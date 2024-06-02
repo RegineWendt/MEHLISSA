@@ -7,6 +7,21 @@ v1.1, 2024-06-02
 MEHLISSA is a ns-3 module that simulates the global movement of objects in the human body. It’s main purpose is to model the work environment of medical nanobots. 
 MEHLISSA is an extension and replacement of the BloodVoyagerS Module for ns-3 (https://github.com/RegineWendt/blood-voyager-s). 
 
+Please Checkout the literature folder for more information of the model and scenario. If you use MEHLISSA cite at least:
+
+Regine Wendt und Stefan Fischer: „MEHLISSA: a medical holistic simulation architecture for nanonetworks in humans“ Proceedings of the 7th ACM International Conference on Nanoscale Computing and Communication · Virtual Event USA: ACM, Sep. 2020, S. 1–6 · isbn: 978-1-4503-8083-6 · doi: 10.1145/ 3411295.3411305 · url: https://dl.acm.org/doi/10.1145/3411295.3411305
+
+You find detailed descriptions on the complete model, uml structures, scenarios, calculations etc. in my dissertation (in german). 
+
+If you use information from my disseration, i.e. the scenarios, cite in addition: 
+
+Regine Wendt: „Einsatz von Nanotechnologien in der Präzisionsmedizin“ · Dissertation · Universität zu Lübeck, 2024
+
+If you use fingerprinting cite my dissertation and: 
+
+Regine Wendt, Florian-Lennert Lau, Lena Unger und Stefan Fischer: „Proteome Fingerprinting as a Localization Scheme for Nanobots“ · Proceedings of the 10th ACM International Conference on Nanoscale Computing and Communication · NANOCOM ’23 · Coventry, United Kingdom: Association for Computing Machinery, 2023, S. 27–32 · isbn: 9798400700347 · doi: 10.1145/3576781.3608728 · url: https://doi.org/10.1145/3576781.3608728
+
+
 == Features
 
   - 3D coordinates of major vessels and organs
