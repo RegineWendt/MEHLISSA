@@ -28,90 +28,92 @@
 using namespace std;
 namespace ns3 {
 
-class Bloodstream : public ns3::Object
-{
+class Bloodstream : public ns3::Object {
 private:
-  int m_bloodvesselID; // unique ID, set in bloodcircuit.
+    int m_bloodvesselID; // unique ID, set in bloodcircuit.
 
-  /// Stream settings
-  int m_currentStream; // id of stream
-  double m_velocity; // velocity of the bloodvessel.
-  int m_velocity_factor;
-  // bool m_changeStreamSet; // true, if the nanobots should be able to change their streams.
-  double m_offset_x;
-  double m_offset_y;
-  double m_offset_z;
-  list<Ptr<Nanobot>> m_nanobots;
+    /// Stream settings
+    int m_currentStream; // id of stream
+    double m_velocity;   // velocity of the bloodvessel.
+    int m_velocity_factor;
+    // bool m_changeStreamSet; // true, if the nanobots should be able to change
+    // their streams.
+    double m_offset_x;
+    double m_offset_y;
+    double m_offset_z;
+    list<Ptr<Nanobot>> m_nanobots;
 
 public:
-  Bloodstream (void);
+    Bloodstream(void);
 
-  /// Destructor.
-  ~Bloodstream (void);
+    /// Destructor.
+    ~Bloodstream(void);
 
-  // initialize bloodstream
-  /**
-   * \param vesselId: Id of the Vessel
-   * \param streamID: Id of the Stream 
-   * \param velocityfactor: 1 - 100 Factor which defines velocity compared to the base velocity
-   * \param offsetX: relative offsetcoordinates
-   * \param offsetY: relative offsetcoordinates
-   * \param angle: angle of the stream
-   */
-  void initBloodstream (int vesselId, int streamId, int velocityfactor, double offsetX,
-                        double offsetY, double angle);
+    // initialize bloodstream
+    /**
+     * \param vesselId: Id of the Vessel
+     * \param streamID: Id of the Stream
+     * \param velocityfactor: 1 - 100 Factor which defines velocity compared to
+     * the base velocity \param offsetX: relative offsetcoordinates \param
+     * offsetY: relative offsetcoordinates \param angle: angle of the stream
+     */
+    void initBloodstream(int vesselId, int streamId, int velocityfactor,
+                         double offsetX, double offsetY, double angle);
 
-  /**
-   * \return number of nanobots inside of this stream
-   */
-  size_t CountNanobots (void);
+    /**
+     * \return number of nanobots inside of this stream
+     */
+    size_t CountNanobots(void);
 
-  /**
- * \param index: NanobotID
- */
-  Ptr<Nanobot> GetNanobot (int index);
+    int CountCarTCells();
 
-  /**
- * \param index: NanobotID
- */
-  Ptr<Nanobot> RemoveNanobot (int index);
+    int CountCancerCells();
+    /**
+     * \param index: NanobotID
+     */
+    Ptr<Nanobot> GetNanobot(int index);
 
-  /**
- * \param bot: pointer to bot
- */
-  Ptr<Nanobot> RemoveNanobot (Ptr<Nanobot> bot);
+    /**
+     * \param index: NanobotID
+     */
+    Ptr<Nanobot> RemoveNanobot(int index);
 
-  /**
- * \param bot: pointer to bot
- */
-  void AddNanobot (Ptr<Nanobot> bot);
+    /**
+     * \param bot: pointer to bot
+     */
+    Ptr<Nanobot> RemoveNanobot(Ptr<Nanobot> bot);
 
-  /**
- * Sort the stream
- */
-  void SortStream (void);
+    /**
+     * \param bot: pointer to bot
+     */
+    void AddNanobot(Ptr<Nanobot> bot);
 
-  /**
- * \return true if empty
- */
-  bool IsEmpty (void);
+    /**
+     * Sort the stream
+     */
+    void SortStream(void);
 
-  /**
- * \return velocity
- */
-  double GetVelocity (void);
+    /**
+     * \return true if empty
+     */
+    bool IsEmpty(void);
 
-  /**
- * \parameter new velocity
- */
-  void SetVelocity (double velocity);
+    /**
+     * \return velocity
+     */
+    double GetVelocity(void);
 
-  /**
-   * \param offsetX: relative offsetcoordinates
-   * \param offsetY: relative offsetcoordinates
-   * \param angle: angle of the stream
- */
-  void SetAngle (double angle, double offsetX, double offsetY);
+    /**
+     * \parameter new velocity
+     */
+    void SetVelocity(double velocity);
+
+    /**
+     * \param offsetX: relative offsetcoordinates
+     * \param offsetY: relative offsetcoordinates
+     * \param angle: angle of the stream
+     */
+    void SetAngle(double angle, double offsetX, double offsetY);
 
 }; //  Class End
 }; // namespace ns3

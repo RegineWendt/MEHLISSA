@@ -10,3 +10,15 @@ build_lib_example(
     ${libwifi}
     ${libnetwork}
 )
+build_lib_example(
+  NAME start-cartcelltherapy
+  SOURCE_FILES start-cartcelltherapy
+    
+  LIBRARIES_TO_LINK 
+    ${libmehlissa}
+    ${libinternet}
+    ${libcore}
+    ${libmobility}
+    ${libwifi}
+    ${libnetwork}
+)

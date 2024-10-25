@@ -22,110 +22,97 @@
 using namespace std;
 namespace ns3 {
 
-Bloodstream::Bloodstream ()
-{
+Bloodstream::Bloodstream() {}
+
+Bloodstream::~Bloodstream() {
+    // this->m_offset_x;
+    this->m_nanobots.erase(this->m_nanobots.begin(), this->m_nanobots.end());
 }
 
-Bloodstream::~Bloodstream ()
-{
-  //this->m_offset_x;
-  this->m_nanobots.erase (this->m_nanobots.begin (), this->m_nanobots.end ());
+void Bloodstream::initBloodstream(int vesselId, int streamId,
+                                  int velocityfactor, double offsetX,
+                                  double offsetY, double angle) {
+    m_bloodvesselID = vesselId;
+    m_currentStream = streamId; // id of stream
+    m_velocity_factor = velocityfactor;
+    m_offset_x = offsetX;
+    m_offset_y = offsetY;
+    m_offset_z = 0;
 }
 
-void
-Bloodstream::initBloodstream (int vesselId, int streamId, int velocityfactor, double offsetX,
-                              double offsetY, double angle)
-{
-  m_bloodvesselID = vesselId;
-  m_currentStream = streamId; // id of stream
-  m_velocity_factor = velocityfactor;
-  m_offset_x = offsetX;
-  m_offset_y = offsetY;
-  m_offset_z = 0;
-}
+size_t Bloodstream::CountNanobots(void) { return this->m_nanobots.size(); }
 
-size_t
-Bloodstream::CountNanobots (void)
-{
-  return this->m_nanobots.size ();
-}
-
-Ptr<Nanobot>
-Bloodstream::GetNanobot (int index)
-{
-  list<Ptr<Nanobot>>::iterator i = this->m_nanobots.begin ();
-  advance (i, index);
-  return *i;
-}
-
-Ptr<Nanobot>
-Bloodstream::RemoveNanobot (int index)
-{
-  return RemoveNanobot (GetNanobot (index));
-}
-
-Ptr<Nanobot>
-Bloodstream::RemoveNanobot (Ptr<Nanobot> bot)
-{
-  m_nanobots.remove (bot);
-  Vector v = bot->GetPosition ();
-  v.x -= m_offset_x;
-  v.y -= m_offset_y;
-  v.z -= m_offset_z;
-  bot->SetPosition (v);
-  return bot;
-}
-
-void
-Bloodstream::AddNanobot (Ptr<Nanobot> bot)
-{
-  m_nanobots.push_back (bot);
-  bot->SetStream (m_currentStream);
-  Vector v = bot->GetPosition ();
-  v.x += m_offset_x;
-  v.y += m_offset_y;
-  v.z += m_offset_z;
-  bot->SetPosition (v);
-}
-
-void
-Bloodstream::SetAngle (double angle, double offsetX, double offsetY)
-{
-  if (angle != 0.0)
-    {
-      m_offset_z = offsetY;
-      m_offset_x = offsetX * (cos (fmod ((angle - 90), 360) * M_PI / 180));
-      m_offset_y = offsetX * (sin (fmod ((angle - 90), 360) * M_PI / 180));
+int Bloodstream::CountCarTCells() {
+    int carTCells = 0;
+    list<Ptr<Nanobot>>::iterator bots = this->m_nanobots.begin();
+    for (unsigned int i = 0; i < m_nanobots.size(); i++) {
+        if ((*bots)->m_type == CarTCellType)
+            carTCells += 1;
+        advance(bots, 1);
     }
-    else {
-      m_offset_z = 0;
-      m_offset_x = offsetY;
-      m_offset_y = offsetX;
+    return carTCells;
+}
+
+int Bloodstream::CountCancerCells() {
+    int cancerCells = 0;
+    list<Ptr<Nanobot>>::iterator bots = this->m_nanobots.begin();
+    for (unsigned int i = 0; i < m_nanobots.size(); i++) {
+        if ((*bots)->m_type == CancerCellType)
+            cancerCells += 1;
+        advance(bots, 1);
+    }
+    return cancerCells;
+}
+
+Ptr<Nanobot> Bloodstream::GetNanobot(int index) {
+    list<Ptr<Nanobot>>::iterator i = this->m_nanobots.begin();
+    advance(i, index);
+    return *i;
+}
+
+Ptr<Nanobot> Bloodstream::RemoveNanobot(int index) {
+    return RemoveNanobot(GetNanobot(index));
+}
+
+Ptr<Nanobot> Bloodstream::RemoveNanobot(Ptr<Nanobot> bot) {
+    m_nanobots.remove(bot);
+    Vector v = bot->GetPosition();
+    v.x -= m_offset_x;
+    v.y -= m_offset_y;
+    v.z -= m_offset_z;
+    bot->SetPosition(v);
+    return bot;
+}
+
+void Bloodstream::AddNanobot(Ptr<Nanobot> bot) {
+    m_nanobots.push_back(bot);
+    bot->SetStream(m_currentStream);
+    Vector v = bot->GetPosition();
+    v.x += m_offset_x;
+    v.y += m_offset_y;
+    v.z += m_offset_z;
+    bot->SetPosition(v);
+}
+
+void Bloodstream::SetAngle(double angle, double offsetX, double offsetY) {
+    if (angle != 0.0) {
+        m_offset_z = offsetY;
+        m_offset_x = offsetX * (cos(fmod((angle - 90), 360) * M_PI / 180));
+        m_offset_y = offsetX * (sin(fmod((angle - 90), 360) * M_PI / 180));
+    } else {
+        m_offset_z = 0;
+        m_offset_x = offsetY;
+        m_offset_y = offsetX;
     }
 }
 
-void
-Bloodstream::SortStream (void)
-{
-  m_nanobots.sort (ns3::Nanobot::Compare);
-}
+void Bloodstream::SortStream(void) { m_nanobots.sort(ns3::Nanobot::Compare); }
 
-bool
-Bloodstream::IsEmpty (void)
-{
-  return m_nanobots.size () <= 0;
-}
+bool Bloodstream::IsEmpty(void) { return m_nanobots.size() <= 0; }
 
-double
-Bloodstream::GetVelocity (void)
-{
-  return m_velocity;
-}
+double Bloodstream::GetVelocity(void) { return m_velocity; }
 
-void
-Bloodstream::SetVelocity (double velocity)
-{
-  m_velocity = velocity * m_velocity_factor / 100.0;
+void Bloodstream::SetVelocity(double velocity) {
+    m_velocity = velocity * m_velocity_factor / 100.0;
 }
-
 } // namespace ns3

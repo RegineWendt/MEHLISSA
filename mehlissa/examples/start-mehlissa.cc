@@ -31,9 +31,11 @@ main (int argc, char *argv[])
   int injectionVessel = 1;
   int numOfCollectors = 0;
   int numOfLocators = 0;
-  //Particle Mode - Set mode to one if you want to simulate ldl particles, and to two if you want so simulate liquid biopsy. 
+  //Particle Mode - Set mode to one if you want to simulate ldl particles, 
+  //and to two if you want so simulate liquid biopsy. 
   //See Bloodcircuit.cc Line 197ff for the setup of both scenarios
   int particleMode = 0;
+  bool isDeterministic = true;
 
   CommandLine cmd;
   cmd.AddValue ("simulationDuration", "simulationDuration", simulationDuration);
@@ -42,7 +44,14 @@ main (int argc, char *argv[])
   cmd.AddValue ("numOfCollectors", "numOfCollectors", numOfCollectors);
   cmd.AddValue ("numOfLocators", "numOfLocators", numOfLocators);
   cmd.AddValue ("particleMode", "particleMode", particleMode);
+  cmd.AddValue ("isDeterministic", "isDeterministic", isDeterministic);
 
   cmd.Parse (argc, argv);
-  return Bloodcircuit::BeginSimulation (simulationDuration, numOfNanobots, injectionVessel, numOfCollectors, numOfLocators, particleMode);
+  return Bloodcircuit::BeginSimulation (simulationDuration, 
+                                        numOfNanobots, 
+                                        injectionVessel, 
+                                        numOfCollectors, 
+                                        numOfLocators, 
+                                        particleMode, 
+                                        isDeterministic);
 }

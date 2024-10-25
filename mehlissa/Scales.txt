@@ -1,0 +1,202 @@
+Nanocollector::Nanocollector() {
+    m_length = 0.0.000001; // 10nm
+    m_width = 0.000001;    // 10nm
+    m_delay = 0.5;         // with Jorge 0.044 delay and 10nm x 10nm
+}
+
+Nanobot::Nanobot() {
+
+    m_length = 0.00001;    // 100nm
+    m_width = 0.00001;     // 100nm
+    m_stream_nb = 0;
+    m_shouldChange = false;
+    m_timeStep = Seconds(0.0);
+}
+
+Nanoparticle::Nanoparticle() {
+    m_length = 0.0000011;  // 11 nm
+    m_width = 0.00000055;  // 5,5nm
+    m_delay = 1;           // 4.71 for ctDNA, 2.32 for LDL
+    m_detectionRadius = 0;
+}
+
+double Bloodcircuit::GetSpeedClassOfBloodVesselType(BloodvesselType type) {
+    if (type == ARTERY)
+        return 10.0;
+    else if (type == VEIN)
+        return 3.7;
+    else // if (type == ORGAN)
+        return 1.0;
+}
+
+void Bloodcircuit::AddVesselData(int id, BloodvesselType type, Vector start,
+                                 Vector stop) {
+    Ptr<Bloodvessel> vessel = CreateObject<Bloodvessel>();
+    vessel->SetBloodvesselID(id);
+    vessel->SetBloodvesselType(type);
+    vessel->SetStartPositionBloodvessel(start);
+    vessel->SetStopPositionBloodvessel(stop);
+    vessel->SetVesselWidth(0.25);  // 0.25cm
+    vessel->SetPrinter(printer);
+    // Init Bloodvessel: Calculate length and angle & velocity.
+    vessel->InitBloodstreamLengthAngleAndVelocity(
+        GetSpeedClassOfBloodVesselType(type));
+    m_bloodvessels[id] = vessel;
+    cout << "New Vessel(" + to_string(id) + "," + to_string(type) + "," +
+                to_string(start.x) + "," + to_string(start.y) + "," +
+                to_string(start.z) + "," + to_string(stop.x) + "," +
+                to_string(stop.y) + "," + to_string(stop.z) + ")"
+         << endl;
+}
+
+double Bloodstream::GetVelocity(void) { return m_velocity; }
+
+void Bloodstream::SetVelocity(double velocity) {
+    m_velocity = velocity * m_velocity_factor / 100.0;
+}
+
+Bloodvessel::Bloodvessel() {
+    m_deltaT = 1; // seconds?
+}
+
+bool Bloodvessel::transposeNanobot(Ptr<Nanobot> botToTranspose,
+                                   Ptr<Bloodvessel> thisBloodvessel,
+                                   Ptr<Bloodvessel> nextBloodvessel,
+                                   int stream) {
+    Vector stopPositionOfVessel = thisBloodvessel->GetStopPositionBloodvessel();
+    Vector nanobotPosition = botToTranspose->GetPosition();
+    double distance = sqrt(pow(nanobotPosition.x - stopPositionOfVessel.x, 2) +
+                           pow(nanobotPosition.y - stopPositionOfVessel.y, 2) +
+                           pow(nanobotPosition.z - stopPositionOfVessel.z, 2));
+    distance = distance /
+               thisBloodvessel->m_bloodstreams[stream]->GetVelocity() *
+               nextBloodvessel->m_bloodstreams[stream]->GetVelocity();
+    botToTranspose->SetPosition(nextBloodvessel->GetStartPositionBloodvessel());
+    Vector rmp = SetPosition(botToTranspose->GetPosition(), distance,
+                             nextBloodvessel->GetBloodvesselAngle(),
+                             nextBloodvessel->GetBloodvesselType(),
+                             thisBloodvessel->GetStopPositionBloodvessel().z);
+    botToTranspose->SetPosition(rmp);
+    double nbx = botToTranspose->GetPosition().x -
+                 nextBloodvessel->GetStartPositionBloodvessel().x;
+    double nby = botToTranspose->GetPosition().y -
+                 nextBloodvessel->GetStartPositionBloodvessel().y;
+    double length = sqrt(nbx * nbx + nby * nby);
+    // check if position exceeds bloodvessel
+    return length > nextBloodvessel->GetbloodvesselLength() || rmp.z < -2 ||
+           rmp.z > 2;
+}
+
+bool Bloodvessel::moveNanobot(Ptr<Nanobot> nb, int i, int randVelocityOffset,
+                              bool direction, double dt) {
+    double distance = 0.0;
+    double velocity = m_bloodstreams[i]->GetVelocity();
+    if (nb->GetDelay() >= 0)
+        velocity = velocity * (nb->GetDelay());
+
+    if (direction)
+        distance = (velocity - ((velocity / 100) * randVelocityOffset)) * dt;
+    else
+        distance = (velocity + ((velocity / 100) * randVelocityOffset)) * dt;
+    // Check vessel direction and move accordingly.
+    Vector nbv =
+        SetPosition(nb->GetPosition(), distance, GetBloodvesselAngle(),
+                    GetBloodvesselType(), m_startPositionBloodvessel.z);
+    nb->SetPosition(nbv);
+    nb->SetTimeStep();
+    double nbx = nb->GetPosition().x - m_startPositionBloodvessel.x;
+    double nby = nb->GetPosition().y - m_startPositionBloodvessel.y;
+    double length = sqrt(nbx * nbx + nby * nby);
+    // check if position exceeds bloodvessel
+    return (length > m_bloodvesselLength || (nbv.z < -2 && m_angle == 0) ||
+            (nbv.z > 2 && m_angle == 0));
+}
+
+double Bloodvessel::CalcLength() {
+    if (GetBloodvesselType() == ORGAN) {
+        return 4;
+    } else {
+        Vector m_start = GetStartPositionBloodvessel();
+        Vector m_end = GetStopPositionBloodvessel();
+        double l =
+            sqrt(pow(m_end.x - m_start.x, 2) + pow(m_end.y - m_start.y, 2));
+        return l;
+    }
+}
+
+double Bloodvessel::CalcDistance(Ptr<Nanobot> n_1, Ptr<Nanobot> n_2) {
+    Vector v_1 = n_1->GetPosition();
+    Vector v_2 = n_2->GetPosition();
+    double l =
+        sqrt(pow(v_1.x - v_2.x, 2) + pow(v_1.y - v_2.y, 2));
+    return l;
+}
+
+void Bloodvessel::InitBloodstreamLengthAngleAndVelocity(double velocity) {
+    int i;
+    double length = CalcLength();
+    m_bloodvesselLength = length < 0 ? 10000 : length;
+    m_angle = CalcAngle();
+
+    if (velocity >= 0) {
+        m_basevelocity = velocity;
+        int maxLength = 0;
+        // calulate the width per stream
+        for (i = 0; i < m_numberOfStreams; i++) {
+            if (maxLength < stream_definition[i][1])
+                maxLength = stream_definition[i][1];
+            if (maxLength < stream_definition[i][2])
+                maxLength = stream_definition[i][2];
+        }
+        double offset = m_vesselWidth / 2.0 / maxLength;
+        // change velocity for the hearts
+        if (m_bloodvesselID == 2 || m_bloodvesselID == 58)
+            m_basevelocity = 5; // duration of one cardiac cycle 0.8 seconds and
+                                // 4 cm distance.
+        // Set velocity, angle and position offset
+        for (i = 0; i < m_numberOfStreams; i++) {
+            m_bloodstreams[i]->SetVelocity(m_basevelocity);
+            m_bloodstreams[i]->SetAngle(m_angle,
+                                        stream_definition[i][1] * offset,
+                                        stream_definition[i][2] * offset);
+        }
+    }
+}
+
+CancerCell::CancerCell() {
+    double default_nanobot_size = 0.000004702; // 47.02 nm
+    // Jurkat
+    m_length = 0.0011500; // 11.5 mum
+    m_width = 0.0011500;  // 11.5 mum
+    // HL60
+    // m_length = 0.0012400;                        // 12.4 mum
+    // m_width = 0.0012400;                         // 12.4 mum
+    m_delay = 1;//default_nanobot_size / m_length; // calculated based on size
+                                               // in relation to Nanobots
+    m_detectionRadius = 0.1;                   // TODO
+}
+
+CarTCell::CarTCell() {
+    double default_nanobot_size = 0.000004702; // 47.02 nm
+    double spacer_size = 0.0000004;    // 4 nm
+    double CD19_size = 0.0000012;      // 12 nm
+    double CD45_size = 0.0000025;      // 22 - 28 nm
+    // Jurkat
+    m_length = 0.0011500; // 11.5 mum
+    m_width = 0.0011500;  // 11.5 mum
+    // HL60
+    // m_length = 0.0012400;                 // 12.4 mum
+    // m_width = 0.0012400;                  // 12.4 mum
+    // must add spacer and CAR size to used T cell size
+    double CAR_size = spacer_size + CD45_size;
+    m_length += CAR_size;
+    m_width += CAR_size;
+    m_delay = 1;//default_nanobot_size / m_length; // calculated based on size
+                                               // in relation to Nanobots
+}
+
+
+
+
+
+
