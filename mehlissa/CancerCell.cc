@@ -34,7 +34,7 @@ CancerCell::CancerCell() {
            //  in relation to Nanobots
     m_got_detected = 0;                 // TODO
     m_detectionRadius = 0.0000001; // TODO
-    m_mitosisTime = 3;
+    m_mitosisTime = 3456000;
     m_mitosisCounter = m_mitosisTime;
 }
 

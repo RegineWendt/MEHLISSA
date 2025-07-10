@@ -33,7 +33,7 @@ TCell::TCell() {
                                                     //  in relation to Nanobots
 
     m_got_detected = 0;                 // TODO
-    m_detectionRadius = 0.0000001; // TODO
+    m_detectionRadius = 0.0000000001; // TODO
 }
 
 TCell::~TCell() {}

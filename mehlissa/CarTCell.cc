@@ -40,12 +40,12 @@ CarTCell::CarTCell() {
         1; // default_nanobot_size / m_length;  // calculated based on size
            //  in relation to Nanobots
 
-    m_cancerFratricideP = 0.2;
-    m_tFratricideP = 0.2;
-    m_carTFratricideP = 0.2;
-    m_cancerMitosisP = 0.01;
-    m_tMitosisP = 0.01;
-    m_carTMitosisP = 0.01;
+    m_cancerFratricideP = 6e-11;
+    m_tFratricideP = 6e-11;
+    m_carTFratricideP = 6e-11;
+    m_cancerMitosisP = 1e-11;
+    m_tMitosisP = 1e-11;
+    m_carTMitosisP = 1e-11;
     //m_cancerFratricideP = 0.15;
     //m_tFratricideP = 0.15;
     //m_carTFratricideP = 0.20;
@@ -61,7 +61,7 @@ CarTCell::CarTCell() {
     m_killedCarTCells = 0;
 
     m_canAge = true;
-    m_maxAge = 450;
+    m_maxAge = 1814400;
     m_ageCounter = m_maxAge;
     m_willPerformMitosis = false;
     m_mitosisTime = -1;

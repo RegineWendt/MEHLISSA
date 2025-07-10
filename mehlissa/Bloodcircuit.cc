@@ -117,7 +117,7 @@ int Bloodcircuit::BeginSimulation(unsigned int simulationDuration,
              << endl;
         cout << "Injected Vessel: " << injectionVessel << endl;
         // Flushing last entries in csv
-        printNano->~PrintNanobots();
+        // disable printing printNano->~PrintNanobots();
         return 0;
     } else {
         cout << "Not enough vessels for simulation! Please check "
@@ -162,7 +162,7 @@ int Bloodcircuit::CancerSimulation(unsigned int numCancerCells,
                  << "s ------------------------" << endl;
             cout << "Injection Vessel: " << injectionVessel << endl;
             cout << "Injection Time: " << injectionTime << endl;
-            printNano->~PrintNanobots();
+            // disable printing printNano->~PrintNanobots();
             return 0;
         } else {
             cout << "Not enough vessels for simulation! Please check "

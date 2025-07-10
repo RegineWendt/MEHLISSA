@@ -317,9 +317,9 @@ void Bloodvessel::TranslatePosition(double dt) {
             TransposeNanobots(reachedEnd, i);
         reachedEnd.clear();
     } // outer for
-    printer->PrintSomeNanobots(print, this->GetbloodvesselID());
-    if (m_isGatewayVessel == true || m_bloodvesselID == 1)
-        printer->PrintGateway(m_bloodvesselID, numCancerCells, numCarTCells);
+    // disable printing printer->PrintSomeNanobots(print, this->GetbloodvesselID());
+    // disable printing if (m_isGatewayVessel == true || m_bloodvesselID == 1)
+        // disable printing printer->PrintGateway(m_bloodvesselID, numCancerCells, numCarTCells);
 } // Function
 
 void Bloodvessel::ChangeStream() {
@@ -432,7 +432,7 @@ void Bloodvessel::TransposeNanobots(list<Ptr<Nanobot>> reachedEnd, int stream) {
         }
     } // for
 
-    printer->PrintSomeNanobots(print1, m_nextBloodvessel1->GetbloodvesselID());
+    // disable printing printer->PrintSomeNanobots(print1, m_nextBloodvessel1->GetbloodvesselID());
     // All Nanobots that freshly entered a vessel in this step are now in print1
     // (and print2). Now we check if these Nanobots are Nanolocators, that
     // should release molecules because they are in their target organ.
@@ -448,8 +448,8 @@ void Bloodvessel::TransposeNanobots(list<Ptr<Nanobot>> reachedEnd, int stream) {
 
     // check for the second branch if present
     if (m_nextBloodvessel2) {
-        printer->PrintSomeNanobots(print2,
-                                   m_nextBloodvessel2->GetbloodvesselID());
+        // disable printing printer->PrintSomeNanobots(print2,
+        // disable printing                            m_nextBloodvessel2->GetbloodvesselID());
         if (m_nextBloodvessel2->GetFingerprintFormationTime() > 0)
             m_nextBloodvessel2->CheckRelease(print2);
         if (m_nextBloodvessel2->isActive())
@@ -462,11 +462,11 @@ void Bloodvessel::TransposeNanobots(list<Ptr<Nanobot>> reachedEnd, int stream) {
 
 // HELPER
 void Bloodvessel::PrintNanobotsOfVessel() {
-    for (uint j = 0; j < m_bloodstreams.size(); j++) {
-        for (uint i = 0; i < m_bloodstreams[j]->CountNanobots(); i++)
-            printer->PrintNanobot(m_bloodstreams[j]->GetNanobot(i),
-                                  GetbloodvesselID());
-    }
+    // disable printing for (uint j = 0; j < m_bloodstreams.size(); j++) {
+        // disable printing for (uint i = 0; i < m_bloodstreams[j]->CountNanobots(); i++)
+            // disable printing printer->PrintNanobot(m_bloodstreams[j]->GetNanobot(i),
+                                  // disable printing GetbloodvesselID());
+    // disable printing }
 }
 
 void Bloodvessel::initStreams() {
