@@ -91,7 +91,7 @@ You can pass different command-line arguments to MEHLISSA for the simulation.
 |"detectionVessel" | int | 23 |
 |"isDeterministic" | bool | false |
 |"parallel" | int | 1 |
-|"simFile" | string | "../outpu/csvnano.csv" |
+|"simFile" | string | "../output/csvnano.csv" |
 |"gwFile" | string | "../output/gwDetect.csv" |
 |"networkFile" | string | "../data/vasculature_transitions95.csv" |
 |"transitionsFile" | string | "../data/transitions95.csv" |
