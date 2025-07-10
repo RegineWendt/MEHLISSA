@@ -57,7 +57,7 @@ url: https://doi.org/10.1145/3576781.3608728
 
 ## Important Parameters
 
-  - Vessel IDs between [1-95]`
+  - Vessel IDs between `[1-95]`
   - Simulation duration in seconds `m_simulationDuration`
   - Duration between each simulation step `m_deltaT`
   - Velocities: `m_arteryVelocity = 10 cm/s, m_veinVelocity = 3,7 cm/s, m_organVelocity = 1cm/s`
