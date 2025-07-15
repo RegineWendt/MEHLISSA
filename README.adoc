@@ -92,7 +92,7 @@ The simulation returns a csv-file (/ns-3.36/csvNano.csv) with the position data 
 To compare the original MEHLISSA 1.0 with MEHLISSA 2.0, we implemented a CAR-t cell treatment scenario in both.
 The scenario is based on the mathematical model by Pérez-García et al. [1].
 
-You can run the CAR-t cell treatment simulation via:
+You can run the CAR-T cell treatment simulation via:
 
 ```
 NUMOFNANOBOTS=0 INJECTVESSEL=68 DETECTVESSEL=29 NUMCANCERCELLS=300000 NUMCARTCELLS=2000 NUMTCELLS=300000 SIMDURATION=100 SIMSTEP=1 INJECTTIME=20 ISDETERMINISTIC=false PARALLELITY=1 SIMFILE="../output/csvNano_cancer001.csv" GWFILE="../output/gwNano_cancer001.csv" VASCFILE="../data/95_vasculature.csv" TRANSFILE="../data/95_transitions.csv" FINGERPRINTS="../data/95_fingerprints.csv"
