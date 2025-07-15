@@ -1,11 +1,101 @@
-# MEHLISSA: A Medical Holistic Simulation Architecture for Nanonetworks in Humans
+= MEHLISSA: A Medical Holistic Simulation Architecture for Nanonetworks in Humans
 
-To run the original MEHLISSA 1.0 with a CAR-t cell simulation, run:
+Regine Wendt <regine.wendt@uni-luebeck.de>
+
+* v1.1, 2024-06-02
+* v2.0, 2025-07-15
+
+== Introduction
+
+MEHLISSA is a ns-3 module that simulates the global movement of objects in the human body. It’s main purpose is to model the work environment of medical nanobots. 
+It is an extension and replacement of the BloodVoyagerS Module for ns-3 (https://github.com/RegineWendt/blood-voyager-s). 
+
+MEHLISSA 2.0 is a redesigned version based on a streamlined simulation core with substantial performance improvements, particularly in long simulations with over 2x runtime reduction.
+
+=== Literature and References
+
+Please Checkout the literature folder for more information of the model and scenario. If you use MEHLISSA cite at least:
+
+__Regine Wendt und Stefan Fischer: „MEHLISSA: a medical holistic simulation architecture for nanonetworks in humans“ Proceedings of the 7th ACM International Conference on Nanoscale Computing and Communication · Virtual Event USA: ACM, Sep. 2020, S. 1–6 · isbn: 978-1-4503-8083-6 · doi: 10.1145/ 3411295.3411305 · url: https://dl.acm.org/doi/10.1145/3411295.3411305__
+
+You find detailed descriptions on the complete model, uml structures, scenarios, calculations etc. in Regine's dissertation (in german). 
+
+If you use information from Regine#s disseration, i.e. the scenarios, cite in addition: 
+
+__Regine Wendt: „Einsatz von Nanotechnologien in der Präzisionsmedizin“ · Dissertation · Universität zu Lübeck, 2024__
+
+If you use fingerprinting cite Regine's dissertation and: 
+
+__Regine Wendt, Florian-Lennert Lau, Lena Unger und Stefan Fischer: „Proteome Fingerprinting as a Localization Scheme for Nanobots“ · Proceedings of the 10th ACM International Conference on Nanoscale Computing and Communication · NANOCOM ’23 · Coventry, United Kingdom: Association for Computing Machinery, 2023, S. 27–32 · isbn: 9798400700347 · doi: 10.1145/3576781.3608728 · url: https://doi.org/10.1145/3576781.3608728__
+
+
+== Features
+
+  - 3D coordinates of major vessels and organs
+  - Simulates permanent movement of nanobots in cardiovascular system
+  - Injection of nanobots in specific vessels
+  - Provides global position data of nanobots (/ns-3.x/csvNano.csv)
+  - Simulates Nanolocators, Nanocollectors and Nanoparticles
+
+== Important Parameters
+
+  - Number of nanobots `m_numberOfNanobots`
+  - Injection vessel `m_injectionVessel [1-95]`
+  - Simulation duration in seconds `m_simulationDuration`
+  - Duration between each simulation step `m_deltaT`
+  - Velocities: `m_arteryVelocity = 10 cm/s, m_veinVelocity = 3,7 cm/s, m_organVelocity = 1cm/s`
+
+== Tutorial/Get started
+
+=== You’ve already installed ns-3.36
+
+Take the mehlissa version, it is set for ns-3.36. Note that ns3 moved from waf to cmake, so the building and running is different. 
+
+=== You're new to ns-3
+
+You need to download the complete ns-3.36 (or possibly newer) and follow the instructions in this  https://www.nsnam.org/docs/tutorial/html/getting-started.html[ns-3 tutorial]. 
+Then you download the mehlissa folder from here and put it in the src folder. 
+In addition, you need to put the other three .csv files in your ns-3.x folder. For further instructions see "Run MEHLISSA".
+
+== Run MEHLISSA Version ns-3.36
+    SIMDURATION=   # simulation duration in seconds
+    NUMOFNANOBOTS= # number of nanobots
+    INJECTVESSEL=  # injection vessel [1-95]
+    NUMOFCOLLECTORS= # specialised nanodevices that collect messages
+    NUMOFLOCATORS= # specialised nanodevices that can locate nine organs
+    PARTICLEMODE = Mode 1 simulates LDL particles, Mode 2 simulates Liquid Biopsy
+
+    for the simulation as in bvs with a refined transition model and new 3D features
+    ./ns3 run "start-mehlissa --simulationDuration=$SIMDURATION, --numOfNanobots=$NUMOFNANOBOTS, --injectionVessel=$INJECTVESSEL"
+    
+    or with default values
+    ./ns3 run start-mehlissa
+
+    to simulate nanocollectors and nanolocators
+    ./ns3 run "start-mehlissa --simulationDuration=$SIMDURATION, --numOfNanobots=$NUMOFNANOBOTS, --injectionVessel=$INJECTVESSEL, --numOfCollectors=$NUMOFCollectors, --numOfLocators=$NUMOFLOCATORS"
+
+    to simulate ldl particle detection
+    ./ns3 run "start-mehlissa --simulationDuration=$SIMDURATION, --numOfNanobots=$NUMOFNANOBOTS, --injectionVessel=$INJECTVESSEL, --particleMode=1"
+
+    you can release more particles from the Bloodvessel.cc during the simulation
+
+     to simulate liquid biopsy of ctDNA
+    ./ns3 run "start-mehlissa --simulationDuration=$SIMDURATION, --numOfNanobots=$NUMOFNANOBOTS, --injectionVessel=$INJECTVESSEL, --particleMode=2"
+
+    In addition you can use other bodymodels by changing the used vasculature.csv in the Bloodcircuit.cc 
+
+    
+The simulation returns a csv-file (/ns-3.36/csvNano.csv) with the position data of the simulated nanobots or other devices and particles and their status in every timestep. 
+
+=== Comparison with MEHLISSA 2.0
+
+To compare the original MEHLISSA 1.0 with MEHLISSA 2.0, we implemented a CAR-t cell treatment scenario in both.
+The scenario is based on the mathematical model by Pérez-García et al. [1].
+
+You can run the CAR-t cell treatment simulation via:
 
 ```
-./ns3 configure --build-profile=optimized --enable-examples --enable-tests
-./ns3 build
 NUMOFNANOBOTS=0 INJECTVESSEL=68 DETECTVESSEL=29 NUMCANCERCELLS=300000 NUMCARTCELLS=2000 NUMTCELLS=300000 SIMDURATION=100 SIMSTEP=1 INJECTTIME=20 ISDETERMINISTIC=false PARALLELITY=1 SIMFILE="../output/csvNano_cancer001.csv" GWFILE="../output/gwNano_cancer001.csv" VASCFILE="../data/95_vasculature.csv" TRANSFILE="../data/95_transitions.csv" FINGERPRINTS="../data/95_fingerprints.csv"
 ./ns3 run "start-cartcelltherapy --simulationDuration=$SIMDURATION --numCancerCells=$NUMCANCERCELLS --numCarTCells=$NUMCARTCELLS --numTCells=$NUMTCELLS --injectionTime=$INJECTTIME --injectionVessel=$INJECTVESSEL --detectionVessel=$DETECTVESSEL --isDeterministic=$ISDETERMINISTIC --simFile=$SIMFILE  --gwFile=$GWFILE"
 ```
-
+[1] Víctor M. Pérez-García, Odelaisy León-Triana, María Rosa, and Antonio Pérez-Martínez. 2021. CAR T Cells for T-Cell Leukemias: Insights from Mathematical Models. Communications in Nonlinear Science and Numerical Simulation 96 (May 2021). https://doi.org/10.1016/j.cnsns.2020.105684
