@@ -21,62 +21,35 @@
 
 namespace ns3 {
 
-Nanoparticle::Nanoparticle ()
-{
-
-  m_length = 0.00011; //11 nm
-  m_width = 0.00055; //5,5nm
-  m_delay = 1;  // 4.71 for ctDNA, 2.32 for LDL
-  m_got_detected = 0;
-  m_detectionRadius = 0;
+Nanoparticle::Nanoparticle() {
+    m_type = NanoparticleType;
+    m_length = 0.0000011; // 11 nm
+    m_width = 0.00000055; // 5,5nm
+    m_delay = 1;          // 4.71 for ctDNA, 2.32 for LDL
+    m_got_detected = 0;
+    m_detectionRadius = 0;
 }
 
-Nanoparticle::~Nanoparticle ()
-{
+Nanoparticle::~Nanoparticle() {}
+
+double Nanoparticle::GetDelay() { return m_delay; }
+
+void Nanoparticle::SetDelay(double value) {
+    if (value < 0)
+        value = 0;
+    m_delay = value;
 }
 
-double
-Nanoparticle::GetDelay ()
-{
-  return m_delay;
+double Nanoparticle::GetDetectionRadius() { return m_detectionRadius; }
+
+void Nanoparticle::SetDetectionRadius(double value) {
+    if (value < 0)
+        value = 0;
+    m_detectionRadius = value;
 }
 
-void
-Nanoparticle::SetDelay (double value)
-{
-  if (value < 0)
-    {
-      value = 0;
-    }
-  m_delay = value;
-}
+int Nanoparticle::GotDetected() { return m_got_detected; }
 
-double
-Nanoparticle::GetDetectionRadius ()
-{
-  return m_detectionRadius;
-}
-
-void
-Nanoparticle::SetDetectionRadius (double value)
-{
-  if (value < 0)
-    {
-      value = 0;
-    }
-  m_detectionRadius = value;
-}
-
-int 
-Nanoparticle::GotDetected()
-{
-  return m_got_detected;
-}
-
-void
-Nanoparticle::GetsDetected()
-{
-  this->m_got_detected++;
-}
+void Nanoparticle::GetsDetected() { this->m_got_detected++; }
 
 } // namespace ns3

@@ -25,35 +25,25 @@ namespace ns3 {
 // {
 
 // }
-Nanolocator::Nanolocator ()
-{
-  m_hasFingerprint = true;
+Nanolocator::Nanolocator() {
+    m_type = NanolocatorType;
+    m_hasFingerprint = true;
 }
 
-Nanolocator::~Nanolocator ()
-{
+Nanolocator::~Nanolocator() {}
+
+bool Nanolocator::HasFingerprintLoaded() { return m_hasFingerprint; }
+
+void Nanolocator::SetTargetOrgan(int target) {
+    m_targetOrgan = target;
+    // std::cout << "target set" << std::endl;
 }
 
-bool Nanolocator::HasFingerprintLoaded ()
-{
-  return m_hasFingerprint;
-}
+int Nanolocator::GetTargetOrgan() { return m_targetOrgan; }
 
-void Nanolocator::SetTargetOrgan(int target)
-{
-  m_targetOrgan = target;
-  //std::cout << "target set" << std::endl;
-}
-
-int Nanolocator::GetTargetOrgan ()
-{
-  return m_targetOrgan;
-}
-
-void Nanolocator::releaseFingerprintTiles()
-{
-  m_hasFingerprint = false;
-  std::cout << "Tiles released" << std::endl;
+void Nanolocator::releaseFingerprintTiles() {
+    m_hasFingerprint = false;
+    std::cout << "Tiles released" << std::endl;
 }
 
 } // namespace ns3

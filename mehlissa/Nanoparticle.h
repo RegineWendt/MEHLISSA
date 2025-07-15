@@ -20,69 +20,68 @@
 #ifndef CLASS_NANOPARTICLE_
 #define CLASS_NANOPARTICLE_
 
-#include "ns3/object.h"
-#include "ns3/core-module.h"
-#include "ns3/network-module.h"
-#include "ns3/mobility-module.h"
 #include "Nanobot.h"
+#include "ns3/core-module.h"
+#include "ns3/mobility-module.h"
+#include "ns3/network-module.h"
+#include "ns3/object.h"
 #include <iostream>
 namespace ns3 {
 class Nanoparticle;
 /**
-* \brief Nanoparticle is a mobile Object.
-*
-* Each Nanoparticle is a small molecule or objekt with more speed than a nanobot, due to its smaller size. 
-* To see in the csv output file if its a Nanoparticle or not, check the last column. False (0) is a 
-* Nanobot and true (1) a Nanoparticle. 
-*/
+ * \brief Nanoparticle is a mobile Object.
+ *
+ * Each Nanoparticle is a small molecule or objekt with more speed than a
+ * nanobot, due to its smaller size. To see in the csv output file if its a
+ * Nanoparticle or not, check the last column. False (0) is a Nanobot and true
+ * (1) a Nanoparticle.
+ */
 
-class Nanoparticle : public Nanobot
-{
+class Nanoparticle : public Nanobot {
 private:
-  double m_delay; // factor for faster traveling speed. 
-  int m_got_detected; //counts up when particle was detected by nanobot 
-  double m_detectionRadius;
+    double m_delay;     // factor for faster traveling speed.
+    int m_got_detected; // counts up when particle was detected by nanobot
+    double m_detectionRadius;
 
 public:
-  //static TypeId GetTypeId (void);
+    // static TypeId GetTypeId (void);
 
-  /// Constructor to initialize values of all variables.
-  Nanoparticle ();
+    /// Constructor to initialize values of all variables.
+    Nanoparticle();
 
-  /// Destructor [does nothing].
-  ~Nanoparticle ();
+    /// Destructor [does nothing].
+    ~Nanoparticle();
 
-  /**
-   * Getter method for the delay.
-   * If the delay is greater than zero, it indicates that it is a Nanoparticle.
-   *
-   * @return The delay value.
-   */
-  double GetDelay ();
+    /**
+     * Getter method for the delay.
+     * If the delay is greater than zero, it indicates that it is a
+     * Nanoparticle.
+     *
+     * @return The delay value.
+     */
+    double GetDelay();
 
-  /**
-   * Setter method for the delay.
-   * @param value The delay value to set.
-   */
-  void SetDelay (double value);
+    /**
+     * Setter method for the delay.
+     * @param value The delay value to set.
+     */
+    void SetDelay(double value);
 
-  /**
-   * Getter method for detection status.
-   * @return counts up if it was detected, false otherwise.
-   */
-  int GotDetected();
+    /**
+     * Getter method for detection status.
+     * @return counts up if it was detected, false otherwise.
+     */
+    int GotDetected();
 
-  /**
-   * Setter method for detection status.
-   * This method is used to signal a detection.
-   */
-  void GetsDetected();
+    /**
+     * Setter method for detection status.
+     * This method is used to signal a detection.
+     */
+    void GetsDetected();
 
-  double GetDetectionRadius ();
+    double GetDetectionRadius();
 
-  void SetDetectionRadius (double value);
-
-
+    void SetDetectionRadius(double value);
 };
 }; // namespace ns3
 #endif

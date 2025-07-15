@@ -25,29 +25,33 @@
 using namespace std;
 namespace ns3 {
 /**
-* \brief Short Description
-*
-* Long Description
-*/
-class PrintNanobots : public ns3::Object
-{
+ * \brief Short Description
+ *
+ * Long Description
+ */
+class PrintNanobots : public ns3::Object {
 private:
-  ofstream output;
-  int particlePrintMode;
+    ofstream output;
+    ofstream gwOutput;
+    int particlePrintMode;
 
 public:
-  PrintNanobots (int particleMode);
+    PrintNanobots(int particleMode);
+    PrintNanobots(int particleMode, string simFile, string gwFile);
 
-  ~PrintNanobots ();
+    ~PrintNanobots();
 
-  /// Prints one nanobot to a csv file.
-  void PrintNanobot (Ptr<Nanobot> n, int vesselID);
+    /// Prints one nanobot to a csv file.
+    void PrintNanobot(Ptr<Nanobot> n, int vesselID);
 
-  /// Prints transposed/translated nanobots in the Bloodvessel to a csv file.
-  void PrintSomeNanobots (list<Ptr<Nanobot>> nbl, int vesselID);
+    /// Prints transposed/translated nanobots in the Bloodvessel to a csv file.
+    void PrintSomeNanobots(list<Ptr<Nanobot>> nbl, int vesselID);
 
-  // Debug Function, currently not used
-  void PrintInTerminal (vector<Ptr<Bloodstream>> streamsOfVessel, int vesselIDl);
+    void PrintGateway(int vesselID, int cancerCellNumber, int carTCellNumber);
+
+    // Debug Function, currently not used
+    void PrintInTerminal(vector<Ptr<Bloodstream>> streamsOfVessel,
+                         int vesselIDl);
 
 }; //  Class End
 }; // namespace ns3

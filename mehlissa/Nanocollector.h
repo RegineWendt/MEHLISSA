@@ -20,77 +20,76 @@
 #ifndef CLASS_NANOCOLLECTOR_
 #define CLASS_NANOCOLLECTOR_
 
-#include "ns3/object.h"
-#include "ns3/core-module.h"
-#include "ns3/network-module.h"
-#include "ns3/mobility-module.h"
 #include "Nanobot.h"
+#include "ns3/core-module.h"
+#include "ns3/mobility-module.h"
+#include "ns3/network-module.h"
+#include "ns3/object.h"
 #include <iostream>
 namespace ns3 {
 class Nanocollector;
 /**
-* \brief Nanocollector is a mobile Object.
-*
-* Each Nanocollector is a Nanobot with bigger dimensions, more capabilities and less speed. 
-* To see in the csv output file if its a Nanocollector or not, check the last column. False (0) is a 
-* Nanobot and true (1) a Nanocollector. 
-*/
+ * \brief Nanocollector is a mobile Object.
+ *
+ * Each Nanocollector is a Nanobot with bigger dimensions, more capabilities and
+ * less speed. To see in the csv output file if its a Nanocollector or not,
+ * check the last column. False (0) is a Nanobot and true (1) a Nanocollector.
+ */
 
-class Nanocollector : public Nanobot
-{
+class Nanocollector : public Nanobot {
 private:
-  double m_delay; // factor for slower traveling speed. 
-  int m_targetOrgan; // Marker for Organ whos message molecule can be collected
-  bool m_tissueDetected; //true when message molecule is collected 
+    double m_delay;        // factor for slower traveling speed.
+    int m_targetOrgan;     // Marker for Organ whos message molecule can be
+                           // collected
+    bool m_tissueDetected; // true when message molecule is collected
 
 public:
-  //static TypeId GetTypeId (void);
+    // static TypeId GetTypeId (void);
 
-  /// Constructor to initialize values of all variables.
-  Nanocollector ();
+    /// Constructor to initialize values of all variables.
+    Nanocollector();
 
-  /// Destructor [does nothing].
-  ~Nanocollector ();
+    /// Destructor [does nothing].
+    ~Nanocollector();
 
-  /**
-   * Getter method for the delay.
-   * If the delay is greater than zero, it indicates that it is a Nanocollector.
-   *
-   * @return The delay value.
-   */
-  double GetDelay ();
+    /**
+     * Getter method for the delay.
+     * If the delay is greater than zero, it indicates that it is a
+     * Nanocollector.
+     *
+     * @return The delay value.
+     */
+    double GetDelay();
 
-  /**
-   * Setter method for the delay.
-   * @param value The delay value to set.
-   */
-  void SetDelay (double value);
+    /**
+     * Setter method for the delay.
+     * @param value The delay value to set.
+     */
+    void SetDelay(double value);
 
-  /**
-   * Getter method for the target organ.
-   * @return The target organ.
-   */
-  int GetTargetOrgan();
+    /**
+     * Getter method for the target organ.
+     * @return The target organ.
+     */
+    int GetTargetOrgan();
 
-  /**
-   * Setter method for the target organ.
-   * @param target The target organ to set.
-   */
-  void SetTargetOrgan(int target);
+    /**
+     * Setter method for the target organ.
+     * @param target The target organ to set.
+     */
+    void SetTargetOrgan(int target);
 
-  /**
-   * Getter method for tissue detection.
-   * @return True if tissue is detected, false otherwise.
-   */
-  bool HasTissueDetected();
+    /**
+     * Getter method for tissue detection.
+     * @return True if tissue is detected, false otherwise.
+     */
+    bool HasTissueDetected();
 
-  /**
-   * Setter method for tissue detection.
-   * This method is used to collect a message.
-   */
-  void collectMessage();
-
-
+    /**
+     * Setter method for tissue detection.
+     * This method is used to collect a message.
+     */
+    void collectMessage();
 };
 }; // namespace ns3
 #endif

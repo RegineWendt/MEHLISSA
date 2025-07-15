@@ -1,4 +1,3 @@
-/* -*-  Mode: C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2017 Universität zu Lübeck [WENDT]
  * This program is free software; you can redistribute it and/or modify
@@ -21,57 +20,30 @@
 
 namespace ns3 {
 
-Nanocollector::Nanocollector ()
-{
-
-  m_length = 0.0001; //10nm
-  m_width = 0.0001; //10nm
-  m_delay = 0.5;  //with Jorge 0.044 delay and 10nm x 10nm 
-  m_tissueDetected = false;
+Nanocollector::Nanocollector() {
+    m_type = NanocollectorType;
+    m_length = 0.000001; // 10nm
+    m_width = 0.000001;  // 10nm
+    m_delay = 0.5;       // with Jorge 0.044 delay and 10nm x 10nm
+    m_tissueDetected = false;
 }
 
-Nanocollector::~Nanocollector ()
-{
+Nanocollector::~Nanocollector() {}
+
+double Nanocollector::GetDelay() { return m_delay; }
+
+void Nanocollector::SetDelay(double value) {
+    if (value < 0)
+        value = 0;
+    m_delay = value;
 }
 
-double
-Nanocollector::GetDelay ()
-{
-  return m_delay;
-}
+int Nanocollector::GetTargetOrgan() { return m_targetOrgan; }
 
-void
-Nanocollector::SetDelay (double value)
-{
-  if (value < 0)
-    {
-      value = 0;
-    }
-  m_delay = value;
-}
+void Nanocollector::SetTargetOrgan(int target) { m_targetOrgan = target; }
 
-int 
-Nanocollector::GetTargetOrgan()
-{
-  return m_targetOrgan;
-}
+bool Nanocollector::HasTissueDetected() { return m_tissueDetected; }
 
-void
-Nanocollector::SetTargetOrgan(int target)
-{
-  m_targetOrgan = target;
-}
-
-bool 
-Nanocollector::HasTissueDetected()
-{
-  return m_tissueDetected;
-}
-
-void
-Nanocollector::collectMessage()
-{
-  this->m_tissueDetected = true;
-}
+void Nanocollector::collectMessage() { this->m_tissueDetected = true; }
 
 } // namespace ns3

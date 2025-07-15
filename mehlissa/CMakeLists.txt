@@ -9,6 +9,11 @@ build_lib(
     Nanocollector.cc
     Nanolocator.cc
     Nanoparticle.cc
+    TCell.cc
+    CarTCell.cc
+    CancerCell.cc
+    Randomizer.cc
+    IDCounter.cc
    
   HEADER_FILES Bloodvessel.h
     Bloodstream.h
@@ -18,6 +23,11 @@ build_lib(
     Nanocollector.h
     Nanolocator.h
     Nanoparticle.h
+    TCell.h
+    CarTCell.h
+    CancerCell.h
+    Randomizer.h
+    IDCounter.h
   
   LIBRARIES_TO_LINK
     ${libinternet}

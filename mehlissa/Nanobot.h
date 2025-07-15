@@ -20,179 +20,220 @@
 #ifndef CLASS_NANOBOT_
 #define CLASS_NANOBOT_
 
-#include "ns3/object.h"
 #include "ns3/core-module.h"
-#include "ns3/network-module.h"
 #include "ns3/mobility-module.h"
+#include "ns3/network-module.h"
+#include "ns3/object.h"
+#include <cstdint>
 #include <iostream>
 
 namespace ns3 {
 class Nanobot;
 
 /**
-* \brief Nanobot is a mobile Object.
-*
-* Each Nanobot has a dimension [length and width] and can be positioned by a Vector.
-* The position of the Nanobot is the position of its node which it owns.
-* A Nanobot belongs to a particular stream of a specific Bloodvessel.
-* Its current velocity depends on the stream it is in. Nanobots are managed by bloodvessels.
-*/
+ * \brief Nanobot is a mobile Object.
+ *
+ * Each Nanobot has a dimension [length and width] and can be positioned by a
+ * Vector. The position of the Nanobot is the position of its node which it
+ * owns. A Nanobot belongs to a particular stream of a specific Bloodvessel. Its
+ * current velocity depends on the stream it is in. Nanobots are managed by
+ * bloodvessels.
+ */
+enum ParticleType {
+    NanobotType,
+    NanocollectorType,
+    NanolocatorType,
+    NanoparticleType,
+    CancerCellType,
+    CarTCellType,
+    TCellType
+};
 
-class Nanobot : public ns3::Object
-{
+class Nanobot : public ns3::Object {
 protected:
-  int m_nanobotID; // nanobot's id
-  double m_length; // nanobot's length.
-  double m_width; // nanobot's width.
-  int m_stream_nb; // nanobot's stream.
+    int m_nanobotID; // nanobot's id
+    double m_length; // nanobot's length.
+    double m_width;  // nanobot's width.
+    int m_stream_nb; // nanobot's stream.
 
-  Ptr<Node> m_node; // nanobot has a node - a node has a position
+    Ptr<Node> m_node; // nanobot has a node - a node has a position
 
-  bool m_shouldChange; // nanobots change setting - if true change streams
-  ns3::Time m_timeStep; // simulatortime of the last change of the nanobot
+    bool m_canAge;         // nanobot can age and die
+    uint64_t m_maxAge;     // nanobot's maximum age [s]
+    uint64_t m_ageCounter; // nanobot's age counter [s]
+
+    bool m_shouldChange;  // nanobot's change stream setting
+    ns3::Time m_timeStep; // sim time of the last change of the nanobot
+
+    bool m_willPerformMitosis;  // set if cell will perform mitosis in next step
+    bool m_mitosisTime;         // nanobot's time to mitosis
+    bool m_mitosisCounter;      // counter for mitosis
 
 public:
-  //static TypeId GetTypeId (void);
+    ParticleType m_type;
 
-  /// Constructor to initialize values of all variables.
-  /// Length an width are set to 100nm and the Nanobot does not change streams by default.
-  /// The NanobotID is set in bloodcircuit, were the Nanobots are initialised.
-  Nanobot ();
+    // static TypeId GetTypeId (void);
 
-  /// Destructor [does nothing].
-  ~Nanobot ();
+    /// Constructor to initialize values of all variables.
+    /// Length an width are set to 100nm and the Nanobot does not change streams
+    /// by default. The NanobotID is set in bloodcircuit, were the Nanobots are
+    /// initialised.
+    Nanobot();
 
-  /// Compare is used for the purpose of sorting nanobots based on their ID in a list or a queue.
-  /// returns true if the ID of v1 is smaller than v2's ID.
-  static bool Compare (Ptr<Nanobot> v1, Ptr<Nanobot> v2);
+    /// Destructor [does nothing].
+    ~Nanobot();
 
-  ///Getter and setter methods
+    /// Compare is used for the purpose of sorting nanobots based on their ID in
+    /// a list or a queue. returns true if the ID of v1 is smaller than v2's ID.
+    static bool Compare(Ptr<Nanobot> v1, Ptr<Nanobot> v2);
 
-  /**
-  * \returns the Nanobot Id.
-  */
-  int GetNanobotID ();
+    /// Getter and setter methods
 
-  /**
-  * \param value a Nanobot Id.
-  *
-  * A Nanobot has an unique Id.
-  */
-  void SetNanobotID (int value);
+    /**
+     * \returns the Nanobot Id.
+     */
+    int GetNanobotID();
 
-  /**
-  * \returns the length of the Nanobot.
-  */
-  double GetLength ();
+    /**
+     * \param value a Nanobot Id.
+     *
+     * A Nanobot has an unique Id.
+     */
+    void SetNanobotID(int value);
 
-  /**
-  * \param value the length of the Nanobot.
-  */
-  void SetLength (double value);
+    /**
+     * \returns the length of the Nanobot.
+     */
+    double GetLength();
 
-  /**
-  * \returns the width of the Nanobot.
-  */
-  double GetWidth ();
+    /**
+     * \param value the length of the Nanobot.
+     */
+    void SetLength(double value);
 
-  /**
-  * \param value the stream of the Nanobot.
-  */
-  void SetStream (int value);
+    /**
+     * \returns the width of the Nanobot.
+     */
+    double GetWidth();
 
-  /**
-  * \returns the stream of the Nanobot.
-  */
-  int GetStream ();
+    /**
+     * \param value the stream of the Nanobot.
+     */
+    void SetStream(int value);
 
-  /**
-  * \param value the width of the Nanobot.
-  */
-  void SetWidth (double value);
+    /**
+     * \returns the stream of the Nanobot.
+     */
+    int GetStream();
 
-  /**
-  * \returns true if the Nanobot should change
-  */
-  bool GetShouldChange ();
+    /**
+     * \param value the width of the Nanobot.
+     */
+    void SetWidth(double value);
 
-  /**
-  * \param bool if nanobot should change.
-  */
-  void SetShouldChange (bool value);
+    /**
+     * \returns true if the Nanobot should change
+     */
+    bool GetShouldChange();
 
-  /**
-  * \returns the time of the last change of Nanobots position
-  */
-  ns3::Time GetTimeStep ();
+    /**
+     * \param bool if nanobot should change.
+     */
+    void SetShouldChange(bool value);
 
-  /**
-  * \sets the time of the last change in position.
-  */
-  void SetTimeStep ();
+    /**
+     * \returns the time of the last change of Nanobots position
+     */
+    ns3::Time GetTimeStep();
 
-  /**
-  * \returns the position of Nanobot's Node which is located at the center back of the Nanobot.
-  */
-  Vector GetPosition ();
+    /**
+     * \sets the time of the last change in position.
+     */
+    void SetTimeStep();
 
-  /**
-  * \param value a position Vector.
-  *
-  * This function sets the position of Nanobot's Node. Nanobot's position is its Node's position.
-  * The position Vector must point to the center back of the Nanobot.
-  */
-  void SetPosition (Vector value);
+    /**
+     * \returns the position of Nanobot's Node which is located at the center
+     * back of the Nanobot.
+     */
+    Vector GetPosition();
 
-  /**
-  * \returns the delay if set in child (eg. Nanocollector).
-  */
-  virtual double GetDelay();
+    /**
+     * \param value a position Vector.
+     *
+     * This function sets the position of Nanobot's Node. Nanobot's position is
+     * its Node's position. The position Vector must point to the center back of
+     * the Nanobot.
+     */
+    void SetPosition(Vector value);
 
-  /**
-  * sets the delay in child (eg. Nanocollector).
-  */
-  virtual void SetDelay(double value);
+    /**
+     * \returns the delay if set in child (eg. Nanocollector).
+     */
+    virtual double GetDelay();
 
-  /**
-  * \returns the target organ if set in child (eg. Nanocollector).
-  */
-  virtual int GetTargetOrgan();
+    /**
+     * sets the delay in child (eg. Nanocollector).
+     */
+    virtual void SetDelay(double value);
 
-  /**
-  * \returns if there is a fingerprint if set in child (eg. Nanolocator).
-  */
-  virtual bool HasFingerprintLoaded();
+    /**
+     * \returns the target organ if set in child (eg. Nanocollector).
+     */
+    virtual int GetTargetOrgan();
 
-  /**
-  * \returns if a tissue has been detected if set in child (eg. Nanocollector).
-  */
-  virtual bool HasTissueDetected();
+    /**
+     * \returns if there is a fingerprint if set in child (eg. Nanolocator).
+     */
+    virtual bool HasFingerprintLoaded();
 
-  /**
-  * collects message if set in child (eg. Nanocollector).
-  */
-  virtual void collectMessage();
+    /**
+     * \returns if a tissue has been detected if set in child (eg.
+     * Nanocollector).
+     */
+    virtual bool HasTissueDetected();
 
-  /**
-  * releases a fingerprint if set in child (eg. Nanolocator).
-  */
-  virtual void releaseFingerprintTiles();
+    /**
+     * collects message if set in child (eg. Nanocollector).
+     */
+    virtual void collectMessage();
 
+    /**
+     * releases a fingerprint if set in child (eg. Nanolocator).
+     */
+    virtual void releaseFingerprintTiles();
 
-  /**
-  * \returns how often a particle was detected if set in child (eg. Nanoparticle).
-  */
-  virtual int GotDetected();
+    /**
+     * \returns how often a particle was detected if set in child (eg.
+     * Nanoparticle).
+     */
+    virtual int GotDetected();
 
-  /**
-   * signals a detection if set in child.
-   */
-  virtual void GetsDetected();
+    /**
+     * signals a detection if set in child.
+     */
+    virtual void GetsDetected();
 
-  virtual double GetDetectionRadius ();
+    virtual double GetDetectionRadius();
 
-  virtual void SetDetectionRadius (double value);
+    virtual void SetDetectionRadius(double value);
 
+    bool CanAge();
+
+    void SetCanAge(bool canAge);
+
+    uint64_t GetAge();
+
+    bool IsAlive();
+
+    bool Age();
+
+    bool Age(int secCount);
+
+    virtual void ResetMitosis();
+
+    virtual bool AddPossibleMitosis(ParticleType type);
+    
+    virtual bool WillPerformMitosis();
 };
 }; // namespace ns3
 #endif
