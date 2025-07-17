@@ -11,6 +11,18 @@ MEHLISSA is a program that simulates the global movement of objects in the human
 MEHLISSA is an extension and replacement of the BloodVoyagerS Module for ns-3 (https://github.com/RegineWendt/blood-voyager-s). 
 MEHLISSA 2.0 removes the ns3 dependencies and is a stand-alone simulator.
 
+The original MEHLISSA application relies on the general-purpose event-based network simulator ns-3 to model the movement of molecular communication (MC) particles through the human circulatory system (HCS).
+While ns-3 is very versatile and offers many options and extensions, these are not all necessary in MEHLISSA and unnecessarily increase its required computational resources.
+We therefore decided to remove MEHLISSA's dependency on ns-3 and instead implemented a much simpler simulation core.
+
+At the start of the simulation process, we create a `BloodCircuit` instance.
+It contains all `BloodVessel` and `Particle` objects.
+We pass the prepared `BloodCircuit` to an instance of the `Simulator` class on creation, which then starts the simulation process.
+The simulation loop moves forward in time according to the time step size set via the command line. 
+In each step, the `Simulator` prompts the movement of the particles in every `BloodVessel` and their transition between connected vessels.
+The `Simulator` also coordinates several utility classes.
+Existing extensions of MEHLISSA or its predecessor BVS can be adapted to work in MEHLISSA 2.0 by simply adapting the necessary calls to the new timer and position structures.
+
 ## References 
 
 Please check out the literature folder for more information on the model and scenario. If you use MEHLISSA, cite at least:
@@ -89,7 +101,7 @@ As an example, we implement the movement of particles in a chimeric antigen rece
 CAR-T cells are a relatively new immunotherapy against cancer.
 The approach relies on modifying T cells into functionalized CAR-T cells that are specialized in attacking the tumorous T cells.
 At the moment, they are mainly used for the treatment of cancers based in the hematopoietic and lymphoid tissues [1].
-Here, we aim to simulate the treatment of leukemia with CAR-T cells and implement the movement and interaction of CAR-T cells with leukemic cells and healthy T cells in the human circulatory system (HCS).
+Here, we aim to simulate the treatment of leukemia with CAR-T cells and implement the movement and interaction of CAR-T cells with leukemic cells and healthy T cells in the HCS.
 
 <img width="1561" height="429" alt="cart" src="https://github.com/user-attachments/assets/6bf6f08e-a9ce-4e4a-831d-88c302bcbf05" />
 
