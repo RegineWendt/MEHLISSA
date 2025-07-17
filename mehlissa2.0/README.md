@@ -7,10 +7,8 @@ v2.0, 2025-07-10
 
 ## Introduction
 
-MEHLISSA is a program that simulates the global movement of objects in the human body. Its main purpose is to model the work environment of medical nanodevices. 
-MEHLISSA is an extension and replacement of the BloodVoyagerS Module for ns-3 (https://github.com/RegineWendt/blood-voyager-s). 
-MEHLISSA 2.0 removes the ns3 dependencies and is a stand-alone simulator.
-
+MEHLISSA is a program that simulates the global movement of objects in the human body. 
+Its main purpose is to model the work environment of medical nanodevices. 
 The original MEHLISSA application relies on the general-purpose event-based network simulator ns-3 to model the movement of molecular communication (MC) particles through the human circulatory system (HCS).
 While ns-3 is very versatile and offers many options and extensions, these are not all necessary in MEHLISSA and unnecessarily increase its required computational resources.
 We therefore decided to remove MEHLISSA's dependency on ns-3 and instead implemented a much simpler simulation core.
@@ -76,7 +74,7 @@ url: https://doi.org/10.1145/3576781.3608728
 
 ## Getting started
 
-### Compile MEHLISSA 2.0
+### Compiling MEHLISSA 2.0
 
 To compile MEHLISSA 2.0 you will need to have CMake installed on your computer.
 For the compilation, navigate into the mehlissa2.0/src folder and execute the following commands:
@@ -142,7 +140,7 @@ You can pass different command-line arguments to MEHLISSA for the simulation.
 |"transitionsFile" | string | "../data/95_transitions.csv" | transitions file of the simulation |
 |"fingerprintFile" | string | "../data/95_fingerprint.csv" | fingerprints file of the simulation |
 
-#### Running MEHLISSA 2.0
+#### Running the Simulation
 
 You can run the CAR-T cell treatment simulation in MEHLISSA 2.0 from the src folder as:
 
