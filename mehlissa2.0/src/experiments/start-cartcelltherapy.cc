@@ -66,9 +66,9 @@ main (int argc, char *argv[])
             ("parallel", po::value<int>(&parallel)->default_value(1), "parallel")
             ("simFile", po::value<string>(&simFile)->default_value("csvnano.csv"), "simFile")
             ("gwFile", po::value<string>(&gwFile)->default_value("gwDetect.csv"), "gwFile")
-            ("networkFile", po::value<string>(&networkFile)->default_value("../data/vasculature_transitions95.csv"), "networkFile")
-            ("transitionsFile", po::value<string>(&transitionsFile)->default_value("../data/transitions95.csv"), "transitionsFile")
-            ("fingerprintFile", po::value<string>(&fingerprintFile)->default_value("../data/fingerprint.csv"), "fingerprintFile")
+            ("networkFile", po::value<string>(&networkFile)->default_value("../data/95_vasculature.csv"), "networkFile")
+            ("transitionsFile", po::value<string>(&transitionsFile)->default_value("../data/95_transitions.csv"), "transitionsFile")
+            ("fingerprintFile", po::value<string>(&fingerprintFile)->default_value("../data/95_fingerprint.csv"), "fingerprintFile")
         ;
         po::variables_map vm;
         po::store(po::parse_command_line(argc, argv, desc), vm);
