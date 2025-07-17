@@ -133,7 +133,7 @@ You can pass different command-line arguments to MEHLISSA for the simulation.
 |"injectionVessel" | int | 29 | injection vessel for the CAR-T cells |
 |"detectionVessel" | int | 23 | gateway vessel, registering all passing cells |
 |"isDeterministic" | bool | false | use a random seed or not |
-|"parallel" | int | 1 | parall execution of the simulation (currently only = 1) |
+|"parallel" | int | 1 | parallel execution of the simulation (currently only = 1) |
 |"simFile" | string | "../output/csvnano.csv" | output file of all particle positions |
 |"gwFile" | string | "../output/gwDetect.csv" | output file of particles detected at the gateway |
 |"networkFile" | string | "../data/95_vasculature.csv" | network file of the simulation |
