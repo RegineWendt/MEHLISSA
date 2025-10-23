@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -61,7 +61,7 @@ BloodCircuit::BloodCircuit(unsigned int numberOfCancerCells,
     cout << "injection Vessel: " << injectionVesselID << endl;
     if (m_bloodvessels.size() > 1)
         InjectParticles(0, 0, 0, numberOfCancerCells, numberOfTCells,
-                       m_bloodvessels[injectionVessel], 0);
+                        m_bloodvessels[injectionVessel], 0);
     AddCarTCellInjectionToVessel(numberOfCarTCells, injectionVessel,
                                  injectionTime);
 }
@@ -86,58 +86,54 @@ BloodCircuit::BloodCircuit(unsigned int numberOfParticles,
                             : m_bloodvessels.size() - 1;
     if (m_bloodvessels.size() > 1) {
         InjectParticles(numberOfParticles, numberOfCollectors, numberOfLocators,
-                       0, 0, m_bloodvessels[injectionVesselID], particleMode);
+                        0, 0, m_bloodvessels[injectionVesselID], particleMode);
     }
 }
 
-shared_ptr<BloodCircuit> BloodCircuit::BeginSimulation(unsigned int simulationDuration,
-                                  unsigned int numOfParticles,
-                                  unsigned int injectionVessel,
-                                  unsigned int numOfCollectors,
-                                  unsigned int numOfLocators,
-                                  unsigned int particleMode,
-                                  bool isDeterministic) {
+shared_ptr<BloodCircuit> BloodCircuit::BeginSimulation(
+    unsigned int simulationDuration, unsigned int numOfParticles,
+    unsigned int injectionVessel, unsigned int numOfCollectors,
+    unsigned int numOfLocators, unsigned int particleMode,
+    bool isDeterministic) {
     Randomizer::InitRandomizer(isDeterministic);
     shared_ptr<Printer> printNano = make_shared<Printer>(particleMode);
     // Create the bloodcircuit
     shared_ptr<BloodCircuit> circuit = make_shared<BloodCircuit>(
-                         numOfParticles, numOfCollectors, numOfCollectors,
-                         injectionVessel, printNano, particleMode);
+        numOfParticles, numOfCollectors, numOfCollectors, injectionVessel,
+        printNano, particleMode);
     // Get the map of the bloodcircuit
     map<int, shared_ptr<BloodVessel>> circuitMap = circuit->GetBloodCircuit();
     if (circuitMap.size() <= 1) {
         cout << "Not enough vessels for simulation! Please check "
-             << circuit->vasculatureFile
-             << endl;
+             << circuit->vasculatureFile << endl;
         return nullptr;
     }
     return circuit;
 }
 
-shared_ptr<BloodCircuit> BloodCircuit::CancerSimulation(unsigned int numCancerCells, 
-        unsigned int numCarTCells, unsigned int numTCells,
-        unsigned int simulationDuration, unsigned int injectionTime,
-        unsigned int injectionVessel, unsigned int detectionVessel,
-        bool isDeterministic, string simFile, string gwFile) {
+shared_ptr<BloodCircuit> BloodCircuit::CancerSimulation(
+    unsigned int numCancerCells, unsigned int numCarTCells,
+    unsigned int numTCells, unsigned int simulationDuration,
+    unsigned int injectionTime, unsigned int injectionVessel,
+    unsigned int detectionVessel, bool isDeterministic, string simFile,
+    string gwFile) {
     try {
         Randomizer::InitRandomizer(isDeterministic);
         IDCounter::InitIDCounter();
-        shared_ptr<Printer> printNano = make_shared<Printer>
-                                              (0, simFile, gwFile);
+        shared_ptr<Printer> printNano =
+            make_shared<Printer>(0, simFile, gwFile);
 
         // setup bloodcircuit
         shared_ptr<BloodCircuit> circuit = make_shared<BloodCircuit>(
-                                  numCancerCells, numCarTCells, numTCells, 
-                                  injectionVessel, detectionVessel, 
-                                  injectionTime, printNano);
+            numCancerCells, numCarTCells, numTCells, injectionVessel,
+            detectionVessel, injectionTime, printNano);
 
         map<int, shared_ptr<BloodVessel>> circuitMap =
             circuit->GetBloodCircuit();
 
         if (circuitMap.size() <= 1) {
             cout << "Not enough vessels for simulation! Please check "
-                 << circuit->vasculatureFile
-                 << endl;
+                 << circuit->vasculatureFile << endl;
             return nullptr;
         }
         return circuit;
@@ -147,14 +143,17 @@ shared_ptr<BloodCircuit> BloodCircuit::CancerSimulation(unsigned int numCancerCe
     }
 }
 
-BloodCircuit::~BloodCircuit() { m_bloodvessels.clear(); 
-printer->~Printer();}
+BloodCircuit::~BloodCircuit() {
+    m_bloodvessels.clear();
+    printer->~Printer();
+}
 
 map<int, shared_ptr<BloodVessel>> BloodCircuit::GetBloodCircuit() {
     return m_bloodvessels;
 }
 
-Position BloodCircuit::CalcDirectionVectorNorm(shared_ptr<BloodVessel> m_bloodvessel) {
+Position
+BloodCircuit::CalcDirectionVectorNorm(shared_ptr<BloodVessel> m_bloodvessel) {
     Position start = m_bloodvessel->GetStartPositionBloodVessel();
     Position end = m_bloodvessel->GetStopPositionBloodVessel();
     double x = end.x - start.x;
@@ -167,10 +166,12 @@ Position BloodCircuit::CalcDirectionVectorNorm(shared_ptr<BloodVessel> m_bloodve
     return Position(x, y, z);
 }
 
-void BloodCircuit::InjectParticles(
-    int numberOfParticles, int numberOfNanocollectors, int numberOfNanolocators,
-    int numberOfCancerCells, int numberOfTCells, shared_ptr<BloodVessel> bloodvessel, 
-    int particleMode) {
+void BloodCircuit::InjectParticles(int numberOfParticles,
+                                   int numberOfNanocollectors,
+                                   int numberOfNanolocators,
+                                   int numberOfCancerCells, int numberOfTCells,
+                                   shared_ptr<BloodVessel> bloodvessel,
+                                   int particleMode) {
     if (numberOfNanocollectors > numberOfParticles)
         throw runtime_error("Number of Nanocollectors too high");
     if (numberOfNanolocators > numberOfParticles)
@@ -219,7 +220,7 @@ void BloodCircuit::InjectParticles(
             AddNanocollector(floor(distribute_randomly->GetValue()),
                              bloodvessel,
                              Position(m_coordinateStart.x, m_coordinateStart.y,
-                                    m_coordinateStart.z),
+                                      m_coordinateStart.z),
                              i);
     }
     // Distribute Nanolocators at the beginning of the start vessel.
@@ -228,7 +229,7 @@ void BloodCircuit::InjectParticles(
         for (int i = 1; i <= numberOfNanolocators; ++i)
             AddNanolocator(floor(distribute_randomly->GetValue()), bloodvessel,
                            Position(m_coordinateStart.x, m_coordinateStart.y,
-                                  m_coordinateStart.z),
+                                    m_coordinateStart.z),
                            i);
     }
     // Distribute cancer cells uniformly
@@ -258,15 +259,16 @@ void BloodCircuit::InjectParticles(
         AddParticle(
             floor(distribute_randomly->GetValue()), bloodvessel,
             Position(m_coordinateStart.x + (directionIntervall.x * group),
-                   m_coordinateStart.y + (directionIntervall.y * group),
-                   m_coordinateStart.z + (directionIntervall.z * group)));
+                     m_coordinateStart.y + (directionIntervall.y * group),
+                     m_coordinateStart.z + (directionIntervall.z * group)));
     }
     // Print Particles in csv-file.
     bloodvessel->PrintParticlesOfVessel();
 }
 
 void BloodCircuit::AddParticle(int streamID,
-                              shared_ptr<BloodVessel> bloodvessel, Position location) {
+                               shared_ptr<BloodVessel> bloodvessel,
+                               Position location) {
     shared_ptr<Particle> tempNB = make_shared<Particle>();
     tempNB->SetParticleID(GetNextParticleID());
     tempNB->SetShouldChange(false);
@@ -286,8 +288,8 @@ void BloodCircuit::AddNanocollector(int streamID,
 }
 
 void BloodCircuit::AddNanolocator(int streamID,
-                                  shared_ptr<BloodVessel> bloodvessel, Position location,
-                                  int counter) {
+                                  shared_ptr<BloodVessel> bloodvessel,
+                                  Position location, int counter) {
     shared_ptr<NanoLocator> tempNB = make_shared<NanoLocator>();
     tempNB->SetParticleID(GetNextParticleID());
     tempNB->SetShouldChange(false);
@@ -296,8 +298,7 @@ void BloodCircuit::AddNanolocator(int streamID,
     bloodvessel->AddParticleToStream(streamID, tempNB);
 }
 
-void BloodCircuit::AddNanoparticle(unsigned int vesselID,
-                                   double delay,
+void BloodCircuit::AddNanoparticle(unsigned int vesselID, double delay,
                                    double detectionRadius, int streamID) {
     shared_ptr<BloodVessel> vessel = m_bloodvessels[vesselID];
     Position coordinateVessel = vessel->GetStartPositionBloodVessel();
@@ -369,7 +370,8 @@ void BloodCircuit::AddCarTCellInjectionToVessel(unsigned int numberOfCarTCells,
             Randomizer::GetNewRandomStream(
                 0, m_bloodvessels[injectionVessel]->GetNumberOfStreams());
         for (unsigned int i = 1; i <= numberOfCarTCells; ++i) {
-            AddCancerCell(injectionVessel, floor(distribute_randomly->GetValue()));
+            AddCancerCell(injectionVessel,
+                          floor(distribute_randomly->GetValue()));
         }
     } else {
         m_bloodvessels[injectionVessel]->AddCarTCellInjection(
@@ -387,8 +389,7 @@ double BloodCircuit::GetSpeedClassOfBloodVesselType(BloodVesselType type) {
 }
 
 void BloodCircuit::ReadInBloodCircuit(string fileName) {
-    cout << "Loading flow network from: "
-         << fileName << endl;
+    cout << "Loading flow network from: " << fileName << endl;
     std::ifstream infile{fileName};
     if (infile.good()) {
         try {
@@ -397,8 +398,8 @@ void BloodCircuit::ReadInBloodCircuit(string fileName) {
             std::string buffer;
             std::string line;
             int errorflag = 0;
-            //while (infile.good()) {
-            while(std::getline(infile,line)) {
+            // while (infile.good()) {
+            while (std::getline(infile, line)) {
                 // cout << line << endl;
                 std::stringstream lineStream(line);
                 for (auto &&elem : numbers) {
@@ -410,14 +411,11 @@ void BloodCircuit::ReadInBloodCircuit(string fileName) {
                     }
                 }
                 if (errorflag == 0) {
-                    if (numbers[1]< 3) {
-                    AddVesselData(numbers[0], (BloodVesselType)numbers[1],
-                                  Position(numbers[2],
-                                         numbers[3],
-                                         numbers[4]),
-                                  Position(numbers[5],
-                                         numbers[6],
-                                         numbers[7]));
+                    if (numbers[1] < 3) {
+                        AddVesselData(
+                            numbers[0], (BloodVesselType)numbers[1],
+                            Position(numbers[2], numbers[3], numbers[4]),
+                            Position(numbers[5], numbers[6], numbers[7]));
                     }
                 }
             }
@@ -556,6 +554,16 @@ void BloodCircuit::SetGatewayVessel(int detectionVesselID) {
     m_bloodvessels[detectionVesselID]->SetIsGatewayVessel(true);
 }
 
+void BloodCircuit::PrintParticles() {
+    for (int i = 0; i < m_bloodvessels.size(); i++) {
+        if (m_bloodvessels[i] == 0)
+            continue;
+        auto particles = m_bloodvessels[i]->GetParticles();
+        auto id_vessel = m_bloodvessels[i]->GetbloodvesselID();
+        printer->PrintParticles(particles, id_vessel);
+    }
+}
+
 void BloodCircuit::PrintStatistics() {
     int cancerCells = 0;
     int carTCells = 0;
@@ -568,6 +576,6 @@ void BloodCircuit::PrintStatistics() {
 }
 
 unsigned int BloodCircuit::GetNextParticleID() {
-    return IDCounter::GetNextParticleID(); 
+    return IDCounter::GetNextParticleID();
 }
 } // namespace bloodcircuit

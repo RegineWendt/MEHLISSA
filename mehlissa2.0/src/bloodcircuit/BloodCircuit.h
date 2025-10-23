@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -20,24 +20,24 @@
 #ifndef CLASS_BLOODCIRCUIT_
 #define CLASS_BLOODCIRCUIT_
 
-#include "BloodVessel.h"
 #include "../particles/CancerCell.h"
 #include "../particles/CarTCell.h"
-#include "../particles/Particle.h"
 #include "../particles/Nanocollector.h"
 #include "../particles/Nanolocator.h"
 #include "../particles/Nanoparticle.h"
+#include "../particles/Particle.h"
 #include "../particles/TCell.h"
-#include "../utils/Randomizer.h"
-#include "../utils/RandomStream.h"
 #include "../utils/IDCounter.h"
 #include "../utils/Position.h"
+#include "../utils/RandomStream.h"
+#include "../utils/Randomizer.h"
+#include "BloodVessel.h"
 #include <fstream>
 #include <functional>
-#include <random>
-#include <stdexcept>
 #include <memory>
+#include <random>
 #include <sstream>
+#include <stdexcept>
 
 using namespace std;
 using namespace particles;
@@ -54,7 +54,6 @@ namespace bloodcircuit {
  */
 class BloodCircuit {
 private:
-
     unsigned int valuesPerLine = 9;
 
     unsigned int injectionVesselID = 1;
@@ -70,7 +69,8 @@ private:
     void ReadInBloodCircuit(string fileName);
     //
     // add a new vessel Object to the bloodcircuit
-    void AddVesselData(int id, BloodVesselType type, Position start, Position stop);
+    void AddVesselData(int id, BloodVesselType type, Position start,
+                       Position stop);
 
     // creates vessel objects from array
     void InitialiseBloodVessels(int vesseldata[][8], unsigned int count);
@@ -98,9 +98,9 @@ private:
      * \param bloodvessel where the Particles get injected.
      */
     void InjectParticles(int numberOfParticles, int numberOfNanocollectors,
-                        int numberOfNanolocators, int numberOfCancerCells,
-                        int numberOfTCells, shared_ptr<BloodVessel> bloodvessel, 
-                        int particleMode);
+                         int numberOfNanolocators, int numberOfCancerCells,
+                         int numberOfTCells,
+                         shared_ptr<BloodVessel> bloodvessel, int particleMode);
 
     void AddNanoparticleToVessel(int numberOfParticles,
                                  int numberOfNanocollectors,
@@ -108,18 +108,16 @@ private:
                                  shared_ptr<BloodVessel> bloodvessel,
                                  int particleMode);
 
-    void AddParticle(int streamID,
-                    shared_ptr<BloodVessel> bloodvessel, Position location);
+    void AddParticle(int streamID, shared_ptr<BloodVessel> bloodvessel,
+                     Position location);
 
-    void AddNanocollector(int streamID,
-                          shared_ptr<BloodVessel> bloodvessel, Position location,
-                          int counter);
+    void AddNanocollector(int streamID, shared_ptr<BloodVessel> bloodvessel,
+                          Position location, int counter);
 
-    void AddNanolocator(int streamID,
-                        shared_ptr<BloodVessel> bloodvessel, Position location,
-                        int counter);
+    void AddNanolocator(int streamID, shared_ptr<BloodVessel> bloodvessel,
+                        Position location, int counter);
 
-    void AddNanoparticle(unsigned int vesselID, double delay, 
+    void AddNanoparticle(unsigned int vesselID, double delay,
                          double detectionRadius, int streamID);
 
     void AddCancerCell(unsigned int vesselID, int streamID);
@@ -138,29 +136,28 @@ private:
      */
     double GetSpeedClassOfBloodVesselType(BloodVesselType type);
 
-
 public:
-
     static string vasculatureFile;
     static string transitionsFile;
     static string fingerprintFile;
-    
+
     /// The constructor setting up the BloodCircuit.
-    BloodCircuit(unsigned int numberOfParticles, unsigned int numberOfCollectors,
-                 unsigned int numberOfLocators, unsigned int injectionVessel,
-                 shared_ptr<Printer> printer, unsigned int particleMode);
+    BloodCircuit(unsigned int numberOfParticles,
+                 unsigned int numberOfCollectors, unsigned int numberOfLocators,
+                 unsigned int injectionVessel, shared_ptr<Printer> printer,
+                 unsigned int particleMode);
 
     BloodCircuit(unsigned int numberOfCancerCells,
                  unsigned int numberOfCarTCells, unsigned int numberOfTCells,
-                 unsigned int injectionVessel, unsigned int detectionVessel, 
+                 unsigned int injectionVessel, unsigned int detectionVessel,
                  unsigned int injectionTime, shared_ptr<Printer> printer);
-    
+
     BloodCircuit(shared_ptr<Printer> printer);
 
     /// Destructor to clean up the map.
     ~BloodCircuit();
 
-    static shared_ptr<BloodCircuit> 
+    static shared_ptr<BloodCircuit>
     BeginSimulation(unsigned int simulationDuration,
                     unsigned int numOfParticles, unsigned int injectionVessel,
                     unsigned int numOfCollectors, unsigned int numOfLocators,
@@ -172,17 +169,18 @@ public:
                      unsigned int injectionTime, unsigned int injectionVessel,
                      unsigned int detectionVessel, bool isDeterministic,
                      string simFile, string gwFile);
-    
+
+    void PrintParticles();
+
     void PrintStatistics();
 
     static unsigned int GetNextParticleID();
-    
+
     /// Return the BloodCircuit map.
     map<int, shared_ptr<BloodVessel>> GetBloodCircuit();
 
     static void SetVasculature(string vasculature, string transitions,
-                               string fingerprints)
-    {
+                               string fingerprints) {
         vasculatureFile = vasculature;
         transitionsFile = transitions;
         fingerprintFile = fingerprints;

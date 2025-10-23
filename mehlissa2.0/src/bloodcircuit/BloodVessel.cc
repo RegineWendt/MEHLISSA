@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -21,7 +21,6 @@
 
 namespace bloodcircuit {
 
-
 BloodVessel::BloodVessel() {
     m_deltaT = 1;
     m_stepsPerSec = 1 / m_deltaT;
@@ -39,8 +38,7 @@ BloodVessel::BloodVessel() {
     m_fingerPrintTimer = -1;
 }
 
-BloodVessel::~BloodVessel() {
-}
+BloodVessel::~BloodVessel() {}
 
 void BloodVessel::SetPrinter(shared_ptr<Printer> printer) {
     this->printer = printer;
@@ -56,9 +54,9 @@ shared_ptr<BloodVessel> BloodVessel::Step(uint64_t timeInS) {
     // to initiate a second particle release, change variable
     // secondParticleRelease from false to true
     bool secondParticleRelease = 0;
-    if (secondParticleRelease && this->GetbloodvesselID() == 36 
-                              && timeInS == 600)
-            this->ReleaseParticles();
+    if (secondParticleRelease && this->GetbloodvesselID() == 36 &&
+        timeInS == 600)
+        this->ReleaseParticles();
 
     if (this->injection.m_injectionVessel > 0) {
         if (this->injection.m_injectionTime <= timeInS) {
@@ -76,7 +74,7 @@ shared_ptr<BloodVessel> BloodVessel::Step(uint64_t timeInS) {
 }
 
 Position BloodVessel::SetPosition(Position nbv, double distance, double angle,
-                                int bloodvesselType, double startPosZ) {
+                                  int bloodvesselType, double startPosZ) {
     // Check vessel direction and move according to distance.
     // right
     if (angle == 0.00 && bloodvesselType != ORGAN) {
@@ -114,7 +112,7 @@ Position BloodVessel::SetPosition(Position nbv, double distance, double angle,
 }
 
 void BloodVessel::TranslateParticles() {
-    // FIXME: WAS IST DAS HIER????? 
+    // FIXME: WAS IST DAS HIER?????
     //       Warum kann global nur jeder zweite Particle springen?
     static int loop = 1;
     if (loop == 2)
@@ -122,14 +120,15 @@ void BloodVessel::TranslateParticles() {
     // Change streams only in organs
     if (loop == 0 && m_changeStreamSet == true &&
         this->GetBloodVesselType() == ORGAN)
-            ChangeStream();
+        ChangeStream();
     // Translate their position every timestep
     TranslatePosition(m_deltaT);
     loop++;
 }
 
-bool BloodVessel::moveParticle(shared_ptr<Particle> nb, int i, int randVelocityOffset,
-                              bool direction, double dt) {
+bool BloodVessel::moveParticle(shared_ptr<Particle> nb, int i,
+                               int randVelocityOffset, bool direction,
+                               double dt) {
     double distance = 0.0;
     double velocity = m_bloodstreams[i]->GetVelocity();
     if (nb->GetDelay() >= 0)
@@ -154,7 +153,6 @@ bool BloodVessel::moveParticle(shared_ptr<Particle> nb, int i, int randVelocityO
 }
 
 void BloodVessel::TranslatePosition(double dt) {
-    list<shared_ptr<Particle>> print;
     int numCarTCells = 0;
     int numCancerCells = 0;
     // perform interaction between CarTCells and Cancer Cells
@@ -166,7 +164,7 @@ void BloodVessel::TranslatePosition(double dt) {
                 shared_ptr<Particle> nb = m_bloodstreams[i]->GetParticle(j);
                 if (!nb->IsAlive()) {
                     m_bloodstreams[i]->RemoveParticle(nb);
-                    j =-1;
+                    j = -1;
                     continue;
                 }
                 shared_ptr<CarTCell> ctc = dynamic_pointer_cast<CarTCell>(nb);
@@ -175,12 +173,14 @@ void BloodVessel::TranslatePosition(double dt) {
                 for (int k = 0; k < m_numberOfStreams; k++) {
                     for (uint l = 0; l < m_bloodstreams[k]->CountParticles();
                          l++) {
-                        shared_ptr<Particle> nb2 = m_bloodstreams[k]->GetParticle(l);
+                        shared_ptr<Particle> nb2 =
+                            m_bloodstreams[k]->GetParticle(l);
                         ctc->AddPossibleMitosis(nb2->particleType);
                         switch (nb2->particleType) {
                         case CancerCellType: {
                             // cout << "Found CancerCell" << endl;
-                            shared_ptr<CancerCell> cc = dynamic_pointer_cast<CancerCell>(nb2);
+                            shared_ptr<CancerCell> cc =
+                                dynamic_pointer_cast<CancerCell>(nb2);
                             if (cc == NULL)
                                 continue;
                             double dist = CalcDistance(nb, nb2);
@@ -196,7 +196,8 @@ void BloodVessel::TranslatePosition(double dt) {
                         }
                         case TCellType: {
                             // cout << "Found TCell" << endl;
-                            shared_ptr<TCell> tc = dynamic_pointer_cast<TCell>(nb2);
+                            shared_ptr<TCell> tc =
+                                dynamic_pointer_cast<TCell>(nb2);
                             if (tc == NULL)
                                 continue;
                             double dist = CalcDistance(nb, nb2);
@@ -212,7 +213,8 @@ void BloodVessel::TranslatePosition(double dt) {
                         }
                         case CarTCellType: {
                             // cout << "Found other CarTCell" << endl;
-                            shared_ptr<CarTCell> ctc2 = dynamic_pointer_cast<CarTCell>(nb2);
+                            shared_ptr<CarTCell> ctc2 =
+                                dynamic_pointer_cast<CarTCell>(nb2);
                             if (ctc2 == NULL)
                                 continue;
                             double dist = CalcDistance(nb, nb2);
@@ -241,7 +243,7 @@ void BloodVessel::TranslatePosition(double dt) {
             shared_ptr<Particle> nb = m_bloodstreams[i]->GetParticle(j);
             shared_ptr<CarTCell> ctc = dynamic_pointer_cast<CarTCell>(nb);
             if (nb->particleType == CarTCellType) {
-                shared_ptr<CarTCell>ctc = dynamic_pointer_cast<CarTCell>(nb);
+                shared_ptr<CarTCell> ctc = dynamic_pointer_cast<CarTCell>(nb);
                 if (ctc != NULL && ctc->IsActive())
                     numCarTCells++;
             }
@@ -257,18 +259,14 @@ void BloodVessel::TranslatePosition(double dt) {
             // another vessel
             if (nb->GetTimeStepInSeconds() < GlobalTimer::NowInSeconds()) {
                 // has nanobot reached end after moving
-                if (moveParticle(nb, i, Randomizer::GetRandomValue(0,11),
-                                Randomizer::GetRandomBoolean(), dt)) {
-                    
+                if (moveParticle(nb, i, Randomizer::GetRandomValue(0, 11),
+                                 Randomizer::GetRandomBoolean(), dt)) {
                     reachedEndMap[i].push_back(nb);
                     m_bloodstreams[i]->RemoveParticle(nb);
-                } else {
-                    print.push_back(nb);
                 }
             }
         }
     }
-    printer->PrintParticles(print, this->GetbloodvesselID());
     if (m_isGatewayVessel == true || m_bloodvesselID == 1)
         printer->PrintGateway(m_bloodvesselID, numCancerCells, numCarTCells);
 }
@@ -287,7 +285,7 @@ void BloodVessel::ChangeStream() {
             int direction = Randomizer::GetRandomBoolean() == true ? -1 : 1;
             if (i == 0) // Special Case 1: outer lane left -> go to middle
                 direction = 1;
-            else if (i + 1 >= m_numberOfStreams) // Special Case 2: outer lane 
+            else if (i + 1 >= m_numberOfStreams) // Special Case 2: outer lane
                                                  // right -> go to middle
                 direction = -1;
             // Move randomly left or right
@@ -312,11 +310,11 @@ void BloodVessel::DoChangeStreamIfPossible(int curStream, int desStream) {
 }
 
 bool BloodVessel::transposeParticle(shared_ptr<Particle> botToTranspose,
-                                   shared_ptr<BloodVessel> thisBloodVessel,
-                                   shared_ptr<BloodVessel> nextBloodVessel,
-                                   int stream) {
-    Position stopPositionOfVessel = thisBloodVessel->
-        GetStopPositionBloodVessel();
+                                    shared_ptr<BloodVessel> thisBloodVessel,
+                                    shared_ptr<BloodVessel> nextBloodVessel,
+                                    int stream) {
+    Position stopPositionOfVessel =
+        thisBloodVessel->GetStopPositionBloodVessel();
     Position nanobotPosition = botToTranspose->GetPosition();
     double distance = sqrt(pow(nanobotPosition.x - stopPositionOfVessel.x, 2) +
                            pow(nanobotPosition.y - stopPositionOfVessel.y, 2) +
@@ -326,9 +324,9 @@ bool BloodVessel::transposeParticle(shared_ptr<Particle> botToTranspose,
                nextBloodVessel->m_bloodstreams[stream]->GetVelocity();
     botToTranspose->SetPosition(nextBloodVessel->GetStartPositionBloodVessel());
     Position rmp = SetPosition(botToTranspose->GetPosition(), distance,
-                             nextBloodVessel->GetBloodVesselAngle(),
-                             nextBloodVessel->GetBloodVesselType(),
-                             thisBloodVessel->GetStopPositionBloodVessel().z);
+                               nextBloodVessel->GetBloodVesselAngle(),
+                               nextBloodVessel->GetBloodVesselType(),
+                               thisBloodVessel->GetStopPositionBloodVessel().z);
     botToTranspose->SetPosition(rmp);
     double nbx = botToTranspose->GetPosition().x -
                  nextBloodVessel->GetStartPositionBloodVessel().x;
@@ -340,12 +338,10 @@ bool BloodVessel::transposeParticle(shared_ptr<Particle> botToTranspose,
            rmp.z > 2;
 }
 
-bool BloodVessel::NeedsTransferStep() {
-    return reachedEndMap.size() > 0;
-}
+bool BloodVessel::NeedsTransferStep() { return reachedEndMap.size() > 0; }
 
-void BloodVessel::PerformTransferStep(){
-    for (auto & x : reachedEndMap) {
+void BloodVessel::PerformTransferStep() {
+    for (auto &x : reachedEndMap) {
         if (x.second.size() > 0) {
             TransferStep(x.second, x.first);
         }
@@ -354,51 +350,42 @@ void BloodVessel::PerformTransferStep(){
     reachedEndMap.clear();
 }
 
-void BloodVessel::TransferStep(list<shared_ptr<Particle>> reachedEnd, 
+void BloodVessel::TransferStep(list<shared_ptr<Particle>> reachedEnd,
                                int stream) {
-    list<shared_ptr<Particle>> print1;
-    list<shared_ptr<Particle>> print2;
     list<shared_ptr<Particle>> reachedEndAgain;
 
     int onetwo = -1;
     for (const shared_ptr<Particle> &botToTranspose : reachedEnd) {
-        onetwo = Randomizer::GetRandomValue(0,100000);
+        onetwo = Randomizer::GetRandomValue(0, 100000);
         // to v2
         if (m_nextBloodVessel2 != 0 && (onetwo >= m_transitionto1 * 100000)) {
             // fits next vessel?
-            if (transposeParticle(botToTranspose, shared_from_this(), 
-                                 m_nextBloodVessel2, stream)) {
+            if (transposeParticle(botToTranspose, shared_from_this(),
+                                  m_nextBloodVessel2, stream)) {
                 reachedEndAgain.push_back(botToTranspose);
                 m_nextBloodVessel2->TransferStep(reachedEndAgain, stream);
                 reachedEndAgain.clear();
             } else {
                 m_nextBloodVessel2->m_bloodstreams[stream]->AddParticle(
                     botToTranspose);
-                print2.push_back(botToTranspose);
             }
         }
         // to v1
         else if (m_nextBloodVessel2 == 0 || onetwo < m_transitionto1 * 100000) {
             // fits next vessel?
-            if (transposeParticle(botToTranspose, shared_from_this(), 
-                                 m_nextBloodVessel1, stream)) {
+            if (transposeParticle(botToTranspose, shared_from_this(),
+                                  m_nextBloodVessel1, stream)) {
                 reachedEndAgain.push_back(botToTranspose);
                 m_nextBloodVessel1->TransferStep(reachedEndAgain, stream);
                 reachedEndAgain.clear();
             } else {
                 m_nextBloodVessel1->m_bloodstreams[stream]->AddParticle(
                     botToTranspose);
-                print1.push_back(botToTranspose);
             }
-        }
-        else {
+        } else {
             cout << "ERROR! Did not transpose particle correctly" << endl;
         }
     }
-
-    printer->PrintParticles(print1, m_nextBloodVessel1->GetbloodvesselID());
-    if (m_nextBloodVessel2 != 0)
-        printer->PrintParticles(print2, m_nextBloodVessel2->GetbloodvesselID());
 }
 
 list<shared_ptr<Particle>> BloodVessel::GetParticles() {
@@ -424,7 +411,7 @@ void BloodVessel::PrintParticlesOfVessel() {
     for (uint j = 0; j < m_bloodstreams.size(); j++) {
         for (uint i = 0; i < m_bloodstreams[j]->CountParticles(); i++)
             printer->PrintParticle(m_bloodstreams[j]->GetParticle(i),
-                                  GetbloodvesselID());
+                                   GetbloodvesselID());
     }
 }
 
@@ -454,7 +441,7 @@ double BloodVessel::CalcLength() {
     }
 }
 
-double BloodVessel::CalcDistance(shared_ptr<Particle> n_1, 
+double BloodVessel::CalcDistance(shared_ptr<Particle> n_1,
                                  shared_ptr<Particle> n_2) {
     Position v_1 = n_1->GetPosition();
     Position v_2 = n_2->GetPosition();
@@ -496,28 +483,26 @@ void BloodVessel::PerformCellMitosis() {
             if (nb->WillPerformMitosis()) {
                 switch (nb->particleType) {
                 case CarTCellType: {
-                    Position m_coordinates = 
+                    Position m_coordinates =
                         this->GetStartPositionBloodVessel();
-                    //Position m_coordinates = nb->GetPosition();
+                    // Position m_coordinates = nb->GetPosition();
                     shared_ptr<CarTCell> cell = make_shared<CarTCell>();
                     cell->SetParticleID(IDCounter::GetNextParticleID());
                     cell->SetShouldChange(false);
-                    cell->SetPosition(Position(m_coordinates.x, 
-                                             m_coordinates.y, 
-                                             m_coordinates.z));
+                    cell->SetPosition(Position(m_coordinates.x, m_coordinates.y,
+                                               m_coordinates.z));
                     this->AddParticleToStream(i, cell);
                     break;
                 }
                 case CancerCellType: {
-                    Position m_coordinates = 
+                    Position m_coordinates =
                         this->GetStartPositionBloodVessel();
-                    //Position m_coordinates = nb->GetPosition();
+                    // Position m_coordinates = nb->GetPosition();
                     shared_ptr<CancerCell> cell = make_shared<CancerCell>();
                     cell->SetParticleID(IDCounter::GetNextParticleID());
                     cell->SetShouldChange(false);
-                    cell->SetPosition(Position(m_coordinates.x, 
-                                             m_coordinates.y, 
-                                             m_coordinates.z));
+                    cell->SetPosition(Position(m_coordinates.x, m_coordinates.y,
+                                               m_coordinates.z));
                     this->AddParticleToStream(i, cell);
                     break;
                 }
@@ -528,7 +513,6 @@ void BloodVessel::PerformCellMitosis() {
             }
         }
     }
-    
 }
 
 void BloodVessel::InitBloodstreamLengthAngleAndVelocity(double velocity) {
@@ -631,16 +615,16 @@ double BloodVessel::GetBloodVesselAngle() { return m_angle; }
 
 int BloodVessel::GetNumberOfStreams() { return m_numberOfStreams; }
 
-shared_ptr<Bloodstream> BloodVessel::GetStream(int id) { 
-    return m_bloodstreams[id]; 
+shared_ptr<Bloodstream> BloodVessel::GetStream(int id) {
+    return m_bloodstreams[id];
 }
 
 double BloodVessel::GetbloodvesselLength() { return m_bloodvesselLength; }
 
 void BloodVessel::SetVesselWidth(double value) { m_vesselWidth = value; }
 
-void BloodVessel::AddParticleToStream(unsigned int streamID, 
-                                     shared_ptr<Particle> bot) {
+void BloodVessel::AddParticleToStream(unsigned int streamID,
+                                      shared_ptr<Particle> bot) {
     m_bloodstreams[streamID]->AddParticle(bot);
 }
 
@@ -771,12 +755,13 @@ void BloodVessel::ExchangeParticles(std::vector<shared_ptr<Particle>> newBots) {
     int numStreams = m_bloodstreams.size();
     for (int i = 0; i < numStreams; i++)
         m_bloodstreams[i]->ClearStream();
-    
+
     for (std::shared_ptr<Particle> bot : newBots) {
         if (bot->GetStream() >= 0)
             m_bloodstreams[bot->GetStream()]->AddParticle(bot);
         else
-            m_bloodstreams[Randomizer::GetRandomIntegerValue(0,numStreams)]->AddParticle(bot);
+            m_bloodstreams[Randomizer::GetRandomIntegerValue(0, numStreams)]
+                ->AddParticle(bot);
     }
 }
 
