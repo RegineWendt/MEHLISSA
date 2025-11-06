@@ -23,19 +23,15 @@ Existing extensions of MEHLISSA or its predecessor BVS can be adapted to work in
 
 ## References 
 
-Please check out the literature folder for more information on the model and scenario. If you use MEHLISSA, cite at least:
+Please check out the literature folder for more information on the model and scenario. If you use MEHLISSA 2.0, cite at least:
 
 ```
-Regine Wendt und Stefan Fischer: „MEHLISSA: a medical holistic simulation architecture for nanonetworks in humans“,
-Proceedings of the 7th ACM International Conference on Nanoscale Computing and Communication,
-Virtual Event USA: ACM, Sep. 2020, S. 1–6,
-isbn: 978-1-4503-8083-6,
-doi: 10.1145/ 3411295.3411305,
-url: https://dl.acm.org/doi/10.1145/3411295.3411305
+Lisa Y. Debus, Regine Wendt, Stefan Fischer and Falko Dressler: "MEHLISSA 2.0: Accelerating Full-body Molecular Communication Simulations,"
+Proceedings of 12th ACM International Conference on Nanoscale Computing and Communication (NANOCOM 2025), Poster Session,
+Chengdu, China, October 2025, pp. 171–172,
+doi: 10.1145/3760544.3765642,
+url: https://dl.acm.org/doi/10.1145/3760544.3765642
 ```
-
-You can find detailed descriptions of the complete model, UML structures, scenarios, calculations, etc. in Regine's dissertation (in German). 
-
 If you use information from Regine's dissertation, i.e., the scenarios, cite in addition: 
 
 ```
