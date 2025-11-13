@@ -78,7 +78,7 @@ You will additionally need to install boost on your system, as described [in the
 
 A more detailed description of the setup process on Windows will be added soon.
 
-#### Compiling MEHLISSA 2.0
+### Compiling MEHLISSA 2.0
 
 For the compilation, navigate into the mehlissa2.0/src folder and execute the following commands:
 
