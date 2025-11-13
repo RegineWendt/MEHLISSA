@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -37,11 +37,10 @@ void Bloodstream::initBloodstream(int vesselId, int streamId,
     m_offset_y = offsetY;
     m_offset_z = 0;
 }
-    
+
 void Bloodstream::ClearStream() {
     this->m_nanobots.erase(this->m_nanobots.begin(), this->m_nanobots.end());
 }
-
 
 size_t Bloodstream::CountParticles(void) { return this->m_nanobots.size(); }
 
@@ -110,7 +109,9 @@ void Bloodstream::SetAngle(double angle, double offsetX, double offsetY) {
     }
 }
 
-void Bloodstream::SortStream(void) { m_nanobots.sort(particles::Particle::Compare); }
+void Bloodstream::SortStream(void) {
+    m_nanobots.sort(particles::Particle::Compare);
+}
 
 bool Bloodstream::IsEmpty(void) { return m_nanobots.size() <= 0; }
 

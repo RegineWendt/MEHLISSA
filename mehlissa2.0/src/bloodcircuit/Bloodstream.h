@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -20,14 +20,13 @@
 #ifndef CLASS_BLOODSTREAM_
 #define CLASS_BLOODSTREAM_
 
-#include "../particles/Particle.h"
 #include "../particles/Nanocollector.h"
 #include "../particles/Nanolocator.h"
 #include "../particles/Nanoparticle.h"
+#include "../particles/Particle.h"
 #include "../utils/Position.h"
-#include <memory>
 #include <cmath>
-#include <omp.h>
+#include <memory>
 #include <mutex>
 
 using namespace std;

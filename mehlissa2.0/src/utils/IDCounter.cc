@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -22,13 +22,11 @@
 namespace utils {
 static unsigned int m_nextParticleID = 0;
 
-void IDCounter::InitIDCounter() {
-    m_nextParticleID = 0;
-}
+void IDCounter::InitIDCounter() { m_nextParticleID = 0; }
 
 unsigned int IDCounter::GetNextParticleID() {
     unsigned int ID = m_nextParticleID;
     m_nextParticleID++;
-    return ID; 
+    return ID;
 }
 } // namespace utils

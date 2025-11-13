@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -20,8 +20,8 @@
 #ifndef H_RANDOMSTREAM_
 #define H_RANDOMSTREAM_
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <random>
 
 using namespace std;
@@ -38,7 +38,7 @@ private:
 public:
     RandomStream(unsigned int seed, double min, double max);
     ~RandomStream();
-    
+
     double GetValue();
 };
 }; // namespace utils

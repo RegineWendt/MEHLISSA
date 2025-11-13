@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -20,8 +20,19 @@
 #ifndef CLASS_POSITION_
 #define CLASS_POSITION_
 
+#include <algorithm>
+#include <cmath>
+#include <iostream>
+#include <map>
 #include <memory>
-#include <bits/stdc++.h>
+#include <set>
+#include <string>
+#include <vector>
+
+// M_PI might not be defined in cmath on Windows, depending on your compiler
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
 
 namespace utils {
 class Position;
@@ -41,4 +52,3 @@ public:
 };
 }; // namespace utils
 #endif
-

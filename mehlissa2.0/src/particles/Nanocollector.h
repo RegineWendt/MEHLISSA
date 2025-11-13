@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -28,8 +28,8 @@ class Nanocollector;
 /**
  * \brief Nanocollector is a mobile Object.
  *
- * Each Nanocollector is a Particle with bigger dimensions, more capabilities and
- * less speed. To see in the csv output file if its a Nanocollector or not,
+ * Each Nanocollector is a Particle with bigger dimensions, more capabilities
+ * and less speed. To see in the csv output file if its a Nanocollector or not,
  * check the last column. False (0) is a Particle and true (1) a Nanocollector.
  */
 

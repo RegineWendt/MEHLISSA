@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -43,7 +43,7 @@ Printer::~Printer() {
 }
 
 void Printer::PrintGateway(int vesselID, int cancerCellNumber,
-                                 int carTCellNumber) {
+                           int carTCellNumber) {
     double m_start = GlobalTimer::NowInSeconds(); // TODO
     gwOutput << vesselID << "," << m_start << "," << cancerCellNumber << ","
              << carTCellNumber << "\n";
@@ -99,13 +99,14 @@ void Printer::PrintParticles(list<shared_ptr<Particle>> nbl, int vesselID) {
 }
 
 void Printer::PrintInTerminal(vector<shared_ptr<Bloodstream>> streamsOfVessel,
-                                    int vesselIDl) {
+                              int vesselIDl) {
     cout.precision(3);
     cout << "VESSEL  ----------------" << vesselIDl << "--------" << endl;
-    cout << "Time  ----------------" << GlobalTimer::NowInSeconds() << " s --------" << endl;
-    for (uint j = 0; j < streamsOfVessel.size(); j++) {
+    cout << "Time  ----------------" << GlobalTimer::NowInSeconds()
+         << " s --------" << endl;
+    for (unsigned int j = 0; j < streamsOfVessel.size(); j++) {
         cout << "Stream " << j + 1 << " ------------------------" << endl;
-        for (uint i = 0; i < streamsOfVessel[j]->CountParticles(); i++) {
+        for (unsigned int i = 0; i < streamsOfVessel[j]->CountParticles(); i++) {
             shared_ptr<Particle> n = streamsOfVessel[j]->GetParticle(i);
             cout << n->GetParticleID() << ":" << n->GetPosition().x << ":"
                  << n->GetPosition().y << ":" << n->GetPosition().z << ":"
@@ -114,4 +115,4 @@ void Printer::PrintInTerminal(vector<shared_ptr<Bloodstream>> streamsOfVessel,
         cout << "----------------------" << endl;
     }
 }
-} // namespace particles
+} // namespace utils

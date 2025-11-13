@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -25,13 +25,12 @@ RandomStream::RandomStream(unsigned int seed, double min, double max) {
     this->min = min;
     this->max = max;
     this->m_seed = seed;
-    mt19937 rnd_stream(m_seed);    
+    mt19937 rnd_stream(m_seed);
     uniform_real_distribution uni_stream(0.0, 1.0);
 }
 
-RandomStream::~RandomStream() {
-}
-    
+RandomStream::~RandomStream() {}
+
 double RandomStream::GetValue() {
     double value = uni_stream(rnd_stream);
     value *= max;
@@ -39,4 +38,3 @@ double RandomStream::GetValue() {
     return value;
 }
 } // namespace utils
-

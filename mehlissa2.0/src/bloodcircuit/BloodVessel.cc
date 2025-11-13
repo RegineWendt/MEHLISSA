@@ -157,7 +157,7 @@ void BloodVessel::TranslatePosition(double dt) {
     int numCancerCells = 0;
     // perform interaction between CarTCells and Cancer Cells
     for (int i = 0; i < m_numberOfStreams; i++) {
-        for (uint j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
+        for (unsigned int j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
             shared_ptr<Particle> nb = m_bloodstreams[i]->GetParticle(j);
             if (nb->particleType == CarTCellType) {
                 // cout << "Found CarTCell" << endl;
@@ -171,7 +171,7 @@ void BloodVessel::TranslatePosition(double dt) {
                 if (ctc == NULL)
                     continue;
                 for (int k = 0; k < m_numberOfStreams; k++) {
-                    for (uint l = 0; l < m_bloodstreams[k]->CountParticles();
+                    for (unsigned int l = 0; l < m_bloodstreams[k]->CountParticles();
                          l++) {
                         shared_ptr<Particle> nb2 =
                             m_bloodstreams[k]->GetParticle(l);
@@ -239,7 +239,7 @@ void BloodVessel::TranslatePosition(double dt) {
     // for every stream of the vessel
     for (int i = 0; i < m_numberOfStreams; i++) {
         // for every nanobot of the stream
-        for (uint j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
+        for (unsigned int j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
             shared_ptr<Particle> nb = m_bloodstreams[i]->GetParticle(j);
             shared_ptr<CarTCell> ctc = dynamic_pointer_cast<CarTCell>(nb);
             if (nb->particleType == CarTCellType) {
@@ -275,7 +275,7 @@ void BloodVessel::ChangeStream() {
     if (m_numberOfStreams > 1) {
         // set half of the nanobots randomly to change
         for (int i = 0; i < m_numberOfStreams; i++) {
-            for (uint j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
+            for (unsigned int j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
                 if (Randomizer::GetRandomBoolean())
                     m_bloodstreams[i]->GetParticle(j)->SetShouldChange(true);
             }
@@ -297,7 +297,7 @@ void BloodVessel::ChangeStream() {
 void BloodVessel::DoChangeStreamIfPossible(int curStream, int desStream) {
     list<shared_ptr<Particle>> canChange;
     canChange.clear();
-    for (uint j = 0; j < m_bloodstreams[curStream]->CountParticles(); j++) {
+    for (unsigned int j = 0; j < m_bloodstreams[curStream]->CountParticles(); j++) {
         if (m_bloodstreams[curStream]->GetParticle(j)->GetShouldChange()) {
             // set should change back to false
             m_bloodstreams[curStream]->GetParticle(j)->SetShouldChange(false);
@@ -390,8 +390,8 @@ void BloodVessel::TransferStep(list<shared_ptr<Particle>> reachedEnd,
 
 list<shared_ptr<Particle>> BloodVessel::GetParticles() {
     list<shared_ptr<Particle>> bots;
-    for (uint j = 0; j < m_bloodstreams.size(); j++) {
-        for (uint i = 0; i < m_bloodstreams[j]->CountParticles(); i++)
+    for (unsigned int j = 0; j < m_bloodstreams.size(); j++) {
+        for (unsigned int i = 0; i < m_bloodstreams[j]->CountParticles(); i++)
             bots.push_back(m_bloodstreams[j]->GetParticle(i));
     }
     return bots;
@@ -408,8 +408,8 @@ void BloodVessel::CheckParticleInteractions() {
 
 // HELPER
 void BloodVessel::PrintParticlesOfVessel() {
-    for (uint j = 0; j < m_bloodstreams.size(); j++) {
-        for (uint i = 0; i < m_bloodstreams[j]->CountParticles(); i++)
+    for (unsigned int j = 0; j < m_bloodstreams.size(); j++) {
+        for (unsigned int i = 0; i < m_bloodstreams[j]->CountParticles(); i++)
             printer->PrintParticle(m_bloodstreams[j]->GetParticle(i),
                                    GetbloodvesselID());
     }
@@ -465,7 +465,7 @@ void BloodVessel::CountStepsAndAgeCells() {
         if (m_stepsPerSec < 0)
             secCount = m_deltaT;
         for (int i = 0; i < m_numberOfStreams; i++) {
-            for (uint j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
+            for (unsigned int j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
                 shared_ptr<Particle> nb = m_bloodstreams[i]->GetParticle(j);
                 if (nb->CanAge() && !nb->Age(secCount)) {
                     m_bloodstreams[i]->RemoveParticle(nb);
@@ -478,7 +478,7 @@ void BloodVessel::CountStepsAndAgeCells() {
 
 void BloodVessel::PerformCellMitosis() {
     for (int i = 0; i < m_numberOfStreams; i++) {
-        for (uint j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
+        for (unsigned int j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
             shared_ptr<Particle> nb = m_bloodstreams[i]->GetParticle(j);
             if (nb->WillPerformMitosis()) {
                 switch (nb->particleType) {

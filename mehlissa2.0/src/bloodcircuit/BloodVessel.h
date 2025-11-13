@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -20,24 +20,24 @@
 #ifndef CLASS_BLOODVESSEL_
 #define CLASS_BLOODVESSEL_
 
-#include "Bloodstream.h"
 #include "../particles/CancerCell.h"
 #include "../particles/CarTCell.h"
-#include "../particles/Particle.h"
 #include "../particles/Nanocollector.h"
 #include "../particles/Nanolocator.h"
 #include "../particles/Nanoparticle.h"
+#include "../particles/Particle.h"
 #include "../particles/TCell.h"
-#include "../utils/Printer.h"
-#include "../utils/Randomizer.h"
-#include "../utils/RandomStream.h"
+#include "../utils/GlobalTimer.h"
 #include "../utils/IDCounter.h"
 #include "../utils/Position.h"
-#include "../utils/GlobalTimer.h"
-#include <random>
-#include <memory>
+#include "../utils/Printer.h"
+#include "../utils/RandomStream.h"
+#include "../utils/Randomizer.h"
+#include "Bloodstream.h"
 #include <map>
 #include <math.h>
+#include <memory>
+#include <random>
 
 using namespace std;
 using namespace utils;
@@ -45,34 +45,35 @@ using namespace particles;
 
 namespace bloodcircuit {
 /**
- * \brief BloodVessel is the place holder of the Particle's and manages each step
- * of the Particle's mobility.
+ * \brief BloodVessel is the place holder of the Particle's and manages each
+ * step of the Particle's mobility.
  *
  * A BloodVessel has up to total 5 lists (maximum 5 streams). At each step
  * (interval dt), BloodVessel browses the nanobots of each stream in order of
- * their positions and moves each Particle. If the resulting position exceeds the
- * current bloodvessel the nanobot gets pushed to the next bloodvessel (and so
- * on). Particles are added to the BloodVessels in BloodCircuit.
+ * their positions and moves each Particle. If the resulting position exceeds
+ * the current bloodvessel the nanobot gets pushed to the next bloodvessel (and
+ * so on). Particles are added to the BloodVessels in BloodCircuit.
  */
 enum BloodVesselType { ARTERY, VEIN, ORGAN };
-class BloodVessel: public enable_shared_from_this<BloodVessel>{
+class BloodVessel : public enable_shared_from_this<BloodVessel> {
 private:
     // bool m_start;
-    vector<shared_ptr<Bloodstream>> m_bloodstreams; // list of nanobots in streams
-    int m_bloodvesselID;                     // unique ID, set in bloodcircuit
-    double m_bloodvesselLength;              // the length of the bloodvessel
-    double m_angle;                          // the angle of the bloodvessel
-    double m_basevelocity;                   // velocity of the bloodvessel
-    BloodVesselType m_bloodvesselType;       // type of the bloodvessel:
-                                             // 0=artery, 1=vein, 2=organ
-    Position m_startPositionBloodVessel;     // start-coordinates of the vessel
-    Position m_stopPositionBloodVessel;      // end-coordinates of the vessel
-    double m_vesselWidth;                    // the width of each stream in the
-                                             // bloodvessel
-    bool m_isGatewayVessel;                  // vessel records measurements
-    CarTCell::CarTCellInjection injection;   // notes whether additional
-                                             // CarTCells are injected into the
-                                             // vessel during the simulation
+    vector<shared_ptr<Bloodstream>>
+        m_bloodstreams;                    // list of nanobots in streams
+    int m_bloodvesselID;                   // unique ID, set in bloodcircuit
+    double m_bloodvesselLength;            // the length of the bloodvessel
+    double m_angle;                        // the angle of the bloodvessel
+    double m_basevelocity;                 // velocity of the bloodvessel
+    BloodVesselType m_bloodvesselType;     // type of the bloodvessel:
+                                           // 0=artery, 1=vein, 2=organ
+    Position m_startPositionBloodVessel;   // start-coordinates of the vessel
+    Position m_stopPositionBloodVessel;    // end-coordinates of the vessel
+    double m_vesselWidth;                  // the width of each stream in the
+                                           // bloodvessel
+    bool m_isGatewayVessel;                // vessel records measurements
+    CarTCell::CarTCellInjection injection; // notes whether additional
+                                           // CarTCells are injected into the
+                                           // vessel during the simulation
 
     // Simulation time
     double m_deltaT;      // the mobility step interval
@@ -81,9 +82,9 @@ private:
     int m_secStepCounter; // counts steps in each second
 
     // Fingerprint functionality
-    double m_fingerprintFormationTime;  // out of csv, time that a message
-                                        // molecule needs to be formed after
-                                        // release from the nanobot
+    double m_fingerprintFormationTime; // out of csv, time that a message
+                                       // molecule needs to be formed after
+                                       // release from the nanobot
     double m_fingerPrintTimer;
     bool m_hasActiveFingerprintMessage; // turns true after nanolocator was in
                                         // vessel and timer of formation ended
@@ -130,7 +131,7 @@ private:
     shared_ptr<Printer> printer;
 
     Position SetPosition(Position nbv, double distance, double angle,
-                       int bloodvesselType, double startPosZ);
+                         int bloodvesselType, double startPosZ);
 
     // calculate Angle
     double CalcAngle();
@@ -162,21 +163,19 @@ private:
     void DoChangeStreamIfPossible(int curStream, int desStream);
 
     /// Transposes Particles from one bloodvessel to another.
-    //void TransposeParticles(list<shared_ptr<Particle>> reachedEnd, int i);
-
+    // void TransposeParticles(list<shared_ptr<Particle>> reachedEnd, int i);
 
     void TransferStep(list<shared_ptr<Particle>> reachedEnd, int stream);
 
     /// Moves one Particle to the next bloodvessel
     bool transposeParticle(shared_ptr<Particle> botToTranspose,
-                          shared_ptr<BloodVessel> thisBloodVessel,
-                          shared_ptr<BloodVessel> nextBloodVessel, int stream);
+                           shared_ptr<BloodVessel> thisBloodVessel,
+                           shared_ptr<BloodVessel> nextBloodVessel, int stream);
     /**
      * /return TRUE if position exceeds bloodvessel
      */
     bool moveParticle(shared_ptr<Particle> nb, int i, int randVelocityOffset,
-                     bool direction, double dt);
-
+                      bool direction, double dt);
 
     /**
      * \returns true, if all streams of the bloodvessel are empty.
@@ -199,7 +198,7 @@ private:
     double GetbloodvesselLength();
 
     void PerformInjection();
-    
+
     void CheckFingerprintRelease();
 
     void CheckParticleInteractions();
@@ -224,7 +223,7 @@ public:
     bool NeedsTransferStep();
 
     list<shared_ptr<Particle>> GetParticles();
-    /* 
+    /*
      * Prints all nanobots in the BloodVessel to a csv file.
      */
     void PrintParticlesOfVessel();
@@ -245,7 +244,7 @@ public:
     void CountStepsAndAgeCells();
 
     void PerformCellMitosis();
-    
+
     int CountCancerCells();
 
     int CountCarTCells();

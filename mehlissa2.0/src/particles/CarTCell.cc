@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -37,8 +37,7 @@ CarTCell::CarTCell() {
     double CAR_size = spacer_size + CD45_size;
     m_length += CAR_size;
     m_width += CAR_size;
-    m_delay = 1; 
-           
+    m_delay = 1;
 
     m_cancerFratricideP = 6e-11;
     m_tFratricideP = 6e-11;
@@ -169,29 +168,25 @@ bool CarTCell::KillCarTCell() {
 
 bool CarTCell::AddPossibleMitosis(ParticleType type) {
     double mitosisP = 0;
-    switch(type) {
-        case CarTCellType:
-            mitosisP = m_carTMitosisP;
-            break;
-        case TCellType:
-            mitosisP = m_tMitosisP;
-            break;
-        case CancerCellType:
-            mitosisP = m_cancerMitosisP;
-            break;
-        default:
-            break;
-    } 
-    m_willPerformMitosis = m_willPerformMitosis ||
-        Randomizer::GetRandomValue() < mitosisP;
+    switch (type) {
+    case CarTCellType:
+        mitosisP = m_carTMitosisP;
+        break;
+    case TCellType:
+        mitosisP = m_tMitosisP;
+        break;
+    case CancerCellType:
+        mitosisP = m_cancerMitosisP;
+        break;
+    default:
+        break;
+    }
+    m_willPerformMitosis =
+        m_willPerformMitosis || Randomizer::GetRandomValue() < mitosisP;
     return m_willPerformMitosis;
 }
 
-bool CarTCell::WillPerformMitosis() {
-    return m_willPerformMitosis;
-}
+bool CarTCell::WillPerformMitosis() { return m_willPerformMitosis; }
 
-void CarTCell::ResetMitosis() {
-    m_willPerformMitosis = false;
-}
+void CarTCell::ResetMitosis() { m_willPerformMitosis = false; }
 } // namespace particles

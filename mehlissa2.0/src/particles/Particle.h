@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -22,10 +22,10 @@
 
 #include "../utils/GlobalTimer.h"
 #include "../utils/Position.h"
-#include <list>
-#include <memory>
 #include <cstdint>
 #include <iostream>
+#include <list>
+#include <memory>
 
 using namespace utils;
 using namespace std;
@@ -38,8 +38,8 @@ class Particle;
  *
  * Each Particle has a dimension [length and width] and can be positioned by a
  * Position. The position of the Particle is the position of its node which it
- * owns. A Particle belongs to a particular stream of a specific BloodVessel. Its
- * current velocity depends on the stream it is in. Particles are managed by
+ * owns. A Particle belongs to a particular stream of a specific BloodVessel.
+ * Its current velocity depends on the stream it is in. Particles are managed by
  * bloodvessels.
  */
 enum ParticleType {
@@ -61,26 +61,26 @@ protected:
     double m_width;  // nanobot's width.
     int m_stream_nb; // nanobot's stream.
 
-    Position m_position;   // nanobot's position
+    Position m_position; // nanobot's position
 
     bool m_canAge;         // nanobot can age and die
     uint64_t m_maxAge;     // nanobot's maximum age [s]
     uint64_t m_ageCounter; // nanobot's age counter [s]
 
-    bool m_shouldChange;  // nanobot's change stream setting
+    bool m_shouldChange; // nanobot's change stream setting
     uint64_t m_timeStep; // sim time of the last change of the nanobot
 
-    bool m_willPerformMitosis;  // set if cell will perform mitosis in next step
-    bool m_mitosisTime;         // nanobot's time to mitosis
-    bool m_mitosisCounter;      // counter for mitosis
+    bool m_willPerformMitosis; // set if cell will perform mitosis in next step
+    uint64_t m_mitosisTime;        // nanobot's time to mitosis
+    uint64_t m_mitosisCounter;     // counter for mitosis
 
 public:
     ParticleType particleType;
 
     /// Constructor to initialize values of all variables.
-    /// Length an width are set to 100nm and the Particle does not change streams
-    /// by default. The ParticleID is set in bloodcircuit, were the Particles are
-    /// initialised.
+    /// Length an width are set to 100nm and the Particle does not change
+    /// streams by default. The ParticleID is set in bloodcircuit, were the
+    /// Particles are initialised.
     Particle();
 
     /// Destructor [does nothing].
@@ -163,9 +163,9 @@ public:
     /**
      * \param value a position Position.
      *
-     * This function sets the position of Particle's Node. Particle's position is
-     * its Node's position. The position Position must point to the center back of
-     * the Particle.
+     * This function sets the position of Particle's Node. Particle's position
+     * is its Node's position. The position Position must point to the center
+     * back of the Particle.
      */
     void SetPosition(Position value);
 
@@ -235,7 +235,7 @@ public:
     virtual void ResetMitosis();
 
     virtual bool AddPossibleMitosis(ParticleType type);
-    
+
     virtual bool WillPerformMitosis();
 };
 }; // namespace particles

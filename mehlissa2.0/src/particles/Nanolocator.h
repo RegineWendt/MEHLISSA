@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -28,8 +28,8 @@ class NanoLocator;
 /**
  * \brief NanoLocator is a mobile Object.
  *
- * Each NanoLocator is a Particle with a specific tileset loaded, that is able to
- * form a message when in the right organ and a disease marker is present. To
+ * Each NanoLocator is a Particle with a specific tileset loaded, that is able
+ * to form a message when in the right organ and a disease marker is present. To
  * see in the csv output file if its a NanoLocator or not, check the column
  * before last. (0) is a Particle or locator and (1) is a Nanocollector. And in
  * the last column a number higher than one indicates the organ the locator is
@@ -50,7 +50,6 @@ public:
 
     /// Destructor [does nothing].
     ~NanoLocator();
-
 
     /**
      * This function returns the target organ.

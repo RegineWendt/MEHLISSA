@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -30,9 +30,7 @@ NanoLocator::~NanoLocator() {}
 
 bool NanoLocator::HasFingerprintLoaded() { return m_hasFingerprint; }
 
-void NanoLocator::SetTargetOrgan(int target) {
-    m_targetOrgan = target;
-}
+void NanoLocator::SetTargetOrgan(int target) { m_targetOrgan = target; }
 
 int NanoLocator::GetTargetOrgan() { return m_targetOrgan; }
 

@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -24,9 +24,9 @@ namespace particles {
 TCell::TCell() {
     particleType = TCellType;
     double default_nanobot_size = 0.000004702; // 47.02 nm
-    m_length = 0.0011500; // 11.5 mum
-    m_width = 0.0011500;  // 11.5 mum
-    m_delay = 1; 
+    m_length = 0.0011500;                      // 11.5 mum
+    m_width = 0.0011500;                       // 11.5 mum
+    m_delay = 1;
     m_got_detected = 0;
     m_detectionRadius = 0.0000001;
 }

@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -31,7 +31,7 @@ void Randomizer::InitRandomizer(bool isDeterministic) {
         m_seed = 1;
     else
         m_seed = rnd();
-    mt19937 rnd_stream(m_seed);    
+    mt19937 rnd_stream(m_seed);
     uniform_real_distribution stream_bool(0.0, 1.0);
     uniform_real_distribution stream_0_1(0.0, 1.0);
 }
@@ -55,13 +55,15 @@ double Randomizer::GetRandomValue(double min, double max) {
 
 int Randomizer::GetRandomIntegerValue(int min, int max) {
     double value = stream_0_1(rnd_stream);
-    if (value == 1) value = value - 0.01;
+    if (value == 1)
+        value = value - 0.01;
     value *= max + 1;
     value += min;
     return std::floor(value);
 }
 
-shared_ptr<RandomStream> Randomizer::GetNewRandomStream(double min, double max) {
+shared_ptr<RandomStream> Randomizer::GetNewRandomStream(double min,
+                                                        double max) {
     shared_ptr<RandomStream> rs = make_shared<RandomStream>(m_seed, min, max);
     return rs;
 }

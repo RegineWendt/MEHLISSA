@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -24,7 +24,7 @@ namespace particles {
 
 Particle::Particle() {
     particleType = BaseParticleType;
-    Position m_position(0,0,0);
+    Position m_position(0, 0, 0);
 
     m_length = 0.00001; // 100nm
     m_width = 0.00001;  // 100nm
@@ -79,11 +79,11 @@ void Particle::SetShouldChange(bool value) { m_shouldChange = value; }
 
 uint64_t Particle::GetTimeStepInSeconds() { return m_timeStep; }
 
-void Particle::SetTimeStep() { m_timeStep = GlobalTimer::NowInSeconds(); } // TODO
+void Particle::SetTimeStep() {
+    m_timeStep = GlobalTimer::NowInSeconds();
+} // TODO
 
-Position Particle::GetPosition() {
-    return m_position;
-}
+Position Particle::GetPosition() { return m_position; }
 
 void Particle::SetPosition(Position value) {
     m_position.x = value.x;
@@ -140,9 +140,7 @@ bool Particle::Age(int secCount) {
     return m_ageCounter > 0;
 }
 
-bool Particle::AddPossibleMitosis(ParticleType type) {
-    return false;
-}
+bool Particle::AddPossibleMitosis(ParticleType type) { return false; }
 
 bool Particle::WillPerformMitosis() {
     return false || (m_mitosisTime > 0 && m_mitosisCounter <= 0);

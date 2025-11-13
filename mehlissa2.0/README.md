@@ -71,9 +71,15 @@ url: https://doi.org/10.1145/3576781.3608728
 
 ## Getting started
 
-### Compiling MEHLISSA 2.0
+### Requirements
 
-To compile MEHLISSA 2.0 you will need to have CMake installed on your computer.
+To compile and run MEHLISSA you will need to need to have a CMake toolchain for C++ set up on your computer.
+You will additionally need to install boost on your system, as described [in the Boost documentation](https://www.boost.org/doc/user-guide/getting-started.html).
+
+A more detailed description of the setup process on Windows will be added soon.
+
+#### Compiling MEHLISSA 2.0
+
 For the compilation, navigate into the mehlissa2.0/src folder and execute the following commands:
 
 ```
@@ -84,13 +90,13 @@ make clean all
 ### Running MEHLISSA 2.0
 
 
-You can run MEHLISSA 2.0 from the command line via:
+You can run MEHLISSA 2.0 from the command line in the mehlissa2.0 folder via:
 
 ```
 ./bin/MehlissaCancer [command line arguments]
 ```
 
-#### Example: CAR-T Cell Treatment
+### Example: CAR-T Cell Treatment
 
 As an example, we implement the movement of particles in a chimeric antigen receptor (CAR)-T cell treatment for leukemia in MEHLISSA 2.0.
 CAR-T cells are a relatively new immunotherapy against cancer.

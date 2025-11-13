@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -21,9 +21,9 @@
 #define CLASS_PRINTNANOBOT_
 
 #include "../bloodcircuit/Bloodstream.h"
-#include <iostream> 
-#include <fstream> 
-#include <vector> 
+#include <fstream>
+#include <iostream>
+#include <vector>
 
 using namespace std;
 using namespace bloodcircuit;

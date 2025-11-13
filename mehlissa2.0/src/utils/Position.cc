@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -42,6 +42,6 @@ Position::Position(std::shared_ptr<Position> p) {
 Position::~Position() {}
 
 double Position::CalcDistance(Position a, Position b) {
-    return std::sqrt(std::pow(b.x - a.x, 2) + std::pow(b.y - a.y, 2) + std::pow(b.z - b.z, 2));
+    return sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2) + pow(b.z - b.z, 2));
 }
 } // namespace utils

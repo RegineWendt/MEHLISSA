@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
+ * Berlin [DEBUS] This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -21,10 +21,10 @@
 #define H_RANDOMIZER_
 
 #include "RandomStream.h"
-#include <iostream>
 #include <cstdint>
-#include <random>
+#include <iostream>
 #include <memory>
+#include <random>
 
 using namespace std;
 
@@ -41,7 +41,7 @@ public:
     static double GetRandomValue();
 
     static double GetRandomValue(double min, double max);
-    
+
     static int GetRandomIntegerValue(int min, int max);
 
     static shared_ptr<RandomStream> GetNewRandomStream(double min, double max);
