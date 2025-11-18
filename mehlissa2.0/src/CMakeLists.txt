@@ -32,7 +32,7 @@ add_library(MehlissaLib
 add_executable(MehlissaCancer 
     experiments/start-cartcelltherapy.cc
 )
-target_include_directories(MehlissaCancer PUBLIC lib/boost_1_82_0)
+
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(MehlissaCancer PRIVATE MehlissaLib 
                       ${Boost_LIBRARIES})
