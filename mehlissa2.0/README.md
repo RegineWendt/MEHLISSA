@@ -73,10 +73,13 @@ url: https://doi.org/10.1145/3576781.3608728
 
 ### Requirements
 
-To compile and run MEHLISSA you will need to need to have a CMake toolchain for C++ set up on your computer.
+To compile and run MEHLISSA you will need to have a CMake toolchain for C++ set up on your computer.
 You will additionally need to install boost on your system, as described [in the Boost documentation](https://www.boost.org/doc/user-guide/getting-started.html).
 
-A more detailed description of the setup process on Windows will be added soon.
+For Linux and macOS, the setup is relatively straightforward.
+You can install most components via the usual package managers.
+The setup on Windows can be a bit more complicated.
+Please see our [Windows Setup README](README_Windows_setup.md) for detailed instructions.
 
 ### Compiling MEHLISSA 2.0
 
