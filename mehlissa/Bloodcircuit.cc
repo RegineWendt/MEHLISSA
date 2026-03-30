@@ -18,6 +18,8 @@
  */
 
 #include "Bloodcircuit.h"
+#include <fstream>
+
 
 /**
  * This function sets the Bloodvessel map of the human body of a female:
@@ -97,6 +99,8 @@ int Bloodcircuit::BeginSimulation(unsigned int simulationDuration,
     Randomizer::InitRandomizer(isDeterministic);
     Ptr<PrintNanobots> printNano = new PrintNanobots(particleMode);
     // Create the bloodcircuit
+    Bloodcircuit circuit(numOfNanobots, numOfCollectors, numberOfLocators,
+                         injectionVessel, printNano, particleMode, isDeterministic);
     Bloodcircuit circuit(numOfNanobots, numOfCollectors, numOfCollectors,
                          injectionVessel, printNano, particleMode);
     // Get the map of the bloodcircuit
@@ -105,6 +109,44 @@ int Bloodcircuit::BeginSimulation(unsigned int simulationDuration,
         // Schedule and run the Simulation in each bloodvessel
         for (unsigned int i = 1; i < circuitMap.size() + 1; i++)
             Simulator::Schedule(Seconds(0.0), &Starter, circuitMap[i]);
+
+        // ADDED for endocrine-signaling-scenario
+        // Start logging at blood sampling sites
+        // List of vessel IDs corresponding to sampling sites:
+        std::vector<int> samplingSiteIds = {
+            91,   // V cava inferior
+            100,  // Left gland
+            // 101,  // V suprarenalis (s) - left adrenal vein
+            103,  // Right gland
+            // 104   // V suprarenalis (d) - right adrenal vein
+        };
+
+        // Start logging for sampling sites
+        for (int vesselId : samplingSiteIds)
+        {
+            // === Clear old log files at beginning ===
+            {
+                std::ostringstream arrivalFile;
+                arrivalFile << "molecule_arrivals_v" << vesselId << ".csv";
+                std::ofstream clearArrival(arrivalFile.str(), std::ios::trunc);
+                clearArrival.close();
+
+                std::ostringstream hormoneFile;
+                hormoneFile << "molecule_log_v" << vesselId << ".csv";
+                std::ofstream clearHormone(hormoneFile.str(), std::ios::trunc);
+                clearHormone.close();
+            }
+            // === Schedule logging ===
+            if (circuitMap.find(vesselId) != circuitMap.end())
+            {
+                Simulator::Schedule(
+                    Seconds(1.0),
+                    &ns3::Bloodvessel::LogHormoneCounts,
+                    circuitMap[vesselId]
+                );
+            }
+        }       
+
         // Stop simulation after specific time
         Simulator::Stop(Seconds(simulationDuration + 1));
         Simulator::Run();
@@ -236,6 +278,14 @@ void Bloodcircuit::InjectNanobots(
                             floor(distribute_randomly->GetValue()));
         }
         break;
+    // ADDED for endocrine-signaling-scenario
+    case 3: // Hormone Release simulation (clinical scenario)
+        std::cout << "Mode 3: endocrine-signaling-scenario" << std::endl;
+        // Initial release of hormones
+        Simulator::Schedule(Seconds(0.0), &Bloodcircuit::ReleaseAldosterone, this);
+        Simulator::Schedule(Seconds(0.0), &Bloodcircuit::ReleaseCortisol, this);
+        break;
+
     default:
         break;
     }
@@ -291,6 +341,130 @@ void Bloodcircuit::InjectNanobots(
     }
     // Print Nanobots in csv-file.
     bloodvessel->PrintNanobotsOfVessel();
+}
+
+
+void Bloodcircuit::ReleaseAldosterone()
+{
+    if (!m_bloodvessels.count(100) || !m_bloodvessels.count(103)) {
+    std::cerr << "[ERROR] Adrenal vein(s) 100 or 103 not found!\n";
+    return;
+  }
+  // Right adrenal gland (ID 103)
+  Ptr<Bloodvessel> rightAdrenalVein = m_bloodvessels[103];
+  // Left adrenal gland (ID 100)
+  Ptr<Bloodvessel> leftAdrenalVein = m_bloodvessels[100];
+
+  Vector rightAdrenalPos = rightAdrenalVein->GetStartPositionBloodvessel();
+  Vector leftAdrenalPos = leftAdrenalVein->GetStartPositionBloodvessel();
+
+  Ptr<UniformRandomVariable> rngRight = rightAdrenalVein->getRandomObjectBetween(0, rightAdrenalVein->GetNumberOfStreams());
+  Ptr<UniformRandomVariable> rngLeft = leftAdrenalVein->getRandomObjectBetween(0, leftAdrenalVein->GetNumberOfStreams());
+
+  int aldosteroneRightCount = 100; // 
+  int aldosteroneLeftCount = 25;
+
+  std::cout << "[DEBUG] Time=" << Simulator::Now().GetSeconds()
+          << " Injecting " << aldosteroneRightCount << " Right Aldosterone particles at "
+          << rightAdrenalPos << std::endl;
+
+  // Right adrenal (more secretion)
+  for (int i = 0; i < aldosteroneRightCount; ++i)
+  {
+    Ptr<Nanoparticle> hormone = CreateObject<Nanoparticle>();
+    hormone->SetHormoneType("ALDOSTERONE");
+    hormone->SetNanobotID(Simulator::Now().GetNanoSeconds() + i);
+    hormone->SetPosition(rightAdrenalPos);
+    hormone->SetInjectionTime(Simulator::Now());
+    hormone->SetDelay(0.0);
+    hormone->SetDetectionRadius(0.3);
+    int stream = floor(rngRight->GetValue());
+    rightAdrenalVein->AddNanobotToStream(stream, hormone);
+  }
+
+  // Left adrenal (less secretion)
+  for (int i = 0; i < aldosteroneLeftCount; ++i)
+  {
+    Ptr<Nanoparticle> hormone = CreateObject<Nanoparticle>();
+    hormone->SetHormoneType("ALDOSTERONE");
+    hormone->SetNanobotID(Simulator::Now().GetNanoSeconds() + 1000 + i);
+    hormone->SetPosition(leftAdrenalPos);
+    hormone->SetInjectionTime(Simulator::Now());
+    hormone->SetDelay(0.0);
+    hormone->SetDetectionRadius(0.3);
+    int stream = floor(rngLeft->GetValue());
+    leftAdrenalVein->AddNanobotToStream(stream, hormone);
+  }
+
+  std::cout << "[ALDOSTERONE] Released "
+            << aldosteroneRightCount << " R + "
+            << aldosteroneLeftCount << " L particles at time "
+            << Simulator::Now().GetSeconds() << "s" << std::endl;
+
+  // Schedule next secretion after t second
+  Simulator::Schedule(Seconds(1.0), &Bloodcircuit::ReleaseAldosterone, this);
+}
+
+
+void Bloodcircuit::ReleaseCortisol()
+{
+    if (!m_bloodvessels.count(100) || !m_bloodvessels.count(103)) {
+    std::cerr << "[ERROR] Adrenal vein(s) 100 or 103 not found!\n";
+    return;
+  }
+  // Right adrenal gland (ID 103)
+  Ptr<Bloodvessel> rightAdrenalVein = m_bloodvessels[103];
+  // Left adrenal gland (ID 100)
+  Ptr<Bloodvessel> leftAdrenalVein = m_bloodvessels[100];
+
+  Vector rightAdrenalPos = rightAdrenalVein->GetStartPositionBloodvessel();
+  Vector leftAdrenalPos = leftAdrenalVein->GetStartPositionBloodvessel();
+
+  Ptr<UniformRandomVariable> rngRight = rightAdrenalVein->getRandomObjectBetween(0, rightAdrenalVein->GetNumberOfStreams());
+  Ptr<UniformRandomVariable> rngLeft = leftAdrenalVein->getRandomObjectBetween(0, leftAdrenalVein->GetNumberOfStreams());
+
+  int cortisolRightCount = 150; // 
+  int cortisolLeftCount = 50;
+
+  std::cout << "[DEBUG] Time=" << Simulator::Now().GetSeconds()
+          << " Injecting " << cortisolRightCount << " Right Cortisol particles at "
+          << rightAdrenalPos << std::endl;
+
+  // Right secretion
+  for (int i = 0; i < cortisolRightCount; ++i)
+  {
+    Ptr<Nanoparticle> hormone = CreateObject<Nanoparticle>();
+    hormone->SetHormoneType("CORTISOL");
+    hormone->SetNanobotID(Simulator::Now().GetNanoSeconds() + i + 2000);
+    hormone->SetPosition(rightAdrenalPos);
+    hormone->SetInjectionTime(Simulator::Now());
+    hormone->SetDelay(0.0);
+    hormone->SetDetectionRadius(0.3);   
+    int stream = floor(rngRight->GetValue());
+    rightAdrenalVein->AddNanobotToStream(stream, hormone);
+  }
+
+  // Left secretion
+  for (int i = 0; i < cortisolLeftCount; ++i)
+  {
+    Ptr<Nanoparticle> hormone = CreateObject<Nanoparticle>();
+    hormone->SetHormoneType("CORTISOL");
+    hormone->SetNanobotID(Simulator::Now().GetNanoSeconds() + i + 3000);
+    hormone->SetPosition(leftAdrenalPos);
+    hormone->SetInjectionTime(Simulator::Now());
+    hormone->SetDelay(0.0);
+    hormone->SetDetectionRadius(0.3);  
+    int stream = floor(rngLeft->GetValue());
+    leftAdrenalVein->AddNanobotToStream(stream, hormone);
+  }
+
+  std::cout << "[CORTISOL] Released "
+            << cortisolRightCount << " Right + "
+            << cortisolLeftCount << " Left particles at time "
+            << Simulator::Now().GetSeconds() << "s" << std::endl;
+
+  // Schedule next secretion after t second
+  Simulator::Schedule(Seconds(1.0), &Bloodcircuit::ReleaseCortisol, this);
 }
 
 void Bloodcircuit::AddNanobot(int streamID,

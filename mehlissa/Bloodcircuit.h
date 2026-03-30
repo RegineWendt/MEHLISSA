@@ -165,6 +165,10 @@ public:
     void PrintStatistics();
 
     static unsigned int GetNextNanobotID();
+
+    // ADDED for endocrine-signaling-scenario
+    void ReleaseAldosterone();
+    void ReleaseCortisol();
 };
 }; // namespace ns3
 #endif

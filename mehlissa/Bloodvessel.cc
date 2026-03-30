@@ -18,6 +18,9 @@
  */
 
 #include "Bloodvessel.h"
+#include <random>
+#include <functional>
+#include <cstdint>
 
 using namespace std;
 namespace ns3 {
@@ -32,7 +35,7 @@ TypeId Bloodvessel::GetTypeId(void) {
 }
 
 Bloodvessel::Bloodvessel() {
-    m_deltaT = 1;
+    m_deltaT = 0.1; // 1
     m_stepsPerSec = 1 / m_deltaT;
     m_secStepCounter = 0;
     initStreams();
@@ -96,6 +99,21 @@ void Bloodvessel::Step(Ptr<Bloodvessel> bloodvessel) {
             bloodvessel->injection.m_injectionVessel = -1;
         }
     }
+}
+
+Ptr<UniformRandomVariable>
+Bloodvessel::getRandomObjectBetween (double min, double max)
+{
+  Ptr<UniformRandomVariable> random = CreateObject<UniformRandomVariable> ();
+  random->SetAttribute ("Min", DoubleValue (min));
+  random->SetAttribute ("Max", DoubleValue (max));
+  return random;
+}
+
+bool
+Bloodvessel::getRandomBoolean ()
+{
+  return randomIntegerBetweenZeroAndOne ();
 }
 
 Vector Bloodvessel::SetPosition(Vector nbv, double distance, double angle,
@@ -318,6 +336,9 @@ void Bloodvessel::TranslatePosition(double dt) {
         reachedEnd.clear();
     } // outer for
     printer->PrintSomeNanobots(print, this->GetbloodvesselID());
+    // ADDED for endocrine-signaling-scenario Output
+    this->CheckDetect(print); 
+    printer->PrintSomeNanobots(print, this->GetbloodvesselID());
         if (m_isGatewayVessel == true || m_bloodvesselID == 1)
             printer->PrintGateway(m_bloodvesselID, numCancerCells, numCarTCells);
 } // Function
@@ -418,6 +439,14 @@ void Bloodvessel::TransposeNanobots(list<Ptr<Nanobot>> reachedEnd, int stream) {
         }
         // to v1
         else if (m_nextBloodvessel2 == 0 || onetwo < m_transitionto1 * 10000) {
+
+            // Null check added here - endocrine-signaling-scenario
+            if ((m_bloodvesselID == 100 || m_bloodvesselID == 101) && m_nextBloodvessel1 == nullptr)
+            {
+                std::cerr << "[ERROR] Vessel " << m_bloodvesselID
+                            << " has NULL m_nextBloodvessel1 — cannot transpose Nanobot ID "
+                            << botToTranspose->GetNanobotID() << std::endl;
+            }
             // fits next vessel?
             if (transposeNanobot(botToTranspose, this, m_nextBloodvessel1,
                                  stream)) {
@@ -433,6 +462,23 @@ void Bloodvessel::TransposeNanobots(list<Ptr<Nanobot>> reachedEnd, int stream) {
     } // for
 
     printer->PrintSomeNanobots(print1, m_nextBloodvessel1->GetbloodvesselID());
+    // ADDED for endocrine-signaling-scenario Output
+      if (m_nextBloodvessel1 && 
+      (m_nextBloodvessel1->GetbloodvesselID() == 101 ||
+       m_nextBloodvessel1->GetbloodvesselID() == 98 ||
+       m_nextBloodvessel1->GetbloodvesselID() == 91))
+    {
+        printer->PrintSomeNanobots (print1, m_nextBloodvessel1->GetbloodvesselID ());
+        // if (m_bloodvesselID == 100 || m_bloodvesselID == 101)
+        // {
+        //   std::cout << "[DEBUG] Transposed " << print1.size()
+        //             << " nanobots into vessel "
+        //             << m_nextBloodvessel1->GetbloodvesselID()
+        //             << std::endl;
+        // }
+    }
+
+
     // All Nanobots that freshly entered a vessel in this step are now in print1
     // (and print2). Now we check if these Nanobots are Nanolocators, that
     // should release molecules because they are in their target organ.
@@ -450,6 +496,22 @@ void Bloodvessel::TransposeNanobots(list<Ptr<Nanobot>> reachedEnd, int stream) {
     if (m_nextBloodvessel2) {
         printer->PrintSomeNanobots(print2,
                                 m_nextBloodvessel2->GetbloodvesselID());
+
+        // ADDED for endocrine-signaling-scenario Output
+        if (m_nextBloodvessel2->GetbloodvesselID() == 101 ||
+        m_nextBloodvessel2->GetbloodvesselID() == 98 ||
+        m_nextBloodvessel2->GetbloodvesselID() == 91)
+        {
+        printer->PrintSomeNanobots (print2, m_nextBloodvessel2->GetbloodvesselID ());
+        if (m_bloodvesselID == 100 || m_bloodvesselID == 101)
+        {
+            std::cout << "[DEBUG] Transposed " << print2.size()
+                    << " nanobots into vessel "
+                    << m_nextBloodvessel2->GetbloodvesselID()
+                    << std::endl;
+        }
+        }
+
         if (m_nextBloodvessel2->GetFingerprintFormationTime() > 0)
             m_nextBloodvessel2->CheckRelease(print2);
         if (m_nextBloodvessel2->isActive())
@@ -656,6 +718,233 @@ void Bloodvessel::CheckDetect(list<Ptr<Nanobot>> nbToCheck) {
             }
         }
     }
+}
+
+// ADDED for endocrine-signaling-scenario
+
+/** Loops over all streams in vessel IDs. Then counts every hormone particle found in all these streams.
+* Counting total ALDOSTERONE and CORTISOL particles 
+* samplingSiteIds = {91, 101, 104}; // IVC, Left Adrenal vein, Right adrenal vein
+*/
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Bloodvessel::LogHormoneCounts()
+{
+    std::list<Ptr<Nanobot>> allParticles;
+    std::map<std::string, int> hormoneCounts;
+    std::map<std::string, int> isiCounts;
+
+    double now = Simulator::Now().GetSeconds();
+
+    // Collect nanobots
+    for (int i = 0; i < this->GetNumberOfStreams(); ++i) {
+        Ptr<Bloodstream> s = this->GetStream(i);
+        for (size_t j = 0; j < s->CountNanobots(); ++j) {
+            allParticles.push_back(s->GetNanobot(j));
+        }
+    }
+
+    // Sampling location & radius
+    Vector receiver = (m_bloodvesselID == 100 || m_bloodvesselID == 103)
+                      ? this->GetStopPositionBloodvessel()
+                      : this->GetStartPositionBloodvessel();
+    double radius = 4.0;
+
+    // Arrival log
+    std::ostringstream arrivalFilename;
+    arrivalFilename << "molecule_arrivals_v" << m_bloodvesselID << ".csv";
+    std::ofstream arrivalLog(arrivalFilename.str(), std::ios::app);
+    static std::map<int,bool> headerWritten;
+    if (!headerWritten[m_bloodvesselID]) {
+        arrivalLog << "ArrivalTime,ParticleID,HormoneType,ReleaseTime,Delay,X,Y,Z\n";
+        headerWritten[m_bloodvesselID] = true;
+    }
+
+    int symbolDuration = 1;
+    int currentSymbol = static_cast<int>(now / symbolDuration);
+    int isiSymbolSpan = 5;
+
+    for (const Ptr<Nanobot>& bot : allParticles) {
+        Ptr<Nanoparticle> np = DynamicCast<Nanoparticle>(bot);
+        if (!np) continue;
+
+        // IVC decay (v91)
+        if (m_bloodvesselID == 91) {
+            // double travelDistance = 10; // cm
+            // double spatialDecayRate = 0.02;
+            double timeDecayRate = 0.017;
+
+            // double spatialFactor = std::exp(-spatialDecayRate * travelDistance);
+            double timeFactor = std::exp(-timeDecayRate * now);
+            double survivalFactor = timeFactor; // spatialFactor * 
+
+            Ptr<UniformRandomVariable> rand = CreateObject<UniformRandomVariable>();
+            if (rand->GetValue(0.0, 1.0) > survivalFactor)
+            {
+                continue;
+            }
+        }
+        hormoneCounts[np->GetHormoneType()]++;
+
+        Vector pos = np->GetPosition();
+        double dx = pos.x - receiver.x;
+        double dy = pos.y - receiver.y;
+        double dz = pos.z - receiver.z;
+        double dist = std::sqrt(dx * dx + dy * dy + dz * dz);
+
+        if (dist <= radius)
+        {
+            double release = np->GetInjectionTime().GetSeconds();
+            double delay = now - release;
+
+            arrivalLog << now << "," << np->GetNanobotID() << "," << np->GetHormoneType() << ","
+                       << release << "," << delay << "," << pos.x << "," << pos.y << "," << pos.z << "\n";
+
+            int releaseSymbol = static_cast<int>(release / symbolDuration);
+            if (releaseSymbol >= currentSymbol - isiSymbolSpan && releaseSymbol < currentSymbol) {
+                isiCounts[np->GetHormoneType()]++;
+            }
+        }
+
+    }
+    arrivalLog.close();
+
+// === Concentration Conversion, Clinical Scaling, Diffusion ===
+const double avogadro = 6.022e23;
+const double pi = 3.142;
+
+// --- Step 1: Per-vessel particle payloads ---
+int64_t aldosteronePerParticle = static_cast<int64_t>(9.5e8);   // default baseline
+int64_t cortisolPerParticle    = static_cast<int64_t>(29e10);  // default baseline
+
+if (m_bloodvesselID == 100) { // Left adrenal
+    aldosteronePerParticle = static_cast<int64_t>(3.5e8);    
+    cortisolPerParticle    = static_cast<int64_t>(19e10);    
+}
+else if (m_bloodvesselID == 103) { // Right adrenal
+    aldosteronePerParticle = static_cast<int64_t>(6.5e9);     
+    cortisolPerParticle    = static_cast<int64_t>(23e11);    
+}
+
+// --- Step 2: Per-particle hormone mass/concentration ---
+double weightA = (360.44 / avogadro) * 1e9 * static_cast<double>(aldosteronePerParticle); // ng
+double molC    = (1.0 / avogadro) * static_cast<double>(cortisolPerParticle);             // mol
+
+// --- Step 3: Compute vessel volume in liters ---
+double r_mm     = (m_vesselWidth * 10.0) / 2.0;
+double l_mm     = m_bloodvesselLength * 10.0;
+double vol_mm3  = pi * r_mm * r_mm * l_mm;
+double volL     = vol_mm3 * 1e-6;
+if (volL <= 0.0) volL = 1e-9;
+
+// --- Step 4: Compute raw concentration from particles ---
+double rawA = (hormoneCounts["ALDOSTERONE"] * weightA) / volL;        // ng/L
+double rawC = (hormoneCounts["CORTISOL"] * molC * 1e9) / volL;        // nmol/L
+
+// --- Step 5: Apply Clinical Scaling (BEFORE diffusion) ---
+static bool scaleInit = false;
+static double gainA = 1.0, gainC = 1.0;
+if (!scaleInit && Simulator::Now().GetSeconds() > 2.0) { // optional warmup
+    double tgtA = 1.0, tgtC = 1.0;
+    if      (m_bloodvesselID == 100) { tgtA = 141.0;   tgtC =  426.0; }
+    else if (m_bloodvesselID == 103) { tgtA = 12420.0; tgtC = 17500.0; }
+    else if (m_bloodvesselID ==  91) { tgtA = 309.0;   tgtC =  562.0; }
+
+    if (rawA > 1e-9) gainA = tgtA / rawA;
+    if (rawC > 1e-9) gainC = tgtC / rawC;
+
+    scaleInit = true;
+}
+
+// Apply gain to convert to clinically-aligned units
+rawA *= gainA;
+rawC *= gainC;
+
+// --- Step 6: Diffusion (Robin) for adrenal glands only ---
+double concA, concC;
+if (m_bloodvesselID == 100 || m_bloodvesselID == 103) {
+    const int N = 10;
+    const double R_cm = 2.0;
+    const double dx = m_bloodvesselLength / static_cast<double>(N);
+    const double area = M_PI * R_cm * R_cm;
+    const double wallA = 2.0 * M_PI * R_cm * dx;
+    const double segL = area * dx * 1e-3;
+    const double k_t = 1e-4;
+
+    // Diffusion coefficient
+    Ptr<NormalRandomVariable> dRg = CreateObject<NormalRandomVariable>();
+    if (m_bloodvesselID == 100) {
+        dRg->SetAttribute("Mean", DoubleValue(1.32e-5));
+        dRg->SetAttribute("Variance", DoubleValue(std::pow(0.20e-5, 2)));
+    } else {
+        dRg->SetAttribute("Mean", DoubleValue(1.01e-5));
+        dRg->SetAttribute("Variance", DoubleValue(std::pow(0.17e-5, 2)));
+    }
+
+    double D = dRg->GetValue();
+    double coeff = D / (dx * dx);
+    double robinF = k_t * wallA / segL;
+
+    if (!m_diffusionInitialized) {
+        m_C_A.assign(N, rawA);
+        m_C_C.assign(N, rawC);
+        m_diffusionInitialized = true;
+    }
+
+    std::vector<double> Anew(N), Cnew(N);
+    for (int i = 0; i < N; ++i) {
+        double aL = (i == 0)   ? m_C_A[1]   : m_C_A[i - 1];
+        double aR = (i == N-1) ? m_C_A[N-2] : m_C_A[i + 1];
+        double cL = (i == 0)   ? m_C_C[1]   : m_C_C[i - 1];
+        double cR = (i == N-1) ? m_C_C[N-2] : m_C_C[i + 1];
+
+        Anew[i] = m_C_A[i] + coeff * (aR - 2 * m_C_A[i] + aL)
+                            - robinF * (m_C_A[i] - rawA);
+
+        Cnew[i] = m_C_C[i] + coeff * (cR - 2 * m_C_C[i] + cL)
+                            - robinF * (m_C_C[i] - rawC);
+    }
+
+    m_C_A.swap(Anew);
+    m_C_C.swap(Cnew);
+
+    concA = std::accumulate(m_C_A.begin(), m_C_A.end(), 0.0) / N;
+    concC = std::accumulate(m_C_C.begin(), m_C_C.end(), 0.0) / N;
+} else {
+    // Non-adrenal vessels get direct values
+    concA = rawA;
+    concC = rawC;
+}
+
+// --- Step 7: Apply ±5% random noise to mimic biological/measurement variability ---
+Ptr<NormalRandomVariable> nRv = CreateObject<NormalRandomVariable>();
+nRv->SetAttribute("Mean", DoubleValue(1.0));
+nRv->SetAttribute("Variance", DoubleValue(0.0025));
+
+concA *= std::clamp(nRv->GetValue(), 0.95, 1.05);
+concC *= std::clamp(nRv->GetValue(), 0.95, 1.05);
+
+    // --- Write summary log ---
+    std::ostringstream summaryFilename;
+    summaryFilename << "molecule_log_v" << m_bloodvesselID << ".csv";
+    std::ofstream summaryLog(summaryFilename.str(), std::ios::app);
+    bool writeHeader = false;
+    std::ifstream in(summaryFilename.str());
+    if (!in.good() || in.peek() == EOF) writeHeader = true;
+    in.close();
+    if (writeHeader) {
+      summaryLog << "Time,"
+          << "ALDOSTERONE,ALDOSTERONE_Conc_ng_per_L,ALDOSTERONE_ISI,"
+          << "CORTISOL,CORTISOL_Conc_nmol_per_L,CORTISOL_ISI\n";
+    }
+    summaryLog << now << ","
+               << hormoneCounts["ALDOSTERONE"] << "," << concA << "," << isiCounts["ALDOSTERONE"] << ","
+               << hormoneCounts["CORTISOL"]   << "," << concC << "," << isiCounts["CORTISOL"]
+               << "\n";
+    summaryLog.close();
+
+    Simulator::Schedule(Seconds(1.0), &Bloodvessel::LogHormoneCounts, this);
 }
 
 // GETTER AND SETTER

@@ -99,3 +99,28 @@ NUMOFNANOBOTS=0 INJECTVESSEL=68 DETECTVESSEL=29 NUMCANCERCELLS=300000 NUMCARTCEL
 ./ns3 run "start-cartcelltherapy --simulationDuration=$SIMDURATION --numCancerCells=$NUMCANCERCELLS --numCarTCells=$NUMCARTCELLS --numTCells=$NUMTCELLS --injectionTime=$INJECTTIME --injectionVessel=$INJECTVESSEL --detectionVessel=$DETECTVESSEL --isDeterministic=$ISDETERMINISTIC --simFile=$SIMFILE  --gwFile=$GWFILE"
 ```
 [1] Víctor M. Pérez-García, Odelaisy León-Triana, María Rosa, and Antonio Pérez-Martínez. 2021. CAR T Cells for T-Cell Leukemias: Insights from Mathematical Models. Communications in Nonlinear Science and Numerical Simulation 96 (May 2021). https://doi.org/10.1016/j.cnsns.2020.105684
+
+
+== Endocrine/AVS Extension
+
+This repository includes an extended vascular transition setup for a clinically inspired endocrine signaling scenario based on adrenal venous sampling (AVS).
+
+In the original MEHLISSA configuration, the vascular layout uses a simplified abdominal representation. For the endocrine/AVS scenario, we extend this layout by introducing separate vessel segments for the left and right adrenal glands, their corresponding adrenal veins, and their connections to the inferior vena cava (IVC).
+
+These additions support a source-channel-receiver endocrine signaling model in which:
+- the left and right adrenal glands act as transmitters,
+- the vascular network acts as the propagation channel,
+- and the left adrenal vein, right adrenal vein, and IVC act as passive receivers.
+
+Hormones released from both adrenal glands propagate through the extended vascular network via diffusion and advection and are passively measured at the receiver sites in an AVS-inspired configuration.
+
+For this scenario, use the extended transition file:
+`vasculature_transitions_endocrine_avs.csv`
+
+The original transition table is kept unchanged to preserve backward compatibility with the base MEHLISSA setup.
+
+image::Images/endocrine_avs_layout.png[Endocrine AVS layout, width=500]
+
+[caption=""]
+.Figure: Extended endocrine/AVS layout with separate adrenal glands, adrenal veins, and IVC receiver configuration.
+

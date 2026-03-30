@@ -190,6 +190,12 @@ private:
 
     void PerformInjection();
 
+    // ADDED for endocrine-signaling-scenario
+    std::vector<double> m_C_A;   // aldosterone profile along vessel (ng/L)
+    std::vector<double> m_C_C;   // cortisol    profile along vessel (nmol/L)
+    bool m_diffusionInitialized = false;
+   
+
 public:
     /**
      * Setting the default values:
@@ -369,6 +375,14 @@ public:
 
     void AddCarTCellInjection(int injectionTime, int injectionVessel,
                               int numberOfCarTCells);
+
+    // ADDED for endocrine-signaling-scenario
+    /** 
+    * Logs the current count of hormone nanoparticles (ALDOSTERONE and CORTISOL)
+    * present in this Bloodvessel (IVC - 91). Intended for time series recording of particle counts
+    * (simulating periodic clinical blood sampling). Writes a single CSV row per timestep.
+    */
+    void LogHormoneCounts();                          
 };
 }; // namespace ns3
 #endif
