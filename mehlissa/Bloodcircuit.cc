@@ -20,6 +20,7 @@
 #include "Bloodcircuit.h"
 #include <fstream>
 
+
 /**
  * This function sets the Bloodvessel map of the human body of a female:
  * hight 1.72m, weight 69kg, age 29.
@@ -100,6 +101,8 @@ int Bloodcircuit::BeginSimulation(unsigned int simulationDuration,
     // Create the bloodcircuit
     Bloodcircuit circuit(numOfNanobots, numOfCollectors, numberOfLocators,
                          injectionVessel, printNano, particleMode, isDeterministic);
+    Bloodcircuit circuit(numOfNanobots, numOfCollectors, numOfCollectors,
+                         injectionVessel, printNano, particleMode);
     // Get the map of the bloodcircuit
     map<int, ns3::Ptr<ns3::Bloodvessel>> circuitMap = circuit.GetBloodcircuit();
     if (circuitMap.size() > 1) {
