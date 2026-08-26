@@ -12,12 +12,11 @@ permissions:
 
 env:
   VCPKG_COMMIT: d5b6777d666efc1a7f491babfcdab37794c1ae3e
+  VCPKG_ROOT: ${{ github.workspace }}/.vcpkg
 
 jobs:
   windows-msvc:
     runs-on: windows-latest
-    env:
-      VCPKG_ROOT: ${{ runner.temp }}\vcpkg
     steps:
       - uses: actions/checkout@v6
       - name: Install pinned vcpkg
@@ -35,8 +34,6 @@ jobs:
 
   linux-gcc:
     runs-on: ubuntu-latest
-    env:
-      VCPKG_ROOT: ${{ runner.temp }}/vcpkg
     steps:
       - uses: actions/checkout@v6
       - name: Install build tools
@@ -55,8 +52,6 @@ jobs:
 
   linux-clang-analysis:
     runs-on: ubuntu-latest
-    env:
-      VCPKG_ROOT: ${{ runner.temp }}/vcpkg
     steps:
       - uses: actions/checkout@v6
       - name: Install analysis tools
