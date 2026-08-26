@@ -19,6 +19,7 @@ Architecture Decision Records (ADRs) dokumentieren Entscheidungen, die die weite
 | [ADR-0008](adr/0008-versioned-experiment-manifest.md) | Accepted | striktes, versioniertes JSON-Experimentmanifest mit JSON Schema 2020-12 |
 | [ADR-0009](adr/0009-run-provenance.md) | Accepted | automatisch erzeugte, schema-validierte Laufprovenienz mit kryptografischen Prüfsummen |
 | [ADR-0010](adr/0010-dimensional-quantity-system.md) | Accepted | dimensionssichere SI-Größen im Kern und explizite Einheiten an Systemgrenzen |
+| [ADR-0011](adr/0011-simulation-context-and-lifecycle.md) | Accepted | expliziter Laufkontext und eindeutig besessener Komponentenlebenszyklus |
 
 ## Statusmodell
 

@@ -32,7 +32,7 @@ Ein `DONE` in dieser Matrix setzt einen erfolgreichen Nachweis voraus. Der bloß
 | SYS-004 | RM 3.2 | DONE | M1 | dimensionssichere Typen für Zeit, Länge, Fläche, Volumen, Geschwindigkeit, Stoffmenge und Konzentration; Compile-/Unit-Tests |
 | SYS-005 | RM 2.1–2.2 | PART | M0/M1 | Architekturprüfung der Zielstruktur und Abhängigkeitsregeln |
 | SYS-006 | RM M0 | PART | M1 | CI-Regel und Review: `core/` importiert kein `scenarios/` |
-| SYS-007 | RM M1 | PART | M1 | Negativtests für Konfiguration, Überlauf und Invarianten |
+| SYS-007 | RM M1 | PART | M1 | Negativtests für Konfiguration, Überlauf, Lifecycle-Zustände und Initialisierungs-/Schrittfehler; strukturierte Fehler folgen in M1.5 |
 | SYS-008 | DISS S. 95–97, 133 | SPEC | M3–M5 | Dasselbe Szenario mit Surrogat und Detailmodell |
 | ARC-001 | DISS S. 94–96 | SPEC | M3–M5 | Vier getrennte `ModelComponent`-Implementierungen |
 | ARC-002 | DISS S. 95 | SPEC | M3–M5 | Modellkarten mit Raum-/Zeitskala und Gültigkeitsbereich |

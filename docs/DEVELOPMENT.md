@@ -85,6 +85,9 @@ ist wie `jsoncons` über den fixierten vcpkg-Baseline-Stand reproduzierbar.
 - Modellgrößen verwenden die dimensionssicheren SI-Typen und benannte
   Konvertierungen aus `core/quantity.hpp`; nackte `double`-Werte sind keine
   öffentliche Einheiten-API.
+- Laufbezogene Uhr-, Seed- und RNG-Zustände gehören in `SimulationContext`;
+  Komponenten werden exklusiv durch `ComponentHost` besessen und folgen dem
+  dokumentierten Lebenszyklus.
 - Neue unabhängig entwickelte Dateien tragen `SPDX-License-Identifier: MPL-2.0`.
 - Direkte Legacy-Portierungen bleiben `GPL-2.0-only` und werden in getrennten
   Dateien mit erhaltener Urheber- und Provenienzangabe umgesetzt.

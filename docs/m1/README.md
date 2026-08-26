@@ -20,12 +20,14 @@ medizinischen Modelle beginnen erst auf diesem Fundament.
 | M1.1 versioniertes Experimentmanifest | umgesetzt, CI-Prüfung ausstehend | Schema `1.0.0`, Parser, Validator, CLI- und Negativtests |
 | M1.2 Provenienzmanifest | umgesetzt, CI-Prüfung ausstehend | Schema `1.0.0`, automatische Erzeugung, SHA-256- und Vertragstests |
 | M1.3 dimensionssicheres Einheitensystem | umgesetzt, CI-Prüfung ausstehend | SI-Vertrag, migrierte 3D-Geometrie, Compile- und Unit-Tests |
-| M1.4 `SimulationContext` und Komponentenlebenszyklus | offen | Lifecycle- und Invariantentests |
+| M1.4 `SimulationContext` und Komponentenlebenszyklus | umgesetzt, CI-Prüfung ausstehend | kontextgebundene Uhr/RNGs, eindeutiges Ownership, Lifecycle- und Fehlerpfadtests |
 | M1.5 strukturierte Fehler, Logging und Checkpointvertrag | offen | Fehler-/Snapshot-Tests |
 | M1.6 plattformübergreifender Determinismusnachweis | offen | identischer Referenzlauf auf Windows/Linux |
 
 Der verbindliche Größen- und Konversionskatalog für M1.3 steht in
 [`UNITS.md`](UNITS.md).
+Der M1.4-Vertrag ist in [`COMPONENT_LIFECYCLE.md`](COMPONENT_LIFECYCLE.md)
+dokumentiert.
 
 ## M1.1 benutzen
 

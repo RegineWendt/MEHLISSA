@@ -3,9 +3,11 @@
 
 add_library(
     mehlissa_core
+    src/component_host.cpp
     src/position.cpp
     src/random_stream.cpp
     src/simulation_clock.cpp
+    src/simulation_context.cpp
 )
 add_library(MEHLISSA::core ALIAS mehlissa_core)
 
