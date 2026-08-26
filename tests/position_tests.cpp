@@ -8,8 +8,12 @@
 
 TEST_CASE("Three-dimensional vessel distances are calculated in meters", "[core][geometry]") {
     const mehlissa::core::Position3D start{};
-    const mehlissa::core::Position3D end{3.0, 4.0, 12.0};
+    const mehlissa::core::Position3D end{
+        mehlissa::core::meters(3.0),
+        mehlissa::core::meters(4.0),
+        mehlissa::core::meters(12.0),
+    };
 
-    REQUIRE(mehlissa::core::distance_meters(start, end) == Catch::Approx(13.0));
-    REQUIRE(mehlissa::core::distance_meters(end, start) == Catch::Approx(13.0));
+    REQUIRE(mehlissa::core::in_meters(mehlissa::core::distance(start, end)) == Catch::Approx(13.0));
+    REQUIRE(mehlissa::core::in_meters(mehlissa::core::distance(end, start)) == Catch::Approx(13.0));
 }

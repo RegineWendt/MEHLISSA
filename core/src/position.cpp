@@ -7,11 +7,11 @@
 
 namespace mehlissa::core {
 
-double distance_meters(const Position3D& first, const Position3D& second) noexcept {
-    const auto delta_x = second.x_meters - first.x_meters;
-    const auto delta_y = second.y_meters - first.y_meters;
-    const auto delta_z = second.z_meters - first.z_meters;
-    return std::hypot(delta_x, delta_y, delta_z);
+Length distance(const Position3D& first, const Position3D& second) noexcept {
+    const auto delta_x = in_meters(second.x - first.x);
+    const auto delta_y = in_meters(second.y - first.y);
+    const auto delta_z = in_meters(second.z - first.z);
+    return meters(std::hypot(delta_x, delta_y, delta_z));
 }
 
 } // namespace mehlissa::core

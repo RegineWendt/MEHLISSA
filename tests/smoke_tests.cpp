@@ -34,8 +34,13 @@ namespace {
 
 [[nodiscard]] bool geometry_is_three_dimensional() {
     const mehlissa::core::Position3D start{};
-    const mehlissa::core::Position3D end{3.0, 4.0, 12.0};
-    return std::abs(mehlissa::core::distance_meters(start, end) - 13.0) < 1.0e-12;
+    const mehlissa::core::Position3D end{
+        mehlissa::core::meters(3.0),
+        mehlissa::core::meters(4.0),
+        mehlissa::core::meters(12.0),
+    };
+    return std::abs(mehlissa::core::in_meters(mehlissa::core::distance(start, end)) - 13.0) <
+           1.0e-12;
 }
 
 [[nodiscard]] bool named_random_streams_are_reproducible() {

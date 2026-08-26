@@ -82,6 +82,9 @@ ist wie `jsoncons` über den fixierten vcpkg-Baseline-Stand reproduzierbar.
 - Tests werden über CTest ausgeführt.
 - Gleicher Experiment-Seed und gleicher Streamname müssen dieselbe rohe Zufallsfolge erzeugen.
 - Simulationszeit wird ganzzahlig in Nanosekunden geführt und darf nur streng monoton fortschreiten.
+- Modellgrößen verwenden die dimensionssicheren SI-Typen und benannte
+  Konvertierungen aus `core/quantity.hpp`; nackte `double`-Werte sind keine
+  öffentliche Einheiten-API.
 - Neue unabhängig entwickelte Dateien tragen `SPDX-License-Identifier: MPL-2.0`.
 - Direkte Legacy-Portierungen bleiben `GPL-2.0-only` und werden in getrennten
   Dateien mit erhaltener Urheber- und Provenienzangabe umgesetzt.
@@ -90,10 +93,11 @@ ist wie `jsoncons` über den fixierten vcpkg-Baseline-Stand reproduzierbar.
 
 ## Aktueller Bootstrap
 
-Der erste Kern enthält bewusst nur drei überprüfbare Grundlagen:
+Der aktuelle Kern enthält bewusst nur überprüfbare technische Grundlagen:
 
 - monotone Simulationszeit mit Nanosekundenauflösung und Überlaufschutz;
-- dreidimensionale euklidische Distanz in Metern;
-- benannte, reproduzierbare Zufallsströme.
+- dimensionssichere SI-Größen und dreidimensionale euklidische Geometrie;
+- benannte, reproduzierbare Zufallsströme;
+- versionierte Experimentvalidierung und automatische Laufprovenienz.
 
 Medizinische Szenarien und Legacy-Zustände gehören nicht in diesen Kern.

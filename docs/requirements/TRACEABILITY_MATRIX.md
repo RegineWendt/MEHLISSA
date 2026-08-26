@@ -29,7 +29,7 @@ Ein `DONE` in dieser Matrix setzt einen erfolgreichen Nachweis voraus. Der bloß
 | SYS-001 | RM M1 | DONE | M1 | `simulation_clock_tests`, plattformübergreifender CTest |
 | SYS-002 | RM 2.4 | PART | M1 | Reproduktionslauf auf Windows/Linux mit identischem Manifest |
 | SYS-003 | RM M1 | DONE | M1 | `random_stream_tests` einschließlich Streamnamen |
-| SYS-004 | RM 3.2 | PART | M1 | Compile-/Unit-Tests für alle Einheitentypen; derzeit nur Zeit/Länge |
+| SYS-004 | RM 3.2 | DONE | M1 | dimensionssichere Typen für Zeit, Länge, Fläche, Volumen, Geschwindigkeit, Stoffmenge und Konzentration; Compile-/Unit-Tests |
 | SYS-005 | RM 2.1–2.2 | PART | M0/M1 | Architekturprüfung der Zielstruktur und Abhängigkeitsregeln |
 | SYS-006 | RM M0 | PART | M1 | CI-Regel und Review: `core/` importiert kein `scenarios/` |
 | SYS-007 | RM M1 | PART | M1 | Negativtests für Konfiguration, Überlauf und Invarianten |

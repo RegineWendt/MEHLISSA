@@ -4,15 +4,17 @@
 #ifndef MEHLISSA_CORE_POSITION_HPP
 #define MEHLISSA_CORE_POSITION_HPP
 
+#include <mehlissa/core/quantity.hpp>
+
 namespace mehlissa::core {
 
-struct Position3D {
-    double x_meters{};
-    double y_meters{};
-    double z_meters{};
+struct Position3D final {
+    Length x{};
+    Length y{};
+    Length z{};
 };
 
-[[nodiscard]] double distance_meters(const Position3D& first, const Position3D& second) noexcept;
+[[nodiscard]] Length distance(const Position3D& first, const Position3D& second) noexcept;
 
 } // namespace mehlissa::core
 

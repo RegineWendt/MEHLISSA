@@ -12,6 +12,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
     add_executable(
         mehlissa_core_tests
         position_tests.cpp
+        quantity_tests.cpp
         random_stream_tests.cpp
         simulation_clock_tests.cpp
     )

@@ -18,6 +18,7 @@ Architecture Decision Records (ADRs) dokumentieren Entscheidungen, die die weite
 | [ADR-0007](adr/0007-repository-license.md) | Accepted | MPL-2.0 für unabhängigen Next-Code, GPL-2.0-only für Legacy/Portierungen, CC-BY-4.0 für neue eigene Dokumentation und freigegebene Daten |
 | [ADR-0008](adr/0008-versioned-experiment-manifest.md) | Accepted | striktes, versioniertes JSON-Experimentmanifest mit JSON Schema 2020-12 |
 | [ADR-0009](adr/0009-run-provenance.md) | Accepted | automatisch erzeugte, schema-validierte Laufprovenienz mit kryptografischen Prüfsummen |
+| [ADR-0010](adr/0010-dimensional-quantity-system.md) | Accepted | dimensionssichere SI-Größen im Kern und explizite Einheiten an Systemgrenzen |
 
 ## Statusmodell
 
