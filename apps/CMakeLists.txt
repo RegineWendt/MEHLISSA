@@ -11,6 +11,7 @@ add_test(
         mehlissa run
         --experiment ${PROJECT_SOURCE_DIR}/examples/experiments/minimal.json
         --schema ${PROJECT_SOURCE_DIR}/data/schemas/experiment/1.0.0.schema.json
+        --checkpoint-schema ${PROJECT_SOURCE_DIR}/data/schemas/checkpoint/1.0.0.schema.json
 )
 set_tests_properties(
     mehlissa_cli_minimal_experiment

@@ -3,6 +3,8 @@
 
 #include <mehlissa/core/simulation_clock.hpp>
 
+#include <mehlissa/core/error.hpp>
+
 #include <catch2/catch_test_macros.hpp>
 
 #include <chrono>
@@ -23,16 +25,16 @@ TEST_CASE("Simulation time advances strictly monotonically", "[core][time]") {
     using namespace std::chrono_literals;
 
     mehlissa::core::SimulationClock clock;
-    REQUIRE_THROWS_AS(clock.advance(0ns), std::invalid_argument);
-    REQUIRE_THROWS_AS(clock.advance(-1ns), std::invalid_argument);
+    REQUIRE_THROWS_AS(clock.advance(0ns), mehlissa::core::MehlissaError);
+    REQUIRE_THROWS_AS(clock.advance(-1ns), mehlissa::core::MehlissaError);
     REQUIRE(clock.now() == 0ns);
 }
 
 TEST_CASE("Simulation time rejects negative starts and overflow", "[core][time]") {
     using Duration = mehlissa::core::SimulationClock::Duration;
 
-    REQUIRE_THROWS_AS(mehlissa::core::SimulationClock(Duration{-1}), std::invalid_argument);
+    REQUIRE_THROWS_AS(mehlissa::core::SimulationClock(Duration{-1}), mehlissa::core::MehlissaError);
 
     mehlissa::core::SimulationClock clock{Duration{std::numeric_limits<Duration::rep>::max()}};
-    REQUIRE_THROWS_AS(clock.advance(Duration{1}), std::overflow_error);
+    REQUIRE_THROWS_AS(clock.advance(Duration{1}), mehlissa::core::MehlissaError);
 }

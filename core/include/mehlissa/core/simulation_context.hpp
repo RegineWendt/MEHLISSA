@@ -12,10 +12,18 @@
 #include <string>
 #include <string_view>
 #include <unordered_map>
+#include <vector>
 
 namespace mehlissa::core {
 
 class ComponentHost;
+
+struct RandomStreamState final {
+    std::string name;
+    std::uint64_t draw_count{};
+
+    [[nodiscard]] bool operator==(const RandomStreamState&) const noexcept = default;
+};
 
 class SimulationContext final {
   public:
@@ -30,6 +38,7 @@ class SimulationContext final {
     [[nodiscard]] std::uint64_t master_seed() const noexcept;
     [[nodiscard]] RandomStream& random_stream(std::string_view name);
     [[nodiscard]] std::size_t random_stream_count() const noexcept;
+    [[nodiscard]] std::vector<RandomStreamState> random_stream_states() const;
 
   private:
     friend class ComponentHost;

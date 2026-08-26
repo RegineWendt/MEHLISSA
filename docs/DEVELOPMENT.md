@@ -80,6 +80,8 @@ ist wie `jsoncons` über den fixierten vcpkg-Baseline-Stand reproduzierbar.
 - Die CI behandelt Compilerwarnungen als Fehler.
 - `clang-format` definiert die Formatierung; `clang-tidy` ergänzt statische Analyse.
 - Tests werden über CTest ausgeführt.
+- Kontrollierte Fehler verwenden stabile `MEHLISSA-Edddd`-Kennungen; neue
+  Bedeutungen erhalten neue Codes statt bestehende umzudeuten.
 - Gleicher Experiment-Seed und gleicher Streamname müssen dieselbe rohe Zufallsfolge erzeugen.
 - Simulationszeit wird ganzzahlig in Nanosekunden geführt und darf nur streng monoton fortschreiten.
 - Modellgrößen verwenden die dimensionssicheren SI-Typen und benannte
@@ -102,5 +104,6 @@ Der aktuelle Kern enthält bewusst nur überprüfbare technische Grundlagen:
 - dimensionssichere SI-Größen und dreidimensionale euklidische Geometrie;
 - benannte, reproduzierbare Zufallsströme;
 - versionierte Experimentvalidierung und automatische Laufprovenienz.
+- strukturiertes JSONL-Laufprotokoll und versioniertes Checkpointmanifest.
 
 Medizinische Szenarien und Legacy-Zustände gehören nicht in diesen Kern.

@@ -8,7 +8,6 @@
 #include <mehlissa/experiment/experiment_manifest.hpp>
 
 #include <filesystem>
-#include <stdexcept>
 #include <string>
 
 namespace mehlissa::experiment {
@@ -44,9 +43,9 @@ struct ProvenanceValidation final {
     std::filesystem::path schema_path;
 };
 
-class ProvenanceError final : public std::runtime_error {
+class ProvenanceError final : public core::MehlissaError {
   public:
-    using std::runtime_error::runtime_error;
+    using core::MehlissaError::MehlissaError;
 };
 
 [[nodiscard]] BuildMetadata current_build_metadata();

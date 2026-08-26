@@ -35,8 +35,10 @@ endif()
 
 add_library(
     mehlissa_experiment
+    src/checkpoint_manifest.cpp
     src/experiment_manifest.cpp
     src/provenance.cpp
+    src/run_log.cpp
 )
 add_library(MEHLISSA::experiment ALIAS mehlissa_experiment)
 

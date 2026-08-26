@@ -12,6 +12,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
     add_executable(
         mehlissa_core_tests
         component_host_tests.cpp
+        error_tests.cpp
         position_tests.cpp
         quantity_tests.cpp
         random_stream_tests.cpp
@@ -32,8 +33,10 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
     if(MEHLISSA_ENABLE_EXPERIMENT_IO)
         add_executable(
             mehlissa_experiment_tests
+            checkpoint_manifest_tests.cpp
             experiment_manifest_tests.cpp
             provenance_tests.cpp
+            run_log_tests.cpp
         )
         target_link_libraries(
             mehlissa_experiment_tests
@@ -48,4 +51,16 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
         mehlissa_configure_target(mehlissa_experiment_tests)
         catch_discover_tests(mehlissa_experiment_tests DISCOVERY_MODE PRE_TEST)
     endif()
+endif()
+
+if(MEHLISSA_BUILD_APPS AND MEHLISSA_ENABLE_EXPERIMENT_IO)
+    add_test(
+        NAME mehlissa_cli_reports_structured_error
+        COMMAND
+            ${CMAKE_COMMAND}
+            -DMEHLISSA_EXECUTABLE=$<TARGET_FILE:mehlissa>
+            -DINVALID_EXPERIMENT=${PROJECT_SOURCE_DIR}/tests/data/experiments/missing-seed.json
+            -DEXPERIMENT_SCHEMA=${PROJECT_SOURCE_DIR}/data/schemas/experiment/1.0.0.schema.json
+            -P ${CMAKE_CURRENT_SOURCE_DIR}/verify_cli_error.cmake
+    )
 endif()

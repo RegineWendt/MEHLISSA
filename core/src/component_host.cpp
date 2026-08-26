@@ -3,8 +3,9 @@
 
 #include <mehlissa/core/component_host.hpp>
 
+#include <mehlissa/core/error.hpp>
+
 #include <algorithm>
-#include <stdexcept>
 #include <utility>
 
 namespace mehlissa::core {
@@ -15,19 +16,23 @@ ComponentHost::~ComponentHost() noexcept { finalize(); }
 
 void ComponentHost::add(std::unique_ptr<SimulationComponent> component) {
     if (state_ != State::building) {
-        throw std::logic_error{"Components can only be added before initialization"};
+        throw MehlissaError{ErrorCode::lifecycle_invalid,
+                            "Components can only be added before initialization"};
     }
     if (!component) {
-        throw std::invalid_argument{"A simulation component must not be null"};
+        throw MehlissaError{ErrorCode::invariant_violated,
+                            "A simulation component must not be null"};
     }
 
     const std::string component_name{component->name()};
     if (component_name.empty()) {
-        throw std::invalid_argument{"A simulation component must have a non-empty name"};
+        throw MehlissaError{ErrorCode::invariant_violated,
+                            "A simulation component must have a non-empty name"};
     }
     const auto duplicate = std::ranges::find(components_, component_name, &ComponentEntry::name);
     if (duplicate != components_.end()) {
-        throw std::invalid_argument{"Duplicate simulation component name: " + component_name};
+        throw MehlissaError{ErrorCode::invariant_violated,
+                            "Duplicate simulation component name: " + component_name};
     }
 
     components_.push_back(ComponentEntry{component_name, std::move(component)});
@@ -35,7 +40,8 @@ void ComponentHost::add(std::unique_ptr<SimulationComponent> component) {
 
 void ComponentHost::initialize() {
     if (state_ != State::building) {
-        throw std::logic_error{"A component host can only be initialized once"};
+        throw MehlissaError{ErrorCode::lifecycle_invalid,
+                            "A component host can only be initialized once"};
     }
 
     try {
@@ -52,7 +58,8 @@ void ComponentHost::initialize() {
 
 void ComponentHost::advance(const SimulationClock::Duration delta) {
     if (state_ != State::initialized) {
-        throw std::logic_error{"Only an initialized component host can advance"};
+        throw MehlissaError{ErrorCode::lifecycle_invalid,
+                            "Only an initialized component host can advance"};
     }
 
     auto next_clock = context_.clock_;

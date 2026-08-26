@@ -16,9 +16,11 @@ class RandomStream final {
 
     [[nodiscard]] std::uint64_t next_u64();
     [[nodiscard]] std::uint64_t derived_seed() const noexcept;
+    [[nodiscard]] std::uint64_t draw_count() const noexcept;
 
   private:
     std::uint64_t derived_seed_{};
+    std::uint64_t draw_count_{};
     std::mt19937_64 engine_;
 };
 

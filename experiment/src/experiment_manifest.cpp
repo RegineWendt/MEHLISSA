@@ -23,14 +23,16 @@ using CompiledSchema = jsoncons::jsonschema::json_schema<Json>;
 [[nodiscard]] Json read_json(const std::filesystem::path& path, const std::string_view role) {
     std::ifstream stream{path, std::ios::binary};
     if (!stream) {
-        throw ManifestError{"Cannot open " + std::string{role} + ": " + path.string()};
+        throw ManifestError{core::ErrorCode::input_unreadable,
+                            "Cannot open " + std::string{role} + ": " + path.string()};
     }
 
     try {
         return Json::parse(stream);
     } catch (const std::exception& error) {
-        throw ManifestError{"Invalid JSON in " + std::string{role} + " '" + path.string() +
-                            "': " + error.what()};
+        throw ManifestError{core::ErrorCode::json_invalid, "Invalid JSON in " + std::string{role} +
+                                                               " '" + path.string() +
+                                                               "': " + error.what()};
     }
 }
 
@@ -39,8 +41,9 @@ using CompiledSchema = jsoncons::jsonschema::json_schema<Json>;
     try {
         return jsoncons::jsonschema::make_json_schema(schema);
     } catch (const std::exception& error) {
-        throw ManifestError{"Invalid experiment schema '" + schema_path.string() +
-                            "': " + error.what()};
+        throw ManifestError{core::ErrorCode::schema_invalid, "Invalid experiment schema '" +
+                                                                 schema_path.string() +
+                                                                 "': " + error.what()};
     }
 }
 
@@ -49,8 +52,9 @@ void validate_against_schema(const Json& document, const CompiledSchema& compile
     try {
         compiled_schema.validate(document);
     } catch (const std::exception& error) {
-        throw ManifestError{"Experiment manifest '" + manifest_path.string() +
-                            "' does not satisfy its schema: " + error.what()};
+        throw ManifestError{core::ErrorCode::manifest_invalid,
+                            "Experiment manifest '" + manifest_path.string() +
+                                "' does not satisfy its schema: " + error.what()};
     }
 }
 
@@ -69,7 +73,8 @@ void validate_against_schema(const Json& document, const CompiledSchema& compile
             return multiplier;
         }
     }
-    throw ManifestError{"Unsupported duration unit after schema validation: " + std::string{unit}};
+    throw ManifestError{core::ErrorCode::manifest_invalid,
+                        "Unsupported duration unit after schema validation: " + std::string{unit}};
 }
 
 [[nodiscard]] core::SimulationClock::Duration parse_duration(const Json& document) {
@@ -81,7 +86,8 @@ void validate_against_schema(const Json& document, const CompiledSchema& compile
     using Representation = core::SimulationClock::Duration::rep;
     constexpr auto maximum = static_cast<std::uint64_t>(std::numeric_limits<Representation>::max());
     if (value > maximum / multiplier) {
-        throw ManifestError{"Experiment duration exceeds the supported nanosecond range"};
+        throw ManifestError{core::ErrorCode::numeric_overflow,
+                            "Experiment duration exceeds the supported nanosecond range"};
     }
 
     return core::SimulationClock::Duration{static_cast<Representation>(value * multiplier)};
@@ -119,8 +125,9 @@ ExperimentManifest load_experiment_manifest(const std::filesystem::path& manifes
     } catch (const ManifestError&) {
         throw;
     } catch (const std::exception& error) {
-        throw ManifestError{"Cannot decode validated experiment manifest '" +
-                            manifest_path.string() + "': " + error.what()};
+        throw ManifestError{core::ErrorCode::manifest_invalid,
+                            "Cannot decode validated experiment manifest '" +
+                                manifest_path.string() + "': " + error.what()};
     }
 }
 

@@ -3,6 +3,8 @@
 
 #include <mehlissa/core/random_stream.hpp>
 
+#include <mehlissa/core/error.hpp>
+
 #include <catch2/catch_test_macros.hpp>
 
 #include <cstddef>
@@ -16,6 +18,8 @@ TEST_CASE("Named random streams are reproducible", "[core][rng]") {
     for (std::size_t sample = 0; sample < 32; ++sample) {
         REQUIRE(first.next_u64() == second.next_u64());
     }
+    REQUIRE(first.draw_count() == 32);
+    REQUIRE(second.draw_count() == 32);
 }
 
 TEST_CASE("Different random stream names derive independent sequences", "[core][rng]") {
@@ -27,5 +31,5 @@ TEST_CASE("Different random stream names derive independent sequences", "[core][
 }
 
 TEST_CASE("Random streams require an explicit name", "[core][rng]") {
-    REQUIRE_THROWS_AS(mehlissa::core::RandomStream(42, ""), std::invalid_argument);
+    REQUIRE_THROWS_AS(mehlissa::core::RandomStream(42, ""), mehlissa::core::MehlissaError);
 }

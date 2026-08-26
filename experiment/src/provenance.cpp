@@ -23,14 +23,16 @@ using Json = jsoncons::json;
 [[nodiscard]] Json read_json(const std::filesystem::path& path, const std::string& role) {
     std::ifstream stream{path, std::ios::binary};
     if (!stream) {
-        throw ProvenanceError{"Cannot open " + role + ": " + path.string()};
+        throw ProvenanceError{core::ErrorCode::input_unreadable,
+                              "Cannot open " + role + ": " + path.string()};
     }
 
     try {
         return Json::parse(stream);
     } catch (const std::exception& error) {
-        throw ProvenanceError{"Invalid JSON in " + role + " '" + path.string() +
-                              "': " + error.what()};
+        throw ProvenanceError{core::ErrorCode::json_invalid, "Invalid JSON in " + role + " '" +
+                                                                 path.string() +
+                                                                 "': " + error.what()};
     }
 }
 
@@ -91,19 +93,22 @@ void write_json(const Json& document, const std::filesystem::path& path) {
     if (!parent.empty()) {
         std::filesystem::create_directories(parent, error);
         if (error) {
-            throw ProvenanceError{"Cannot create provenance directory '" + parent.string() +
-                                  "': " + error.message()};
+            throw ProvenanceError{core::ErrorCode::output_unwritable,
+                                  "Cannot create provenance directory '" + parent.string() +
+                                      "': " + error.message()};
         }
     }
 
     std::ofstream stream{path, std::ios::binary | std::ios::trunc};
     if (!stream) {
-        throw ProvenanceError{"Cannot write provenance file: " + path.string()};
+        throw ProvenanceError{core::ErrorCode::output_unwritable,
+                              "Cannot write provenance file: " + path.string()};
     }
     document.dump_pretty(stream);
     stream.put('\n');
     if (!stream) {
-        throw ProvenanceError{"Cannot complete provenance file: " + path.string()};
+        throw ProvenanceError{core::ErrorCode::output_unwritable,
+                              "Cannot complete provenance file: " + path.string()};
     }
 }
 
@@ -124,18 +129,21 @@ std::string current_utc_timestamp() {
     std::tm utc_time{};
 #ifdef _WIN32
     if (gmtime_s(&utc_time, &calendar_time) != 0) {
-        throw ProvenanceError{"Cannot convert the current time to UTC"};
+        throw ProvenanceError{core::ErrorCode::internal_failure,
+                              "Cannot convert the current time to UTC"};
     }
 #else
     if (gmtime_r(&calendar_time, &utc_time) == nullptr) {
-        throw ProvenanceError{"Cannot convert the current time to UTC"};
+        throw ProvenanceError{core::ErrorCode::internal_failure,
+                              "Cannot convert the current time to UTC"};
     }
 #endif
 
     std::ostringstream timestamp;
     timestamp << std::put_time(&utc_time, "%Y-%m-%dT%H:%M:%SZ");
     if (!timestamp) {
-        throw ProvenanceError{"Cannot format the current UTC timestamp"};
+        throw ProvenanceError{core::ErrorCode::internal_failure,
+                              "Cannot format the current UTC timestamp"};
     }
     return timestamp.str();
 }
@@ -143,13 +151,15 @@ std::string current_utc_timestamp() {
 std::string sha256_file(const std::filesystem::path& path) {
     std::ifstream stream{path, std::ios::binary};
     if (!stream) {
-        throw ProvenanceError{"Cannot open file for SHA-256: " + path.string()};
+        throw ProvenanceError{core::ErrorCode::input_unreadable,
+                              "Cannot open file for SHA-256: " + path.string()};
     }
 
     std::vector<unsigned char> digest(picosha2::k_digest_size);
     picosha2::hash256(stream, digest.begin(), digest.end());
     if (stream.bad()) {
-        throw ProvenanceError{"Cannot read file for SHA-256: " + path.string()};
+        throw ProvenanceError{core::ErrorCode::input_unreadable,
+                              "Cannot read file for SHA-256: " + path.string()};
     }
     return picosha2::bytes_to_hex_string(digest.begin(), digest.end());
 }
@@ -171,8 +181,9 @@ void validate_provenance_file(const ProvenanceValidation& validation) {
         const auto compiled_schema = jsoncons::jsonschema::make_json_schema(schema);
         compiled_schema.validate(provenance);
     } catch (const std::exception& error) {
-        throw ProvenanceError{"Provenance file '" + validation.document_path.string() +
-                              "' does not satisfy its schema: " + error.what()};
+        throw ProvenanceError{core::ErrorCode::provenance_invalid,
+                              "Provenance file '" + validation.document_path.string() +
+                                  "' does not satisfy its schema: " + error.what()};
     }
 }
 

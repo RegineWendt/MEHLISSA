@@ -4,11 +4,11 @@
 #ifndef MEHLISSA_EXPERIMENT_EXPERIMENT_MANIFEST_HPP
 #define MEHLISSA_EXPERIMENT_EXPERIMENT_MANIFEST_HPP
 
+#include <mehlissa/core/error.hpp>
 #include <mehlissa/core/simulation_clock.hpp>
 
 #include <cstdint>
 #include <filesystem>
-#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -25,9 +25,9 @@ struct ExperimentManifest final {
     std::filesystem::path output_directory;
 };
 
-class ManifestError final : public std::runtime_error {
+class ManifestError final : public core::MehlissaError {
   public:
-    using std::runtime_error::runtime_error;
+    using core::MehlissaError::MehlissaError;
 };
 
 [[nodiscard]] ExperimentManifest

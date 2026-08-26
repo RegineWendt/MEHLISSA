@@ -3,10 +3,13 @@
 
 #include <mehlissa/core/simulation_context.hpp>
 
+#include <mehlissa/core/error.hpp>
+
 #include <catch2/catch_test_macros.hpp>
 
 #include <cstdint>
 #include <stdexcept>
+#include <vector>
 
 TEST_CASE("A simulation context owns reproducible named random streams",
           "[core][context][random]") {
@@ -22,11 +25,13 @@ TEST_CASE("A simulation context owns reproducible named random streams",
     REQUIRE(first_transport.next_u64() == second_transport.next_u64());
     REQUIRE(first_transport.next_u64() == second_transport.next_u64());
     REQUIRE(first.master_seed() == std::uint64_t{42});
+    REQUIRE(first.random_stream_states() ==
+            std::vector<mehlissa::core::RandomStreamState>{{"transport", 2}});
 }
 
 TEST_CASE("A simulation context rejects an unnamed random stream", "[core][context][random]") {
     mehlissa::core::SimulationContext context{std::uint64_t{1}};
 
-    REQUIRE_THROWS_AS(context.random_stream(""), std::invalid_argument);
+    REQUIRE_THROWS_AS(context.random_stream(""), mehlissa::core::MehlissaError);
     REQUIRE(context.random_stream_count() == 0);
 }

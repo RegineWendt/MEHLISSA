@@ -3,7 +3,9 @@
 
 #include <mehlissa/core/random_stream.hpp>
 
-#include <stdexcept>
+#include <mehlissa/core/error.hpp>
+
+#include <limits>
 
 namespace mehlissa::core {
 namespace {
@@ -33,12 +35,22 @@ RandomStream::RandomStream(const std::uint64_t experiment_seed, const std::strin
     : derived_seed_(splitmix64(experiment_seed ^ stable_name_hash(stream_name))),
       engine_(derived_seed_) {
     if (stream_name.empty()) {
-        throw std::invalid_argument("A random stream must have a non-empty name");
+        throw MehlissaError{ErrorCode::invariant_violated,
+                            "A random stream must have a non-empty name"};
     }
 }
 
-std::uint64_t RandomStream::next_u64() { return engine_(); }
+std::uint64_t RandomStream::next_u64() {
+    if (draw_count_ == std::numeric_limits<std::uint64_t>::max()) {
+        throw MehlissaError{ErrorCode::numeric_overflow, "Random-stream draw counter overflow"};
+    }
+    const auto value = engine_();
+    ++draw_count_;
+    return value;
+}
 
 std::uint64_t RandomStream::derived_seed() const noexcept { return derived_seed_; }
+
+std::uint64_t RandomStream::draw_count() const noexcept { return draw_count_; }
 
 } // namespace mehlissa::core

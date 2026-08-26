@@ -32,7 +32,7 @@ Ein `DONE` in dieser Matrix setzt einen erfolgreichen Nachweis voraus. Der bloß
 | SYS-004 | RM 3.2 | DONE | M1 | dimensionssichere Typen für Zeit, Länge, Fläche, Volumen, Geschwindigkeit, Stoffmenge und Konzentration; Compile-/Unit-Tests |
 | SYS-005 | RM 2.1–2.2 | PART | M0/M1 | Architekturprüfung der Zielstruktur und Abhängigkeitsregeln |
 | SYS-006 | RM M0 | PART | M1 | CI-Regel und Review: `core/` importiert kein `scenarios/` |
-| SYS-007 | RM M1 | PART | M1 | Negativtests für Konfiguration, Überlauf, Lifecycle-Zustände und Initialisierungs-/Schrittfehler; strukturierte Fehler folgen in M1.5 |
+| SYS-007 | RM M1 | DONE | M1 | stabile Fehlercodes/CLI-Statuswerte sowie Negativtests für Konfiguration, Überlauf, Lifecycle, Log- und Checkpointinvarianten |
 | SYS-008 | DISS S. 95–97, 133 | SPEC | M3–M5 | Dasselbe Szenario mit Surrogat und Detailmodell |
 | ARC-001 | DISS S. 94–96 | SPEC | M3–M5 | Vier getrennte `ModelComponent`-Implementierungen |
 | ARC-002 | DISS S. 95 | SPEC | M3–M5 | Modellkarten mit Raum-/Zeitskala und Gültigkeitsbereich |
@@ -89,7 +89,7 @@ Ein `DONE` in dieser Matrix setzt einen erfolgreichen Nachweis voraus. Der bloß
 | IOT-003 | DISS S. 117–118, 187–190 | LEGACY | M2/M6 | Handgelenk-Gateway als expliziter Messort |
 | IOT-004 | RM M6 | SPEC | M6 | Kommunikationsbericht mit Latenz/Verlust/Energie |
 | IOT-005 | DISS S. 96–100; MEH25 | SPEC | M6 | austauschbarer Netzwerkadapter ohne Kernabhängigkeit |
-| DATA-001 | RM 6.1 | SPEC | M1/M2 | JSON-Schema plus Datenvalidator in CI |
+| DATA-001 | RM 6.1 | PART | M1/M2 | versionierte Schemata und Validatoren für Experiment, Provenienz, Log und Checkpoint; fachliche M2-Datenschemata folgen |
 | DATA-002 | RM 6.4 | DONE | M1 | JSON Schema `1.0.0`, Manifest- und CLI-Negativtests |
 | DATA-003 | RM 2.4, 6.4 | PART | M1 | Schema `1.0.0`, automatisch erzeugtes `provenance.json`, SHA-256- und Vertragstests; Datenversionskatalog folgt mit realen Modellen |
 | DATA-004 | VIS20; MEH25 | LEGACY | M2 | konfigurierbare Events/Aggregate/Trajektorien |

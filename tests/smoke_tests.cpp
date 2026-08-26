@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 // SPDX-License-Identifier: MPL-2.0
 
+#include <mehlissa/core/error.hpp>
 #include <mehlissa/core/position.hpp>
 #include <mehlissa/core/random_stream.hpp>
 #include <mehlissa/core/simulation_clock.hpp>
@@ -26,7 +27,7 @@ namespace {
 
     try {
         clock.advance(0ns);
-    } catch (const std::invalid_argument&) {
+    } catch (const mehlissa::core::MehlissaError&) {
         return true;
     }
     return false;

@@ -4,6 +4,7 @@
 add_library(
     mehlissa_core
     src/component_host.cpp
+    src/error.cpp
     src/position.cpp
     src/random_stream.cpp
     src/simulation_clock.cpp

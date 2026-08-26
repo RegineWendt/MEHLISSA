@@ -3,7 +3,9 @@
 
 #include <mehlissa/core/simulation_context.hpp>
 
-#include <stdexcept>
+#include <mehlissa/core/error.hpp>
+
+#include <algorithm>
 #include <string>
 
 namespace mehlissa::core {
@@ -16,7 +18,8 @@ std::uint64_t SimulationContext::master_seed() const noexcept { return master_se
 
 RandomStream& SimulationContext::random_stream(const std::string_view name) {
     if (name.empty()) {
-        throw std::invalid_argument{"A random stream must have a non-empty name"};
+        throw MehlissaError{ErrorCode::invariant_violated,
+                            "A random stream must have a non-empty name"};
     }
 
     const std::string owned_name{name};
@@ -28,6 +31,16 @@ RandomStream& SimulationContext::random_stream(const std::string_view name) {
 
 std::size_t SimulationContext::random_stream_count() const noexcept {
     return random_streams_.size();
+}
+
+std::vector<RandomStreamState> SimulationContext::random_stream_states() const {
+    std::vector<RandomStreamState> states;
+    states.reserve(random_streams_.size());
+    for (const auto& [name, stream] : random_streams_) {
+        states.push_back(RandomStreamState{name, stream.draw_count()});
+    }
+    std::ranges::sort(states, {}, &RandomStreamState::name);
+    return states;
 }
 
 } // namespace mehlissa::core

@@ -3,6 +3,8 @@
 
 #include <mehlissa/core/component_host.hpp>
 
+#include <mehlissa/core/error.hpp>
+
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers.hpp>
 #include <catch2/matchers/catch_matchers_string.hpp>
@@ -151,16 +153,19 @@ TEST_CASE("Component ownership and lifecycle transitions are guarded", "[core][c
     FinalizationLog finalizations;
     mehlissa::core::ComponentHost host{std::uint64_t{1}};
 
-    REQUIRE_THROWS_AS(host.add(nullptr), std::invalid_argument);
-    REQUIRE_THROWS_AS(host.add(component("", events, finalizations, 0)), std::invalid_argument);
+    REQUIRE_THROWS_AS(host.add(nullptr), mehlissa::core::MehlissaError);
+    REQUIRE_THROWS_AS(host.add(component("", events, finalizations, 0)),
+                      mehlissa::core::MehlissaError);
     host.add(component("unique", events, finalizations, 1));
     REQUIRE_THROWS_WITH(host.add(component("unique", events, finalizations, 2)),
                         "Duplicate simulation component name: unique");
-    REQUIRE_THROWS_AS(host.advance(mehlissa::core::SimulationClock::Duration{1}), std::logic_error);
+    REQUIRE_THROWS_AS(host.advance(mehlissa::core::SimulationClock::Duration{1}),
+                      mehlissa::core::MehlissaError);
 
     host.initialize();
-    REQUIRE_THROWS_AS(host.add(component("late", events, finalizations, 3)), std::logic_error);
-    REQUIRE_THROWS_AS(host.initialize(), std::logic_error);
+    REQUIRE_THROWS_AS(host.add(component("late", events, finalizations, 3)),
+                      mehlissa::core::MehlissaError);
+    REQUIRE_THROWS_AS(host.initialize(), mehlissa::core::MehlissaError);
 }
 
 TEST_CASE("The host destructor finalizes initialized components exactly once",
