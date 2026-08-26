@@ -12,6 +12,14 @@ It is an extension and replacement of the BloodVoyagerS Module for ns-3 (https:/
 
 MEHLISSA 2.0 is a redesigned version based on a streamlined simulation core with substantial performance improvements, particularly in long simulations with over 2x runtime reduction.
 
+== Project Status and Development Roadmap
+
+The current implementation has been assessed against the complete MEHLISSA vision described in the literature and dissertation. The resulting analysis and the roadmap for a new, multi-layer MEHLISSA generation are available in the repository documentation:
+
+* link:docs/IST_ANALYSE.md[Analysis of the current state (German)]
+* link:docs/ROADMAP.md[Roadmap for a new MEHLISSA generation (German)]
+* link:docs/README.md[Documentation index]
+
 === Literature and References
 
 Please Checkout the literature folder for more information of the model and scenario. If you use MEHLISSA cite at least:
