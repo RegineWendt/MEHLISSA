@@ -5,6 +5,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers.hpp>
+#include <catch2/matchers/catch_matchers_string.hpp>
 
 #include <chrono>
 #include <cstdint>
@@ -70,4 +71,16 @@ TEST_CASE("Missing manifest and schema files report their role", "[experiment][m
             root_path() / "data" / "schemas" / "experiment" / "does-not-exist.json"),
         "Cannot open experiment schema: " +
             (root_path() / "data" / "schemas" / "experiment" / "does-not-exist.json").string());
+}
+
+TEST_CASE("An invalid experiment schema is rejected before the manifest",
+          "[experiment][manifest]") {
+    const auto invalid_schema =
+        root_path() / "tests" / "data" / "schemas" / "invalid-experiment-schema.json";
+
+    REQUIRE_THROWS_WITH(
+        mehlissa::experiment::load_experiment_manifest(
+            root_path() / "examples" / "experiments" / "minimal.json", invalid_schema),
+        Catch::Matchers::StartsWith("Invalid experiment schema '" + invalid_schema.string() +
+                                    "':"));
 }
