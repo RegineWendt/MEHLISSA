@@ -21,8 +21,8 @@ medizinischen Modelle beginnen erst auf diesem Fundament.
 | M1.2 Provenienzmanifest | abgeschlossen | Schema `1.0.0`, automatische Erzeugung, SHA-256- und Vertragstests; Plattform-CI |
 | M1.3 dimensionssicheres Einheitensystem | abgeschlossen | SI-Vertrag, migrierte 3D-Geometrie, Compile- und Unit-Tests; Plattform-CI |
 | M1.4 `SimulationContext` und Komponentenlebenszyklus | abgeschlossen | kontextgebundene Uhr/RNGs, eindeutiges Ownership, Lifecycle- und Fehlerpfadtests; Plattform-CI |
-| M1.5 strukturierte Fehler, Logging und Checkpointvertrag | umgesetzt, CI-Prüfung ausstehend | stabile Fehlercodes, JSONL-Schema, Checkpoint-Schema und Manipulationstests |
-| M1.6 plattformübergreifender Determinismusnachweis | offen | identischer Referenzlauf auf Windows/Linux |
+| M1.5 strukturierte Fehler, Logging und Checkpointvertrag | abgeschlossen | stabile Fehlercodes, JSONL-Schema, Checkpoint-Schema und Manipulationstests; Plattform-CI |
+| M1.6 plattformübergreifender Determinismusnachweis | umgesetzt, CI-Prüfung ausstehend | kanonischer Golden-Reference-Lauf auf MSVC, GCC und Clang |
 
 Der verbindliche Größen- und Konversionskatalog für M1.3 steht in
 [`UNITS.md`](UNITS.md).
@@ -30,6 +30,8 @@ Der M1.4-Vertrag ist in [`COMPONENT_LIFECYCLE.md`](COMPONENT_LIFECYCLE.md)
 dokumentiert.
 Fehlerkennungen, Laufprotokoll und Checkpointformat beschreibt
 [`ERRORS_LOGS_CHECKPOINTS.md`](ERRORS_LOGS_CHECKPOINTS.md).
+Der bytegenaue M1.6-Referenzlauf ist in
+[`DETERMINISM.md`](DETERMINISM.md) festgelegt.
 
 ## M1.1 benutzen
 

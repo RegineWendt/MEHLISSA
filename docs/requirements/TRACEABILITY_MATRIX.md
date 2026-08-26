@@ -5,7 +5,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Traceability Matrix – MEHLISSA Next
 
-**Stand:** 26. August 2026  
+**Stand:** 27. August 2026
 **Bezugsdokument:** [Systemanforderungen](SYSTEM_REQUIREMENTS.md)
 
 ## 1. Zweck
@@ -24,10 +24,10 @@ Ein `DONE` in dieser Matrix setzt einen erfolgreichen Nachweis voraus. Der bloß
 
 ## 2. Fundament und Architektur
 
-| ID | Quelle | Stand 26.08.2026 | Ziel | Vorgesehener Nachweis |
+| ID | Quelle | Stand 27.08.2026 | Ziel | Vorgesehener Nachweis |
 |---|---|---|---|---|
 | SYS-001 | RM M1 | DONE | M1 | `simulation_clock_tests`, plattformübergreifender CTest |
-| SYS-002 | RM 2.4 | PART | M1 | Reproduktionslauf auf Windows/Linux mit identischem Manifest |
+| SYS-002 | RM 2.4 | PART | M1/M7 | bytegleicher M1-Kernreferenzlauf auf MSVC/GCC/Clang; Replikatplanung und fachliche Modellnachweise folgen |
 | SYS-003 | RM M1 | DONE | M1 | `random_stream_tests` einschließlich Streamnamen |
 | SYS-004 | RM 3.2 | DONE | M1 | dimensionssichere Typen für Zeit, Länge, Fläche, Volumen, Geschwindigkeit, Stoffmenge und Konzentration; Compile-/Unit-Tests |
 | SYS-005 | RM 2.1–2.2 | PART | M0/M1 | Architekturprüfung der Zielstruktur und Abhängigkeitsregeln |
@@ -44,7 +44,7 @@ Ein `DONE` in dieser Matrix setzt einen erfolgreichen Nachweis voraus. Der bloß
 
 ## 3. Körper- und Organebene
 
-| ID | Quelle | Stand 26.08.2026 | Ziel | Vorgesehener Nachweis |
+| ID | Quelle | Stand 27.08.2026 | Ziel | Vorgesehener Nachweis |
 |---|---|---|---|---|
 | BODY-001 | DISS S. 100; BVS18 | LEGACY | M2 | schema-validierter, geschlossener 95er-Graph |
 | BODY-002 | DISS S. 100, 113–117 | LEGACY | M2 | Schema-, Einheiten- und Graphvalidierung |
@@ -65,7 +65,7 @@ Ein `DONE` in dieser Matrix setzt einen erfolgreichen Nachweis voraus. Der bloß
 
 ## 4. Kapillar- und Zellebene
 
-| ID | Quelle | Stand 26.08.2026 | Ziel | Vorgesehener Nachweis |
+| ID | Quelle | Stand 27.08.2026 | Ziel | Vorgesehener Nachweis |
 |---|---|---|---|---|
 | CAP-001 | DISS S. 126–129 | SPEC | M4 | parametrisierter Arteriole–Kapillare–Venole-Referenzfall |
 | CAP-002 | DISS S. 126–129 | RESEARCH | M4 | organspezifische Parameterkarten und Literaturvergleich |
@@ -82,7 +82,7 @@ Ein `DONE` in dieser Matrix setzt einen erfolgreichen Nachweis voraus. Der bloß
 
 ## 5. Nano-IoT und Forschungsdaten
 
-| ID | Quelle | Stand 26.08.2026 | Ziel | Vorgesehener Nachweis |
+| ID | Quelle | Stand 27.08.2026 | Ziel | Vorgesehener Nachweis |
 |---|---|---|---|---|
 | IOT-001 | DISS S. 113–115, 186–188 | LEGACY | M2/M7 | generischer Gerätetyp plus Locator/Collector-Komposition |
 | IOT-002 | DISS S. 96–97 | SPEC | M6 | Nano-In-Body → Gateway → BAN → Station |
@@ -100,7 +100,7 @@ Ein `DONE` in dieser Matrix setzt einen erfolgreichen Nachweis voraus. Der bloß
 
 ## 6. Bedienung, Szenarien und Qualität
 
-| ID | Quelle | Stand 26.08.2026 | Ziel | Vorgesehener Nachweis |
+| ID | Quelle | Stand 27.08.2026 | Ziel | Vorgesehener Nachweis |
 |---|---|---|---|---|
 | UX-001 | RM Phase 0/10 | PART | M1 | headless CLI-Lauf in CI |
 | UX-002 | VIS20 S. 1–2 | LEGACY | M7 | standardisiertes Ergebnisformat in neuer Visualisierung |

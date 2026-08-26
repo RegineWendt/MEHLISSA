@@ -1,0 +1,11 @@
+{
+  "format_version": "1.0.0",
+  "reference": "core-rng-clock-v1",
+  "master_seed": 7640891576956012809,
+  "simulation_time_ns": 1000000000,
+  "streams": [
+    {"name": "circulation", "draw_count": 32, "fnv1a64": "502313b898128b5e"},
+    {"name": "sensor-noise", "draw_count": 16, "fnv1a64": "4e82976ede629bc1"}
+  ],
+  "combined_fnv1a64": "5182e05e18bdf962"
+}

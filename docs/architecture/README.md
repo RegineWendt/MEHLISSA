@@ -21,6 +21,7 @@ Architecture Decision Records (ADRs) dokumentieren Entscheidungen, die die weite
 | [ADR-0010](adr/0010-dimensional-quantity-system.md) | Accepted | dimensionssichere SI-Größen im Kern und explizite Einheiten an Systemgrenzen |
 | [ADR-0011](adr/0011-simulation-context-and-lifecycle.md) | Accepted | expliziter Laufkontext und eindeutig besessener Komponentenlebenszyklus |
 | [ADR-0012](adr/0012-errors-logs-and-checkpoints.md) | Accepted | stabile Fehlerkennungen, JSONL-Laufprotokolle und versionierte Checkpointmanifeste |
+| [ADR-0013](adr/0013-cross-platform-determinism-reference.md) | Accepted | bytegenauer Golden-Reference-Lauf für MSVC, GCC und Clang |
 
 ## Statusmodell
 

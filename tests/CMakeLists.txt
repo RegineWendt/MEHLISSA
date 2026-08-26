@@ -6,6 +6,19 @@ target_link_libraries(mehlissa_core_smoke_tests PRIVATE MEHLISSA::core)
 mehlissa_configure_target(mehlissa_core_smoke_tests)
 add_test(NAME mehlissa_core_smoke_tests COMMAND mehlissa_core_smoke_tests)
 
+add_executable(mehlissa_determinism_reference determinism_reference.cpp)
+target_link_libraries(mehlissa_determinism_reference PRIVATE MEHLISSA::core)
+mehlissa_configure_target(mehlissa_determinism_reference)
+add_test(
+    NAME mehlissa_cross_platform_determinism
+    COMMAND
+        ${CMAKE_COMMAND}
+        -DREFERENCE_EXECUTABLE=$<TARGET_FILE:mehlissa_determinism_reference>
+        -DACTUAL_RESULT=${CMAKE_CURRENT_BINARY_DIR}/determinism-reference.actual.json
+        -DEXPECTED_RESULT=${CMAKE_CURRENT_SOURCE_DIR}/data/determinism/reference-v1.json
+        -P ${CMAKE_CURRENT_SOURCE_DIR}/verify_determinism.cmake
+)
+
 if(MEHLISSA_ENABLE_CATCH2_TESTS)
     find_package(Catch2 3 CONFIG REQUIRED)
 
