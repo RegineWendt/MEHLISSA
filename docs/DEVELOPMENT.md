@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # MEHLISSA Next entwickeln
 
 Dieses Dokument beschreibt den reproduzierbaren Build der neuen MEHLISSA-Generation. Die historischen Implementierungen in `mehlissa/` und `mehlissa2.0/` werden davon nicht verändert.
@@ -69,6 +74,11 @@ Der Bootstrap verwendet Catch2 für Unit-Tests. Ein kleiner frameworkfreier CTes
 - Tests werden über CTest ausgeführt.
 - Gleicher Experiment-Seed und gleicher Streamname müssen dieselbe rohe Zufallsfolge erzeugen.
 - Simulationszeit wird ganzzahlig in Nanosekunden geführt und darf nur streng monoton fortschreiten.
+- Neue unabhängig entwickelte Dateien tragen `SPDX-License-Identifier: MPL-2.0`.
+- Direkte Legacy-Portierungen bleiben `GPL-2.0-only` und werden in getrennten
+  Dateien mit erhaltener Urheber- und Provenienzangabe umgesetzt.
+- Neue Projektdokumentation und freigegebene eigene Daten verwenden
+  `CC-BY-4.0`; Daten benötigen zusätzlich ein Provenienzmanifest.
 
 ## Aktueller Bootstrap
 

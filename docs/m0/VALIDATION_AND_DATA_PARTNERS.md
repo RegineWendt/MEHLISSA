@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # Datenlücken und Validierungspartner
 
 **Stand:** 26. August 2026  

@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # ADR-0001: Neuer Kern und Legacy-Strategie
 
 - **Status:** Accepted

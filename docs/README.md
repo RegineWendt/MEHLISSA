@@ -1,4 +1,13 @@
+<!--
+SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # MEHLISSA-Dokumentation
+
+Die Lizenzzuordnung des Repositories ist in
+[`LICENSE.md`](../LICENSE.md) beschrieben; Regeln für Daten stehen in
+[`DATA_LICENSING.md`](DATA_LICENSING.md).
 
 ## Projektstand und Weiterentwicklung
 
@@ -8,7 +17,8 @@
 - [Traceability Matrix](requirements/TRACEABILITY_MATRIX.md) – Zuordnung aller Anforderungen zu Literatur, aktuellem Stand, Roadmap-Gate und vorgesehenem Nachweis.
 - [Fingerprinting-Referenzszenario](requirements/FINGERPRINTING_SCENARIO.md) – fachliche Baseline, Referenzwerte, Akzeptanzstufen und Tests für den ersten vertikalen Demonstrator.
 - [Architekturentscheidungen](architecture/README.md) – neuer Kern, Vier-Ebenen-Co-Simulation, Technologie, Szenariopriorität und Evidenzregeln.
-- [M0 Gate Review](m0/M0_GATE_REVIEW.md) – Abnahme der Fundamententscheidungen und einziger noch offener formaler Lizenzbeschluss.
+- [M0 Gate Review](m0/M0_GATE_REVIEW.md) – bestandene Abnahme der fachlichen,
+  technischen und lizenzbezogenen Fundamententscheidungen.
 - [Lizenz- und Dateninventar](m0/LICENSE_AND_DATA_INVENTORY.md) – lokaler Bestand, Prüfsummen, Defekte, Fremdquellen und Freigaberegeln.
 - [Zielnutzer und Arbeitsabläufe](m0/USERS_AND_WORKFLOWS.md) – Rollen, priorisierte Workflows und Release-Nutzbarkeit.
 - [Datenlücken und Validierungspartner](m0/VALIDATION_AND_DATA_PARTNERS.md) – benötigte Evidenz, öffentliche Quellen und mögliche Kompetenzpartner.

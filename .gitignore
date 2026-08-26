@@ -1,4 +1,7 @@
 # ---> C++
+# SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+# SPDX-License-Identifier: MPL-2.0
+
 # Prerequisites
 *.d
 

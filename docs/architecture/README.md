@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # Architekturentscheidungen
 
 Architecture Decision Records (ADRs) dokumentieren Entscheidungen, die die weitere Entwicklung von MEHLISSA Next prägen. Sie erklären Kontext, Entscheidung, Folgen und verworfene Alternativen. Akzeptierte ADRs werden nicht nachträglich umgeschrieben; eine neue Entscheidung ersetzt sie durch ein weiteres ADR.
@@ -10,7 +15,7 @@ Architecture Decision Records (ADRs) dokumentieren Entscheidungen, die die weite
 | [ADR-0004](adr/0004-fingerprinting-first-vertical-slice.md) | Accepted | Fingerprinting als erster vertikaler Demonstrator |
 | [ADR-0005](adr/0005-model-evidence-and-validity.md) | Accepted | Evidenz, Kalibrierung, Validierung und Hypothesen explizit trennen |
 | [ADR-0006](adr/0006-lung-reference-organ.md) | Accepted | Lunge als erstes Referenzorgan und stufenweises pulmonales Modell |
-| [ADR-0007](adr/0007-repository-license.md) | Proposed | GPL-2.0-only als repositoryweite Code-Lizenz; Rechteinhaberfreigabe ausstehend |
+| [ADR-0007](adr/0007-repository-license.md) | Accepted | MPL-2.0 für unabhängigen Next-Code, GPL-2.0-only für Legacy/Portierungen, CC-BY-4.0 für neue eigene Dokumentation und freigegebene Daten |
 
 ## Statusmodell
 

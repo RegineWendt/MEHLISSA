@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+// SPDX-License-Identifier: MPL-2.0
+
 #ifndef MEHLISSA_CORE_POSITION_HPP
 #define MEHLISSA_CORE_POSITION_HPP
 

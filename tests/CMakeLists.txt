@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+# SPDX-License-Identifier: MPL-2.0
+
 add_executable(mehlissa_core_smoke_tests smoke_tests.cpp)
 target_link_libraries(mehlissa_core_smoke_tests PRIVATE MEHLISSA::core)
 mehlissa_configure_target(mehlissa_core_smoke_tests)

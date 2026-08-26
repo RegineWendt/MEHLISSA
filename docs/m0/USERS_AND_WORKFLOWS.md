@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # Zielnutzer und priorisierte Arbeitsabläufe
 
 **Stand:** 26. August 2026  

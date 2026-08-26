@@ -1,7 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # Gate Review M0 – Projektauftrag und Architekturentscheidungen
 
 **Reviewdatum:** 26. August 2026  
-**Ergebnis:** fachlich und technisch abgeschlossen; formale Lizenzfreigabe ausstehend
+**Ergebnis:** bestanden
 
 ## 1. Abnahmekriterien
 
@@ -19,7 +24,7 @@
 | Forschungsfragen, Datenlücken und Partnerrollen benannt | erfüllt | [Datenlücken und Validierungspartner](VALIDATION_AND_DATA_PARTNERS.md) |
 | Legacy-Stände archiviert | erfüllt | Tag `legacy-baseline-2026-08-26` |
 | Modellvalidität und Releasequalität definiert | erfüllt | ADR-0005, Systemanforderungen und Abnahmeregeln |
-| repositoryweite Lizenz formal freigegeben | **offen** | ADR-0007 `Proposed`; Bestätigung der Rechteinhaber erforderlich |
+| repositoryweites Lizenzmodell formal freigegeben | erfüllt | ADR-0007 `Accepted`; `LICENSE.md`, `LICENSES/`, Notices und SPDX-Kennzeichnungen |
 
 ## 2. Verbindliche M0-Entscheidungen
 
@@ -30,10 +35,15 @@
 - Die Lunge ist das erste Organmodell; begonnen wird mit dem pulmonalen Kreislauf, nicht mit einer vollständigen Atemmechanik.
 - Reproduzierbarkeit, Einheiten, Provenienz, Evidenzklasse und Unsicherheit sind Produktfunktionen.
 - Öffentliche Daten und Fremdmodelle werden nur mit versionierter Lizenz- und Transformationsprovenienz aufgenommen.
+- Unabhängiger Next-Code steht unter MPL-2.0, Legacy und direkte Portierungen
+  unter GPL-2.0-only, neue eigene Dokumentation und freigegebene eigene Daten
+  unter CC-BY-4.0.
 
 ## 3. Eintritt in M1
 
-Technische Arbeit an M1 darf beginnen. Vor einem öffentlichen M1-Release oder der Annahme externer Beiträge muss ADR-0007 angenommen und die zentrale Lizenz-/Notice-Struktur umgesetzt sein.
+Technische Arbeit an M1 darf beginnen. Das Lizenz- und Notice-Gate ist erfüllt.
+Bestandsdaten mit ungeklärter Rechtekette und Publikations-PDFs bleiben bis zur
+artefaktbezogenen Freigabe außerhalb öffentlicher Next-Pakete.
 
 Die ersten M1-Arbeitspakete sind:
 
@@ -44,10 +54,9 @@ Die ersten M1-Arbeitspakete sind:
 5. strukturierte Fehler und Konfigurationsvalidierung;
 6. anschließend Migration des 95er-Gefäßmodells als M2-Vorbereitung.
 
-## 4. Restentscheidung der Projektleitung
+## 4. Abschlussentscheidung der Projektleitung
 
-Empfehlung zur Freigabe:
-
-> Das gesamte MEHLISSA-Repository wird unter `GPL-2.0-only` geführt. Bestehende Rechteinhaberhinweise bleiben erhalten; Fremddaten und Drittsoftware werden mit ihren eigenen Lizenzen und Notices dokumentiert.
-
-Nach Bestätigung werden `LICENSE`, `NOTICE.md`, `THIRD_PARTY_NOTICES.md` und SPDX-Header in einem eigenen, überprüfbaren Commit ergänzt. Danach kann M0 ohne Vorbehalt als `passed` markiert werden.
+Die Projektleitung hat die in ADR-0007 dokumentierte Mehrfachlizenzierung
+bestätigt. M0 ist damit abgeschlossen. Offene Rechteprüfungen einzelner
+Bestandsartefakte sind als Release-Gates der jeweiligen Datenpakete geführt und
+blockieren den Beginn von M1 nicht.

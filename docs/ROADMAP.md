@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # Roadmap für eine neue MEHLISSA-Generation
 
 **Stand:** 26. August 2026  
@@ -186,7 +191,18 @@ legacy/                  eingefrorene Referenzen auf MEHLISSA 1.x und 2.0
 **Richtwert:** 0–2 Monate  
 **Ziel:** Verbindlicher fachlicher und technischer Rahmen für die neue Generation
 
-**Arbeitsstand 26. August 2026:** Die technische und fachliche Baseline ist abgeschlossen und im [M0 Gate Review](m0/M0_GATE_REVIEW.md) abgenommen. Verbindliche Artefakte sind die [Systemanforderungen](requirements/SYSTEM_REQUIREMENTS.md), die [Traceability Matrix](requirements/TRACEABILITY_MATRIX.md), das [Fingerprinting-Referenzszenario](requirements/FINGERPRINTING_SCENARIO.md), die [Architecture Decision Records](architecture/README.md) sowie das [Lizenz-/Daten-](m0/LICENSE_AND_DATA_INVENTORY.md) und [Partnerinventar](m0/VALIDATION_AND_DATA_PARTNERS.md). Einziger formaler Vorbehalt ist die Rechteinhaberbestätigung für die empfohlene repositoryweite Lizenz `GPL-2.0-only` (ADR-0007).
+**Arbeitsstand 26. August 2026:** M0 ist abgeschlossen und im
+[M0 Gate Review](m0/M0_GATE_REVIEW.md) als bestanden abgenommen. Verbindliche
+Artefakte sind die [Systemanforderungen](requirements/SYSTEM_REQUIREMENTS.md),
+die [Traceability Matrix](requirements/TRACEABILITY_MATRIX.md), das
+[Fingerprinting-Referenzszenario](requirements/FINGERPRINTING_SCENARIO.md), die
+[Architecture Decision Records](architecture/README.md) sowie das
+[Lizenz-/Daten-](m0/LICENSE_AND_DATA_INVENTORY.md) und
+[Partnerinventar](m0/VALIDATION_AND_DATA_PARTNERS.md). ADR-0007 legt MPL-2.0
+für unabhängigen Next-Code, GPL-2.0-only für Legacy und direkte Portierungen
+sowie CC-BY-4.0 für neue eigene Dokumentation und freigegebene eigene Daten
+fest. Rechteprüfungen vorhandener Daten werden artefaktbezogen als Release-Gate
+geführt und blockieren M1 nicht.
 
 #### Aufgaben
 
@@ -218,6 +234,8 @@ legacy/                  eingefrorene Referenzen auf MEHLISSA 1.x und 2.0
 - Es ist entschieden, welche Bestandteile von 2.0 übernommen, neu geschrieben oder nur als Referenz erhalten werden.
 - Der erste vertikale Demonstrator ist Fingerprinting.
 - Keine neue Szenariologik wird mehr in den Legacy-Kern eingebaut.
+- Das Lizenzmodell pro Datei und Artefakt ist angenommen und technisch
+  umgesetzt.
 
 ### Phase 1 – Vertrauenswürdiges technisches Fundament
 
@@ -228,7 +246,7 @@ legacy/                  eingefrorene Referenzen auf MEHLISSA 1.x und 2.0
 
 - sauberen Out-of-Source-Build einrichten;
 - Linux, Windows und mindestens einen CI-Compiler unterstützen;
-- repositoryweite Lizenzdatei und Contributor-Anleitung ergänzen;
+- Lizenzgrenzen automatisiert prüfen und Contributor-Anleitung ergänzen;
 - bestehende Zeit-, Geometrie-, RNG-, Injektions- und Speicherfehler beheben;
 - globale Zustände entfernen oder explizit in einen `SimulationContext` überführen;
 - typsichere Einheiten für Zeit, Länge, Geschwindigkeit, Konzentration und Stoffmenge einführen;

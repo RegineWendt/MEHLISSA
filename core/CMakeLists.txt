@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+# SPDX-License-Identifier: MPL-2.0
+
 add_library(
     mehlissa_core
     src/position.cpp

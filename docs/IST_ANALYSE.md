@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # MEHLISSA – Analyse des aktuellen Stands
 
 **Analysestand:** 26. August 2026  
@@ -390,7 +395,9 @@ Für eine nachhaltige Forschungsplattform fehlen derzeit:
 - strukturierte Logs und aggregierte Ergebnisformate;
 - Benchmark- und Validierungssuite;
 - Contributor-Dokumentation;
-- repositoryweite Lizenzdatei trotz GPLv2-Hinweisen in Quelldateien.
+- zum Analysezeitpunkt fehlende repositoryweite Lizenzdatei trotz
+  GPLv2-Hinweisen in Quelldateien; inzwischen durch ADR-0007 und die
+  Mehrfachlizenzstruktur behoben.
 
 ## 9. Stärken des Bestands
 

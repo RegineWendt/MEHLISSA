@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # Referenzszenario: Proteom-Fingerprinting
 
 **Szenario-ID:** `FP-VERTICAL-001`  

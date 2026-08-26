@@ -1,31 +1,43 @@
+<!--
+SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # Lizenz- und Dateninventar
 
 **Stand:** 26. August 2026  
-**Status:** M0-Inventar vollständig; repositoryweite Lizenzentscheidung noch durch die Rechteinhaber zu bestätigen  
+**Status:** M0-Inventar und Lizenzmodell beschlossen; Rechteprüfung einzelner Bestandsdaten bleibt artefaktbezogen
 **Hinweis:** Dieses Dokument ist eine technische Bestandsaufnahme, keine Rechtsberatung.
 
 ## 1. Ergebnis in Kürze
 
-Der historische MEHLISSA-Code enthält durchgängig Hinweise auf **GNU GPL Version 2** und nennt als Rechteinhaber Universität zu Lübeck und – für spätere Anteile – Technische Universität Berlin. Im Repository fehlt jedoch eine zentrale `LICENSE`-/`COPYING`-Datei; GitHub erkennt deshalb keine Repositorylizenz. Der neue Next-Kern besitzt noch keine SPDX- oder Copyright-Kennzeichnung.
+Der historische MEHLISSA-Code enthält durchgängig Hinweise auf **GNU GPL Version 2** und nennt als Rechteinhaber Universität zu Lübeck und – für spätere Anteile – Technische Universität Berlin. Das Repository verwendet deshalb bewusst ein Lizenzmodell pro Datei und Artefakt.
 
-Die empfohlene Bereinigung ist:
+Die beschlossene und umgesetzte Struktur ist:
 
-1. MEHLISSA Next als `GPL-2.0-only` veröffentlichen;
-2. die vollständige GPLv2 als `LICENSE` im Repository-Root ergänzen;
-3. neuen MEHLISSA-Quelldateien `SPDX-License-Identifier: GPL-2.0-only` geben;
-4. Urheber- und institutionelle Rechteinhaber in `NOTICE.md` dokumentieren;
-5. Drittsoftware und Fremddaten in `THIRD_PARTY_NOTICES.md` getrennt führen;
-6. Publikations-PDFs nicht ungeprüft in Software-Releases paketieren.
+1. unabhängig entwickelten MEHLISSA-Next-Code als `MPL-2.0` veröffentlichen;
+2. Legacy-Code und direkte Portierungen unter `GPL-2.0-only` erhalten;
+3. neue, projekteigene Dokumentation und freigegebene eigene Daten unter
+   `CC-BY-4.0` stellen;
+4. vollständige Lizenztexte unter `LICENSES/` und die Zuordnung in
+   `LICENSE.md` führen;
+5. Urheber und Drittmaterial in `NOTICE.md` beziehungsweise
+   `THIRD_PARTY_NOTICES.md` dokumentieren;
+6. ungeklärte Bestandsdaten und Publikations-PDFs nicht in öffentliche
+   Next-Daten- oder Softwarepakete aufnehmen.
 
-Die Empfehlung folgt dem vorhandenen Code und bleibt mit einer optionalen späteren ns-3-Anbindung kompatibel. Sie wird in [ADR-0007](../architecture/adr/0007-repository-license.md) erst nach Bestätigung durch die Rechteinhaber verbindlich.
+Die Entscheidung folgt für den Bestand den vorhandenen Lizenzhinweisen, bleibt
+mit einer optionalen ns-3-Anbindung kompatibel und öffnet den unabhängig
+entwickelten Next-Kern für breitere Integration. Sie ist in
+[ADR-0007](../architecture/adr/0007-repository-license.md) verbindlich.
 
 ## 2. Quellcode und Werkzeuge
 
 | Bestandteil | Nutzung | Festgestellte Lizenz | Befund/Aktion |
 |---|---|---|---|
-| `mehlissa/` | Legacy MEHLISSA 1.x/ns-3-Modul | Header nennen GNU GPL Version 2 | Rechteinhaber und Autoren pro Datei erhalten; zentrale Lizenzdatei fehlt |
-| `mehlissa2.0/` | Legacy MEHLISSA 2.0 | Header nennen GNU GPL Version 2 | Universität zu Lübeck und TU Berlin genannt; zentrale Lizenzdatei fehlt |
-| `core/`, `apps/`, `tests/`, `cmake/` | MEHLISSA Next | noch nicht gekennzeichnet | nach Lizenzfreigabe SPDX-Header ergänzen |
+| `mehlissa/` | Legacy MEHLISSA 1.x/ns-3-Modul | GPL-2.0-only gemäß vorhandenen Headern | Rechteinhaber und Autoren pro Datei erhalten; vollständiger Text unter `LICENSES/` |
+| `mehlissa2.0/` | Legacy MEHLISSA 2.0 | GPL-2.0-only gemäß vorhandenen Headern | Universität zu Lübeck und TU Berlin genannt; vollständiger Text unter `LICENSES/` |
+| `core/`, `apps/`, `tests/`, `cmake/` | unabhängig entwickeltes MEHLISSA Next | MPL-2.0 | SPDX-Header vorhanden; GPL-Portierungen müssen als solche getrennt bleiben |
 | Catch2 | Unit-Tests, über vcpkg | BSL-1.0 | kompatible Testabhängigkeit; Copyrightdatei im Buildartefakt erhalten |
 | vcpkg | Paketmanager | MIT | Portbibliotheken behalten jeweils ihre eigene Lizenz |
 | CMake/Compiler | Buildwerkzeuge | nicht in MEHLISSA vendort | keine Codeübernahme; Version in Provenienz erfassen |
@@ -106,10 +118,12 @@ known_limitations
 responsible_reviewer
 ```
 
-## 7. Offene Rechteinhaberentscheidung
+## 7. Verbleibende artefaktbezogene Rechteprüfung
 
-Vor M1-Release ist zu bestätigen:
-
-> MEHLISSA Next und das Repository werden unter `GPL-2.0-only` geführt; die bestehenden Urheber- und Institutionshinweise bleiben erhalten.
-
-Falls eine permissive oder duale Lizenz gewünscht ist, müssen Universität zu Lübeck, TU Berlin und gegebenenfalls weitere individuelle Rechteinhaber der betroffenen Beiträge zustimmen. Bis zur Entscheidung werden keine neuen Fremdbeiträge angenommen und keine Next-Releaseartefakte veröffentlicht.
+Die repositoryweite Lizenzentscheidung ist getroffen. Offen bleibt nicht das
+Lizenzmodell, sondern die Rechtekette einzelner vorhandener CSV-Dateien und
+Publikations-PDFs. Die Dateien werden erst dann als CC-BY-4.0-Daten
+gekennzeichnet beziehungsweise in öffentliche Next-Pakete aufgenommen, wenn
+die jeweils genannten Beitragenden oder zuständigen Rechteinhaber die Freigabe
+bestätigt haben. Neue eigene Daten verwenden von Beginn an ein Manifest und
+`CC-BY-4.0`.

@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+// SPDX-License-Identifier: CC-BY-4.0
+
 = MEHLISSA: A Medical Holistic Simulation Architecture for Nanonetworks in Humans
 
 Regine Wendt <regine.wendt@uni-luebeck.de>
@@ -19,6 +22,18 @@ The current implementation has been assessed against the complete MEHLISSA visio
 * link:docs/IST_ANALYSE.md[Analysis of the current state (German)]
 * link:docs/ROADMAP.md[Roadmap for a new MEHLISSA generation (German)]
 * link:docs/README.md[Documentation index]
+
+== Licensing
+
+MEHLISSA uses licenses per file and artifact:
+
+* independently developed MEHLISSA Next code: `MPL-2.0`
+* historical implementations and direct ports: `GPL-2.0-only`
+* new project-owned documentation and released project data: `CC-BY-4.0`
+
+See link:LICENSE.md[the repository licensing policy] for the exact boundaries.
+Existing datasets and third-party material are not relicensed without a
+confirmed rights chain.
 
 === Literature and References
 

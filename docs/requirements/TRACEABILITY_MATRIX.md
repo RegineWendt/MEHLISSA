@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # Traceability Matrix – MEHLISSA Next
 
 **Stand:** 26. August 2026  
@@ -127,6 +132,11 @@ Phase 0 ist fachlich abgeschlossen, wenn zusätzlich zu diesen Dokumenten folgen
 - [x] Zielnutzer und priorisierte Arbeitsabläufe als M0-Baseline festgelegt;
 - [x] Referenzorgan für M3 ausgewählt: Lunge (ADR-0006);
 - [x] Partner-/Datenlücken für Proteomik, pulmonale Hämodynamik und Wetlab-Validierung benannt;
-- [ ] repositoryweite Lizenz `GPL-2.0-only` durch die Rechteinhaber bestätigt und technisch umgesetzt (ADR-0007).
+- [x] Mehrfachlizenzierung technisch umgesetzt: MPL-2.0 für unabhängigen
+  Next-Code, GPL-2.0-only für Legacy und direkte Portierungen, CC-BY-4.0 für
+  neue eigene Dokumentation und freigegebene eigene Daten (ADR-0007).
 
-Der verbleibende Lizenzvorbehalt blockiert nicht den Beginn technischer M1-Arbeit, wohl aber einen öffentlichen M1-Release und die Annahme externer Beiträge. Details stehen im [M0 Gate Review](../m0/M0_GATE_REVIEW.md).
+M0 ist damit abgeschlossen. Ungeklärte Rechte einzelner Bestandsdaten und
+Publikationen werden als Release-Gate des jeweiligen Artefakts geführt; sie
+blockieren weder M1 noch unabhängig entwickelte Next-Releases. Details stehen
+im [M0 Gate Review](../m0/M0_GATE_REVIEW.md).
