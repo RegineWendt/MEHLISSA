@@ -91,7 +91,7 @@ Ein `DONE` in dieser Matrix setzt einen erfolgreichen Nachweis voraus. Der bloß
 | IOT-005 | DISS S. 96–100; MEH25 | SPEC | M6 | austauschbarer Netzwerkadapter ohne Kernabhängigkeit |
 | DATA-001 | RM 6.1 | SPEC | M1/M2 | JSON-Schema plus Datenvalidator in CI |
 | DATA-002 | RM 6.4 | DONE | M1 | JSON Schema `1.0.0`, Manifest- und CLI-Negativtests |
-| DATA-003 | RM 2.4, 6.4 | SPEC | M1 | automatisch erzeugtes `provenance.json` |
+| DATA-003 | RM 2.4, 6.4 | PART | M1 | Schema `1.0.0`, automatisch erzeugtes `provenance.json`, SHA-256- und Vertragstests; Datenversionskatalog folgt mit realen Modellen |
 | DATA-004 | VIS20; MEH25 | LEGACY | M2 | konfigurierbare Events/Aggregate/Trajektorien |
 | DATA-005 | RM 2.5 | SPEC | M0/M1 | Evidenzklasse in jeder Modellkarte |
 | DATA-006 | RM 6.2 | SPEC | M0 | dokumentierter Kalibrier-/Validierungssplit |

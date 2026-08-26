@@ -18,7 +18,7 @@ medizinischen Modelle beginnen erst auf diesem Fundament.
 | M1.0 C++20/CMake/vcpkg und Plattform-CI | abgeschlossen | MSVC-, GCC- und Clang-Jobs; CTest |
 | M1.0 monotone Zeit, 3D-Geometrie, benannte RNG-Ströme | abgeschlossen | Core-Unit- und Smoke-Tests |
 | M1.1 versioniertes Experimentmanifest | umgesetzt, CI-Prüfung ausstehend | Schema `1.0.0`, Parser, Validator, CLI- und Negativtests |
-| M1.2 Provenienzmanifest | offen | `provenance.json` pro Lauf |
+| M1.2 Provenienzmanifest | umgesetzt, CI-Prüfung ausstehend | Schema `1.0.0`, automatische Erzeugung, SHA-256- und Vertragstests |
 | M1.3 vollständiges Einheitensystem | offen | Compile- und Unit-Tests |
 | M1.4 `SimulationContext` und Komponentenlebenszyklus | offen | Lifecycle- und Invariantentests |
 | M1.5 strukturierte Fehler, Logging und Checkpointvertrag | offen | Fehler-/Snapshot-Tests |
@@ -42,6 +42,9 @@ Ohne `--schema` verwendet die CLI relativ zum aktuellen Arbeitsverzeichnis
 `data/schemas/experiment/1.0.0.schema.json`.
 
 Das aktuelle Minimalexperiment enthält noch keine medizinischen Modelle. Der
-`run`-Befehl validiert den Vertrag und führt die Simulationsuhr deterministisch
-bis zur konfigurierten Dauer. Provenienz und reale Komponenten folgen in den
-nächsten Inkrementen.
+`run`-Befehl validiert den Vertrag, führt die Simulationsuhr deterministisch bis
+zur konfigurierten Dauer und schreibt anschließend
+`<outputs.directory>/provenance.json`. Das Provenienzmanifest enthält unter
+anderem den SHA-256-Hash der Experimentdatei, Seed, Git- und Buildzustand,
+Compiler, Plattform, Zeitstempel und erreichte Simulationszeit. Sein Vertrag
+liegt unter `data/schemas/provenance/1.0.0.schema.json`.

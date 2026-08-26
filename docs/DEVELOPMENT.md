@@ -69,6 +69,10 @@ Der Bootstrap verwendet Catch2 für Unit-Tests. Ein kleiner frameworkfreier CTes
 Abhängigkeit ist bewusst nicht Teil des Offline-Smoke-Presets; dieser baut nur
 den allgemeinen Kern ohne Apps und Experiment-I/O.
 
+`PicoSHA2` berechnet die SHA-256-Prüfsumme des eingelesenen
+Experimentmanifests für die Laufprovenienz. Die kleine Header-only-Abhängigkeit
+ist wie `jsoncons` über den fixierten vcpkg-Baseline-Stand reproduzierbar.
+
 ## Qualitätsregeln
 
 - Builds erfolgen ausschließlich außerhalb der Quellverzeichnisse unter `build/`.

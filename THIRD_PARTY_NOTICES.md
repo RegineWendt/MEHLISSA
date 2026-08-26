@@ -12,6 +12,7 @@ project. Their own license and attribution terms remain authoritative.
 |---|---|---|
 | Catch2 | Next unit-test dependency obtained through vcpkg | BSL-1.0 |
 | jsoncons | JSON parsing and JSON Schema 2020-12 validation, obtained through vcpkg | BSL-1.0 |
+| PicoSHA2 | Streaming SHA-256 checksums for provenance, obtained through vcpkg | MIT |
 | vcpkg | Dependency manager; not vendored | MIT |
 | ns-3 | Optional legacy and future communications integration | GPL-2.0-only |
 | SimVascular | Potential external modeling tool/adapter | BSD-3-Clause |

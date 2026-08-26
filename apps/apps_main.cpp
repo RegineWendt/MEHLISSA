@@ -3,6 +3,7 @@
 
 #include <mehlissa/core/simulation_clock.hpp>
 #include <mehlissa/experiment/experiment_manifest.hpp>
+#include <mehlissa/experiment/provenance.hpp>
 
 #include <cinttypes>
 #include <cstdint>
@@ -87,10 +88,26 @@ int execute(const CommandLine& command) {
         return 0;
     }
 
+    const auto started_at = mehlissa::experiment::current_utc_timestamp();
     mehlissa::core::SimulationClock clock;
     clock.advance(manifest.duration);
+
+    const auto provenance_path = manifest.output_directory / "provenance.json";
+    const mehlissa::experiment::ProvenanceRequest provenance_request{
+        command.experiment_path,
+        provenance_path,
+        {
+            started_at,
+            mehlissa::experiment::current_utc_timestamp(),
+            "completed",
+            clock.now(),
+        },
+    };
+    mehlissa::experiment::write_provenance(manifest, provenance_request);
+
     print_manifest(manifest);
     std::printf("simulation_time_ns=%" PRId64 "\n", static_cast<std::int64_t>(clock.now().count()));
+    std::printf("provenance_file=%s\n", provenance_path.string().c_str());
     return 0;
 }
 

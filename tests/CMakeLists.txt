@@ -27,7 +27,11 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
     catch_discover_tests(mehlissa_core_tests DISCOVERY_MODE PRE_TEST)
 
     if(MEHLISSA_ENABLE_EXPERIMENT_IO)
-        add_executable(mehlissa_experiment_tests experiment_manifest_tests.cpp)
+        add_executable(
+            mehlissa_experiment_tests
+            experiment_manifest_tests.cpp
+            provenance_tests.cpp
+        )
         target_link_libraries(
             mehlissa_experiment_tests
             PRIVATE

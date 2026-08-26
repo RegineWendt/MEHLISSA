@@ -37,6 +37,8 @@
 
 # MEHLISSA Next out-of-source builds and local tooling
 /build/
+/results/
+/.vcpkg/
 /vcpkg_installed/
 CMakeUserPresets.json
 compile_commands.json
