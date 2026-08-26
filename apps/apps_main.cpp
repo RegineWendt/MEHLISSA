@@ -18,7 +18,7 @@ namespace {
 constexpr auto default_schema_path = "data/schemas/experiment/1.0.0.schema.json";
 
 struct CommandLine final {
-    enum class Operation { run, validate };
+    enum class Operation : std::uint8_t { run, validate };
 
     Operation operation{};
     std::filesystem::path experiment_path;

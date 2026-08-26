@@ -18,6 +18,7 @@ namespace mehlissa::experiment {
 namespace {
 
 using Json = jsoncons::json;
+using CompiledSchema = jsoncons::jsonschema::json_schema<Json>;
 
 [[nodiscard]] Json read_json(const std::filesystem::path& path, const std::string_view role) {
     std::ifstream stream{path, std::ios::binary};
@@ -33,10 +34,19 @@ using Json = jsoncons::json;
     }
 }
 
-void validate_against_schema(const Json& document, const Json& schema,
+[[nodiscard]] CompiledSchema compile_schema(const Json& schema,
+                                            const std::filesystem::path& schema_path) {
+    try {
+        return jsoncons::jsonschema::make_json_schema(schema);
+    } catch (const std::exception& error) {
+        throw ManifestError{"Invalid experiment schema '" + schema_path.string() +
+                            "': " + error.what()};
+    }
+}
+
+void validate_against_schema(const Json& document, const CompiledSchema& compiled_schema,
                              const std::filesystem::path& manifest_path) {
     try {
-        const auto compiled_schema = jsoncons::jsonschema::make_json_schema(schema);
         compiled_schema.validate(document);
     } catch (const std::exception& error) {
         throw ManifestError{"Experiment manifest '" + manifest_path.string() +
@@ -93,7 +103,8 @@ ExperimentManifest load_experiment_manifest(const std::filesystem::path& manifes
                                             const std::filesystem::path& schema_path) {
     const auto schema = read_json(schema_path, "experiment schema");
     const auto document = read_json(manifest_path, "experiment manifest");
-    validate_against_schema(document, schema, manifest_path);
+    const auto compiled_schema = compile_schema(schema, schema_path);
+    validate_against_schema(document, compiled_schema, manifest_path);
 
     try {
         ExperimentManifest manifest;
