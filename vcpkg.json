@@ -1,0 +1,10 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "mehlissa-next",
+  "version-string": "0.1.0",
+  "description": "Development dependencies for the next MEHLISSA generation",
+  "builtin-baseline": "d5b6777d666efc1a7f491babfcdab37794c1ae3e",
+  "dependencies": [
+    "catch2"
+  ]
+}

@@ -1,0 +1,11 @@
+BasedOnStyle: LLVM
+Language: Cpp
+ColumnLimit: 100
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+PointerAlignment: Left
+ReferenceAlignment: Left
+SortIncludes: CaseSensitive
+FixNamespaceComments: true
+InsertNewlineAtEOF: true

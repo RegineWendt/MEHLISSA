@@ -1,0 +1,78 @@
+name: MEHLISSA Next CI
+
+on:
+  push:
+    branches:
+      - main
+      - mehlissa-next-generation
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  VCPKG_COMMIT: d5b6777d666efc1a7f491babfcdab37794c1ae3e
+
+jobs:
+  windows-msvc:
+    runs-on: windows-latest
+    env:
+      VCPKG_ROOT: ${{ runner.temp }}\vcpkg
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install pinned vcpkg
+        shell: pwsh
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git "$env:VCPKG_ROOT"
+          git -C "$env:VCPKG_ROOT" checkout "$env:VCPKG_COMMIT"
+          & "$env:VCPKG_ROOT\bootstrap-vcpkg.bat" -disableMetrics
+      - name: Configure
+        run: cmake --preset windows-msvc
+      - name: Build
+        run: cmake --build --preset windows-msvc-debug
+      - name: Test
+        run: ctest --preset windows-msvc-debug
+
+  linux-gcc:
+    runs-on: ubuntu-latest
+    env:
+      VCPKG_ROOT: ${{ runner.temp }}/vcpkg
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install build tools
+        run: sudo apt-get update && sudo apt-get install --yes ninja-build
+      - name: Install pinned vcpkg
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git "$VCPKG_ROOT"
+          git -C "$VCPKG_ROOT" checkout "$VCPKG_COMMIT"
+          "$VCPKG_ROOT/bootstrap-vcpkg.sh" -disableMetrics
+      - name: Configure
+        run: cmake --preset linux-gcc
+      - name: Build
+        run: cmake --build --preset linux-gcc-debug
+      - name: Test
+        run: ctest --preset linux-gcc-debug
+
+  linux-clang-analysis:
+    runs-on: ubuntu-latest
+    env:
+      VCPKG_ROOT: ${{ runner.temp }}/vcpkg
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install analysis tools
+        run: sudo apt-get update && sudo apt-get install --yes clang clang-format clang-tidy ninja-build
+      - name: Verify formatting
+        run: >-
+          find apps core tests -type f \( -name '*.cpp' -o -name '*.hpp' \) -print0 |
+          xargs -0 clang-format --dry-run --Werror
+      - name: Install pinned vcpkg
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git "$VCPKG_ROOT"
+          git -C "$VCPKG_ROOT" checkout "$VCPKG_COMMIT"
+          "$VCPKG_ROOT/bootstrap-vcpkg.sh" -disableMetrics
+      - name: Configure
+        run: cmake --preset linux-clang-analysis
+      - name: Build with clang-tidy and sanitizers
+        run: cmake --build --preset linux-clang-analysis
+      - name: Test with sanitizers
+        run: ctest --preset linux-clang-analysis

@@ -32,6 +32,14 @@
 *.out
 *.app
 
+# MEHLISSA Next out-of-source builds and local tooling
+/build/
+/vcpkg_installed/
+CMakeUserPresets.json
+compile_commands.json
+.cache/
+.vs/
+
 
 # mehlissa 2.0
 mehlissa2.0/bin/
