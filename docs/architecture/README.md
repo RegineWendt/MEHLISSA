@@ -16,6 +16,7 @@ Architecture Decision Records (ADRs) dokumentieren Entscheidungen, die die weite
 | [ADR-0005](adr/0005-model-evidence-and-validity.md) | Accepted | Evidenz, Kalibrierung, Validierung und Hypothesen explizit trennen |
 | [ADR-0006](adr/0006-lung-reference-organ.md) | Accepted | Lunge als erstes Referenzorgan und stufenweises pulmonales Modell |
 | [ADR-0007](adr/0007-repository-license.md) | Accepted | MPL-2.0 für unabhängigen Next-Code, GPL-2.0-only für Legacy/Portierungen, CC-BY-4.0 für neue eigene Dokumentation und freigegebene Daten |
+| [ADR-0008](adr/0008-versioned-experiment-manifest.md) | Accepted | striktes, versioniertes JSON-Experimentmanifest mit JSON Schema 2020-12 |
 
 ## Statusmodell
 

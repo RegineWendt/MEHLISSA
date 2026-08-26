@@ -34,7 +34,8 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "BUILD_TESTING": "ON",
-        "MEHLISSA_BUILD_APPS": "ON",
+        "MEHLISSA_BUILD_APPS": "OFF",
+        "MEHLISSA_ENABLE_EXPERIMENT_IO": "OFF",
         "MEHLISSA_ENABLE_CATCH2_TESTS": "OFF",
         "MEHLISSA_WARNINGS_AS_ERRORS": "ON"
       }

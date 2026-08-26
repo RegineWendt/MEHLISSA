@@ -14,6 +14,7 @@ include(CTest)
 include(cmake/MehlissaTargetOptions.cmake)
 
 option(MEHLISSA_BUILD_APPS "Build MEHLISSA command-line applications" ON)
+option(MEHLISSA_ENABLE_EXPERIMENT_IO "Build JSON experiment loading and validation" ON)
 option(MEHLISSA_ENABLE_CATCH2_TESTS "Build the full Catch2 unit-test suite" ON)
 option(MEHLISSA_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
 option(MEHLISSA_ENABLE_CLANG_TIDY "Run clang-tidy while compiling" OFF)
@@ -21,7 +22,14 @@ option(MEHLISSA_ENABLE_SANITIZERS "Enable address and undefined-behaviour saniti
 
 add_subdirectory(core)
 
+if(MEHLISSA_ENABLE_EXPERIMENT_IO)
+    add_subdirectory(experiment)
+endif()
+
 if(MEHLISSA_BUILD_APPS)
+    if(NOT MEHLISSA_ENABLE_EXPERIMENT_IO)
+        message(FATAL_ERROR "MEHLISSA applications require experiment I/O")
+    endif()
     add_subdirectory(apps)
 endif()
 

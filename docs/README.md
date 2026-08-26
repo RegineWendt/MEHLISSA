@@ -23,5 +23,7 @@ Die Lizenzzuordnung des Repositories ist in
 - [Zielnutzer und Arbeitsabläufe](m0/USERS_AND_WORKFLOWS.md) – Rollen, priorisierte Workflows und Release-Nutzbarkeit.
 - [Datenlücken und Validierungspartner](m0/VALIDATION_AND_DATA_PARTNERS.md) – benötigte Evidenz, öffentliche Quellen und mögliche Kompetenzpartner.
 - [Entwicklungsumgebung und Build](DEVELOPMENT.md) – reproduzierbarer CMake/vcpkg-Build, Testausführung und Qualitätswerkzeuge für MEHLISSA Next.
+- [M1 – Trustworthy Kernel](m1/README.md) – aktueller Umsetzungsstand,
+  Inkremente und Bedienung des versionierten Experimentmanifests.
 
 Die historische Analyse bezieht sich auf den Legacy-Stand `4f4fc5a` (Tag `legacy-baseline-2026-08-26`). Die Entwicklungsdokumente beschreiben den Branch `mehlissa-next-generation`. Bei wesentlichen Änderungen an Architektur, Datensätzen oder Szenarien müssen Anforderungen, Traceability Matrix und Roadmap gemeinsam aktualisiert werden.

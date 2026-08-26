@@ -65,6 +65,10 @@ Alle direkten C++-Abhängigkeiten stehen in `vcpkg.json`. Der dort eingetragene 
 
 Der Bootstrap verwendet Catch2 für Unit-Tests. Ein kleiner frameworkfreier CTest-Smoke-Test hält die Kerninvarianten zusätzlich offline prüfbar. Weitere Bibliotheken werden erst nach einer begründeten Architekturentscheidung ergänzt.
 
+`jsoncons` validiert Experimentdateien gegen das versionierte JSON Schema. Die
+Abhängigkeit ist bewusst nicht Teil des Offline-Smoke-Presets; dieser baut nur
+den allgemeinen Kern ohne Apps und Experiment-I/O.
+
 ## Qualitätsregeln
 
 - Builds erfolgen ausschließlich außerhalb der Quellverzeichnisse unter `build/`.

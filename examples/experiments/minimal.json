@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "experiment_id": "minimal-deterministic-run",
+  "duration": {
+    "value": 10,
+    "unit": "s"
+  },
+  "random": {
+    "master_seed": 12345
+  },
+  "models": [],
+  "outputs": {
+    "directory": "results/minimal-deterministic-run"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "experiment_id": "duration-overflow",
+  "duration": {
+    "value": 9223372036854775807,
+    "unit": "h"
+  },
+  "random": {
+    "master_seed": 12345
+  },
+  "models": [],
+  "outputs": {
+    "directory": "results/duration-overflow"
+  }
+}

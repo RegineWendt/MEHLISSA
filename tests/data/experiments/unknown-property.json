@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "experiment_id": "unknown-property",
+  "duration": {
+    "value": 1,
+    "unit": "s"
+  },
+  "random": {
+    "master_seed": 12345
+  },
+  "models": [],
+  "outputs": {
+    "directory": "results/unknown-property"
+  },
+  "unexpected": true
+}

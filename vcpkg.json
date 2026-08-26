@@ -5,6 +5,7 @@
   "description": "Development dependencies for the next MEHLISSA generation",
   "builtin-baseline": "ddd0023b0eee70986e42ed49d9d4afb8098f212e",
   "dependencies": [
-    "catch2"
+    "catch2",
+    "jsoncons"
   ]
 }
