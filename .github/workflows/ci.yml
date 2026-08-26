@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 env:
-  VCPKG_COMMIT: d5b6777d666efc1a7f491babfcdab37794c1ae3e
+  VCPKG_COMMIT: ddd0023b0eee70986e42ed49d9d4afb8098f212e
   VCPKG_ROOT: ${{ github.workspace }}/.vcpkg
 
 jobs:
