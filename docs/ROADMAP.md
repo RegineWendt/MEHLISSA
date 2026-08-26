@@ -186,6 +186,8 @@ legacy/                  eingefrorene Referenzen auf MEHLISSA 1.x und 2.0
 **Richtwert:** 0–2 Monate  
 **Ziel:** Verbindlicher fachlicher und technischer Rahmen für die neue Generation
 
+**Arbeitsstand 26. August 2026:** Die technische und fachliche Baseline ist angelegt. Verbindliche Artefakte sind die [Systemanforderungen](requirements/SYSTEM_REQUIREMENTS.md), die [Traceability Matrix](requirements/TRACEABILITY_MATRIX.md), das [Fingerprinting-Referenzszenario](requirements/FINGERPRINTING_SCENARIO.md) und die [Architecture Decision Records](architecture/README.md). Offen bleiben vor dem vollständigen Gate M0 das Lizenz-/Dateninventar, bestätigte Nutzerrollen, die Wahl des ersten Referenzorgans und die Benennung externer Daten-/Validierungspartner.
+
 #### Aufgaben
 
 - Dissertation in nachverfolgbare fachliche Anforderungen überführen.
@@ -203,8 +205,8 @@ legacy/                  eingefrorene Referenzen auf MEHLISSA 1.x und 2.0
 
 #### Ergebnisse
 
-- System Requirements Document;
-- Architekturgrundsatzpapier;
+- [System Requirements Document](requirements/SYSTEM_REQUIREMENTS.md);
+- [Architekturgrundsätze und Decision Records](architecture/README.md);
 - priorisierter Szenariokatalog;
 - dokumentierte Technologieentscheidung;
 - Daten- und Lizenzinventar;
@@ -753,14 +755,14 @@ Nicht jede Rolle muss dauerhaft durch eine eigene Person besetzt sein. Für jede
 
 Die folgenden Pakete können direkt aus dieser Roadmap abgeleitet werden:
 
-1. Anforderungen aus Kapitel 4–6 der Dissertation als nummerierten Katalog erfassen.
-2. Architekturentscheidung „MEHLISSA Next auf Basis von 2.0 versus neuer Kern“ durch einen kleinen Spike vorbereiten.
-3. Legacy-Versionen taggen und die aktuelle Buildbarkeit dokumentieren.
-4. Minimalen neuen Kern mit korrekter Zeit, 3D-Geometrie und RNG erstellen.
+1. ~~Anforderungen aus Kapitel 4–6 der Dissertation als nummerierten Katalog erfassen.~~ Erledigt: [Systemanforderungen](requirements/SYSTEM_REQUIREMENTS.md).
+2. ~~Architekturentscheidung „MEHLISSA Next auf Basis von 2.0 versus neuer Kern“ durch einen kleinen Spike vorbereiten.~~ Erledigt: [ADR-0001](architecture/adr/0001-new-kernel-and-legacy-policy.md).
+3. ~~Legacy-Versionen taggen und die aktuelle Buildbarkeit dokumentieren.~~ Erledigt: Tag `legacy-baseline-2026-08-26` und [Entwicklungsdokumentation](DEVELOPMENT.md).
+4. ~~Minimalen neuen Kern mit korrekter Zeit, 3D-Geometrie und RNG erstellen.~~ Erledigt und in der CI auf MSVC, GCC und Clang geprüft.
 5. 95er-Gefäßmodell in ein versioniertes Schema migrieren und validieren.
 6. BVS-Referenzlauf als ersten automatischen wissenschaftlichen Regressionstest aufbauen.
 7. Szenarioformat und Experimentmanifest definieren.
-8. Fingerprinting-Anforderungen und die Baseline aus der Dissertation als vertikale Spezifikation formulieren.
+8. ~~Fingerprinting-Anforderungen und die Baseline aus der Dissertation als vertikale Spezifikation formulieren.~~ Erledigt: [Fingerprinting-Referenzszenario](requirements/FINGERPRINTING_SCENARIO.md).
 9. Referenzorgan für die erste Body–Organ-Kopplung auswählen.
 10. Benötigte biologische und experimentelle Partner beziehungsweise Datenquellen identifizieren.
 

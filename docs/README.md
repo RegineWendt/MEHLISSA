@@ -4,6 +4,10 @@
 
 - [Analyse des aktuellen Stands](IST_ANALYSE.md) – Abgleich von Literatur, MEHLISSA 1.x, MEHLISSA 2.0, Datensätzen und Anwendungsszenarien.
 - [Roadmap für eine neue MEHLISSA-Generation](ROADMAP.md) – dissertationsnahe Zielarchitektur, Entwicklungsphasen, Qualitätsgates, Szenarien und langfristiger Digital-Twin-Pfad.
+- [Systemanforderungen](requirements/SYSTEM_REQUIREMENTS.md) – 72 nummerierte fachliche, architektonische und qualitative Anforderungen mit Herkunft, Priorität und Nachweisart.
+- [Traceability Matrix](requirements/TRACEABILITY_MATRIX.md) – Zuordnung aller Anforderungen zu Literatur, aktuellem Stand, Roadmap-Gate und vorgesehenem Nachweis.
+- [Fingerprinting-Referenzszenario](requirements/FINGERPRINTING_SCENARIO.md) – fachliche Baseline, Referenzwerte, Akzeptanzstufen und Tests für den ersten vertikalen Demonstrator.
+- [Architekturentscheidungen](architecture/README.md) – neuer Kern, Vier-Ebenen-Co-Simulation, Technologie, Szenariopriorität und Evidenzregeln.
 - [Entwicklungsumgebung und Build](DEVELOPMENT.md) – reproduzierbarer CMake/vcpkg-Build, Testausführung und Qualitätswerkzeuge für MEHLISSA Next.
 
-Die Dokumente beziehen sich auf den Stand von `main` am 26. August 2026 (`4f4fc5a`). Bei wesentlichen Änderungen an Architektur, Datensätzen oder Szenarien sollten Analyse und Roadmap gemeinsam aktualisiert werden.
+Die historische Analyse bezieht sich auf den Legacy-Stand `4f4fc5a` (Tag `legacy-baseline-2026-08-26`). Die Entwicklungsdokumente beschreiben den Branch `mehlissa-next-generation`. Bei wesentlichen Änderungen an Architektur, Datensätzen oder Szenarien müssen Anforderungen, Traceability Matrix und Roadmap gemeinsam aktualisiert werden.
