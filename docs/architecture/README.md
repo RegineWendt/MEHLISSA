@@ -9,6 +9,8 @@ Architecture Decision Records (ADRs) dokumentieren Entscheidungen, die die weite
 | [ADR-0003](adr/0003-cpp20-cmake-vcpkg.md) | Accepted | C++20-Kern mit CMake/vcpkg; Python später als Experiment-API |
 | [ADR-0004](adr/0004-fingerprinting-first-vertical-slice.md) | Accepted | Fingerprinting als erster vertikaler Demonstrator |
 | [ADR-0005](adr/0005-model-evidence-and-validity.md) | Accepted | Evidenz, Kalibrierung, Validierung und Hypothesen explizit trennen |
+| [ADR-0006](adr/0006-lung-reference-organ.md) | Accepted | Lunge als erstes Referenzorgan und stufenweises pulmonales Modell |
+| [ADR-0007](adr/0007-repository-license.md) | Proposed | GPL-2.0-only als repositoryweite Code-Lizenz; Rechteinhaberfreigabe ausstehend |
 
 ## Statusmodell
 

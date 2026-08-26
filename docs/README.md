@@ -8,6 +8,10 @@
 - [Traceability Matrix](requirements/TRACEABILITY_MATRIX.md) – Zuordnung aller Anforderungen zu Literatur, aktuellem Stand, Roadmap-Gate und vorgesehenem Nachweis.
 - [Fingerprinting-Referenzszenario](requirements/FINGERPRINTING_SCENARIO.md) – fachliche Baseline, Referenzwerte, Akzeptanzstufen und Tests für den ersten vertikalen Demonstrator.
 - [Architekturentscheidungen](architecture/README.md) – neuer Kern, Vier-Ebenen-Co-Simulation, Technologie, Szenariopriorität und Evidenzregeln.
+- [M0 Gate Review](m0/M0_GATE_REVIEW.md) – Abnahme der Fundamententscheidungen und einziger noch offener formaler Lizenzbeschluss.
+- [Lizenz- und Dateninventar](m0/LICENSE_AND_DATA_INVENTORY.md) – lokaler Bestand, Prüfsummen, Defekte, Fremdquellen und Freigaberegeln.
+- [Zielnutzer und Arbeitsabläufe](m0/USERS_AND_WORKFLOWS.md) – Rollen, priorisierte Workflows und Release-Nutzbarkeit.
+- [Datenlücken und Validierungspartner](m0/VALIDATION_AND_DATA_PARTNERS.md) – benötigte Evidenz, öffentliche Quellen und mögliche Kompetenzpartner.
 - [Entwicklungsumgebung und Build](DEVELOPMENT.md) – reproduzierbarer CMake/vcpkg-Build, Testausführung und Qualitätswerkzeuge für MEHLISSA Next.
 
 Die historische Analyse bezieht sich auf den Legacy-Stand `4f4fc5a` (Tag `legacy-baseline-2026-08-26`). Die Entwicklungsdokumente beschreiben den Branch `mehlissa-next-generation`. Bei wesentlichen Änderungen an Architektur, Datensätzen oder Szenarien müssen Anforderungen, Traceability Matrix und Roadmap gemeinsam aktualisiert werden.

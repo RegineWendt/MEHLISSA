@@ -123,9 +123,10 @@ Phase 0 ist fachlich abgeschlossen, wenn zusätzlich zu diesen Dokumenten folgen
 - [x] C++20/CMake/vcpkg als technisches Fundament entschieden (ADR-0003);
 - [x] Fingerprinting als erster vertikaler Demonstrator entschieden (ADR-0004);
 - [x] Evidenz- und Validitätsklassen festgelegt (ADR-0005 und `DATA-005/006`);
-- [ ] Lizenz- und Dateninventar einschließlich externer Modelle vollständig;
-- [ ] Zielnutzer und priorisierte Arbeitsabläufe mit mindestens je einer Persona bestätigt;
-- [ ] Referenzorgan für M3 anhand Datenverfügbarkeit ausgewählt;
-- [ ] Partner-/Datenlücken für Proteomik, Hämodynamik und Wetlab-Validierung benannt.
+- [x] Dateninventar einschließlich externer Modelle vollständig;
+- [x] Zielnutzer und priorisierte Arbeitsabläufe als M0-Baseline festgelegt;
+- [x] Referenzorgan für M3 ausgewählt: Lunge (ADR-0006);
+- [x] Partner-/Datenlücken für Proteomik, pulmonale Hämodynamik und Wetlab-Validierung benannt;
+- [ ] repositoryweite Lizenz `GPL-2.0-only` durch die Rechteinhaber bestätigt und technisch umgesetzt (ADR-0007).
 
-Die offenen Punkte blockieren nicht den technischen Abschluss von M1, müssen jedoch vor der jeweiligen daten- oder organabhängigen Implementierung geschlossen werden.
+Der verbleibende Lizenzvorbehalt blockiert nicht den Beginn technischer M1-Arbeit, wohl aber einen öffentlichen M1-Release und die Annahme externer Beiträge. Details stehen im [M0 Gate Review](../m0/M0_GATE_REVIEW.md).

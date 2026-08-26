@@ -186,7 +186,7 @@ legacy/                  eingefrorene Referenzen auf MEHLISSA 1.x und 2.0
 **Richtwert:** 0–2 Monate  
 **Ziel:** Verbindlicher fachlicher und technischer Rahmen für die neue Generation
 
-**Arbeitsstand 26. August 2026:** Die technische und fachliche Baseline ist angelegt. Verbindliche Artefakte sind die [Systemanforderungen](requirements/SYSTEM_REQUIREMENTS.md), die [Traceability Matrix](requirements/TRACEABILITY_MATRIX.md), das [Fingerprinting-Referenzszenario](requirements/FINGERPRINTING_SCENARIO.md) und die [Architecture Decision Records](architecture/README.md). Offen bleiben vor dem vollständigen Gate M0 das Lizenz-/Dateninventar, bestätigte Nutzerrollen, die Wahl des ersten Referenzorgans und die Benennung externer Daten-/Validierungspartner.
+**Arbeitsstand 26. August 2026:** Die technische und fachliche Baseline ist abgeschlossen und im [M0 Gate Review](m0/M0_GATE_REVIEW.md) abgenommen. Verbindliche Artefakte sind die [Systemanforderungen](requirements/SYSTEM_REQUIREMENTS.md), die [Traceability Matrix](requirements/TRACEABILITY_MATRIX.md), das [Fingerprinting-Referenzszenario](requirements/FINGERPRINTING_SCENARIO.md), die [Architecture Decision Records](architecture/README.md) sowie das [Lizenz-/Daten-](m0/LICENSE_AND_DATA_INVENTORY.md) und [Partnerinventar](m0/VALIDATION_AND_DATA_PARTNERS.md). Einziger formaler Vorbehalt ist die Rechteinhaberbestätigung für die empfohlene repositoryweite Lizenz `GPL-2.0-only` (ADR-0007).
 
 #### Aufgaben
 
@@ -209,7 +209,7 @@ legacy/                  eingefrorene Referenzen auf MEHLISSA 1.x und 2.0
 - [Architekturgrundsätze und Decision Records](architecture/README.md);
 - priorisierter Szenariokatalog;
 - dokumentierte Technologieentscheidung;
-- Daten- und Lizenzinventar;
+- [Daten- und Lizenzinventar](m0/LICENSE_AND_DATA_INVENTORY.md);
 - erste Risiko- und Forschungsfragenliste.
 
 #### Gate M0
@@ -326,7 +326,7 @@ Zunächst genügen literaturbasierte Parametersätze. Später können gekoppelte
 
 #### Wahl des Referenzorgans
 
-Für den ersten vollständigen Pfad wird ein Organ gewählt, das sowohl im Fingerprinting-Szenario als auch in den vorhandenen Daten gut repräsentiert ist. Kandidaten sind Leber, Niere oder Lunge. Die Entscheidung erfolgt anhand von:
+Für den ersten vollständigen Pfad wurde die **Lunge** gewählt ([ADR-0006](architecture/adr/0006-lung-reference-organ.md)). Sie ist im Fingerprinting-Szenario repräsentiert, wird bei jedem vollständigen Kreislauf passiert und besitzt zugängliche pulmonale SimVascular-/VMR-Referenzfälle. Der erste Modellumfang ist der pulmonale Blutkreislauf; Atemmechanik und Gasaustausch folgen als getrennte Modellvarianten. Die Entscheidung wurde anhand folgender Kriterien getroffen:
 
 - Verfügbarkeit anatomischer Daten;
 - Verfügbarkeit von Perfusionsdaten;
@@ -763,8 +763,8 @@ Die folgenden Pakete können direkt aus dieser Roadmap abgeleitet werden:
 6. BVS-Referenzlauf als ersten automatischen wissenschaftlichen Regressionstest aufbauen.
 7. Szenarioformat und Experimentmanifest definieren.
 8. ~~Fingerprinting-Anforderungen und die Baseline aus der Dissertation als vertikale Spezifikation formulieren.~~ Erledigt: [Fingerprinting-Referenzszenario](requirements/FINGERPRINTING_SCENARIO.md).
-9. Referenzorgan für die erste Body–Organ-Kopplung auswählen.
-10. Benötigte biologische und experimentelle Partner beziehungsweise Datenquellen identifizieren.
+9. ~~Referenzorgan für die erste Body–Organ-Kopplung auswählen.~~ Erledigt: Lunge, dokumentiert in [ADR-0006](architecture/adr/0006-lung-reference-organ.md).
+10. ~~Benötigte biologische und experimentelle Partner beziehungsweise Datenquellen identifizieren.~~ Erledigt: [Datenlücken und Validierungspartner](m0/VALIDATION_AND_DATA_PARTNERS.md).
 
 ## 12. Definition des langfristigen Erfolgs
 
