@@ -38,7 +38,7 @@ its in-flight set until the return is complete.
 ## Executable reference
 
 The contract test uses the synthetic four-segment graph and a two-second lung
-transit:
+transit loaded from either checked-in lung definition:
 
 ```text
 body artery-10
@@ -51,11 +51,12 @@ body artery-10
 ```
 
 The returned particle has ID 1, the active body count returns to one, and all
-outside/resident/in-flight queues return to zero.
+outside/resident/in-flight queues return to zero. The same test runs the
+effective compartment and regional circulation at 0.5 s and 1.0 s host steps.
 
-## Remaining M3 work
+## Related M3 evidence
 
-This regression conserves individual identity and count. It does not yet
-transfer an aggregated population, volume flow, or substance amount. M3.3 adds
-those typed contracts and their dimension-safe balance tests. Scenario/CLI
-composition and a second detailed pulmonary implementation also remain open.
+M3.3 adds lossless population, volume-flow, and substance-amount transit across
+both organ variants. Model selection is schema-validated and external to the
+kernel. See [Conserved Transfers](CONSERVED_TRANSFERS.md) and
+[Orchestration Regression](ORCHESTRATION_REGRESSION.md).

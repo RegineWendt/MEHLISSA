@@ -74,6 +74,7 @@ TEST_CASE("Both lung variants conserve population substance and volume flow",
           "[m3][organ][conservation]") {
     const auto variant =
         GENERATE(LungModelVariant::effective_compartment, LungModelVariant::regional_circulation);
+    const auto step = GENERATE(500ms, 1s);
     auto lung = mehlissa::models::organ::make_lung_model(lung_config(variant));
     auto* observer = lung.get();
     const std::string lung_model_id{observer->model_id()};
@@ -91,10 +92,13 @@ TEST_CASE("Both lung variants conserve population substance and volume flow",
                            mehlissa::core::cubic_meters_per_second(0.0001), 2s});
 
     CHECK(observer->resident_conserved_transfer_count() == 3);
-    host.advance(1s);
-    CHECK(observer->take_outbound_conserved_transfers().empty());
-    CHECK(observer->resident_conserved_transfer_count() == 3);
-    host.advance(1s);
+    for (auto elapsed = 0ns; elapsed < 2s; elapsed += step) {
+        host.advance(step);
+        if (host.context().clock().now() < 2s) {
+            CHECK(observer->take_outbound_conserved_transfers().empty());
+            CHECK(observer->resident_conserved_transfer_count() == 3);
+        }
+    }
 
     const auto returned = observer->take_outbound_conserved_transfers();
     REQUIRE(returned.size() == 3);

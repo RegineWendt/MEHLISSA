@@ -23,7 +23,7 @@ respiratory mechanics, or gas exchange.
 | M3.3 conservative population and substance exchange | implemented, under CI review | dimension-safe population, amount, and volume-flow transfers; both lung endpoints; positive and negative balance tests |
 | M3.4 structured pulmonary-circulation variant | implemented as serial regional surrogate; anatomical refinement planned | second implementation behind the same contract with artery, regional capillary surrogate, and venous return |
 | M3.5 physiological parameters and external-data pipeline | definition schema, loader, and qualification gate implemented; sourced parameters/data planned | versioned model cards, rest/exercise parameters, uncertainty, reproducible axes/units/provenance, qualified SimVascular/VMR reference |
-| M3.6 orchestration and gate regression | programmatic model switch implemented; manifest, FP9 baseline, and gate review planned | deterministic synchronization, coarse/detailed scenario switch, historical FP9 timing baseline, formal M3 gate review |
+| M3.6 orchestration and gate regression | external lung definition and fixed-step matrix implemented; FP9 baseline and gate review planned | deterministic synchronization, coarse/detailed scenario switch, historical FP9 timing baseline, formal M3 gate review |
 
 ## M3.1 result
 
@@ -89,6 +89,12 @@ from one typed scenario configuration. The same body–lung–body regression ru
 against both variants without coupler branches; see
 [Lung Model Selection](LUNG_MODEL_SELECTION.md). External experiment-manifest
 composition remains open.
+
+The complete body–organ regression now loads those standalone definitions and
+runs both resolutions at 0.5 s and 1.0 s host steps. Entity and conserved-
+quantity results agree across all four combinations; see
+[Orchestration Regression](ORCHESTRATION_REGRESSION.md). General experiment-
+manifest and asynchronous multirate scheduling remain separate extensions.
 
 ## Next implementation step
 
