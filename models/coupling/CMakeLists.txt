@@ -1,7 +1,11 @@
 # SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 # SPDX-License-Identifier: MPL-2.0
 
-add_library(mehlissa_model_coupling src/entity_transfer.cpp)
+add_library(
+    mehlissa_model_coupling
+    src/conserved_transfer.cpp
+    src/entity_transfer.cpp
+)
 add_library(MEHLISSA::model_coupling ALIAS mehlissa_model_coupling)
 
 target_include_directories(

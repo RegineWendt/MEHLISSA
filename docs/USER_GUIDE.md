@@ -269,8 +269,9 @@ The current contract verifies that:
 
 This is currently a developer API and contract-test slice. The first explicit
 body → lung → body ownership round trip is implemented, but the CLI cannot yet
-compose that experiment automatically. Population and substance-flow exchange
-follow as separate conservative contracts. See the [M3 working plan](m3/README.md)
+compose that experiment automatically. Typed population, substance-amount, and
+volume-flow contracts now have a strict sender/receiver balance ledger; organ
+endpoint integration follows. See the [M3 working plan](m3/README.md)
 and [lung model card](m3/LUNG_COMPARTMENT.md) before interpreting this model.
 
 ## 8. How to interpret model evidence

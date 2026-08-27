@@ -57,3 +57,6 @@ Breaking semantic or field changes require a new contract version. Receivers
 reject unsupported versions. Population, flow, physiological state, and event
 exchanges are separate contracts rather than extensions with unrelated
 optional fields.
+
+The first three quantity contracts and their balance ledger are specified in
+[Conserved Transfers](CONSERVED_TRANSFERS.md).

@@ -92,6 +92,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
         add_executable(
             mehlissa_organ_model_tests
             body_organ_coupler_tests.cpp
+            conserved_transfer_tests.cpp
             lung_compartment_tests.cpp
         )
         target_link_libraries(
