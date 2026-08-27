@@ -39,7 +39,7 @@ struct LegacySegment final {
                              "Cannot migrate legacy 95-segment data: " + message};
 }
 
-[[nodiscard]] std::string trim(std::string value) {
+[[nodiscard]] std::string trim(const std::string& value) {
     const auto first = value.find_first_not_of(" \t\r\n");
     if (first == std::string::npos) {
         return {};
@@ -53,7 +53,7 @@ struct LegacySegment final {
     std::stringstream stream{line};
     std::string field;
     while (std::getline(stream, field, ',')) {
-        fields.push_back(trim(std::move(field)));
+        fields.push_back(trim(field));
     }
     if (!line.empty() && line.back() == ',') {
         fields.emplace_back();
@@ -61,38 +61,38 @@ struct LegacySegment final {
     return fields;
 }
 
-[[nodiscard]] int parse_integer(const std::string& field, const std::string& role,
+[[nodiscard]] int parse_integer(const std::string& field, const std::string_view role,
                                 const std::size_t line_number) {
     try {
         std::size_t consumed{};
         const auto value = std::stoi(field, &consumed);
         if (consumed != field.size()) {
-            migration_error(role + " line " + std::to_string(line_number) +
+            migration_error(std::string{role} + " line " + std::to_string(line_number) +
                             " contains a non-integer field");
         }
         return value;
     } catch (const VascularGraphError&) {
         throw;
     } catch (const std::exception&) {
-        migration_error(role + " line " + std::to_string(line_number) +
+        migration_error(std::string{role} + " line " + std::to_string(line_number) +
                         " contains an invalid integer");
     }
 }
 
-[[nodiscard]] double parse_number(const std::string& field, const std::string& role,
+[[nodiscard]] double parse_number(const std::string& field, const std::string_view role,
                                   const std::size_t line_number) {
     try {
         std::size_t consumed{};
         const auto value = std::stod(field, &consumed);
         if (consumed != field.size() || !std::isfinite(value)) {
-            migration_error(role + " line " + std::to_string(line_number) +
+            migration_error(std::string{role} + " line " + std::to_string(line_number) +
                             " contains a non-finite or malformed number");
         }
         return value;
     } catch (const VascularGraphError&) {
         throw;
     } catch (const std::exception&) {
-        migration_error(role + " line " + std::to_string(line_number) +
+        migration_error(std::string{role} + " line " + std::to_string(line_number) +
                         " contains an invalid number");
     }
 }

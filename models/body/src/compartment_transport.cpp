@@ -344,7 +344,7 @@ void CompartmentTransport::extract_until(const core::SimulationClock::Duration c
                 record_trajectory(cutoff, particle, TrajectoryAction::extracted);
                 ++extracted;
             } else {
-                remaining.push_back(std::move(particle));
+                remaining.push_back(particle);
             }
         }
         particles_ = std::move(remaining);
