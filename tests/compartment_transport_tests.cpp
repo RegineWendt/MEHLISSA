@@ -39,16 +39,20 @@ struct TransportRun final {
     [[nodiscard]] bool operator==(const TransportRun&) const noexcept = default;
 };
 
-[[nodiscard]] TransportRun run_branching_transport(const std::uint64_t seed,
-                                                   const int step_count = 7) {
+struct TransportRunOptions final {
+    std::uint64_t seed{};
+    int step_count{7};
+};
+
+[[nodiscard]] TransportRun run_branching_transport(const TransportRunOptions options) {
     auto transport = std::make_unique<mehlissa::models::body::CompartmentTransport>(
         load_reference_graph(),
         std::vector<mehlissa::models::body::InjectionEvent>{{0ns, "artery-10", 64}});
     auto* observer = transport.get();
-    mehlissa::core::ComponentHost host{seed};
+    mehlissa::core::ComponentHost host{options.seed};
     host.add(std::move(transport));
     host.initialize();
-    for (int step = 0; step < step_count; ++step) {
+    for (int step = 0; step < options.step_count; ++step) {
         host.advance(1s);
     }
     return {observer->particle_locations(), observer->segment_populations(),
@@ -102,8 +106,8 @@ TEST_CASE("A particle moves at most one graph edge per simulation advance",
 
 TEST_CASE("Transport conserves all injected particles across branches and merges",
           "[body][transport][conservation]") {
-    const auto result = run_branching_transport(42);
-    const auto branch_result = run_branching_transport(42, 4);
+    const auto result = run_branching_transport({.seed = 42});
+    const auto branch_result = run_branching_transport({.seed = 42, .step_count = 4});
 
     REQUIRE(result.locations.size() == 64);
     REQUIRE(population_sum(result.populations) == 64);
@@ -116,9 +120,10 @@ TEST_CASE("Transport conserves all injected particles across branches and merges
 
 TEST_CASE("Named-stream branching is exactly reproducible for a fixed seed",
           "[body][transport][determinism]") {
-    REQUIRE(run_branching_transport(1'234'567) == run_branching_transport(1'234'567));
-    REQUIRE_FALSE(run_branching_transport(1'234'567).locations ==
-                  run_branching_transport(7'654'321).locations);
+    REQUIRE(run_branching_transport({.seed = 1'234'567}) ==
+            run_branching_transport({.seed = 1'234'567}));
+    REQUIRE_FALSE(run_branching_transport({.seed = 1'234'567}).locations ==
+                  run_branching_transport({.seed = 7'654'321}).locations);
 }
 
 TEST_CASE("Transport rejects invalid injections and unsafe advance intervals",
