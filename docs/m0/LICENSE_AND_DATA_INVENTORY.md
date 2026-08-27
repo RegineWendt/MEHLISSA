@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-4.0
 # Lizenz- und Dateninventar
 
 **Stand:** 26. August 2026  
-**Status:** M0-Inventar und Lizenzmodell beschlossen; Rechteprüfung einzelner Bestandsdaten bleibt artefaktbezogen
+**Status:** M0-Inventar und Lizenzmodell beschlossen; 95er-Quelldatensatz seit 27. August 2026 freigegeben, weitere Rechteprüfungen bleiben artefaktbezogen
 **Hinweis:** Dieses Dokument ist eine technische Bestandsaufnahme, keine Rechtsberatung.
 
 ## 1. Ergebnis in Kürze
@@ -48,7 +48,11 @@ Offizielle Referenzen: [Catch2](https://github.com/catchorg/Catch2), [vcpkg](htt
 
 ## 3. Repositorydaten
 
-Die CSV-Dateien besitzen keine eingebetteten Metadaten oder individuellen Lizenzhinweise. Die Git-Historie dokumentiert ihre Herkunft, ersetzt aber keine explizite Datenlizenz.
+Die drei Dateien unter `mehlissa2.0/data/95_*.csv` besitzen seit dem
+27. August 2026 explizite `CC-BY-4.0`-Sidecars und das Freigabemanifest
+`data/legacy/bvs95/release-v1.json`. Die übrigen CSV-Dateien besitzen weiterhin
+keine individuellen Lizenzhinweise; ihre Git-Historie ersetzt keine explizite
+Datenlizenz.
 
 | Datei | Zeilen | SHA-256 | Herkunft/Befund |
 |---|---:|---|---|
@@ -58,9 +62,9 @@ Die CSV-Dateien besitzen keine eingebetteten Metadaten oder individuellen Lizenz
 | `vasculature_transitions_endocrine_avs.csv` | 104 | `90e3429ab30e07606b507e3eb3c76cf0c4e9688658e81f6a888483ead99ba241` | Saswati Pal, Commit `c14ad46`; AVS-Erweiterung ohne Datenschema/Einheitenmetadaten |
 | `bodymodels/vasculature_transitions95female.csv` | 96 nichtleere Zeilen | `b3a3d30cdbe0d95ba2ffb15e605992095999ad965c67970325ea36e8cd950f23` | Regine Wendt, Commit `a3f3090`; **bekannter Defekt:** Datensatzzeile 51 ist über Dateizeilen 51 und 53 getrennt |
 | `bodymodels/vasculature_transitions95male.csv` | 95 | `3fbc694159554624169cab0f4420d054037f5d1262b3f6df4e88feb2d4ab072e` | Regine Wendt, Commit `a3f3090`; ohne Header/Einheitenmetadaten |
-| `mehlissa2.0/data/95_fingerprints.csv` | 9 | `a6e42f40d6ff5f159224ab85e9d0a6c73e75f23217a922e3b49e854f259e467c` | Lisa Y. Debus, Commit `59cccdf`; Byte-identisch mit Root-Datei |
-| `mehlissa2.0/data/95_transitions.csv` | 23 | `186650341da23f233ec483fcebfd212833b48071922345f297bc36a771709a8a` | Lisa Y. Debus, Commit `59cccdf`; Byte-identisch mit Root-Datei |
-| `mehlissa2.0/data/95_vasculature.csv` | 95 | `de4b2b730bf3f88d3cb59213d67fcaf3d4764a3aca69be892e151109eb8c9db8` | Lisa Y. Debus, Commit `59cccdf`; konsistente zehn Felder, aber ohne Header/Schema |
+| `mehlissa2.0/data/95_fingerprints.csv` | 9 | `a6e42f40d6ff5f159224ab85e9d0a6c73e75f23217a922e3b49e854f259e467c` | Lisa Y. Debus, Commit `59cccdf`; Byte-identisch mit Root-Datei; **CC-BY-4.0 freigegeben** |
+| `mehlissa2.0/data/95_transitions.csv` | 23 | `186650341da23f233ec483fcebfd212833b48071922345f297bc36a771709a8a` | Lisa Y. Debus, Commit `59cccdf`; Byte-identisch mit Root-Datei; **CC-BY-4.0 freigegeben** |
+| `mehlissa2.0/data/95_vasculature.csv` | 95 | `de4b2b730bf3f88d3cb59213d67fcaf3d4764a3aca69be892e151109eb8c9db8` | Lisa Y. Debus, Commit `59cccdf`; konsistente zehn Felder; **CC-BY-4.0 freigegeben** |
 
 ### 3.1 Verbindliche Migrationsregel
 
@@ -120,10 +124,10 @@ responsible_reviewer
 
 ## 7. Verbleibende artefaktbezogene Rechteprüfung
 
-Die repositoryweite Lizenzentscheidung ist getroffen. Offen bleibt nicht das
-Lizenzmodell, sondern die Rechtekette einzelner vorhandener CSV-Dateien und
-Publikations-PDFs. Die Dateien werden erst dann als CC-BY-4.0-Daten
-gekennzeichnet beziehungsweise in öffentliche Next-Pakete aufgenommen, wenn
-die jeweils genannten Beitragenden oder zuständigen Rechteinhaber die Freigabe
-bestätigt haben. Neue eigene Daten verwenden von Beginn an ein Manifest und
-`CC-BY-4.0`.
+Die repositoryweite Lizenzentscheidung ist getroffen und die drei
+`mehlissa2.0/data/95_*.csv`-Quellen sind freigegeben. Offen bleibt die
+Rechtekette der anderen vorhandenen CSV-Dateien und Publikations-PDFs. Diese
+Artefakte werden erst dann als CC-BY-4.0-Daten gekennzeichnet beziehungsweise
+in öffentliche Next-Pakete aufgenommen, wenn die jeweils zuständigen
+Rechteinhaber die Freigabe bestätigt haben. Neue eigene Daten verwenden von
+Beginn an ein Manifest und `CC-BY-4.0`.

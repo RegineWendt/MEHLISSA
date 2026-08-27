@@ -23,6 +23,9 @@ Architecture Decision Records (ADRs) dokumentieren Entscheidungen, die die weite
 | [ADR-0012](adr/0012-errors-logs-and-checkpoints.md) | Accepted | stabile Fehlerkennungen, JSONL-Laufprotokolle und versionierte Checkpointmanifeste |
 | [ADR-0013](adr/0013-cross-platform-determinism-reference.md) | Accepted | bytegenauer Golden-Reference-Lauf für MSVC, GCC und Clang |
 | [ADR-0014](adr/0014-validated-vascular-graph-contract.md) | Accepted | versionierter SI-Gefäßgraph mit Geometrie-, Topologie- und Flussinvarianten |
+| [ADR-0015](adr/0015-deterministic-compartment-transport.md) | Accepted | deterministischer, datengetriebener Kompartimenttransport |
+| [ADR-0016](adr/0016-legacy-95-release-and-reference-profiles.md) | Accepted | CC-BY-Freigabe und validierte Migration des 95er-Modells; historische und physiologische Profile bleiben getrennt |
+| [ADR-0017](adr/0017-bvs-reference-regression.md) | Accepted | getrennte BVS-Dynamik- und Dissertationsperfusionsregression mit vorab definierten Gates |
 
 ## Statusmodell
 

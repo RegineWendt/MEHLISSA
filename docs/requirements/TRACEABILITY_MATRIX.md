@@ -46,18 +46,18 @@ Ein `DONE` in dieser Matrix setzt einen erfolgreichen Nachweis voraus. Der bloß
 
 | ID | Quelle | Stand 27.08.2026 | Ziel | Vorgesehener Nachweis |
 |---|---|---|---|---|
-| BODY-001 | DISS S. 100; BVS18 | PART | M2 | versionierter, stark zusammenhängender synthetischer Referenzgraph; 95er-Migration folgt nach Daten-/Lizenzklärung |
-| BODY-002 | DISS S. 100, 113–117 | PART | M2 | SI-Schema und Validator für ID, Typ, Geometrie, Länge, Durchmesser, Querschnitt, Volumen, Fluss, Quellen und Unsicherheit |
+| BODY-001 | DISS S. 100; BVS18 | DONE | M2 | vollständiger, stark zusammenhängender und schema-validierter 95-Segment-Graph; Konverter- und Graphinvariantentests |
+| BODY-002 | DISS S. 100, 113–117 | DONE | M2 | SI-Schema und Validator für ID, Typ, Geometrie, Länge, Durchmesser, Querschnitt, Volumen, Fluss, Quellen und Unsicherheit; kanonischer M2.2-Datensatz |
 | BODY-003 | DISS S. 101–104 | LEGACY | M2 | analytische 3D-Geometrietests und Modellbericht |
 | BODY-004 | DISS S. 117, 140–143 | LEGACY | M2 | zweites Körpermodell ohne Rebuild laden |
 | BODY-005 | DISS S. 99–104 | PART | M2 | terminierte Injektion, identitätserhaltender Kompartimenttransport, Einmalbewegungs- und Erhaltungstests; Entnahme folgt in M2.5 |
-| BODY-006 | DISS S. 100–101, 118–122 | PART | M2 | validierte Übergangswahrscheinlichkeiten und reproduzierbare Verzweigung; fachlicher Perfusionsvergleich folgt |
+| BODY-006 | DISS S. 100–101, 118–122 | DONE | M2 | 23 Dissertationstransitionen, belegter Gefäß-9-Split, stationäre Flusserhaltung, reproduzierbare Verzweigung und schema-validierte Perfusionsregression; unabhängige physiologische Evidenz folgt mit dem separaten Profil in M2.6 |
 | BODY-007 | DISS S. 115–117 | PART | M2/M4 | deterministisches Transitkompartiment implementiert; laminare/Stream-Variante und Referenzvergleich folgen |
-| BODY-008 | DISS S. 120–122 | SPEC | M2/M3 | Ruhe-/Belastungs-Vergleich mit Literaturwerten |
+| BODY-008 | DISS S. 120–122 | PART | M2/M3 | Ruhe-/Rückenlage-Baseline und Evidenzregeln dokumentiert; maschinenlesbare Belastungs-/Orthostaseprofile und Literaturvergleich folgen in M2.6 |
 | BODY-009 | DISS S. 101 | RESEARCH | M4/M5 | dokumentierte Blutmodellvarianten und Sensitivität |
-| BODY-010 | BVS18 S. 4–6 | LEGACY | M2 | 6.359-/63.590-Agenten-Regression, Gleichgewicht nach ca. 7 min |
+| BODY-010 | BVS18 S. 4–6 | DONE | M2 | deterministische 6.359-/63.590-Partikel-Regression, Gleichgewicht bei Minute 7, Injektionsortvergleich, exakte Populationserhaltung und schema-validierte Golden Reference |
 | ORG-001 | DISS S. 118–126 | SPEC | M3 | Modellkarte und Tests des Referenzorgans |
-| ORG-002 | DISS S. 118–122 | LEGACY | M3 | Soll-/Ist-Perfusion je Organ mit Toleranzbericht |
+| ORG-002 | DISS S. 118–122 | PART | M3 | M2.4 prüft 23 Soll-/Ist-Perfusionen des Ganzkörpergraphen; organspezifisches Lungenmodell und unabhängige physiologische Validierung folgen in M3/M2.6 |
 | ORG-003 | DISS S. 95, 153–154 | SPEC | M3 | Roundtrip Körper → Organ → Körper |
 | ORG-004 | DISS S. 122–123, Kap. 6 | LEGACY | M3/M7 | Lokalisierungsereignis mit Gewebe und Unsicherheit |
 | ORG-005 | DISS S. 123–126 | SPEC | M3 | austauschbares Kompartiment-/Detailmodell |

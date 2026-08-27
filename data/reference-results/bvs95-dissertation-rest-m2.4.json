@@ -1,0 +1,235 @@
+{
+    "acceptance_thresholds": {
+        "maximum_injection_site_difference_percent": 5.0, 
+        "maximum_mean_dissertation_difference_percentage_points": 0.5, 
+        "maximum_mean_perfusion_target_error_percentage_points": 0.01, 
+        "maximum_minute_7_equilibrium_difference_percent": 5.0, 
+        "maximum_perfusion_target_error_percentage_points": 0.01, 
+        "maximum_population_scale_total_variation_percent": 2.0
+    }, 
+    "diagnostics": {
+        "aorta_reference_transitions": 23462725, 
+        "large_population_transitions": 13781639, 
+        "popliteal_transitions": 1292874
+    }, 
+    "dynamic_distribution": {
+        "aorta_vs_popliteal_at_minute_7": {
+            "maximum_absolute_difference": 8.134246065150002, 
+            "mean_absolute_difference_per_segment": 1.1656105984305265, 
+            "normalized_mean_difference_percent": 1.741358811934267
+        }, 
+        "minute_15_vs_minute_120": {
+            "maximum_absolute_difference": 7.430488020149994, 
+            "mean_absolute_difference_per_segment": 1.2369495629964924, 
+            "normalized_mean_difference_percent": 1.8479353433663592
+        }, 
+        "minute_1_vs_minute_120": {
+            "maximum_absolute_difference": 117.34501530736668, 
+            "mean_absolute_difference_per_segment": 7.287355164157542, 
+            "normalized_mean_difference_percent": 10.886912102452689
+        }, 
+        "minute_7_vs_minute_120": {
+            "maximum_absolute_difference": 9.23184333035, 
+            "mean_absolute_difference_per_segment": 1.2339846055880683, 
+            "normalized_mean_difference_percent": 1.8435058583246815
+        }, 
+        "population_scale_total_variation_percent": 0.7607195508117893
+    }, 
+    "experiment": {
+        "aorta_segment_id": "bvs95-001", 
+        "averaging_window_seconds": 60, 
+        "large_particle_count": 63590, 
+        "master_seed": 2018, 
+        "popliteal_segment_id": "bvs95-062", 
+        "reference_duration_seconds": 7200, 
+        "reference_particle_count": 6359
+    }, 
+    "gates": {
+        "equilibrium": true, 
+        "injection_site": true, 
+        "overall": true, 
+        "perfusion": true, 
+        "population_conserved": true, 
+        "population_scale": true
+    }, 
+    "model": {
+        "id": "bvs95-dissertation-rest", 
+        "version": "1.0.0"
+    }, 
+    "perfusion": {
+        "maximum_error_vs_literature_percentage_points": 0.00768531156384733, 
+        "mean_difference_vs_dissertation_percentage_points": 0.3140123811803352, 
+        "mean_error_vs_literature_percentage_points": 0.0021404040872810585, 
+        "regions": [
+            {
+                "dissertation_simulation_percent": 4.89, 
+                "literature_target_percent": 5.0, 
+                "model_percent": 5.0, 
+                "region": "heart", 
+                "segment_id": "bvs95-095"
+            }, 
+            {
+                "dissertation_simulation_percent": 14.08, 
+                "literature_target_percent": 15.0, 
+                "model_percent": 15.0007356, 
+                "region": "head", 
+                "segment_id": "bvs95-009"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.18, 
+                "literature_target_percent": 1.25, 
+                "model_percent": 1.2495882, 
+                "region": "right shoulder", 
+                "segment_id": "bvs95-011"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.19, 
+                "literature_target_percent": 1.25, 
+                "model_percent": 1.2494632411799997, 
+                "region": "right upper arm", 
+                "segment_id": "bvs95-015"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.13, 
+                "literature_target_percent": 1.25, 
+                "model_percent": 1.2506402009299997, 
+                "region": "left shoulder", 
+                "segment_id": "bvs95-017"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.37, 
+                "literature_target_percent": 1.25, 
+                "model_percent": 1.2496506794099997, 
+                "region": "right elbow", 
+                "segment_id": "bvs95-021"
+            }, 
+            {
+                "dissertation_simulation_percent": 0.94, 
+                "literature_target_percent": 1.25, 
+                "model_percent": 1.2505151369099068, 
+                "region": "left upper arm", 
+                "segment_id": "bvs95-023"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.67, 
+                "literature_target_percent": 1.67, 
+                "model_percent": 1.6729605840310924, 
+                "region": "chest and back", 
+                "segment_id": "bvs95-024"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.27, 
+                "literature_target_percent": 1.25, 
+                "model_percent": 1.2496506794099997, 
+                "region": "right hand", 
+                "segment_id": "bvs95-027"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.01, 
+                "literature_target_percent": 1.25, 
+                "model_percent": 1.2507027329400464, 
+                "region": "left elbow", 
+                "segment_id": "bvs95-029"
+            }, 
+            {
+                "dissertation_simulation_percent": 9.7, 
+                "literature_target_percent": 10.0, 
+                "model_percent": 9.996004588052017, 
+                "region": "stomach", 
+                "segment_id": "bvs95-030"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.11, 
+                "literature_target_percent": 1.25, 
+                "model_percent": 1.2507027329400464, 
+                "region": "left hand", 
+                "segment_id": "bvs95-033"
+            }, 
+            {
+                "dissertation_simulation_percent": 9.37, 
+                "literature_target_percent": 10.0, 
+                "model_percent": 9.997656695987347, 
+                "region": "liver", 
+                "segment_id": "bvs95-036"
+            }, 
+            {
+                "dissertation_simulation_percent": 13.9, 
+                "literature_target_percent": 15.0, 
+                "model_percent": 15.002168659316242, 
+                "region": "intestine", 
+                "segment_id": "bvs95-039"
+            }, 
+            {
+                "dissertation_simulation_percent": 18.65, 
+                "literature_target_percent": 20.0, 
+                "model_percent": 20.00106911736287, 
+                "region": "kidneys", 
+                "segment_id": "bvs95-040"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.54, 
+                "literature_target_percent": 1.67, 
+                "model_percent": 1.670059941286763, 
+                "region": "left pelvis", 
+                "segment_id": "bvs95-047"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.81, 
+                "literature_target_percent": 1.67, 
+                "model_percent": 1.6695562576061462, 
+                "region": "left hip", 
+                "segment_id": "bvs95-049"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.54, 
+                "literature_target_percent": 1.67, 
+                "model_percent": 1.670059941286763, 
+                "region": "right pelvis", 
+                "segment_id": "bvs95-051"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.31, 
+                "literature_target_percent": 1.67, 
+                "model_percent": 1.6695562576061462, 
+                "region": "right hip", 
+                "segment_id": "bvs95-052"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.41, 
+                "literature_target_percent": 1.67, 
+                "model_percent": 1.6623146884361526, 
+                "region": "left knee", 
+                "segment_id": "bvs95-054"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.52, 
+                "literature_target_percent": 1.67, 
+                "model_percent": 1.6623146884361526, 
+                "region": "right knee", 
+                "segment_id": "bvs95-056"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.31, 
+                "literature_target_percent": 1.67, 
+                "model_percent": 1.6623146884361526, 
+                "region": "left foot", 
+                "segment_id": "bvs95-059"
+            }, 
+            {
+                "dissertation_simulation_percent": 1.44, 
+                "literature_target_percent": 1.67, 
+                "model_percent": 1.6623146884361526, 
+                "region": "right foot", 
+                "segment_id": "bvs95-060"
+            }
+        ]
+    }, 
+    "published_reference": {
+        "bvs_injection_site_difference_percent": 3.95, 
+        "bvs_mean_normalized_difference_percent": 3.11, 
+        "bvs_minute_7_mean_difference_per_vessel": 2.03, 
+        "bvs_vessel_count": 94, 
+        "description": "BloodVoyagerS 2018 used a 94-vessel, coarse 1:1/1:3 model. The M2.4 dynamic gates compare the claims, not an identical implementation."
+    }, 
+    "schema_version": "1.0.0"
+}

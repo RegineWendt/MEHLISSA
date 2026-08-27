@@ -1,0 +1,4035 @@
+{
+    "coordinate_system": {
+        "description": "Legacy schematic Cartesian centimetre coordinates converted exactly to metres; arteries and veins remain on the historical z=+/-0.02 m planes.", 
+        "handedness": "not_applicable", 
+        "id": "bvs95-schematic-cartesian", 
+        "length_unit": "m"
+    }, 
+    "model": {
+        "id": "bvs95-dissertation-rest", 
+        "title": "BVS/MEHLISSA 95-segment dissertation rest profile", 
+        "version": "1.0.0"
+    }, 
+    "schema_version": "1.0.0", 
+    "segments": [
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00095, 
+                "diameter_m": 0.034778981691510245, 
+                "end_m": [
+                    -0.06, 
+                    0.08, 
+                    0.02
+                ], 
+                "length_m": 0.1, 
+                "start_m": [
+                    0.0, 
+                    0.0, 
+                    0.02
+                ], 
+                "volume_m3": 9.5e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 9.5e-05, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-001", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.1176, 
+                    "successor_id": "bvs95-003"
+                }, 
+                {
+                    "probability": 0.8824, 
+                    "successor_id": "bvs95-004"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.002, 
+                "diameter_m": 0.050462650440403205, 
+                "end_m": [
+                    0.0, 
+                    0.0, 
+                    0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    0.0, 
+                    0.0, 
+                    -0.02
+                ], 
+                "volume_m3": 8e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 0.0001, 
+                "mean_velocity_m_s": 0.05
+            }, 
+            "id": "bvs95-002", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.95, 
+                    "successor_id": "bvs95-001"
+                }, 
+                {
+                    "probability": 0.05, 
+                    "successor_id": "bvs95-095"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00011172000000000001, 
+                "diameter_m": 0.011926706248491759, 
+                "end_m": [
+                    -0.12, 
+                    0.15, 
+                    0.02
+                ], 
+                "length_m": 0.09219544457292887, 
+                "start_m": [
+                    -0.06, 
+                    0.08, 
+                    0.02
+                ], 
+                "volume_m3": 1.0300075067687614e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.1172e-05, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-003", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.4474, 
+                    "successor_id": "bvs95-005"
+                }, 
+                {
+                    "probability": 0.5526, 
+                    "successor_id": "bvs95-006"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00083828, 
+                "diameter_m": 0.03267003589775488, 
+                "end_m": [
+                    -0.03, 
+                    0.08, 
+                    0.02
+                ], 
+                "length_m": 0.03, 
+                "start_m": [
+                    -0.06, 
+                    0.08, 
+                    0.02
+                ], 
+                "volume_m3": 2.5148399999999998e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 8.3828e-05, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-004", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.1053, 
+                    "successor_id": "bvs95-007"
+                }, 
+                {
+                    "probability": 0.8947, 
+                    "successor_id": "bvs95-008"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 4.9983528e-05, 
+                "diameter_m": 0.007977531224318539, 
+                "end_m": [
+                    -0.2, 
+                    0.17, 
+                    0.02
+                ], 
+                "length_m": 0.08246211251235323, 
+                "start_m": [
+                    -0.12, 
+                    0.15, 
+                    0.02
+                ], 
+                "volume_m3": 4.121747309700358e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 4.9983528e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-005", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.75, 
+                    "successor_id": "bvs95-010"
+                }, 
+                {
+                    "probability": 0.25, 
+                    "successor_id": "bvs95-011"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 6.1736472e-05, 
+                "diameter_m": 0.008865963991740274, 
+                "end_m": [
+                    -0.05, 
+                    0.44, 
+                    0.02
+                ], 
+                "length_m": 0.29832867780352595, 
+                "start_m": [
+                    -0.12, 
+                    0.15, 
+                    0.02
+                ], 
+                "volume_m3": 1.8417760064014402e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 6.173647200000001e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-006", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-009"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 8.8270884e-05, 
+                "diameter_m": 0.010601414064054397, 
+                "end_m": [
+                    -0.05, 
+                    0.44, 
+                    0.02
+                ], 
+                "length_m": 0.3605551275463989, 
+                "start_m": [
+                    -0.03, 
+                    0.08, 
+                    0.02
+                ], 
+                "volume_m3": 3.182651983925338e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 8.827088400000001e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-007", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-009"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.000750009116, 
+                "diameter_m": 0.030902123962651205, 
+                "end_m": [
+                    0.0, 
+                    0.08, 
+                    0.02
+                ], 
+                "length_m": 0.03, 
+                "start_m": [
+                    -0.03, 
+                    0.08, 
+                    0.02
+                ], 
+                "volume_m3": 2.250027348e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 7.50009116e-05, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-008", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.0667, 
+                    "successor_id": "bvs95-012"
+                }, 
+                {
+                    "probability": 0.9333, 
+                    "successor_id": "bvs95-013"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0015000735600000001, 
+                "diameter_m": 0.04370300878204675, 
+                "end_m": [
+                    -0.05, 
+                    0.44, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    -0.05, 
+                    0.44, 
+                    0.02
+                ], 
+                "volume_m3": 6.000294240000001e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.5000735600000002e-05, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-009", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method", 
+                "jugular-flow-mri-2009"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.2875, 
+                    "successor_id": "bvs95-081"
+                }, 
+                {
+                    "probability": 0.7125, 
+                    "successor_id": "bvs95-083"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 3.7487645999999996e-05, 
+                "diameter_m": 0.0069087446997434295, 
+                "end_m": [
+                    -0.3, 
+                    0.08, 
+                    0.02
+                ], 
+                "length_m": 0.1345362404707371, 
+                "start_m": [
+                    -0.2, 
+                    0.17, 
+                    0.02
+                ], 
+                "volume_m3": 5.043446956937865e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 3.7487646e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-010", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.6667, 
+                    "successor_id": "bvs95-014"
+                }, 
+                {
+                    "probability": 0.3333, 
+                    "successor_id": "bvs95-015"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00012495882, 
+                "diameter_m": 0.012613584386979109, 
+                "end_m": [
+                    -0.2, 
+                    0.17, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    -0.2, 
+                    0.17, 
+                    0.02
+                ], 
+                "volume_m3": 4.9983528e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.2495882e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-011", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-082"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 5.002560803719999e-05, 
+                "diameter_m": 0.007980888572232055, 
+                "end_m": [
+                    0.1, 
+                    0.17, 
+                    0.02
+                ], 
+                "length_m": 0.13453624047073712, 
+                "start_m": [
+                    0.0, 
+                    0.08, 
+                    0.02
+                ], 
+                "volume_m3": 6.730257232587578e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 5.00256080372e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-012", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.75, 
+                    "successor_id": "bvs95-016"
+                }, 
+                {
+                    "probability": 0.25, 
+                    "successor_id": "bvs95-017"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0006999835079628, 
+                "diameter_m": 0.029853754922968698, 
+                "end_m": [
+                    -0.02, 
+                    -0.03, 
+                    0.02
+                ], 
+                "length_m": 0.11180339887498948, 
+                "start_m": [
+                    0.0, 
+                    0.08, 
+                    0.02
+                ], 
+                "volume_m3": 7.826053534667931e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 6.999835079628001e-05, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-013", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.0239, 
+                    "successor_id": "bvs95-018"
+                }, 
+                {
+                    "probability": 0.9761, 
+                    "successor_id": "bvs95-019"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 2.49930135882e-05, 
+                "diameter_m": 0.005641107448240948, 
+                "end_m": [
+                    -0.3, 
+                    -0.18, 
+                    0.02
+                ], 
+                "length_m": 0.26, 
+                "start_m": [
+                    -0.3, 
+                    0.08, 
+                    0.02
+                ], 
+                "volume_m3": 6.4981835329319995e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 2.49930135882e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-014", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.5, 
+                    "successor_id": "bvs95-020"
+                }, 
+                {
+                    "probability": 0.5, 
+                    "successor_id": "bvs95-021"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00012494632411799998, 
+                "diameter_m": 0.012612953691991991, 
+                "end_m": [
+                    -0.3, 
+                    0.08, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    -0.3, 
+                    0.08, 
+                    0.02
+                ], 
+                "volume_m3": 4.997852964719999e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.2494632411799998e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-015", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-075"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 3.751920602789999e-05, 
+                "diameter_m": 0.006911652248325878, 
+                "end_m": [
+                    0.2, 
+                    0.08, 
+                    0.02
+                ], 
+                "length_m": 0.13453624047073712, 
+                "start_m": [
+                    0.1, 
+                    0.17, 
+                    0.02
+                ], 
+                "volume_m3": 5.047692924440683e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 3.7519206027899997e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-016", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.6667, 
+                    "successor_id": "bvs95-022"
+                }, 
+                {
+                    "probability": 0.3333, 
+                    "successor_id": "bvs95-023"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.000125064020093, 
+                "diameter_m": 0.012618892820131272, 
+                "end_m": [
+                    0.1, 
+                    0.17, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    0.1, 
+                    0.17, 
+                    0.02
+                ], 
+                "volume_m3": 5.0025608037200004e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.25064020093e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-017", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-080"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 1.672960584031092e-05, 
+                "diameter_m": 0.004615278509875238, 
+                "end_m": [
+                    0.12, 
+                    -0.04, 
+                    0.02
+                ], 
+                "length_m": 0.140356688476182, 
+                "start_m": [
+                    -0.02, 
+                    -0.03, 
+                    0.02
+                ], 
+                "volume_m3": 2.3481120752578346e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.6729605840310923e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-018", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-024"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0006832539021224891, 
+                "diameter_m": 0.029494845096676832, 
+                "end_m": [
+                    -0.05, 
+                    -0.14, 
+                    0.02
+                ], 
+                "length_m": 0.1140175425099138, 
+                "start_m": [
+                    -0.02, 
+                    -0.03, 
+                    0.02
+                ], 
+                "volume_m3": 7.790293083031539e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 6.832539021224891e-05, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-019", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.1463, 
+                    "successor_id": "bvs95-025"
+                }, 
+                {
+                    "probability": 0.8537, 
+                    "successor_id": "bvs95-026"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 1.24965067941e-05, 
+                "diameter_m": 0.003988865330053115, 
+                "end_m": [
+                    -0.3, 
+                    -0.43, 
+                    0.02
+                ], 
+                "length_m": 0.25, 
+                "start_m": [
+                    -0.3, 
+                    -0.18, 
+                    0.02
+                ], 
+                "volume_m3": 3.124126698525e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.24965067941e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-020", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-027"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.000124965067941, 
+                "diameter_m": 0.012613899722647136, 
+                "end_m": [
+                    -0.3, 
+                    -0.18, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    -0.3, 
+                    -0.18, 
+                    0.02
+                ], 
+                "volume_m3": 4.99860271764e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.24965067941e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-021", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-069"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 2.5014054658800928e-05, 
+                "diameter_m": 0.005643481511066743, 
+                "end_m": [
+                    0.2, 
+                    -0.18, 
+                    0.02
+                ], 
+                "length_m": 0.26, 
+                "start_m": [
+                    0.2, 
+                    0.08, 
+                    0.02
+                ], 
+                "volume_m3": 6.503654211288241e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 2.5014054658800928e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-022", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.5, 
+                    "successor_id": "bvs95-028"
+                }, 
+                {
+                    "probability": 0.5, 
+                    "successor_id": "bvs95-029"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0001250515136909907, 
+                "diameter_m": 0.01261826185971586, 
+                "end_m": [
+                    0.2, 
+                    0.08, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    0.2, 
+                    0.08, 
+                    0.02
+                ], 
+                "volume_m3": 5.002060547639628e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.250515136909907e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-023", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-074"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00016729605840310922, 
+                "diameter_m": 0.014594792127233672, 
+                "end_m": [
+                    0.12, 
+                    -0.04, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    0.12, 
+                    -0.04, 
+                    0.02
+                ], 
+                "volume_m3": 6.6918423361243684e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.6729605840310923e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-024", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-087"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 9.996004588052017e-05, 
+                "diameter_m": 0.011281537275948677, 
+                "end_m": [
+                    0.01, 
+                    -0.14, 
+                    0.02
+                ], 
+                "length_m": 0.060000000000000005, 
+                "start_m": [
+                    -0.05, 
+                    -0.14, 
+                    0.02
+                ], 
+                "volume_m3": 5.99760275283121e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 9.996004588052017e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-025", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-030"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.000583293856241969, 
+                "diameter_m": 0.027252023850869167, 
+                "end_m": [
+                    -0.05, 
+                    -0.16, 
+                    0.02
+                ], 
+                "length_m": 0.01999999999999999, 
+                "start_m": [
+                    -0.05, 
+                    -0.14, 
+                    0.02
+                ], 
+                "volume_m3": 1.1665877124839373e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 5.83293856241969e-05, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-026", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.8286, 
+                    "successor_id": "bvs95-031"
+                }, 
+                {
+                    "probability": 0.1714, 
+                    "successor_id": "bvs95-032"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.000124965067941, 
+                "diameter_m": 0.012613899722647136, 
+                "end_m": [
+                    -0.3, 
+                    -0.43, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    -0.3, 
+                    -0.43, 
+                    0.02
+                ], 
+                "volume_m3": 4.99860271764e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.24965067941e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-027", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-065"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 1.2507027329400464e-05, 
+                "diameter_m": 0.003990544045976198, 
+                "end_m": [
+                    0.2, 
+                    -0.43, 
+                    0.02
+                ], 
+                "length_m": 0.25, 
+                "start_m": [
+                    0.2, 
+                    -0.18, 
+                    0.02
+                ], 
+                "volume_m3": 3.126756832350116e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.2507027329400464e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-028", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-033"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00012507027329400463, 
+                "diameter_m": 0.01261920828850847, 
+                "end_m": [
+                    0.2, 
+                    -0.18, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    0.2, 
+                    -0.18, 
+                    0.02
+                ], 
+                "volume_m3": 5.0028109317601855e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.2507027329400464e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-029", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-068"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0009996004588052017, 
+                "diameter_m": 0.035675353300089335, 
+                "end_m": [
+                    0.01, 
+                    -0.14, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    0.01, 
+                    -0.14, 
+                    0.02
+                ], 
+                "volume_m3": 3.998401835220807e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 9.996004588052017e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-030", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-076"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0004833172892820955, 
+                "diameter_m": 0.02480682739425113, 
+                "end_m": [
+                    -0.05, 
+                    -0.2, 
+                    0.02
+                ], 
+                "length_m": 0.04000000000000001, 
+                "start_m": [
+                    -0.05, 
+                    -0.16, 
+                    0.02
+                ], 
+                "volume_m3": 1.9332691571283825e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 4.833172892820955e-05, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-031", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.6896, 
+                    "successor_id": "bvs95-034"
+                }, 
+                {
+                    "probability": 0.3104, 
+                    "successor_id": "bvs95-035"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 9.997656695987346e-05, 
+                "diameter_m": 0.011282469525780861, 
+                "end_m": [
+                    -0.13, 
+                    -0.16, 
+                    0.02
+                ], 
+                "length_m": 0.08, 
+                "start_m": [
+                    -0.05, 
+                    -0.16, 
+                    0.02
+                ], 
+                "volume_m3": 7.998125356789877e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 9.997656695987347e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-032", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-036"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00012507027329400463, 
+                "diameter_m": 0.01261920828850847, 
+                "end_m": [
+                    0.2, 
+                    -0.43, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    0.2, 
+                    -0.43, 
+                    0.02
+                ], 
+                "volume_m3": 5.0028109317601855e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.2507027329400464e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-033", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-064"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.000333295602688933, 
+                "diameter_m": 0.020600124791609605, 
+                "end_m": [
+                    -0.05, 
+                    -0.24, 
+                    0.02
+                ], 
+                "length_m": 0.03999999999999998, 
+                "start_m": [
+                    -0.05, 
+                    -0.2, 
+                    0.02
+                ], 
+                "volume_m3": 1.3331824107557313e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 3.3329560268893303e-05, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-034", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.6001, 
+                    "successor_id": "bvs95-037"
+                }, 
+                {
+                    "probability": 0.3999, 
+                    "successor_id": "bvs95-038"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00015002168659316244, 
+                "diameter_m": 0.013820764954888692, 
+                "end_m": [
+                    -0.14, 
+                    -0.2, 
+                    0.02
+                ], 
+                "length_m": 0.09000000000000001, 
+                "start_m": [
+                    -0.05, 
+                    -0.2, 
+                    0.02
+                ], 
+                "volume_m3": 1.3501951793384621e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.5002168659316244e-05, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-035", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-039"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0009997656695987346, 
+                "diameter_m": 0.03567830133290734, 
+                "end_m": [
+                    -0.13, 
+                    -0.16, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    -0.13, 
+                    -0.16, 
+                    0.02
+                ], 
+                "volume_m3": 3.999062678394939e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 9.997656695987347e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-036", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-090"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0002000106911736287, 
+                "diameter_m": 0.015958117726476272, 
+                "end_m": [
+                    0.03, 
+                    -0.24, 
+                    0.02
+                ], 
+                "length_m": 0.08, 
+                "start_m": [
+                    -0.05, 
+                    -0.24, 
+                    0.02
+                ], 
+                "volume_m3": 1.6000855293890297e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 2.0001069117362872e-05, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-037", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-040"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0001332849115153043, 
+                "diameter_m": 0.013027034200377785, 
+                "end_m": [
+                    -0.05, 
+                    -0.29, 
+                    0.02
+                ], 
+                "length_m": 0.04999999999999999, 
+                "start_m": [
+                    -0.05, 
+                    -0.24, 
+                    0.02
+                ], 
+                "volume_m3": 6.664245575765213e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.3328491151530432e-05, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-038", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.5, 
+                    "successor_id": "bvs95-041"
+                }, 
+                {
+                    "probability": 0.5, 
+                    "successor_id": "bvs95-042"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0015002168659316243, 
+                "diameter_m": 0.04370509626328255, 
+                "end_m": [
+                    -0.14, 
+                    -0.2, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    -0.14, 
+                    -0.2, 
+                    0.02
+                ], 
+                "volume_m3": 6.0008674637264976e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.5002168659316244e-05, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-039", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-077"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.002000106911736287, 
+                "diameter_m": 0.05046399918477292, 
+                "end_m": [
+                    0.03, 
+                    -0.24, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    0.03, 
+                    -0.24, 
+                    0.02
+                ], 
+                "volume_m3": 8.000427646945147e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 2.0001069117362872e-05, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-040", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-086"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 6.664245575765215e-05, 
+                "diameter_m": 0.009211504221836206, 
+                "end_m": [
+                    0.0, 
+                    -0.33, 
+                    0.02
+                ], 
+                "length_m": 0.06403124237432851, 
+                "start_m": [
+                    -0.05, 
+                    -0.29, 
+                    0.02
+                ], 
+                "volume_m3": 4.267199237038689e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 6.664245575765216e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-041", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.2506, 
+                    "successor_id": "bvs95-043"
+                }, 
+                {
+                    "probability": 0.7494, 
+                    "successor_id": "bvs95-044"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 6.664245575765215e-05, 
+                "diameter_m": 0.009211504221836206, 
+                "end_m": [
+                    -0.1, 
+                    -0.33, 
+                    0.02
+                ], 
+                "length_m": 0.06403124237432851, 
+                "start_m": [
+                    -0.05, 
+                    -0.29, 
+                    0.02
+                ], 
+                "volume_m3": 4.267199237038689e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 6.664245575765216e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-042", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.2506, 
+                    "successor_id": "bvs95-045"
+                }, 
+                {
+                    "probability": 0.7494, 
+                    "successor_id": "bvs95-046"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 1.6700599412867628e-05, 
+                "diameter_m": 0.004611275701283096, 
+                "end_m": [
+                    0.13, 
+                    -0.28, 
+                    0.02
+                ], 
+                "length_m": 0.13928388277184117, 
+                "start_m": [
+                    0.0, 
+                    -0.33, 
+                    0.02
+                ], 
+                "volume_m3": 2.326124330841334e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.670059941286763e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-043", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-047"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 4.994185634478452e-05, 
+                "diameter_m": 0.007974205066065353, 
+                "end_m": [
+                    0.13, 
+                    -0.41000000000000003, 
+                    0.02
+                ], 
+                "length_m": 0.1526433752247375, 
+                "start_m": [
+                    0.0, 
+                    -0.33, 
+                    0.02
+                ], 
+                "volume_m3": 7.623293517456881e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 4.994185634478452e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-044", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.6657, 
+                    "successor_id": "bvs95-048"
+                }, 
+                {
+                    "probability": 0.3343, 
+                    "successor_id": "bvs95-049"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 1.6700599412867628e-05, 
+                "diameter_m": 0.004611275701283096, 
+                "end_m": [
+                    -0.23, 
+                    -0.28, 
+                    0.02
+                ], 
+                "length_m": 0.13928388277184117, 
+                "start_m": [
+                    -0.1, 
+                    -0.33, 
+                    0.02
+                ], 
+                "volume_m3": 2.326124330841334e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.670059941286763e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-045", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-051"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 4.994185634478452e-05, 
+                "diameter_m": 0.007974205066065353, 
+                "end_m": [
+                    -0.23, 
+                    -0.41000000000000003, 
+                    0.02
+                ], 
+                "length_m": 0.1526433752247375, 
+                "start_m": [
+                    -0.1, 
+                    -0.33, 
+                    0.02
+                ], 
+                "volume_m3": 7.623293517456881e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 4.994185634478452e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-046", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.6657, 
+                    "successor_id": "bvs95-050"
+                }, 
+                {
+                    "probability": 0.3343, 
+                    "successor_id": "bvs95-052"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0001670059941286763, 
+                "diameter_m": 0.01458213413504481, 
+                "end_m": [
+                    0.13, 
+                    -0.28, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    0.13, 
+                    -0.28, 
+                    0.02
+                ], 
+                "volume_m3": 6.680239765147052e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.670059941286763e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-047", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-070"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 3.324629376872305e-05, 
+                "diameter_m": 0.006506189049068618, 
+                "end_m": [
+                    0.13, 
+                    -0.78, 
+                    0.02
+                ], 
+                "length_m": 0.37, 
+                "start_m": [
+                    0.13, 
+                    -0.41000000000000003, 
+                    0.02
+                ], 
+                "volume_m3": 1.2301128694427529e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 3.3246293768723056e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-048", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.5, 
+                    "successor_id": "bvs95-053"
+                }, 
+                {
+                    "probability": 0.5, 
+                    "successor_id": "bvs95-054"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00016695562576061465, 
+                "diameter_m": 0.014579935011323583, 
+                "end_m": [
+                    0.13, 
+                    -0.41000000000000003, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    0.13, 
+                    -0.41000000000000003, 
+                    0.02
+                ], 
+                "volume_m3": 6.678225030424586e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.6695562576061464e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-049", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-071"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 3.324629376872305e-05, 
+                "diameter_m": 0.006506189049068618, 
+                "end_m": [
+                    -0.23, 
+                    -0.78, 
+                    0.02
+                ], 
+                "length_m": 0.37, 
+                "start_m": [
+                    -0.23, 
+                    -0.41000000000000003, 
+                    0.02
+                ], 
+                "volume_m3": 1.2301128694427529e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 3.3246293768723056e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-050", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 0.5, 
+                    "successor_id": "bvs95-055"
+                }, 
+                {
+                    "probability": 0.5, 
+                    "successor_id": "bvs95-056"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0001670059941286763, 
+                "diameter_m": 0.01458213413504481, 
+                "end_m": [
+                    -0.23, 
+                    -0.28, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    -0.23, 
+                    -0.28, 
+                    0.02
+                ], 
+                "volume_m3": 6.680239765147052e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.670059941286763e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-051", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-072"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00016695562576061465, 
+                "diameter_m": 0.014579935011323583, 
+                "end_m": [
+                    -0.23, 
+                    -0.41000000000000003, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    -0.23, 
+                    -0.41000000000000003, 
+                    0.02
+                ], 
+                "volume_m3": 6.678225030424586e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.6695562576061464e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-052", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-073"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 1.6623146884361526e-05, 
+                "diameter_m": 0.0046005703962780755, 
+                "end_m": [
+                    0.13, 
+                    -1.31, 
+                    0.02
+                ], 
+                "length_m": 0.53, 
+                "start_m": [
+                    0.13, 
+                    -0.78, 
+                    0.02
+                ], 
+                "volume_m3": 8.81026784871161e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.6623146884361528e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-053", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-059"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00016623146884361527, 
+                "diameter_m": 0.014548280988182146, 
+                "end_m": [
+                    0.13, 
+                    -0.78, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    0.13, 
+                    -0.78, 
+                    0.02
+                ], 
+                "volume_m3": 6.649258753744611e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.6623146884361528e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-054", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-066"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 1.6623146884361526e-05, 
+                "diameter_m": 0.0046005703962780755, 
+                "end_m": [
+                    -0.23, 
+                    -1.31, 
+                    0.02
+                ], 
+                "length_m": 0.53, 
+                "start_m": [
+                    -0.23, 
+                    -0.78, 
+                    0.02
+                ], 
+                "volume_m3": 8.81026784871161e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.6623146884361528e-06, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-055", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-060"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00016623146884361527, 
+                "diameter_m": 0.014548280988182146, 
+                "end_m": [
+                    -0.23, 
+                    -0.78, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    -0.23, 
+                    -0.78, 
+                    0.02
+                ], 
+                "volume_m3": 6.649258753744611e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.6623146884361528e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-056", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-067"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.001, 
+                "diameter_m": 0.035682482323055424, 
+                "end_m": [
+                    -0.14, 
+                    0.04, 
+                    0.02
+                ], 
+                "length_m": 0.1, 
+                "start_m": [
+                    -0.04, 
+                    0.04, 
+                    0.02
+                ], 
+                "volume_m3": 0.0001
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 0.0001, 
+                "mean_velocity_m_s": 0.1
+            }, 
+            "id": "bvs95-057", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-061"
+                }
+            ], 
+            "type": "artery"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0019, 
+                "diameter_m": 0.04918490759365935, 
+                "end_m": [
+                    -0.04, 
+                    0.04, 
+                    0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    -0.04, 
+                    0.04, 
+                    -0.02
+                ], 
+                "volume_m3": 7.6e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 9.5e-05, 
+                "mean_velocity_m_s": 0.05
+            }, 
+            "id": "bvs95-058", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-057"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00016623146884361527, 
+                "diameter_m": 0.014548280988182146, 
+                "end_m": [
+                    0.13, 
+                    -1.31, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    0.13, 
+                    -1.31, 
+                    0.02
+                ], 
+                "volume_m3": 6.649258753744611e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.6623146884361528e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-059", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-062"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00016623146884361527, 
+                "diameter_m": 0.014548280988182146, 
+                "end_m": [
+                    -0.23, 
+                    -1.31, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    -0.23, 
+                    -1.31, 
+                    0.02
+                ], 
+                "volume_m3": 6.649258753744611e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.6623146884361528e-06, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-060", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-063"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.01, 
+                "diameter_m": 0.11283791670955126, 
+                "end_m": [
+                    -0.14, 
+                    0.04, 
+                    -0.02
+                ], 
+                "length_m": 0.04, 
+                "start_m": [
+                    -0.14, 
+                    0.04, 
+                    0.02
+                ], 
+                "volume_m3": 0.0004
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 0.0001, 
+                "mean_velocity_m_s": 0.01
+            }, 
+            "id": "bvs95-061", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-094"
+                }
+            ], 
+            "type": "organ_bed"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 4.492742401178792e-05, 
+                "diameter_m": 0.00756329114175122, 
+                "end_m": [
+                    0.13, 
+                    -0.78, 
+                    -0.02
+                ], 
+                "length_m": 0.53, 
+                "start_m": [
+                    0.13, 
+                    -1.31, 
+                    -0.02
+                ], 
+                "volume_m3": 2.3811534726247598e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.6623146884361528e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-062", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-066"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 4.492742401178792e-05, 
+                "diameter_m": 0.00756329114175122, 
+                "end_m": [
+                    -0.23, 
+                    -0.78, 
+                    -0.02
+                ], 
+                "length_m": 0.53, 
+                "start_m": [
+                    -0.23, 
+                    -1.31, 
+                    -0.02
+                ], 
+                "volume_m3": 2.3811534726247598e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.6623146884361528e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-063", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-067"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 3.38027765659472e-05, 
+                "diameter_m": 0.006560413999559101, 
+                "end_m": [
+                    0.2, 
+                    -0.18, 
+                    -0.02
+                ], 
+                "length_m": 0.25, 
+                "start_m": [
+                    0.2, 
+                    -0.43, 
+                    -0.02
+                ], 
+                "volume_m3": 8.4506941414868e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.2507027329400464e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-064", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-068"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 3.377434268675676e-05, 
+                "diameter_m": 0.00655765420758182, 
+                "end_m": [
+                    -0.3, 
+                    -0.18, 
+                    -0.02
+                ], 
+                "length_m": 0.25, 
+                "start_m": [
+                    -0.3, 
+                    -0.43, 
+                    -0.02
+                ], 
+                "volume_m3": 8.44358567168919e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.24965067941e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-065", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-069"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 8.985484802357584e-05, 
+                "diameter_m": 0.010696108908840866, 
+                "end_m": [
+                    0.13, 
+                    -0.41000000000000003, 
+                    -0.02
+                ], 
+                "length_m": 0.37, 
+                "start_m": [
+                    0.13, 
+                    -0.78, 
+                    -0.02
+                ], 
+                "volume_m3": 3.324629376872306e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 3.3246293768723056e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-066", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-071"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 8.985484802357584e-05, 
+                "diameter_m": 0.010696108908840866, 
+                "end_m": [
+                    -0.23, 
+                    -0.41000000000000003, 
+                    -0.02
+                ], 
+                "length_m": 0.37, 
+                "start_m": [
+                    -0.23, 
+                    -0.78, 
+                    -0.02
+                ], 
+                "volume_m3": 3.324629376872306e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 3.3246293768723056e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-067", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-073"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 6.76055531318944e-05, 
+                "diameter_m": 0.0092778264529588, 
+                "end_m": [
+                    0.2, 
+                    0.08, 
+                    -0.02
+                ], 
+                "length_m": 0.26, 
+                "start_m": [
+                    0.2, 
+                    -0.18, 
+                    -0.02
+                ], 
+                "volume_m3": 1.7577443814292545e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 2.5014054658800928e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-068", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-074"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 6.754868537351351e-05, 
+                "diameter_m": 0.0092739235177152, 
+                "end_m": [
+                    -0.3, 
+                    0.08, 
+                    -0.02
+                ], 
+                "length_m": 0.26, 
+                "start_m": [
+                    -0.3, 
+                    -0.18, 
+                    -0.02
+                ], 
+                "volume_m3": 1.7562658197113514e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 2.49930135882e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-069", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-075"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 4.5136755169912514e-05, 
+                "diameter_m": 0.007580890554767422, 
+                "end_m": [
+                    0.0, 
+                    -0.33, 
+                    -0.02
+                ], 
+                "length_m": 0.13928388277184117, 
+                "start_m": [
+                    0.13, 
+                    -0.28, 
+                    -0.02
+                ], 
+                "volume_m3": 6.28682251578739e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.670059941286763e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-070", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-078"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00013497799012103927, 
+                "diameter_m": 0.01310951237426394, 
+                "end_m": [
+                    0.0, 
+                    -0.33, 
+                    -0.02
+                ], 
+                "length_m": 0.1526433752247375, 
+                "start_m": [
+                    0.13, 
+                    -0.41000000000000003, 
+                    -0.02
+                ], 
+                "volume_m3": 2.060349599312671e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 4.994185634478452e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-071", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-078"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 4.5136755169912514e-05, 
+                "diameter_m": 0.007580890554767422, 
+                "end_m": [
+                    -0.1, 
+                    -0.33, 
+                    -0.02
+                ], 
+                "length_m": 0.13928388277184117, 
+                "start_m": [
+                    -0.23, 
+                    -0.28, 
+                    -0.02
+                ], 
+                "volume_m3": 6.28682251578739e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.670059941286763e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-072", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-079"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00013497799012103927, 
+                "diameter_m": 0.01310951237426394, 
+                "end_m": [
+                    -0.1, 
+                    -0.33, 
+                    -0.02
+                ], 
+                "length_m": 0.1526433752247375, 
+                "start_m": [
+                    -0.23, 
+                    -0.41000000000000003, 
+                    -0.02
+                ], 
+                "volume_m3": 2.060349599312671e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 4.994185634478452e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-073", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-079"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00010140325953486486, 
+                "diameter_m": 0.011362686302315702, 
+                "end_m": [
+                    0.1, 
+                    0.17, 
+                    -0.02
+                ], 
+                "length_m": 0.13453624047073712, 
+                "start_m": [
+                    0.2, 
+                    0.08, 
+                    -0.02
+                ], 
+                "volume_m3": 1.3642413309299145e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 3.7519206027899997e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-074", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-080"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00010131796216216216, 
+                "diameter_m": 0.011357906321890748, 
+                "end_m": [
+                    -0.2, 
+                    0.17, 
+                    -0.02
+                ], 
+                "length_m": 0.1345362404707371, 
+                "start_m": [
+                    -0.3, 
+                    0.08, 
+                    -0.02
+                ], 
+                "volume_m3": 1.363093772145369e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 3.7487646e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-075", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-082"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00027016228616356805, 
+                "diameter_m": 0.018546733034136016, 
+                "end_m": [
+                    -0.08, 
+                    -0.18, 
+                    -0.02
+                ], 
+                "length_m": 0.09848857801796104, 
+                "start_m": [
+                    0.01, 
+                    -0.14, 
+                    -0.02
+                ], 
+                "volume_m3": 2.660789939833129e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 9.996004588052017e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-076", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-084"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.000405464017819358, 
+                "diameter_m": 0.02272119762369073, 
+                "end_m": [
+                    -0.08, 
+                    -0.18, 
+                    -0.02
+                ], 
+                "length_m": 0.0632455532033676, 
+                "start_m": [
+                    -0.14, 
+                    -0.2, 
+                    -0.02
+                ], 
+                "volume_m3": 2.564379611104539e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.5002168659316244e-05, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-077", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-084"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00018011474529095177, 
+                "diameter_m": 0.015143619656288956, 
+                "end_m": [
+                    -0.05, 
+                    -0.29, 
+                    -0.02
+                ], 
+                "length_m": 0.06403124237432851, 
+                "start_m": [
+                    0.0, 
+                    -0.33, 
+                    -0.02
+                ], 
+                "volume_m3": 1.1532970910915378e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 6.664245575765215e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-078", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-085"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00018011474529095177, 
+                "diameter_m": 0.015143619656288956, 
+                "end_m": [
+                    -0.05, 
+                    -0.29, 
+                    -0.02
+                ], 
+                "length_m": 0.06403124237432851, 
+                "start_m": [
+                    -0.1, 
+                    -0.33, 
+                    -0.02
+                ], 
+                "volume_m3": 1.1532970910915378e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 6.664245575765215e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-079", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-085"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00013520434604648648, 
+                "diameter_m": 0.013120499990718489, 
+                "end_m": [
+                    0.02, 
+                    0.15, 
+                    -0.02
+                ], 
+                "length_m": 0.08246211251235322, 
+                "start_m": [
+                    0.1, 
+                    0.17, 
+                    -0.02
+                ], 
+                "volume_m3": 1.1149235995844507e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 5.00256080372e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-080", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-088"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00011655976986486488, 
+                "diameter_m": 0.012182303079351454, 
+                "end_m": [
+                    0.02, 
+                    0.15, 
+                    -0.02
+                ], 
+                "length_m": 0.29832867780352595, 
+                "start_m": [
+                    -0.05, 
+                    0.44, 
+                    -0.02
+                ], 
+                "volume_m3": 3.477312202886841e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 4.312711485e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-081", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-088"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00013509061621621622, 
+                "diameter_m": 0.01311498054474835, 
+                "end_m": [
+                    -0.12, 
+                    0.15, 
+                    -0.02
+                ], 
+                "length_m": 0.08246211251235323, 
+                "start_m": [
+                    -0.2, 
+                    0.17, 
+                    -0.02
+                ], 
+                "volume_m3": 1.1139857593784752e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 4.9983528e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-082", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-089"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0002888655166216217, 
+                "diameter_m": 0.019177982137675516, 
+                "end_m": [
+                    -0.12, 
+                    0.15, 
+                    -0.02
+                ], 
+                "length_m": 0.29832867780352595, 
+                "start_m": [
+                    -0.05, 
+                    0.44, 
+                    -0.02
+                ], 
+                "volume_m3": 8.617686763676085e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.0688024115000002e-05, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-083", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-089"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.000675626303982926, 
+                "diameter_m": 0.02932974816963694, 
+                "end_m": [
+                    -0.13, 
+                    -0.16, 
+                    -0.02
+                ], 
+                "length_m": 0.05385164807134504, 
+                "start_m": [
+                    -0.08, 
+                    -0.18, 
+                    -0.02
+                ], 
+                "volume_m3": 3.638358994983212e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 2.499817324736826e-05, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-084", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-090"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00036022949058190355, 
+                "diameter_m": 0.02141631230134363, 
+                "end_m": [
+                    -0.05, 
+                    -0.24, 
+                    -0.02
+                ], 
+                "length_m": 0.04999999999999999, 
+                "start_m": [
+                    -0.05, 
+                    -0.29, 
+                    -0.02
+                ], 
+                "volume_m3": 1.8011474529095174e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.332849115153043e-05, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-085", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-091"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.000540569435604402, 
+                "diameter_m": 0.0262349839353237, 
+                "end_m": [
+                    -0.05, 
+                    -0.24, 
+                    -0.02
+                ], 
+                "length_m": 0.08, 
+                "start_m": [
+                    0.03, 
+                    -0.24, 
+                    -0.02
+                ], 
+                "volume_m3": 4.324555484835216e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 2.0001069117362872e-05, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-086", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-091"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 4.5215150919759254e-05, 
+                "diameter_m": 0.007587471131556676, 
+                "end_m": [
+                    -0.05, 
+                    0.08, 
+                    -0.02
+                ], 
+                "length_m": 0.2080865204668481, 
+                "start_m": [
+                    0.12, 
+                    -0.04, 
+                    -0.02
+                ], 
+                "volume_m3": 9.40866342727611e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.6729605840310923e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-087", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-092"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00025176411591135134, 
+                "diameter_m": 0.01790407853880282, 
+                "end_m": [
+                    -0.05, 
+                    0.08, 
+                    -0.02
+                ], 
+                "length_m": 0.09899494936611665, 
+                "start_m": [
+                    0.02, 
+                    0.15, 
+                    -0.02
+                ], 
+                "volume_m3": 2.4923375906849348e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 9.31527228872e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-088", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-092"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0004239561328378379, 
+                "diameter_m": 0.023233547158411454, 
+                "end_m": [
+                    -0.05, 
+                    0.08, 
+                    -0.02
+                ], 
+                "length_m": 0.09899494936611665, 
+                "start_m": [
+                    -0.12, 
+                    0.15, 
+                    -0.02
+                ], 
+                "volume_m3": 4.196951590373639e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 1.5686376915000003e-05, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-089", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-092"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0009458332417123139, 
+                "diameter_m": 0.03470262650107582, 
+                "end_m": [
+                    -0.05, 
+                    -0.16, 
+                    -0.02
+                ], 
+                "length_m": 0.08, 
+                "start_m": [
+                    -0.13, 
+                    -0.16, 
+                    -0.02
+                ], 
+                "volume_m3": 7.566665933698512e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 3.499582994335561e-05, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-090", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-093"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0009007989261863056, 
+                "diameter_m": 0.03386639654104604, 
+                "end_m": [
+                    -0.05, 
+                    -0.16, 
+                    -0.02
+                ], 
+                "length_m": 0.07999999999999999, 
+                "start_m": [
+                    -0.05, 
+                    -0.24, 
+                    -0.02
+                ], 
+                "volume_m3": 7.206391409490443e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 3.3329560268893303e-05, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-091", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-093"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0007209353996689487, 
+                "diameter_m": 0.03029725169149761, 
+                "end_m": [
+                    -0.04, 
+                    0.04, 
+                    -0.02
+                ], 
+                "length_m": 0.04123105625617661, 
+                "start_m": [
+                    -0.05, 
+                    0.08, 
+                    -0.02
+                ], 
+                "volume_m3": 2.972492802081959e-05
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 2.66746097877511e-05, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-092", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-058"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.0018466321678986194, 
+                "diameter_m": 0.048489226646220546, 
+                "end_m": [
+                    -0.04, 
+                    0.04, 
+                    -0.02
+                ], 
+                "length_m": 0.2002498439450079, 
+                "start_m": [
+                    -0.05, 
+                    -0.16, 
+                    -0.02
+                ], 
+                "volume_m3": 0.00036978780344553016
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 6.832539021224891e-05, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-093", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-058"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.002702702702702703, 
+                "diameter_m": 0.05866163958451625, 
+                "end_m": [
+                    0.0, 
+                    0.0, 
+                    -0.02
+                ], 
+                "length_m": 0.14560219778561037, 
+                "start_m": [
+                    -0.14, 
+                    0.04, 
+                    -0.02
+                ], 
+                "volume_m3": 0.00039351945347462265
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 0.0001, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-094", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-002"
+                }
+            ], 
+            "type": "vein"
+        }, 
+        {
+            "evidence": {
+                "diameter": "derived", 
+                "flow": "derived", 
+                "geometry": "schematic"
+            }, 
+            "geometry": {
+                "cross_section_area_m2": 0.00013513513513513516, 
+                "diameter_m": 0.013117141378257086, 
+                "end_m": [
+                    -0.04, 
+                    0.04, 
+                    0.02
+                ], 
+                "length_m": 0.05656854249492381, 
+                "start_m": [
+                    0.0, 
+                    0.0, 
+                    0.02
+                ], 
+                "volume_m3": 7.644397634449164e-06
+            }, 
+            "hemodynamics": {
+                "flow_rate_m3_s": 5e-06, 
+                "mean_velocity_m_s": 0.037
+            }, 
+            "id": "bvs95-095", 
+            "relative_uncertainty": {}, 
+            "source_refs": [
+                "legacy-95-release", 
+                "wendt-dissertation-2024", 
+                "bvs95-migration-method"
+            ], 
+            "transitions": [
+                {
+                    "probability": 1.0, 
+                    "successor_id": "bvs95-057"
+                }
+            ], 
+            "type": "vein"
+        }
+    ], 
+    "sources": [
+        {
+            "citation": "MEHLISSA/BloodVoyagerS 95_vasculature.csv and 95_transitions.csv; released by the project rights holder on 2026-08-27.", 
+            "id": "legacy-95-release", 
+            "license": "CC-BY-4.0"
+        }, 
+        {
+            "citation": "Regine Wendt, Einsatz von Nanotechnologien in der Praezisionsmedizin, Universitaet zu Luebeck, 2024, Section 4.3.1 and Appendix A.1.", 
+            "id": "wendt-dissertation-2024", 
+            "license": "citation-only"
+        }, 
+        {
+            "citation": "Stoquart-ElSankari et al., A phase-contrast MRI study of physiologic cerebral venous flow, J Cereb Blood Flow Metab 29 (2009), doi:10.1038/jcbfm.2009.29.", 
+            "id": "jugular-flow-mri-2009", 
+            "license": "citation-only"
+        }, 
+        {
+            "citation": "MEHLISSA Next M2.2 deterministic SI migration method, version 1.0.0.", 
+            "id": "bvs95-migration-method", 
+            "license": "CC-BY-4.0"
+        }
+    ], 
+    "validity": {
+        "description": "Reproduction and regression profile. Relative organ perfusion follows the released dissertation transition table; 6.0 L/min is an explicit normalization assumption. This profile is not a patient-specific or anatomically validated circulation.", 
+        "physiological_state": "rest; posture not represented; jugular correction uses supine evidence", 
+        "population": "historical BVS/MEHLISSA reference woman (1.72 m, 69 kg)"
+    }
+}

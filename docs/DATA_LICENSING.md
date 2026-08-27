@@ -19,12 +19,16 @@ Bestandsdatensatzes ungeklärt; er darf dann nicht als CC-BY-Datensatz in einem
 
 ## Aktueller Bestand
 
-Für die CSV-Dateien im Repository sind Herkunft und technische Eigenschaften im
-[Lizenz- und Dateninventar](m0/LICENSE_AND_DATA_INVENTORY.md) erfasst. Da die
-Commits mehrere individuelle Beitragende nennen und bislang keine explizite
-Datenlizenz enthalten, ist ihre Freigabe unter CC BY 4.0 noch zu bestätigen.
-Bis dahin werden sie als wissenschaftliche Legacy-Eingaben behandelt und aus
-öffentlichen Next-Datenpaketen ausgeschlossen.
+Für die drei Quellen des 95er-BVS/MEHLISSA-Datensatzes ist die Freigabe seit
+dem 27. August 2026 bestätigt. Sie besitzen `CC-BY-4.0`-Sidecars; das Manifest
+`data/legacy/bvs95/release-v1.json` erfasst Herkunft, Prüfsummen,
+Namensnennung, Transformationen und bekannte Grenzen. Der daraus erzeugte
+Next-Gefäßgraph steht ebenfalls unter `CC-BY-4.0`.
+
+Diese Freigabe gilt artefaktbezogen und erfasst nicht automatisch die weiteren
+CSV-Dateien, Erweiterungen oder Publikations-PDFs im Repository. Deren Status
+bleibt im [Lizenz- und Dateninventar](m0/LICENSE_AND_DATA_INVENTORY.md)
+dokumentiert.
 
 ## Namensnennung
 

@@ -41,6 +41,34 @@ add_test(
         --model ${PROJECT_SOURCE_DIR}/examples/body-models/synthetic-branching-circuit.json
         --schema ${PROJECT_SOURCE_DIR}/data/schemas/vascular-graph/1.0.0.schema.json
 )
+
+add_test(
+    NAME mehlissa_cli_migrates_legacy_95
+    COMMAND
+        mehlissa migrate-legacy-95
+        --vasculature ${PROJECT_SOURCE_DIR}/mehlissa2.0/data/95_vasculature.csv
+        --transitions ${PROJECT_SOURCE_DIR}/mehlissa2.0/data/95_transitions.csv
+        --output ${CMAKE_CURRENT_BINARY_DIR}/bvs95-dissertation-rest.generated.json
+        --schema ${PROJECT_SOURCE_DIR}/data/schemas/vascular-graph/1.0.0.schema.json
+)
+set_tests_properties(
+    mehlissa_cli_migrates_legacy_95
+    PROPERTIES PASS_REGULAR_EXPRESSION "bvs95-dissertation-rest.*95 segments"
+)
+
+add_test(
+    NAME mehlissa_cli_runs_bvs_reference
+    COMMAND
+        mehlissa reference-bvs
+        --model ${PROJECT_SOURCE_DIR}/data/body-models/bvs95-dissertation-rest-v1.json
+        --output ${CMAKE_CURRENT_BINARY_DIR}/bvs95-m2.4-reference.generated.json
+        --schema ${PROJECT_SOURCE_DIR}/data/schemas/vascular-graph/1.0.0.schema.json
+        --report-schema ${PROJECT_SOURCE_DIR}/data/schemas/bvs-reference-report/1.0.0.schema.json
+)
+set_tests_properties(
+    mehlissa_cli_runs_bvs_reference
+    PROPERTIES PASS_REGULAR_EXPRESSION "M2.4 BVS reference passed"
+)
 set_tests_properties(
     mehlissa_cli_validates_body_model
     PROPERTIES PASS_REGULAR_EXPRESSION "synthetic-branching-circuit.*4 segments"

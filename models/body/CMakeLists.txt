@@ -5,7 +5,9 @@ find_package(jsoncons CONFIG REQUIRED)
 
 add_library(
     mehlissa_body_model
+    src/bvs_reference.cpp
     src/compartment_transport.cpp
+    src/legacy_95_migration.cpp
     src/vascular_graph.cpp
 )
 add_library(MEHLISSA::body_model ALIAS mehlissa_body_model)

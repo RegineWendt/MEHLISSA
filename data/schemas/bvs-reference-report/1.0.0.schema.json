@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:bvs-reference-report:1.0.0",
+  "title": "MEHLISSA BVS reference report",
+  "description": "Machine-readable M2.4 regression evidence for BVS distribution and dissertation perfusion claims.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "model", "experiment", "published_reference", "acceptance_thresholds", "dynamic_distribution", "perfusion", "diagnostics", "gates"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1}
+      }
+    },
+    "experiment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["master_seed", "reference_particle_count", "large_particle_count", "aorta_segment_id", "popliteal_segment_id", "averaging_window_seconds", "reference_duration_seconds"],
+      "properties": {
+        "master_seed": {"type": "integer", "minimum": 0},
+        "reference_particle_count": {"type": "integer", "minimum": 1},
+        "large_particle_count": {"type": "integer", "minimum": 1},
+        "aorta_segment_id": {"type": "string", "minLength": 1},
+        "popliteal_segment_id": {"type": "string", "minLength": 1},
+        "averaging_window_seconds": {"type": "integer", "minimum": 1},
+        "reference_duration_seconds": {"type": "integer", "minimum": 1}
+      }
+    },
+    "published_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bvs_vessel_count", "bvs_minute_7_mean_difference_per_vessel", "bvs_mean_normalized_difference_percent", "bvs_injection_site_difference_percent", "description"],
+      "properties": {
+        "bvs_vessel_count": {"type": "integer", "minimum": 1},
+        "bvs_minute_7_mean_difference_per_vessel": {"type": "number", "minimum": 0},
+        "bvs_mean_normalized_difference_percent": {"type": "number", "minimum": 0},
+        "bvs_injection_site_difference_percent": {"type": "number", "minimum": 0},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "acceptance_thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maximum_minute_7_equilibrium_difference_percent", "maximum_injection_site_difference_percent", "maximum_population_scale_total_variation_percent", "maximum_mean_perfusion_target_error_percentage_points", "maximum_perfusion_target_error_percentage_points", "maximum_mean_dissertation_difference_percentage_points"],
+      "properties": {
+        "maximum_minute_7_equilibrium_difference_percent": {"type": "number", "minimum": 0},
+        "maximum_injection_site_difference_percent": {"type": "number", "minimum": 0},
+        "maximum_population_scale_total_variation_percent": {"type": "number", "minimum": 0},
+        "maximum_mean_perfusion_target_error_percentage_points": {"type": "number", "minimum": 0},
+        "maximum_perfusion_target_error_percentage_points": {"type": "number", "minimum": 0},
+        "maximum_mean_dissertation_difference_percentage_points": {"type": "number", "minimum": 0}
+      }
+    },
+    "dynamic_distribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minute_1_vs_minute_120", "minute_7_vs_minute_120", "minute_15_vs_minute_120", "aorta_vs_popliteal_at_minute_7", "population_scale_total_variation_percent"],
+      "properties": {
+        "minute_1_vs_minute_120": {"$ref": "#/$defs/distribution_comparison"},
+        "minute_7_vs_minute_120": {"$ref": "#/$defs/distribution_comparison"},
+        "minute_15_vs_minute_120": {"$ref": "#/$defs/distribution_comparison"},
+        "aorta_vs_popliteal_at_minute_7": {"$ref": "#/$defs/distribution_comparison"},
+        "population_scale_total_variation_percent": {"type": "number", "minimum": 0}
+      }
+    },
+    "perfusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mean_error_vs_literature_percentage_points", "maximum_error_vs_literature_percentage_points", "mean_difference_vs_dissertation_percentage_points", "regions"],
+      "properties": {
+        "mean_error_vs_literature_percentage_points": {"type": "number", "minimum": 0},
+        "maximum_error_vs_literature_percentage_points": {"type": "number", "minimum": 0},
+        "mean_difference_vs_dissertation_percentage_points": {"type": "number", "minimum": 0},
+        "regions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["region", "segment_id", "literature_target_percent", "dissertation_simulation_percent", "model_percent"],
+            "properties": {
+              "region": {"type": "string", "minLength": 1},
+              "segment_id": {"type": "string", "minLength": 1},
+              "literature_target_percent": {"type": "number", "minimum": 0},
+              "dissertation_simulation_percent": {"type": "number", "minimum": 0},
+              "model_percent": {"type": "number", "minimum": 0}
+            }
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["aorta_reference_transitions", "popliteal_transitions", "large_population_transitions"],
+      "properties": {
+        "aorta_reference_transitions": {"type": "integer", "minimum": 0},
+        "popliteal_transitions": {"type": "integer", "minimum": 0},
+        "large_population_transitions": {"type": "integer", "minimum": 0}
+      }
+    },
+    "gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["population_conserved", "perfusion", "equilibrium", "injection_site", "population_scale", "overall"],
+      "properties": {
+        "population_conserved": {"type": "boolean"},
+        "perfusion": {"type": "boolean"},
+        "equilibrium": {"type": "boolean"},
+        "injection_site": {"type": "boolean"},
+        "population_scale": {"type": "boolean"},
+        "overall": {"type": "boolean"}
+      }
+    }
+  },
+  "$defs": {
+    "distribution_comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mean_absolute_difference_per_segment", "normalized_mean_difference_percent", "maximum_absolute_difference"],
+      "properties": {
+        "mean_absolute_difference_per_segment": {"type": "number", "minimum": 0},
+        "normalized_mean_difference_percent": {"type": "number", "minimum": 0},
+        "maximum_absolute_difference": {"type": "number", "minimum": 0}
+      }
+    }
+  }
+}

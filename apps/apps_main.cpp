@@ -8,6 +8,8 @@
 #include <mehlissa/experiment/experiment_manifest.hpp>
 #include <mehlissa/experiment/provenance.hpp>
 #include <mehlissa/experiment/run_log.hpp>
+#include <mehlissa/models/body/bvs_reference.hpp>
+#include <mehlissa/models/body/legacy_95_migration.hpp>
 #include <mehlissa/models/body/vascular_graph.hpp>
 
 #include <cinttypes>
@@ -24,15 +26,27 @@ namespace {
 constexpr auto default_schema_path = "data/schemas/experiment/1.0.0.schema.json";
 constexpr auto default_checkpoint_schema_path = "data/schemas/checkpoint/1.0.0.schema.json";
 constexpr auto default_body_schema_path = "data/schemas/vascular-graph/1.0.0.schema.json";
+constexpr auto default_bvs_report_schema_path =
+    "data/schemas/bvs-reference-report/1.0.0.schema.json";
 
 struct CommandLine final {
-    enum class Operation : std::uint8_t { run, validate, validate_body };
+    enum class Operation : std::uint8_t {
+        run,
+        validate,
+        validate_body,
+        migrate_legacy_95,
+        reference_bvs
+    };
 
     Operation operation{};
     std::filesystem::path experiment_path;
     std::filesystem::path body_model_path;
+    std::filesystem::path vasculature_path;
+    std::filesystem::path transitions_path;
+    std::filesystem::path output_path;
     std::filesystem::path schema_path{default_schema_path};
     std::filesystem::path checkpoint_schema_path{default_checkpoint_schema_path};
+    std::filesystem::path report_schema_path{default_bvs_report_schema_path};
 };
 
 void print_usage() {
@@ -40,7 +54,11 @@ void print_usage() {
                "  mehlissa run --experiment <file> [--schema <file>] "
                "[--checkpoint-schema <file>]\n"
                "  mehlissa validate --experiment <file> [--schema <file>]\n"
-               "  mehlissa validate-body --model <file> [--schema <file>]\n",
+               "  mehlissa validate-body --model <file> [--schema <file>]\n"
+               "  mehlissa migrate-legacy-95 --vasculature <file> --transitions <file> "
+               "--output <file> [--schema <file>]\n"
+               "  mehlissa reference-bvs --model <file> --output <file> "
+               "[--schema <file>] [--report-schema <file>]\n",
                stderr);
 }
 
@@ -59,6 +77,12 @@ void print_usage() {
     } else if (operation == "validate-body") {
         command.operation = CommandLine::Operation::validate_body;
         command.schema_path = default_body_schema_path;
+    } else if (operation == "migrate-legacy-95") {
+        command.operation = CommandLine::Operation::migrate_legacy_95;
+        command.schema_path = default_body_schema_path;
+    } else if (operation == "reference-bvs") {
+        command.operation = CommandLine::Operation::reference_bvs;
+        command.schema_path = default_body_schema_path;
     } else {
         throw mehlissa::core::MehlissaError{mehlissa::core::ErrorCode::command_line_invalid,
                                             "Unknown command: " + std::string{operation}};
@@ -76,17 +100,38 @@ void print_usage() {
             command.experiment_path = argv[argument + 1];
         } else if (option == "--model") {
             command.body_model_path = argv[argument + 1];
+        } else if (option == "--vasculature") {
+            command.vasculature_path = argv[argument + 1];
+        } else if (option == "--transitions") {
+            command.transitions_path = argv[argument + 1];
+        } else if (option == "--output") {
+            command.output_path = argv[argument + 1];
         } else if (option == "--schema") {
             command.schema_path = argv[argument + 1];
         } else if (option == "--checkpoint-schema") {
             command.checkpoint_schema_path = argv[argument + 1];
+        } else if (option == "--report-schema") {
+            command.report_schema_path = argv[argument + 1];
         } else {
             throw mehlissa::core::MehlissaError{mehlissa::core::ErrorCode::command_line_invalid,
                                                 "Unknown option: " + std::string{option}};
         }
     }
 
-    if (command.operation == CommandLine::Operation::validate_body) {
+    if (command.operation == CommandLine::Operation::migrate_legacy_95) {
+        if (command.vasculature_path.empty() || command.transitions_path.empty() ||
+            command.output_path.empty()) {
+            throw mehlissa::core::MehlissaError{
+                mehlissa::core::ErrorCode::command_line_invalid,
+                "--vasculature, --transitions and --output are required"};
+        }
+    } else if (command.operation == CommandLine::Operation::reference_bvs) {
+        if (command.body_model_path.empty() || command.output_path.empty()) {
+            throw mehlissa::core::MehlissaError{
+                mehlissa::core::ErrorCode::command_line_invalid,
+                "--model and --output are required"};
+        }
+    } else if (command.operation == CommandLine::Operation::validate_body) {
         if (command.body_model_path.empty()) {
             throw mehlissa::core::MehlissaError{mehlissa::core::ErrorCode::command_line_invalid,
                                                 "--model is required"};
@@ -154,6 +199,37 @@ void record_failure(mehlissa::experiment::JsonLinesRunLog& log,
 }
 
 int execute(const CommandLine& command) {
+    if (command.operation == CommandLine::Operation::reference_bvs) {
+        const auto graph = mehlissa::models::body::load_vascular_graph(
+            {command.body_model_path, command.schema_path});
+        const auto report = mehlissa::models::body::run_bvs_reference(graph);
+        mehlissa::models::body::write_bvs_reference_report(
+            report, {command.output_path, command.report_schema_path});
+        std::printf("M2.4 BVS reference %s: equilibrium=%.6f%%, injection-site=%.6f%%, "
+                    "population-scale=%.6f%%, perfusion-mean=%.6f pp -> %s\n",
+                    report.overall_passed ? "passed" : "failed",
+                    report.minute_7_vs_minute_120.normalized_mean_difference_percent,
+                    report.aorta_vs_popliteal_at_minute_7.normalized_mean_difference_percent,
+                    report.population_scale_total_variation_percent,
+                    report.mean_perfusion_error_vs_literature_percentage_points,
+                    command.output_path.string().c_str());
+        if (!report.overall_passed) {
+            throw mehlissa::core::MehlissaError{
+                mehlissa::core::ErrorCode::data_invalid,
+                "M2.4 BVS reference failed one or more pre-defined acceptance gates"};
+        }
+        return 0;
+    }
+    if (command.operation == CommandLine::Operation::migrate_legacy_95) {
+        const auto graph = mehlissa::models::body::migrate_legacy_95(
+            {command.vasculature_path, command.transitions_path});
+        mehlissa::models::body::write_vascular_graph(graph, command.output_path);
+        static_cast<void>(mehlissa::models::body::load_vascular_graph(
+            {command.output_path, command.schema_path}));
+        std::printf("Migrated vascular graph: %s (%zu segments) -> %s\n", graph.model_id.c_str(),
+                    graph.segments.size(), command.output_path.string().c_str());
+        return 0;
+    }
     if (command.operation == CommandLine::Operation::validate_body) {
         const auto graph = mehlissa::models::body::load_vascular_graph(
             {command.body_model_path, command.schema_path});

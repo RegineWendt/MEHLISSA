@@ -186,6 +186,143 @@ void validate_document(const Json& document, const CompiledSchema& schema,
     return graph;
 }
 
+[[nodiscard]] std::string_view encode_vessel_type(const VesselType type) noexcept {
+    switch (type) {
+    case VesselType::artery:
+        return "artery";
+    case VesselType::vein:
+        return "vein";
+    case VesselType::organ_bed:
+        return "organ_bed";
+    }
+    return "organ_bed";
+}
+
+[[nodiscard]] std::string_view encode_quality(const EvidenceQuality quality) noexcept {
+    switch (quality) {
+    case EvidenceQuality::measured:
+        return "measured";
+    case EvidenceQuality::literature:
+        return "literature";
+    case EvidenceQuality::derived:
+        return "derived";
+    case EvidenceQuality::schematic:
+        return "schematic";
+    case EvidenceQuality::assumed:
+        return "assumed";
+    case EvidenceQuality::unknown:
+        return "unknown";
+    }
+    return "unknown";
+}
+
+[[nodiscard]] Json encode_position(const core::Position3D& position) {
+    Json document = Json::array();
+    document.push_back(core::in_meters(position.x));
+    document.push_back(core::in_meters(position.y));
+    document.push_back(core::in_meters(position.z));
+    return document;
+}
+
+[[nodiscard]] Json encode(const VascularGraph& graph) {
+    Json source_documents = Json::array();
+    for (const auto& source : graph.sources) {
+        source_documents.push_back(Json{jsoncons::json_object_arg,
+                                        {
+                                            {"id", source.id},
+                                            {"citation", source.citation},
+                                            {"license", source.license},
+                                        }});
+    }
+
+    Json segment_documents = Json::array();
+    for (const auto& segment : graph.segments) {
+        Json transition_documents = Json::array();
+        for (const auto& transition : segment.transitions) {
+            transition_documents.push_back(Json{jsoncons::json_object_arg,
+                                                {
+                                                    {"successor_id", transition.successor_id},
+                                                    {"probability", transition.probability},
+                                                }});
+        }
+        Json source_refs = Json::array();
+        for (const auto& source_ref : segment.source_refs) {
+            source_refs.push_back(source_ref);
+        }
+        Json uncertainty{jsoncons::json_object_arg};
+        if (segment.relative_uncertainty.geometry.has_value()) {
+            uncertainty["geometry"] = *segment.relative_uncertainty.geometry;
+        }
+        if (segment.relative_uncertainty.diameter.has_value()) {
+            uncertainty["diameter"] = *segment.relative_uncertainty.diameter;
+        }
+        if (segment.relative_uncertainty.flow.has_value()) {
+            uncertainty["flow"] = *segment.relative_uncertainty.flow;
+        }
+
+        segment_documents.push_back(Json{
+            jsoncons::json_object_arg,
+            {
+                {"id", segment.id},
+                {"type", encode_vessel_type(segment.type)},
+                {"geometry", Json{jsoncons::json_object_arg,
+                                  {
+                                      {"start_m", encode_position(segment.geometry.start)},
+                                      {"end_m", encode_position(segment.geometry.end)},
+                                      {"length_m", core::in_meters(segment.geometry.length)},
+                                      {"diameter_m", core::in_meters(segment.geometry.diameter)},
+                                      {"cross_section_area_m2",
+                                       core::in_square_meters(segment.geometry.cross_section_area)},
+                                      {"volume_m3", core::in_cubic_meters(segment.geometry.volume)},
+                                  }}},
+                {"hemodynamics",
+                 Json{jsoncons::json_object_arg,
+                      {
+                          {"flow_rate_m3_s",
+                           core::in_cubic_meters_per_second(segment.hemodynamics.flow_rate)},
+                          {"mean_velocity_m_s",
+                           core::in_meters_per_second(segment.hemodynamics.mean_velocity)},
+                      }}},
+                {"transitions", std::move(transition_documents)},
+                {"source_refs", std::move(source_refs)},
+                {"evidence", Json{jsoncons::json_object_arg,
+                                  {
+                                      {"geometry", encode_quality(segment.evidence.geometry)},
+                                      {"diameter", encode_quality(segment.evidence.diameter)},
+                                      {"flow", encode_quality(segment.evidence.flow)},
+                                  }}},
+                {"relative_uncertainty", std::move(uncertainty)},
+            }});
+    }
+
+    return Json{
+        jsoncons::json_object_arg,
+        {
+            {"schema_version", graph.schema_version},
+            {"model", Json{jsoncons::json_object_arg,
+                           {
+                               {"id", graph.model_id},
+                               {"version", graph.model_version},
+                               {"title", graph.title},
+                           }}},
+            {"coordinate_system", Json{jsoncons::json_object_arg,
+                                       {
+                                           {"id", graph.coordinate_system.id},
+                                           {"description", graph.coordinate_system.description},
+                                           {"handedness", graph.coordinate_system.handedness},
+                                           {"length_unit", "m"},
+                                       }}},
+            {"validity", Json{jsoncons::json_object_arg,
+                              {
+                                  {"population", graph.validity.population},
+                                  {"physiological_state", graph.validity.physiological_state},
+                                  {"description", graph.validity.description},
+                              }}},
+            {"sources", std::move(source_documents)},
+            {"segments", std::move(segment_documents)},
+        }};
+}
+
 [[nodiscard]] bool approximately_equal(const double left, const double right) noexcept {
     constexpr double absolute_tolerance = 1.0e-12;
     constexpr double relative_tolerance = 1.0e-9;
@@ -423,6 +560,31 @@ VascularGraph load_vascular_graph(const VascularGraphLoadRequest& request) {
         throw VascularGraphError{core::ErrorCode::data_invalid, "Cannot decode vascular graph '" +
                                                                     request.model_path.string() +
                                                                     "': " + error.what()};
+    }
+}
+
+void write_vascular_graph(const VascularGraph& graph, const std::filesystem::path& output_path) {
+    validate_vascular_graph(graph);
+    std::error_code error;
+    if (!output_path.parent_path().empty()) {
+        std::filesystem::create_directories(output_path.parent_path(), error);
+        if (error) {
+            throw VascularGraphError{core::ErrorCode::output_unwritable,
+                                     "Cannot create vascular-graph directory '" +
+                                         output_path.parent_path().string() +
+                                         "': " + error.message()};
+        }
+    }
+    std::ofstream stream{output_path, std::ios::binary | std::ios::trunc};
+    if (!stream) {
+        throw VascularGraphError{core::ErrorCode::output_unwritable,
+                                 "Cannot write vascular graph: " + output_path.string()};
+    }
+    encode(graph).dump_pretty(stream);
+    stream.put('\n');
+    if (!stream) {
+        throw VascularGraphError{core::ErrorCode::output_unwritable,
+                                 "Cannot complete vascular graph: " + output_path.string()};
     }
 }
 

@@ -33,10 +33,11 @@ zusammenhängenden gerichteten Graphen. Die 24 Verzweigungs-IDs sind:
 
 ## Bestätigte Auffälligkeiten
 
-1. Für Gefäß 9 fehlen Übergangswahrscheinlichkeiten, obwohl die
-   Koordinatenlogik zwei Nachfolger (`81` und `83`) erzeugt. Der Legacy-Code
-   verwendet dadurch implizit seinen Standard `1/0`; die physiologisch
-   richtige Aufteilung ist ungeklärt und darf nicht erfunden werden.
+1. Für Gefäß 9 fehlen in der Quelle Übergangswahrscheinlichkeiten, obwohl die
+   Koordinatenlogik zwei Nachfolger (`81` links und `83` rechts) erzeugt. Der
+   Legacy-Code verwendet dadurch implizit `1/0`. M2.2 korrigiert dies für das
+   Ruhe-/Rückenlageprofil belegt auf `0,2875/0,7125`; Quelle, Gültigkeitsbereich
+   und Variabilität sind im Profil dokumentiert.
 2. Alle Start- und Endpunkte liegen auf nur zwei Ebenen, `z = -2` und `z = +2`.
    Das ist eine schematische Topologie, keine anatomische 3D-Geometrie.
 3. Jede Gefäßzeile endet mit einem Trennzeichen. Das ergibt beim strikten Split
@@ -59,18 +60,21 @@ M2 übernimmt keine dieser Annahmen stillschweigend:
 - Schematische Koordinaten werden als solche gekennzeichnet und mit einer
   dokumentierten Einheit transformiert.
 - Physikalische Parameter erhalten Quelle, Evidenzqualität und Unsicherheit.
-- Fehlende Werte bleiben als offene Datenlücke sichtbar; insbesondere wird für
-  Gefäß 9 keine Wahrscheinlichkeit geraten.
+- Fehlende Werte bleiben als Datenlücke sichtbar. Gefäß 9 ist die einzige
+  fachlich korrigierte Transition und verweist auf die zugrunde liegende
+  MRT-Kohorte; der historische `1/0`-Lauf bleibt in der Rohquelle erhalten.
 - Der neue Loader unterstützt nicht fortlaufende IDs und lehnt unvollständige
   Graphen vor dem Simulationsstart ab.
 
 ## Lizenz- und Provenienzgrenze
 
-ADR-0007 erlaubt keine rückwirkende CC-BY-Umlizenzierung der bestehenden
-Dateien. Deshalb bleibt der Legacy-Datensatz an seinem bisherigen Ort und wird
-nicht in ein öffentliches Next-Datenpaket kopiert. M2.1 verwendet zunächst
-einen unabhängig erzeugten synthetischen CC-BY-Referenzgraphen.
+Die Projektleitung hat am 27. August 2026 bestätigt, dass die drei 95er-Dateien
+verwendet und neu lizenziert werden dürfen. Sie und die kanonische Migration
+stehen deshalb unter `CC-BY-4.0`. Sidecars sowie
+`data/legacy/bvs95/release-v1.json` dokumentieren Namensnennung, SHA-256-Werte,
+Freigabegrundlage, Transformationen und Grenzen.
 
-Die vollständige 95er-Migration wird erst eingecheckt, wenn Urheberschaft,
-Datenquelle und Freigabe geklärt sind. Ein Konverter kann zuvor technisch
-entwickelt werden; sein Ergebnis ist bis dahin kein freigegebener Next-Datensatz.
+Der reproduzierbare Konverter lehnt strukturelle Abweichungen von den 95
+Segmenten und 23 Transitionseinträgen ab. Sein Ergebnis ist der vollständige,
+schema- und semantikvalidierte Graph
+`data/body-models/bvs95-dissertation-rest-v1.json`.

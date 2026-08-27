@@ -1,0 +1,58 @@
+{
+  "dataset": {
+    "id": "mehlissa-bvs95-source-release",
+    "version": "1.0.0",
+    "title": "MEHLISSA/BloodVoyagerS 95-segment source data",
+    "release_date": "2026-08-27"
+  },
+  "rights": {
+    "license": "CC-BY-4.0",
+    "authorization_basis": "MEHLISSA project leadership confirmed that the source files may be used and relicensed.",
+    "required_attribution": "MEHLISSA/BloodVoyagerS vascular model data, originally developed by Regine Wendt, CC BY 4.0.",
+    "repository": "https://github.com/RegineWendt/MEHLISSA"
+  },
+  "source_files": [
+    {
+      "path": "mehlissa2.0/data/95_vasculature.csv",
+      "sha256": "de4b2b730bf3f88d3cb59213d67fcaf3d4764a3aca69be892e151109eb8c9db8",
+      "role": "95 segment IDs, legacy types and schematic coordinates",
+      "license_sidecar": "mehlissa2.0/data/95_vasculature.csv.license"
+    },
+    {
+      "path": "mehlissa2.0/data/95_transitions.csv",
+      "sha256": "186650341da23f233ec483fcebfd212833b48071922345f297bc36a771709a8a",
+      "role": "23 explicit dissertation-derived branching ratios",
+      "license_sidecar": "mehlissa2.0/data/95_transitions.csv.license"
+    },
+    {
+      "path": "mehlissa2.0/data/95_fingerprints.csv",
+      "sha256": "a6e42f40d6ff5f159224ab85e9d0a6c73e75f23217a922e3b49e854f259e467c",
+      "role": "nine historical fingerprint formation times",
+      "license_sidecar": "mehlissa2.0/data/95_fingerprints.csv.license"
+    }
+  ],
+  "derived_files": [
+    {
+      "path": "data/body-models/bvs95-dissertation-rest-v1.json",
+      "sha256": "1266ac9f30033820255161ccfb53104a20c76188df4d50e38c1d6e329ece0c28",
+      "schema": "data/schemas/vascular-graph/1.0.0.schema.json",
+      "transformations": [
+        "map legacy IDs 1..95 bijectively to bvs95-001..bvs95-095",
+        "map legacy vessel types 0/1/2 to artery/vein/organ_bed",
+        "convert all schematic coordinates from centimetres to metres",
+        "make every coordinate-derived successor explicit",
+        "preserve all 23 released branch ratios",
+        "replace the missing vessel-9 legacy default with the documented 0.2875 left and 0.7125 right internal-jugular cohort mean",
+        "normalize the stationary flow to 6.0 L/min at legacy vessel 2",
+        "derive equivalent circular area and diameter from flow and documented historical class velocity"
+      ]
+    }
+  ],
+  "known_limitations": [
+    "The geometry is schematic and confined to two depth planes.",
+    "The absolute 6.0 L/min flow is a normalization assumption, not a measurement of the historical reference person.",
+    "Equivalent diameters are derived transport parameters, not anatomical measurements.",
+    "The vessel-9 split is a cohort mean for healthy young adults in rest and supine posture and has high inter-individual variability.",
+    "Fingerprint formation times remain a separately licensed source input and are not part of the vascular-graph contract."
+  ]
+}

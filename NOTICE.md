@@ -20,3 +20,7 @@ When citing MEHLISSA in scientific work, use the publications listed in the
 repository `README.adoc` and cite the concrete software version, commit, model,
 and dataset used for the experiment.
 
+The released 95-segment source dataset and its canonical migration require the
+following attribution: "MEHLISSA/BloodVoyagerS vascular model data, originally
+developed by Regine Wendt, CC BY 4.0." Exact files, hashes, transformations and
+scientific sources are recorded in `data/legacy/bvs95/release-v1.json`.

@@ -113,6 +113,7 @@ class VascularGraphError final : public core::MehlissaError {
 };
 
 [[nodiscard]] VascularGraph load_vascular_graph(const VascularGraphLoadRequest& request);
+void write_vascular_graph(const VascularGraph& graph, const std::filesystem::path& output_path);
 void validate_vascular_graph(const VascularGraph& graph);
 
 } // namespace mehlissa::models::body
