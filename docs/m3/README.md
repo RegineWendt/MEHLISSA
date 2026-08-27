@@ -21,7 +21,7 @@ respiratory mechanics, or gas exchange.
 | M3.1 model-component and entity-transfer contract | implemented, under CI review | versioned exchange object, named ports, strict temporal/route/identity validation, coarse `LungCompartment`, and deterministic contract tests |
 | M3.2 body–lung–body entity round trip | implemented, under CI review | body transport hand-off, explicit orchestrator ownership, complete circulation test, no entity loss or duplication |
 | M3.3 conservative population and substance exchange | contract and ledger implemented; endpoint integration planned | dimension-safe population, amount, and volume-flow transfers; positive and negative balance tests |
-| M3.4 detailed pulmonary-circulation variant | planned | second implementation behind the same scenario contract; artery, regional distribution, capillary surrogate, and venous return |
+| M3.4 structured pulmonary-circulation variant | implemented as serial regional surrogate; anatomical refinement planned | second implementation behind the same contract with artery, regional capillary surrogate, and venous return |
 | M3.5 physiological parameters and external-data pipeline | research/planned | versioned model cards, rest/exercise parameters, uncertainty, reproducible axes/units/provenance, qualified SimVascular/VMR reference |
 | M3.6 orchestration and gate regression | planned | deterministic synchronization, coarse/detailed scenario switch, historical FP9 timing baseline, formal M3 gate review |
 
@@ -75,3 +75,9 @@ These are milestone tasks, not hidden assumptions. The M3 gate remains open.
 M3.3 now provides typed population, substance-amount, and volume-flow transfers
 plus a conservative balance ledger. The next slice connects these contracts to
 both lung variants. See [Conserved Transfers](CONSERVED_TRANSFERS.md).
+
+M3.4 also provides `PulmonaryCirculation`, a second `ModelComponent` that
+separates pulmonary artery, regional capillary surrogate, and pulmonary vein.
+It passes the same port, identity, timing, and return contract as
+`LungCompartment`; see its [Model Card](PULMONARY_CIRCULATION.md). It is more
+structural, but not yet an anatomical 0D/1D or imported vascular model.

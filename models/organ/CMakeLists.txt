@@ -1,7 +1,11 @@
 # SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 # SPDX-License-Identifier: MPL-2.0
 
-add_library(mehlissa_organ_model src/lung_compartment.cpp)
+add_library(
+    mehlissa_organ_model
+    src/lung_compartment.cpp
+    src/pulmonary_circulation.cpp
+)
 add_library(MEHLISSA::organ_model ALIAS mehlissa_organ_model)
 
 target_include_directories(

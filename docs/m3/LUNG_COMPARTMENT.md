@@ -58,3 +58,6 @@ The detailed M3 variant will add pulmonary artery, regional distribution,
 capillary surrogate, and pulmonary veins behind the same `ModelComponent`
 boundary. Respiratory and alveolar biology remain separate later variants in
 accordance with ADR-0006.
+
+The first structured alternative is now documented in the
+[Pulmonary Circulation Model Card](PULMONARY_CIRCULATION.md).

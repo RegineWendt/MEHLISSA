@@ -63,7 +63,7 @@ Status codes:
 | ORG-002 | DISS pp. 118–122 | PART | M3 | M2.4 checks 23 target/actual perfusions in the whole-body graph; organ-specific lung model and independent physiological validation follow in M3/M2.6 |
 | ORG-003 | DISS pp. 95, 153–154 | DONE | M3 | tested body → lung → body ownership round trip with named ports, stable identity, synchronization time, and explicit outside-body ledger |
 | ORG-004 | DISS pp. 122–123, Ch. 6 | LEGACY | M3/M7 | localization event with tissue and uncertainty |
-| ORG-005 | DISS pp. 123–126 | PART | M3 | coarse lung implements the generic component contract; a second detailed pulmonary implementation must prove interchangeability |
+| ORG-005 | DISS pp. 123–126 | PART | M3 | coarse and three-region pulmonary implementations pass the same entity contract; anatomical 0D/1D refinement and scenario-level parameter switching follow |
 | ORG-006 | DISS pp. 124–126 | RESEARCH | M3/M8 | reproducible conversion with geometry verification |
 
 ## 4. Capillary and cell layers
