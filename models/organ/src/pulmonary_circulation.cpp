@@ -18,6 +18,10 @@ void validate_config(const PulmonaryCirculationConfig& config) {
         throw core::MehlissaError{core::ErrorCode::data_invalid,
                                   "Pulmonary circulation requires IDs, ports, and regions"};
     }
+    if (config.entry_port_id == config.exit_port_id) {
+        throw core::MehlissaError{core::ErrorCode::data_invalid,
+                                  "Pulmonary entry and exit ports must be distinct"};
+    }
     std::unordered_set<std::string> region_ids;
     for (const auto& region : config.regions) {
         if (region.id.empty() || !region_ids.insert(region.id).second ||

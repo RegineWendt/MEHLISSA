@@ -4,6 +4,7 @@
 add_library(
     mehlissa_organ_model
     src/lung_compartment.cpp
+    src/lung_model_factory.cpp
     src/pulmonary_circulation.cpp
 )
 add_library(MEHLISSA::organ_model ALIAS mehlissa_organ_model)

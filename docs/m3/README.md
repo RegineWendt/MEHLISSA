@@ -23,7 +23,7 @@ respiratory mechanics, or gas exchange.
 | M3.3 conservative population and substance exchange | contract and ledger implemented; endpoint integration planned | dimension-safe population, amount, and volume-flow transfers; positive and negative balance tests |
 | M3.4 structured pulmonary-circulation variant | implemented as serial regional surrogate; anatomical refinement planned | second implementation behind the same contract with artery, regional capillary surrogate, and venous return |
 | M3.5 physiological parameters and external-data pipeline | research/planned | versioned model cards, rest/exercise parameters, uncertainty, reproducible axes/units/provenance, qualified SimVascular/VMR reference |
-| M3.6 orchestration and gate regression | planned | deterministic synchronization, coarse/detailed scenario switch, historical FP9 timing baseline, formal M3 gate review |
+| M3.6 orchestration and gate regression | programmatic model switch implemented; manifest, FP9 baseline, and gate review planned | deterministic synchronization, coarse/detailed scenario switch, historical FP9 timing baseline, formal M3 gate review |
 
 ## M3.1 result
 
@@ -64,8 +64,8 @@ The executable regression starts entity 1 in synthetic body segment
 - No population or substance amount crosses the boundary yet.
 - `LungCompartment` is a software-verified surrogate, not a physiologically
   calibrated or independently validated pulmonary model.
-- There is not yet a second detailed implementation proving scenario-level
-  interchangeability.
+- The second implementation is structurally more detailed, but is not yet a
+  sourced anatomical or physiological pulmonary model.
 - The CLI and experiment manifest do not yet compose model components.
 
 These are milestone tasks, not hidden assumptions. The M3 gate remains open.
@@ -81,3 +81,9 @@ separates pulmonary artery, regional capillary surrogate, and pulmonary vein.
 It passes the same port, identity, timing, and return contract as
 `LungCompartment`; see its [Model Card](PULMONARY_CIRCULATION.md). It is more
 structural, but not yet an anatomical 0D/1D or imported vascular model.
+
+The `make_lung_model` composition boundary now selects either implementation
+from one typed scenario configuration. The same body–lung–body regression runs
+against both variants without coupler branches; see
+[Lung Model Selection](LUNG_MODEL_SELECTION.md). External experiment-manifest
+composition remains open.

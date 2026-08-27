@@ -94,6 +94,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
             body_organ_coupler_tests.cpp
             conserved_transfer_tests.cpp
             lung_compartment_tests.cpp
+            lung_model_factory_tests.cpp
             pulmonary_circulation_tests.cpp
         )
         target_link_libraries(

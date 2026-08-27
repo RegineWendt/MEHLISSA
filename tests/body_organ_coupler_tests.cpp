@@ -5,9 +5,10 @@
 #include <mehlissa/models/body/compartment_transport.hpp>
 #include <mehlissa/models/body/vascular_graph.hpp>
 #include <mehlissa/models/cosimulation/body_organ_coupler.hpp>
-#include <mehlissa/models/organ/lung_compartment.hpp>
+#include <mehlissa/models/organ/lung_model_factory.hpp>
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <chrono>
 #include <cstdint>
@@ -31,12 +32,30 @@ using namespace std::chrono_literals;
 
 TEST_CASE("An entity completes a conservative body lung body round trip",
           "[m3][cosimulation][round-trip]") {
+    using mehlissa::models::organ::LungModelVariant;
+
+    const auto variant =
+        GENERATE(LungModelVariant::effective_compartment, LungModelVariant::regional_circulation);
     auto body = std::make_unique<mehlissa::models::body::CompartmentTransport>(
         load_graph(), std::vector<mehlissa::models::body::InjectionEvent>{{0ns, "artery-10", 1}});
-    auto lung = std::make_unique<mehlissa::models::organ::LungCompartment>(
-        mehlissa::models::organ::LungCompartmentConfig{
-            "organ.lung.compartment", "lung.compartment.v1", "pulmonary-arterial-entry",
-            "pulmonary-venous-exit", "synthetic-branching-circuit", "pulmonary-venous-return", 2s});
+    auto lung = mehlissa::models::organ::make_lung_model({
+        variant,
+        "organ.lung",
+        variant == LungModelVariant::effective_compartment ? "lung.compartment.v1"
+                                                           : "lung.regional.v1",
+        "pulmonary-arterial-entry",
+        "pulmonary-venous-exit",
+        "synthetic-branching-circuit",
+        "pulmonary-venous-return",
+        variant == LungModelVariant::effective_compartment ? 2s : 0s,
+        variant == LungModelVariant::regional_circulation
+            ? std::vector<mehlissa::models::organ::PulmonaryTransitRegion>{
+                  {"pulmonary-artery", 500ms},
+                  {"regional-capillary-surrogate", 1s},
+                  {"pulmonary-vein", 500ms},
+              }
+            : std::vector<mehlissa::models::organ::PulmonaryTransitRegion>{},
+    });
     auto* body_observer = body.get();
     auto* lung_observer = lung.get();
 
@@ -54,7 +73,6 @@ TEST_CASE("An entity completes a conservative body lung body round trip",
     coupler.send_to_organ(1, 0ns);
     CHECK(body_observer->particle_count() == 0);
     CHECK(body_observer->outside_body_particle_count() == 1);
-    CHECK(lung_observer->resident_count() == 1);
     CHECK(coupler.in_flight_count() == 1);
 
     host.advance(1s);
@@ -66,7 +84,6 @@ TEST_CASE("An entity completes a conservative body lung body round trip",
     CHECK(body_observer->particle_locations().front().particle_id == 1);
     CHECK(body_observer->particle_locations().front().segment_id == "vein-90");
     CHECK(body_observer->outside_body_particle_count() == 0);
-    CHECK(lung_observer->resident_count() == 0);
     CHECK(coupler.in_flight_count() == 0);
     CHECK(coupler.pending_return_count() == 0);
     CHECK(coupler.completed_round_trip_count() == 1);

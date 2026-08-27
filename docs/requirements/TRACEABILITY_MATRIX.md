@@ -36,7 +36,7 @@ Status codes:
 | SYS-005 | RM 2.1–2.2 | PART | M0/M1 | architecture review of target structure and dependency rules |
 | SYS-006 | RM M0 | PART | M1 | CI rule and review: `core/` does not import `scenarios/` |
 | SYS-007 | RM M1 | DONE | M1 | stable error codes/CLI statuses and negative tests for configuration, overflow, lifecycle, log, and checkpoint invariants |
-| SYS-008 | DISS pp. 95–97, 133 | SPEC | M3–M5 | same scenario with surrogate and detailed model |
+| SYS-008 | DISS pp. 95–97, 133 | PART | M3–M5 | one typed scenario and body coupler run unchanged with coarse and regional lung implementations; externally configured multi-resolution experiments follow |
 | ARC-001 | DISS pp. 94–96 | PART | M3–M5 | generic `ModelComponent` boundary and first organ implementation; body/capillary/cell implementations follow |
 | ARC-002 | DISS p. 95 | PART | M3–M5 | lung-compartment model card records scale, evidence, and validity; all further models require equivalent cards |
 | ARC-003 | DISS pp. 95–97 | PART | M3 | versioned entity, population, substance-amount, and volume-flow contracts exist; physiological-state and event contracts follow |
@@ -63,7 +63,7 @@ Status codes:
 | ORG-002 | DISS pp. 118–122 | PART | M3 | M2.4 checks 23 target/actual perfusions in the whole-body graph; organ-specific lung model and independent physiological validation follow in M3/M2.6 |
 | ORG-003 | DISS pp. 95, 153–154 | DONE | M3 | tested body → lung → body ownership round trip with named ports, stable identity, synchronization time, and explicit outside-body ledger |
 | ORG-004 | DISS pp. 122–123, Ch. 6 | LEGACY | M3/M7 | localization event with tissue and uncertainty |
-| ORG-005 | DISS pp. 123–126 | PART | M3 | coarse and three-region pulmonary implementations pass the same entity contract; anatomical 0D/1D refinement and scenario-level parameter switching follow |
+| ORG-005 | DISS pp. 123–126 | PART | M3 | coarse and three-region pulmonary implementations pass the same generated body–organ scenario through a typed factory; external configuration and anatomical 0D/1D refinement follow |
 | ORG-006 | DISS pp. 124–126 | RESEARCH | M3/M8 | reproducible conversion with geometry verification |
 
 ## 4. Capillary and cell layers

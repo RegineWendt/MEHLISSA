@@ -354,10 +354,11 @@ models can follow later.
 
 **Objective:** First genuine coupling between whole-body and regional models
 
-**Current implementation status:** M3 is active. The first increment provides
-the versioned `ModelComponent` entity-transfer boundary and a coarse,
-identity-conserving `LungCompartment`. Body-graph adapters, population and
-substance-flow contracts, the detailed pulmonary variant, and independent
+**Current implementation status:** M3 is active. The versioned
+`ModelComponent` boundary, body adapter, identity-conserving coarse and
+three-region lung variants, typed conserved-transfer contracts, and a shared
+programmatic scenario switch are implemented. Quantity endpoint integration,
+external model configuration, anatomical refinement, and independent
 physiological validation remain open; see [M3 working plan](m3/README.md).
 
 #### Tasks
