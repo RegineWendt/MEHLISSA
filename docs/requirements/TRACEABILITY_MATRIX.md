@@ -39,8 +39,8 @@ Status codes:
 | SYS-008 | DISS pp. 95–97, 133 | PART | M3–M5 | one typed scenario and body coupler run unchanged with coarse and regional lung implementations; externally configured multi-resolution experiments follow |
 | ARC-001 | DISS pp. 94–96 | PART | M3–M5 | generic `ModelComponent` boundary and first organ implementation; body/capillary/cell implementations follow |
 | ARC-002 | DISS p. 95 | PART | M3–M5 | lung-compartment model card records scale, evidence, and validity; all further models require equivalent cards |
-| ARC-003 | DISS pp. 95–97 | PART | M3 | versioned entity, population, substance-amount, and volume-flow contracts exist; physiological-state and event contracts follow |
-| ARC-004 | RM 3.3 | PART | M3 | entity round trip and exact transfer-ID/payload balance tests pass; quantity endpoint integration follows |
+| ARC-003 | DISS pp. 95–97 | PART | M3 | versioned entity, population, substance-amount, and volume-flow contracts and lung endpoints exist; physiological-state and event contracts follow |
+| ARC-004 | RM 3.3 | PART | M3 | entity round trip and lossless population, substance, and flow transit pass across both lung variants; transforming exchange and body aggregate endpoints follow |
 | ARC-005 | DISS pp. 99–100 | SPEC | M3–M5 | return of a detection/cell event to a higher layer |
 | ARC-006 | RM 3.3 | PART | M3 | fixed-transit lung result agrees for compatible 0.5 s and 1 s steps; orchestrated multirate synchronization follows |
 | ARC-007 | DISS pp. 96–97, 133 | SPEC | M4/M5 | reference adapter plus equivalent surrogate |

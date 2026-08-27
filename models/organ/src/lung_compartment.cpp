@@ -30,6 +30,34 @@ void validate_config(const LungCompartmentConfig& config) {
     }
 }
 
+void validate_conserved_target(const coupling::ConservedTransfer& transfer,
+                               const LungCompartmentConfig& config,
+                               const core::SimulationClock::Duration synchronization_time) {
+    coupling::validate_transfer(transfer);
+    const auto& header = coupling::transfer_header(transfer);
+    if (header.target_model_id != config.model_id ||
+        header.target_port_id != config.entry_port_id) {
+        throw core::MehlissaError{core::ErrorCode::data_invalid,
+                                  "Conserved transfer does not target this lung entry port"};
+    }
+    if (header.emitted_at != synchronization_time) {
+        throw core::MehlissaError{
+            core::ErrorCode::invariant_violated,
+            "Conserved transfer must be accepted at its declared synchronization time"};
+    }
+}
+
+void route_conserved_return(coupling::ConservedTransfer& transfer,
+                            const LungCompartmentConfig& config,
+                            const core::SimulationClock::Duration emitted_at) {
+    auto& header = coupling::transfer_header(transfer);
+    header.source_model_id = config.model_id;
+    header.source_port_id = config.exit_port_id;
+    header.target_model_id = config.return_target_model_id;
+    header.target_port_id = config.return_target_port_id;
+    header.emitted_at = emitted_at;
+}
+
 } // namespace
 
 LungCompartment::LungCompartment(LungCompartmentConfig config) : config_{std::move(config)} {
@@ -94,6 +122,20 @@ void LungCompartment::advance(core::SimulationContext& context,
         }
     }
     residents_ = std::move(remaining);
+
+    std::vector<ResidentConservedTransfer> remaining_conserved;
+    remaining_conserved.reserve(resident_conserved_transfers_.size());
+    for (auto& resident : resident_conserved_transfers_) {
+        if (resident.residence_time >=
+            config_.transit_time - std::min(delta, config_.transit_time)) {
+            route_conserved_return(resident.transfer, config_, completion_time);
+            outbound_conserved_transfers_.push_back(std::move(resident.transfer));
+        } else {
+            resident.residence_time += delta;
+            remaining_conserved.push_back(std::move(resident));
+        }
+    }
+    resident_conserved_transfers_ = std::move(remaining_conserved);
     synchronization_time_ = completion_time;
 }
 
@@ -131,6 +173,34 @@ std::vector<coupling::EntityTransfer> LungCompartment::take_outbound_entities() 
         held_entity_ids_.erase(transfer.entity_id);
     }
     return result;
+}
+
+void LungCompartment::accept_conserved_transfer(coupling::ConservedTransfer transfer) {
+    if (state_ != State::initialized) {
+        throw core::MehlissaError{
+            core::ErrorCode::lifecycle_invalid,
+            "Only an initialized lung compartment can accept conserved transfers"};
+    }
+    validate_conserved_target(transfer, config_, synchronization_time_);
+    const auto& transfer_id = coupling::transfer_header(transfer).transfer_id;
+    if (!held_transfer_ids_.insert(transfer_id).second) {
+        throw core::MehlissaError{core::ErrorCode::invariant_violated,
+                                  "Lung compartment already holds this transfer ID"};
+    }
+    resident_conserved_transfers_.push_back({std::move(transfer), {}});
+}
+
+std::vector<coupling::ConservedTransfer> LungCompartment::take_outbound_conserved_transfers() {
+    auto result = std::move(outbound_conserved_transfers_);
+    outbound_conserved_transfers_.clear();
+    for (const auto& transfer : result) {
+        held_transfer_ids_.erase(coupling::transfer_header(transfer).transfer_id);
+    }
+    return result;
+}
+
+std::size_t LungCompartment::resident_conserved_transfer_count() const noexcept {
+    return resident_conserved_transfers_.size();
 }
 
 std::size_t LungCompartment::resident_count() const noexcept { return residents_.size(); }

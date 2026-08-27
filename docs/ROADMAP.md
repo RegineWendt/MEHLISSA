@@ -356,9 +356,9 @@ models can follow later.
 
 **Current implementation status:** M3 is active. The versioned
 `ModelComponent` boundary, body adapter, identity-conserving coarse and
-three-region lung variants, typed conserved-transfer contracts, and a shared
-programmatic scenario switch are implemented. Quantity endpoint integration,
-external model configuration, anatomical refinement, and independent
+three-region lung variants, lossless typed population/substance/flow endpoints,
+and a shared programmatic scenario switch are implemented. External model
+configuration, anatomical refinement, transforming exchange, and independent
 physiological validation remain open; see [M3 working plan](m3/README.md).
 
 #### Tasks

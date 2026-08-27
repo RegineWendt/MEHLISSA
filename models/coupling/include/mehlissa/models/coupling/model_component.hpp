@@ -5,8 +5,10 @@
 #define MEHLISSA_MODELS_COUPLING_MODEL_COMPONENT_HPP
 
 #include <mehlissa/core/component_host.hpp>
+#include <mehlissa/models/coupling/conserved_transfer.hpp>
 #include <mehlissa/models/coupling/entity_transfer.hpp>
 
+#include <cstddef>
 #include <string_view>
 #include <vector>
 
@@ -19,6 +21,9 @@ class ModelComponent : public core::SimulationComponent {
     [[nodiscard]] virtual bool emits_entity_at(std::string_view port_id) const noexcept = 0;
     virtual void accept_entity(EntityTransfer transfer) = 0;
     [[nodiscard]] virtual std::vector<EntityTransfer> take_outbound_entities() = 0;
+    virtual void accept_conserved_transfer(ConservedTransfer transfer) = 0;
+    [[nodiscard]] virtual std::vector<ConservedTransfer> take_outbound_conserved_transfers() = 0;
+    [[nodiscard]] virtual std::size_t resident_conserved_transfer_count() const noexcept = 0;
 };
 
 } // namespace mehlissa::models::coupling

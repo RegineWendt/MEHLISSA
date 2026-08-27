@@ -77,6 +77,19 @@ void validate_transfer(const VolumeFlowTransfer& transfer) {
     }
 }
 
+void validate_transfer(const ConservedTransfer& transfer) {
+    std::visit([](const auto& value) { validate_transfer(value); }, transfer);
+}
+
+const TransferHeader& transfer_header(const ConservedTransfer& transfer) {
+    return std::visit([](const auto& value) -> const TransferHeader& { return value.header; },
+                      transfer);
+}
+
+TransferHeader& transfer_header(ConservedTransfer& transfer) {
+    return std::visit([](auto& value) -> TransferHeader& { return value.header; }, transfer);
+}
+
 core::Volume integrated_volume(const VolumeFlowTransfer& transfer) {
     validate_transfer(transfer);
     const auto seconds = static_cast<double>(transfer.interval.count()) / 1'000'000'000.0;

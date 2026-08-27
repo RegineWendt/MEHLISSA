@@ -32,6 +32,31 @@ void validate_config(const PulmonaryCirculationConfig& config) {
     }
 }
 
+void validate_conserved_target(const coupling::ConservedTransfer& transfer,
+                               const PulmonaryCirculationConfig& config,
+                               const core::SimulationClock::Duration synchronization_time) {
+    coupling::validate_transfer(transfer);
+    const auto& header = coupling::transfer_header(transfer);
+    if (header.target_model_id != config.model_id ||
+        header.target_port_id != config.entry_port_id ||
+        header.emitted_at != synchronization_time) {
+        throw core::MehlissaError{
+            core::ErrorCode::invariant_violated,
+            "Conserved transfer does not match pulmonary entry synchronization"};
+    }
+}
+
+void route_conserved_return(coupling::ConservedTransfer& transfer,
+                            const PulmonaryCirculationConfig& config,
+                            const core::SimulationClock::Duration emitted_at) {
+    auto& header = coupling::transfer_header(transfer);
+    header.source_model_id = config.model_id;
+    header.source_port_id = config.exit_port_id;
+    header.target_model_id = config.return_target_model_id;
+    header.target_port_id = config.return_target_port_id;
+    header.emitted_at = emitted_at;
+}
+
 } // namespace
 
 PulmonaryCirculation::PulmonaryCirculation(PulmonaryCirculationConfig config)
@@ -99,6 +124,32 @@ void PulmonaryCirculation::advance(core::SimulationContext& context,
         }
     }
     residents_ = std::move(remaining_residents);
+
+    std::vector<ResidentConservedTransfer> remaining_conserved;
+    remaining_conserved.reserve(resident_conserved_transfers_.size());
+    for (auto& resident : resident_conserved_transfers_) {
+        auto remaining_time = delta;
+        while (remaining_time > core::SimulationClock::Duration::zero() &&
+               resident.region_index < config_.regions.size()) {
+            const auto required =
+                config_.regions[resident.region_index].transit_time - resident.region_time;
+            if (remaining_time < required) {
+                resident.region_time += remaining_time;
+                remaining_time = {};
+            } else {
+                remaining_time -= required;
+                ++resident.region_index;
+                resident.region_time = {};
+            }
+        }
+        if (resident.region_index == config_.regions.size()) {
+            route_conserved_return(resident.transfer, config_, next.now());
+            outbound_conserved_transfers_.push_back(std::move(resident.transfer));
+        } else {
+            remaining_conserved.push_back(std::move(resident));
+        }
+    }
+    resident_conserved_transfers_ = std::move(remaining_conserved);
     synchronization_time_ = next.now();
 }
 
@@ -132,6 +183,34 @@ std::vector<coupling::EntityTransfer> PulmonaryCirculation::take_outbound_entiti
         held_entity_ids_.erase(transfer.entity_id);
     }
     return result;
+}
+
+void PulmonaryCirculation::accept_conserved_transfer(coupling::ConservedTransfer transfer) {
+    if (state_ != State::initialized) {
+        throw core::MehlissaError{
+            core::ErrorCode::lifecycle_invalid,
+            "Only initialized pulmonary circulation accepts conserved transfers"};
+    }
+    validate_conserved_target(transfer, config_, synchronization_time_);
+    const auto& transfer_id = coupling::transfer_header(transfer).transfer_id;
+    if (!held_transfer_ids_.insert(transfer_id).second) {
+        throw core::MehlissaError{core::ErrorCode::invariant_violated,
+                                  "Pulmonary circulation already holds this transfer ID"};
+    }
+    resident_conserved_transfers_.push_back({std::move(transfer), 0, {}});
+}
+
+std::vector<coupling::ConservedTransfer> PulmonaryCirculation::take_outbound_conserved_transfers() {
+    auto result = std::move(outbound_conserved_transfers_);
+    outbound_conserved_transfers_.clear();
+    for (const auto& transfer : result) {
+        held_transfer_ids_.erase(coupling::transfer_header(transfer).transfer_id);
+    }
+    return result;
+}
+
+std::size_t PulmonaryCirculation::resident_conserved_transfer_count() const noexcept {
+    return resident_conserved_transfers_.size();
 }
 
 std::size_t PulmonaryCirculation::region_count() const noexcept { return config_.regions.size(); }

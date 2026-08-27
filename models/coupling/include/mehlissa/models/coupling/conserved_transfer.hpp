@@ -11,6 +11,7 @@
 #include <string>
 #include <string_view>
 #include <unordered_map>
+#include <variant>
 
 namespace mehlissa::models::coupling {
 
@@ -52,9 +53,15 @@ struct VolumeFlowTransfer final {
     [[nodiscard]] bool operator==(const VolumeFlowTransfer&) const noexcept = default;
 };
 
+using ConservedTransfer =
+    std::variant<PopulationTransfer, SubstanceAmountTransfer, VolumeFlowTransfer>;
+
 void validate_transfer(const PopulationTransfer& transfer);
 void validate_transfer(const SubstanceAmountTransfer& transfer);
 void validate_transfer(const VolumeFlowTransfer& transfer);
+void validate_transfer(const ConservedTransfer& transfer);
+[[nodiscard]] const TransferHeader& transfer_header(const ConservedTransfer& transfer);
+[[nodiscard]] TransferHeader& transfer_header(ConservedTransfer& transfer);
 [[nodiscard]] core::Volume integrated_volume(const VolumeFlowTransfer& transfer);
 
 class ConservationLedger final {

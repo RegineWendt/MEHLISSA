@@ -20,7 +20,7 @@ respiratory mechanics, or gas exchange.
 |---|---|---|
 | M3.1 model-component and entity-transfer contract | implemented, under CI review | versioned exchange object, named ports, strict temporal/route/identity validation, coarse `LungCompartment`, and deterministic contract tests |
 | M3.2 body–lung–body entity round trip | implemented, under CI review | body transport hand-off, explicit orchestrator ownership, complete circulation test, no entity loss or duplication |
-| M3.3 conservative population and substance exchange | contract and ledger implemented; endpoint integration planned | dimension-safe population, amount, and volume-flow transfers; positive and negative balance tests |
+| M3.3 conservative population and substance exchange | implemented, under CI review | dimension-safe population, amount, and volume-flow transfers; both lung endpoints; positive and negative balance tests |
 | M3.4 structured pulmonary-circulation variant | implemented as serial regional surrogate; anatomical refinement planned | second implementation behind the same contract with artery, regional capillary surrogate, and venous return |
 | M3.5 physiological parameters and external-data pipeline | research/planned | versioned model cards, rest/exercise parameters, uncertainty, reproducible axes/units/provenance, qualified SimVascular/VMR reference |
 | M3.6 orchestration and gate regression | programmatic model switch implemented; manifest, FP9 baseline, and gate review planned | deterministic synchronization, coarse/detailed scenario switch, historical FP9 timing baseline, formal M3 gate review |
@@ -61,7 +61,8 @@ The executable regression starts entity 1 in synthetic body segment
 
 ## What the current implementation deliberately does not claim
 
-- No population or substance amount crosses the boundary yet.
+- Conserved transfers currently provide lossless transit; they do not yet model
+  gas exchange, reaction, production, consumption, or barrier transport.
 - `LungCompartment` is a software-verified surrogate, not a physiologically
   calibrated or independently validated pulmonary model.
 - The second implementation is structurally more detailed, but is not yet a
@@ -70,11 +71,12 @@ The executable regression starts entity 1 in synthetic body segment
 
 These are milestone tasks, not hidden assumptions. The M3 gate remains open.
 
-## Next implementation step
+## Conserved-transfer result
 
-M3.3 now provides typed population, substance-amount, and volume-flow transfers
-plus a conservative balance ledger. The next slice connects these contracts to
-both lung variants. See [Conserved Transfers](CONSERVED_TRANSFERS.md).
+M3.3 provides typed population, substance-amount, and volume-flow transfers,
+an exact balance ledger, and lossless endpoints in both lung variants. The same
+generated regression verifies unchanged payloads and transfer IDs after organ
+transit. See [Conserved Transfers](CONSERVED_TRANSFERS.md).
 
 M3.4 also provides `PulmonaryCirculation`, a second `ModelComponent` that
 separates pulmonary artery, regional capillary surrogate, and pulmonary vein.
@@ -87,3 +89,10 @@ from one typed scenario configuration. The same body–lung–body regression ru
 against both variants without coupler branches; see
 [Lung Model Selection](LUNG_MODEL_SELECTION.md). External experiment-manifest
 composition remains open.
+
+## Next implementation step
+
+M3.5 must turn evidence into explicit, versioned pulmonary model parameters
+without confusing the current contract-test durations with physiology. That
+requires model-card and data-import contracts before adopting an external
+anatomical or hemodynamic data set.

@@ -40,6 +40,10 @@ class LungCompartment final : public coupling::ModelComponent {
 
     void accept_entity(coupling::EntityTransfer transfer) override;
     [[nodiscard]] std::vector<coupling::EntityTransfer> take_outbound_entities() override;
+    void accept_conserved_transfer(coupling::ConservedTransfer transfer) override;
+    [[nodiscard]] std::vector<coupling::ConservedTransfer>
+    take_outbound_conserved_transfers() override;
+    [[nodiscard]] std::size_t resident_conserved_transfer_count() const noexcept override;
 
     [[nodiscard]] std::size_t resident_count() const noexcept;
     [[nodiscard]] std::size_t outbound_count() const noexcept;
@@ -54,10 +58,18 @@ class LungCompartment final : public coupling::ModelComponent {
         core::SimulationClock::Duration residence_time{};
     };
 
+    struct ResidentConservedTransfer final {
+        coupling::ConservedTransfer transfer;
+        core::SimulationClock::Duration residence_time{};
+    };
+
     LungCompartmentConfig config_;
     std::vector<ResidentEntity> residents_;
     std::vector<coupling::EntityTransfer> outbound_;
+    std::vector<ResidentConservedTransfer> resident_conserved_transfers_;
+    std::vector<coupling::ConservedTransfer> outbound_conserved_transfers_;
     std::unordered_set<std::uint64_t> held_entity_ids_;
+    std::unordered_set<std::string> held_transfer_ids_;
     core::SimulationClock::Duration synchronization_time_{};
     std::uint64_t accepted_count_{};
     std::uint64_t completed_count_{};
