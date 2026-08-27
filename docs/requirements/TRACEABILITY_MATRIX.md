@@ -64,7 +64,7 @@ Status codes:
 | ORG-003 | DISS pp. 95, 153–154 | DONE | M3 | tested body → lung → body ownership round trip with named ports, stable identity, synchronization time, and explicit outside-body ledger |
 | ORG-004 | DISS pp. 122–123, Ch. 6 | LEGACY | M3/M7 | localization event with tissue and uncertainty |
 | ORG-005 | DISS pp. 123–126 | PART | M3 | schema-selected coarse and three-region pulmonary implementations pass the same generated body–organ scenario at two host steps; anatomical 0D/1D refinement follows |
-| ORG-006 | DISS pp. 124–126 | PART | M3/M8 | external-data definition contract preserves checksum, format, axes, units, and ordered transformations; source qualification, import adapter, and geometry verification follow |
+| ORG-006 | DISS pp. 124–126 | PART | M3/M8 | external-data contract preserves checksum, format, axes, units, and transformations; official SimVascular arterial candidate reviewed with access/license/state/unit/coverage blockers; import adapter and geometry verification follow |
 
 ## 4. Capillary and cell layers
 

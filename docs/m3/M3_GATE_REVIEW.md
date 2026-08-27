@@ -71,7 +71,9 @@ make the current lung models physiological reference models.
 M3 can pass only after the following evidence is added and reviewed:
 
 1. qualify and license a concrete pulmonary reference case or a sourced 0D/1D
-   parameterization, including population and physiological state;
+   parameterization, including population and physiological state; the initial
+   [SimVascular candidate review](SIMVASCULAR_PULMONARY_CANDIDATE_REVIEW.md)
+   narrows the open questions but does not qualify the archive;
 2. provide sourced pressure, resistance/flow, perfusion, and transit targets in
    SI units with uncertainty and explicit calibration/validation separation;
 3. implement the anatomical/hemodynamic regional variant and compare it with

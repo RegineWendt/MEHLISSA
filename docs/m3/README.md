@@ -109,3 +109,9 @@ introduced.
 The formal [M3 Gate Review](M3_GATE_REVIEW.md) records the technical evidence
 and the scientific closure package. M3 remains open until that package and the
 historical FP9 executable reference are complete.
+
+An initial [SimVascular Healthy Pulmonary Candidate Review](SIMVASCULAR_PULMONARY_CANDIDATE_REVIEW.md)
+finds the official case useful for an imported pulmonary-artery technical
+variant, but insufficient as a complete or normative lung reference. Data
+access, artifact licensing, state ambiguity, units, venous return, uncertainty,
+and independent validation remain explicit qualification blockers.
