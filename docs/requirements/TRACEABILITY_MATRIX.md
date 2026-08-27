@@ -61,7 +61,7 @@ Status codes:
 | BODY-010 | BVS18 pp. 4–6 | DONE | M2 | deterministic 6,359/63,590-particle regression, equilibrium at minute 7, injection-site comparison, exact population conservation, and schema-validated golden reference |
 | ORG-001 | DISS pp. 118–126 | PART | M3 | coarse pulmonary-circulation surrogate has a model card and contract tests; anatomy, perfusion, and activity-state variants follow |
 | ORG-002 | DISS pp. 118–122 | PART | M3 | M2.4 checks 23 target/actual perfusions in the whole-body graph; organ-specific lung model and independent physiological validation follow in M3/M2.6 |
-| ORG-003 | DISS pp. 95, 153–154 | PART | M3 | named lung entry/exit and return route exist; body-transport adapter and complete round-trip test follow |
+| ORG-003 | DISS pp. 95, 153–154 | DONE | M3 | tested body → lung → body ownership round trip with named ports, stable identity, synchronization time, and explicit outside-body ledger |
 | ORG-004 | DISS pp. 122–123, Ch. 6 | LEGACY | M3/M7 | localization event with tissue and uncertainty |
 | ORG-005 | DISS pp. 123–126 | PART | M3 | coarse lung implements the generic component contract; a second detailed pulmonary implementation must prove interchangeability |
 | ORG-006 | DISS pp. 124–126 | RESEARCH | M3/M8 | reproducible conversion with geometry verification |

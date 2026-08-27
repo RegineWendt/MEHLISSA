@@ -13,6 +13,7 @@
 #include <string>
 #include <string_view>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 namespace mehlissa::models::body {
@@ -127,6 +128,10 @@ class CompartmentTransport final : public core::SimulationComponent {
     [[nodiscard]] std::uint64_t extracted_particle_count() const noexcept;
     [[nodiscard]] std::uint64_t transition_count() const noexcept;
     [[nodiscard]] std::size_t particle_count() const noexcept;
+    void handoff_particle(std::uint64_t particle_id, std::string_view expected_segment_id);
+    void receive_returned_particle(std::uint64_t particle_id, std::string_view segment_id,
+                                   core::SimulationClock::Duration time);
+    [[nodiscard]] std::size_t outside_body_particle_count() const noexcept;
     [[nodiscard]] std::vector<ParticleLocation> particle_locations() const;
     [[nodiscard]] std::vector<SegmentPopulation> segment_populations() const;
     [[nodiscard]] const VascularGraph& graph() const noexcept;
@@ -165,6 +170,7 @@ class CompartmentTransport final : public core::SimulationComponent {
     std::unordered_map<std::string, std::size_t> segment_indices_;
     std::vector<core::SimulationClock::Duration> transit_times_;
     std::vector<Particle> particles_;
+    std::unordered_set<std::uint64_t> outside_body_particle_ids_;
     std::vector<std::vector<std::size_t>> measurement_sites_by_segment_;
     std::vector<TrajectoryRecord> trajectory_records_;
     std::vector<MeasurementRecord> measurement_records_;

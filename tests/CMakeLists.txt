@@ -89,12 +89,21 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
     endif()
 
     if(MEHLISSA_BUILD_MODEL_COUPLING AND MEHLISSA_BUILD_ORGAN_MODELS)
-        add_executable(mehlissa_organ_model_tests lung_compartment_tests.cpp)
+        add_executable(
+            mehlissa_organ_model_tests
+            body_organ_coupler_tests.cpp
+            lung_compartment_tests.cpp
+        )
         target_link_libraries(
             mehlissa_organ_model_tests
             PRIVATE
                 MEHLISSA::organ_model
+                MEHLISSA::cosimulation
                 Catch2::Catch2WithMain
+        )
+        target_compile_definitions(
+            mehlissa_organ_model_tests
+            PRIVATE MEHLISSA_TEST_ROOT="${PROJECT_SOURCE_DIR}"
         )
         mehlissa_configure_target(mehlissa_organ_model_tests)
         catch_discover_tests(mehlissa_organ_model_tests DISCOVERY_MODE PRE_TEST)

@@ -244,6 +244,56 @@ std::uint64_t CompartmentTransport::transition_count() const noexcept { return t
 
 std::size_t CompartmentTransport::particle_count() const noexcept { return particles_.size(); }
 
+void CompartmentTransport::handoff_particle(const std::uint64_t particle_id,
+                                            const std::string_view expected_segment_id) {
+    if (!initialized_ || finalized_) {
+        throw core::MehlissaError{core::ErrorCode::lifecycle_invalid,
+                                  "Only initialized body transport can hand off particles"};
+    }
+    const auto expected_segment = segment_indices_.find(std::string{expected_segment_id});
+    if (expected_segment == segment_indices_.end()) {
+        throw core::MehlissaError{core::ErrorCode::data_invalid,
+                                  "Body hand-off references an unknown segment"};
+    }
+    const auto particle = std::ranges::find(particles_, particle_id, &Particle::id);
+    if (particle == particles_.end() || particle->segment_index != expected_segment->second) {
+        throw core::MehlissaError{core::ErrorCode::data_invalid,
+                                  "Particle is not present at the requested body hand-off segment"};
+    }
+    if (!outside_body_particle_ids_.insert(particle_id).second) {
+        throw core::MehlissaError{core::ErrorCode::invariant_violated,
+                                  "Particle is already outside the body model"};
+    }
+    particles_.erase(particle);
+    verify_population_invariant();
+}
+
+void CompartmentTransport::receive_returned_particle(const std::uint64_t particle_id,
+                                                     const std::string_view segment_id,
+                                                     const core::SimulationClock::Duration time) {
+    if (!initialized_ || finalized_) {
+        throw core::MehlissaError{core::ErrorCode::lifecycle_invalid,
+                                  "Only initialized body transport can receive particles"};
+    }
+    const auto segment = segment_indices_.find(std::string{segment_id});
+    if (segment == segment_indices_.end()) {
+        throw core::MehlissaError{core::ErrorCode::data_invalid,
+                                  "Body return references an unknown segment"};
+    }
+    if (!outside_body_particle_ids_.contains(particle_id)) {
+        throw core::MehlissaError{core::ErrorCode::invariant_violated,
+                                  "Returned particle was not handed off by this body model"};
+    }
+    particles_.push_back({particle_id, segment->second, {}});
+    outside_body_particle_ids_.erase(particle_id);
+    record_entry(time, particles_.back(), TrajectoryAction::entered_segment);
+    verify_population_invariant();
+}
+
+std::size_t CompartmentTransport::outside_body_particle_count() const noexcept {
+    return outside_body_particle_ids_.size();
+}
+
 std::vector<ParticleLocation> CompartmentTransport::particle_locations() const {
     std::vector<ParticleLocation> result;
     result.reserve(particles_.size());
@@ -425,8 +475,9 @@ std::size_t CompartmentTransport::choose_successor(const std::size_t segment_ind
 }
 
 void CompartmentTransport::verify_population_invariant() const {
+    const auto accounted = particles_.size() + outside_body_particle_ids_.size();
     if (extracted_particle_count_ > injected_particle_count_ ||
-        particles_.size() != injected_particle_count_ - extracted_particle_count_) {
+        accounted != injected_particle_count_ - extracted_particle_count_) {
         throw core::MehlissaError{core::ErrorCode::invariant_violated,
                                   "Transport population is not conserved"};
     }

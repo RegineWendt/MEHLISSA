@@ -267,10 +267,9 @@ The current contract verifies that:
 - the outgoing transfer names the configured venous return route; and
 - compatible time-step subdivisions produce the same transfer result.
 
-This is currently a developer API and contract-test slice. The CLI cannot yet
-compose a body and lung experiment, and the existing body transport does not
-yet hand entities to the organ automatically. M3.2 adds that adapter and the
-first complete body → lung → body test. Population and substance-flow exchange
+This is currently a developer API and contract-test slice. The first explicit
+body → lung → body ownership round trip is implemented, but the CLI cannot yet
+compose that experiment automatically. Population and substance-flow exchange
 follow as separate conservative contracts. See the [M3 working plan](m3/README.md)
 and [lung model card](m3/LUNG_COMPARTMENT.md) before interpreting this model.
 
