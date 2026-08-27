@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:vascular-graph:1.0.0",
+  "title": "MEHLISSA vascular graph",
+  "description": "Versioned SI-based contract for a closed whole-body vascular transport graph.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "model", "coordinate_system", "validity", "sources", "segments"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "coordinate_system": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "description", "handedness", "length_unit"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+        "description": {"type": "string", "minLength": 1},
+        "handedness": {"type": "string", "enum": ["right", "left", "not_applicable"]},
+        "length_unit": {"const": "m"}
+      }
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["population", "physiological_state", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "citation", "license"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+          "citation": {"type": "string", "minLength": 1},
+          "license": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "segments": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "type",
+          "geometry",
+          "hemodynamics",
+          "transitions",
+          "source_refs",
+          "evidence",
+          "relative_uncertainty"
+        ],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+          "type": {"type": "string", "enum": ["artery", "vein", "organ_bed"]},
+          "geometry": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "start_m",
+              "end_m",
+              "length_m",
+              "diameter_m",
+              "cross_section_area_m2",
+              "volume_m3"
+            ],
+            "properties": {
+              "start_m": {"$ref": "#/$defs/position"},
+              "end_m": {"$ref": "#/$defs/position"},
+              "length_m": {"type": "number", "exclusiveMinimum": 0},
+              "diameter_m": {"type": "number", "exclusiveMinimum": 0},
+              "cross_section_area_m2": {"type": "number", "exclusiveMinimum": 0},
+              "volume_m3": {"type": "number", "exclusiveMinimum": 0}
+            }
+          },
+          "hemodynamics": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["flow_rate_m3_s", "mean_velocity_m_s"],
+            "properties": {
+              "flow_rate_m3_s": {"type": "number", "exclusiveMinimum": 0},
+              "mean_velocity_m_s": {"type": "number", "exclusiveMinimum": 0}
+            }
+          },
+          "transitions": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["successor_id", "probability"],
+              "properties": {
+                "successor_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+                },
+                "probability": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}
+              }
+            }
+          },
+          "source_refs": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"}
+          },
+          "evidence": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["geometry", "diameter", "flow"],
+            "properties": {
+              "geometry": {"$ref": "#/$defs/evidence_quality"},
+              "diameter": {"$ref": "#/$defs/evidence_quality"},
+              "flow": {"$ref": "#/$defs/evidence_quality"}
+            }
+          },
+          "relative_uncertainty": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "geometry": {"type": "number", "minimum": 0},
+              "diameter": {"type": "number", "minimum": 0},
+              "flow": {"type": "number", "minimum": 0}
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "position": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"type": "number"}
+    },
+    "evidence_quality": {
+      "type": "string",
+      "enum": ["measured", "literature", "derived", "schematic", "assumed", "unknown"]
+    }
+  }
+}

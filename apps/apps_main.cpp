@@ -8,6 +8,7 @@
 #include <mehlissa/experiment/experiment_manifest.hpp>
 #include <mehlissa/experiment/provenance.hpp>
 #include <mehlissa/experiment/run_log.hpp>
+#include <mehlissa/models/body/vascular_graph.hpp>
 
 #include <cinttypes>
 #include <cstdint>
@@ -22,12 +23,14 @@ namespace {
 
 constexpr auto default_schema_path = "data/schemas/experiment/1.0.0.schema.json";
 constexpr auto default_checkpoint_schema_path = "data/schemas/checkpoint/1.0.0.schema.json";
+constexpr auto default_body_schema_path = "data/schemas/vascular-graph/1.0.0.schema.json";
 
 struct CommandLine final {
-    enum class Operation : std::uint8_t { run, validate };
+    enum class Operation : std::uint8_t { run, validate, validate_body };
 
     Operation operation{};
     std::filesystem::path experiment_path;
+    std::filesystem::path body_model_path;
     std::filesystem::path schema_path{default_schema_path};
     std::filesystem::path checkpoint_schema_path{default_checkpoint_schema_path};
 };
@@ -36,7 +39,8 @@ void print_usage() {
     std::fputs("Usage:\n"
                "  mehlissa run --experiment <file> [--schema <file>] "
                "[--checkpoint-schema <file>]\n"
-               "  mehlissa validate --experiment <file> [--schema <file>]\n",
+               "  mehlissa validate --experiment <file> [--schema <file>]\n"
+               "  mehlissa validate-body --model <file> [--schema <file>]\n",
                stderr);
 }
 
@@ -52,6 +56,9 @@ void print_usage() {
         command.operation = CommandLine::Operation::run;
     } else if (operation == "validate") {
         command.operation = CommandLine::Operation::validate;
+    } else if (operation == "validate-body") {
+        command.operation = CommandLine::Operation::validate_body;
+        command.schema_path = default_body_schema_path;
     } else {
         throw mehlissa::core::MehlissaError{mehlissa::core::ErrorCode::command_line_invalid,
                                             "Unknown command: " + std::string{operation}};
@@ -67,6 +74,8 @@ void print_usage() {
         const std::string_view option{argv[argument]};
         if (option == "--experiment") {
             command.experiment_path = argv[argument + 1];
+        } else if (option == "--model") {
+            command.body_model_path = argv[argument + 1];
         } else if (option == "--schema") {
             command.schema_path = argv[argument + 1];
         } else if (option == "--checkpoint-schema") {
@@ -77,7 +86,12 @@ void print_usage() {
         }
     }
 
-    if (command.experiment_path.empty()) {
+    if (command.operation == CommandLine::Operation::validate_body) {
+        if (command.body_model_path.empty()) {
+            throw mehlissa::core::MehlissaError{mehlissa::core::ErrorCode::command_line_invalid,
+                                                "--model is required"};
+        }
+    } else if (command.experiment_path.empty()) {
         throw mehlissa::core::MehlissaError{mehlissa::core::ErrorCode::command_line_invalid,
                                             "--experiment is required"};
     }
@@ -103,6 +117,7 @@ void print_manifest(const mehlissa::experiment::ExperimentManifest& manifest) {
     case ErrorCode::json_invalid:
     case ErrorCode::schema_invalid:
     case ErrorCode::manifest_invalid:
+    case ErrorCode::data_invalid:
         return 3;
     case ErrorCode::output_unwritable:
     case ErrorCode::provenance_invalid:
@@ -139,6 +154,14 @@ void record_failure(mehlissa::experiment::JsonLinesRunLog& log,
 }
 
 int execute(const CommandLine& command) {
+    if (command.operation == CommandLine::Operation::validate_body) {
+        const auto graph = mehlissa::models::body::load_vascular_graph(
+            {command.body_model_path, command.schema_path});
+        std::printf("Vascular graph is valid: %s (%zu segments)\n", graph.model_id.c_str(),
+                    graph.segments.size());
+        return 0;
+    }
+
     const auto manifest = mehlissa::experiment::load_experiment_manifest(command.experiment_path,
                                                                          command.schema_path);
 

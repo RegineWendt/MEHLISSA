@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0.0",
+  "model": {
+    "id": "synthetic-branching-circuit",
+    "version": "1.0.0",
+    "title": "Synthetic four-segment branching circulation"
+  },
+  "coordinate_system": {
+    "id": "synthetic-cartesian-right-handed",
+    "description": "Synthetic Cartesian coordinates for contract tests; not anatomical.",
+    "handedness": "right",
+    "length_unit": "m"
+  },
+  "validity": {
+    "population": "synthetic",
+    "physiological_state": "contract-test",
+    "description": "Software verification only; carries no physiological interpretation."
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m2-contract-test",
+      "citation": "MEHLISSA Next M2.1 synthetic vascular graph",
+      "license": "CC-BY-4.0"
+    }
+  ],
+  "segments": [
+    {
+      "id": "artery-10",
+      "type": "artery",
+      "geometry": {
+        "start_m": [0.0, 0.0, 0.0],
+        "end_m": [0.4, 0.0, 0.0],
+        "length_m": 0.4,
+        "diameter_m": 0.01,
+        "cross_section_area_m2": 0.00007853981633974483,
+        "volume_m3": 0.000031415926535897935
+      },
+      "hemodynamics": {
+        "flow_rate_m3_s": 0.00001,
+        "mean_velocity_m_s": 0.12732395447351627
+      },
+      "transitions": [
+        {"successor_id": "organ-a", "probability": 0.4},
+        {"successor_id": "organ-b", "probability": 0.6}
+      ],
+      "source_refs": ["mehlissa-m2-contract-test"],
+      "evidence": {"geometry": "derived", "diameter": "assumed", "flow": "derived"},
+      "relative_uncertainty": {"geometry": 0.0, "diameter": 0.0, "flow": 0.0}
+    },
+    {
+      "id": "organ-a",
+      "type": "organ_bed",
+      "geometry": {
+        "start_m": [0.4, 0.0, 0.0],
+        "end_m": [0.6, 0.0, 0.0],
+        "length_m": 0.2,
+        "diameter_m": 0.006,
+        "cross_section_area_m2": 0.000028274333882308137,
+        "volume_m3": 0.000005654866776461628
+      },
+      "hemodynamics": {
+        "flow_rate_m3_s": 0.000004,
+        "mean_velocity_m_s": 0.1414710605261292
+      },
+      "transitions": [{"successor_id": "vein-90", "probability": 1.0}],
+      "source_refs": ["mehlissa-m2-contract-test"],
+      "evidence": {"geometry": "derived", "diameter": "assumed", "flow": "derived"},
+      "relative_uncertainty": {"geometry": 0.0, "diameter": 0.0, "flow": 0.0}
+    },
+    {
+      "id": "organ-b",
+      "type": "organ_bed",
+      "geometry": {
+        "start_m": [0.4, 0.0, 0.0],
+        "end_m": [0.6, 0.0, 0.0],
+        "length_m": 0.2,
+        "diameter_m": 0.008,
+        "cross_section_area_m2": 0.00005026548245743669,
+        "volume_m3": 0.000010053096491487339
+      },
+      "hemodynamics": {
+        "flow_rate_m3_s": 0.000006,
+        "mean_velocity_m_s": 0.1193662073189215
+      },
+      "transitions": [{"successor_id": "vein-90", "probability": 1.0}],
+      "source_refs": ["mehlissa-m2-contract-test"],
+      "evidence": {"geometry": "derived", "diameter": "assumed", "flow": "derived"},
+      "relative_uncertainty": {"geometry": 0.0, "diameter": 0.0, "flow": 0.0}
+    },
+    {
+      "id": "vein-90",
+      "type": "vein",
+      "geometry": {
+        "start_m": [0.6, 0.0, 0.0],
+        "end_m": [0.0, 0.0, 0.0],
+        "length_m": 0.6,
+        "diameter_m": 0.01,
+        "cross_section_area_m2": 0.00007853981633974483,
+        "volume_m3": 0.0000471238898038469
+      },
+      "hemodynamics": {
+        "flow_rate_m3_s": 0.00001,
+        "mean_velocity_m_s": 0.12732395447351627
+      },
+      "transitions": [{"successor_id": "artery-10", "probability": 1.0}],
+      "source_refs": ["mehlissa-m2-contract-test"],
+      "evidence": {"geometry": "derived", "diameter": "assumed", "flow": "derived"},
+      "relative_uncertainty": {"geometry": 0.0, "diameter": 0.0, "flow": 0.0}
+    }
+  ]
+}

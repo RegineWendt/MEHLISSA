@@ -18,6 +18,7 @@ TEST_CASE("Machine-readable error identifiers are stable", "[core][error]") {
         std::pair{ErrorCode::json_invalid, std::string_view{"MEHLISSA-E2002"}},
         std::pair{ErrorCode::schema_invalid, std::string_view{"MEHLISSA-E2003"}},
         std::pair{ErrorCode::manifest_invalid, std::string_view{"MEHLISSA-E2004"}},
+        std::pair{ErrorCode::data_invalid, std::string_view{"MEHLISSA-E2005"}},
         std::pair{ErrorCode::output_unwritable, std::string_view{"MEHLISSA-E3001"}},
         std::pair{ErrorCode::provenance_invalid, std::string_view{"MEHLISSA-E3002"}},
         std::pair{ErrorCode::lifecycle_invalid, std::string_view{"MEHLISSA-E4001"}},

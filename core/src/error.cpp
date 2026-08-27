@@ -17,6 +17,8 @@ std::string_view error_code_id(const ErrorCode code) noexcept {
         return "MEHLISSA-E2003";
     case ErrorCode::manifest_invalid:
         return "MEHLISSA-E2004";
+    case ErrorCode::data_invalid:
+        return "MEHLISSA-E2005";
     case ErrorCode::output_unwritable:
         return "MEHLISSA-E3001";
     case ErrorCode::provenance_invalid:

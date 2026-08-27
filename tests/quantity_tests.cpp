@@ -53,6 +53,13 @@ TEST_CASE("Amount and volume derive concentration without hidden conversion", "[
     REQUIRE(mehlissa::core::in_moles_per_cubic_meter(derived) == Catch::Approx(2.0));
 }
 
+TEST_CASE("Volume per time derives a dimension-safe flow rate", "[core][quantity]") {
+    const auto flow = mehlissa::core::liters(6.0) / mehlissa::core::minutes(1.0);
+
+    STATIC_REQUIRE(std::same_as<std::remove_cvref_t<decltype(flow)>, mehlissa::core::FlowRate>);
+    REQUIRE(mehlissa::core::in_cubic_meters_per_second(flow) == Catch::Approx(0.0001));
+}
+
 TEST_CASE("Scalar operations retain the physical dimension", "[core][quantity]") {
     const auto doubled = 2.0 * mehlissa::core::millimeters(5.0);
     const auto halved = doubled / 2.0;

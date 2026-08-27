@@ -46,8 +46,8 @@ Ein `DONE` in dieser Matrix setzt einen erfolgreichen Nachweis voraus. Der bloß
 
 | ID | Quelle | Stand 27.08.2026 | Ziel | Vorgesehener Nachweis |
 |---|---|---|---|---|
-| BODY-001 | DISS S. 100; BVS18 | LEGACY | M2 | schema-validierter, geschlossener 95er-Graph |
-| BODY-002 | DISS S. 100, 113–117 | LEGACY | M2 | Schema-, Einheiten- und Graphvalidierung |
+| BODY-001 | DISS S. 100; BVS18 | PART | M2 | versionierter, stark zusammenhängender synthetischer Referenzgraph; 95er-Migration folgt nach Daten-/Lizenzklärung |
+| BODY-002 | DISS S. 100, 113–117 | PART | M2 | SI-Schema und Validator für ID, Typ, Geometrie, Länge, Durchmesser, Querschnitt, Volumen, Fluss, Quellen und Unsicherheit |
 | BODY-003 | DISS S. 101–104 | LEGACY | M2 | analytische 3D-Geometrietests und Modellbericht |
 | BODY-004 | DISS S. 117, 140–143 | LEGACY | M2 | zweites Körpermodell ohne Rebuild laden |
 | BODY-005 | DISS S. 99–104 | LEGACY | M2 | Injektions-, Transport- und Entnahmetests |

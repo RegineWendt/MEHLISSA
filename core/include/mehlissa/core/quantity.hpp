@@ -124,6 +124,7 @@ using Time = Quantity<Dimension<0, 1, 0>>;
 using Area = Quantity<Dimension<2, 0, 0>>;
 using Volume = Quantity<Dimension<3, 0, 0>>;
 using Speed = Quantity<Dimension<1, -1, 0>>;
+using FlowRate = Quantity<Dimension<3, -1, 0>>;
 using Amount = Quantity<Dimension<0, 0, 1>>;
 using Concentration = Quantity<Dimension<-3, 0, 1>>;
 
@@ -171,6 +172,10 @@ using Concentration = Quantity<Dimension<-3, 0, 1>>;
     return meters_per_second(value * 1.0e-3);
 }
 
+[[nodiscard]] constexpr FlowRate cubic_meters_per_second(const double value) noexcept {
+    return FlowRate::from_si(value);
+}
+
 [[nodiscard]] constexpr Amount moles(const double value) noexcept { return Amount::from_si(value); }
 
 [[nodiscard]] constexpr Amount millimoles(const double value) noexcept {
@@ -202,6 +207,10 @@ using Concentration = Quantity<Dimension<-3, 0, 1>>;
 }
 
 [[nodiscard]] constexpr double in_meters_per_second(const Speed value) noexcept {
+    return value.si_value();
+}
+
+[[nodiscard]] constexpr double in_cubic_meters_per_second(const FlowRate value) noexcept {
     return value.si_value();
 }
 

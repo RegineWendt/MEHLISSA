@@ -10,5 +10,5 @@ Checks: >
   modernize-use-nullptr,
   modernize-use-override
 WarningsAsErrors: 'bugprone-*,clang-analyzer-*'
-HeaderFilterRegex: '(^|[\\/])(apps|core|experiment|tests)[\\/]'
+HeaderFilterRegex: '(^|[\\/])(apps|core|experiment|models|tests)[\\/]'
 FormatStyle: file

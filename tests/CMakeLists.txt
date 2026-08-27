@@ -64,6 +64,22 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
         mehlissa_configure_target(mehlissa_experiment_tests)
         catch_discover_tests(mehlissa_experiment_tests DISCOVERY_MODE PRE_TEST)
     endif()
+
+    if(MEHLISSA_BUILD_BODY_MODELS)
+        add_executable(mehlissa_body_model_tests vascular_graph_tests.cpp)
+        target_link_libraries(
+            mehlissa_body_model_tests
+            PRIVATE
+                MEHLISSA::body_model
+                Catch2::Catch2WithMain
+        )
+        target_compile_definitions(
+            mehlissa_body_model_tests
+            PRIVATE MEHLISSA_TEST_ROOT="${PROJECT_SOURCE_DIR}"
+        )
+        mehlissa_configure_target(mehlissa_body_model_tests)
+        catch_discover_tests(mehlissa_body_model_tests DISCOVERY_MODE PRE_TEST)
+    endif()
 endif()
 
 if(MEHLISSA_BUILD_APPS AND MEHLISSA_ENABLE_EXPERIMENT_IO)

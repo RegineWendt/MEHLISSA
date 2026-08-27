@@ -17,6 +17,7 @@ enum class ErrorCode : std::uint16_t {
     json_invalid = 2002,
     schema_invalid = 2003,
     manifest_invalid = 2004,
+    data_invalid = 2005,
     output_unwritable = 3001,
     provenance_invalid = 3002,
     lifecycle_invalid = 4001,

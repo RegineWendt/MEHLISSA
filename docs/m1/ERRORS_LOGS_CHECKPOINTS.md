@@ -14,6 +14,7 @@ SPDX-License-Identifier: CC-BY-4.0
 | `MEHLISSA-E2002` | `json_invalid` | ungültiges JSON oder JSONL | 3 |
 | `MEHLISSA-E2003` | `schema_invalid` | das Prüfschema selbst ist ungültig | 3 |
 | `MEHLISSA-E2004` | `manifest_invalid` | Experiment verletzt seinen Vertrag | 3 |
+| `MEHLISSA-E2005` | `data_invalid` | Eingabedaten verletzen ihren fachlichen Vertrag | 3 |
 | `MEHLISSA-E3001` | `output_unwritable` | Ausgabe kann nicht geschrieben werden | 4 |
 | `MEHLISSA-E3002` | `provenance_invalid` | Provenienzdokument verletzt seinen Vertrag | 4 |
 | `MEHLISSA-E4001` | `lifecycle_invalid` | unzulässiger Komponenten-/Laufzustand | 5 |
