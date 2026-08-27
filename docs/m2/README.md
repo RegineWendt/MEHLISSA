@@ -16,7 +16,7 @@ Vertrag folgen Partikeltransport und wissenschaftliche BVS-Regressionen.
 
 | Inkrement | Status | Gate-Nachweis |
 |---|---|---|
-| M2.1 Gefäßgraphvertrag | umgesetzt, CI-Prüfung ausstehend | JSON Schema, SI-Datentypen, Graph-/Geometrie-/Flussinvarianten und synthetischer Referenzgraph |
+| M2.1 Gefäßgraphvertrag | abgeschlossen | JSON Schema, SI-Datentypen, Graph-/Geometrie-/Flussinvarianten, synthetischer Referenzgraph und Plattform-CI |
 | M2.2 Legacy-95-Migration | vorbereitet | verlustfreier Konverter, Provenienz- und Lizenzfreigabe, Klärung Gefäß 9 |
 | M2.3 deterministischer Kompartimenttransport | offen | Injektions-, Übergangs-, Einmalbewegungs- und Massenerhaltungstests |
 | M2.4 BVS-Referenzlauf | offen | publizierte Verteilungen innerhalb vorab definierter Toleranzen |
