@@ -13,6 +13,9 @@ M2 replaces the implicit legacy topology with a versioned, dimension-safe, and
 semantically validated vascular graph. Particle transport and scientific BVS
 regressions are built on this contract.
 
+The formal acceptance decision, verification evidence, and non-blocking
+scientific limitations are recorded in the [M2 gate review](M2_GATE_REVIEW.md).
+
 ## Planned increments
 
 | Increment | Status | Gate verification |
