@@ -50,9 +50,9 @@ Ein `DONE` in dieser Matrix setzt einen erfolgreichen Nachweis voraus. Der bloß
 | BODY-002 | DISS S. 100, 113–117 | PART | M2 | SI-Schema und Validator für ID, Typ, Geometrie, Länge, Durchmesser, Querschnitt, Volumen, Fluss, Quellen und Unsicherheit |
 | BODY-003 | DISS S. 101–104 | LEGACY | M2 | analytische 3D-Geometrietests und Modellbericht |
 | BODY-004 | DISS S. 117, 140–143 | LEGACY | M2 | zweites Körpermodell ohne Rebuild laden |
-| BODY-005 | DISS S. 99–104 | LEGACY | M2 | Injektions-, Transport- und Entnahmetests |
-| BODY-006 | DISS S. 100–101, 118–122 | LEGACY | M2 | Wahrscheinlichkeitsinvarianten und Perfusionsvergleich |
-| BODY-007 | DISS S. 115–117 | LEGACY | M2/M4 | Kompartiment- und Streammodell gegen Referenzfall |
+| BODY-005 | DISS S. 99–104 | PART | M2 | terminierte Injektion, identitätserhaltender Kompartimenttransport, Einmalbewegungs- und Erhaltungstests; Entnahme folgt in M2.5 |
+| BODY-006 | DISS S. 100–101, 118–122 | PART | M2 | validierte Übergangswahrscheinlichkeiten und reproduzierbare Verzweigung; fachlicher Perfusionsvergleich folgt |
+| BODY-007 | DISS S. 115–117 | PART | M2/M4 | deterministisches Transitkompartiment implementiert; laminare/Stream-Variante und Referenzvergleich folgen |
 | BODY-008 | DISS S. 120–122 | SPEC | M2/M3 | Ruhe-/Belastungs-Vergleich mit Literaturwerten |
 | BODY-009 | DISS S. 101 | RESEARCH | M4/M5 | dokumentierte Blutmodellvarianten und Sensitivität |
 | BODY-010 | BVS18 S. 4–6 | LEGACY | M2 | 6.359-/63.590-Agenten-Regression, Gleichgewicht nach ca. 7 min |

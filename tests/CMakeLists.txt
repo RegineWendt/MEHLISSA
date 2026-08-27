@@ -66,7 +66,11 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
     endif()
 
     if(MEHLISSA_BUILD_BODY_MODELS)
-        add_executable(mehlissa_body_model_tests vascular_graph_tests.cpp)
+        add_executable(
+            mehlissa_body_model_tests
+            compartment_transport_tests.cpp
+            vascular_graph_tests.cpp
+        )
         target_link_libraries(
             mehlissa_body_model_tests
             PRIVATE

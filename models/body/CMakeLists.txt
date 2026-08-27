@@ -3,7 +3,11 @@
 
 find_package(jsoncons CONFIG REQUIRED)
 
-add_library(mehlissa_body_model src/vascular_graph.cpp)
+add_library(
+    mehlissa_body_model
+    src/compartment_transport.cpp
+    src/vascular_graph.cpp
+)
 add_library(MEHLISSA::body_model ALIAS mehlissa_body_model)
 
 target_include_directories(

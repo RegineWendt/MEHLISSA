@@ -18,7 +18,7 @@ Vertrag folgen Partikeltransport und wissenschaftliche BVS-Regressionen.
 |---|---|---|
 | M2.1 Gefäßgraphvertrag | abgeschlossen | JSON Schema, SI-Datentypen, Graph-/Geometrie-/Flussinvarianten, synthetischer Referenzgraph und Plattform-CI |
 | M2.2 Legacy-95-Migration | vorbereitet | verlustfreier Konverter, Provenienz- und Lizenzfreigabe, Klärung Gefäß 9 |
-| M2.3 deterministischer Kompartimenttransport | offen | Injektions-, Übergangs-, Einmalbewegungs- und Massenerhaltungstests |
+| M2.3 deterministischer Kompartimenttransport | abgeschlossen | zeitgesteuerte Injektion, datengetriebene Transitzeiten, benannter Übergangs-Zufallsstrom, Einmalbewegungs- und Populationserhaltungstests |
 | M2.4 BVS-Referenzlauf | offen | publizierte Verteilungen innerhalb vorab definierter Toleranzen |
 | M2.5 Ausgabe und Messorte | offen | begrenzbare Trajektorien, Aggregate, Entnahme und Gateway-Messpunkte |
 | M2.6 alternative Körpermodelle und Zustände | offen | Laden ohne Rebuild; Ruhe-/Belastungsparametersätze |
@@ -53,3 +53,24 @@ build/windows-msvc/Debug/apps/mehlissa.exe validate-body `
 
 Ohne `--schema` wird relativ zum aktuellen Arbeitsverzeichnis
 `data/schemas/vascular-graph/1.0.0.schema.json` verwendet.
+
+## M2.3 – deterministischer Kompartimenttransport
+
+Der erste Transportbaustein behandelt jedes Gefäßsegment als durchströmtes
+Kompartiment, behält aber die stabile Identität jeder mobilen Entität. Eine
+Entität sammelt im aktuellen Segment Aufenthaltszeit. Nach der aus
+`Länge / mittlere Geschwindigkeit` berechneten Transitzeit wird sie anhand der
+im Graphen hinterlegten Übergangswahrscheinlichkeiten an genau einen
+Nachfolger übergeben.
+
+„Deterministisch“ bedeutet hier: Verzweigungen bleiben stochastisch, aber ein
+Experiment mit demselben Master-Seed, denselben Ereignissen und demselben
+Zeitschritt erzeugt exakt dieselbe Folge. Dafür verwendet die Komponente den
+eigenen benannten Zufallsstrom
+`body.compartment-transport.transitions` und keinen
+implementierungsabhängigen Standard-Verteilungsalgorithmus.
+
+Die Invarianten, Grenzen und API stehen in
+[`COMPARTMENT_TRANSPORT.md`](COMPARTMENT_TRANSPORT.md). Die Architekturentscheidung
+ist in [ADR-0015](../architecture/adr/0015-deterministic-compartment-transport.md)
+dokumentiert.
