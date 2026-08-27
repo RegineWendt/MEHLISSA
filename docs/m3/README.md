@@ -5,7 +5,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # M3 – Body–Organ Coupling
 
-**Status:** in progress
+**Status:** technical coupling candidate complete; scientific gate open
 
 **Started:** 27 August 2026
 
@@ -18,12 +18,12 @@ respiratory mechanics, or gas exchange.
 
 | Increment | Status | Exit evidence |
 |---|---|---|
-| M3.1 model-component and entity-transfer contract | implemented, under CI review | versioned exchange object, named ports, strict temporal/route/identity validation, coarse `LungCompartment`, and deterministic contract tests |
-| M3.2 body–lung–body entity round trip | implemented, under CI review | body transport hand-off, explicit orchestrator ownership, complete circulation test, no entity loss or duplication |
-| M3.3 conservative population and substance exchange | implemented, under CI review | dimension-safe population, amount, and volume-flow transfers; both lung endpoints; positive and negative balance tests |
-| M3.4 structured pulmonary-circulation variant | implemented as serial regional surrogate; anatomical refinement planned | second implementation behind the same contract with artery, regional capillary surrogate, and venous return |
-| M3.5 physiological parameters and external-data pipeline | definition schema, loader, and qualification gate implemented; sourced parameters/data planned | versioned model cards, rest/exercise parameters, uncertainty, reproducible axes/units/provenance, qualified SimVascular/VMR reference |
-| M3.6 orchestration and gate regression | external lung definition and fixed-step matrix implemented; FP9 baseline and gate review planned | deterministic synchronization, coarse/detailed scenario switch, historical FP9 timing baseline, formal M3 gate review |
+| M3.1 model-component and entity-transfer contract | verified | versioned exchange object, named ports, strict temporal/route/identity validation, coarse `LungCompartment`, and deterministic contract tests |
+| M3.2 body–lung–body entity round trip | verified | body transport hand-off, explicit orchestrator ownership, complete circulation test, no entity loss or duplication |
+| M3.3 conservative population and substance exchange | verified for lossless transit | dimension-safe population, amount, and volume-flow transfers; both lung endpoints; positive and negative balance tests |
+| M3.4 structured pulmonary-circulation variant | software-verified serial regional surrogate; anatomical refinement open | second implementation behind the same contract with artery, regional capillary surrogate, and venous return |
+| M3.5 physiological parameters and external-data pipeline | definition schema, loader, and qualification gate verified; sourced parameters/data open | versioned model cards, rest/exercise parameters, uncertainty, reproducible axes/units/provenance, qualified SimVascular/VMR reference |
+| M3.6 orchestration and gate regression | external lung definition and fixed-step matrix verified; FP9 baseline open | deterministic synchronization, coarse/detailed scenario switch, historical FP9 timing baseline, formal M3 gate review |
 
 ## M3.1 result
 
@@ -105,3 +105,7 @@ external-data qualification gate; see
 scientific step is to review and parameterize an actual pulmonary reference.
 No external data set or physiological parameter values have been silently
 introduced.
+
+The formal [M3 Gate Review](M3_GATE_REVIEW.md) records the technical evidence
+and the scientific closure package. M3 remains open until that package and the
+historical FP9 executable reference are complete.

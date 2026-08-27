@@ -363,6 +363,11 @@ external-data axes/units/provenance. Anatomical refinement, transforming
 exchange, general experiment composition, and independent physiological
 validation remain open; see [M3 working plan](m3/README.md).
 
+The formal [M3 gate review](m3/M3_GATE_REVIEW.md) therefore keeps the milestone
+open: the software coupling candidate is verified, while qualification of a
+physiological pulmonary reference and the executable historical FP9 baseline
+remain mandatory closure evidence.
+
 #### Tasks
 
 - implement a generic `ModelComponent` interface;

@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** M0 through M2.6
+**Covered software:** M0 through the current M3 body–organ coupling slice
 
 **Last updated:** 27 August 2026
 
@@ -31,10 +31,15 @@ The current software can:
 - collect bounded trajectories, population snapshots, sample-site events, and
   passive gateway measurements;
 - apply versioned rest, exercise, and posture profiles without rebuilding the
-  executable.
+  executable;
+- exchange identity-preserving entities, populations, substance amounts, and
+  volume flows through a typed body–organ boundary;
+- select a coarse or regional lung implementation from a schema-validated
+  executable model card; and
+- run the same body–lung–body regression at two compatible host steps.
 
-The software does not yet contain the detailed lung, capillary, cellular, or
-active Nano-IoT communication models. Those layers begin with M3.
+The software does not yet contain an anatomical or physiologically validated
+pulmonary model, capillary/cellular exchange, or active Nano-IoT communication.
 
 ## 2. Repository orientation
 
@@ -44,6 +49,9 @@ active Nano-IoT communication models. Those layers begin with M3.
 | `core/` | generic simulation clock, lifecycle, quantities, and random streams |
 | `experiment/` | manifests, provenance, logs, and checkpoints |
 | `models/body/` | validated vascular graphs, transport, state profiles, and body-level reports |
+| `models/coupling/` | versioned cross-model entity and conserved-transfer contracts |
+| `models/organ/` | interchangeable lung implementations and model-definition loader |
+| `models/cosimulation/` | body–organ ownership and route adapter |
 | `data/body-models/` | canonical executable vascular models |
 | `data/body-states/` | state overlays for compatible body models |
 | `data/schemas/` | versioned JSON Schemas |
@@ -128,8 +136,9 @@ The configured output directory receives:
 - `checkpoint-000000.json` with clock and random-stream state;
 - `run.log.jsonl` with structured lifecycle events.
 
-This command currently demonstrates the reproducible M1 runtime contract. Body
-transport is connected to full experiment orchestration in M3.
+This command currently demonstrates the reproducible M1 runtime contract. The
+M3 body–organ path is tested as a typed developer API but is not yet composed by
+this general CLI command.
 
 ### 5.3 Validate a vascular model
 
@@ -247,16 +256,17 @@ data/schemas/transport-observation-report/1.0.0.schema.json
 
 The full event-order and truncation contract is documented in
 [Transport Output, Extraction, and Measurement Sites](m2/TRANSPORT_OBSERVATION.md).
-A CLI/manifest connection for this typed configuration is planned as part of
-M3 orchestration.
+A CLI/manifest connection for this body observation configuration remains
+planned. Standalone lung definitions already provide schema-validated M3 organ
+selection, but the general experiment manifest does not compose them yet.
 
 ## 7. M3 developer preview: the first lung boundary
 
-M3 has started with a typed C++ boundary rather than a scenario-specific body
-shortcut. A `ModelComponent` exposes a stable model ID, named entity entry and
-exit ports, and versioned entity transfers. The first implementation is
-`LungCompartment`, a coarse pulmonary-circulation surrogate with a configured
-fixed transit time.
+M3 uses a typed C++ boundary rather than a scenario-specific body shortcut. A
+`ModelComponent` exposes a stable model ID, named entry and exit ports, and
+versioned entity and conserved-quantity transfers. Two implementations exist:
+`LungCompartment`, a coarse transit surrogate, and `PulmonaryCirculation`, a
+serial artery/regional-capillary/vein surrogate.
 
 The current contract verifies that:
 
@@ -265,14 +275,30 @@ The current contract verifies that:
 - an entity ID cannot exist twice inside the organ boundary;
 - identity and entity type survive pulmonary transit;
 - the outgoing transfer names the configured venous return route; and
-- compatible time-step subdivisions produce the same transfer result.
+- population count, molar amount, flow rate, interval, and integrated volume
+  survive lossless transit; and
+- 0.5 s and 1.0 s compatible time-step subdivisions produce the same result for
+  both model variants.
 
-This is currently a developer API and contract-test slice. The first explicit
-body → lung → body ownership round trip is implemented, but the CLI cannot yet
-compose that experiment automatically. Typed population, substance-amount, and
-volume-flow contracts now have a strict sender/receiver balance ledger; organ
-endpoint integration follows. See the [M3 working plan](m3/README.md)
-and [lung model card](m3/LUNG_COMPARTMENT.md) before interpreting this model.
+The executable lung model cards are:
+
+```text
+examples/organ-models/lung-compartment-contract-v1.json
+examples/organ-models/lung-regional-contract-v1.json
+```
+
+Both validate against
+`data/schemas/lung-model-definition/1.0.0.schema.json`. They are classified as
+`software_test_surrogate`; their transit values are not physiological data.
+The optional external-data section can preserve a source checksum, format,
+coordinate system, units, and transformation history, but no qualified
+pulmonary geometry is distributed yet.
+
+This remains a developer API: the first explicit body → lung → body ownership
+round trip is implemented, but the CLI cannot yet compose it automatically.
+See the [M3 working plan](m3/README.md),
+[model-definition guide](m3/LUNG_MODEL_DEFINITIONS.md), and both model cards
+before interpreting results.
 
 ## 8. How to interpret model evidence
 
@@ -292,6 +318,8 @@ These labels are not interchangeable. In particular:
 - the M2.4 perfusion table is a calibration regression;
 - the M2.6 exercise and posture profiles change global flow but do not yet
   model complete regional redistribution;
+- both current lung variants are verification surrogates rather than validated
+  pulmonary physiology;
 - none of the current outputs is patient-specific or suitable for clinical
   decision-making.
 
@@ -331,7 +359,7 @@ minutes on the current Windows reference system.
 
 The guide will be extended with:
 
-- M3 experiment-level body/organ composition and the detailed pulmonary model;
+- M3 general CLI composition, qualified pulmonary data, and gate closure;
 - M4 capillary models and transport hand-offs;
 - M5 cellular and molecular interaction models;
 - M6 active gateway and Nano-IoT configuration;
