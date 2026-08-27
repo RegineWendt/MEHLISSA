@@ -779,7 +779,8 @@ Die folgenden Pakete können direkt aus dieser Roadmap abgeleitet werden:
 4. ~~Minimalen neuen Kern mit korrekter Zeit, 3D-Geometrie und RNG erstellen.~~ Erledigt und in der CI auf MSVC, GCC und Clang geprüft.
 5. 95er-Gefäßmodell in ein versioniertes Schema migrieren und validieren.
 6. BVS-Referenzlauf als ersten automatischen wissenschaftlichen Regressionstest aufbauen.
-7. Szenarioformat und Experimentmanifest definieren.
+7. ~~Szenarioformat und Experimentmanifest definieren.~~ Erledigt: versioniertes
+   Experimentmanifest, Provenienz, Laufprotokoll und Checkpointvertrag in M1.
 8. ~~Fingerprinting-Anforderungen und die Baseline aus der Dissertation als vertikale Spezifikation formulieren.~~ Erledigt: [Fingerprinting-Referenzszenario](requirements/FINGERPRINTING_SCENARIO.md).
 9. ~~Referenzorgan für die erste Body–Organ-Kopplung auswählen.~~ Erledigt: Lunge, dokumentiert in [ADR-0006](architecture/adr/0006-lung-reference-organ.md).
 10. ~~Benötigte biologische und experimentelle Partner beziehungsweise Datenquellen identifizieren.~~ Erledigt: [Datenlücken und Validierungspartner](m0/VALIDATION_AND_DATA_PARTNERS.md).

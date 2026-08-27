@@ -5,8 +5,8 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # M1 – Trustworthy Kernel
 
-**Status:** in Arbeit  
-**Beginn:** 26. August 2026
+**Status:** abgeschlossen
+**Zeitraum:** 26.–27. August 2026
 
 M1 schafft einen kleinen, reproduzierbaren und getesteten Simulationskern. Die
 medizinischen Modelle beginnen erst auf diesem Fundament.
@@ -22,7 +22,7 @@ medizinischen Modelle beginnen erst auf diesem Fundament.
 | M1.3 dimensionssicheres Einheitensystem | abgeschlossen | SI-Vertrag, migrierte 3D-Geometrie, Compile- und Unit-Tests; Plattform-CI |
 | M1.4 `SimulationContext` und Komponentenlebenszyklus | abgeschlossen | kontextgebundene Uhr/RNGs, eindeutiges Ownership, Lifecycle- und Fehlerpfadtests; Plattform-CI |
 | M1.5 strukturierte Fehler, Logging und Checkpointvertrag | abgeschlossen | stabile Fehlercodes, JSONL-Schema, Checkpoint-Schema und Manipulationstests; Plattform-CI |
-| M1.6 plattformübergreifender Determinismusnachweis | umgesetzt, CI-Prüfung ausstehend | kanonischer Golden-Reference-Lauf auf MSVC, GCC und Clang |
+| M1.6 plattformübergreifender Determinismusnachweis | abgeschlossen | bytegleicher Golden-Reference-Lauf auf MSVC, GCC und Clang; Plattform-CI |
 
 Der verbindliche Größen- und Konversionskatalog für M1.3 steht in
 [`UNITS.md`](UNITS.md).
@@ -32,6 +32,21 @@ Fehlerkennungen, Laufprotokoll und Checkpointformat beschreibt
 [`ERRORS_LOGS_CHECKPOINTS.md`](ERRORS_LOGS_CHECKPOINTS.md).
 Der bytegenaue M1.6-Referenzlauf ist in
 [`DETERMINISM.md`](DETERMINISM.md) festgelegt.
+
+## Gate-Ergebnis
+
+Das Gate „Trustworthy Kernel“ ist erfüllt:
+
+- der vollständige Build und alle 40 Tests laufen auf Windows/MSVC,
+  Linux/GCC und Linux/Clang;
+- Clang prüft zusätzlich Formatierung, statische Analyse, ASan und UBSan;
+- Kerninvarianten für Zeit, Einheiten, Geometrie, RNG, Lifecycle, Fehler,
+  Manifeste, Logs und Checkpoints sind automatisiert getestet und dokumentiert;
+- der M1.6-Referenzlauf ist auf allen drei Toolchains bytegleich;
+- `core/` enthält keine medizinische Szenarioklasse.
+
+Der Abschluss von M1 behauptet noch keine fachliche Validität eines Körper-,
+Lungen-, Kapillar- oder Zellmodells. Diese Nachweise beginnen mit M2.
 
 ## M1.1 benutzen
 
