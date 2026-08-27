@@ -22,7 +22,7 @@ respiratory mechanics, or gas exchange.
 | M3.2 body–lung–body entity round trip | implemented, under CI review | body transport hand-off, explicit orchestrator ownership, complete circulation test, no entity loss or duplication |
 | M3.3 conservative population and substance exchange | implemented, under CI review | dimension-safe population, amount, and volume-flow transfers; both lung endpoints; positive and negative balance tests |
 | M3.4 structured pulmonary-circulation variant | implemented as serial regional surrogate; anatomical refinement planned | second implementation behind the same contract with artery, regional capillary surrogate, and venous return |
-| M3.5 physiological parameters and external-data pipeline | research/planned | versioned model cards, rest/exercise parameters, uncertainty, reproducible axes/units/provenance, qualified SimVascular/VMR reference |
+| M3.5 physiological parameters and external-data pipeline | definition schema, loader, and qualification gate implemented; sourced parameters/data planned | versioned model cards, rest/exercise parameters, uncertainty, reproducible axes/units/provenance, qualified SimVascular/VMR reference |
 | M3.6 orchestration and gate regression | programmatic model switch implemented; manifest, FP9 baseline, and gate review planned | deterministic synchronization, coarse/detailed scenario switch, historical FP9 timing baseline, formal M3 gate review |
 
 ## M3.1 result
@@ -92,7 +92,10 @@ composition remains open.
 
 ## Next implementation step
 
-M3.5 must turn evidence into explicit, versioned pulmonary model parameters
-without confusing the current contract-test durations with physiology. That
-requires model-card and data-import contracts before adopting an external
-anatomical or hemodynamic data set.
+M3.5 now has a schema-validated executable model-card format and an explicit
+external-data qualification gate; see
+[Versioned Lung Model Definitions](LUNG_MODEL_DEFINITIONS.md) and the
+[Qualification Checklist](EXTERNAL_PULMONARY_DATA_QUALIFICATION.md). The next
+scientific step is to review and parameterize an actual pulmonary reference.
+No external data set or physiological parameter values have been silently
+introduced.

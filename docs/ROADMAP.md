@@ -357,9 +357,11 @@ models can follow later.
 **Current implementation status:** M3 is active. The versioned
 `ModelComponent` boundary, body adapter, identity-conserving coarse and
 three-region lung variants, lossless typed population/substance/flow endpoints,
-and a shared programmatic scenario switch are implemented. External model
-configuration, anatomical refinement, transforming exchange, and independent
-physiological validation remain open; see [M3 working plan](m3/README.md).
+and a shared programmatic scenario switch are implemented. Schema-validated
+executable lung definitions preserve validity, evidence, sources, and optional
+external-data axes/units/provenance. Anatomical refinement, transforming
+exchange, general experiment composition, and independent physiological
+validation remain open; see [M3 working plan](m3/README.md).
 
 #### Tasks
 

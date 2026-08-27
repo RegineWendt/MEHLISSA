@@ -32,6 +32,7 @@ test scenario. In both cases the same entity leaves body segment `artery-10`,
 is owned by the selected lung for two seconds, and returns to `vein-90` without
 loss or duplication. Dedicated factory tests also reject mixed parameter sets.
 
-This is a programmatic scenario switch. A schema-validated external experiment
-manifest remains future work and must preserve the same typed configuration
-rules rather than introduce a second composition path.
+Schema-validated standalone lung definitions now feed this same typed factory;
+see [Versioned Lung Model Definitions](LUNG_MODEL_DEFINITIONS.md). Composition
+inside the general experiment manifest remains future work and must preserve
+this path rather than introduce a second model-selection mechanism.

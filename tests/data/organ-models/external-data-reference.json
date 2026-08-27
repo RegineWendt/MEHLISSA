@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "definition": {
+    "id": "external-data-reference-test",
+    "version": "1.0.0",
+    "title": "External pulmonary data metadata test"
+  },
+  "variant": "regional_circulation",
+  "component": {
+    "name": "organ.lung",
+    "model_id": "lung.external.metadata.test.v1",
+    "entry_port_id": "arterial-entry",
+    "exit_port_id": "venous-exit",
+    "return_target_model_id": "body",
+    "return_target_port_id": "venous-return"
+  },
+  "timing": {
+    "regions": [{"id": "imported-surrogate", "transit_time_s": 1.0}]
+  },
+  "validity": {
+    "population": "test fixture only",
+    "physiological_state": "not applicable",
+    "evidence_class": "externally_derived",
+    "description": "Exercises external-data provenance decoding without claiming a qualified model."
+  },
+  "sources": [
+    {
+      "id": "external-test-source",
+      "citation": "Synthetic external-data metadata fixture",
+      "url": "https://github.com/RegineWendt/MEHLISSA",
+      "license": "CC-BY-4.0",
+      "role": "loader verification"
+    }
+  ],
+  "limitations": ["No external data file is supplied or qualified by this test fixture."],
+  "external_data": {
+    "source_id": "external-test-source",
+    "path": "fixtures/pulmonary-reference.vtp",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "format": "VTK PolyData",
+    "coordinate_system": "right-handed Cartesian, source axes retained",
+    "length_unit": "m",
+    "flow_unit": "m3/s",
+    "transformations": ["No transformation; metadata decoding test only."]
+  }
+}

@@ -95,6 +95,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
             conserved_transfer_tests.cpp
             lung_compartment_tests.cpp
             lung_conserved_transfer_tests.cpp
+            lung_model_definition_tests.cpp
             lung_model_factory_tests.cpp
             pulmonary_circulation_tests.cpp
         )
