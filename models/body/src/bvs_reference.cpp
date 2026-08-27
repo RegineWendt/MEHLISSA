@@ -87,6 +87,14 @@ struct EventRun final {
     std::uint64_t final_population{};
 };
 
+struct MasterSeed final {
+    std::uint64_t value{};
+};
+
+struct ParticleCount final {
+    std::uint64_t value{};
+};
+
 [[noreturn]] void invalid(const std::string& message) {
     throw VascularGraphError{core::ErrorCode::data_invalid, message};
 }
@@ -139,9 +147,8 @@ struct EventRun final {
     return second_successor_indices.at(segment_index);
 }
 
-[[nodiscard]] EventRun run_event_transport(const VascularGraph& graph,
-                                           const std::uint64_t master_seed,
-                                           const std::uint64_t particle_count,
+[[nodiscard]] EventRun run_event_transport(const VascularGraph& graph, const MasterSeed master_seed,
+                                           const ParticleCount particle_count,
                                            const std::string_view injection_segment_id,
                                            const std::vector<std::uint64_t>& boundaries_ns) {
     if (boundaries_ns.empty() || !std::ranges::is_sorted(boundaries_ns) ||
@@ -174,16 +181,16 @@ struct EventRun final {
     std::vector<std::uint64_t> populations(segment_count);
     std::vector<std::uint64_t> accumulated(segment_count);
     std::vector<std::uint64_t> last_change_ns(segment_count);
-    populations.at(injection->second) = particle_count;
+    populations.at(injection->second) = particle_count.value;
 
     std::priority_queue<TransitionEvent, std::vector<TransitionEvent>, EarlierEvent> events;
     const auto initial_transition_time = transit_times.at(injection->second);
-    for (std::uint64_t particle_id = 1; particle_id <= particle_count; ++particle_id) {
+    for (std::uint64_t particle_id = 1; particle_id <= particle_count.value; ++particle_id) {
         events.push({initial_transition_time, particle_id, injection->second});
     }
 
     const auto maximum_time_ns = boundaries_ns.back();
-    core::RandomStream random{master_seed, transition_stream_name};
+    core::RandomStream random{master_seed.value, transition_stream_name};
     std::uint64_t transition_count{};
 
     const auto update_integral = [&](const std::size_t index, const std::uint64_t time_ns) {
@@ -443,12 +450,15 @@ BvsReferenceReport run_bvs_reference(const VascularGraph& graph, const std::uint
         420 * nanoseconds_per_second,
     };
 
-    const auto aorta = run_event_transport(graph, master_seed, reference_particle_count,
-                                           aorta_segment_id, reference_boundaries);
-    const auto popliteal = run_event_transport(graph, master_seed, reference_particle_count,
-                                               popliteal_segment_id, minute_7_boundaries);
-    const auto large = run_event_transport(graph, master_seed, large_particle_count,
-                                           aorta_segment_id, minute_7_boundaries);
+    const auto aorta =
+        run_event_transport(graph, MasterSeed{master_seed}, ParticleCount{reference_particle_count},
+                            aorta_segment_id, reference_boundaries);
+    const auto popliteal =
+        run_event_transport(graph, MasterSeed{master_seed}, ParticleCount{reference_particle_count},
+                            popliteal_segment_id, minute_7_boundaries);
+    const auto large =
+        run_event_transport(graph, MasterSeed{master_seed}, ParticleCount{large_particle_count},
+                            aorta_segment_id, minute_7_boundaries);
 
     const auto minute_1 = window_average(aorta, 0, 1, reference_boundaries);
     const auto minute_7 = window_average(aorta, 2, 3, reference_boundaries);
