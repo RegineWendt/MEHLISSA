@@ -3,60 +3,59 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# Gate Review M0 – Projektauftrag und Architekturentscheidungen
+# M0 Gate Review – Project Charter and Architecture Decisions
 
-**Reviewdatum:** 26. August 2026  
-**Ergebnis:** bestanden
+**Review date:** 26 August 2026
 
-## 1. Abnahmekriterien
+**Result:** passed
 
-| Kriterium | Status | Artefakt/Nachweis |
+## 1. Acceptance criteria
+
+| Criterion | Status | Artifact/verification |
 |---|---|---|
-| Dissertation in nachverfolgbare Anforderungen überführt | erfüllt | [Systemanforderungen](../requirements/SYSTEM_REQUIREMENTS.md), [Traceability Matrix](../requirements/TRACEABILITY_MATRIX.md) |
-| Vision, bestehende Baseline, Ableitung und neue Ergänzung getrennt | erfüllt | Herkunftscodes und ADR-0005 |
-| vier Ebenen und Verantwortlichkeiten verbindlich | erfüllt | ADR-0002, `ARC-001` bis `ARC-007` |
-| Legacy-Übernahmeprinzip entschieden | erfüllt | ADR-0001 |
-| Technologieentscheidung dokumentiert | erfüllt | ADR-0003; C++20/CMake/vcpkg-Bootstrap |
-| erster vertikaler Demonstrator priorisiert | erfüllt | ADR-0004 und Fingerprinting-Spezifikation |
-| Zielnutzer und Arbeitsabläufe festgelegt | erfüllt | [Zielnutzer und Workflows](USERS_AND_WORKFLOWS.md) |
-| Datenbestände und externe Quellen inventarisiert | erfüllt | [Lizenz- und Dateninventar](LICENSE_AND_DATA_INVENTORY.md) |
-| erstes Referenzorgan ausgewählt | erfüllt | ADR-0006: Lunge |
-| Forschungsfragen, Datenlücken und Partnerrollen benannt | erfüllt | [Datenlücken und Validierungspartner](VALIDATION_AND_DATA_PARTNERS.md) |
-| Legacy-Stände archiviert | erfüllt | Tag `legacy-baseline-2026-08-26` |
-| Modellvalidität und Releasequalität definiert | erfüllt | ADR-0005, Systemanforderungen und Abnahmeregeln |
-| repositoryweites Lizenzmodell formal freigegeben | erfüllt | ADR-0007 `Accepted`; `LICENSE.md`, `LICENSES/`, Notices und SPDX-Kennzeichnungen |
+| dissertation translated into traceable requirements | satisfied | [system requirements](../requirements/SYSTEM_REQUIREMENTS.md), [traceability matrix](../requirements/TRACEABILITY_MATRIX.md) |
+| vision, existing baseline, derivation, and new extension separated | satisfied | origin codes and ADR-0005 |
+| four layers and responsibilities made binding | satisfied | ADR-0002, `ARC-001` through `ARC-007` |
+| legacy adoption principle decided | satisfied | ADR-0001 |
+| technology decision documented | satisfied | ADR-0003; C++20/CMake/vcpkg bootstrap |
+| first vertical demonstrator prioritized | satisfied | ADR-0004 and fingerprinting specification |
+| target users and workflows defined | satisfied | [target users and workflows](USERS_AND_WORKFLOWS.md) |
+| data inventory and external sources cataloged | satisfied | [license and data inventory](LICENSE_AND_DATA_INVENTORY.md) |
+| first reference organ selected | satisfied | ADR-0006: lung |
+| research questions, data gaps, and partner roles named | satisfied | [data gaps and validation partners](VALIDATION_AND_DATA_PARTNERS.md) |
+| legacy revisions archived | satisfied | tag `legacy-baseline-2026-08-26` |
+| model validity and release quality defined | satisfied | ADR-0005, system requirements, and acceptance rules |
+| repository-wide licensing model formally approved | satisfied | ADR-0007 `Accepted`; `LICENSE.md`, `LICENSES/`, notices, and SPDX labels |
 
-## 2. Verbindliche M0-Entscheidungen
+## 2. Binding M0 decisions
 
-- MEHLISSA Next verwendet einen neuen Kern und qualifiziert Legacy-Code vor jeder Portierung.
-- Körper-, Organ-, Kapillar- und Zellebene sind eigenständige Co-Simulationskomponenten.
-- C++20/CMake/vcpkg bilden das technische Fundament; Python folgt als Experiment-API.
-- Fingerprinting ist der erste vertikale Demonstrator.
-- Die Lunge ist das erste Organmodell; begonnen wird mit dem pulmonalen Kreislauf, nicht mit einer vollständigen Atemmechanik.
-- Reproduzierbarkeit, Einheiten, Provenienz, Evidenzklasse und Unsicherheit sind Produktfunktionen.
-- Öffentliche Daten und Fremdmodelle werden nur mit versionierter Lizenz- und Transformationsprovenienz aufgenommen.
-- Unabhängiger Next-Code steht unter MPL-2.0, Legacy und direkte Portierungen
-  unter GPL-2.0-only, neue eigene Dokumentation und freigegebene eigene Daten
-  unter CC-BY-4.0.
+- MEHLISSA Next uses a new kernel and qualifies legacy code before every port.
+- The body, organ, capillary, and cell layers are independent co-simulation components.
+- C++20/CMake/vcpkg form the technical foundation; Python follows as an experiment API.
+- Fingerprinting is the first vertical demonstrator.
+- The lung is the first organ model; work starts with pulmonary circulation, not complete respiratory mechanics.
+- Reproducibility, units, provenance, evidence class, and uncertainty are product features.
+- Public data and third-party models are included only with versioned license and transformation provenance.
+- Independent Next code is MPL-2.0, legacy code and direct ports are GPL-2.0-only, and new original documentation and approved original data are CC-BY-4.0.
 
-## 3. Eintritt in M1
+## 3. Entry into M1
 
-Technische Arbeit an M1 darf beginnen. Das Lizenz- und Notice-Gate ist erfüllt.
-Bestandsdaten mit ungeklärter Rechtekette und Publikations-PDFs bleiben bis zur
-artefaktbezogenen Freigabe außerhalb öffentlicher Next-Pakete.
+Technical work on M1 may begin. The license and notice gate is satisfied.
+Existing data with an unresolved chain of rights and publication PDFs remain
+outside public Next packages until artifact-specific authorization is obtained.
 
-Die ersten M1-Arbeitspakete sind:
+The first M1 work packages are:
 
-1. versioniertes Experimentmanifest und Schema;
-2. Provenienzmanifest für jeden Lauf;
-3. vollständiges Einheitensystem;
-4. `SimulationContext` und Komponentenlebenszyklus;
-5. strukturierte Fehler und Konfigurationsvalidierung;
-6. anschließend Migration des 95er-Gefäßmodells als M2-Vorbereitung.
+1. versioned experiment manifest and schema;
+2. provenance manifest for every run;
+3. complete unit system;
+4. `SimulationContext` and component lifecycle;
+5. structured errors and configuration validation;
+6. subsequent migration of the 1995 vascular model in preparation for M2.
 
-## 4. Abschlussentscheidung der Projektleitung
+## 4. Final project-leadership decision
 
-Die Projektleitung hat die in ADR-0007 dokumentierte Mehrfachlizenzierung
-bestätigt. M0 ist damit abgeschlossen. Offene Rechteprüfungen einzelner
-Bestandsartefakte sind als Release-Gates der jeweiligen Datenpakete geführt und
-blockieren den Beginn von M1 nicht.
+Project leadership confirmed the multiple licensing documented in ADR-0007. M0
+is therefore complete. Outstanding rights reviews for individual existing
+artifacts are tracked as release gates for the respective data packages and do
+not block the start of M1.

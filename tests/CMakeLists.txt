@@ -68,6 +68,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
     if(MEHLISSA_BUILD_BODY_MODELS)
         add_executable(
             mehlissa_body_model_tests
+            body_state_profile_tests.cpp
             bvs_reference_tests.cpp
             compartment_transport_tests.cpp
             legacy_95_migration_tests.cpp

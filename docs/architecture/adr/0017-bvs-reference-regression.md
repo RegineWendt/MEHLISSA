@@ -3,72 +3,53 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# ADR-0017: Getrennte BVS-Dynamik- und Perfusionsregression
+# ADR-0017: Separate BVS Dynamics and Perfusion Regression
 
 - **Status:** Accepted
-- **Datum:** 27. August 2026
-- **Entscheider:** Projektleitung MEHLISSA Next
-- **Betrifft:** M2.4; `BODY-006`, `BODY-010`, `ORG-002`
+- **Date:** 27 August 2026
+- **Decision makers:** MEHLISSA Next project leadership
+- **Applies to:** M2.4; `BODY-006`, `BODY-010`, `ORG-002`
 
-## Kontext
+## Context
 
-BloodVoyagerS berichtet Verteilungsexperimente mit 94 Gefäßen. Die Dissertation
-ergänzt ein 95. Gefäß und kalibriert Organ- und Regionalflüsse wesentlich
-feiner. Ein einzelner vermeintlich exakter Reproduktionswert würde diese beiden
-Modellgenerationen vermischen. Hinzu kommt, dass die im Paper als
-„standard deviation“ bezeichnete Rechnung methodisch als mittlere absolute
-Gefäßabweichung beschrieben wird.
+BloodVoyagerS reports distribution experiments using 94 vessels. The
+dissertation adds a 95th vessel and calibrates organ and regional flows much
+more finely. A single supposedly exact reproduction value would conflate these
+two model generations. In addition, the calculation called “standard
+deviation” in the paper is methodologically described as a mean absolute vessel
+deviation.
 
-## Entscheidung
+## Decision
 
-1. BVS-Gleichgewicht, Injektionsort und Populationsskalierung werden als
-   vergleichende dynamische Claims geprüft, nicht als identische Reproduktion
-   des 94-Gefäß-Codes.
-2. Die 23 Perfusionssollwerte der Dissertation werden in einem getrennten
-   stationären Gate geprüft und ausdrücklich als Kalibrierungsregression, nicht
-   als unabhängige physiologische Validierung bezeichnet.
-3. Die dynamische Metrik heißt normierte mittlere absolute Abweichung. Die
-   Populationsskalierung verwendet Total Variation.
-4. Alle Schwellen werden vor dem ersten vollständigen Lauf festgelegt und im
-   maschinenlesbaren Bericht gespeichert.
-5. Der Lauf ist ereignisgetrieben, integriert Aufenthaltszeiten exakt, nutzt
-   einen benannten deterministischen Zufallsstrom und prüft exakte
-   Populationserhaltung.
-6. Ein versioniertes JSON Schema und eine bytegenaue Golden Reference machen
-   Methode, Eingaben, Ergebnisse und Gates automatisiert prüfbar.
+1. BVS equilibrium, injection location, and population scaling are evaluated as comparative dynamic claims, not as identical reproduction of the 94-vessel code.
+2. The dissertation's 23 perfusion targets are checked in a separate stationary gate and explicitly described as calibration regression, not independent physiological validation.
+3. The dynamic metric is named normalized mean absolute deviation. Population scaling uses total variation.
+4. All thresholds are fixed before the first complete run and stored in the machine-readable report.
+5. The run is event-driven, integrates residence times exactly, uses a named deterministic random stream, and verifies exact population conservation.
+6. A versioned JSON Schema and byte-identical golden reference make method, inputs, results, and gates automatically verifiable.
 
-## Folgen
+## Consequences
 
-Positiv:
+Positive:
 
-- Die publizierten Aussagen werden reproduzierbar operationalisiert.
-- Unterschiede zwischen BVS 2018 und dem Dissertationsprofil bleiben sichtbar.
-- Nachträgliches Verschieben von Toleranzen wird durch Bericht und Golden
-  Reference erkennbar.
-- Lange Läufe bleiben ohne künstlichen globalen Integrationszeitschritt
-  ausführbar.
+- Published claims are operationalized reproducibly.
+- Differences between BVS 2018 and the dissertation profile remain visible.
+- Subsequent movement of tolerances is exposed by the report and golden reference.
+- Long runs remain executable without an artificial global integration time step.
 
-Grenzen:
+Limitations:
 
-- Der Referenzläufer prüft das gleiche Übergangs- und Transitzeitmodell, ist
-  aber eine spezialisierte ereignisgetriebene Messimplementierung und nicht der
-  allgemeine M2.3-Zeitschritt-Host.
-- Eine bestandene Kalibrierungsregression belegt keine klinische oder
-  patientenspezifische Gültigkeit.
-- Das künftige normative Profil benötigt unabhängige Daten und eigene Gates.
+- The reference runner tests the same transition and transit-time model, but is a specialized event-driven measurement implementation rather than the general M2.3 time-step host.
+- Passing calibration regression does not establish clinical or patient-specific validity.
+- The future normative profile requires independent data and its own gates.
 
-## Alternativen
+## Alternatives
 
-- **Historischen Code unverändert portieren:** verworfen als Hauptgate, weil
-  dies den überholten 94-Gefäß-Vertrag und dessen implizite Annahmen
-  konservieren würde. Er bleibt eine Vergleichsquelle.
-- **Paperzahlen exakt als Sollwerte erzwingen:** verworfen, weil Topologie,
-  Übergänge und Geschwindigkeitsmodell verschieden sind.
-- **Nur den stationären Flussgraphen prüfen:** verworfen, weil damit weder
-  transienter Transport noch Injektionsort- und Populationseffekte erfasst
-  würden.
+- **Port the historical code unchanged:** rejected as the primary gate because it would preserve the obsolete 94-vessel contract and its implicit assumptions. It remains a comparison source.
+- **Enforce paper figures as exact targets:** rejected because topology, transitions, and velocity model differ.
+- **Check only the stationary flow graph:** rejected because this would cover neither transient transport nor injection-location and population effects.
 
-## Nachweis
+## Verification
 
 - `docs/m2/BVS_REFERENCE_REGRESSION.md`
 - `data/reference-results/bvs95-dissertation-rest-m2.4.json`

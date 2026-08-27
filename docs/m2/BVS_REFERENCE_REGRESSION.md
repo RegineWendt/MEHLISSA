@@ -3,109 +3,104 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# M2.4 – BVS-Referenzregression
+# M2.4 – BVS Reference Regression
 
-**Status:** bestanden  
-**Referenzprofil:** `bvs95-dissertation-rest-v1`  
-**Seed:** `2018`  
-**Maschinenlesbarer Nachweis:**
+**Status:** passed
+
+**Reference profile:** `bvs95-dissertation-rest-v1`
+
+**Seed:** `2018`
+
+**Machine-readable verification:**
 `data/reference-results/bvs95-dissertation-rest-m2.4.json`
 
-## Ziel und wissenschaftliche Grenze
+## Purpose and scientific boundary
 
-M2.4 prüft zwei verschiedene Aussagen, die nicht vermischt werden dürfen:
+M2.4 tests two different claims that must not be conflated:
 
-1. **Dynamische BVS-Aussagen:** Nähert sich die Partikelverteilung nach etwa
-   sieben Minuten einem Langzeitwert, wird sie weitgehend unabhängig vom
-   Injektionsort und bleibt sie bei zehnfacher Population ähnlich?
-2. **Dissertationsperfusion:** Bildet der 95-Segment-Graph die 23 in Tabelle
-   4.1 vorgegebenen Organ- und Regionalanteile reproduzierbar ab?
+1. **Dynamic BVS claims:** Does particle distribution approach a long-term value after about seven minutes, become largely independent of injection location, and remain similar with a tenfold population?
+2. **Dissertation perfusion:** Does the 95-segment graph reproducibly represent the 23 organ and regional shares specified in Table 4.1?
 
-Der dynamische Vergleich ist keine byte- oder zahlengenaue Reproduktion des
-BloodVoyagerS-Laufs von 2018. Dieser verwendete 94 Gefäße, überwiegend
-1:1-Verzweigungen, einzelne 1:3-Verzweigungen und zufällig variierte
-Geschwindigkeiten. MEHLISSA Next verwendet dagegen den aus der Dissertation
-rekonstruierten, flusserhaltenden 95-Segment-Graphen. M2.4 prüft deshalb die
-publizierten qualitativen und größenordnungsmäßigen Aussagen unter dem neuen
-Modellvertrag.
+The dynamic comparison is not a byte- or number-identical reproduction of the
+2018 BloodVoyagerS run. That run used 94 vessels, predominantly 1:1 branches,
+some 1:3 branches, and randomly varied velocities. MEHLISSA Next instead uses
+the flow-conserving 95-segment graph reconstructed from the dissertation. M2.4
+therefore tests the published qualitative and order-of-magnitude claims under
+the new model contract.
 
-## Rekonstruierte Referenzbedingungen
+## Reconstructed reference conditions
 
-Aus dem BloodVoyagerS-Paper wurden übernommen:
+The following were adopted from the BloodVoyagerS paper:
 
-- 6.359 Partikel als Referenzpopulation und 63.590 als zehnfacher Lauf;
-- Injektion in Gefäß 1, Aorta ascendens;
-- Vergleich von über die jeweils vorangehende Minute gemittelten
-  Gefäßpopulationen;
-- Minute 7 als Gleichgewichtsprüfung und Minute 120 als Langzeitreferenz;
-- alternative Injektion in die linke Poplitealregion;
-- publizierte Vergleichswerte 3,11 % mittlere normierte Abweichung und
-  3,95 % Injektionsortabweichung.
+- 6,359 particles as the reference population and 63,590 for the tenfold run;
+- injection into vessel 1, the ascending aorta;
+- comparison of vessel populations averaged over the preceding minute;
+- minute 7 as the equilibrium check and minute 120 as the long-term reference;
+- alternative injection in the left popliteal region;
+- published comparison values of 3.11% mean normalized deviation and 3.95% injection-location deviation.
 
-Die Dissertation liefert den ergänzten 95. Koronarzweig sowie Soll- und
-Simulationsanteile für 23 Regionen. Diese Werte werden separat gegen die
-stationären Flüsse des kanonischen Graphen geprüft.
+The dissertation supplies the added 95th coronary branch and target and
+simulation shares for 23 regions. These values are tested separately against
+stationary flows in the canonical graph.
 
-## Metriken
+## Metrics
 
-Für zwei gemittelte Verteilungen `x` und `y` mit `S = 95` Segmenten gilt:
+For two averaged distributions `x` and `y` with `S = 95` segments:
 
 ```text
-MAD = (1/S) * Summe_i |x_i - y_i|
-normierte MAD [%] = MAD / (N/S) * 100
+MAD = (1/S) * sum_i |x_i - y_i|
+normalized MAD [%] = MAD / (N/S) * 100
 ```
 
-Das Paper bezeichnet seine gemittelte absolute Gefäßabweichung an einer
-Stelle als „standard deviation“, beschreibt aber eine Mittelung der absoluten
-Differenzen. M2.4 benennt die implementierte Größe daher eindeutig als
-**mean absolute difference (MAD)** und behauptet keine Identität mit einer
-statistischen Standardabweichung.
+At one point, the paper calls its averaged absolute vessel deviation “standard
+deviation,” but describes an average of absolute differences. M2.4 therefore
+unambiguously names the implemented measure **mean absolute difference (MAD)**
+and does not claim identity with a statistical standard deviation.
 
-Der Populationsvergleich verwendet die Total-Variation-Distanz der auf die
-jeweilige Partikelzahl normierten Minute-7-Verteilungen. Die Perfusionsfehler
-werden in Prozentpunkten berechnet.
+The population comparison uses total-variation distance between minute-7
+distributions normalized to their respective particle counts. Perfusion errors
+are calculated in percentage points.
 
-## Vor dem Lauf festgelegte Gates
+## Gates fixed before the run
 
-| Gate | Grenze | Begründung |
+| Gate | Limit | Rationale |
 |---|---:|---|
-| Minute 7 gegen Minute 120 | höchstens 5 % normierte MAD | umfasst die publizierten 3,11 % und Modellunterschiede |
-| Aorta gegen Poplitea bei Minute 7 | höchstens 5 % normierte MAD | umfasst die publizierten 3,95 % |
-| 6.359 gegen 63.590 Partikel | höchstens 2 % Total Variation | prüft Skalierungsstabilität statt identischer Zählwerte |
-| mittlerer Fehler gegen Perfusionssoll | höchstens 0,01 Prozentpunkte | deterministischer stationärer Graph |
-| maximaler Fehler gegen Perfusionssoll | höchstens 0,01 Prozentpunkte | verhindert lokal verdeckte Ausreißer |
-| mittlere Differenz zur Dissertationssimulation | höchstens 0,5 Prozentpunkte | historischer stochastischer Lauf, kein Sollwert |
-| Populationserhaltung | exakt | harte Transportinvariante |
+| minute 7 versus minute 120 | at most 5% normalized MAD | includes the published 3.11% and model differences |
+| aorta versus popliteal at minute 7 | at most 5% normalized MAD | includes the published 3.95% |
+| 6,359 versus 63,590 particles | at most 2% total variation | tests scaling stability rather than identical counts |
+| mean error versus perfusion target | at most 0.01 percentage points | deterministic stationary graph |
+| maximum error versus perfusion target | at most 0.01 percentage points | prevents locally hidden outliers |
+| mean difference from dissertation simulation | at most 0.5 percentage points | historical stochastic run, not a target |
+| population conservation | exact | hard transport invariant |
 
-Die Grenzen wurden vor dem ersten vollständigen M2.4-Lauf festgelegt und
-danach nicht verändert.
+The limits were fixed before the first complete M2.4 run and were not changed
+afterward.
 
-## Ergebnis
+## Result
 
-| Nachweis | Ergebnis | Grenze | Status |
+| Verification | Result | Limit | Status |
 |---|---:|---:|---|
-| Minute 7 gegen Minute 120 | 1,843506 % | 5 % | bestanden |
-| Aorta gegen Poplitea, Minute 7 | 1,741359 % | 5 % | bestanden |
-| Populationsskalierung | 0,760720 % | 2 % | bestanden |
-| mittlerer Perfusions-Sollfehler | 0,002140 Prozentpunkte | 0,01 | bestanden |
-| maximaler Perfusions-Sollfehler | 0,007685 Prozentpunkte | 0,01 | bestanden |
-| Mittel gegen Dissertation-Istwerte | 0,314012 Prozentpunkte | 0,5 | bestanden |
-| Populationserhaltung | exakt | exakt | bestanden |
+| minute 7 versus minute 120 | 1.843506% | 5% | passed |
+| aorta versus popliteal, minute 7 | 1.741359% | 5% | passed |
+| population scaling | 0.760720% | 2% | passed |
+| mean perfusion-target error | 0.002140 percentage points | 0.01 | passed |
+| maximum perfusion-target error | 0.007685 percentage points | 0.01 | passed |
+| mean versus dissertation actual values | 0.314012 percentage points | 0.5 | passed |
+| population conservation | exact | exact | passed |
 
-Minute 1 liegt mit 10,886912 % erwartungsgemäß noch deutlich weiter von der
-Langzeitverteilung entfernt. Dass Minute 15 mit 1,847935 % nicht monoton unter
-Minute 7 liegt, ist bei endlicher stochastischer Population plausibel; das
-Gate fordert Konvergenz in einen stabilen Streubereich, keine monotone Folge.
+At 10.886912%, minute 1 is still substantially farther from the long-term
+distribution as expected. Minute 15 at 1.847935% is not monotonically below
+minute 7, which is plausible for a finite stochastic population; the gate
+requires convergence into a stable dispersion range, not a monotonic sequence.
 
-## Implementierung und Reproduktion
+## Implementation and reproduction
 
-Der Referenzläufer verarbeitet Segmentwechsel ereignisgetrieben. Er integriert
-die exakte Partikel-Aufenthaltszeit je Segment und bildet daraus die
-60-Sekunden-Mittelwerte. Damit wird der lange Lauf nicht durch einen frei
-gewählten globalen Zeitschritt verzerrt. Übergänge werden in stabiler
-Reihenfolge aus einem benannten, vom Master-Seed abgeleiteten Zufallsstrom
-gezogen. Die Gesamtpopulation wird nach jedem vollständigen Lauf exakt
-erhalten.
+The reference runner processes segment transitions as events. It integrates
+exact particle residence time per segment and derives the 60-second averages
+from it. The long run is therefore not distorted by an arbitrarily chosen
+global time step. Transitions are drawn in stable order from a named random
+stream derived from the master seed. Total population is conserved exactly
+after every complete run.
 
 ```powershell
 build/windows-msvc/apps/Debug/mehlissa.exe reference-bvs `
@@ -115,30 +110,27 @@ build/windows-msvc/apps/Debug/mehlissa.exe reference-bvs `
   --report-schema data/schemas/bvs-reference-report/1.0.0.schema.json
 ```
 
-Der Bericht wird vor dem Schreiben gegen das Schema
-`data/schemas/bvs-reference-report/1.0.0.schema.json` validiert. Ein Test
-erzeugt ihn erneut und vergleicht ihn bytegenau mit der eingecheckten Golden
-Reference.
+Before writing, the report is validated against
+`data/schemas/bvs-reference-report/1.0.0.schema.json`. A test regenerates it and
+compares it byte for byte with the committed golden reference.
 
-## Aussage und verbleibende Risiken
+## Claim and remaining risks
 
-M2.4 zeigt, dass der Next-Transport für dieses Profil massenerhaltend,
-reproduzierbar und gegenüber den drei BVS-Szenarien robust ist. Außerdem zeigt
-es, dass die aus der Dissertation migrierten stationären Flüsse deren Sollwerte
-treffen.
+M2.4 demonstrates that Next transport is mass-conserving, reproducible, and
+robust across the three BVS scenarios for this profile. It also demonstrates
+that stationary flows migrated from the dissertation meet its target values.
 
-M2.4 ist **keine unabhängige physiologische Validierung**: Die Sollanteile
-haben die 95er-Übergänge kalibriert und dürfen daher nicht zugleich als externe
-Validierungsdaten gelten. Anatomische Gefäßradien, pulsatile Strömung,
-Geschwindigkeitsverteilungen innerhalb eines Segments und ein unabhängiges
-weibliches Ruheprofil bleiben Aufgaben von M2.6 und späteren
-Validierungsinkrementen.
+M2.4 is **not independent physiological validation**: the target shares
+calibrated the 1995 transitions and therefore cannot simultaneously serve as
+external validation data. Anatomical vessel radii, pulsatile flow, within-
+segment velocity distributions, and an independent female resting profile
+remain tasks for M2.6 and later validation increments.
 
-## Quellen
+## Sources
 
 - Wendt et al., *BloodVoyagerS – Simulation of the work environment of medical
-  nanobots*, 2018, insbesondere S. 4–5.
+  nanobots*, 2018, especially pp. 4–5.
 - Regine Wendt, *Einsatz von Nanotechnologien in der Präzisionsmedizin*, 2024,
-  Abschnitt 4.3.1, Tabelle 4.1 und Tabelle A.1.
-- Öffentliche Referenzimplementierung:
+  Section 4.3.1, Table 4.1, and Table A.1.
+- Public reference implementation:
   <https://github.com/RegineWendt/blood-voyager-s>.

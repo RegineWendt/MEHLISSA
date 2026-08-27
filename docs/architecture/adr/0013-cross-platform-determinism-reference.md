@@ -3,75 +3,53 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# ADR-0013: Plattformübergreifender Determinismusnachweis
+# ADR-0013: Cross-Platform Determinism Verification
 
 - **Status:** Accepted
-- **Datum:** 27. August 2026
-- **Entscheider:** Projektleitung MEHLISSA Next
-- **Betrifft:** M1; `SYS-001`, `SYS-002`, `SYS-003`, `QUA-001`, `QUA-002`
+- **Date:** 27 August 2026
+- **Decision makers:** MEHLISSA Next project leadership
+- **Applies to:** M1; `SYS-001`, `SYS-002`, `SYS-003`, `QUA-001`, `QUA-002`
 
-## Kontext
+## Context
 
-Erfolgreiche Tests auf mehreren Plattformen belegen noch nicht, dass derselbe
-Simulationslauf dort dasselbe Ergebnis erzeugt. Ein Vergleich von Provenienz,
-Logs oder Checkpoints als vollständige Dateien wäre ebenfalls ungeeignet, weil
-sie absichtlich Zeitstempel, Compiler- und Plattformangaben enthalten.
+Successful tests on several platforms do not establish that the same simulation
+run produces the same result on each. Comparing complete provenance, log, or
+checkpoint files would also be unsuitable because they intentionally contain
+timestamps, compiler details, and platform details.
 
-Der M1-Kern benötigt deshalb einen kleinen Referenzlauf, der ausschließlich
-deterministische Zustandsgrößen abbildet und jede unterstützte Toolchain gegen
-dasselbe Ergebnis prüft.
+The M1 kernel therefore needs a small reference run containing only
+deterministic state quantities and testing every supported toolchain against the
+same result.
 
-## Entscheidung
+## Decision
 
-1. `mehlissa_determinism_reference` läuft über den regulären
-   `ComponentHost`-Lebenszyklus, nicht über einen privilegierten Testzugriff.
-2. Der Lauf verwendet einen fixierten Master-Seed, 16 Schritte zu je
-   62.500.000 ns und die benannten Ströme `circulation` und `sensor-noise`.
-3. Pro Schritt werden in definierter Reihenfolge zwei beziehungsweise ein rohe
-   `std::mt19937_64`-Werte gezogen. Verteilungen für Fließkommawerte sind nicht
-   Teil dieses Vertrags.
-4. Jeder 64-Bit-Wert wird in Big-Endian-Bytefolge in FNV-1a-64 eingespeist. Die
-   Einzel- und Gesamtdigests dienen als kompakte Regressionssignatur, nicht als
-   kryptografischer Integritätsschutz.
-5. Das Ergebnis wird in Binärmodus als kanonische UTF-8/ASCII-JSON-Datei
-   geschrieben. Dadurch entstehen unter Windows keine abweichenden CRLF-Bytes.
-6. CTest vergleicht den SHA-256 der erzeugten Datei bytegenau mit
-   `tests/data/determinism/reference-v1.json`.
-7. Derselbe Test läuft in der Windows-MSVC-, Linux-GCC- und
-   Linux-Clang/ASan/UBSan-CI. Gleichheit mit derselben Referenz ist der
-   transitive Nachweis der Plattformgleichheit.
-8. Jede beabsichtigte Änderung der Referenz erfordert eine neue Format- oder
-   Referenzversion und eine dokumentierte Begründung; die Golden-Datei darf
-   nicht stillschweigend aktualisiert werden.
+1. `mehlissa_determinism_reference` runs through the regular `ComponentHost` lifecycle, not privileged test access.
+2. The run uses a fixed master seed, 16 steps of 62,500,000 ns each, and the named streams `circulation` and `sensor-noise`.
+3. Each step draws two and one raw `std::mt19937_64` values, respectively, in a defined order. Floating-point distributions are not part of this contract.
+4. Each 64-bit value is fed to FNV-1a-64 as a big-endian byte sequence. Individual and overall digests are compact regression signatures, not cryptographic integrity protection.
+5. The result is written in binary mode as a canonical UTF-8/ASCII JSON file. This avoids divergent CRLF bytes on Windows.
+6. CTest compares the SHA-256 of the generated file byte for byte with `tests/data/determinism/reference-v1.json`.
+7. The same test runs in Windows/MSVC, Linux/GCC, and Linux/Clang/ASan/UBSan CI. Equality with the same reference transitively verifies platform equality.
+8. Any intentional reference change requires a new format or reference version and a documented rationale; the golden file must not be updated silently.
 
-## Folgen
+## Consequences
 
-Positiv:
+Positive:
 
-- Uhr, Seedableitung, Streamnamen, Ziehungsreihenfolge und Komponentenpfad
-  werden gemeinsam gegen eine bytegenaue Referenz geprüft.
-- Plattformabweichungen erscheinen als normale CTest-Fehler und blockieren CI.
-- Beobachtungsmetadaten bleiben vom deterministischen Ergebnis getrennt.
+- Clock, seed derivation, stream names, draw order, and component path are jointly verified against a byte-identical reference.
+- Platform deviations appear as normal CTest failures and block CI.
+- Observational metadata remains separate from the deterministic result.
 
-Negativ und Grenzen:
+Negative and limitations:
 
-- Der Nachweis umfasst die M1-Kernprimitiven, noch keine medizinischen Modelle.
-- FNV-1a komprimiert den Verlauf und ist nicht kollisionssicher; der äußere
-  SHA-256 schützt die vollständige Referenzdatei, ersetzt aber keine fachlichen
-  Invarianten.
-- Plattformidentische Fließkomma- und Verteilungsalgorithmen werden nicht
-  behauptet. Sie benötigen vor ihrer Verwendung eigene Verträge und
-  Toleranzklassen.
-- Replikatplanung und statistische Reproduzierbarkeit bleiben spätere Teile von
-  `SYS-002`.
+- The verification covers M1 kernel primitives, not yet medical models.
+- FNV-1a compresses the sequence and is not collision-resistant; the outer SHA-256 protects the complete reference file but does not replace domain invariants.
+- Platform-identical floating-point and distribution algorithms are not claimed. They require their own contracts and tolerance classes before use.
+- Replicate planning and statistical reproducibility remain later parts of `SYS-002`.
 
-## Alternativen
+## Alternatives
 
-- **Nur bekannte Einzelwerte testen:** abgelehnt, weil Uhr, Lifecycle und
-  Ziehungsreihenfolge nicht gemeinsam erfasst würden.
-- **Provenienz oder Logdatei vergleichen:** abgelehnt, weil beobachtende
-  Metadaten absichtlich variieren.
-- **Nur Hashwerte im Quellcode prüfen:** abgelehnt, weil eine eigenständige
-  Referenzdatei besser prüf-, archiv- und versionierbar ist.
-- **Fließkommaverteilungen sofort aufnehmen:** vertagt, bis Rundung,
-  Mathematikbibliothek und erlaubte Toleranzen ausdrücklich festgelegt sind.
+- **Test only known individual values:** rejected because clock, lifecycle, and draw order would not be covered together.
+- **Compare provenance or log files:** rejected because observational metadata intentionally varies.
+- **Check only hash values in source code:** rejected because a separate reference file is easier to inspect, archive, and version.
+- **Include floating-point distributions immediately:** deferred until rounding, the mathematics library, and permitted tolerances are explicitly defined.

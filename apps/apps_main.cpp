@@ -8,6 +8,7 @@
 #include <mehlissa/experiment/experiment_manifest.hpp>
 #include <mehlissa/experiment/provenance.hpp>
 #include <mehlissa/experiment/run_log.hpp>
+#include <mehlissa/models/body/body_state_profile.hpp>
 #include <mehlissa/models/body/bvs_reference.hpp>
 #include <mehlissa/models/body/legacy_95_migration.hpp>
 #include <mehlissa/models/body/vascular_graph.hpp>
@@ -28,6 +29,8 @@ constexpr auto default_checkpoint_schema_path = "data/schemas/checkpoint/1.0.0.s
 constexpr auto default_body_schema_path = "data/schemas/vascular-graph/1.0.0.schema.json";
 constexpr auto default_bvs_report_schema_path =
     "data/schemas/bvs-reference-report/1.0.0.schema.json";
+constexpr auto default_body_state_schema_path =
+    "data/schemas/body-state-profile/1.0.0.schema.json";
 
 struct CommandLine final {
     enum class Operation : std::uint8_t {
@@ -35,7 +38,8 @@ struct CommandLine final {
         validate,
         validate_body,
         migrate_legacy_95,
-        reference_bvs
+        reference_bvs,
+        apply_body_state
     };
 
     Operation operation{};
@@ -44,9 +48,11 @@ struct CommandLine final {
     std::filesystem::path vasculature_path;
     std::filesystem::path transitions_path;
     std::filesystem::path output_path;
+    std::filesystem::path profile_path;
     std::filesystem::path schema_path{default_schema_path};
     std::filesystem::path checkpoint_schema_path{default_checkpoint_schema_path};
     std::filesystem::path report_schema_path{default_bvs_report_schema_path};
+    std::filesystem::path profile_schema_path{default_body_state_schema_path};
 };
 
 void print_usage() {
@@ -58,7 +64,9 @@ void print_usage() {
                "  mehlissa migrate-legacy-95 --vasculature <file> --transitions <file> "
                "--output <file> [--schema <file>]\n"
                "  mehlissa reference-bvs --model <file> --output <file> "
-               "[--schema <file>] [--report-schema <file>]\n",
+               "[--schema <file>] [--report-schema <file>]\n"
+               "  mehlissa apply-body-state --model <file> --profile <file> --output <file> "
+               "[--schema <file>] [--profile-schema <file>]\n",
                stderr);
 }
 
@@ -83,6 +91,9 @@ void print_usage() {
     } else if (operation == "reference-bvs") {
         command.operation = CommandLine::Operation::reference_bvs;
         command.schema_path = default_body_schema_path;
+    } else if (operation == "apply-body-state") {
+        command.operation = CommandLine::Operation::apply_body_state;
+        command.schema_path = default_body_schema_path;
     } else {
         throw mehlissa::core::MehlissaError{mehlissa::core::ErrorCode::command_line_invalid,
                                             "Unknown command: " + std::string{operation}};
@@ -106,12 +117,16 @@ void print_usage() {
             command.transitions_path = argv[argument + 1];
         } else if (option == "--output") {
             command.output_path = argv[argument + 1];
+        } else if (option == "--profile") {
+            command.profile_path = argv[argument + 1];
         } else if (option == "--schema") {
             command.schema_path = argv[argument + 1];
         } else if (option == "--checkpoint-schema") {
             command.checkpoint_schema_path = argv[argument + 1];
         } else if (option == "--report-schema") {
             command.report_schema_path = argv[argument + 1];
+        } else if (option == "--profile-schema") {
+            command.profile_schema_path = argv[argument + 1];
         } else {
             throw mehlissa::core::MehlissaError{mehlissa::core::ErrorCode::command_line_invalid,
                                                 "Unknown option: " + std::string{option}};
@@ -124,6 +139,13 @@ void print_usage() {
             throw mehlissa::core::MehlissaError{
                 mehlissa::core::ErrorCode::command_line_invalid,
                 "--vasculature, --transitions and --output are required"};
+        }
+    } else if (command.operation == CommandLine::Operation::apply_body_state) {
+        if (command.body_model_path.empty() || command.profile_path.empty() ||
+            command.output_path.empty()) {
+            throw mehlissa::core::MehlissaError{
+                mehlissa::core::ErrorCode::command_line_invalid,
+                "--model, --profile and --output are required"};
         }
     } else if (command.operation == CommandLine::Operation::reference_bvs) {
         if (command.body_model_path.empty() || command.output_path.empty()) {
@@ -199,6 +221,21 @@ void record_failure(mehlissa::experiment::JsonLinesRunLog& log,
 }
 
 int execute(const CommandLine& command) {
+    if (command.operation == CommandLine::Operation::apply_body_state) {
+        const auto graph = mehlissa::models::body::load_vascular_graph(
+            {command.body_model_path, command.schema_path});
+        const auto profile = mehlissa::models::body::load_body_state_profile(
+            {command.profile_path, command.profile_schema_path});
+        const auto derived = mehlissa::models::body::apply_body_state_profile(graph, profile);
+        mehlissa::models::body::write_vascular_graph(derived, command.output_path);
+        static_cast<void>(mehlissa::models::body::load_vascular_graph(
+            {command.output_path, command.schema_path}));
+        std::printf("Applied body-state profile: %s x %.6f -> %s (%zu segments) -> %s\n",
+                    profile.profile_id.c_str(), profile.cardiac_output_multiplier,
+                    derived.model_id.c_str(), derived.segments.size(),
+                    command.output_path.string().c_str());
+        return 0;
+    }
     if (command.operation == CommandLine::Operation::reference_bvs) {
         const auto graph = mehlissa::models::body::load_vascular_graph(
             {command.body_model_path, command.schema_path});

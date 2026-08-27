@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "supine-cycle-exercise-1.9x",
+    "version": "1.0.0",
+    "title": "Supine bicycle-exercise 1.9x cardiac-output sensitivity profile"
+  },
+  "compatible_model": {
+    "id": "bvs95-dissertation-rest",
+    "version": "1.0.0"
+  },
+  "validity": {
+    "population": "healthy adult cohort from Wong et al. 2014 mapped to the schematic BVS95 graph",
+    "physiological_state": "supine bicycle exercise; global-flow sensitivity profile",
+    "description": "Cardiac output is multiplied by the 1.9-fold cohort result. Regional redistribution is intentionally not applied because the BVS95 branches are not a validated upper/lower-body territorial partition."
+  },
+  "cardiac_output": {
+    "anchor_segment_id": "bvs95-002",
+    "multiplier": 1.9
+  },
+  "transition_overrides": [],
+  "sources": [
+    {
+      "id": "wong-pcmri-exercise-2014",
+      "citation": "Wong DT et al. Changes in systemic and pulmonary blood flow distribution in normal adult volunteers in response to posture and exercise. J Physiol Sci. 2014;64:105-112. doi:10.1007/s12576-013-0298-z.",
+      "license": "Citation and derived multiplier only; article rights remain with the publisher."
+    }
+  ],
+  "limitations": [
+    "This is a global-flow sensitivity scenario, not a complete physiological exercise model.",
+    "The source reports 1.5-fold upper-body and 2.3-fold lower-body flow increases, but BVS95 lacks a validated mapping for applying those regional factors without inventing anatomy.",
+    "The cohort value is not sex-specific and does not define exercise power for an individual.",
+    "Fixed schematic cross-sections turn increased flow into proportionally increased mean velocity."
+  ]
+}

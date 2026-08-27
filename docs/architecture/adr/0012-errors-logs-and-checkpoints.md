@@ -3,87 +3,56 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# ADR-0012: Strukturierte Fehler, Laufprotokolle und Checkpoints
+# ADR-0012: Structured Errors, Run Logs, and Checkpoints
 
 - **Status:** Accepted
-- **Datum:** 26. August 2026
-- **Entscheider:** Projektleitung MEHLISSA Next
-- **Betrifft:** M1; `SYS-002`, `SYS-007`, `DATA-001`, `DATA-003`, `QUA-005`
+- **Date:** 26 August 2026
+- **Decision makers:** MEHLISSA Next project leadership
+- **Applies to:** M1; `SYS-002`, `SYS-007`, `DATA-001`, `DATA-003`, `QUA-005`
 
-## Kontext
+## Context
 
-Freie Fehlermeldungen und wechselnde Exit-Codes sind für automatisierte
-Experimente, CI und spätere Python-Werkzeuge nicht zuverlässig auswertbar.
-Gleichzeitig müssen lange Simulationsläufe ihren Verlauf maschinenlesbar
-dokumentieren und einen definierten Wiederaufnahmepunkt hinterlassen können.
+Free-form error messages and changing exit codes cannot be evaluated reliably
+by automated experiments, CI, and later Python tools. Long simulation runs must
+also document their progress in machine-readable form and be able to leave a
+defined resume point.
 
-Ein Checkpoint ist nur belastbar, wenn er eindeutig an Experiment, Zeit, Seed,
-Zufallszustand und versionierte Komponentenstände gebunden ist. Ein bloßes
-Speicherabbild wäre plattformabhängig und könnte Änderungen unbemerkt als
-kompatibel behandeln.
+A checkpoint is robust only when it is unambiguously bound to the experiment,
+time, seed, random state, and versioned component states. A raw memory image
+would be platform-dependent and could silently treat changes as compatible.
 
-## Entscheidung
+## Decision
 
-1. Kontrollierte Fehler erben von `MehlissaError` und tragen einen stabilen
-   numerischen `ErrorCode` sowie eine Kennung `MEHLISSA-Edddd`.
-2. Vergebene Kennungen werden nicht umgedeutet. Neue Ursachen erhalten eine
-   neue Kennung; die freie Diagnose darf präzisiert werden.
-3. Die CLI schreibt die Kennung nach `stderr` und ordnet Fehlergruppen stabilen
-   Exit-Statuswerten zu.
-4. Jeder Lauf schreibt `run.log.jsonl`. Jede Zeile ist ein unabhängiges
-   JSON-Dokument nach dem versionierten Schema `1.0.0` und enthält Sequenz,
-   UTC-Zeit, Simulationszeit, Level, Quelle, Ereignis und Nachricht.
-5. Fehlerdatensätze enthalten zusätzlich numerischen Code und Kennung. Falls
-   das Schreiben einer Fehlermeldung selbst scheitert, bleibt der ursprüngliche
-   Fehler maßgeblich.
-6. Checkpoints verwenden ein versioniertes JSON-Manifest statt eines rohen
-   Speicherabbilds. Version `1.0.0` bindet Experiment-Hash, Softwareversion,
-   Sequenz, Simulationszeit, Master-Seed und Ziehungsstände benannter
-   Zufallsströme.
-7. Komponentenstände liegen in eigenen, relativ zum Checkpointverzeichnis
-   adressierten Dateien. Jede Referenz nennt Komponentenname,
-   Zustandsschemaversion und SHA-256-Prüfsumme.
-8. Schreiben und Laden validieren das Manifest gegen JSON Schema, verbieten
-   ausbrechende Komponentenpfade, prüfen eindeutige Namen und verifizieren die
-   referenzierten Prüfsummen.
-9. Der Minimalversuch schreibt nach erfolgreichem Lauf einen finalen
-   `checkpoint-000000.json`. Die eigentliche Wiederaufnahme folgt, sobald
-   zustandsbehaftete M2-Komponenten einen Snapshotvertrag implementieren.
+1. Controlled errors derive from `MehlissaError` and carry a stable numeric `ErrorCode` and an identifier of the form `MEHLISSA-Edddd`.
+2. Assigned identifiers are not reinterpreted. New causes receive a new identifier; free-form diagnostics may be refined.
+3. The CLI writes the identifier to `stderr` and maps error groups to stable exit-status values.
+4. Every run writes `run.log.jsonl`. Each line is an independent JSON document conforming to versioned schema `1.0.0` and contains sequence, UTC time, simulation time, level, source, event, and message.
+5. Error records additionally contain the numeric code and identifier. If writing an error message itself fails, the original error remains authoritative.
+6. Checkpoints use a versioned JSON manifest instead of a raw memory image. Version `1.0.0` binds the experiment hash, software version, sequence, simulation time, master seed, and draw counts of named random streams.
+7. Component states reside in separate files addressed relative to the checkpoint directory. Each reference states the component name, state schema version, and SHA-256 checksum.
+8. Writing and loading validate the manifest against JSON Schema, reject escaping component paths, check unique names, and verify referenced checksums.
+9. After a successful run, the minimal experiment writes a final `checkpoint-000000.json`. Actual resumption follows when stateful M2 components implement a snapshot contract.
 
-## Folgen
+## Consequences
 
-Positiv:
+Positive:
 
-- Skripte können Ursache und Exit-Status unabhängig vom Wortlaut auswerten.
-- JSONL bleibt auch bei großen Protokollen zeilenweise verarbeitbar und nach
-  jedem Datensatz gespült.
-- Checkpoints sind selbstbeschreibend, versionierbar und gegen vertauschte oder
-  nachträglich veränderte Komponentenstände geschützt.
-- RNG-Ziehungsstände erlauben eine algorithmisch definierte Rekonstruktion,
-  ohne plattformspezifisches Speicherlayout zu serialisieren.
+- Scripts can evaluate cause and exit status independently of wording.
+- JSONL remains processable line by line even for large logs and is flushed after every record.
+- Checkpoints are self-describing, versionable, and protected against swapped or subsequently modified component states.
+- RNG draw counts enable algorithmically defined reconstruction without serializing platform-specific memory layout.
 
-Negativ:
+Negative:
 
-- UTC-Zeitstempel unterscheiden sich zwischen ansonsten identischen Läufen;
-  deterministische Vergleiche müssen Beobachtungsfelder ausnehmen.
-- Das Flushen jeder Logzeile kostet I/O-Leistung. Eine gepufferte Variante darf
-  später nur mit expliziter Verlusttoleranz ergänzt werden.
-- M1 spezifiziert und prüft den Checkpoint, führt aber noch keine vollständige
-  Wiederaufnahme fachlicher Komponenten aus.
-- Eine Rekonstruktion sehr weit fortgeschrittener RNG-Ströme allein über den
-  Zähler kann teuer werden; ein späteres portables Engine-State-Format benötigt
-  eine eigene Version und Vergleichstests.
+- UTC timestamps differ between otherwise identical runs; deterministic comparisons must exclude observational fields.
+- Flushing every log line costs I/O performance. A buffered variant may be added later only with explicit loss tolerance.
+- M1 specifies and verifies the checkpoint but does not yet perform full resumption of domain components.
+- Reconstructing highly advanced RNG streams solely from a counter can be expensive; a later portable engine-state format needs its own version and comparison tests.
 
-## Alternativen
+## Alternatives
 
-- **Nur Textmeldungen:** abgelehnt, weil Kennung und Felder nicht stabil
-  maschinenlesbar sind.
-- **Ein großes JSON-Log:** abgelehnt, weil ein Abbruch das Gesamtdokument
-  ungültig hinterlassen kann und Streaming erschwert.
-- **Binäres Speicherabbild:** abgelehnt, weil Layout, Endianness und
-  Softwarekompatibilität implizit blieben.
-- **Komponentenstatus direkt im Manifest:** abgelehnt, weil große oder binäre
-  Zustände das Kontrollmanifest aufblähen und nicht unabhängig versionierbar
-  wären.
-- **Absolute Snapshotpfade:** abgelehnt, weil Checkpoints dann nicht portabel
-  verschoben oder archiviert werden könnten.
+- **Text messages only:** rejected because identifiers and fields would not be stably machine-readable.
+- **One large JSON log:** rejected because interruption could leave the entire document invalid and would impede streaming.
+- **Binary memory image:** rejected because layout, endianness, and software compatibility would remain implicit.
+- **Component state directly in the manifest:** rejected because large or binary states would bloat the control manifest and could not be versioned independently.
+- **Absolute snapshot paths:** rejected because checkpoints could not then be moved or archived portably.

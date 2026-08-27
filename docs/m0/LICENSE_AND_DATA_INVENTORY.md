@@ -3,106 +3,109 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# Lizenz- und Dateninventar
+# License and Data Inventory
 
-**Stand:** 26. August 2026  
-**Status:** M0-Inventar und Lizenzmodell beschlossen; 95er-Quelldatensatz seit 27. August 2026 freigegeben, weitere Rechteprüfungen bleiben artefaktbezogen
-**Hinweis:** Dieses Dokument ist eine technische Bestandsaufnahme, keine Rechtsberatung.
+**As of:** 26 August 2026
 
-## 1. Ergebnis in Kürze
+**Status:** M0 inventory and licensing model approved; 1995 source data set authorized since 27 August 2026; further rights reviews remain artifact-specific
 
-Der historische MEHLISSA-Code enthält durchgängig Hinweise auf **GNU GPL Version 2** und nennt als Rechteinhaber Universität zu Lübeck und – für spätere Anteile – Technische Universität Berlin. Das Repository verwendet deshalb bewusst ein Lizenzmodell pro Datei und Artefakt.
+**Note:** This document is a technical inventory, not legal advice.
 
-Die beschlossene und umgesetzte Struktur ist:
+## 1. Summary
 
-1. unabhängig entwickelten MEHLISSA-Next-Code als `MPL-2.0` veröffentlichen;
-2. Legacy-Code und direkte Portierungen unter `GPL-2.0-only` erhalten;
-3. neue, projekteigene Dokumentation und freigegebene eigene Daten unter
-   `CC-BY-4.0` stellen;
-4. vollständige Lizenztexte unter `LICENSES/` und die Zuordnung in
-   `LICENSE.md` führen;
-5. Urheber und Drittmaterial in `NOTICE.md` beziehungsweise
-   `THIRD_PARTY_NOTICES.md` dokumentieren;
-6. ungeklärte Bestandsdaten und Publikations-PDFs nicht in öffentliche
-   Next-Daten- oder Softwarepakete aufnehmen.
+The historical MEHLISSA code consistently contains **GNU GPL version 2**
+notices and names Universität zu Lübeck and—for later contributions—Technische
+Universität Berlin as rights holders. The repository therefore deliberately
+uses a per-file and per-artifact licensing model.
 
-Die Entscheidung folgt für den Bestand den vorhandenen Lizenzhinweisen, bleibt
-mit einer optionalen ns-3-Anbindung kompatibel und öffnet den unabhängig
-entwickelten Next-Kern für breitere Integration. Sie ist in
-[ADR-0007](../architecture/adr/0007-repository-license.md) verbindlich.
+The approved and implemented structure is:
 
-## 2. Quellcode und Werkzeuge
+1. release independently developed MEHLISSA Next code under `MPL-2.0`;
+2. retain legacy code and direct ports under `GPL-2.0-only`;
+3. license new original project documentation and approved original data under `CC-BY-4.0`;
+4. provide full license texts under `LICENSES/` and the mapping in `LICENSE.md`;
+5. document rights holders and third-party material in `NOTICE.md` and `THIRD_PARTY_NOTICES.md`, respectively;
+6. exclude unresolved existing data and publication PDFs from public Next data or software packages.
 
-| Bestandteil | Nutzung | Festgestellte Lizenz | Befund/Aktion |
+For existing material, the decision follows the available license notices,
+remains compatible with an optional ns-3 connection, and opens the independently
+developed Next kernel for broader integration. It is binding through
+[ADR-0007](../architecture/adr/0007-repository-license.md).
+
+## 2. Source code and tools
+
+| Component | Use | Identified license | Finding/action |
 |---|---|---|---|
-| `mehlissa/` | Legacy MEHLISSA 1.x/ns-3-Modul | GPL-2.0-only gemäß vorhandenen Headern | Rechteinhaber und Autoren pro Datei erhalten; vollständiger Text unter `LICENSES/` |
-| `mehlissa2.0/` | Legacy MEHLISSA 2.0 | GPL-2.0-only gemäß vorhandenen Headern | Universität zu Lübeck und TU Berlin genannt; vollständiger Text unter `LICENSES/` |
-| `core/`, `apps/`, `tests/`, `cmake/` | unabhängig entwickeltes MEHLISSA Next | MPL-2.0 | SPDX-Header vorhanden; GPL-Portierungen müssen als solche getrennt bleiben |
-| Catch2 | Unit-Tests, über vcpkg | BSL-1.0 | kompatible Testabhängigkeit; Copyrightdatei im Buildartefakt erhalten |
-| vcpkg | Paketmanager | MIT | Portbibliotheken behalten jeweils ihre eigene Lizenz |
-| CMake/Compiler | Buildwerkzeuge | nicht in MEHLISSA vendort | keine Codeübernahme; Version in Provenienz erfassen |
-| ns-3 | optionaler Legacy-/Kommunikationsadapter | GPL-2.0-only | keine Pflichtabhängigkeit des Next-Kerns; Lizenzkompatibilität erhalten |
-| SimVascular | künftiger externer Adapter | BSD-3-Clause | nicht vendorn, sofern nicht nötig; Version und Copyright dokumentieren |
+| `mehlissa/` | legacy MEHLISSA 1.x/ns-3 module | GPL-2.0-only according to existing headers | retain rights holders and authors per file; full text under `LICENSES/` |
+| `mehlissa2.0/` | legacy MEHLISSA 2.0 | GPL-2.0-only according to existing headers | Universität zu Lübeck and TU Berlin named; full text under `LICENSES/` |
+| `core/`, `apps/`, `tests/`, `cmake/` | independently developed MEHLISSA Next | MPL-2.0 | SPDX headers present; GPL ports must remain identified separately |
+| Catch2 | unit tests, through vcpkg | BSL-1.0 | compatible test dependency; retain copyright file in build artifact |
+| vcpkg | package manager | MIT | port libraries retain their own licenses |
+| CMake/compiler | build tools | not vendored in MEHLISSA | no code adoption; record version in provenance |
+| ns-3 | optional legacy/communication adapter | GPL-2.0-only | not a mandatory dependency of the Next kernel; retain license compatibility |
+| SimVascular | future external adapter | BSD-3-Clause | do not vendor unless necessary; document version and copyright |
 
-Offizielle Referenzen: [Catch2](https://github.com/catchorg/Catch2), [vcpkg](https://github.com/microsoft/vcpkg), [ns-3](https://www.nsnam.org/), [SimVascular](https://simvascular.github.io/).
+Official references: [Catch2](https://github.com/catchorg/Catch2), [vcpkg](https://github.com/microsoft/vcpkg), [ns-3](https://www.nsnam.org/), [SimVascular](https://simvascular.github.io/).
 
-## 3. Repositorydaten
+## 3. Repository data
 
-Die drei Dateien unter `mehlissa2.0/data/95_*.csv` besitzen seit dem
-27. August 2026 explizite `CC-BY-4.0`-Sidecars und das Freigabemanifest
-`data/legacy/bvs95/release-v1.json`. Die übrigen CSV-Dateien besitzen weiterhin
-keine individuellen Lizenzhinweise; ihre Git-Historie ersetzt keine explizite
-Datenlizenz.
+Since 27 August 2026, the three files under `mehlissa2.0/data/95_*.csv` have
+explicit `CC-BY-4.0` sidecars and the release manifest
+`data/legacy/bvs95/release-v1.json`. The other CSV files still have no
+individual license notices; their Git history does not replace an explicit data
+license.
 
-| Datei | Zeilen | SHA-256 | Herkunft/Befund |
+| File | Lines | SHA-256 | Origin/finding |
 |---|---:|---|---|
-| `fingerprint.csv` | 9 | `a6e42f40d6ff5f159224ab85e9d0a6c73e75f23217a922e3b49e854f259e467c` | Regine Wendt, Commit `4757903`; identisch mit 2.0-Kopie; uneinheitliches Abschlusskomma |
-| `transitions95.csv` | 23 | `186650341da23f233ec483fcebfd212833b48071922345f297bc36a771709a8a` | Regine Wendt, Commit `4757903`; identisch mit 2.0-Kopie; uneinheitliches Abschlusskomma |
-| `vasculature_transitions95.csv` | 95 | `8e04a2e004e42fd37a4cb1d225f4c0dd8b6bf27d05afec4e40a51fbb18c31588` | Regine Wendt, Commit `4757903`; kombiniertes Legacyformat ohne Header |
-| `vasculature_transitions_endocrine_avs.csv` | 104 | `90e3429ab30e07606b507e3eb3c76cf0c4e9688658e81f6a888483ead99ba241` | Saswati Pal, Commit `c14ad46`; AVS-Erweiterung ohne Datenschema/Einheitenmetadaten |
-| `bodymodels/vasculature_transitions95female.csv` | 96 nichtleere Zeilen | `b3a3d30cdbe0d95ba2ffb15e605992095999ad965c67970325ea36e8cd950f23` | Regine Wendt, Commit `a3f3090`; **bekannter Defekt:** Datensatzzeile 51 ist über Dateizeilen 51 und 53 getrennt |
-| `bodymodels/vasculature_transitions95male.csv` | 95 | `3fbc694159554624169cab0f4420d054037f5d1262b3f6df4e88feb2d4ab072e` | Regine Wendt, Commit `a3f3090`; ohne Header/Einheitenmetadaten |
-| `mehlissa2.0/data/95_fingerprints.csv` | 9 | `a6e42f40d6ff5f159224ab85e9d0a6c73e75f23217a922e3b49e854f259e467c` | Lisa Y. Debus, Commit `59cccdf`; Byte-identisch mit Root-Datei; **CC-BY-4.0 freigegeben** |
-| `mehlissa2.0/data/95_transitions.csv` | 23 | `186650341da23f233ec483fcebfd212833b48071922345f297bc36a771709a8a` | Lisa Y. Debus, Commit `59cccdf`; Byte-identisch mit Root-Datei; **CC-BY-4.0 freigegeben** |
-| `mehlissa2.0/data/95_vasculature.csv` | 95 | `de4b2b730bf3f88d3cb59213d67fcaf3d4764a3aca69be892e151109eb8c9db8` | Lisa Y. Debus, Commit `59cccdf`; konsistente zehn Felder; **CC-BY-4.0 freigegeben** |
+| `fingerprint.csv` | 9 | `a6e42f40d6ff5f159224ab85e9d0a6c73e75f23217a922e3b49e854f259e467c` | Regine Wendt, commit `4757903`; identical to 2.0 copy; inconsistent trailing comma |
+| `transitions95.csv` | 23 | `186650341da23f233ec483fcebfd212833b48071922345f297bc36a771709a8a` | Regine Wendt, commit `4757903`; identical to 2.0 copy; inconsistent trailing comma |
+| `vasculature_transitions95.csv` | 95 | `8e04a2e004e42fd37a4cb1d225f4c0dd8b6bf27d05afec4e40a51fbb18c31588` | Regine Wendt, commit `4757903`; combined legacy format without header |
+| `vasculature_transitions_endocrine_avs.csv` | 104 | `90e3429ab30e07606b507e3eb3c76cf0c4e9688658e81f6a888483ead99ba241` | Saswati Pal, commit `c14ad46`; AVS extension without data schema/unit metadata |
+| `bodymodels/vasculature_transitions95female.csv` | 96 non-empty lines | `b3a3d30cdbe0d95ba2ffb15e605992095999ad965c67970325ea36e8cd950f23` | Regine Wendt, commit `a3f3090`; **known defect:** data record 51 is split across file lines 51 and 53 |
+| `bodymodels/vasculature_transitions95male.csv` | 95 | `3fbc694159554624169cab0f4420d054037f5d1262b3f6df4e88feb2d4ab072e` | Regine Wendt, commit `a3f3090`; without header/unit metadata |
+| `mehlissa2.0/data/95_fingerprints.csv` | 9 | `a6e42f40d6ff5f159224ab85e9d0a6c73e75f23217a922e3b49e854f259e467c` | Lisa Y. Debus, commit `59cccdf`; byte-identical to root file; **authorized under CC-BY-4.0** |
+| `mehlissa2.0/data/95_transitions.csv` | 23 | `186650341da23f233ec483fcebfd212833b48071922345f297bc36a771709a8a` | Lisa Y. Debus, commit `59cccdf`; byte-identical to root file; **authorized under CC-BY-4.0** |
+| `mehlissa2.0/data/95_vasculature.csv` | 95 | `de4b2b730bf3f88d3cb59213d67fcaf3d4764a3aca69be892e151109eb8c9db8` | Lisa Y. Debus, commit `59cccdf`; consistent ten fields; **authorized under CC-BY-4.0** |
 
-### 3.1 Verbindliche Migrationsregel
+### 3.1 Binding migration rule
 
-Legacydateien werden nicht stillschweigend korrigiert oder überschrieben. Die Migration in `data/` muss:
+Legacy files are not silently corrected or overwritten. Migration into `data/` must:
 
-- Quelldatei und SHA-256 speichern;
-- Feldbedeutung, Einheit und Koordinatensystem explizit machen;
-- Transformationen als reproduzierbares Werkzeug ausführen;
-- bekannte Defekte als Validierungsfehler erkennen;
-- neue kanonische IDs von historischen Gefäßnummern trennen;
-- Lizenz, Urheber, Publikationsquelle und Gültigkeitsbereich im Datenmanifest führen.
+- record the source file and SHA-256;
+- make field meaning, unit, and coordinate system explicit;
+- execute transformations through a reproducible tool;
+- detect known defects as validation errors;
+- separate new canonical IDs from historical vessel numbers;
+- record license, authorship, publication source, and validity scope in the data manifest.
 
-## 4. Literaturverzeichnis im Repository
+## 4. Literature in the repository
 
-Unter `literature/` liegen sechs Publikations-PDFs. Sie sind fachliche Primärquellen, enthalten aber Verlags- beziehungsweise Publikationsrechte und keine repositoryweite Weiterverbreitungserlaubnis.
+Six publication PDFs reside under `literature/`. They are primary domain sources
+but carry publisher or publication rights and do not grant repository-wide
+redistribution permission.
 
-Regel bis zur Rechteprüfung:
+Rule pending rights review:
 
-- PDFs dürfen lokal zur wissenschaftlichen Rückverfolgbarkeit verwendet werden;
-- automatisierte Releasepakete und Container schließen `literature/` aus;
-- öffentliche Spiegelung oder Weitergabe wird nicht aus der MEHLISSA-Code-Lizenz abgeleitet;
-- DOI und bibliografische Referenz sind die dauerhafte öffentliche Referenz;
-- Autorenversion, Verlagserlaubnis oder Open-Access-Status wird pro PDF nachgetragen.
+- PDFs may be used locally for scientific traceability;
+- automated release packages and containers exclude `literature/`;
+- public mirroring or redistribution is not inferred from the MEHLISSA code license;
+- DOI and bibliographic citation are the permanent public reference;
+- author version, publisher permission, or open-access status is recorded per PDF.
 
-## 5. Vorgesehene externe Datenquellen
+## 5. Planned external data sources
 
-| Quelle | Zweck | Lizenz/Nutzungsbedingung | Aufnahmebedingung |
+| Source | Purpose | License/terms of use | Inclusion condition |
 |---|---|---|---|
-| [Human Protein Atlas](https://www.proteinatlas.org/about/licence) | Fingerprint-Genprodukte und Gewebeexpression | CC BY 4.0 für urheberrechtlich schützbare Daten; Drittquellen gesondert beachten | exakte HPA-Version, Gene/URLs und Zitation speichern |
-| [BodyParts3D](https://lifesciencedb.jp/bp3d/info_en/license/index.html) | generische Organ-/Körpergeometrie | CC BY-SA 2.1 Japan | Share-Alike und vorgeschriebenen Credit erhalten; Versions-/Koordinatenwarnungen dokumentieren |
-| [Vascular Model Repository](https://www.vascularmodel.com/FAQs.html) | pulmonale und andere Gefäß-/Randbedingungsmodelle | Nutzung für Forschung und Entwicklung mit Copyright-/README- und Anerkennungspflichten | konkretes Modell und dessen `README-COPYRIGHT` archivieren; nicht pauschal als Open Data bezeichnen |
-| [SimVascular](https://simvascular.github.io/) | Segmentierung, 0D/1D/3D-Hämodynamik, Konvertierung | BSD-3-Clause | Werkzeugversion und Konvertierungsworkflow protokollieren |
-| [BioModels](https://www.ebi.ac.uk/biomodels/faq) | kuratierte Reaktions-/Zellmodelle | Modelle laut FAQ unter CC0 | Modell-ID, Revision, Originalpublikation und Curation-Status speichern |
-| [Physiome Model Repository](https://models.physiomeproject.org/) | CellML-/Kreislauf-/Mehrskalenmodelle | öffentlich zugängliche Inhalte grundsätzlich CC BY 3.0; einzelne Einträge können abweichend/unklar sein | Lizenz jedes konkreten Modells prüfen, persistenten Stand und Zitation speichern |
+| [Human Protein Atlas](https://www.proteinatlas.org/about/licence) | fingerprint gene products and tissue expression | CC BY 4.0 for copyrightable data; handle third-party sources separately | record exact HPA version, genes/URLs, and citation |
+| [BodyParts3D](https://lifesciencedb.jp/bp3d/info_en/license/index.html) | generic organ/body geometry | CC BY-SA 2.1 Japan | retain ShareAlike and required credit; document version/coordinate warnings |
+| [Vascular Model Repository](https://www.vascularmodel.com/FAQs.html) | pulmonary and other vascular/boundary-condition models | research and development use with copyright/README and acknowledgment obligations | archive the specific model and its `README-COPYRIGHT`; do not label generically as open data |
+| [SimVascular](https://simvascular.github.io/) | segmentation, 0D/1D/3D hemodynamics, conversion | BSD-3-Clause | record tool version and conversion workflow |
+| [BioModels](https://www.ebi.ac.uk/biomodels/faq) | curated reaction/cell models | models under CC0 according to the FAQ | record model ID, revision, original publication, and curation status |
+| [Physiome Model Repository](https://models.physiomeproject.org/) | CellML/circulation/multiscale models | publicly accessible content generally CC BY 3.0; individual entries may differ or be unclear | verify each model's license and record a persistent revision and citation |
 
-## 6. Freigabegates
+## 6. Release gates
 
-Vor der Aufnahme externer Daten oder Modelle müssen folgende Felder vollständig sein:
+Before external data or models are included, the following fields must be complete:
 
 ```text
 identifier
@@ -122,12 +125,11 @@ known_limitations
 responsible_reviewer
 ```
 
-## 7. Verbleibende artefaktbezogene Rechteprüfung
+## 7. Remaining artifact-specific rights review
 
-Die repositoryweite Lizenzentscheidung ist getroffen und die drei
-`mehlissa2.0/data/95_*.csv`-Quellen sind freigegeben. Offen bleibt die
-Rechtekette der anderen vorhandenen CSV-Dateien und Publikations-PDFs. Diese
-Artefakte werden erst dann als CC-BY-4.0-Daten gekennzeichnet beziehungsweise
-in öffentliche Next-Pakete aufgenommen, wenn die jeweils zuständigen
-Rechteinhaber die Freigabe bestätigt haben. Neue eigene Daten verwenden von
-Beginn an ein Manifest und `CC-BY-4.0`.
+The repository-wide licensing decision has been made and the three
+`mehlissa2.0/data/95_*.csv` sources are authorized. The chain of rights for the
+other existing CSV files and publication PDFs remains open. These artifacts
+will be labeled as CC-BY-4.0 data or included in public Next packages only after
+the responsible rights holders have confirmed authorization. New original data
+uses a manifest and `CC-BY-4.0` from the outset.

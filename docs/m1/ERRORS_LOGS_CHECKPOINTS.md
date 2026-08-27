@@ -3,51 +3,50 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# Fehler-, Log- und Checkpointvertrag
+# Error, Log, and Checkpoint Contract
 
-## Fehlerkatalog 1.0
+## Error catalog 1.0
 
-| Kennung | Enum | Bedeutung | CLI-Status |
+| Identifier | Enum | Meaning | CLI status |
 |---|---|---|---:|
-| `MEHLISSA-E1001` | `command_line_invalid` | ungültiger CLI-Aufruf | 2 |
-| `MEHLISSA-E2001` | `input_unreadable` | Eingabe fehlt oder ist nicht lesbar | 3 |
-| `MEHLISSA-E2002` | `json_invalid` | ungültiges JSON oder JSONL | 3 |
-| `MEHLISSA-E2003` | `schema_invalid` | das Prüfschema selbst ist ungültig | 3 |
-| `MEHLISSA-E2004` | `manifest_invalid` | Experiment verletzt seinen Vertrag | 3 |
-| `MEHLISSA-E2005` | `data_invalid` | Eingabedaten verletzen ihren fachlichen Vertrag | 3 |
-| `MEHLISSA-E3001` | `output_unwritable` | Ausgabe kann nicht geschrieben werden | 4 |
-| `MEHLISSA-E3002` | `provenance_invalid` | Provenienzdokument verletzt seinen Vertrag | 4 |
-| `MEHLISSA-E4001` | `lifecycle_invalid` | unzulässiger Komponenten-/Laufzustand | 5 |
-| `MEHLISSA-E4002` | `invariant_violated` | Kern- oder Modellinvariante verletzt | 5 |
-| `MEHLISSA-E4003` | `numeric_overflow` | numerischer Zähler oder Zeitbereich überschritten | 5 |
-| `MEHLISSA-E5001` | `checkpoint_invalid` | Checkpoint oder referenzierter Zustand ungültig | 6 |
-| `MEHLISSA-E5002` | `checkpoint_incompatible` | gültiger, aber nicht kompatibler Checkpoint | 6 |
-| `MEHLISSA-E9001` | `internal_failure` | nicht näher klassifizierter interner Fehler | 1 |
+| `MEHLISSA-E1001` | `command_line_invalid` | invalid CLI invocation | 2 |
+| `MEHLISSA-E2001` | `input_unreadable` | input is missing or unreadable | 3 |
+| `MEHLISSA-E2002` | `json_invalid` | invalid JSON or JSONL | 3 |
+| `MEHLISSA-E2003` | `schema_invalid` | validation schema itself is invalid | 3 |
+| `MEHLISSA-E2004` | `manifest_invalid` | experiment violates its contract | 3 |
+| `MEHLISSA-E2005` | `data_invalid` | input data violate their domain contract | 3 |
+| `MEHLISSA-E3001` | `output_unwritable` | output cannot be written | 4 |
+| `MEHLISSA-E3002` | `provenance_invalid` | provenance document violates its contract | 4 |
+| `MEHLISSA-E4001` | `lifecycle_invalid` | invalid component or run state | 5 |
+| `MEHLISSA-E4002` | `invariant_violated` | kernel or model invariant violated | 5 |
+| `MEHLISSA-E4003` | `numeric_overflow` | numeric counter or time range exceeded | 5 |
+| `MEHLISSA-E5001` | `checkpoint_invalid` | checkpoint or referenced state is invalid | 6 |
+| `MEHLISSA-E5002` | `checkpoint_incompatible` | valid but incompatible checkpoint | 6 |
+| `MEHLISSA-E9001` | `internal_failure` | unclassified internal error | 1 |
 
-Vergebene Kennungen sind öffentliche Maschinenverträge. Der Diagnosetext darf
-mehr Kontext erhalten, die Bedeutung einer Kennung jedoch nicht wechseln.
+Assigned identifiers are public machine contracts. Diagnostic text may gain
+more context, but the meaning of an identifier must not change.
 
 ## `run.log.jsonl`
 
-Jede Zeile erfüllt `data/schemas/log-record/1.0.0.schema.json`. Sequenzen
-beginnen bei null, sind lückenlos und geben die Schreibreihenfolge wieder.
-Simulationszeit wird in ganzzahligen Nanosekunden gespeichert; der UTC-Zeitwert
-ist nur Beobachtungsmetadatum.
+Every line conforms to `data/schemas/log-record/1.0.0.schema.json`. Sequences
+start at zero, contain no gaps, and represent write order. Simulation time is
+stored in integer nanoseconds; the UTC timestamp is observational metadata only.
 
-Der Runner erzeugt mindestens:
+The runner emits at least:
 
-1. `run_started` bei Simulationszeit null;
-2. `run_completed` nach allen erfolgreichen Ausgaben; oder
-3. bestmöglich `run_failed` mit Fehlerkennung.
+1. `run_started` at simulation time zero;
+2. `run_completed` after all outputs succeed; or
+3. best-effort `run_failed` with an error identifier.
 
 ## `checkpoint-000000.json`
 
-Das Manifest erfüllt `data/schemas/checkpoint/1.0.0.schema.json`. Es enthält
-keine großen Modellzustände selbst, sondern referenziert sie relativ und mit
-eigener Schemaversion sowie SHA-256-Prüfsumme. Dadurch können Komponenten
-unabhängige Formate verwenden, ohne die gemeinsame Hülle zu umgehen.
+The manifest conforms to `data/schemas/checkpoint/1.0.0.schema.json`. It does not
+contain large model states itself, but references them using relative paths,
+their own schema versions, and SHA-256 checksums. Components can thus use
+independent formats without bypassing the shared envelope.
 
-M1 erzeugt einen finalen Checkpoint des noch komponentenlosen
-Minimalexperiments. M2 ergänzt zustandsbehaftete Komponenten-Snapshots und den
-Wiederaufnahmebefehl. Bis dahin belegt der Roundtrip-Test bereits Schema,
-Pfadgrenze, Namenseindeutigkeit und Manipulationserkennung.
+M1 produces a final checkpoint for the still component-free minimal experiment.
+M2 adds stateful component snapshots and the resume command. Until then, the
+round-trip test already verifies the schema, path boundary, name uniqueness,
+and tamper detection.

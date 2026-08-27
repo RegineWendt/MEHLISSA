@@ -3,79 +3,55 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# ADR-0010: Dimensionssicheres SI-Größensystem
+# ADR-0010: Dimension-Safe SI Quantity System
 
 - **Status:** Accepted
-- **Datum:** 26. August 2026
-- **Entscheider:** Projektleitung MEHLISSA Next
-- **Betrifft:** M1/M2; `SYS-001`, `SYS-004`, `BODY-002`, `DATA-001`
+- **Date:** 26 August 2026
+- **Decision makers:** MEHLISSA Next project leadership
+- **Applies to:** M1/M2; `SYS-001`, `SYS-004`, `BODY-002`, `DATA-001`
 
-## Kontext
+## Context
 
-Historische MEHLISSA-Modelle kodieren Einheiten teilweise nur in Variablennamen
-oder Kommentaren. Dadurch sind unbemerkte Verwechslungen von Metern und
-Millimetern sowie dimensionswidrige Rechnungen möglich. Künftige Körper-,
-Organ-, Zell- und Kommunikationsmodelle tauschen Größen über mehrere Skalen aus;
-eine alleinige Dokumentationskonvention reicht dafür nicht.
+Historical MEHLISSA models sometimes encode units only in variable names or
+comments. This permits unnoticed confusion between metres and millimetres and
+dimensionally invalid calculations. Future body, organ, cell, and communication
+models exchange quantities across several scales; a documentation convention
+alone is insufficient.
 
-Die Simulationsuhr benötigt zusätzlich ganzzahlige Nanosekunden für exakte,
-monotone Ereignisreihen. Physikalische Modellgleichungen benötigen dagegen
-dimensionssichere Multiplikation und Division mit abgeleiteten Größen.
+The simulation clock additionally needs integer nanoseconds for exact,
+monotonic event sequences. Physical model equations, in contrast, require
+dimension-safe multiplication and division with derived quantities.
 
-## Entscheidung
+## Decision
 
-1. Der Kern definiert `Quantity<Dimension<L, T, N>>`. Die Exponenten stehen für
-   Länge, Zeit und Stoffmenge in SI-Basisdimensionen.
-2. Öffentliche Alias-Typen decken in M1 `Length`, `Time`, `Area`, `Volume`,
-   `Speed`, `Amount` und `Concentration` ab.
-3. Größen unterschiedlicher Dimension dürfen nicht addiert oder subtrahiert
-   werden. Multiplikation und Division leiten die Ergebnisdimension zur
-   Compile-Zeit her.
-4. Es gibt keine implizite Konvertierung zwischen `double` und einer
-   physikalischen Größe. Benannte Fabrik- und Ausgabefunktionen machen die
-   verwendete Einheit am Aufruf sichtbar.
-5. Intern werden SI-Werte verwendet: Meter, Sekunde, Kubikmeter, Meter pro
-   Sekunde, Mol und Mol pro Kubikmeter. Häufige medizinische Präfixe werden an
-   der Grenze exakt skaliert.
-6. `SimulationClock` behält ganzzahlige `std::chrono::nanoseconds`.
-   Modellgleichungen verwenden den dimensionssicheren Zeittyp; Adapter zwischen
-   Ereigniszeit und Modellgröße werden dort eingeführt, wo sie benötigt werden.
-7. `Position3D` speichert dimensionssichere Längen und gibt eine `Length`
-   zurück. Nackte Koordinatenwerte sind in der neuen API nicht mehr zulässig.
-8. Positivität, Endlichkeit und fachliche Wertebereiche sind Invarianten des
-   jeweiligen Modells oder Eingabeschemas, nicht der Dimension selbst.
+1. The kernel defines `Quantity<Dimension<L, T, N>>`. The exponents represent length, time, and amount of substance in SI base dimensions.
+2. Public alias types cover `Length`, `Time`, `Area`, `Volume`, `Speed`, `Amount`, and `Concentration` in M1.
+3. Quantities of different dimensions cannot be added or subtracted. Multiplication and division derive the result dimension at compile time.
+4. There is no implicit conversion between `double` and a physical quantity. Named factory and output functions make the unit visible at the call site.
+5. SI values are used internally: metre, second, cubic metre, metre per second, mole, and mole per cubic metre. Common medical prefixes are scaled exactly at the boundary.
+6. `SimulationClock` retains integer `std::chrono::nanoseconds`. Model equations use the dimension-safe time type; adapters between event time and model quantity are introduced where needed.
+7. `Position3D` stores dimension-safe lengths and returns a `Length`. Bare coordinate values are no longer permitted in the new API.
+8. Positivity, finiteness, and domain-specific value ranges are invariants of the respective model or input schema, not of the dimension itself.
 
-## Folgen
+## Consequences
 
-Positiv:
+Positive:
 
-- Dimensionsfehler werden beim Kompilieren statt erst im Experiment sichtbar.
-- Eingabe-, Modell- und Ausgabecode benennt Konversionen ausdrücklich.
-- Abgeleitete Größen wie Geschwindigkeit und Konzentration entstehen aus
-  gewöhnlicher, aber typsicherer Arithmetik.
-- Das System ist klein, header-only und bleibt Bestandteil des
-  abhängigkeitenfreien Offline-Kerns.
+- Dimensional errors become visible at compile time rather than during an experiment.
+- Input, model, and output code states conversions explicitly.
+- Derived quantities such as speed and concentration result from ordinary but type-safe arithmetic.
+- The system is small, header-only, and remains part of the dependency-free offline kernel.
 
-Negativ:
+Negative:
 
-- Bestehender Code mit nackten `double`-Werten muss an den Grenzen bewusst
-  migriert werden.
-- Die interne Darstellung als `double` löst noch keine Unsicherheits- oder
-  numerische Konditionierungsprobleme.
-- Weitere Basisdimensionen wie Masse oder Temperatur erfordern eine
-  kontrollierte Erweiterung des Dimensionsvektors.
-- Uhrzeit und physikalische Zeit bleiben absichtlich getrennte Typen und
-  benötigen explizite Adapter.
+- Existing code using bare `double` values must be migrated deliberately at boundaries.
+- Internal representation as `double` does not solve uncertainty or numerical-conditioning problems.
+- Further base dimensions such as mass or temperature require a controlled extension of the dimension vector.
+- Clock time and physical time intentionally remain separate types and require explicit adapters.
 
-## Alternativen
+## Alternatives
 
-- **Einheit nur im Variablennamen:** abgelehnt, weil der Compiler keine
-  Invarianten prüfen kann.
-- **Einheit als Laufzeit-String:** für Metadaten weiterhin nötig, aber für
-  Kernarithmetik zu spät und fehleranfällig.
-- **Alle Werte als SI-`double`:** vermeidet Konvertierungen im Inneren, aber
-  nicht die Verwechslung verschiedener Dimensionen.
-- **Externe Units-Bibliothek:** fachlich möglich, für den derzeit kleinen Satz
-  aber zusätzliche API-, Build- und Migrationskomplexität. Die Entscheidung
-  wird neu bewertet, wenn erweiterte Dimensionen, Formatierung oder
-  Standardinteroperabilität den eigenen kleinen Vertrag übersteigen.
+- **Unit only in the variable name:** rejected because the compiler cannot verify invariants.
+- **Unit as a runtime string:** still needed for metadata, but too late and error-prone for kernel arithmetic.
+- **All values as SI `double`:** avoids internal conversions, but not confusion between dimensions.
+- **External units library:** technically possible, but adds API, build, and migration complexity for the currently small set. The decision will be reassessed when extended dimensions, formatting, or standards interoperability exceed the small internal contract.

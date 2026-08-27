@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "rest-supine-identity",
+    "version": "1.0.0",
+    "title": "Dissertation rest/supine identity profile"
+  },
+  "compatible_model": {
+    "id": "bvs95-dissertation-rest",
+    "version": "1.0.0"
+  },
+  "validity": {
+    "population": "historical BVS/MEHLISSA schematic reference",
+    "physiological_state": "rest; supine assumption for the jugular split",
+    "description": "Identity overlay for reproducing the calibrated dissertation profile at 6.0 L/min. It is a historical regression state, not an independent physiological reference."
+  },
+  "cardiac_output": {
+    "anchor_segment_id": "bvs95-002",
+    "multiplier": 1.0
+  },
+  "transition_overrides": [],
+  "sources": [
+    {
+      "id": "m2.6-rest-identity-profile",
+      "citation": "MEHLISSA Next M2.6 identity overlay derived from bvs95-dissertation-rest-v1; 2026.",
+      "license": "CC-BY-4.0"
+    }
+  ],
+  "limitations": [
+    "The 6.0 L/min cardiac output is the transparent normalization of the M2.2 reproduction profile, not a measurement of a reference individual.",
+    "Geometry and equivalent cross-sections remain schematic.",
+    "No pulsatility, pressure, compliance or intra-segment velocity distribution is represented."
+  ]
+}

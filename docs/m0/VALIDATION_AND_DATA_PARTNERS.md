@@ -3,84 +3,93 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# Datenlücken und Validierungspartner
+# Data Gaps and Validation Partners
 
-**Stand:** 26. August 2026  
-**Status:** Kandidaten- und Kompetenzinventar; keine Kooperationszusage wird behauptet
+**As of:** 26 August 2026
 
-## 1. Ziel
+**Status:** Candidate and expertise inventory; no collaboration commitment is claimed
 
-Dieses Dokument benennt, welche Evidenz MEHLISSA Next nicht allein aus Softwareentwicklung gewinnen kann, welche öffentlichen Quellen als Startpunkt dienen und welche fachlichen Partnerrollen für eine belastbare Validierung benötigt werden.
+## 1. Purpose
 
-## 2. Partner- und Datenmatrix
+This document identifies evidence that MEHLISSA Next cannot obtain through
+software development alone, public sources that can serve as starting points,
+and expert partner roles required for robust validation.
 
-| Bereich | Benötigte Evidenz | Öffentliche Startquelle/Kandidat | Erwartetes Artefakt | Zeitpunkt |
+## 2. Partner and data matrix
+
+| Area | Required evidence | Public starting source/candidate | Expected artifact | Time |
 |---|---|---|---|---|
-| pulmonale Anatomie | Gefäßgeometrie, Ein-/Auslässe, Koordinaten, Segmentierung | [BodyParts3D](https://lifesciencedb.jp/bp3d/info_en/index.html), [Healthy Pulmonary](https://simvascular.github.io/clinical/pulmonary.html), [Vascular Model Repository](https://www.vascularmodel.com/) | versioniertes generisches Lungenmodell mit Lizenz und Geometriebericht | vor M3 |
-| pulmonale Hämodynamik | Flüsse, Drücke, Widerstände, Transitzeiten, Randbedingungen in Ruhe/Belastung | SimVascular/VMR; pulmonalmedizinische und hämodynamische Fachbegutachtung | 0D-/1D-Referenzfall, Parameterbereiche und unabhängige Vergleichsdaten | M3/M4 |
-| alveoläre Mikrozirkulation | Kapillardichte, Rekrutierung, Transit, Sphinkter-/Perfusionsersatzmodelle | Literatur plus experimentelle Lungenmikroskopie | Kapillarmodellkarte und Messdatensatz für Transit-/Verteilungswerte | M4 |
-| Barriere und Stoffaustausch | Blut–Endothel–Interstitium–Alveole, Diffusion/Bindung | Institut für Anatomie Lübeck, AG Barriere-Organe als **Kooperationskandidat** | analytischer Referenzfall und experimentelle Parameterbereiche | M4/M5 |
-| Lungenbildgebung | Segmentierung, Gewebe-/Gefäßvergleich, mögliche Individualisierung | Institut für Biomedizinische Optik und radiologische Kompetenz als **Kandidaten** | Bildgebungs-/Konvertierungsvalidierung, später patientenspezifischer Pilot | M3/M8 |
-| Proteom-Fingerprints | interindividuelle Stabilität, Krankheitseinfluss, Konzentration, Nachweisgrenze | [Human Protein Atlas](https://www.proteinatlas.org/), Bioinformatik/Proteomik-Partner | versionierter FP9-Datensatz, Kohorten-/Robustheitsanalyse | vor Stufe B von M7 |
-| DNA-Tile-Erkennung | Bindungsaffinität, Freisetzung, Assembly und Abbau | bestehende NaBoCom-/DNA-Nanonetzwerk-Expertise; Wetlab-Partner erforderlich | in-vitro Messreihen und validiertes Assembly-Surrogat | M5/M7 |
-| Nanogeräteigenschaften | Größe, Strömungsverzögerung, Lebensdauer, Immuninteraktion | Material-/Nanomedizin- und Immunologiepartner | begründete Parameterbereiche und Sensitivitätsprioritäten | M4–M7 |
-| Gateway am Handgelenk | Reichweite, Kontaktzeit, Lesefehler, Signalweg nach außen | Kommunikations-/Biosensorikpartner | Gateway-Kanalmodell und Messprotokoll | M6/M7 |
-| Zell-/Reaktionsmodelle | Ligandenbindung, Signalwege, Apoptose | [BioModels](https://www.ebi.ac.uk/biomodels/), [Physiome Model Repository](https://models.physiomeproject.org/) und Zellbiologiepartner | qualifizierte Modellkarte plus unabhängiger Referenzdatensatz | M5 |
-| translationale Szenarien | medizinische Fragestellung, Endpunkte, vertretbare Interpretation | [ARCN/DZL Nord](https://research.uni-luebeck.de/de/projects/dzl-deutsches-zentrum-f%C3%BCr-lungenforschung-arcn-airway-research-ce/) als **Netzwerkkandidat** | Szenario-Review und klinisch sinnvolle, nicht-diagnostische Endpunkte | M7/M8 |
+| pulmonary anatomy | vascular geometry, inlets/outlets, coordinates, segmentation | [BodyParts3D](https://lifesciencedb.jp/bp3d/info_en/index.html), [Healthy Pulmonary](https://simvascular.github.io/clinical/pulmonary.html), [Vascular Model Repository](https://www.vascularmodel.com/) | versioned generic lung model with license and geometry report | before M3 |
+| pulmonary hemodynamics | flows, pressures, resistances, transit times, boundary conditions at rest/exercise | SimVascular/VMR; pulmonary-medicine and hemodynamics review | 0D/1D reference case, parameter ranges, and independent comparison data | M3/M4 |
+| alveolar microcirculation | capillary density, recruitment, transit, sphincter/perfusion surrogate models | literature plus experimental lung microscopy | capillary model card and measurement data set for transit/distribution values | M4 |
+| barrier and substance exchange | blood–endothelium–interstitium–alveolus, diffusion/binding | Lübeck Institute of Anatomy, Barrier Organs group as a **collaboration candidate** | analytical reference case and experimental parameter ranges | M4/M5 |
+| lung imaging | segmentation, tissue/vessel comparison, potential individualization | Institute of Biomedical Optics and radiology expertise as **candidates** | imaging/conversion validation, later a patient-specific pilot | M3/M8 |
+| proteome fingerprints | interindividual stability, disease effects, concentration, detection limit | [Human Protein Atlas](https://www.proteinatlas.org/), bioinformatics/proteomics partner | versioned FP9 data set, cohort/robustness analysis | before level B of M7 |
+| DNA-tile detection | binding affinity, release, assembly, and degradation | existing NaBoCom/DNA nanonetwork expertise; wet-lab partner required | in-vitro measurement series and validated assembly surrogate | M5/M7 |
+| nanodevice properties | size, flow retardation, lifetime, immune interaction | materials/nanomedicine and immunology partner | justified parameter ranges and sensitivity priorities | M4–M7 |
+| wrist gateway | range, contact time, read errors, external signal path | communication/biosensor partner | gateway channel model and measurement protocol | M6/M7 |
+| cell/reaction models | ligand binding, signaling pathways, apoptosis | [BioModels](https://www.ebi.ac.uk/biomodels/), [Physiome Model Repository](https://models.physiomeproject.org/), and cell-biology partner | qualified model card plus independent reference data set | M5 |
+| translational scenarios | medical research question, endpoints, defensible interpretation | [ARCN/DZL North](https://research.uni-luebeck.de/de/projects/dzl-deutsches-zentrum-f%C3%BCr-lungenforschung-arcn-airway-research-ce/) as a **network candidate** | scenario review and clinically meaningful, non-diagnostic endpoints | M7/M8 |
 
-Die Universität zu Lübeck weist für ihr Institut für Anatomie ausdrücklich Kooperationsangebote unter anderem für Licht-/Elektronenmikroskopie, intravitale Multiphotonenmikroskopie der Lunge und mRNA-Analysen aus. Das ARCN verbindet Universität zu Lübeck, UKSH, LungenClinic Großhansdorf, Forschungszentrum Borstel und weitere norddeutsche Lungenforschung. Diese Nähe ist ein starkes Potenzial, ersetzt aber keine formelle Projektvereinbarung.
+Universität zu Lübeck explicitly advertises collaboration opportunities at its
+Institute of Anatomy, including light/electron microscopy, intravital
+multiphoton microscopy of the lung, and mRNA analyses. ARCN connects Universität
+zu Lübeck, UKSH, LungenClinic Großhansdorf, Forschungszentrum Borstel, and other
+northern German lung-research institutions. This proximity offers strong
+potential but does not replace a formal project agreement.
 
-## 3. Kritische Datenlücken für das Lungenreferenzmodell
+## 3. Critical data gaps for the lung reference model
 
-### Vor Implementierung des ersten Organmodells
+### Before implementation of the first organ model
 
-- eindeutige Definition, ob „Lunge“ zunächst beide Lungen als ein effektives Organ oder getrennte Seiten bezeichnet;
-- pulmonalarterieller Einlass und pulmonalvenöser Auslass im neuen Körpergraphen;
-- konsistente Einheiten und Koordinatentransformation zwischen MEHLISSA, BodyParts3D und VMR;
-- Referenzwerte für Durchfluss, Druck, Volumen und Transitzeit;
-- Lizenz und konkreter Versionsstand des gewählten VMR-Modells.
+- unambiguous definition of whether “lung” initially represents both lungs as one effective organ or separate sides;
+- pulmonary-arterial inlet and pulmonary-venous outlet in the new body graph;
+- consistent units and coordinate transformation between MEHLISSA, BodyParts3D, and VMR;
+- reference values for flow, pressure, volume, and transit time;
+- license and exact revision of the selected VMR model.
 
-### Vor Kapillardetaillierung
+### Before capillary refinement
 
-- Verteilung pulmonaler Transitzeiten statt nur eines Mittelwerts;
-- Kapillarnetzgröße und sinnvolle Abstraktionsstufe;
-- Rekrutierung/Derekrutierung unter verschiedenen physiologischen Zuständen;
-- Hämatokrit und zellfreie Randschicht auf relevanter Skala;
-- Austauschparameter und Massenerhaltung über die alveoläre Barriere.
+- distribution of pulmonary transit times rather than a mean only;
+- capillary-network size and an appropriate abstraction level;
+- recruitment/derecruitment under different physiological states;
+- hematocrit and cell-free marginal layer at the relevant scale;
+- exchange parameters and mass conservation across the alveolar barrier.
 
-### Vor Fingerprinting-Stufe B
+### Before fingerprinting level B
 
-- exakte FP9-Genproduktkombination in einer versionierten HPA-Ausgabe;
-- Variation in gesunden und erkrankten Lungengeweben;
-- physisch detektierte Spezies: mRNA, Protein oder beide;
-- lokale Konzentrations- und Bindungsparameter;
-- falsch-positive und falsch-negative Nachweiswahrscheinlichkeit.
+- exact FP9 gene-product combination in a versioned HPA release;
+- variation in healthy and diseased lung tissues;
+- physically detected species: mRNA, protein, or both;
+- local concentration and binding parameters;
+- false-positive and false-negative detection probability.
 
-## 4. Vorgeschlagene Partneransprache
+## 4. Proposed partner outreach
 
-1. **Kurzer Modellsteckbrief:** Zweck, Forschungsstatus, keine klinische Behauptung.
-2. **Konkrete Frage:** höchstens drei benötigte Parameter oder ein prüfbarer Referenzfall.
-3. **Datenmanagement:** Eigentum, Einwilligung, Lizenz, Anonymisierung und Publikationsrecht vor Datenaustausch.
-4. **Validierungsplan:** Kalibrier- und Testdaten vor Beginn trennen.
-5. **Gegenseitiger Nutzen:** reproduzierbarer Modelladapter, gemeinsame Modellkarte und zitierbarer Datensatz/Benchmark.
+1. **Short model profile:** purpose, research status, no clinical claim.
+2. **Concrete question:** at most three required parameters or one testable reference case.
+3. **Data management:** ownership, consent, license, anonymization, and publication rights before data exchange.
+4. **Validation plan:** separate calibration and test data before starting.
+5. **Mutual benefit:** reproducible model adapter, shared model card, and citable data set/benchmark.
 
-## 5. Mindestbesetzung je Gate
+## 5. Minimum expert approval per gate
 
-| Gate | Erforderliche fachliche Freigabe zusätzlich zum Software-Review |
+| Gate | Required domain approval in addition to software review |
 |---|---|
-| M2 | Physiologie-/Kreislaufreview der Ganzkörperparameter |
-| M3 | pulmonale Anatomie und Hämodynamik |
-| M4 | Mikrozirkulation und Stofftransport |
-| M5 | Zellbiologie/Pharmakologie |
-| M6 | Kommunikationssysteme/Biosensorik |
-| M7 | Proteomik, DNA-Nanonetzwerk und translationale Lungenmedizin |
-| M8 | Datenschutz, Ethik, klinische Methodik und gegebenenfalls Regulierung |
+| M2 | physiology/circulation review of whole-body parameters |
+| M3 | pulmonary anatomy and hemodynamics |
+| M4 | microcirculation and substance transport |
+| M5 | cell biology/pharmacology |
+| M6 | communication systems/biosensing |
+| M7 | proteomics, DNA nanonetworking, and translational pulmonary medicine |
+| M8 | data protection, ethics, clinical methodology, and regulation where applicable |
 
-## 6. Partnerstatus
+## 6. Partner status
 
-M0 verlangt die **Identifikation** benötigter Kompetenzen und realistischer Kandidaten, nicht bereits geschlossene Kooperationen. Der aktuelle Status ist:
+M0 requires **identification** of required expertise and realistic candidates,
+not already concluded collaborations. Current status:
 
-- öffentliche Daten- und Modellquellen identifiziert;
-- lokale und überregionale Kompetenzfelder identifiziert;
-- noch keine externe Stelle als verantwortlich oder zugesagt eingetragen;
-- Kontaktaufnahme erfolgt erst nach Freigabe durch die Projektleitung.
+- public data and model sources identified;
+- local and supraregional areas of expertise identified;
+- no external institution recorded as responsible or committed yet;
+- contact begins only after approval by project leadership.

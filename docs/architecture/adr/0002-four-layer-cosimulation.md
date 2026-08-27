@@ -3,51 +3,61 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# ADR-0002: Vier Ebenen als explizite Co-Simulation
+# ADR-0002: Four Layers as Explicit Co-Simulation
 
 - **Status:** Accepted
-- **Datum:** 26. August 2026
-- **Betrifft:** M0, M3–M5; `ARC-001` bis `ARC-007`
+- **Date:** 26 August 2026
+- **Applies to:** M0, M3–M5; `ARC-001` through `ARC-007`
 
-## Kontext
+## Context
 
-Die Dissertation definiert Körper-, Organ-, Kapillar- und Zellebene als verbundene, aber unabhängige Module mit verschiedenen Raum- und Zeitskalen. Die historischen Implementierungen konzentrieren sich überwiegend auf den Ganzkörpertransport und bilden Ebenenwechsel teilweise durch Speziallogik in gemeinsamen Klassen ab.
+The dissertation defines body, organ, capillary, and cell layers as connected
+but independent modules with different spatial and temporal scales. The
+historical implementations focus primarily on whole-body transport and partly
+represent layer transitions through special logic in shared classes.
 
-Eine umfassende Simulation kann die biologischen Größenordnungen nicht auf allen Ebenen gleichzeitig mit derselben Auflösung berechnen. Die Architektur muss daher Detailmodelle lokal aktivieren, gröbere Modelle daneben weiterlaufen lassen und Zustände kontrolliert austauschen.
+A comprehensive simulation cannot calculate all biological scales at the same
+resolution simultaneously. The architecture must therefore activate detailed
+models locally, continue running coarser models alongside them, and exchange
+state in a controlled manner.
 
-## Entscheidung
+## Decision
 
-Jede Ebene wird als eigenständige `ModelComponent` mit eigenem Zustand, Zeitschritt-/Ereignismodell und Gültigkeitsbereich implementiert. Die Komponenten kommunizieren ausschließlich über versionierte Austauschobjekte und einen Orchestrator.
+Each layer is implemented as an independent `ModelComponent` with its own state,
+time-step/event model, and validity scope. Components communicate exclusively
+through versioned exchange objects and an orchestrator.
 
-Mindestens folgende Austauscharten werden vorgesehen:
+At least the following exchange types are provided:
 
-- einzelne Entitäten;
-- aggregierte Populationen und Flüsse;
-- physiologische Zustände;
-- molekulare Signale;
-- Detektions- und Zellereignisse;
-- Aktuierungsbefehle und Messungen;
-- Evidenz- und Unsicherheitsmetadaten.
+- individual entities;
+- aggregated populations and flows;
+- physiological states;
+- molecular signals;
+- detection and cell events;
+- actuation commands and measurements;
+- evidence and uncertainty metadata.
 
-Der Orchestrator koordiniert Synchronisationspunkte. Übergaben prüfen Zeitordnung, Identität und relevante Erhaltungssätze. Direkte Änderungen am internen Zustand einer anderen Ebene sind nicht zulässig.
+The orchestrator coordinates synchronization points. Exchanges verify temporal
+ordering, identity, and relevant conservation laws. Direct changes to another
+layer's internal state are not permitted.
 
-## Folgen
+## Consequences
 
-Positiv:
+Positive:
 
-- Modellvarianten sind unabhängig entwickel- und validierbar.
-- Grobe und detaillierte Modelle können je nach Fragestellung kombiniert werden.
-- Externe Simulatoren lassen sich über dieselben Verträge anbinden.
-- Fehler an Schichtgrenzen werden beobachtbar und testbar.
+- Model variants can be developed and validated independently.
+- Coarse and detailed models can be combined according to the research question.
+- External simulators can be connected through the same contracts.
+- Errors at layer boundaries become observable and testable.
 
-Negativ:
+Negative:
 
-- Kopplungsverträge und Synchronisation erzeugen zusätzlichen Entwicklungsaufwand.
-- Zeit- und Rauminterpolation kann neue numerische Fehler einführen.
-- Konservative Übergaben von Populationen und Stoffen benötigen klare Semantik.
+- Coupling contracts and synchronization add development effort.
+- Temporal and spatial interpolation can introduce new numerical errors.
+- Conservative exchanges of populations and substances require clear semantics.
 
-## Verworfene Alternativen
+## Rejected alternatives
 
-- **Ein globaler Zeitschritt für alle Modelle:** einfach, aber für stark unterschiedliche Skalen ineffizient und teilweise numerisch ungeeignet.
-- **Gemeinsamer monolithischer Objektgraph:** erschwert Austauschbarkeit, Validierung und skalierbare Abstraktionen.
-- **Nur lose dateibasierte Pipeline:** nützlich für Offline-Kopplung, aber unzureichend für bidirektionale laufzeitnahe Szenarien.
+- **One global time step for all models:** simple, but inefficient and partly numerically unsuitable for widely different scales.
+- **Shared monolithic object graph:** impedes interchangeability, validation, and scalable abstractions.
+- **Only a loosely coupled file-based pipeline:** useful for offline coupling, but insufficient for bidirectional runtime scenarios.

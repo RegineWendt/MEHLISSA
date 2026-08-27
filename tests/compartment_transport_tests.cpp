@@ -3,6 +3,7 @@
 
 #include <mehlissa/core/component_host.hpp>
 #include <mehlissa/models/body/compartment_transport.hpp>
+#include <mehlissa/models/body/transport_observation_report.hpp>
 #include <mehlissa/models/body/vascular_graph.hpp>
 
 #include <catch2/catch_test_macros.hpp>
@@ -11,6 +12,8 @@
 #include <chrono>
 #include <cstdint>
 #include <filesystem>
+#include <fstream>
+#include <iterator>
 #include <memory>
 #include <numeric>
 #include <string>
@@ -144,4 +147,122 @@ TEST_CASE("Transport rejects invalid injections and unsafe advance intervals",
 
     REQUIRE_THROWS_WITH(host.advance(observer->maximum_advance() + 1ns),
                         Catch::Matchers::ContainsSubstring("shortest segment transit time"));
+}
+
+TEST_CASE("Scheduled extraction deterministically removes the lowest active particle IDs",
+          "[body][transport][extraction]") {
+    mehlissa::models::body::TransportObservationConfig observations;
+    observations.trajectory_selection = mehlissa::models::body::TrajectorySelection::all;
+    observations.maximum_trajectory_records = 10;
+    auto transport = std::make_unique<mehlissa::models::body::CompartmentTransport>(
+        load_reference_graph(),
+        std::vector<mehlissa::models::body::InjectionEvent>{{0ns, "artery-10", 5}},
+        std::vector<mehlissa::models::body::ExtractionEvent>{{1s, "artery-10", 2}},
+        observations);
+    auto* observer = transport.get();
+    mehlissa::core::ComponentHost host{31};
+    host.add(std::move(transport));
+    host.initialize();
+    host.advance(1s);
+
+    REQUIRE(observer->injected_particle_count() == 5);
+    REQUIRE(observer->extracted_particle_count() == 2);
+    REQUIRE(observer->particle_count() == 3);
+    REQUIRE(observer->particle_locations().at(0).particle_id == 3);
+    REQUIRE(observer->extraction_results() ==
+            std::vector<mehlissa::models::body::ExtractionResult>{{1s, 1s, "artery-10", 2, 2}});
+    REQUIRE(observer->trajectory_records().at(5).action ==
+            mehlissa::models::body::TrajectoryAction::extracted);
+    REQUIRE(observer->trajectory_records().at(5).particle_id == 1);
+    REQUIRE(observer->trajectory_records().at(6).particle_id == 2);
+}
+
+TEST_CASE("An extraction without a requested count removes all particles at its site",
+          "[body][transport][extraction]") {
+    auto transport = std::make_unique<mehlissa::models::body::CompartmentTransport>(
+        load_reference_graph(),
+        std::vector<mehlissa::models::body::InjectionEvent>{{0ns, "artery-10", 5}},
+        std::vector<mehlissa::models::body::ExtractionEvent>{{0ns, "artery-10", std::nullopt}},
+        mehlissa::models::body::TransportObservationConfig{});
+    auto* observer = transport.get();
+    mehlissa::core::ComponentHost host{31};
+    host.add(std::move(transport));
+    host.initialize();
+
+    REQUIRE(observer->particle_count() == 0);
+    REQUIRE(observer->extracted_particle_count() == 5);
+    REQUIRE(observer->extraction_results().front().extracted_particle_count == 5);
+}
+
+TEST_CASE("Measurement and trajectory detail is bounded while aggregate counts remain exact",
+          "[body][transport][observation]") {
+    mehlissa::models::body::TransportObservationConfig observations;
+    observations.measurement_sites = {
+        {"organ-a-sample", "organ-a", mehlissa::models::body::MeasurementSiteKind::sample},
+        {"wrist-gateway", "vein-90", mehlissa::models::body::MeasurementSiteKind::gateway},
+    };
+    observations.trajectory_selection = mehlissa::models::body::TrajectorySelection::first_n;
+    observations.trajectory_particle_limit = 2;
+    observations.maximum_trajectory_records = 5;
+    observations.maximum_measurement_records = 3;
+    observations.aggregate_interval = 1s;
+    observations.maximum_aggregate_records = 2;
+    auto transport = std::make_unique<mehlissa::models::body::CompartmentTransport>(
+        load_reference_graph(),
+        std::vector<mehlissa::models::body::InjectionEvent>{{0ns, "artery-10", 64}},
+        std::vector<mehlissa::models::body::ExtractionEvent>{}, observations);
+    auto* observer = transport.get();
+    mehlissa::core::ComponentHost host{42};
+    host.add(std::move(transport));
+    host.initialize();
+    for (int step = 0; step < 7; ++step) {
+        host.advance(1s);
+    }
+
+    REQUIRE(observer->measurement_counts().at(0).particle_count == 29);
+    REQUIRE(observer->measurement_counts().at(1).particle_count == 64);
+    REQUIRE(observer->measurement_records().size() == 3);
+    REQUIRE(observer->measurements_truncated());
+    REQUIRE(observer->trajectory_records().size() == 5);
+    REQUIRE(observer->trajectories_truncated());
+    REQUIRE(observer->population_snapshots().size() == 2);
+    REQUIRE(observer->aggregates_truncated());
+    REQUIRE(population_sum(observer->population_snapshots().back().populations) == 64);
+}
+
+TEST_CASE("Transport observations are written as schema-valid structured output",
+          "[body][transport][observation][schema]") {
+    mehlissa::models::body::TransportObservationConfig observations;
+    observations.measurement_sites = {
+        {"arterial-sample", "artery-10", mehlissa::models::body::MeasurementSiteKind::sample}};
+    observations.maximum_measurement_records = 1;
+    observations.aggregate_interval = 1s;
+    observations.maximum_aggregate_records = 2;
+    auto transport = std::make_unique<mehlissa::models::body::CompartmentTransport>(
+        load_reference_graph(),
+        std::vector<mehlissa::models::body::InjectionEvent>{{0ns, "artery-10", 2}},
+        std::vector<mehlissa::models::body::ExtractionEvent>{}, observations);
+    auto* observer = transport.get();
+    mehlissa::core::ComponentHost host{71};
+    host.add(std::move(transport));
+    host.initialize();
+    host.advance(1s);
+
+    const auto unique = std::chrono::steady_clock::now().time_since_epoch().count();
+    const auto output_path = std::filesystem::temp_directory_path() /
+                             ("mehlissa-transport-observation-" + std::to_string(unique) +
+                              ".json");
+    mehlissa::models::body::write_transport_observation_report(
+        *observer,
+        {output_path,
+         root_path() / "data" / "schemas" / "transport-observation-report" /
+             "1.0.0.schema.json"});
+
+    std::ifstream input{output_path, std::ios::binary};
+    REQUIRE(input);
+    const std::string contents{std::istreambuf_iterator<char>{input}, {}};
+    REQUIRE(contents.find("\"schema_version\": \"1.0.0\"") != std::string::npos);
+    REQUIRE(contents.find("\"arterial-sample\"") != std::string::npos);
+    input.close();
+    std::filesystem::remove(output_path);
 }

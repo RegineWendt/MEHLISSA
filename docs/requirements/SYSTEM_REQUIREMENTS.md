@@ -3,194 +3,208 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# Systemanforderungen für MEHLISSA Next
+# System Requirements for MEHLISSA Next
 
-**Status:** Baseline für Phase 0  
-**Stand:** 26. August 2026  
-**Ziel:** Die in der Dissertation beschriebene MEHLISSA-Vision in überprüfbare Anforderungen für eine neue, wissenschaftlich belastbare Simulationsplattform überführen.
+**Status:** Phase 0 baseline
 
-## 1. Geltungsbereich
+**As of:** 26 August 2026
 
-MEHLISSA Next ist eine Forschungsplattform zur Simulation medizinischer Nano- und Molekularkommunikationssysteme im menschlichen Körper. Sie verbindet Modelle auf Körper-, Organ-, Kapillar- und Zellebene mit Nanogeräten, Gateways, Body-Area-Networks und externen Analyse- oder Steuerkomponenten.
+**Purpose:** Translate the MEHLISSA vision described in the dissertation into
+verifiable requirements for a new, scientifically robust simulation platform.
 
-Das System ist zunächst **kein klinisches Medizinprodukt** und seine Ergebnisse sind nicht automatisch klinisch valide. Jede Modellvariante muss ihren Gültigkeitsbereich, ihre Datenbasis und ihre Unsicherheit offenlegen.
+## 1. Scope
 
-Die Anforderungen beschreiben den fachlichen Zielzustand. Ihre schrittweise Umsetzung ist in der [Roadmap](../ROADMAP.md) festgelegt. Die [Traceability Matrix](TRACEABILITY_MATRIX.md) ordnet sie Quellen, vorhandenem Code, Meilensteinen und Nachweisen zu.
+MEHLISSA Next is a research platform for simulating medical nano- and molecular
+communication systems in the human body. It connects models at body, organ,
+capillary, and cell level with nanodevices, gateways, body-area networks, and
+external analysis or control components.
 
-## 2. Quellen und Leseschlüssel
+The system is initially **not a clinical medical device**, and its results are
+not automatically clinically valid. Every model variant must disclose its
+validity scope, data basis, and uncertainty.
 
-### 2.1 Primärquellen
+The requirements describe the domain target state. Incremental implementation
+is defined in the [roadmap](../ROADMAP.md). The
+[traceability matrix](TRACEABILITY_MATRIX.md) maps them to sources, existing
+code, milestones, and verification.
 
-| Kürzel | Quelle |
+## 2. Sources and reading key
+
+### 2.1 Primary sources
+
+| Abbreviation | Source |
 |---|---|
-| DISS | Dissertation, insbesondere Kapitel 4–6; Seitenangaben beziehen sich auf die gedruckte Seitenzahl |
+| DISS | dissertation, especially Chapters 4–6; page references use printed page numbers |
 | MEH20 | *MEHLISSA: A Medical Holistic Simulation Architecture for Nanonetworks in Humans* |
 | BVS18 | *BloodVoyagerS – Simulation of the Work Environment of Medical Nanobots* |
 | VIS20 | *BVS-Vis: A Web-based Visualizer for BloodVoyagerS* |
 | FP23 | *Proteome Fingerprinting as a Localization Scheme for Nanobots* |
 | MEH25 | *MEHLISSA 2.0: Accelerating Full-body Molecular Communication Simulations* |
-| RM | [Roadmap für eine neue MEHLISSA-Generation](../ROADMAP.md) |
+| RM | [roadmap for a new MEHLISSA generation](../ROADMAP.md) |
 
-### 2.2 Herkunft
+### 2.2 Origin
 
-| Code | Bedeutung |
+| Code | Meaning |
 |---|---|
-| `V` | unmittelbar aus der fachlichen Vision oder einer expliziten Forderung der Literatur |
-| `B` | in einem vorhandenen MEHLISSA-/BVS-Stand als Verhalten oder Ergebnis beschrieben |
-| `A` | für eine belastbare Umsetzung aus Vision und Roadmap abgeleitet |
-| `N` | bewusst neue Ergänzung gegenüber der ursprünglichen Vision |
+| `V` | directly from the domain vision or an explicit literature requirement |
+| `B` | described as behavior or a result in an existing MEHLISSA/BVS revision |
+| `A` | derived from the vision and roadmap for a robust implementation |
+| `N` | deliberate new addition to the original vision |
 
-Mehrere Codes sind möglich. `B` bedeutet nicht automatisch, dass die bestehende Implementierung korrekt oder ausreichend validiert ist.
+Multiple codes are possible. `B` does not automatically mean that the existing
+implementation is correct or sufficiently validated.
 
-### 2.3 Priorität und Nachweis
+### 2.3 Priority and verification
 
-| Code | Bedeutung |
+| Code | Meaning |
 |---|---|
-| `P0` | Fundament; vor fachlicher Erweiterung erforderlich |
-| `P1` | Kern der Dissertationsvision und des ersten vertikalen Demonstrators |
-| `P2` | Ausbau zu einer vielseitigen Forschungsplattform |
-| `P3` | langfristige Personalisierungs-, Skalierungs- oder kliniknahe Vision |
-| `T` | automatisierter Software-, Komponenten- oder Regressionstest |
-| `A` | analytischer/numerischer Vergleich oder Invariantenprüfung |
-| `R` | Reproduktion eines publizierten Referenzlaufs |
-| `E` | Vergleich mit unabhängigen experimentellen oder physiologischen Daten |
-| `I` | Inspektion von Schema, Manifest, Dokumentation oder Benutzeroberfläche |
+| `P0` | foundation; required before domain extension |
+| `P1` | core of the dissertation vision and first vertical demonstrator |
+| `P2` | extension into a versatile research platform |
+| `P3` | long-term personalization, scaling, or near-clinical vision |
+| `T` | automated software, component, or regression test |
+| `A` | analytical/numerical comparison or invariant check |
+| `R` | reproduction of a published reference run |
+| `E` | comparison with independent experimental or physiological data |
+| `I` | inspection of schema, manifest, documentation, or user interface |
 
-## 3. Übergreifende Systemanforderungen
+## 3. Cross-cutting system requirements
 
-| ID | Anforderung | Herkunft | Prio | Nachweis | Quelle |
+| ID | Requirement | Origin | Priority | Verification | Source |
 |---|---|---:|---:|---:|---|
-| SYS-001 | Das System muss Simulationszeit monoton, mit expliziter Einheit und ausreichender Subsekundenauflösung darstellen. | A | P0 | T/A | RM 3.1, M1 |
-| SYS-002 | Ein Lauf muss bei identischer Software, Konfiguration, Eingabe und Seeds deterministisch reproduzierbar sein; statistische Modelle müssen zusätzlich Replikate unterstützen. | A/N | P0 | T/R | RM 2.4, M1 |
-| SYS-003 | Zufallsvorgänge müssen benannte, voneinander entkoppelte Zufallsströme verwenden. | A/N | P0 | T | RM M1 |
-| SYS-004 | Physikalische Größen müssen explizite, prüfbare Einheiten besitzen; unvereinbare Einheiten dürfen nicht stillschweigend kombiniert werden. | A/N | P0 | T/I | RM 3.2, 6.1 |
-| SYS-005 | Kern, Modelle, Szenarien, Datenadapter und Auswertung müssen getrennte Verantwortlichkeiten besitzen. | A | P0 | I/T | RM 2.1–2.2 |
-| SYS-006 | Szenariospezifische Logik darf den allgemeinen Simulationskern nicht verändern. | A | P0 | I | RM 2.2, M0 |
-| SYS-007 | Das System muss kontrolliert auf ungültige Konfigurationen, numerische Fehler und verletzte Modellinvarianten reagieren. | A/N | P0 | T | RM 3.1, M1 |
-| SYS-008 | Modelle müssen von groben Surrogaten bis zu detaillierten Varianten austauschbar sein, ohne dass ein Szenario seine fachliche Bedeutung verliert. | V/A | P1 | T/R | DISS S. 95–97, 133; RM 2.3 |
+| SYS-001 | The system shall represent simulation time monotonically, with an explicit unit and sufficient subsecond resolution. | A | P0 | T/A | RM 3.1, M1 |
+| SYS-002 | A run shall be deterministically reproducible with identical software, configuration, input, and seeds; statistical models shall additionally support replicates. | A/N | P0 | T/R | RM 2.4, M1 |
+| SYS-003 | Random processes shall use named, mutually decoupled random streams. | A/N | P0 | T | RM M1 |
+| SYS-004 | Physical quantities shall have explicit, verifiable units; incompatible units shall not be combined silently. | A/N | P0 | T/I | RM 3.2, 6.1 |
+| SYS-005 | Kernel, models, scenarios, data adapters, and evaluation shall have separate responsibilities. | A | P0 | I/T | RM 2.1–2.2 |
+| SYS-006 | Scenario-specific logic shall not modify the general simulation kernel. | A | P0 | I | RM 2.2, M0 |
+| SYS-007 | The system shall respond in a controlled manner to invalid configurations, numerical errors, and violated model invariants. | A/N | P0 | T | RM 3.1, M1 |
+| SYS-008 | Models shall be interchangeable from coarse surrogates to detailed variants without changing a scenario's domain meaning. | V/A | P1 | T/R | DISS pp. 95–97, 133; RM 2.3 |
 
-## 4. Mehrschicht- und Co-Simulationsarchitektur
+## 4. Multilayer and co-simulation architecture
 
-| ID | Anforderung | Herkunft | Prio | Nachweis | Quelle |
+| ID | Requirement | Origin | Priority | Verification | Source |
 |---|---|---:|---:|---:|---|
-| ARC-001 | Das System muss die vier verbundenen, aber eigenständigen Ebenen Körper, Organ, Kapillare und Zelle repräsentieren. | V | P1 | I/T | DISS S. 94–96; MEH20 S. 1–2 |
-| ARC-002 | Jede Ebene muss eine eigene räumliche und zeitliche Auflösung, ein eigenes Zustandsmodell und einen dokumentierten Gültigkeitsbereich besitzen. | V/A | P1 | I/T | DISS S. 95; RM 2.1 |
-| ARC-003 | Ebenen müssen Entitäten, Populationen, Stoffflüsse, physiologische Zustände und Ereignisse über versionierte Verträge austauschen können. | V/A | P1 | T/A | DISS S. 95–97; RM 3.2 |
-| ARC-004 | Übergaben zwischen Ebenen müssen Zeitordnung sowie relevante Erhaltungssätze und Identitäten bewahren. | A/N | P1 | T/A | RM 3.3, M3–M5 |
-| ARC-005 | Die Kopplung muss bidirektional sein: untere Ebenen können Ereignisse und aggregierte Wirkungen an höhere Ebenen zurückgeben. | V/A | P1 | T | DISS S. 99–100; MEH20 S. 2–5 |
-| ARC-006 | Der Orchestrator muss unterschiedliche Zeitschritte durch definierte Synchronisationspunkte oder Ereignisse koordinieren. | A/N | P1 | T/A | RM 3.3 |
-| ARC-007 | Externe Simulatoren müssen über Adapter oder aus ihnen abgeleitete Surrogate eingebunden werden können, ohne Kern oder Ebenen an ein konkretes Fremdprodukt zu koppeln. | V/A | P2 | T/I | DISS S. 96–97, 129–133, 154; MEH20 S. 2–5 |
+| ARC-001 | The system shall represent the four connected but independent layers: body, organ, capillary, and cell. | V | P1 | I/T | DISS pp. 94–96; MEH20 pp. 1–2 |
+| ARC-002 | Each layer shall have its own spatial and temporal resolution, state model, and documented validity scope. | V/A | P1 | I/T | DISS p. 95; RM 2.1 |
+| ARC-003 | Layers shall exchange entities, populations, substance flows, physiological states, and events through versioned contracts. | V/A | P1 | T/A | DISS pp. 95–97; RM 3.2 |
+| ARC-004 | Exchanges between layers shall preserve temporal order and relevant conservation laws and identities. | A/N | P1 | T/A | RM 3.3, M3–M5 |
+| ARC-005 | Coupling shall be bidirectional: lower layers can return events and aggregate effects to higher layers. | V/A | P1 | T | DISS pp. 99–100; MEH20 pp. 2–5 |
+| ARC-006 | The orchestrator shall coordinate different time steps through defined synchronization points or events. | A/N | P1 | T/A | RM 3.3 |
+| ARC-007 | External simulators shall be integrated through adapters or derived surrogates without coupling the kernel or layers to a specific external product. | V/A | P2 | T/I | DISS pp. 96–97, 129–133, 154; MEH20 pp. 2–5 |
 
-## 5. Körperebene
+## 5. Body layer
 
-| ID | Anforderung | Herkunft | Prio | Nachweis | Quelle |
+| ID | Requirement | Origin | Priority | Verification | Source |
 |---|---|---:|---:|---:|---|
-| BODY-001 | Die Körperebene muss einen vollständigen geschlossenen Kreislauf mit großen Gefäßen, Organ-/Regionsübergängen und geeigneten Abstraktionen kleiner Gefäße modellieren. | V/B | P1 | T/R | DISS S. 100; BVS18 S. 3–6 |
-| BODY-002 | Jedes Gefäß muss mindestens stabile ID, Typ, Start-/Endgeometrie, Länge, Durchmesser oder Querschnitt, Verbindungen und Datenherkunft besitzen. | V/A | P1 | T/I | DISS S. 100, 113–117 |
-| BODY-003 | Das räumliche Modell muss alle relevanten Körperregionen einschließlich Extremitäten in einem dokumentierten 3D-Koordinatensystem abbilden. | V/B | P1 | T/R | DISS S. 101–104, 115–117; BVS18 S. 3–5 |
-| BODY-004 | Neue oder personalisierte Körpermodelle müssen ohne Änderung des Simulationscodes geladen und schema-validiert werden können. | V/B/A | P1 | T/I | DISS S. 117, 140–143 |
-| BODY-005 | Nanogeräte, seltene Zellen und andere mobile Entitäten müssen injiziert, transportiert, verfolgt und entnommen werden können. | V/B | P1 | T/R | DISS S. 99–104, 113–115 |
-| BODY-006 | Bewegungen und Verzweigungen müssen durch konfigurierbare Blutfluss-/Perfusionswerte und Wahrscheinlichkeiten bestimmt werden; Verzweigungsanteile müssen sich zu eins summieren. | V/B/A | P1 | T/A/R | DISS S. 100–101, 118–122 |
-| BODY-007 | Die Körperebene muss mindestens ein Kompartiment-/Graphmodell und optional virtuelle laminare Ströme oder importierte Flusslinien unterstützen. | V/B/A | P2 | T/R | DISS S. 115–117; BVS18 S. 4 |
-| BODY-008 | Physiologische Zustände wie Ruhe, Belastung, Herzfrequenz und Körperhaltung müssen als austauschbare Parametersätze oder gekoppelte Modelle wirken können. | V/A | P2 | T/E | DISS S. 120–122; BVS18 S. 6 |
-| BODY-009 | Bestandteile des Blutes und ihre chemischen, mechanischen oder kommunikationstechnischen Einflüsse müssen in abgestuften Modellvarianten darstellbar sein. | V | P2 | T/E | DISS S. 101; BVS18 S. 3, 6 |
-| BODY-010 | Verteilungen müssen über Massenerhaltung, stationäre Verteilung und publizierte BVS-Referenzläufe geprüft werden können. | B/A | P1 | A/R | DISS S. 104–108, 134–137; BVS18 S. 4–6 |
+| BODY-001 | The body layer shall model a complete closed circulation with large vessels, organ/regional transitions, and appropriate abstractions of small vessels. | V/B | P1 | T/R | DISS p. 100; BVS18 pp. 3–6 |
+| BODY-002 | Every vessel shall have at least a stable ID, type, start/end geometry, length, diameter or cross section, connections, and data provenance. | V/A | P1 | T/I | DISS pp. 100, 113–117 |
+| BODY-003 | The spatial model shall represent all relevant body regions, including extremities, in a documented 3D coordinate system. | V/B | P1 | T/R | DISS pp. 101–104, 115–117; BVS18 pp. 3–5 |
+| BODY-004 | New or personalized body models shall be loadable and schema-validatable without changing simulation code. | V/B/A | P1 | T/I | DISS pp. 117, 140–143 |
+| BODY-005 | Nanodevices, rare cells, and other mobile entities shall support injection, transport, tracking, and extraction. | V/B | P1 | T/R | DISS pp. 99–104, 113–115 |
+| BODY-006 | Movement and branching shall be determined by configurable blood-flow/perfusion values and probabilities; branch shares shall sum to one. | V/B/A | P1 | T/A/R | DISS pp. 100–101, 118–122 |
+| BODY-007 | The body layer shall support at least a compartment/graph model and optionally virtual laminar flows or imported streamlines. | V/B/A | P2 | T/R | DISS pp. 115–117; BVS18 p. 4 |
+| BODY-008 | Physiological states such as rest, exercise, heart rate, and posture shall act through interchangeable parameter sets or coupled models. | V/A | P2 | T/E | DISS pp. 120–122; BVS18 p. 6 |
+| BODY-009 | Blood components and their chemical, mechanical, or communication effects shall be representable in graduated model variants. | V | P2 | T/E | DISS p. 101; BVS18 pp. 3, 6 |
+| BODY-010 | Distributions shall be verifiable through mass conservation, stationary distribution, and published BVS reference runs. | B/A | P1 | A/R | DISS pp. 104–108, 134–137; BVS18 pp. 4–6 |
 
-## 6. Organebene
+## 6. Organ layer
 
-| ID | Anforderung | Herkunft | Prio | Nachweis | Quelle |
+| ID | Requirement | Origin | Priority | Verification | Source |
 |---|---|---:|---:|---:|---|
-| ORG-001 | Organe müssen eigenständige Modelle mit Geometrie, Gefäßstruktur, Gewebeklassen, Perfusion und Aktivitätszustand besitzen können. | V | P1 | T/E | DISS S. 118–126; MEH20 S. 3 |
-| ORG-002 | Die Organperfusion muss aus literaturbasierten Sollwerten oder gekoppelten Modellen ableitbar und über Zustände veränderbar sein. | V/B | P1 | A/R/E | DISS S. 118–122 |
-| ORG-003 | Entitäten und Stoffflüsse müssen über definierte Ein- und Austrittspunkte zwischen Körper- und Organebene übergeben werden. | V/A | P1 | T/A | DISS S. 95, 153–154; RM M3 |
-| ORG-004 | Detektionen und Messungen müssen einem Organ oder Gewebe einschließlich Methode und Lokalisierungsunsicherheit zugeordnet werden können. | V | P1 | T/R | DISS S. 122–123, Kap. 6 |
-| ORG-005 | Ein grobes Organ-Kompartiment und ein detaillierteres Organ-/Gefäßmodell müssen bei gleicher Schnittstelle austauschbar sein. | V/A | P2 | T/R | DISS S. 123–126 |
-| ORG-006 | Import- und Konvertierungsschritte für BodyParts3D, SimVascular oder Patientendaten müssen Einheiten, Achsen, Provenienz und Lizenz nachvollziehbar erhalten. | V/A | P3 | T/I | DISS S. 124–126; RM M3/M8 |
+| ORG-001 | Organs shall support independent models with geometry, vascular structure, tissue classes, perfusion, and activity state. | V | P1 | T/E | DISS pp. 118–126; MEH20 p. 3 |
+| ORG-002 | Organ perfusion shall be derivable from literature-based targets or coupled models and changeable by state. | V/B | P1 | A/R/E | DISS pp. 118–122 |
+| ORG-003 | Entities and substance flows shall be exchanged between body and organ layers through defined entry and exit points. | V/A | P1 | T/A | DISS pp. 95, 153–154; RM M3 |
+| ORG-004 | Detections and measurements shall be assignable to an organ or tissue, including method and localization uncertainty. | V | P1 | T/R | DISS pp. 122–123, Ch. 6 |
+| ORG-005 | A coarse organ compartment and a more detailed organ/vascular model shall be interchangeable behind the same interface. | V/A | P2 | T/R | DISS pp. 123–126 |
+| ORG-006 | Import and conversion steps for BodyParts3D, SimVascular, or patient data shall traceably preserve units, axes, provenance, and license. | V/A | P3 | T/I | DISS pp. 124–126; RM M3/M8 |
 
-## 7. Kapillarebene
+## 7. Capillary layer
 
-| ID | Anforderung | Herkunft | Prio | Nachweis | Quelle |
+| ID | Requirement | Origin | Priority | Verification | Source |
 |---|---|---:|---:|---:|---|
-| CAP-001 | Die Kapillarebene muss Arteriolen, Kapillarbett und Venolen in mindestens einer parametrisierbaren Abstraktion darstellen. | V | P1 | T/A | DISS S. 126–129; MEH20 S. 3–4 |
-| CAP-002 | Kapillardichte, Durchmesser, Transitzeit, Blutgeschwindigkeit und Verzweigung müssen organspezifisch konfigurierbar sein. | V/A | P1 | T/E | DISS S. 126–129 |
-| CAP-003 | Aktivitätsabhängige Perfusion und präkapilläre Sphinkter müssen den durchströmten Anteil eines Kapillarbetts verändern können. | V | P2 | T/E | DISS S. 127–128 |
-| CAP-004 | Austausch zwischen Blut, Endothel, Interstitium und Zelle muss mit expliziten Stoffmengen/Konzentrationen und Erhaltungskontrollen modellierbar sein. | V/A | P1 | T/A/E | DISS S. 127; MEH20 S. 3–4 |
-| CAP-005 | Lokale Position, Aufenthaltsdauer, Retention und spätere Adhäsions-/Extravasationsmodelle müssen unterstützt oder als Unsicherheit ausgewiesen werden. | V/A | P2 | T/E | DISS S. 128–129 |
-| CAP-006 | Molekulare, elektromagnetische oder andere Kanalmodelle müssen als austauschbare Detailmodelle oder validierte Laufzeit-/Erfolgsverteilungen angebunden werden können. | V/A | P1 | T/R | DISS S. 129, 154; MEH20 S. 3–5 |
-| CAP-007 | Cluster-, Relay- und Multi-Hop-Kommunikation im Kapillarbett muss untersuchbar sein und eine abstrahierte Erreichbarkeit für höhere Ebenen liefern können. | V | P2 | T/R | DISS S. 129; MEH20 S. 3–4 |
+| CAP-001 | The capillary layer shall represent arterioles, a capillary bed, and venules in at least one parameterizable abstraction. | V | P1 | T/A | DISS pp. 126–129; MEH20 pp. 3–4 |
+| CAP-002 | Capillary density, diameter, transit time, blood velocity, and branching shall be configurable per organ. | V/A | P1 | T/E | DISS pp. 126–129 |
+| CAP-003 | Activity-dependent perfusion and precapillary sphincters shall change the perfused fraction of a capillary bed. | V | P2 | T/E | DISS pp. 127–128 |
+| CAP-004 | Exchange among blood, endothelium, interstitium, and cell shall be modeled with explicit amounts/concentrations and conservation checks. | V/A | P1 | T/A/E | DISS p. 127; MEH20 pp. 3–4 |
+| CAP-005 | Local position, residence duration, retention, and later adhesion/extravasation models shall be supported or reported as uncertainty. | V/A | P2 | T/E | DISS pp. 128–129 |
+| CAP-006 | Molecular, electromagnetic, or other channel models shall be connectable as interchangeable detailed models or validated runtime/success distributions. | V/A | P1 | T/R | DISS p. 129, 154; MEH20 pp. 3–5 |
+| CAP-007 | Cluster, relay, and multi-hop communication in the capillary bed shall be investigable and provide abstracted reachability to higher layers. | V | P2 | T/R | DISS p. 129; MEH20 pp. 3–4 |
 
-## 8. Zellebene
+## 8. Cell layer
 
-| ID | Anforderung | Herkunft | Prio | Nachweis | Quelle |
+| ID | Requirement | Origin | Priority | Verification | Source |
 |---|---|---:|---:|---:|---|
-| CELL-001 | Die Zellebene muss Molekül-/Biomarkerfreisetzung, lokale Konzentrationen und Erkennung durch Nanogeräte modellieren können. | V | P1 | T/A/E | DISS S. 129–132 |
-| CELL-002 | Rezeptor-/Ligandenbindung, Detektionsschwellen und stochastische Fehlentscheidungen müssen als parametrisierbare Modelle verfügbar sein. | V/A | P1 | T/A/E | DISS S. 130–132; FP23 S. 2–6 |
-| CELL-003 | Nanogeräte müssen Signale oder Wirkstoffe freisetzen können; Diffusion, Bindung und Aufnahme müssen koppelbar sein. | V | P1 | T/A/R | DISS S. 130–132, 153–154; MEH20 S. 4–5 |
-| CELL-004 | Intrazelluläre Reaktionen müssen über Reaktionszeitverteilungen, ODE/SSA-Modelle oder externe Simulatoren repräsentierbar sein. | V/A | P2 | T/A/E | DISS S. 131–133, 154 |
-| CELL-005 | Mindestens Apoptose sowie ein generisches messbares Zellzustandsereignis müssen an höhere Ebenen zurückgegeben werden können. | V | P2 | T/R/E | DISS S. 153–154; MEH20 S. 4–5 |
+| CELL-001 | The cell layer shall model molecule/biomarker release, local concentrations, and detection by nanodevices. | V | P1 | T/A/E | DISS pp. 129–132 |
+| CELL-002 | Receptor/ligand binding, detection thresholds, and stochastic misclassification shall be available as parameterizable models. | V/A | P1 | T/A/E | DISS pp. 130–132; FP23 pp. 2–6 |
+| CELL-003 | Nanodevices shall release signals or active substances; diffusion, binding, and uptake shall be coupleable. | V | P1 | T/A/R | DISS pp. 130–132, 153–154; MEH20 pp. 4–5 |
+| CELL-004 | Intracellular reactions shall be representable through reaction-time distributions, ODE/SSA models, or external simulators. | V/A | P2 | T/A/E | DISS pp. 131–133, 154 |
+| CELL-005 | At least apoptosis and a generic measurable cell-state event shall be returnable to higher layers. | V | P2 | T/R/E | DISS pp. 153–154; MEH20 pp. 4–5 |
 
-## 9. Nanogeräte, Nano-IoT und Gateways
+## 9. Nanodevices, nano-IoT, and gateways
 
-| ID | Anforderung | Herkunft | Prio | Nachweis | Quelle |
+| ID | Requirement | Origin | Priority | Verification | Source |
 |---|---|---:|---:|---:|---|
-| IOT-001 | Nanogeräte müssen Typ, Fähigkeiten, Nutzlast, internen Zustand, Ziel und Lebenszyklus besitzen; Szenarien müssen spezialisierte Typen ergänzen können. | V/B/A | P1 | T | DISS S. 113–115, 186–188 |
-| IOT-002 | Das System muss Nano-IoT-Komponenten aus In-Body-Netz, Gateway, BAN-Gerät sowie Analyse-/Kontrollstation komponieren können. | V | P1 | T/I | DISS S. 96–97; MEH20 S. 2 |
-| IOT-003 | Gateways müssen als räumliche Mess- und Kommunikationsorte mit Nano- und Makroseite modelliert werden können. | V | P1 | T/R | DISS S. 117–118, 187–190 |
-| IOT-004 | Uplink-Messungen und Downlink-Befehle müssen Latenz, Verlust, Fehlerrate und gegebenenfalls Energie getrennt von biologischen Ergebnissen ausweisen. | V/A | P2 | T/R | DISS S. 96–97, 117–118; RM M6 |
-| IOT-005 | Kommunikationsmodelle müssen optional über ns-3 oder andere Simulatoren ausführbar sein, ohne dass physiologische Modelle von ihnen abhängen. | V/A | P2 | T/I | DISS S. 96–100; MEH25 S. 1–2 |
+| IOT-001 | Nanodevices shall have type, capabilities, payload, internal state, target, and lifecycle; scenarios shall be able to add specialized types. | V/B/A | P1 | T | DISS pp. 113–115, 186–188 |
+| IOT-002 | The system shall compose nano-IoT components from an in-body network, gateway, BAN device, and analysis/control station. | V | P1 | T/I | DISS pp. 96–97; MEH20 p. 2 |
+| IOT-003 | Gateways shall be modeled as spatial measurement and communication sites with nano and macro sides. | V | P1 | T/R | DISS pp. 117–118, 187–190 |
+| IOT-004 | Uplink measurements and downlink commands shall report latency, loss, error rate, and optionally energy separately from biological results. | V/A | P2 | T/R | DISS pp. 96–97, 117–118; RM M6 |
+| IOT-005 | Communication models shall optionally run through ns-3 or other simulators without physiological models depending on them. | V/A | P2 | T/I | DISS pp. 96–100; MEH25 pp. 1–2 |
 
-## 10. Daten, Experimente, Evidenz und Ausgaben
+## 10. Data, experiments, evidence, and output
 
-| ID | Anforderung | Herkunft | Prio | Nachweis | Quelle |
+| ID | Requirement | Origin | Priority | Verification | Source |
 |---|---|---:|---:|---:|---|
-| DATA-001 | Alle Eingabedaten müssen ein versioniertes Schema, Einheiten, Koordinatensystem, Quelle, Lizenz und Prüfsumme besitzen. | A/N | P0 | T/I | RM 6.1 |
-| DATA-002 | Ein Experimentmanifest muss Modellvarianten, Parameter, Seeds, Dauer, Injektionen, Beobachtungen und Abbruchbedingungen vollständig beschreiben. | A/N | P0 | T/I | RM 6.4 |
-| DATA-003 | Jeder Lauf muss ein Provenienzmanifest mit Software-/Datenversionen, Build, Plattform und Laufzeit erzeugen. | A/N | P0 | T/I | RM 2.4, 6.4 |
-| DATA-004 | Ausgaben müssen zwischen Ereignissen, Aggregaten, Stichproben und optionalen Trajektorien unterscheiden und ihr Volumen begrenzen können. | B/A | P1 | T/R | VIS20 S. 1–2; MEH25 S. 1–2; RM M2 |
-| DATA-005 | Modellannahmen müssen als publiziert/beobachtet, kalibriert, validiert, abgeleitet oder hypothetisch klassifiziert werden. | A/N | P0 | I | RM 2.5, 6.2 |
-| DATA-006 | Kalibrier- und Validierungsdaten müssen getrennt werden; eine Anpassung an Zielwerte darf nicht zugleich als unabhängige Validierung gelten. | A/N | P0 | I/E | RM 6.2 |
-| DATA-007 | Medizinische Ergebnisse müssen Unsicherheit, Sensitivität und Gültigkeitsgrenzen zusammen mit dem Schätzwert ausgeben. | A/N | P1 | T/I/E | RM 6.3 |
-| DATA-008 | Regressionsläufe müssen numerische/statistische Toleranzen statt ungeprüfter exakter Gleichheit verwenden, sofern stochastische Modelle verglichen werden. | A/N | P1 | T/R | RM 5/M2, 6.2 |
+| DATA-001 | All input data shall have a versioned schema, units, coordinate system, source, license, and checksum. | A/N | P0 | T/I | RM 6.1 |
+| DATA-002 | An experiment manifest shall completely describe model variants, parameters, seeds, duration, injections, observations, and termination conditions. | A/N | P0 | T/I | RM 6.4 |
+| DATA-003 | Every run shall produce a provenance manifest containing software/data versions, build, platform, and runtime. | A/N | P0 | T/I | RM 2.4, 6.4 |
+| DATA-004 | Output shall distinguish events, aggregates, samples, and optional trajectories and support volume limits. | B/A | P1 | T/R | VIS20 pp. 1–2; MEH25 pp. 1–2; RM M2 |
+| DATA-005 | Model assumptions shall be classified as published/observed, calibrated, validated, derived, or hypothetical. | A/N | P0 | I | RM 2.5, 6.2 |
+| DATA-006 | Calibration and validation data shall be separated; fitting to target values shall not simultaneously count as independent validation. | A/N | P0 | I/E | RM 6.2 |
+| DATA-007 | Medical results shall report uncertainty, sensitivity, and validity limitations together with the estimate. | A/N | P1 | T/I/E | RM 6.3 |
+| DATA-008 | Regression runs shall use numerical/statistical tolerances rather than unreviewed exact equality when comparing stochastic models. | A/N | P1 | T/R | RM 5/M2, 6.2 |
 
-## 11. Visualisierung und Bedienung
+## 11. Visualization and operation
 
-| ID | Anforderung | Herkunft | Prio | Nachweis | Quelle |
+| ID | Requirement | Origin | Priority | Verification | Source |
 |---|---|---:|---:|---:|---|
-| UX-001 | Die Simulation muss ohne Visualisierung im lokalen Batch- und später im HPC-Betrieb ausführbar sein. | A/N | P1 | T | RM Phase 0/10 |
-| UX-002 | Eine entkoppelte Visualisierung muss Körpermodell, Entitäten/Populationen, Zeitverlauf und Dichte-/Heatmap-Daten lesen können. | B/A | P2 | T/I | VIS20 S. 1–2; DISS S. 109–113 |
-| UX-003 | Nutzer müssen Zeit navigieren, Ansichten drehen/verschieben/zoomen und Ebenen oder Läufe vergleichen können. | B/A | P2 | I | VIS20 S. 1–2; RM 6.5 |
-| UX-004 | Visualisierungen und Berichte müssen reproduzierbar aus gespeicherten Ergebnissen entstehen und dürfen den Simulationszustand nicht verändern. | A/N | P1 | T/I | RM 6.5 |
+| UX-001 | The simulation shall run without visualization in local batch mode and later in HPC operation. | A/N | P1 | T | RM Phase 0/10 |
+| UX-002 | A decoupled visualization shall read the body model, entities/populations, time series, and density/heatmap data. | B/A | P2 | T/I | VIS20 pp. 1–2; DISS pp. 109–113 |
+| UX-003 | Users shall navigate time, rotate/pan/zoom views, and compare layers or runs. | B/A | P2 | I | VIS20 pp. 1–2; RM 6.5 |
+| UX-004 | Visualizations and reports shall be reproducibly generated from stored results and shall not modify simulation state. | A/N | P1 | T/I | RM 6.5 |
 
-## 12. Medizinische Szenarien
+## 12. Medical scenarios
 
-| ID | Anforderung | Herkunft | Prio | Nachweis | Quelle |
+| ID | Requirement | Origin | Priority | Verification | Source |
 |---|---|---:|---:|---:|---|
-| SCN-001 | Fingerprinting muss als erster vertikaler Demonstrator Injektion, Transport, Gewebeerkennung, Nachrichtenbildung, Sammlung und externes Auslesen abbilden. | V/B/A | P1 | R | DISS Kap. 6, bes. S. 185–190; FP23 S. 5–6 |
-| SCN-002 | Kontinuierliches Monitoring muss zeitabhängige Biomarker, persönliche Baselines/Schwellen und Alarmwege modellieren können. | V | P2 | T/E | DISS S. 143–152 |
-| SCN-003 | In-vivo Liquid Biopsy muss Freisetzung, Transport, Abbau, seltene ctDNA-Erkennung und Vergleich mit Blutproben modellieren können. | V/B | P2 | R/E | DISS S. 155–160 |
-| SCN-004 | Metastasenprävention muss Zellablösung, Transport, Erkennung, Wirkstofffreisetzung, Bindung und Zellantwort über alle Ebenen verbinden können. | V | P2 | T/R/E | DISS S. 153–154; MEH20 S. 4–5 |
-| SCN-005 | CAR-T muss Zellpopulationen und lokale Agentenmodelle kombinieren und publizierte Interaktionsmodelle als austauschbare Modellkomponente nutzen können. | B/A | P2 | R/E | MEH25 S. 1–2 |
-| SCN-006 | Ein Forschungs-Digital-Twin muss schrittweise anatomische, physiologische und biochemische Personalisierung sowie fortlaufende Datenaktualisierung unterstützen. | V/A | P3 | I/E | DISS S. 140–143; RM M8 |
+| SCN-001 | As the first vertical demonstrator, fingerprinting shall represent injection, transport, tissue detection, message formation, collection, and external readout. | V/B/A | P1 | R | DISS Ch. 6, especially pp. 185–190; FP23 pp. 5–6 |
+| SCN-002 | Continuous monitoring shall model time-dependent biomarkers, personal baselines/thresholds, and alert paths. | V | P2 | T/E | DISS pp. 143–152 |
+| SCN-003 | In-vivo liquid biopsy shall model release, transport, degradation, rare ctDNA detection, and comparison with blood samples. | V/B | P2 | R/E | DISS pp. 155–160 |
+| SCN-004 | Metastasis prevention shall connect cell detachment, transport, detection, drug release, binding, and cell response across all layers. | V | P2 | T/R/E | DISS pp. 153–154; MEH20 pp. 4–5 |
+| SCN-005 | CAR-T shall combine cell populations and local agent models and use published interaction models as interchangeable model components. | B/A | P2 | R/E | MEH25 pp. 1–2 |
+| SCN-006 | A research digital twin shall incrementally support anatomical, physiological, and biochemical personalization and continuous data updates. | V/A | P3 | I/E | DISS pp. 140–143; RM M8 |
 
-## 13. Nichtfunktionale Qualitätsziele
+## 13. Non-functional quality objectives
 
-| ID | Anforderung | Herkunft | Prio | Nachweis | Quelle |
+| ID | Requirement | Origin | Priority | Verification | Source |
 |---|---|---:|---:|---:|---|
-| QUA-001 | Der C++-Kern muss auf Windows und Linux mit mindestens MSVC, GCC und Clang automatisiert gebaut und getestet werden. | N | P0 | T | RM M1 |
-| QUA-002 | Kritischer Kerncode muss mit Warnungen als Fehler, statischer Analyse und geeigneten Sanitizern geprüft werden. | N | P0 | T | RM M1 |
-| QUA-003 | Performance muss durch versionierte Benchmarks bewertet werden; Optimierungen dürfen Referenzergebnisse nur innerhalb festgelegter Toleranzen verändern. | A/N | P1 | T/R | MEH25 S. 1–2; RM Phase 10 |
-| QUA-004 | Realistische Größenordnungen müssen durch Agenten-, Populations-, Kompartiment-, Feld- und Surrogatmodelle skalierbar werden. | A | P1 | T/R | MEH25 S. 1–2; RM 2.3 |
-| QUA-005 | Öffentliche Schnittstellen, Modelle, Datenschemata und Szenarien müssen versioniert und für Forschende dokumentiert sein. | A/N | P1 | I | RM 6.6 |
-| QUA-006 | Patientendaten dürfen erst nach einem dokumentierten Datenschutz-, Einwilligungs- und Pseudonymisierungskonzept verarbeitet werden. | N | P3 | I | RM M8 |
+| QUA-001 | The C++ kernel shall be built and tested automatically on Windows and Linux using at least MSVC, GCC, and Clang. | N | P0 | T | RM M1 |
+| QUA-002 | Critical kernel code shall be checked with warnings as errors, static analysis, and appropriate sanitizers. | N | P0 | T | RM M1 |
+| QUA-003 | Performance shall be assessed with versioned benchmarks; optimizations shall change reference results only within specified tolerances. | A/N | P1 | T/R | MEH25 pp. 1–2; RM Phase 10 |
+| QUA-004 | Realistic scales shall become scalable through agent, population, compartment, field, and surrogate models. | A | P1 | T/R | MEH25 pp. 1–2; RM 2.3 |
+| QUA-005 | Public interfaces, models, data schemas, and scenarios shall be versioned and documented for researchers. | A/N | P1 | I | RM 6.6 |
+| QUA-006 | Patient data shall be processed only after a documented data-protection, consent, and pseudonymization concept exists. | N | P3 | I | RM M8 |
 
-## 14. Abnahmeregeln
+## 14. Acceptance rules
 
-Eine Anforderung gilt erst als umgesetzt, wenn:
+A requirement is implemented only when:
 
-1. eine verantwortliche Implementierung oder ein versioniertes Datenartefakt existiert;
-2. der in der Tabelle genannte Nachweis automatisiert oder nachvollziehbar dokumentiert ist;
-3. Gültigkeitsbereich und bekannte Einschränkungen dokumentiert sind;
-4. die Traceability Matrix auf Commit, Test, Datensatz oder Bericht verweist;
-5. eine Änderung an einem publizierten Referenzverhalten erklärt und wissenschaftlich bewertet wurde.
+1. a responsible implementation or versioned data artifact exists;
+2. the verification named in the table is automated or traceably documented;
+3. validity scope and known limitations are documented;
+4. the traceability matrix references a commit, test, data set, or report;
+5. any change to published reference behavior is explained and scientifically assessed.
 
-Die Baseline darf über Architecture Decision Records geändert werden. Eine Abweichung von der Dissertation ist zulässig, muss aber als bewusste Entscheidung mit Nutzen, Kosten und wissenschaftlichen Folgen dokumentiert werden.
+The baseline may be changed through Architecture Decision Records. A deviation
+from the dissertation is permissible, but must be documented as a deliberate
+decision with benefits, costs, and scientific consequences.

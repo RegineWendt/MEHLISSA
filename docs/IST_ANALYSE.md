@@ -3,423 +3,498 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# MEHLISSA – Analyse des aktuellen Stands
+# MEHLISSA – Current-State Analysis
 
-**Analysestand:** 26. August 2026  
-**Untersuchter Stand:** `main`, Commit `4f4fc5a`  
-**Gegenstand:** Literatur in `literature/`, die ns-3-Implementierung in `mehlissa/`, die eigenständige Implementierung in `mehlissa2.0/` sowie die Körper- und Szenariodatensätze im Repository
+**Analysis date:** 26 August 2026
 
-## 1. Kurzurteil
+**Revision examined:** `main`, commit `4f4fc5a`
 
-MEHLISSA ist gegenwärtig ein wissenschaftlich gut begründetes Gesamtkonzept mit einem funktionsfähigen Forschungsprototyp der Körperkreislaufebene. Es ist noch keine vollständige „Medical Holistic Simulation Architecture“ im Sinne der Dissertation.
+**Scope:** Literature in `literature/`, the ns-3 implementation in `mehlissa/`,
+the standalone implementation in `mehlissa2.0/`, and the body and scenario data
+sets in the repository
 
-Der zentrale Abstand zwischen Vision und Implementierung lautet:
+## 1. Executive assessment
 
-- Die Vision ist eine gekoppelte Mehrskalenarchitektur von der Ganzkörperzirkulation bis zu molekularer und intrazellulärer Kommunikation.
-- Implementiert ist hauptsächlich der Transport individueller Partikel durch ein grobes Ganzkörper-Gefäßnetz.
-- MEHLISSA 2.0 ersetzt ns-3 durch einen kleineren Simulationskern und verbessert die Laufzeit. Es implementiert jedoch nicht die vier in der Literatur beschriebenen Ebenen.
-- Die medizinischen Szenarien sind wertvolle Proofs of Concept, aber noch keine validierten physiologischen oder klinischen Modelle.
-- Der aktuelle `main`-Branch enthält technische Inkonsistenzen. Insbesondere ist die alte ns-3-Version nach der jüngsten Endokrin-/AVS-Erweiterung in ihrem derzeitigen Zustand nicht konsistent baubar.
+MEHLISSA is currently a scientifically well-founded overall concept with a
+functional research prototype of the whole-body circulation layer. It is not
+yet a complete “Medical Holistic Simulation Architecture” in the sense of the
+dissertation.
 
-### Reifegradübersicht
+The central gap between vision and implementation is:
 
-| Bereich | Einschätzung |
+- The vision is a coupled multiscale architecture from whole-body circulation to molecular and intracellular communication.
+- The implementation mainly transports individual particles through a coarse whole-body vascular network.
+- MEHLISSA 2.0 replaces ns-3 with a smaller simulation kernel and improves runtime, but does not implement the four layers described in the literature.
+- The medical scenarios are valuable proofs of concept, but are not yet validated physiological or clinical models.
+- The current `main` branch contains technical inconsistencies. In particular, after the latest endocrine/AVS extension, the old ns-3 version cannot be built consistently in its current state.
+
+### Maturity overview
+
+| Area | Assessment |
 |---|---|
-| Wissenschaftliche Vision | hoch |
-| Ganzkörper-Transportmodell | Forschungsprototyp |
-| Organmodelle | grobe symbolische Repräsentation |
-| Kapillarmodelle | nicht implementiert |
-| Zell- und Molekülmodelle | einzelne abstrahierte Partikelinteraktionen |
-| Anwendungsszenarien | mehrere Demonstratoren, uneinheitlich integriert |
-| Softwareplattform | frühe Alpha |
-| Physiologische Prognosefähigkeit | noch nicht belastbar |
-| Klinischer Digital Twin | Vision, noch keine Implementierung |
+| Scientific vision | high |
+| Whole-body transport model | research prototype |
+| Organ models | coarse symbolic representation |
+| Capillary models | not implemented |
+| Cell and molecular models | isolated abstract particle interactions |
+| Application scenarios | several demonstrators, inconsistently integrated |
+| Software platform | early alpha |
+| Physiological predictive capability | not yet robust |
+| Clinical digital twin | vision, not yet implemented |
 
-## 2. Quellenbasis
+## 2. Source basis
 
-Die Analyse beruht insbesondere auf folgenden im Repository enthaltenen Arbeiten:
+The analysis is based especially on the following works contained in the repository:
 
 - [MEHLISSA: A Medical Holistic Simulation Architecture for Nanonetworks in Humans](<../literature/Mehlissa A Medical Holistic Simulation Architecture for Nanonetworks in Humans.pdf>)
-- [Dissertation – Simulationskapitel](../literature/Diss_WENDT_Simulationchapters.pdf)
+- [Dissertation – simulation chapters](../literature/Diss_WENDT_Simulationchapters.pdf)
 - [BloodVoyagerS – Simulation of the Work Environment of Medical Nanobots](<../literature/BloodVoyagerS - Simulation of the work environment of medical nanobots.pdf>)
 - [BVS-Vis: A Web-based Visualizer for BloodVoyagerS](<../literature/BVS-VIS_A Web-based Visualizer for Blood Voyager S.pdf>)
 - [Proteome Fingerprinting as a Localization Scheme for Nanobots](../literature/wendt_fingerprinting.pdf)
 - [MEHLISSA 2.0: Accelerating Full-body Molecular Communication Simulations](../literature/3760544.3765642.pdf)
 
-## 3. Zielbild aus der Literatur
+## 3. Target vision from the literature
 
-MEHLISSA soll aus vier verbundenen, aber grundsätzlich eigenständigen Ebenen bestehen. Zwischen ihnen werden mindestens Mobilität, Zustand, Aktivität und Simulationsergebnisse ausgetauscht.
+MEHLISSA is intended to consist of four connected but fundamentally independent
+layers. At least mobility, state, activity, and simulation results are exchanged
+between them.
 
-### 3.1 Körperebene
+### 3.1 Body layer
 
-Die Körperebene soll Folgendes leisten:
+The body layer is intended to provide:
 
-- geschlossener Ganzkörper-Blutkreislauf;
-- Transport und globale Verteilung von Nanogeräten, Zellen und Molekülen;
-- realistische Verzweigungs- und Perfusionsverhältnisse;
-- dreidimensionale Gefäße mit mehreren virtuellen Strömungen;
-- dynamisch ladbare und langfristig patientenspezifische Körpermodelle;
-- Injektion, Erfassung und globale Positionsausgabe;
-- Body-Area-Network, Gateways sowie Anbindung externer Analyse- und Kontrollsysteme.
+- a closed whole-body blood circulation;
+- transport and global distribution of nanodevices, cells, and molecules;
+- realistic branching and perfusion ratios;
+- three-dimensional vessels with multiple virtual flow paths;
+- dynamically loadable and eventually patient-specific body models;
+- injection, collection, and global position output;
+- a body-area network, gateways, and connection to external analysis and control systems.
 
-### 3.2 Organebene
+### 3.2 Organ layer
 
-Die Organebene soll organspezifische Eigenschaften abbilden:
+The organ layer is intended to represent organ-specific properties:
 
-- regionale Gefäßstruktur;
-- Organvolumen und lokale Perfusion;
-- belastungs-, aktivitäts- und situationsabhängige Durchblutung;
-- Organlokalisierung von Nanogeräten;
-- Übergang von der globalen Zirkulation in regionale Detailmodelle;
-- gegebenenfalls organspezifische Gateways oder Router.
+- regional vascular structure;
+- organ volume and local perfusion;
+- perfusion dependent on exercise, activity, and situation;
+- organ localization of nanodevices;
+- transition from global circulation into regional detailed models;
+- organ-specific gateways or routers where appropriate.
 
-### 3.3 Kapillarebene
+### 3.3 Capillary layer
 
-Die Kapillarebene soll Arteriolen, Venolen, Kapillarbetten und deren lokale Dynamik repräsentieren:
+The capillary layer is intended to represent arterioles, venules, capillary beds,
+and their local dynamics:
 
-- Kapillardichte und Verzweigungsstruktur;
-- präkapilläre Sphinkter und regulierte Perfusion;
-- Stoffaustausch zwischen Blut und Gewebe;
-- lokale Retention und Verteilung von Nanogeräten;
-- Cluster- und Multi-Hop-Kommunikation;
-- Einbindung existierender molekularer Kanalmodelle;
-- Ableitung kompakter Ergebnisse für die Organ- und Körperebene.
+- capillary density and branching structure;
+- precapillary sphincters and regulated perfusion;
+- substance exchange between blood and tissue;
+- local retention and distribution of nanodevices;
+- cluster and multi-hop communication;
+- integration of existing molecular channel models;
+- derivation of compact results for organ and body layers.
 
-### 3.4 Zellebene
+### 3.4 Cell layer
 
-Die Zellebene soll die eigentlichen biologischen Zielprozesse modellieren:
+The cell layer is intended to model the actual biological target processes:
 
-- Nanogerät-Zell- und Zell-Zell-Kommunikation;
-- Erkennung von Biomarkern und Rezeptorbindung;
-- Wirkstofffreisetzung und -aufnahme;
-- intra- und extrazelluläre Konzentrationen;
-- Signalwege und Reaktionskaskaden;
-- Zellantworten bis hin zu Apoptose, Immunantwort oder Proliferation.
+- nanodevice–cell and cell–cell communication;
+- biomarker detection and receptor binding;
+- drug release and uptake;
+- intra- and extracellular concentrations;
+- signaling pathways and reaction cascades;
+- cell responses up to apoptosis, immune response, or proliferation.
 
-### 3.5 Nano-IoT und medizinischer Workflow
+### 3.5 Nano-IoT and medical workflow
 
-Die vier physiologischen Ebenen sollen um eine Kommunikations- und Anwendungsebene ergänzt werden:
+The four physiological layers are intended to be extended by communication and
+application functions:
 
-- In-Body-Nanonetzwerk;
-- Mikro-/Nano-Gateway;
-- Body-Area-Network;
-- externe Analyse- und Kontrollstation;
-- Rückkanal für Aktivierung oder Therapie;
-- medizinische Workflows für Monitoring, Diagnose, Behandlung und Digital Twins.
+- an in-body nanonetwork;
+- a micro/nano gateway;
+- a body-area network;
+- an external analysis and control station;
+- a return channel for activation or treatment;
+- medical workflows for monitoring, diagnosis, treatment, and digital twins.
 
-Die Literatur beschreibt damit ein Forschungsprogramm und eine Architekturvision. Sie ist keine vollständige technische Spezifikation: Viele Modelle sollen aus externen Simulatoren, Datenbanken oder zukünftigen Experimenten eingebunden werden.
+The literature therefore describes a research program and architectural vision,
+not a complete technical specification. Many models are intended to be
+integrated from external simulators, databases, or future experiments.
 
-## 4. Implementierter Stand nach Ebenen
+## 4. Implemented status by layer
 
-### 4.1 Körperebene
+### 4.1 Body layer
 
-Dies ist der mit Abstand reifste Teil von MEHLISSA.
+This is by far the most mature part of MEHLISSA.
 
-Der aktuelle 95er-Datensatz enthält:
+The current 1995 data set contains:
 
-- 95 Gefäß- beziehungsweise Organabschnitte;
-- 36 Arterien, 34 Venen und 25 als Organe modellierte Übergänge;
-- ein geschlossenes Netz ohne Sackgassen;
-- 24 topologische Verzweigungen;
-- 23 explizite Datensätze mit Verzweigungswahrscheinlichkeiten;
-- neun Organe mit Fingerprint-Bildungszeiten;
-- 21 virtuelle Strömungskanäle pro Gefäß.
+- 95 vessel or organ sections;
+- 36 arteries, 34 veins, and 25 transitions modeled as organs;
+- a closed network without dead ends;
+- 24 topological branches;
+- 23 explicit records of branching probabilities;
+- nine organs with fingerprint-assembly times;
+- 21 virtual flow channels per vessel.
 
-Partikel können injiziert, durch das Gefäßnetz bewegt, stochastisch an Verzweigungen verteilt und als CSV ausgegeben werden. Die literaturbasierten Übergangswahrscheinlichkeiten sind gegenüber dem ursprünglichen BVS-Modell eine relevante Verbesserung.
+Particles can be injected, moved through the vascular network, distributed
+stochastically at branches, and exported as CSV. The literature-based transition
+probabilities are a relevant improvement over the original BVS model.
 
-Die physiologische Aussagekraft wird jedoch durch starke Abstraktionen begrenzt:
+Physiological meaning is nevertheless limited by strong abstractions:
 
-- Alle Gefäße erhalten dieselbe Breite von `0,25`.
-- Geschwindigkeiten hängen nur von den Kategorien Arterie, Vene und Organ ab.
-- Blutdruck, Gefäßelastizität, Pulsatilität und Massenerhaltung über Querschnitte fehlen.
-- Aktivität, Herzfrequenz, Körperhaltung und belastungsabhängige Perfusion fehlen.
-- Die Koordinaten liegen fast ausschließlich auf `z = +2` und `z = -2`.
-- Organe sind überwiegend vier Zentimeter lange Übergangssegmente und keine Organmodelle.
+- All vessels receive the same width of `0.25`.
+- Velocities depend only on the categories artery, vein, and organ.
+- Blood pressure, vascular elasticity, pulsatility, and mass conservation through cross sections are absent.
+- Activity, heart rate, posture, and exercise-dependent perfusion are absent.
+- Coordinates lie almost exclusively at `z = +2` and `z = -2`.
+- Organs are mostly four-centimetre transition segments rather than organ models.
 
-Das vorhandene Modell ist daher am besten als stochastische Transporttopologie und nicht als Hämodynamikmodell zu verstehen.
+The existing model is therefore best understood as a stochastic transport
+topology rather than a hemodynamic model.
 
-Eine weitere Datenauffälligkeit besteht bei Gefäß 9: Es besitzt zwei topologische Nachfolger, aber keinen Eintrag in `95_transitions.csv`. Es verwendet deshalb die Standardverteilung `1/0`, wodurch einer der beiden Abflüsse faktisch ungenutzt bleibt.
+Vessel 9 is another data anomaly: it has two topological successors but no entry
+in `95_transitions.csv`. It therefore uses the default distribution `1/0`,
+effectively leaving one drainage path unused.
 
-### 4.2 Organebene
+### 4.2 Organ layer
 
-Organe sind über IDs, statische Übergangswahrscheinlichkeiten und teilweise Fingerprint-Zeiten repräsentiert. Nicht vorhanden sind:
+Organs are represented through IDs, static transition probabilities, and in
+some cases fingerprint times. The following are absent:
 
-- detaillierte organspezifische Gefäßbäume;
-- regulierte Organperfusion;
-- Kopplung an Aktivität oder physiologischen Zustand;
-- regionale Stoffkonzentrationen;
-- Austausch zwischen Blut, Interstitium und Gewebe;
-- Integration von BodyParts3D-, SimVascular-, Bildgebungs- oder CFD-Modellen.
+- detailed organ-specific vascular trees;
+- regulated organ perfusion;
+- coupling to activity or physiological state;
+- regional substance concentrations;
+- exchange between blood, interstitium, and tissue;
+- integration of BodyParts3D, SimVascular, imaging, or CFD models.
 
-Die Dissertation beschreibt vorbereitende Arbeiten für solche Modelle, diese sind aber nicht in die Software eingeflossen.
+The dissertation describes preparatory work for such models, but it has not
+entered the software.
 
-Die Dateien unter `bodymodels/` stellen noch keine belastbare Personalisierung dar. Insbesondere:
+Files under `bodymodels/` do not yet provide robust personalization. In particular:
 
-- handelt es sich primär um geometrische Skalierungen;
-- enthält das weibliche Modell einen auf zwei Zeilen aufgeteilten Datensatz 51;
-- liest MEHLISSA 2.0 Koordinaten mit `std::stoi` ein und verliert dadurch Dezimalstellen;
-- bleibt nach einem fehlerhaften Datensatz das Parser-Fehlerflag gesetzt, sodass folgende Gefäße verworfen werden.
+- they are primarily geometric scalings;
+- the female model contains record 51 split across two lines;
+- MEHLISSA 2.0 reads coordinates with `std::stoi`, losing decimal places;
+- after a defective record, the parser error flag remains set and subsequent vessels are discarded.
 
-### 4.3 Kapillarebene
+### 4.3 Capillary layer
 
-Die Kapillarebene ist nicht implementiert. Es gibt keine Softwarekomponenten für:
+The capillary layer is not implemented. There are no software components for:
 
-- Arteriolen, Venolen oder Kapillarbetten;
-- Sphinkter und lokale Flussregulation;
-- Kapillardurchmesser und blutzellbedingte Effekte;
-- Stoffaustausch mit dem Gewebe;
-- lokale Kommunikationscluster;
-- Multi-Hop-Protokolle;
-- molekulare Kanalmodelle;
-- Übergabe abstrahierter Kapillarergebnisse an höhere Ebenen.
+- arterioles, venules, or capillary beds;
+- sphincters and local flow regulation;
+- capillary diameters and blood-cell effects;
+- substance exchange with tissue;
+- local communication clusters;
+- multi-hop protocols;
+- molecular channel models;
+- exchange of abstracted capillary results with higher layers.
 
-Es existiert derzeit auch keine klar definierte Schnittstelle, über die ein externer Kapillar- oder Kanalsimulator angebunden werden könnte.
+There is also no clearly defined interface for attaching an external capillary
+or channel simulator.
 
-### 4.4 Zellebene
+### 4.4 Cell layer
 
-`CancerCell`, `TCell` und `CarTCell` sind bewegliche Partikel im Blutstrom. Sie bilden kein Gewebe- oder Zellmodell im Sinne der Dissertation ab.
+`CancerCell`, `TCell`, and `CarTCell` are mobile particles in the bloodstream.
+They do not constitute tissue or cell models in the sense of the dissertation.
 
-Nicht vorhanden sind unter anderem:
+Missing features include:
 
-- Zellmembranen und Rezeptorbindung;
-- intra- und extrazelluläre Konzentrationen;
-- Signalwege und Reaktionsnetze;
-- Wirkstoffaufnahme und Wirkstoffantwort;
-- Tumorgewebe und dessen Mikroumgebung;
-- Rückkopplung biologischer Prozesse auf Organ- oder Kreislaufzustände.
+- cell membranes and receptor binding;
+- intra- and extracellular concentrations;
+- signaling pathways and reaction networks;
+- drug uptake and response;
+- tumor tissue and its microenvironment;
+- feedback from biological processes to organ or circulatory state.
 
-Die CAR-T-Klassen implementieren statische Wahrscheinlichkeiten für Tötung, Fratrizid und Proliferation. Dies ist ein Szenariodemonstrator, aber keine allgemeine Zellebene.
+The CAR-T classes implement static probabilities for killing, fratricide, and
+proliferation. This is a scenario demonstrator, not a general cell layer.
 
-### 4.5 Kommunikation, Gateway und Nano-IoT
+### 4.5 Communication, gateway, and nano-IoT
 
-Trotz der ursprünglichen ns-3-Basis gibt es keine eigentliche Netzwerkimplementierung mit Paketen, Kanälen, Protokollen oder Routing. Das als Gateway bezeichnete Gefäß ist gegenwärtig ein passiver Mess- und CSV-Ausgabepunkt.
+Despite its original ns-3 base, there is no actual network implementation with
+packets, channels, protocols, or routing. The vessel called a gateway is
+currently a passive measurement and CSV output point.
 
-Nicht umgesetzt sind:
+Not implemented are:
 
-- Kommunikationsprotokolle zwischen Nanogeräten;
-- molekulare Kanäle mit Rauschen und Interferenz;
-- Gateway-Kommunikation;
-- Body-Area-Network;
-- externe Steuerung;
-- sichere Rückkanäle und Aktuatorik.
+- communication protocols between nanodevices;
+- molecular channels with noise and interference;
+- gateway communication;
+- a body-area network;
+- external control;
+- secure return channels and actuation.
 
-## 5. Die beiden Implementierungen
+## 5. The two implementations
 
-### 5.1 `mehlissa/`: historische ns-3-Version
+### 5.1 `mehlissa/`: historical ns-3 version
 
-Die alte Version enthält die umfangreichste Sammlung von Szenarioideen:
+The old version contains the broadest collection of scenario ideas:
 
-- klassische Nanogeräte und globale Verteilung;
-- Nanolokatoren und Nanokollektoren;
-- LDL-/Monitoring-Modus;
-- Liquid-Biopsy-Modus;
-- CAR-T-Zellen;
-- die neue Endokrin-/AVS-Erweiterung.
+- conventional nanodevices and global distribution;
+- nanolocators and nanocollectors;
+- LDL/monitoring mode;
+- liquid-biopsy mode;
+- CAR-T cells;
+- the new endocrine/AVS extension.
 
-Sie ist jedoch eng mit ns-3 und mit globalen, hart codierten Dateien verbunden. Szenariologik befindet sich direkt in `Bloodcircuit` und `Bloodvessel`. Dadurch werden Simulationskern, Physiologie, Experimentkonfiguration und Ausgabe vermischt.
+It is tightly coupled to ns-3 and global hard-coded files. Scenario logic
+resides directly in `Bloodcircuit` and `Bloodvessel`, mixing the simulation
+kernel, physiology, experiment configuration, and output.
 
-Der aktuelle Stand weist zusätzlich eindeutige Merge-/API-Probleme auf:
+The current revision also has clear merge/API problems:
 
-- In [`Bloodcircuit.cc`](../mehlissa/Bloodcircuit.cc#L102) wird `circuit` unmittelbar zweimal deklariert.
-- Der erste Aufruf verwendet `numberOfLocators`, obwohl der Parameter `numOfLocators` heißt.
-- Es wird eine nicht deklarierte Konstruktorvariante aufgerufen.
-- Die Endokrin-Erweiterung verwendet `SetHormoneType`, `GetHormoneType`, `SetInjectionTime` und `GetInjectionTime`; diese Methoden existieren in `Nanoparticle` nicht.
-- Der Build benötigt eine separate ns-3-Installation und ist aus diesem Repository allein nicht reproduzierbar.
+- In [`Bloodcircuit.cc`](../mehlissa/Bloodcircuit.cc#L102), `circuit` is declared twice in immediate succession.
+- The first call uses `numberOfLocators`, although the parameter is named `numOfLocators`.
+- An undeclared constructor overload is called.
+- The endocrine extension uses `SetHormoneType`, `GetHormoneType`, `SetInjectionTime`, and `GetInjectionTime`; these methods do not exist in `Nanoparticle`.
+- The build requires a separate ns-3 installation and is not reproducible from this repository alone.
 
-Diese Version sollte deshalb als historische Referenz und Vergleichsimplementierung behandelt werden, nicht als Basis der weiteren Hauptentwicklung.
+This version should therefore be retained as a historical reference and
+comparison implementation, not as the basis for further primary development.
 
-### 5.2 `mehlissa2.0/`: eigenständiger Simulationskern
+### 5.2 `mehlissa2.0/`: standalone simulation kernel
 
-MEHLISSA 2.0 entfernt die ns-3-Abhängigkeit und führt einen einfachen zeitschrittbasierten Simulator ein. Positiv sind:
+MEHLISSA 2.0 removes the ns-3 dependency and introduces a simple time-stepped
+simulator. Positive aspects are:
 
-- kleinerer technischer Kern;
-- bessere Verzeichnis- und Namensraumstruktur;
-- konfigurierbare Pfade für Gefäßnetz, Übergänge und Fingerprints;
-- modernere Speicherverwaltung;
-- deutlich reduzierte Laufzeit gegenüber der ns-3-Version;
-- eine Kernbibliothek, die einen reinen C++23-Syntaxcheck besteht.
+- a smaller technical kernel;
+- improved directory and namespace structure;
+- configurable paths for the vascular network, transitions, and fingerprints;
+- more modern memory management;
+- substantially reduced runtime compared with the ns-3 version;
+- a kernel library that passes a pure C++23 syntax check.
 
-MEHLISSA 2.0 ist dennoch überwiegend eine Portierung der alten Körperkreislauflogik. Organ-, Kapillar-, Zell- und Kommunikationsschichten wurden nicht ergänzt.
+MEHLISSA 2.0 nevertheless remains mainly a port of the old whole-body
+circulation logic. Organ, capillary, cell, and communication layers were not
+added.
 
-Der Build- und Ausführungsweg ist unvollständig:
+Its build and execution path is incomplete:
 
-- [`CMakeLists.txt`](../mehlissa2.0/src/CMakeLists.txt#L32) erzeugt nur `MehlissaCancer`.
-- Der allgemeine Einstieg `start-mehlissa.cc` wird nicht gebaut.
-- [`start-mehlissa.cc`](../mehlissa2.0/src/experiments/start-mehlissa.cc#L34) enthält mehrfach deklarierte Variablen und würde nicht kompilieren.
-- Der Standardpfad nennt `95_fingerprint.csv`, vorhanden ist `95_fingerprints.csv`.
-- Es gibt keine automatisierten Tests, keine CI und keine reproduzierbaren Referenzläufe.
+- [`CMakeLists.txt`](../mehlissa2.0/src/CMakeLists.txt#L32) creates only `MehlissaCancer`.
+- The general entry point `start-mehlissa.cc` is not built.
+- [`start-mehlissa.cc`](../mehlissa2.0/src/experiments/start-mehlissa.cc#L34) contains multiply declared variables and would not compile.
+- The default path names `95_fingerprint.csv`, while the existing file is `95_fingerprints.csv`.
+- There are no automated tests, CI, or reproducible reference runs.
 
-## 6. Zentrale technische Befunde
+## 6. Central technical findings
 
-### 6.1 Zeitmodell
+### 6.1 Time model
 
-Der Simulator akzeptiert einen konfigurierbaren Zeitschritt. Jedes Gefäß verwendet jedoch fest `m_deltaT = 1` und bewegt Partikel damit immer um eine Sekunde weiter. Der konfigurierte Zeitschritt verändert nur die globale Uhr.
+The simulator accepts a configurable time step. Every vessel, however, uses
+fixed `m_deltaT = 1` and therefore always moves particles forward by one second.
+The configured time step changes only the global clock.
 
-Die globale Uhr speichert Millisekunden als Ganzzahl, gibt Sekunden aber per Ganzzahldivision zurück. Subsekunden-Zeitschritte gehen dadurch verloren.
+The global clock stores milliseconds as an integer but returns seconds using
+integer division. Subsecond steps are therefore lost.
 
-Folgen:
+Consequences:
 
-- Simulationen mit `simulationStep != 1` sind nicht numerisch konsistent.
-- Bewegung, Alterung, Interaktion und Ereigniszeit können unterschiedliche Zeitbasen verwenden.
-- Konvergenz- oder Zeitschrittstudien sind nicht möglich.
+- Simulations with `simulationStep != 1` are numerically inconsistent.
+- Movement, aging, interaction, and event time can use different time bases.
+- Convergence or time-step studies are impossible.
 
-### 6.2 Geometrie
+### 6.2 Geometry
 
-[`Position::CalcDistance`](../mehlissa2.0/src/utils/Position.cc#L44) verwendet für die z-Differenz `b.z - b.z` und ignoriert z vollständig. Weitere Längen- und Interaktionsberechnungen verwenden nur x und y. Organe werden über Sonderfälle in z behandelt.
+[`Position::CalcDistance`](../mehlissa2.0/src/utils/Position.cc#L44) uses
+`b.z - b.z` for the z difference and ignores z entirely. Further length and
+interaction calculations use only x and y. Organs are handled through special
+cases in z.
 
-Die behauptete 3D-Unterstützung ist deshalb gegenwärtig eine 2D-Geometrie mit einzelnen z-Sonderfällen.
+The claimed 3D support is therefore currently 2D geometry with isolated z
+special cases.
 
-### 6.3 Zufallszahlen und Reproduzierbarkeit
+### 6.3 Random numbers and reproducibility
 
-In `Randomizer` und `RandomStream` werden bei der Initialisierung lokale Zufallsgeneratoren deklariert, welche die eigentlichen statischen beziehungsweise Member-Generatoren verdecken. Die gewählte Seed-Initialisierung wirkt dadurch nicht wie vorgesehen.
+In `Randomizer` and `RandomStream`, initialization declares local random
+generators that shadow the actual static or member generators. The selected seed
+initialization therefore does not act as intended.
 
-Mögliche Folgen:
+Possible consequences:
 
-- unbeabsichtigt deterministische Abläufe;
-- korrelierte Zufallsströme;
-- unwirksamer `isDeterministic`-Parameter;
-- schwer nachvollziehbare Resultate bei späterer Parallelisierung.
+- unintentionally deterministic behavior;
+- correlated random streams;
+- an ineffective `isDeterministic` parameter;
+- results that become difficult to trace under later parallelization.
 
-### 6.4 Partikel- und CAR-T-Logik
+### 6.4 Particle and CAR-T logic
 
-Bei einer CAR-T-Injektion zum Zeitpunkt null werden in [`BloodCircuit.cc`](../mehlissa2.0/src/bloodcircuit/BloodCircuit.cc#L348) versehentlich Krebszellen erzeugt.
+For a CAR-T injection at time zero, [`BloodCircuit.cc`](../mehlissa2.0/src/bloodcircuit/BloodCircuit.cc#L348)
+mistakenly creates cancer cells.
 
-Weitere Einschränkungen:
+Further limitations:
 
-- CAR-T-Proliferation kann durch alle passenden Partikel im selben Gefäß stimuliert werden, unabhängig von der räumlichen Nähe.
-- Fratrizid wird bei Distanz `<= 0` geprüft und kann die eigene Zelle einschließen.
-- Zellinteraktionen vergleichen Partikel im Gefäß weitgehend paarweise und skalieren quadratisch.
-- Replikations- und Lebensdauern liegen weit außerhalb der kurzen Benchmark-Zeiträume.
-- Detektionsradien und räumliche Modellauflösung passen teilweise nicht zusammen.
+- CAR-T proliferation can be stimulated by all matching particles in the same vessel, regardless of spatial proximity.
+- Fratricide is checked at distance `<= 0` and may include the cell itself.
+- Cell interactions compare particles in a vessel largely pairwise and scale quadratically.
+- Replication and lifetimes are far outside the short benchmark periods.
+- Detection radii and spatial model resolution are partly inconsistent.
 
-Die CAR-T-Benchmarks bewerten daher primär Transport- und Laufzeitleistung und nicht die biologische Validität einer Therapievorhersage.
+The CAR-T benchmarks therefore primarily assess transport and runtime
+performance, not biological validity of a treatment prediction.
 
-### 6.5 Ausgabe und Skalierung
+### 6.5 Output and scaling
 
-Der Simulator schreibt standardmäßig jeden Partikelzustand in jedem Zeitschritt. Dies erzeugt große Datenmengen und kann die Laufzeit dominieren.
+By default, the simulator writes every particle state at every time step. This
+creates large data volumes and can dominate runtime.
 
-In [`Printer.cc`](../mehlissa2.0/src/utils/Printer.cc#L74) wird der konfigurierte Partikelausgabemodus bei jeder Ausgabe auf null gesetzt. Spezialisierte LDL- und Liquid-Biopsy-Ausgaben funktionieren dadurch nicht wie vorgesehen.
+In [`Printer.cc`](../mehlissa2.0/src/utils/Printer.cc#L74), the configured
+particle-output mode is reset to zero during every output operation. Specialized
+LDL and liquid-biopsy output therefore does not work as intended.
 
-Parallelisierung ist nur vorbereitet. Bei `parallel > 1` läuft die Simulation weiterhin sequenziell.
+Parallelization is only prepared. With `parallel > 1`, simulation still runs
+sequentially.
 
-### 6.6 Speicherverwaltung
+### 6.6 Memory management
 
-Die Gefäße halten `shared_ptr` auf ihre Nachfolger. Da der Kreislauf geschlossen ist, entstehen Referenzzyklen. Zusätzlich ruft `BloodCircuit` den Destruktor des von einem `shared_ptr` verwalteten `Printer` manuell auf.
+Vessels hold `shared_ptr` references to successors. Because circulation is
+closed, this creates reference cycles. `BloodCircuit` also manually invokes the
+destructor of a `Printer` managed by `shared_ptr`.
 
-Vor größeren Experimenten müssen Lebensdauer, Besitzverhältnisse und Speicherlayout neu geordnet werden.
+Object lifetime, ownership, and memory layout must be reorganized before larger
+experiments.
 
-### 6.7 Datenmodell und Parametrisierung
+### 6.7 Data model and parameterization
 
-Der aktuelle Zustand verwendet:
+The current state uses:
 
-- implizite Einheiten;
-- hart codierte Konstanten;
-- CSV-Dateien ohne Schema- oder Versionsangabe;
-- kaum Eingabevalidierung;
-- keine dokumentierte Parameterprovenienz;
-- keine Unsicherheiten oder Verteilungen für physiologische Parameter;
-- keine zentrale Experimentkonfiguration.
+- implicit units;
+- hard-coded constants;
+- CSV files without schema or version information;
+- little input validation;
+- no documented parameter provenance;
+- no uncertainties or distributions for physiological parameters;
+- no central experiment configuration.
 
-Das erschwert Reproduzierbarkeit und wissenschaftliche Vergleichbarkeit.
+This impedes reproducibility and scientific comparability.
 
-## 7. Stand der Szenarien
+## 7. Scenario status
 
-### 7.1 Proteom-Fingerprinting
+### 7.1 Proteome fingerprinting
 
-Fingerprinting ist der am weitesten ausgearbeitete verbindende Anwendungsfall. Implementiert ist eine abstrahierte Zustandsmaschine:
+Fingerprinting is the most developed connecting application. An abstract state
+machine is implemented:
 
-1. Ein Nanolokator erreicht seine Zielorgan-ID.
-2. Ein organspezifischer Timer läuft.
-3. Das Gefäß wird dauerhaft als „Fingerprint-Nachricht aktiv“ markiert.
-4. Ein passender Nanokollektor erhält beim Durchqueren ein Detektionsflag.
+1. A nanolocator reaches its target-organ ID.
+2. An organ-specific timer runs.
+3. The vessel is permanently marked “fingerprint message active.”
+4. A matching nanocollector receives a detection flag when passing through.
 
-Nicht simuliert werden Genexpression, Konzentration, Bindungswahrscheinlichkeit, Krankheitsmarker, Tile-Anzahl und chemische Assembly. Die aus NetTAS abgeleitete Assembly-Dauer wird als reine Verzögerung verwendet.
+Gene expression, concentration, binding probability, disease marker, tile
+count, and chemical assembly are not simulated. Assembly duration derived from
+NetTAS is used only as a delay.
 
-Trotzdem ist Fingerprinting der beste Kandidat für einen ersten vollständigen Mehrschicht-Demonstrator.
+Fingerprinting is nevertheless the best candidate for a first complete
+multilayer demonstrator.
 
-### 7.2 Kontinuierliches Monitoring und Liquid Biopsy
+### 7.2 Continuous monitoring and liquid biopsy
 
-LDL und ctDNA sind als hart codierte Partikelmodi vorhanden. Partikel erhalten Größen-/Geschwindigkeitsfaktoren und werden über räumliche Nähe zu Nanogeräten gezählt.
+LDL and ctDNA exist as hard-coded particle modes. Particles receive size/speed
+factors and are counted through spatial proximity to nanodevices.
 
-Die veröffentlichten Wahrscheinlichkeiten beruhen teilweise auf vereinfachenden Unabhängigkeitsannahmen. Eine experimentelle Kalibrierung und Sensitivitätsanalyse fehlen. In MEHLISSA 2.0 sind diese Modi aktuell nicht regulär ausführbar, weil der allgemeine Programmeinstieg nicht gebaut wird und nicht kompiliert.
+Published probabilities partly rely on simplifying independence assumptions.
+Experimental calibration and sensitivity analysis are absent. In MEHLISSA 2.0,
+these modes are not currently executable through the regular path because the
+general program entry point is neither built nor compilable.
 
-### 7.3 Digital Twin
+### 7.3 Digital twin
 
-Der Digital Twin ist gegenwärtig eine Vision mit geometrischer Skalierungsdemonstration. Es fehlen:
+The digital twin is currently a vision with a geometric-scaling demonstration.
+Missing are:
 
-- Patientendatenmodell;
-- Bildgebungsimport;
-- Vital- und Laborparameter;
-- persönliche Parameterkalibrierung;
-- Therapieplanung und Rückkopplung;
-- Unsicherheitsquantifizierung;
-- Datenschutz- und Provenienzkonzept.
+- a patient data model;
+- imaging import;
+- vital and laboratory parameters;
+- personal parameter calibration;
+- treatment planning and feedback;
+- uncertainty quantification;
+- a data-protection and provenance concept.
 
-### 7.4 Metastasenprävention
+### 7.4 Metastasis prevention
 
-Das Metastasenszenario verbindet die vier Ebenen am vollständigsten: Ablösung einer Krebszelle, Transport, Erkennung, molekulare Kommunikation, Wirkstofffreisetzung und Apoptose. Es ist bislang konzeptionell geblieben und eignet sich langfristig als Integrations- und Capstone-Szenario.
+The metastasis scenario connects the four layers most completely: cancer-cell
+detachment, transport, detection, molecular communication, drug release, and
+apoptosis. It has remained conceptual and is suitable as a long-term integration
+and capstone scenario.
 
 ### 7.5 CAR-T
 
-CAR-T ist der wichtigste Performance-Demonstrator von MEHLISSA 2.0. Die biologische Interaktion ist jedoch stark abstrahiert und weist die in Abschnitt 6.4 beschriebenen Probleme auf. Realistische Zellzahlen bleiben selbst nach der Laufzeitverbesserung um viele Größenordnungen außer Reichweite.
+CAR-T is the main performance demonstrator for MEHLISSA 2.0. Biological
+interaction is strongly abstracted and has the problems described in Section
+6.4. Even after the runtime improvement, realistic cell counts remain many
+orders of magnitude out of reach.
 
-### 7.6 Endokrin-/AVS-Erweiterung
+### 7.6 Endocrine/AVS extension
 
-Die jüngste Erweiterung fügt getrennte Nebennieren-/Venenabschnitte sowie Aldosteron- und Cortisolideen hinzu. Sie liegt ausschließlich in der alten ns-3-Version und ist aktuell nicht lauffähig:
+The latest extension adds separate adrenal-gland/vein sections and ideas for
+aldosterone and cortisol. It exists only in the old ns-3 version and is not
+currently functional:
 
-- fehlende Methoden in `Nanoparticle`;
-- inkonsistente Konstruktoraufrufe;
-- das 104er-Gefäßmodell wird nicht automatisch ausgewählt;
-- Hormone erhalten `delay = 0`, was im vorhandenen Bewegungsmodell Geschwindigkeit null bedeutet;
-- Sampling-IDs in README, Kommentaren und Implementierung stimmen nicht vollständig überein;
-- simulierte Konzentrationen werden nachträglich an klinische Zielwerte angepasst, wodurch eine unabhängige Validierung zirkulär würde.
+- missing methods in `Nanoparticle`;
+- inconsistent constructor calls;
+- the 104-vessel model is not selected automatically;
+- hormones receive `delay = 0`, which means zero velocity in the existing movement model;
+- sampling IDs in README, comments, and implementation are not fully consistent;
+- simulated concentrations are adjusted afterward to clinical targets, making independent validation circular.
 
-Die Erweiterung ist eine wertvolle Szenarioskizze, aber noch kein implementiertes Modell.
+The extension is a valuable scenario sketch, but not yet an implemented model.
 
-### 7.7 Visualisierung
+### 7.7 Visualization
 
-BVS-Vis ist ein separates Three.js-basiertes Projekt und nicht Teil dieses Repositorys. MEHLISSA besitzt keine integrierte Ergebnisexploration, Experimentverwaltung oder Visualisierung.
+BVS-Vis is a separate Three.js project and is not part of this repository.
+MEHLISSA has no integrated result exploration, experiment management, or
+visualization.
 
-## 8. Fehlende Engineering-Grundlagen
+## 8. Missing engineering foundations
 
-Für eine nachhaltige Forschungsplattform fehlen derzeit:
+A sustainable research platform currently lacks:
 
-- ein reproduzierbarer Build für alle unterstützten Plattformen;
-- Unit-, Integrations- und Regressionstests;
-- Continuous Integration;
-- versionierte Releases und Referenzdatensätze;
-- klare Abgrenzung zwischen Kern, Modell, Szenario und Ausgabe;
-- maschinenlesbare Konfigurationen mit Schema;
-- explizite Einheiten;
-- Seeds und Experimentmanifeste;
-- strukturierte Logs und aggregierte Ergebnisformate;
-- Benchmark- und Validierungssuite;
-- Contributor-Dokumentation;
-- zum Analysezeitpunkt fehlende repositoryweite Lizenzdatei trotz
-  GPLv2-Hinweisen in Quelldateien; inzwischen durch ADR-0007 und die
-  Mehrfachlizenzstruktur behoben.
+- a reproducible build for all supported platforms;
+- unit, integration, and regression tests;
+- continuous integration;
+- versioned releases and reference data sets;
+- clear separation among kernel, model, scenario, and output;
+- machine-readable configurations with schemas;
+- explicit units;
+- seeds and experiment manifests;
+- structured logs and aggregate result formats;
+- a benchmark and validation suite;
+- contributor documentation;
+- at the time of analysis, a missing repository-wide license file despite GPLv2 notices in source files; this has since been resolved by ADR-0007 and the multiple-license structure.
 
-## 9. Stärken des Bestands
+## 9. Strengths of the existing work
 
-Die kritischen Befunde bedeuten nicht, dass MEHLISSA neu erfunden oder verworfen werden muss. Der Bestand besitzt erhebliche Werte:
+The critical findings do not mean that MEHLISSA must be reinvented or rejected.
+The existing work has considerable value:
 
-- eine klare und wissenschaftlich relevante Mehrskalenvision;
-- einen geschlossenen und überwiegend konsistenten Ganzkörpergraphen;
-- literaturbasierte statische Perfusionswahrscheinlichkeiten;
-- mehrere publizierte Anwendungsszenarien;
-- einen gegenüber ns-3 kleineren Simulationskern;
-- einen mit etwa 9.000 C++-Zeilen noch überschaubaren Codebestand;
-- vorhandene Partikel- und Gerätekonzepte als Ausgangspunkt für neue Schnittstellen;
-- Fingerprinting als besonders geeigneten schichtübergreifenden Demonstrator.
+- a clear and scientifically relevant multiscale vision;
+- a closed and largely consistent whole-body graph;
+- literature-based static perfusion probabilities;
+- several published application scenarios;
+- a smaller simulation kernel than ns-3;
+- a still manageable codebase of about 9,000 C++ lines;
+- existing particle and device concepts as a starting point for new interfaces;
+- fingerprinting as a particularly suitable cross-layer demonstrator.
 
-## 10. Gesamteinschätzung
+## 10. Overall assessment
 
-MEHLISSA ist eine starke Forschungsvision mit einem nützlichen, aber technisch und wissenschaftlich noch nicht ausreichend abgesicherten Ganzkörper-Transportprototyp.
+MEHLISSA is a strong research vision with a useful whole-body transport
+prototype that is not yet sufficiently secured technically or scientifically.
 
-Die alte ns-3-Version sollte als historische Referenz erhalten bleiben. Die weitere Entwicklung sollte auf einem stabilisierten, neu modularisierten Nachfolger des 2.0-Kerns aufbauen. Dabei sollten nicht weitere Szenarien direkt in `BloodCircuit` oder `BloodVessel` eingebettet werden.
+The old ns-3 version should be retained as a historical reference. Further
+development should build on a stabilized, newly modularized successor to the
+2.0 kernel. Additional scenarios should not be embedded directly in
+`BloodCircuit` or `BloodVessel`.
 
-Der nächste Entwicklungsschritt sollte daher nicht primär „mehr Features“ lauten, sondern:
+The next development step should therefore not primarily be “more features,”
+but:
 
-> Eine reproduzierbare, validierbare und mehrskalige Plattform schaffen, in die Körper-, Organ-, Kapillar-, Zell- und Kommunikationsmodelle über wohldefinierte Schnittstellen eingebunden werden können.
+> Create a reproducible, validatable, multiscale platform into which body,
+> organ, capillary, cell, and communication models can be integrated through
+> well-defined interfaces.
 
-Die daraus abgeleitete Entwicklungsplanung befindet sich in der [MEHLISSA-Roadmap](ROADMAP.md).
+The resulting development plan is documented in the
+[MEHLISSA roadmap](ROADMAP.md).

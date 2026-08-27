@@ -3,213 +3,243 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# Referenzszenario: Proteom-Fingerprinting
+# Reference Scenario: Proteome Fingerprinting
 
-**Szenario-ID:** `FP-VERTICAL-001`  
-**Status:** fachliche Baseline für den ersten vertikalen Demonstrator  
-**Primärquellen:** Dissertation Kapitel 6, insbesondere S. 161–192; FP23  
-**Zugehörige Anforderung:** `SCN-001`
+**Scenario ID:** `FP-VERTICAL-001`
 
-## 1. Ziel und Forschungsfrage
+**Status:** domain baseline for the first vertical demonstrator
 
-Das Szenario untersucht, ob im Blutstrom transportierte Nanogeräte einen Krankheitsmarker einem Gewebe zuordnen und die codierte Detektion in sinnvoller Zeit an ein externes Gerät melden können.
+**Primary sources:** dissertation Chapter 6, especially pp. 161–192; FP23
 
-Der erste Nachbau reproduziert bewusst die in der Dissertation verwendete Timerabstraktion. Spätere Modellstufen ersetzen einzelne Abstraktionen durch organspezifische Perfusion, Konzentrationen, Bindungsmodelle, DNA-Tile-Assembly und ein explizites Gateway. Abweichungen von der publizierten Baseline werden erklärt, nicht auf sie zurückskaliert.
+**Associated requirement:** `SCN-001`
 
-## 2. Fachlicher Ablauf
+## 1. Purpose and research question
+
+The scenario investigates whether nanodevices transported in the bloodstream
+can assign a disease marker to a tissue and report the encoded detection to an
+external device within a meaningful time.
+
+The first reconstruction deliberately reproduces the timer abstraction used in
+the dissertation. Later model levels replace individual abstractions with
+organ-specific perfusion, concentrations, binding models, DNA-tile assembly,
+and an explicit gateway. Deviations from the published baseline are explained,
+not rescaled back to it.
+
+## 2. Domain workflow
 
 ```mermaid
 sequenceDiagram
-    participant Injection as Injektion linke Armvene
-    participant Body as Körperebene
-    participant Organ as Zielorgan/Gewebe
-    participant Locator as Nanolokator
-    participant Assembly as Nachrichtenbildung
-    participant Collector as Nanokollektor
-    participant Gateway as Handgelenk-Gateway
+    participant Injection as Left arm-vein injection
+    participant Body as Body layer
+    participant Organ as Target organ/tissue
+    participant Locator as Nanolocator
+    participant Assembly as Message assembly
+    participant Collector as Nanocollector
+    participant Gateway as Wrist gateway
 
-    Injection->>Body: Lokatoren und Kollektoren injizieren
-    Body->>Organ: passiver Transport zum Zielgewebe
-    Locator->>Organ: Fingerprint + Marker erkennen, Tiles einmalig freisetzen
-    Organ->>Assembly: organspezifischen Assembly-Timer starten
-    Assembly-->>Organ: codiertes Nachrichtenmolekül aktiv
-    Collector->>Organ: passende Nachricht aufnehmen
-    Organ->>Body: beladenen Kollektor zurückgeben
-    Body->>Gateway: Kollektor passiert Handgelenk
-    Gateway-->>Gateway: Gewebe-/Markerereignis und Zeit erfassen
+    Injection->>Body: Inject locators and collectors
+    Body->>Organ: Passive transport to target tissue
+    Locator->>Organ: Detect fingerprint + marker, release tiles once
+    Organ->>Assembly: Start tissue-specific assembly timer
+    Assembly-->>Organ: Encoded message molecule active
+    Collector->>Organ: Collect matching message
+    Organ->>Body: Return loaded collector
+    Body->>Gateway: Collector passes wrist
+    Gateway-->>Gateway: Record tissue/marker event and time
 ```
 
-Die fachliche Nachricht entsteht nur, wenn beide organspezifischen Fingerprint-Genprodukte **und** der zu lokalisierende Marker vorhanden sind. Das entspricht einer logischen UND-Verknüpfung. In der Baseline wird die Erkennung als gegeben angenommen; in späteren Stufen wird sie stochastisch aus Konzentration und Bindung abgeleitet.
+The domain message is created only when both tissue-specific fingerprint gene
+products **and** the marker to be localized are present. This is a logical AND.
+The baseline assumes successful detection; later levels derive it
+stochastically from concentration and binding.
 
-## 3. Rollen und Zustände
+## 3. Roles and states
 
-### 3.1 Nanolokator
+### 3.1 Nanolocator
 
-Ein Nanolokator besitzt:
+A nanolocator has:
 
-- eine stabile Entitäts-ID;
-- genau ein Zielgewebe beziehungsweise eine Zielorgan-Klasse;
-- die Kennung des 2-Gen-Fingerprints;
-- einen Marker- oder Regelbezug;
-- eine einmalig freisetzbare Tile-Nutzlast;
-- Zustände `loaded`, `released`, `expired`;
-- Zeit und Ort der Freisetzung.
+- a stable entity ID;
+- exactly one target tissue or target-organ class;
+- the identifier of the two-gene fingerprint;
+- an association with a marker or rule;
+- a tile payload that can be released once;
+- states `loaded`, `released`, `expired`;
+- release time and location.
 
-Beim ersten qualifizierenden Besuch des Zielgewebes setzt er seine Tiles einmalig frei. Ein späteres probabilistisches Modell darf auch erfolglose Besuche und falsch-negative Erkennung darstellen.
+On its first qualifying visit to the target tissue, it releases its tiles once.
+A later probabilistic model may also represent unsuccessful visits and
+false-negative detection.
 
-### 3.2 Nachrichtenmolekül
+### 3.2 Message molecule
 
-Eine aktive Nachricht besitzt:
+An active message has:
 
-- Zielgewebe/Fingerprint;
-- Marker-ID;
-- Freisetzungs- und Fertigstellungszeit;
-- Assembly-Modell und Parameterprovenienz;
-- Anzahl oder Konzentration verfügbarer Nachrichten;
-- Verfallszeit beziehungsweise Stabilität, sobald Daten dafür vorliegen.
+- target tissue/fingerprint;
+- marker ID;
+- release and completion time;
+- assembly model and parameter provenance;
+- number or concentration of available messages;
+- decay time or stability once data becomes available.
 
-Die Baseline verwendet eine gewebespezifische feste Assembly-Dauer von ungefähr 11 bis 33 Sekunden. Detailmodelle können NetTAS-Ergebnisse oder stochastische Surrogate verwenden.
+The baseline uses a tissue-specific fixed assembly duration of approximately
+11 to 33 seconds. Detailed models can use NetTAS results or stochastic
+surrogates.
 
-### 3.3 Nanokollektor
+### 3.3 Nanocollector
 
-Ein Nanokollektor besitzt:
+A nanocollector has:
 
-- eine stabile Entitäts-ID;
-- genau ein Zielgewebe beziehungsweise eine Zielorgan-Klasse;
-- Zustände `searching`, `carrying-message`, `reported`, `expired`;
-- eine Sammlungskapazität;
-- ein Mobilitätsmodell, in der historischen Baseline mit Verzögerungsfaktor 0,5;
-- Zeit und Ort von Aufnahme und Meldung.
+- a stable entity ID;
+- exactly one target tissue or target-organ class;
+- states `searching`, `carrying-message`, `reported`, `expired`;
+- a collection capacity;
+- a mobility model, with retardation factor 0.5 in the historical baseline;
+- time and location of collection and reporting.
 
-Er nimmt nur eine zum Ziel passende aktive Nachricht auf. Eine Meldung wird registriert, wenn ein beladener Kollektor den Messort am Handgelenk passiert.
+It collects only an active message matching its target. A report is registered
+when a loaded collector passes the measurement site at the wrist.
 
-## 4. Baseline-Gewebe
+## 4. Baseline tissues
 
-Die Dissertation bildet 18 untersuchte Fingerprint-Gewebe auf neun ohne Änderung direkt repräsentierte MEHLISSA-Regionen ab:
+The dissertation maps 18 investigated fingerprint tissues to nine MEHLISSA
+regions that are represented directly without modification:
 
-| Fingerprint | Gewebe | historischer Organindex | MEHLISSA-Region |
+| Fingerprint | Tissue | Historical organ index | MEHLISSA region |
 |---|---|---:|---|
-| FP3 | Speiseröhre | 24 | Brust und Rücken |
-| FP5 | Herz | 58 und 2 | Herz |
-| FP6 | Darm | 39 | Darm |
-| FP7 | Niere | 40 | Niere |
-| FP8 | Leber | 36 | Leber |
-| FP9 | Lunge | 61 | Lunge |
-| FP12 | Hypophyse | 9 | Kopf |
-| FP15 | Magen | 30 | Magen |
-| FP18 | Harnblase | 51 und 47 | Becken/Genitalien |
+| FP3 | esophagus | 24 | chest and back |
+| FP5 | heart | 58 and 2 | heart |
+| FP6 | intestine | 39 | intestine |
+| FP7 | kidney | 40 | kidney |
+| FP8 | liver | 36 | liver |
+| FP9 | lung | 61 | lung |
+| FP12 | pituitary gland | 9 | head |
+| FP15 | stomach | 30 | stomach |
+| FP18 | urinary bladder | 51 and 47 | pelvis/genitals |
 
-Historische Indizes sind Migrationsinformationen, keine dauerhaft fest codierten IDs der neuen Architektur. Neue Datenmodelle verwenden stabile externe Kennungen und explizite Mappingtabellen.
+Historical indices are migration information, not permanently hard-coded IDs
+in the new architecture. New data models use stable external identifiers and
+explicit mapping tables.
 
-## 5. Referenzkonfiguration
+## 5. Reference configuration
 
-| Parameter | Baselinewert |
+| Parameter | Baseline value |
 |---|---|
-| Injektionsort | linke Armvene, historisch Gefäß 64 |
-| Simulationsdauer | 3 Stunden |
-| Nanolokatoren | 1.000, möglichst gleichmäßig auf neun Ziele verteilt |
-| Nanokollektoren A | 1.000, möglichst gleichmäßig auf neun Ziele verteilt |
-| Nanokollektoren B | 10.000, möglichst gleichmäßig auf neun Ziele verteilt |
-| Transport | passiv im Blutstrom |
-| Locator-Freisetzung | einmalig beim qualifizierenden Zielgewebebesuch |
-| Assembly | fester gewebespezifischer Timer |
-| Auslesen | Ereignis beim Passieren des Handgelenks; physischer Auslesevorgang in der Baseline ohne Zusatzlatenz |
+| injection site | left arm vein, historically vessel 64 |
+| simulation duration | 3 hours |
+| nanolocators | 1,000, distributed as evenly as possible across nine targets |
+| nanocollectors A | 1,000, distributed as evenly as possible across nine targets |
+| nanocollectors B | 10,000, distributed as evenly as possible across nine targets |
+| transport | passive in the bloodstream |
+| locator release | once at a qualifying target-tissue visit |
+| assembly | fixed tissue-specific timer |
+| readout | event when passing the wrist; physical readout in the baseline has no additional latency |
 
-Da 1.000 nicht durch neun teilbar ist, muss das Manifest die exakte Verteilung und die Regel für Restgeräte speichern. Die historische Beschreibung verwendet näherungsweise 111 Geräte pro Gewebe.
+Because 1,000 is not divisible by nine, the manifest must store the exact
+distribution and rule for residual devices. The historical description uses
+approximately 111 devices per tissue.
 
-## 6. Publizierte Referenzwerte
+## 6. Published reference values
 
-| Region | erste Lokalisation (s) | Assembly (s) | Erfassung 1.000 NC (s) | Erfassung 10.000 NC (s) |
+| Region | First localization (s) | Assembly (s) | Collection with 1,000 NC (s) | Collection with 10,000 NC (s) |
 |---|---:|---:|---:|---:|
-| Brust | 40 | 16,47 | 559 | 223 |
-| Herz | 24 | 19,40 | 90 | 91 |
-| Darm | 41 | 11,75 | 231 | 152 |
-| Niere | 40 | 26,90 | 240 | 177 |
-| Leber | 40 | 21,71 | 489 | 182 |
-| Lunge | 25 | 15,99 | 209 | 91 |
-| Kopf | 41 | 13,43 | 351 | 158 |
-| Magen | 39 | 17,18 | 250 | 220 |
-| Becken | 46 | 17,74 | 944 | 245 |
+| chest | 40 | 16.47 | 559 | 223 |
+| heart | 24 | 19.40 | 90 | 91 |
+| intestine | 41 | 11.75 | 231 | 152 |
+| kidney | 40 | 26.90 | 240 | 177 |
+| liver | 40 | 21.71 | 489 | 182 |
+| lung | 25 | 15.99 | 209 | 91 |
+| head | 41 | 13.43 | 351 | 158 |
+| stomach | 39 | 17.18 | 250 | 220 |
+| pelvis | 46 | 17.74 | 944 | 245 |
 
-Diese Werte sind **Regressionserwartungen der historischen Modellabstraktion**, keine klinischen Zielwerte. Die Dissertation berichtet bei 10.000 Kollektoren Erfassungszeiten von ungefähr 1,5 bis gut 4 Minuten. Eine weitere Erhöhung auf 20.000 brachte nur geringe zusätzliche Verbesserung. Nach einer Stunde waren bis auf 34 Lokatoren alle entladen; nach fünf Stunden waren alle Fingerprints freigesetzt.
+These values are **regression expectations of the historical model
+abstraction**, not clinical targets. For 10,000 collectors, the dissertation
+reports collection times from about 1.5 to just over 4 minutes. Increasing the
+number to 20,000 brought only minor additional improvement. After one hour, all
+but 34 locators had unloaded; after five hours, all fingerprints had been
+released.
 
-## 7. Messgrößen
+## 7. Measures
 
-Jeder Lauf muss mindestens ausgeben:
+Every run shall report at least:
 
-- Zeit bis zur ersten Ankunft eines passenden Lokators je Gewebe;
-- Zeit und Anzahl der Tile-Freisetzungen;
-- Zeit bis zur Fertigstellung aktiver Nachrichten;
-- Zeit bis zur ersten Aufnahme durch einen Kollektor;
-- End-to-End-Zeit von Injektion bis externer Meldung;
-- Anteil entladener Lokatoren und meldender Kollektoren über der Zeit;
-- Anzahl vollständiger Kreisläufe bis zum jeweiligen Ereignis;
-- falsch-positive, falsch-negative und mehrdeutige Erkennungen, sobald die Baseline verlassen wird;
-- Laufzeit, Speicher und Ausgabevolumen;
-- Seeds, Modell-, Daten- und Parameterprovenienz.
+- time to first arrival of a matching locator per tissue;
+- time and count of tile releases;
+- time to completion of active messages;
+- time to first collection by a collector;
+- end-to-end time from injection to external report;
+- fraction of unloaded locators and reporting collectors over time;
+- number of complete circulations before each event;
+- false-positive, false-negative, and ambiguous detections once the baseline is extended;
+- runtime, memory, and output volume;
+- seeds, model, data, and parameter provenance.
 
-Ergebnisse werden je Replikat und als Verteilung über Replikate berichtet. Median, Quantile und Konfidenzintervall sind einer einzelnen Mittelwertzahl vorzuziehen.
+Results are reported per replicate and as a distribution across replicates.
+Median, quantiles, and a confidence interval are preferable to a single mean.
 
-## 8. Akzeptanzstufen
+## 8. Acceptance levels
 
-### Stufe A – historische Timerbaseline
+### Level A – historical timer baseline
 
-- neun Zielregionen sind datengetrieben konfiguriert;
-- Locator- und Collector-Zustandsautomaten sind getestet;
-- keine Gewebe- oder Gefäß-ID ist im Kern hart codiert;
-- die Rangfolge und Größenordnung der Referenzzeiten ist reproduzierbar;
-- numerische/statistische Toleranzen werden nach ersten Replikaten begründet festgelegt.
+- nine target regions are configured through data;
+- locator and collector state machines are tested;
+- no tissue or vessel ID is hard-coded in the kernel;
+- rank order and magnitude of the reference times are reproducible;
+- numerical/statistical tolerances are justified after initial replicates.
 
-### Stufe B – organspezifische Erkennung
+### Level B – organ-specific detection
 
-- Fingerprints bestehen standardmäßig aus zwei risikoreduzierten Genprodukten;
-- Konzentration, Nachweisgrenze und Bindung bestimmen die Erkennungswahrscheinlichkeit;
-- `risk = 0` des Auswahlalgorithmus und simulierte falsch-positive Rate werden getrennt ausgewiesen;
-- Krankheitsmarker kann unabhängig vom Organfingerprint ein- oder ausgeschaltet werden.
+- fingerprints consist of two risk-reduced gene products by default;
+- concentration, detection limit, and binding determine detection probability;
+- `risk = 0` from the selection algorithm and simulated false-positive rate are reported separately;
+- the disease marker can be enabled or disabled independently of the organ fingerprint.
 
-### Stufe C – Nachrichtenbildung
+### Level C – message assembly
 
-- feste Timer können durch ein NetTAS-basiertes Surrogat oder Detailmodell ersetzt werden;
-- Assembly-Dauer hängt nachvollziehbar von Tilezahl/Konzentration und Modellparametern ab;
-- die historische Timerbaseline bleibt als Regression erhalten.
+- fixed timers can be replaced with a NetTAS-based surrogate or detailed model;
+- assembly duration depends traceably on tile count/concentration and model parameters;
+- the historical timer baseline remains as a regression.
 
-### Stufe D – Gateway und Nano-IoT
+### Level D – gateway and nano-IoT
 
-- Handgelenk-Gateway ist ein explizites Modell mit Reichweite, Kontaktzeit und Lesewahrscheinlichkeit;
-- Auslese- und externe Kommunikationslatenz werden ergänzt;
-- biologische und kommunikative Fehler werden getrennt gemessen.
+- the wrist gateway is an explicit model with range, contact time, and read probability;
+- readout and external communication latency are added;
+- biological and communication errors are measured separately.
 
-### Stufe E – Robustheit und Evidenz
+### Level E – robustness and evidence
 
-- Sensitivität gegenüber Gerätezahl, Injektionsort, Perfusion, Assembly, Verfall und Bindung;
-- Vergleich von Ruhe- und Belastungszustand;
-- Unsicherheitsfortpflanzung und Parameteridentifizierbarkeit;
-- dokumentierte Wetlab-/Biologiedatenlücken und Gültigkeitsgrenzen.
+- sensitivity to device count, injection site, perfusion, assembly, decay, and binding;
+- comparison of rest and exercise states;
+- uncertainty propagation and parameter identifiability;
+- documented wet-lab/biology data gaps and validity limitations.
 
-## 9. Automatisierte Tests
+## 9. Automated tests
 
-Mindestens folgende Tests werden vor M7 erwartet:
+At least the following tests are expected before M7:
 
-1. Ein Lokator setzt seine Nutzlast höchstens einmal frei.
-2. Ein Lokator reagiert nicht auf ein falsches Gewebe.
-3. Eine Nachricht wird nicht vor Ende ihrer Assembly-Dauer aktiv.
-4. Ohne Marker oder bei fehlendem Fingerprint-Teil entsteht keine vollständige Nachricht.
-5. Ein Kollektor sammelt nur passende, aktive Nachrichten.
-6. Ein unbeladener Kollektor erzeugt am Gateway keine positive Meldung.
-7. Ereigniszeiten sind monoton und kausal geordnet.
-8. Entitäten gehen bei Übergaben zwischen Ebenen nicht verloren und werden nicht dupliziert.
-9. Gleiche Konfiguration und Seeds reproduzieren denselben Ereignisstrom.
-10. Steigende Kollektorzahl verschlechtert die erwartete Erfassungszeit nicht systematisch; statistische Ausreißer werden über Replikate bewertet.
+1. A locator releases its payload at most once.
+2. A locator does not react to the wrong tissue.
+3. A message does not become active before its assembly duration has elapsed.
+4. Without the marker or with one fingerprint component missing, no complete message is created.
+5. A collector collects only matching, active messages.
+6. An unloaded collector produces no positive report at the gateway.
+7. Event times are monotonic and causally ordered.
+8. Entities are neither lost nor duplicated during exchanges between layers.
+9. Identical configuration and seeds reproduce the same event stream.
+10. Increasing collector count does not systematically worsen expected collection time; statistical outliers are assessed across replicates.
 
-## 10. Offene Forschungsfragen
+## 10. Open research questions
 
-- Werden mRNA, Proteine oder beide als physisches Ziel detektiert?
-- Wie stabil sind die ausgewählten 2-Gen-Fingerprints zwischen Personen, Alter, Geschlecht, Krankheit und Aktivität?
-- Welche Bindungsaffinitäten, Nachweisgrenzen und Freisetzungswahrscheinlichkeiten sind realistisch?
-- Wie lange bleiben Nachrichtenmoleküle im Gewebe verfügbar und wie werden sie abgebaut?
-- Welche Größe, Geschwindigkeit, Lebensdauer und Immuninteraktion besitzen Lokatoren und Kollektoren?
-- Wie realistisch ist ein gewebespezifisch vorkonfigurierter Kollektor gegenüber einem universellen Decoder?
-- Welche Gateway-Reichweite und Kontaktzeit sind am Handgelenk erreichbar?
-- Wie ändern detaillierte Organ-/Kapillarmodelle die bisher nur aus dem Ganzkörpergraphen resultierenden Zeiten?
+- Are mRNA, proteins, or both detected as the physical target?
+- How stable are the selected two-gene fingerprints across persons, age, sex, disease, and activity?
+- Which binding affinities, detection limits, and release probabilities are realistic?
+- How long do message molecules remain available in tissue and how are they degraded?
+- What size, velocity, lifetime, and immune interaction do locators and collectors have?
+- How realistic is a tissue-specific preconfigured collector compared with a universal decoder?
+- What gateway range and contact time are achievable at the wrist?
+- How do detailed organ/capillary models change times that currently result only from the whole-body graph?
 
-Diese Fragen sind Teil des Forschungsprogramms und dürfen in Stufe A als explizit markierte Annahmen behandelt werden. Sie dürfen nicht als empirisch bestätigt dargestellt werden.
+These questions are part of the research program and may be treated as
+explicitly labeled assumptions in Level A. They must not be presented as
+empirically confirmed.

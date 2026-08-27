@@ -3,43 +3,51 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# ADR-0003: C++20, CMake und vcpkg als technisches Fundament
+# ADR-0003: C++20, CMake, and vcpkg as the Technical Foundation
 
 - **Status:** Accepted
-- **Datum:** 26. August 2026
-- **Betrifft:** M0/M1; `QUA-001`, `QUA-002`, `QUA-005`
+- **Date:** 26 August 2026
+- **Applies to:** M0/M1; `QUA-001`, `QUA-002`, `QUA-005`
 
-## Kontext
+## Context
 
-Ganzkörper- und Mehrskalensimulationen erfordern kontrollierbare Laufzeit, Speicherlayout und Parallelisierung. Historische MEHLISSA-Versionen sind in C++ implementiert. Für Experimente, Datenanalyse und wissenschaftliche Workflows ist Python langfristig attraktiv, als alleiniger Kern für große Agentenzahlen aber nicht ohne vorherigen Leistungsvergleich begründbar.
+Whole-body and multiscale simulations require controllable runtime, memory
+layout, and parallelization. Historical MEHLISSA versions are implemented in
+C++. Python is attractive in the long term for experiments, data analysis, and
+scientific workflows, but using it as the sole kernel for large agent counts
+cannot be justified without prior performance comparison.
 
-Die lokale Entwicklungsumgebung und CI unterstützen MSVC, GCC und Clang. Abhängigkeiten müssen reproduzierbar fixiert werden.
+The local development environment and CI support MSVC, GCC, and Clang.
+Dependencies must be pinned reproducibly.
 
-## Entscheidung
+## Decision
 
-- Der Simulationskern und performancekritische Modelle werden in standardkonformem C++20 entwickelt.
-- CMake ist das alleinige Buildsystem; Builds erfolgen out of source über Presets.
-- Direkte C++-Abhängigkeiten werden in `vcpkg.json` mit festem Baseline-Commit deklariert.
-- CTest orchestriert Tests; Catch2 ist die Unit-Testbibliothek.
-- MSVC, GCC und Clang werden in CI unterstützt; der Analysejob verwendet clang-tidy sowie Address-/UndefinedBehaviorSanitizer.
-- Python wird später als versionierte API für Experimenterstellung, Ensembles und Analyse ergänzt. Die Bindung darf das C++-Domänenmodell nicht duplizieren.
-- Neue Abhängigkeiten benötigen einen konkreten Anwendungsfall, Lizenzprüfung und begründeten ADR-Eintrag, sofern sie die Architektur prägen.
+- The simulation kernel and performance-critical models are developed in standards-compliant C++20.
+- CMake is the sole build system; builds are out of source and use presets.
+- Direct C++ dependencies are declared in `vcpkg.json` with a fixed baseline commit.
+- CTest orchestrates tests; Catch2 is the unit-test framework.
+- CI supports MSVC, GCC, and Clang; the analysis job uses clang-tidy and the Address/UndefinedBehavior sanitizers.
+- Python is added later as a versioned API for experiment creation, ensembles, and analysis. The binding must not duplicate the C++ domain model.
+- New dependencies require a concrete use case, license review, and a justified ADR entry if they shape the architecture.
 
-## Folgen
+## Consequences
 
-Positiv:
+Positive:
 
-- Performancekritische Pfade und Speicherlayout bleiben kontrollierbar.
-- Bestehende C++-Kenntnisse und ausgewählte Legacy-Algorithmen sind nutzbar.
-- Der Build ist bereits auf drei Compilern automatisiert geprüft.
-- Python kann eine nutzerfreundliche Oberfläche liefern, ohne Kernkorrektheit zu ersetzen.
+- Performance-critical paths and memory layout remain controllable.
+- Existing C++ expertise and selected legacy algorithms remain usable.
+- The build is already checked automatically with three compilers.
+- Python can provide a user-friendly interface without replacing kernel correctness.
 
-Negativ:
+Negative:
 
-- C++ erhöht die Anforderungen an Ownership-, Einheiten- und API-Disziplin.
-- Sprachübergreifende Bindungen und Paketierung kommen als zusätzlicher Aufwand hinzu.
-- vcpkg benötigt erreichbare Paketquellen; der Offline-Smoke-Test deckt nur den Kern ab.
+- C++ increases the demands on ownership, units, and API discipline.
+- Cross-language bindings and packaging add effort.
+- vcpkg requires reachable package sources; the offline smoke test covers only the kernel.
 
-## Neubewertung
+## Reassessment
 
-Die Entscheidung wird nach M2 anhand gemessener Profile, API-Erfahrungen und des Bedarfs externer Modellierer überprüft. Ein alternativer Kern ist nur sinnvoll, wenn ein repräsentativer Prototyp Korrektheit, Reproduzierbarkeit und Performance nachweislich verbessert.
+The decision will be reviewed after M2 using measured profiles, API experience,
+and the needs of external modelers. An alternative kernel is justified only if
+a representative prototype demonstrably improves correctness, reproducibility,
+and performance.

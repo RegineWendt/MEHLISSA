@@ -3,88 +3,70 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# ADR-0007: Lizenzmodell des Repositories
+# ADR-0007: Repository Licensing Model
 
 - **Status:** Accepted
-- **Datum:** 26. August 2026
-- **Entscheider:** Projektleitung MEHLISSA Next
-- **Betrifft:** M0/M1-Release; alle Quell- und Datenartefakte
+- **Date:** 26 August 2026
+- **Decision makers:** MEHLISSA Next project leadership
+- **Applies to:** M0/M1 release; all source and data artifacts
 
-## Kontext
+## Context
 
-Die Quelldateien in `mehlissa/` und `mehlissa2.0/` enthalten GNU-GPL-Version-2-Hinweise. Als Rechteinhaber werden Universität zu Lübeck und teilweise Technische Universität Berlin genannt. Eine zentrale Lizenzdatei fehlt und GitHub erkennt keine Lizenz. Die neu angelegten Next-Dateien besitzen noch keine SPDX-Kennzeichnung.
+Source files in `mehlissa/` and `mehlissa2.0/` contain GNU GPL version 2
+notices. Universität zu Lübeck and, in some cases, Technische Universität
+Berlin are named as rights holders. No central license file exists and GitHub
+does not detect a license. Newly created Next files do not yet have SPDX labels.
 
-Ohne eine eindeutige repositoryweite Erklärung ist für Nutzer und Beitragende unklar, unter welchen Bedingungen Next-Code, Dokumentation und Daten verwendet werden dürfen. Gleichzeitig dürfen Code- und Datenlizenzen nicht vermischt werden.
+Without an unambiguous repository-wide declaration, users and contributors do
+not know under what terms Next code, documentation, and data may be used. Code
+and data licenses must not be conflated.
 
-## Entscheidung
+## Decision
 
-1. Vollständig neu und unabhängig entwickelter MEHLISSA-Next-Quellcode,
-   Buildskripte und Tests werden unter `MPL-2.0` veröffentlicht.
-2. Der historische Code in `mehlissa/` und `mehlissa2.0/` bleibt
-   `GPL-2.0-only`. Direkte Portierungen, Änderungen und aus diesem Code
-   abgeleitete Integrationskomponenten behalten `GPL-2.0-only`.
-3. Neue, projekteigene Dokumentation und zur Veröffentlichung freigegebene
-   eigene Daten werden unter `CC-BY-4.0` veröffentlicht.
-4. Die Lizenz gilt pro Datei beziehungsweise Artefakt. Neue Dateien erhalten
-   SPDX-Kennzeichnungen; nicht kommentierbare Formate erhalten eine
-   `.license`-Sidecar-Datei oder ein eindeutiges Datenmanifest.
-5. Bestehende Copyright- und Autorenhinweise bleiben erhalten.
-6. Bestehende Datensätze werden durch diese Entscheidung nicht rückwirkend
-   umlizenziert. Ihre Freigabe unter CC BY 4.0 setzt eine bestätigte
-   Rechtekette voraus; bis dahin bleiben sie außerhalb öffentlicher
-   Next-Datenpakete.
-7. Fremddaten, Publikationen und Drittsoftware bleiben unter ihren jeweiligen
-   Bedingungen. `LICENSE.md`, `NOTICE.md`, `THIRD_PARTY_NOTICES.md` und
-   Datenmanifeste dokumentieren die Grenzen.
+1. Completely new and independently developed MEHLISSA Next source code, build scripts, and tests are released under `MPL-2.0`.
+2. Historical code in `mehlissa/` and `mehlissa2.0/` remains `GPL-2.0-only`. Direct ports, modifications, and integration components derived from this code retain `GPL-2.0-only`.
+3. New original project documentation and original data approved for publication are released under `CC-BY-4.0`.
+4. Licensing applies per file or artifact. New files receive SPDX labels; formats that cannot contain comments receive a `.license` sidecar or an unambiguous data manifest.
+5. Existing copyright and author notices are retained.
+6. This decision does not retroactively relicense existing data sets. Their release under CC BY 4.0 requires a confirmed chain of rights; until then they remain outside public Next data packages.
+7. Third-party data, publications, and software remain subject to their respective terms. `LICENSE.md`, `NOTICE.md`, `THIRD_PARTY_NOTICES.md`, and data manifests document the boundaries.
 
-## Begründung
+## Rationale
 
-- GPL-2.0-only entspricht den Lizenzhinweisen des vorhandenen Codes und bleibt
-  mit ns-3 kompatibel.
-- MPL-2.0 hält Änderungen am neuen Kern auf Dateiebene offen, erleichtert aber
-  dessen Einbindung in größere Forschungs- und Industrieanwendungen.
-- Die getrennte Lizenzierung vermeidet eine unautorisierte Relizenzierung
-  historischer Beiträge.
-- CC BY 4.0 ist für Dokumentation und zitierbare Forschungsdaten geeigneter als
-  eine Softwarelizenz.
-- SPDX-Kennzeichnungen machen die jeweilige Lizenz maschinenlesbar.
+- GPL-2.0-only matches the license notices in the existing code and remains compatible with ns-3.
+- MPL-2.0 keeps changes to the new kernel open at file level while making integration into larger research and industrial applications easier.
+- Separate licensing avoids unauthorized relicensing of historical contributions.
+- CC BY 4.0 is more suitable than a software license for documentation and citable research data.
+- SPDX labels make the applicable license machine-readable.
 
-## Folgen
+## Consequences
 
-Positiv:
+Positive:
 
-- Nutzer und Beitragende erhalten eindeutige Bedingungen pro Artefakt.
-- Der neue Kern bleibt offen und ist zugleich leichter wiederverwendbar als
-  unter starkem Copyleft für das Gesamtwerk.
-- Lizenzprüfung kann in CI automatisiert werden.
+- Users and contributors receive unambiguous terms for each artifact.
+- The new kernel remains open while being easier to reuse than under strong copyleft for the entire work.
+- License checks can be automated in CI.
 
-Negativ:
+Negative:
 
-- Die Grenze zwischen unabhängiger Neuentwicklung und GPL-Portierung muss in
-  Reviews konsequent geprüft werden.
-- Ein aus Legacy-Code abgeleitetes Werk kann nicht allein durch Ablage in einem
-  Next-Verzeichnis zu MPL-Code werden.
-- Bestandsdaten und Publikations-PDFs benötigen weiterhin eine getrennte
-  Rechteprüfung.
-- Release- und Paketierungsprozesse müssen die Mehrfachlizenzierung abbilden.
+- Reviews must consistently check the boundary between independent new development and GPL ports.
+- A work derived from legacy code does not become MPL code merely by being placed in a Next directory.
+- Existing data and publication PDFs still require a separate rights review.
+- Release and packaging processes must represent the multiple licenses.
 
-## Alternativen
+## Alternatives
 
-- **GPL-2.0-only für das gesamte Repository:** rechtlich und operativ einfacher,
-  aber mit höheren Integrationshürden für unabhängige Next-Komponenten.
-- **BSD-3-Clause/MIT für Next:** maximale Wiederverwendbarkeit, verlangt aber
-  nicht, Verbesserungen an den betroffenen Dateien offenzulegen.
-- **Apache-2.0 für Next:** wegen der Inkompatibilität mit GPL-2.0-only für die
-  geplanten Integrationspfade ungünstig.
-- **Duale Lizenz:** flexibel, setzt jedoch umfassende Zustimmung aller
-  Rechteinhaber und ein Contributor Agreement voraus.
-- **Keine zentrale Lizenz:** abgelehnt; lässt zentrale Nutzungsfragen offen und verhindert einen sauberen öffentlichen Release.
+- **GPL-2.0-only for the entire repository:** legally and operationally simpler, but creates higher integration barriers for independent Next components.
+- **BSD-3-Clause/MIT for Next:** maximum reusability, but does not require disclosure of improvements to the affected files.
+- **Apache-2.0 for Next:** unfavorable for the planned integration paths because of incompatibility with GPL-2.0-only.
+- **Dual license:** flexible, but requires comprehensive consent from all rights holders and a contributor agreement.
+- **No central license:** rejected; leaves fundamental use questions unanswered and prevents a clean public release.
 
-## Umsetzungs- und Prüfregel
+## Implementation and review rule
 
-Die Entscheidung ist mit `LICENSE.md`, vollständigen Texten unter `LICENSES/`,
-Notices und SPDX-Kennzeichnungen umgesetzt. Jeder Pull Request mit portiertem
-Legacy-Code oder neuen Daten muss die zutreffende Lizenz und Provenienz explizit
-prüfen. Vor einer institutionellen öffentlichen Freigabe soll die Rechts- oder
-Transferstelle die dokumentierten Grenzen bestätigen; diese Prüfung ändert
-nicht rückwirkend die Lizenzen fremder Artefakte.
+The decision is implemented through `LICENSE.md`, full texts under `LICENSES/`,
+notices, and SPDX labels. Every pull request containing ported legacy code or
+new data must explicitly verify the applicable license and provenance. Before
+an institutional public release, the legal or transfer office should confirm
+the documented boundaries; this review does not retroactively change licenses
+of third-party artifacts.

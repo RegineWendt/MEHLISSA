@@ -3,42 +3,41 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# Einheitensystem des MEHLISSA-Kerns
+# MEHLISSA Kernel Unit System
 
-MEHLISSA Next rechnet intern in SI und unterscheidet physikalische Dimensionen
-bereits im C++-Typsystem. Ein Wert ohne sichtbare Einheit soll nur an einer
-eng begrenzten Serialisierungs- oder Mathematikgrenze vorkommen.
+MEHLISSA Next uses SI internally and distinguishes physical dimensions in the
+C++ type system. A value without a visible unit should occur only at a tightly
+bounded serialization or mathematics boundary.
 
-## Typen und kanonische Einheiten
+## Types and canonical units
 
-| C++-Typ | Dimension | interner SI-Wert | benannte Eingaben |
+| C++ type | Dimension | Internal SI value | Named inputs |
 |---|---:|---|---|
-| `Length` | L | Meter | `meters`, `millimeters`, `micrometers` |
-| `Time` | T | Sekunde | `seconds`, `milliseconds`, `minutes` |
-| `Area` | L² | Quadratmeter | Ableitung aus `Length * Length`, `square_meters` |
-| `Volume` | L³ | Kubikmeter | `cubic_meters`, `liters`, `milliliters` |
-| `Speed` | L/T | Meter pro Sekunde | Ableitung aus `Length / Time`, `meters_per_second`, `millimeters_per_second` |
-| `Amount` | N | Mol | `moles`, `millimoles`, `micromoles` |
-| `Concentration` | N/L³ | Mol pro Kubikmeter | Ableitung aus `Amount / Volume`, `moles_per_cubic_meter`, `millimoles_per_liter` |
+| `Length` | L | metre | `meters`, `millimeters`, `micrometers` |
+| `Time` | T | second | `seconds`, `milliseconds`, `minutes` |
+| `Area` | L² | square metre | derived from `Length * Length`, `square_meters` |
+| `Volume` | L³ | cubic metre | `cubic_meters`, `liters`, `milliliters` |
+| `Speed` | L/T | metre per second | derived from `Length / Time`, `meters_per_second`, `millimeters_per_second` |
+| `Amount` | N | mole | `moles`, `millimoles`, `micromoles` |
+| `Concentration` | N/L³ | mole per cubic metre | derived from `Amount / Volume`, `moles_per_cubic_meter`, `millimoles_per_liter` |
 
-`1 mmol/l` entspricht exakt `1 mol/m³`. Die Ganzzahl-Nanosekunden der
-`SimulationClock` bleiben davon getrennt, damit Ereignisse ohne Rundungsdrift
-geordnet werden.
+`1 mmol/l` is exactly equal to `1 mol/m³`. Integer nanoseconds in the
+`SimulationClock` remain separate so that events can be ordered without
+rounding drift.
 
-## Verbindliche Regeln
+## Binding rules
 
-- Keine implizite Konvertierung von oder zu `double`.
-- Addition und Subtraktion nur bei gleicher Dimension.
-- Multiplikation und Division leiten die Dimension des Ergebnisses ab.
-- Öffentliche Modell-APIs verwenden Größen-Typen, keine Einheitensuffixe an
-  nackten Zahlen.
-- JSON- und Datenformate nennen Einheit und Wert getrennt und konvertieren beim
-  Dekodieren genau einmal in SI.
-- Modelle prüfen Endlichkeit, Vorzeichen und fachliche Wertebereiche an ihrer
-  Eingabegrenze; Dimensionssicherheit ersetzt diese Validierung nicht.
+- No implicit conversion from or to `double`.
+- Addition and subtraction only for equal dimensions.
+- Multiplication and division derive the result dimension.
+- Public model APIs use quantity types, not unit suffixes on bare numbers.
+- JSON and data formats state the unit and value separately and convert to SI
+  exactly once during decoding.
+- Models check finiteness, sign, and domain-specific value ranges at their input
+  boundary; dimension safety does not replace this validation.
 
-## Nachweis
+## Verification
 
-`tests/quantity_tests.cpp` enthält Laufzeit- und Compile-Zeit-Tests für alle
-M1-Größen. Die Geometrietests verwenden die migrierte `Position3D`-API und der
-abhängigkeitenfreie Smoke-Test prüft sie zusätzlich.
+`tests/quantity_tests.cpp` contains runtime and compile-time tests for all M1
+quantities. Geometry tests use the migrated `Position3D` API, which is also
+checked by the dependency-free smoke test.

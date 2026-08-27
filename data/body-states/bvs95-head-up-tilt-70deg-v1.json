@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "head-up-tilt-70deg-0.783x",
+    "version": "1.0.0",
+    "title": "Sustained 70-degree head-up-tilt global-flow sensitivity profile"
+  },
+  "compatible_model": {
+    "id": "bvs95-dissertation-rest",
+    "version": "1.0.0"
+  },
+  "validity": {
+    "population": "nine healthy adults from Harms et al. 2003 mapped to the schematic BVS95 graph",
+    "physiological_state": "sustained 70-degree head-up tilt; global-flow sensitivity profile",
+    "description": "Cardiac output is scaled from the reported median 6.0 L/min supine to 4.7 L/min during sustained head-up tilt. Posture-dependent cerebral venous rerouting is not represented by BVS95."
+  },
+  "cardiac_output": {
+    "anchor_segment_id": "bvs95-002",
+    "multiplier": 0.7833333333333333
+  },
+  "transition_overrides": [],
+  "sources": [
+    {
+      "id": "harms-head-up-tilt-2003",
+      "citation": "Harms MPM et al. Postural effects on cardiac output and mixed venous oxygen saturation in humans. Exp Physiol. 2003;88:611-616. doi:10.1113/eph8802580.",
+      "license": "Citation and derived multiplier only; article rights remain with the publisher."
+    },
+    {
+      "id": "gisolf-cerebral-outflow-2004",
+      "citation": "Gisolf J et al. Human cerebral venous outflow pathway depends on posture and central venous pressure. J Physiol. 2004;560:317-327. doi:10.1113/jphysiol.2004.070409.",
+      "license": "Citation and qualitative model limitation only; article rights remain with the publisher."
+    }
+  ],
+  "limitations": [
+    "This is a global-flow sensitivity scenario, not a complete orthostatic circulation model.",
+    "BVS95 lacks the vertebral venous plexus that becomes a major cerebral outflow pathway upright; therefore no jugular transition override is scientifically justified.",
+    "The source cohort is small and the reported cardiac-output range shows substantial inter-individual variation.",
+    "Pressure, venous collapse, baroreflexes and time-dependent orthostatic adaptation are absent."
+  ]
+}

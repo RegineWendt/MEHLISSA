@@ -3,88 +3,105 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# Roadmap für eine neue MEHLISSA-Generation
+# Roadmap for a New MEHLISSA Generation
 
-**Stand:** 26. August 2026  
-**Strategisches Ziel:** Umsetzung der in der Dissertation beschriebenen MEHLISSA-Vision als reproduzierbare, modular gekoppelte und wissenschaftlich validierbare Mehrskalen-Simulationsplattform  
-**Ausgangsanalyse:** [MEHLISSA – Analyse des aktuellen Stands](IST_ANALYSE.md)
+**As of:** 26 August 2026
 
-## 1. Ziel der Roadmap
+**Strategic objective:** Implement the MEHLISSA vision described in the
+dissertation as a reproducible, modularly coupled, and scientifically
+validatable multiscale simulation platform
 
-Die neue MEHLISSA-Generation soll die Vision der Dissertation möglichst vollständig verwirklichen:
+**Baseline analysis:** [MEHLISSA – current-state analysis](IST_ANALYSE.md)
 
-- Ganzkörpertransport im menschlichen Blutkreislauf;
-- organspezifische Gefäß- und Perfusionsmodelle;
-- Kapillarbetten, Stoffaustausch und lokale molekulare Kommunikation;
-- Nanogerät-Zell- und intrazelluläre Modelle;
-- ein Nano-IoT-System aus Nanogeräten, Gateways, BAN und externer Steuerung;
-- medizinische Szenarien von Monitoring und Lokalisierung bis zu Therapie und Digital Twin.
+## 1. Purpose of the roadmap
 
-Diese Roadmap interpretiert die Dissertation als architektonischen Nordstern. Wo eine direkte mikroskopische Simulation physikalisch oder rechnerisch nicht realistisch ist, wird die Vision mit hybriden Mehrskalenmodellen umgesetzt.
+The new MEHLISSA generation should implement the dissertation vision as fully
+as possible:
 
-Die Roadmap ist absichtlich in abhängige Meilensteine und Qualitätsgates gegliedert. Zeitangaben sind Richtwerte für ein kleines Forschungsteam und sollten nach Abschluss der Fundamentphase anhand gemessener Entwicklungsgeschwindigkeit neu geschätzt werden.
+- whole-body transport in the human bloodstream;
+- organ-specific vascular and perfusion models;
+- capillary beds, substance exchange, and local molecular communication;
+- nanodevice–cell and intracellular models;
+- a nano-IoT system comprising nanodevices, gateways, a BAN, and external control;
+- medical scenarios from monitoring and localization to treatment and a digital twin.
 
-## 2. Leitprinzipien
+This roadmap treats the dissertation as the architectural north star. Where a
+direct microscopic simulation is physically or computationally unrealistic,
+the vision is implemented through hybrid multiscale models.
 
-### 2.1 Die vier Ebenen bleiben eigenständige Modelle
+The roadmap is deliberately divided into dependent milestones and quality
+gates. Time estimates are indicative for a small research team and should be
+re-estimated after the foundation phase using measured development velocity.
 
-Körper-, Organ-, Kapillar- und Zellebene dürfen nicht erneut in einer zentralen Klasse vermischt werden. Jede Ebene erhält:
+## 2. Guiding principles
 
-- ein eigenes Zustandsmodell;
-- eigene Raum- und Zeitskalen;
-- eine definierte Ein- und Ausgabeschnittstelle;
-- eigene Validierungsdaten;
-- austauschbare Modellvarianten.
+### 2.1 The four layers remain independent models
 
-### 2.2 Szenarien komponieren Modelle, sie verändern nicht den Kern
+The body, organ, capillary, and cell layers must not again be mixed in a central
+class. Each layer receives:
 
-Fingerprinting, CAR-T, Liquid Biopsy, Endokrinologie oder Metastasenbehandlung werden als Szenariopakete implementiert. Sie konfigurieren und verbinden vorhandene Modelle, fügen aber keine szenariospezifischen `if`-Blöcke in den Simulationskern ein.
+- its own state model;
+- its own spatial and temporal scales;
+- a defined input and output interface;
+- its own validation data;
+- interchangeable model variants.
 
-### 2.3 Hybride Mehrskalenmodellierung statt vollständiger Einzelobjektsimulation
+### 2.2 Scenarios compose models; they do not modify the kernel
 
-Biologisch realistische Größenordnungen können nicht als einzelne C++-Objekte repräsentiert werden. Deshalb gilt:
+Fingerprinting, CAR-T, liquid biopsy, endocrinology, and metastasis treatment
+are implemented as scenario packages. They configure and connect existing
+models but add no scenario-specific `if` blocks to the simulation kernel.
 
-- Nanogeräte und seltene Zellen können agentenbasiert modelliert werden.
-- Große Zellpopulationen werden als Populationen, Kompartimente oder stochastische Zählprozesse modelliert.
-- Moleküle werden je nach Fragestellung als Konzentrationsfeld, Reaktionsnetz, Partikelstichprobe oder analytisches Kanalmodell dargestellt.
-- Detaillierte Kapillar- und Zellmodelle werden nur in ausgewählten Regions of Interest aktiviert.
-- Surrogatmodelle dürfen externe Detailmodelle ersetzen, sofern Herkunft, Gültigkeitsbereich und Fehler dokumentiert sind.
+### 2.3 Hybrid multiscale modeling instead of complete individual-object simulation
 
-### 2.4 Wissenschaftliche Reproduzierbarkeit ist eine Kernfunktion
+Biologically realistic scales cannot all be represented as individual C++
+objects. Therefore:
 
-Jeder Simulationslauf muss vollständig rekonstruierbar sein. Dazu gehören:
+- Nanodevices and rare cells may be modeled as agents.
+- Large cell populations are modeled as populations, compartments, or stochastic counting processes.
+- Depending on the question, molecules are represented as concentration fields, reaction networks, particle samples, or analytical channel models.
+- Detailed capillary and cell models are activated only in selected regions of interest.
+- Surrogates may replace external detailed models if their origin, validity scope, and error are documented.
 
-- Software- und Modellversionen;
-- Eingabedaten und deren Prüfsummen;
-- Parameter und Einheiten;
-- Seeds und Zufallsstromzuordnung;
-- aktivierte Modellvarianten;
-- Hardware- und Laufzeitinformationen;
-- Ergebnis- und Validierungsmetadaten.
+### 2.4 Scientific reproducibility is a core feature
 
-### 2.5 Validierung erfolgt schrittweise und szenariospezifisch
+Every simulation run must be completely reconstructable, including:
 
-MEHLISSA ist zunächst eine Forschungs- und Hypothesentestplattform. Klinische Vorhersagen dürfen erst beansprucht werden, wenn das jeweilige Modell unabhängig kalibriert und validiert wurde.
+- software and model versions;
+- input data and checksums;
+- parameters and units;
+- seeds and random-stream mapping;
+- active model variants;
+- hardware and runtime information;
+- result and validation metadata.
 
-### 2.6 Performance folgt einem validierten Modell
+### 2.5 Validation is incremental and scenario-specific
 
-Korrektheit, Reproduzierbarkeit und Profiling kommen vor Parallelisierung. Optimiert wird nur gegen definierte Benchmarks, ohne wissenschaftliche Ergebnisse unkontrolliert zu verändern.
+MEHLISSA is initially a research and hypothesis-testing platform. Clinical
+predictions may be claimed only after the respective model has been calibrated
+and validated independently.
 
-## 3. Zielarchitektur
+### 2.6 Performance follows a validated model
+
+Correctness, reproducibility, and profiling precede parallelization.
+Optimization is measured against defined benchmarks and must not change
+scientific results in an uncontrolled way.
+
+## 3. Target architecture
 
 ```mermaid
 flowchart TB
-    Scenarios[Medizinische Szenarien und Experimente]
-    Orchestration[Experiment-Orchestrierung und Co-Simulation]
-    Body[Körperebene]
-    Organ[Organebene]
-    Capillary[Kapillarebene]
-    Cell[Zellebene]
-    Communication[Nano-IoT- und Kommunikationsmodelle]
-    Kernel[Simulationskern]
-    Data[Versionierte Modelle, Parameter und Provenienz]
-    Observation[Messung, Aggregation und Visualisierung]
-    External[Externe Simulatoren und Surrogatmodelle]
+    Scenarios[Medical scenarios and experiments]
+    Orchestration[Experiment orchestration and co-simulation]
+    Body[Body layer]
+    Organ[Organ layer]
+    Capillary[Capillary layer]
+    Cell[Cell layer]
+    Communication[Nano-IoT and communication models]
+    Kernel[Simulation kernel]
+    Data[Versioned models, parameters, and provenance]
+    Observation[Measurement, aggregation, and visualization]
+    External[External simulators and surrogate models]
 
     Scenarios --> Orchestration
     Orchestration --> Body
@@ -105,65 +122,69 @@ flowchart TB
     External <--> Orchestration
 ```
 
-### 3.1 Simulationskern
+### 3.1 Simulation kernel
 
-Der Kern stellt nur allgemeine Simulationsdienste bereit:
+The kernel provides only general simulation services:
 
-- monotone Simulationszeit mit klarer Auflösung;
-- Ereigniswarteschlange und definierte Synchronisationspunkte;
-- optional feste oder adaptive Integrationsschritte;
-- deterministische, benannte Zufallsströme;
-- Komponenten-Lebenszyklus;
-- sichere Objekt- und Ressourcenverwaltung;
-- Checkpointing und Wiederaufnahme;
-- Beobachter- und Messschnittstellen;
-- Fehlerbehandlung und Abbruchbedingungen;
-- später parallele Ausführung.
+- monotonic simulation time with a clear resolution;
+- event queue and defined synchronization points;
+- optional fixed or adaptive integration steps;
+- deterministic named random streams;
+- component lifecycle;
+- safe object and resource management;
+- checkpointing and resumption;
+- observer and measurement interfaces;
+- error handling and termination conditions;
+- later, parallel execution.
 
-Der Kern kennt weder Aldosteron noch Krebszellen, Fingerprints oder spezielle Gefäß-IDs.
+The kernel knows neither aldosterone nor cancer cells, fingerprints, or special
+vessel IDs.
 
-### 3.2 Gemeinsame Modellschnittstellen
+### 3.2 Shared model interfaces
 
-Alle Ebenen verwenden eine kleine Menge versionierter Austauschobjekte. Vorgesehen sind mindestens:
+All layers use a small set of versioned exchange objects. At minimum:
 
-| Austauschobjekt | Zweck |
+| Exchange object | Purpose |
 |---|---|
-| `EntityTransfer` | Übergabe eines Nanogeräts, Partikels oder seltenen Zellagenten zwischen Modellen |
-| `PopulationTransfer` | Übergabe großer Populationen oder Flüsse ohne Einzelobjekte |
-| `PhysiologicalState` | Druck, Fluss, Perfusion, Aktivität, Temperatur und weitere Zustände |
-| `MolecularSignal` | Konzentration, Stoffmenge, Freisetzungsrate oder Nachrichtenereignis |
-| `DetectionEvent` | Erkennung eines Markers oder Fingerprints einschließlich Unsicherheit |
-| `ActuationCommand` | Wirkstofffreisetzung, Aktivierung oder Steuerung eines Nanogeräts |
-| `Measurement` | simulierte Messung an Gateway, Wearable, Labor oder Bildgebung |
-| `ModelEvidence` | Herkunft, Gültigkeitsbereich und Unsicherheit einer Modellannahme |
+| `EntityTransfer` | transfer a nanodevice, particle, or rare-cell agent between models |
+| `PopulationTransfer` | transfer large populations or flows without individual objects |
+| `PhysiologicalState` | pressure, flow, perfusion, activity, temperature, and other states |
+| `MolecularSignal` | concentration, amount, release rate, or message event |
+| `DetectionEvent` | marker or fingerprint detection, including uncertainty |
+| `ActuationCommand` | drug release, activation, or nanodevice control |
+| `Measurement` | simulated measurement at a gateway, wearable, laboratory, or imaging system |
+| `ModelEvidence` | origin, validity scope, and uncertainty of a model assumption |
 
-Jedes Austauschobjekt besitzt explizite Einheiten, Zeitstempel, räumlichen Kontext und Modellprovenienz.
+Every exchange object has explicit units, a timestamp, spatial context, and
+model provenance.
 
-### 3.3 Zeitkopplung
+### 3.3 Time coupling
 
-Die Ebenen arbeiten auf unterschiedlichen Zeitskalen. Vorgesehen ist eine konservative Co-Simulation:
+The layers operate at different time scales. A conservative co-simulation is
+planned:
 
-1. Der Orchestrator definiert das nächste Synchronisationsfenster.
-2. Jede Ebene integriert oder simuliert ihren Zustand bis zu diesem Zeitpunkt.
-3. Übergaben und Ereignisse werden an Schichtgrenzen ausgetauscht.
-4. Invarianten wie Masse, Partikelzahl und Zeitordnung werden geprüft.
-5. Bei zu großen Kopplungsfehlern kann das Fenster verkleinert oder ein Lauf abgebrochen werden.
+1. The orchestrator defines the next synchronization window.
+2. Every layer integrates or simulates its state up to that time.
+3. Transfers and events are exchanged at layer boundaries.
+4. Invariants such as mass, particle count, and temporal order are checked.
+5. If coupling error is too large, the window can be reduced or the run terminated.
 
-Externe Simulatoren können über denselben Mechanismus angebunden werden.
+External simulators can be connected through the same mechanism.
 
-## 4. Vorgesehene Repository-Struktur
+## 4. Planned repository structure
 
-Die genaue Sprache und Buildtechnik wird in Phase 0 entschieden. Die fachliche Struktur sollte ungefähr so aussehen:
+The exact language and build technology are decided in Phase 0. The domain
+structure should be approximately:
 
 ```text
-apps/                   Kommandozeile, Dienste und optionale Benutzeroberflächen
-core/                   Simulationszeit, Events, RNG, Komponenten und Checkpoints
+apps/                   command line, services, and optional user interfaces
+core/                   simulation time, events, RNG, components, checkpoints
 models/
-  body/                 Ganzkörperkreislauf und systemische Physiologie
-  organ/                organspezifische Modelle
-  capillary/            Kapillarbetten, Austausch und lokale Kanäle
-  cell/                 Zell-, Rezeptor- und Reaktionsmodelle
-  communication/        Nano-IoT, Gateway, BAN und externe Kommunikation
+  body/                 whole-body circulation and systemic physiology
+  organ/                organ-specific models
+  capillary/            capillary beds, exchange, and local channels
+  cell/                 cell, receptor, and reaction models
+  communication/        nano-IoT, gateway, BAN, and external communication
 scenarios/
   fingerprinting/
   monitoring/
@@ -171,632 +192,658 @@ scenarios/
   endocrine_avs/
   cart/
   metastasis/
-adapters/               NetTAS, SimVascular, CFD, Kanal- und Zell-Simulatoren
+adapters/               NetTAS, SimVascular, CFD, channel, and cell simulators
 data/
-  schemas/               versionierte Datenschemata
+  schemas/              versioned data schemas
   body_models/
   organ_models/
   parameters/
-validation/             Referenzdaten, Vergleichsläufe und wissenschaftliche Tests
-benchmarks/              Performance- und Skalierungsbenchmarks
-tools/                   Konvertierung, Inspektion und Ergebnisanalyse
-docs/                    Architektur, Modelle, Roadmap und Nutzeranleitungen
-legacy/                  eingefrorene Referenzen auf MEHLISSA 1.x und 2.0
+validation/             reference data, comparison runs, and scientific tests
+benchmarks/             performance and scaling benchmarks
+tools/                  conversion, inspection, and result analysis
+docs/                   architecture, models, roadmap, and user guides
+legacy/                 frozen references to MEHLISSA 1.x and 2.0
 ```
 
-## 5. Entwicklungsphasen und Meilensteine
+## 5. Development phases and milestones
 
-### Phase 0 – Projektauftrag und Architekturentscheidungen
+### Phase 0 – Project charter and architecture decisions
 
-**Richtwert:** 0–2 Monate  
-**Ziel:** Verbindlicher fachlicher und technischer Rahmen für die neue Generation
+**Indicative period:** 0–2 months
 
-**Arbeitsstand 26. August 2026:** M0 ist abgeschlossen und im
-[M0 Gate Review](m0/M0_GATE_REVIEW.md) als bestanden abgenommen. Verbindliche
-Artefakte sind die [Systemanforderungen](requirements/SYSTEM_REQUIREMENTS.md),
-die [Traceability Matrix](requirements/TRACEABILITY_MATRIX.md), das
-[Fingerprinting-Referenzszenario](requirements/FINGERPRINTING_SCENARIO.md), die
-[Architecture Decision Records](architecture/README.md) sowie das
-[Lizenz-/Daten-](m0/LICENSE_AND_DATA_INVENTORY.md) und
-[Partnerinventar](m0/VALIDATION_AND_DATA_PARTNERS.md). ADR-0007 legt MPL-2.0
-für unabhängigen Next-Code, GPL-2.0-only für Legacy und direkte Portierungen
-sowie CC-BY-4.0 für neue eigene Dokumentation und freigegebene eigene Daten
-fest. Rechteprüfungen vorhandener Daten werden artefaktbezogen als Release-Gate
-geführt und blockieren M1 nicht.
+**Objective:** Binding domain and technical framework for the new generation
 
-#### Aufgaben
+**Status on 26 August 2026:** M0 is complete and accepted as passed in the
+[M0 gate review](m0/M0_GATE_REVIEW.md). Binding artifacts are the
+[system requirements](requirements/SYSTEM_REQUIREMENTS.md),
+[traceability matrix](requirements/TRACEABILITY_MATRIX.md),
+[fingerprinting reference scenario](requirements/FINGERPRINTING_SCENARIO.md),
+[Architecture Decision Records](architecture/README.md),
+[license/data inventory](m0/LICENSE_AND_DATA_INVENTORY.md), and
+[partner inventory](m0/VALIDATION_AND_DATA_PARTNERS.md). ADR-0007 defines
+MPL-2.0 for independent Next code, GPL-2.0-only for legacy and direct ports, and
+CC-BY-4.0 for new original documentation and approved original data. Rights
+reviews for existing data are tracked per artifact as release gates and do not
+block M1.
 
-- Dissertation in nachverfolgbare fachliche Anforderungen überführen.
-- „Vision“, „bereits validierte Funktion“ und „Forschungshypothese“ klar kennzeichnen.
-- Zielnutzer definieren: Modellentwickler, Kommunikationsforscher, Biologen, Mediziner und Studierende.
-- Unterstützte Betriebsarten festlegen: lokale Experimente, Batch/HPC, interaktive Exploration.
-- Technologieentscheidung treffen:
-  - C++ als Hochleistungskern beibehalten oder neu strukturieren;
-  - Python-API für Experimente und Analyse;
-  - alternatives Kernkonzept nur nach Prototypvergleich.
-- Lizenz- und Contributor-Regeln klären.
-- Legacy-Stände taggen und unverändert archivieren.
-- erste Architecture Decision Records anlegen.
-- Definitionen für Modellvalidität, Experimentreproduzierbarkeit und Releasequalität festlegen.
+#### Tasks
 
-#### Ergebnisse
+- Translate the dissertation into traceable domain requirements.
+- Clearly distinguish “vision,” “already validated function,” and “research hypothesis.”
+- Define target users: model developers, communication researchers, biologists, physicians, and students.
+- Define supported operating modes: local experiments, batch/HPC, and interactive exploration.
+- Make the technology decision:
+  - retain or restructure C++ as the high-performance kernel;
+  - provide a Python API for experiments and analysis;
+  - consider an alternative kernel only after a prototype comparison.
+- Clarify licensing and contributor rules.
+- Tag legacy revisions and archive them unchanged.
+- Create the first Architecture Decision Records.
+- Define model validity, experiment reproducibility, and release quality.
 
-- [System Requirements Document](requirements/SYSTEM_REQUIREMENTS.md);
-- [Architekturgrundsätze und Decision Records](architecture/README.md);
-- priorisierter Szenariokatalog;
-- dokumentierte Technologieentscheidung;
-- [Daten- und Lizenzinventar](m0/LICENSE_AND_DATA_INVENTORY.md);
-- erste Risiko- und Forschungsfragenliste.
+#### Deliverables
+
+- [system requirements document](requirements/SYSTEM_REQUIREMENTS.md);
+- [architecture principles and decision records](architecture/README.md);
+- prioritized scenario catalog;
+- documented technology decision;
+- [data and license inventory](m0/LICENSE_AND_DATA_INVENTORY.md);
+- initial risk and research-question list.
 
 #### Gate M0
 
-- Die vier Ebenen und ihre Verantwortlichkeiten sind verbindlich beschrieben.
-- Es ist entschieden, welche Bestandteile von 2.0 übernommen, neu geschrieben oder nur als Referenz erhalten werden.
-- Der erste vertikale Demonstrator ist Fingerprinting.
-- Keine neue Szenariologik wird mehr in den Legacy-Kern eingebaut.
-- Das Lizenzmodell pro Datei und Artefakt ist angenommen und technisch
-  umgesetzt.
-
-### Phase 1 – Vertrauenswürdiges technisches Fundament
-
-**Richtwert:** 1–4 Monate  
-**Ziel:** Kleiner, reproduzierbarer und getesteter Simulationskern
-
-#### Aufgaben
-
-- sauberen Out-of-Source-Build einrichten;
-- Linux, Windows und mindestens einen CI-Compiler unterstützen;
-- Lizenzgrenzen automatisiert prüfen und Contributor-Anleitung ergänzen;
-- bestehende Zeit-, Geometrie-, RNG-, Injektions- und Speicherfehler beheben;
-- globale Zustände entfernen oder explizit in einen `SimulationContext` überführen;
-- typsichere Einheiten für Zeit, Länge, Geschwindigkeit, Konzentration und Stoffmenge einführen;
-- benannte und reproduzierbare Zufallsströme implementieren;
-- versioniertes Szenario- und Experimentformat mit Schema erstellen;
-- strukturierte Logs, Fehlercodes und Experimentmanifeste einführen;
-- Unit- und Property-Tests für Kerninvarianten aufbauen;
-- Checkpoint- und Snapshotformat spezifizieren;
-- statische Analyse, Sanitizer und Formatprüfung in CI aktivieren.
-
-#### Zwingende Tests
-
-- Zeit schreitet streng monoton und mit korrekter Subsekundenauflösung fort.
-- Ein Partikel wird pro Simulationszeitpunkt höchstens einmal bewegt.
-- 3D-Distanzen und Gefäßlängen stimmen analytisch.
-- Gleicher Seed und gleiche Konfiguration erzeugen identische Ergebnisse.
-- Unterschiedliche benannte Zufallsströme sind unabhängig reproduzierbar.
-- Objektlebensdauern erzeugen keine Referenzzyklen oder Double-Destruction.
-- Fehlerhafte Konfigurationen werden vor Simulationsstart abgelehnt.
-
-#### Gate M1 – „Trustworthy Kernel“
-
-- Vollständiger CI-Build ist grün.
-- Kernabdeckung durch Tests und kritische Invarianten sind dokumentiert.
-- Ein deterministischer Minimalversuch kann auf zwei Plattformen bit- oder toleranzidentisch reproduziert werden.
-- Keine medizinische Szenarioklasse befindet sich im Kern.
-
-### Phase 2 – Körperebene 2.0 als validiertes Transportmodell
-
-**Richtwert:** 3–8 Monate  
-**Ziel:** Die heute stärkste Ebene neu und belastbar implementieren
-
-#### Aufgaben
-
-- Gefäßnetz als validierten gerichteten Graphen modellieren;
-- zusammenhängende, nicht zwingend fortlaufende IDs unterstützen;
-- versioniertes Gefäßschema mit folgenden Feldern einführen:
-  - Geometrie und Koordinatensystem;
-  - Gefäßtyp;
-  - Länge und Durchmesser;
-  - Querschnitt und Volumen;
-  - Fluss beziehungsweise Perfusion;
-  - Nachfolger und Übergangsmodell;
-  - Datenquelle, Unsicherheit und Gültigkeitsbereich;
-- den bestehenden 95er-Datensatz verlustfrei migrieren;
-- Gefäß 9 und weitere Graph-/Wahrscheinlichkeitsinvarianten klären;
-- Geschwindigkeiten und Übergänge vom Datensatz statt von hart codierten Typwerten steuern;
-- mehrere Strömungsmodelle unterstützen:
-  - einfaches Kompartimentmodell;
-  - virtuelle laminare Ströme;
-  - später importierte CFD-/Streamline-Modelle;
-- Injektion und Entnahme als allgemeine Ereignisse modellieren;
-- Gateways als Messorte, noch nicht als Netzwerkprotokoll, modellieren;
-- Ausgabe von vollständigen Trajektorien, Stichproben und Aggregaten konfigurierbar machen;
-- Referenzläufe der BVS-Verteilungsstudien reproduzieren;
-- Massenerhaltung und stationäre Verteilung automatisch prüfen.
-
-#### Körperzustände
-
-Bereits die neue Körperebene sollte dynamische Zustände vorbereiten:
-
-- Ruhe;
-- körperliche Belastung;
-- Orthostase/Körperhaltung;
-- veränderte Herzfrequenz;
-- organspezifische Perfusionsänderung.
-
-Zunächst genügen literaturbasierte Parametersätze. Später können gekoppelte Kreislaufmodelle folgen.
-
-#### Gate M2 – „Validated Body Layer“
-
-- 95er-Modell ist schema-validiert und vollständig dokumentiert.
-- BVS- und Dissertationsergebnisse sind innerhalb festgelegter Toleranzen reproduziert oder Abweichungen sind erklärt.
-- Partikel-, Fluss- und Übergangsinvarianten sind automatisiert getestet.
-- Ein neues Körpermodell kann ohne Codeänderung geladen werden.
-- Ausgaben sind für große Experimente aggregierbar und begrenzbar.
-
-### Phase 3 – Co-Simulationsrahmen und Organebene
-
-**Richtwert:** 6–12 Monate  
-**Ziel:** Erstmals echte Kopplung zwischen Ganzkörper- und Regionalmodell
-
-#### Aufgaben
-
-- generische `ModelComponent`-Schnittstelle implementieren;
-- Ein- und Austrittspunkte zwischen Körpergefäß und Organmodell definieren;
-- konservative Übergabe von Agenten, Populationen und Stoffflüssen umsetzen;
-- organspezifische Parameter- und Zustandsmodelle einführen;
-- mindestens ein Referenzorgan detailliert modellieren;
-- Importpipeline für BodyParts3D/SimVascular-Daten prototypisieren;
-- Geometrie-, Achsen- und Einheitenkonvertierung reproduzierbar machen;
-- ein Surrogat für CFD-Flussfelder definieren;
-- Aktivitäts- und Perfusionsänderungen über `PhysiologicalState` koppeln;
-- Organlokalisierung und Organ-Gateway als austauschbare Modelle umsetzen.
-
-#### Wahl des Referenzorgans
-
-Für den ersten vollständigen Pfad wurde die **Lunge** gewählt ([ADR-0006](architecture/adr/0006-lung-reference-organ.md)). Sie ist im Fingerprinting-Szenario repräsentiert, wird bei jedem vollständigen Kreislauf passiert und besitzt zugängliche pulmonale SimVascular-/VMR-Referenzfälle. Der erste Modellumfang ist der pulmonale Blutkreislauf; Atemmechanik und Gasaustausch folgen als getrennte Modellvarianten. Die Entscheidung wurde anhand folgender Kriterien getroffen:
+- The four layers and their responsibilities are defined as binding.
+- It is decided which parts of 2.0 are adopted, rewritten, or retained only as references.
+- Fingerprinting is the first vertical demonstrator.
+- No new scenario logic is added to the legacy kernel.
+- The per-file and per-artifact licensing model is accepted and technically implemented.
+
+### Phase 1 – Trustworthy technical foundation
+
+**Indicative period:** 1–4 months
+
+**Objective:** A small, reproducible, and tested simulation kernel
+
+#### Tasks
+
+- establish a clean out-of-source build;
+- support Linux, Windows, and at least one CI compiler;
+- automate license-boundary checks and add a contributor guide;
+- fix existing time, geometry, RNG, injection, and memory defects;
+- remove global state or move it explicitly into a `SimulationContext`;
+- introduce type-safe units for time, length, speed, concentration, and amount;
+- implement named and reproducible random streams;
+- create a versioned scenario and experiment format with a schema;
+- introduce structured logs, error codes, and experiment manifests;
+- build unit and property tests for kernel invariants;
+- specify checkpoint and snapshot formats;
+- enable static analysis, sanitizers, and formatting checks in CI.
+
+#### Mandatory tests
+
+- Time advances strictly monotonically with correct subsecond resolution.
+- A particle moves at most once per simulation instant.
+- 3D distances and vessel lengths match analytical values.
+- The same seed and configuration produce identical results.
+- Different named random streams are independently reproducible.
+- Object lifetimes produce no reference cycles or double destruction.
+- Invalid configurations are rejected before simulation begins.
+
+#### Gate M1 – “Trustworthy Kernel”
+
+- The complete CI build is green.
+- Kernel test coverage and critical invariants are documented.
+- A deterministic minimal experiment can be reproduced bit-identically or tolerance-identically on two platforms.
+- No medical scenario class resides in the kernel.
+
+### Phase 2 – Body layer 2.0 as a validated transport model
+
+**Indicative period:** 3–8 months
+
+**Objective:** Reimplement today's strongest layer robustly
+
+#### Tasks
+
+- model the vascular network as a validated directed graph;
+- support coherent, non-contiguous IDs;
+- introduce a versioned vascular schema containing:
+  - geometry and coordinate system;
+  - vessel type;
+  - length and diameter;
+  - cross section and volume;
+  - flow or perfusion;
+  - successors and transition model;
+  - data source, uncertainty, and validity scope;
+- migrate the existing 1995 data set without loss;
+- resolve vessel 9 and further graph/probability invariants;
+- drive velocities and transitions from data instead of hard-coded type values;
+- support multiple flow models:
+  - simple compartment model;
+  - virtual laminar flows;
+  - later imported CFD/streamline models;
+- model injection and extraction as general events;
+- model gateways as measurement sites, not yet as network protocols;
+- make complete trajectories, samples, and aggregates configurable;
+- reproduce reference runs from the BVS distribution studies;
+- automatically verify mass conservation and stationary distribution.
+
+#### Body states
+
+The new body layer should already prepare dynamic states:
+
+- rest;
+- physical exercise;
+- orthostasis/posture;
+- changed heart rate;
+- organ-specific perfusion change.
+
+Literature-based parameter sets are sufficient initially. Coupled circulatory
+models can follow later.
+
+#### Gate M2 – “Validated Body Layer”
+
+- The 1995 model is schema-validated and fully documented.
+- BVS and dissertation results are reproduced within defined tolerances or deviations are explained.
+- Particle, flow, and transition invariants are tested automatically.
+- A new body model can be loaded without code changes.
+- Output can be aggregated and bounded for large experiments.
+
+### Phase 3 – Co-simulation framework and organ layer
+
+**Indicative period:** 6–12 months
+
+**Objective:** First genuine coupling between whole-body and regional models
 
-- Verfügbarkeit anatomischer Daten;
-- Verfügbarkeit von Perfusionsdaten;
-- Relevanz für Fingerprinting und spätere Therapieszenarien;
-- überschaubarem Modellierungsaufwand.
+#### Tasks
 
-#### Gate M3 – „Body–Organ Coupling“
+- implement a generic `ModelComponent` interface;
+- define entry and exit points between a body vessel and an organ model;
+- implement conservative transfer of agents, populations, and substance flows;
+- introduce organ-specific parameter and state models;
+- model at least one reference organ in detail;
+- prototype an import pipeline for BodyParts3D/SimVascular data;
+- make geometry, axis, and unit conversion reproducible;
+- define a surrogate for CFD flow fields;
+- couple activity and perfusion changes through `PhysiologicalState`;
+- implement organ localization and an organ gateway as interchangeable models.
 
-- Ein Agent kann reproduzierbar vom Körpergraphen in ein Organmodell und zurück wechseln.
-- Fluss, Populationen und Stoffmengen bleiben über die Schichtgrenze erhalten.
-- Das Organ besitzt eine eigene, austauschbare Modellimplementierung.
-- Ein grobes Kompartiment- und ein detaillierteres Organmodell können mit demselben Szenario verwendet werden.
-
-### Phase 4 – Kapillarebene und molekulare Kanäle
-
-**Richtwert:** 9–18 Monate  
-**Ziel:** Lokale Mikrozirkulation, Stoffaustausch und Kommunikation modellieren
+#### Choice of reference organ
 
-#### Aufgaben
-
-- Kapillarbetten als parametrisierbare Graph-, Kompartiment- oder Netzwerkmodelle einführen;
-- Arteriolen, Kapillaren und Venolen unterscheiden;
-- Kapillardichte, Durchmesser, Länge, Transitzeit und Hämatokrit abbilden;
-- präkapilläre Sphinkter und aktivitätsabhängige Perfusion modellieren;
-- Austausch zwischen Blut, Endothel, Interstitium und Zelle definieren;
-- Retention, Adhäsion und Extravasation von Nanogeräten vorbereiten;
-- lokale Positionen und Aufenthaltszeiten bereitstellen;
-- Schnittstellen für molekulare Kanalmodelle implementieren;
-- vorhandene Modelle wie BiNS2, BNSim2, N3Sim oder analytische Modelle über Adapter anbinden, sofern verfügbar und lizenzierbar;
-- Clusterbildung und Multi-Hop-Kommunikation untersuchen;
-- obere Abstraktionen ableiten, etwa Erreichbarkeits-, Laufzeit- und Erfolgsverteilungen.
-
-#### Modellvarianten
+The **lung** was selected for the first complete path
+([ADR-0006](architecture/adr/0006-lung-reference-organ.md)). It is represented
+in the fingerprinting scenario, is traversed during every complete circulation,
+and has accessible pulmonary SimVascular/VMR reference cases. The initial model
+scope is pulmonary circulation; respiratory mechanics and gas exchange follow
+as separate variants. Selection used these criteria:
 
-Mindestens drei Auflösungen sollten vorgesehen werden:
-
-1. **Surrogat:** Verteilungen für Transit-, Detektions- und Kommunikationszeiten.
-2. **Mesoskopisch:** Kapillarnetz mit Populationen und Konzentrationsfeldern.
-3. **Detailliert:** Partikel-/Kanalsimulation in einer kleinen Region of Interest.
+- availability of anatomical data;
+- availability of perfusion data;
+- relevance to fingerprinting and later treatment scenarios;
+- manageable modeling effort.
 
-#### Gate M4 – „Capillary Communication“
+#### Gate M3 – “Body–Organ Coupling”
 
-- Ein Nanogerät kann ein Organ verlassen, ein Kapillarbett durchqueren und zurückgegeben werden.
-- Stoffaustausch ist massenerhaltend und einheitenkonsistent.
-- Mindestens ein molekulares Kanalmodell ist über eine stabile Schnittstelle angebunden.
-- Detailliertes Modell und Surrogat werden gegen dieselben Referenzfälle verglichen.
+- An agent can move reproducibly from the body graph into an organ model and back.
+- Flow, populations, and substance amounts are conserved across the layer boundary.
+- The organ has an independent, interchangeable model implementation.
+- A coarse compartment and more detailed organ model can be used with the same scenario.
 
-### Phase 5 – Zellebene
+### Phase 4 – Capillary layer and molecular channels
 
-**Richtwert:** 12–24 Monate  
-**Ziel:** Biomarkererkennung, Wirkstofffreisetzung und Zellantwort koppeln
+**Indicative period:** 9–18 months
 
-#### Aufgaben
+**Objective:** Model local microcirculation, substance exchange, and communication
 
-- allgemeines Rezeptor-/Ligandenmodell definieren;
-- Bindung, Dissoziation und Detektionsschwellen modellieren;
-- Zell- und Gewebekompartimente einführen;
-- Reaktionsnetze über ODE, SSA oder externe Simulatoren anbinden;
-- Biomarkerfreisetzung und Konzentrationsverläufe modellieren;
-- Nanogerät-Aktivierung und Wirkstofffreisetzung implementieren;
-- Wirkstoffaufnahme, Signalweg und Zellantwort koppeln;
-- Apoptose als erstes vollständiges Zellantwortmodell implementieren;
-- populationsbasierte Modelle für große Zellzahlen vorsehen;
-- Modellprovenienz, Kalibrierbereich und Unsicherheit erfassen.
+#### Tasks
 
-#### Gate M5 – „Cell Response“
-
-- Ein molekulares Signal aus dem Kapillarmodell kann eine Zellreaktion auslösen.
-- Ein Zellmodell kann ein messbares Ereignis oder eine Zustandsänderung an höhere Ebenen zurückgeben.
-- Rezeptorbindung und Reaktionsnetz sind gegen analytische oder externe Referenzdaten getestet.
-- Einzelzell- und Populationsvariante besitzen dokumentierte Gültigkeitsbereiche.
-
-### Phase 6 – Nano-IoT, Gateway und externe Kommunikation
-
-**Richtwert:** 12–24 Monate, teilweise parallel zu Phase 5  
-**Ziel:** Die Kommunikationsvision der Dissertation vervollständigen
-
-#### Aufgaben
-
-- Fähigkeiten und Ressourcen von Nanogeräten modellieren;
-- lokale Nachrichtentypen und Kommunikationsereignisse definieren;
-- molekulare Kommunikation auf Kapillarebene mit logischer Nachrichtenebene verbinden;
-- Cluster-, Relay- und Multi-Hop-Strategien implementieren;
-- Gateway als aktives Modell mit Nano- und Mikrokommunikation definieren;
-- BAN und externes Gerät simulieren oder über Adapter anbinden;
-- Uplink für Messungen und Downlink für Aktivierungsbefehle umsetzen;
-- Latenz, Energie, Fehlerrate, Rauschen und Kapazität messen;
-- Kommunikationsmodelle optional wieder an ns-3 oder einen anderen Netzwerksimulator anbinden, ohne die physiologischen Modelle davon abhängig zu machen;
-- Sicherheits-, Fehlsteuerungs- und Ausfallszenarien vorbereiten.
-
-#### Gate M6 – „End-to-End Nano-IoT“
-
-- Eine simulierte molekulare Erkennung erzeugt eine nachvollziehbare externe Messung.
-- Ein externer Steuerbefehl kann ein Nanogerät oder eine Wirkstofffreisetzung erreichen.
-- Kommunikations- und Physiologiemodelle können unabhängig ausgetauscht werden.
-- Kommunikationsmetriken werden getrennt von biologischen Ergebnissen ausgewiesen.
-
-### Phase 7 – Erster vollständiger Mehrschicht-Demonstrator: Fingerprinting
-
-**Richtwert:** 9–18 Monate, aufbauend auf M3 und mindestens einer frühen M4/M5-Variante  
-**Ziel:** Durchgängiger Ablauf über alle Ebenen
-
-#### Referenzablauf
-
-1. Nanolokatoren und Nanokollektoren werden in ein definiertes Gefäß injiziert.
-2. Die Körperebene transportiert sie zum Zielorgan.
-3. Das Organmodell übergibt sie an ein Kapillarbett.
-4. Fingerprint-Genprodukte und ein Krankheitsmarker werden als Konzentrationen beziehungsweise stochastische Bindungsziele bereitgestellt.
-5. Ein Nanolokator detektiert die erforderliche Kombination und setzt Tiles frei.
-6. Ein NetTAS-basiertes Surrogat oder Detailmodell bestimmt die Nachrichtenbildung.
-7. Ein Nanokollektor nimmt die Nachricht auf.
-8. Der Rücktransport führt zum Handgelenk-Gateway.
-9. Gateway und BAN erzeugen eine externe Messung mit Gewebe-, Marker- und Unsicherheitsinformation.
-
-#### Stufenweiser Realismus
-
-- **Stufe A:** Bestehende Timerlogik als reproduzierbare Baseline.
-- **Stufe B:** Konzentrations- und bindungsbasierte Fingerprinterkennung.
-- **Stufe C:** explizite Tile-Freisetzung und Assembly-Surrogat.
-- **Stufe D:** lokales Kommunikations- und Gatewaymodell.
-- **Stufe E:** Sensitivitäts-, Robustheits- und Fehlklassifikationsanalyse.
-
-#### Validierung
-
-- Zuordnung der neun bestehenden MEHLISSA-Organe reproduzieren.
-- Lokalisations-, Assembly- und Erfassungszeiten aus der Dissertation als Baseline verwenden.
-- Abweichungen neuer Modelle nicht künstlich auf die publizierten Werte skalieren, sondern erklären.
-- Einfluss von Nanogerätezahl, Injektionsort, Perfusion, Konzentration und Bindungsaffinität untersuchen.
-- falsch-positive und falsch-negative Erkennung ausweisen.
-
-#### Gate M7 – „Holistic Vertical Slice“
-
-- Der Ablauf funktioniert ohne szenariospezifische Änderungen an Kern oder Ebenen.
-- Jede Ebene kann durch eine einfachere oder detailliertere Variante ersetzt werden.
-- Der gesamte Lauf ist mit Manifest, Seeds, Datenversionen und Ergebnisbericht reproduzierbar.
-- Unsicherheiten und Gültigkeitsgrenzen werden zusammen mit dem Ergebnis ausgegeben.
-
-### Phase 8 – Weitere medizinische Szenarien
-
-**Richtwert:** ab 15 Monaten, abhängig von den jeweiligen Gates  
-**Ziel:** Plattformnutzen durch unabhängige Szenariopakete nachweisen
-
-#### 8.1 Kontinuierliches Monitoring
-
-- generisches Biomarker- und Baseline-Modell;
-- personalisierte Schwellenwerte;
-- Sensor- und Gatewaymodell;
-- zeitabhängige Konzentrationsänderungen;
-- falsch-positive und falsch-negative Alarme;
-- Rückkanal für Bestätigung oder Aktivierung.
-
-#### 8.2 Liquid Biopsy
-
-- Freisetzungsmodell für cfDNA/ctDNA;
-- Abbau, Halbwertszeit und Organ-Clearance;
-- populationsbasierter Molekültransport;
-- Probenahme- und Detektionsmodell;
-- Vergleich mit realen Blutprobenwahrscheinlichkeiten;
-- Sensitivitätsanalyse für Tumorlast und Detektionsradius.
-
-#### 8.3 Endokrinologie und AVS
-
-- Endokrinmodell vollständig neu als Szenario aufbauen;
-- korrektes 104er-Gefäß-/Organmodell versionieren;
-- Nebennieren, Nebennierenvenen und IVC eindeutig trennen;
-- Sekretionsraten, Pulsatilität, Abbau und Clearance modellieren;
-- Advektion und Diffusion physikalisch konsistent koppeln;
-- Sampling als Messmodell implementieren;
-- keine Skalierung der Simulationsergebnisse auf die später zu validierenden Zielwerte;
-- gegen unabhängige AVS-Daten kalibrieren und validieren.
+- introduce capillary beds as parameterizable graph, compartment, or network models;
+- distinguish arterioles, capillaries, and venules;
+- represent capillary density, diameter, length, transit time, and hematocrit;
+- model precapillary sphincters and activity-dependent perfusion;
+- define exchange among blood, endothelium, interstitium, and cell;
+- prepare retention, adhesion, and extravasation of nanodevices;
+- provide local positions and residence times;
+- implement interfaces for molecular channel models;
+- connect existing models such as BiNS2, BNSim2, N3Sim, or analytical models through adapters where available and licensable;
+- investigate cluster formation and multi-hop communication;
+- derive higher-level abstractions such as reachability, runtime, and success distributions.
+
+#### Model variants
+
+At least three resolutions should be provided:
+
+1. **Surrogate:** distributions of transit, detection, and communication times.
+2. **Mesoscopic:** capillary network with populations and concentration fields.
+3. **Detailed:** particle/channel simulation in a small region of interest.
+
+#### Gate M4 – “Capillary Communication”
+
+- A nanodevice can leave an organ, traverse a capillary bed, and return.
+- Substance exchange conserves mass and is unit-consistent.
+- At least one molecular channel model is connected through a stable interface.
+- The detailed model and surrogate are compared against the same reference cases.
+
+### Phase 5 – Cell layer
+
+**Indicative period:** 12–24 months
+
+**Objective:** Couple biomarker detection, drug release, and cell response
+
+#### Tasks
+
+- define a general receptor/ligand model;
+- model binding, dissociation, and detection thresholds;
+- introduce cell and tissue compartments;
+- connect reaction networks through ODE, SSA, or external simulators;
+- model biomarker release and concentration trajectories;
+- implement nanodevice activation and drug release;
+- couple drug uptake, signaling pathway, and cell response;
+- implement apoptosis as the first complete cell-response model;
+- provide population-based models for large cell counts;
+- record model provenance, calibration range, and uncertainty.
+
+#### Gate M5 – “Cell Response”
+
+- A molecular signal from the capillary model can trigger a cell reaction.
+- A cell model can return a measurable event or state change to higher layers.
+- Receptor binding and the reaction network are tested against analytical or external reference data.
+- Single-cell and population variants have documented validity scopes.
+
+### Phase 6 – Nano-IoT, gateway, and external communication
+
+**Indicative period:** 12–24 months, partly in parallel with Phase 5
+
+**Objective:** Complete the dissertation's communication vision
+
+#### Tasks
+
+- model nanodevice capabilities and resources;
+- define local message types and communication events;
+- connect molecular communication at capillary level with a logical message layer;
+- implement cluster, relay, and multi-hop strategies;
+- define the gateway as an active model with nano and micro communication;
+- simulate or connect a BAN and external device through adapters;
+- implement uplink for measurements and downlink for activation commands;
+- measure latency, energy, error rate, noise, and capacity;
+- optionally reconnect communication models to ns-3 or another network simulator without making physiological models dependent on it;
+- prepare security, miscontrol, and failure scenarios.
+
+#### Gate M6 – “End-to-End Nano-IoT”
+
+- A simulated molecular detection produces a traceable external measurement.
+- An external control command can reach a nanodevice or drug release.
+- Communication and physiology models can be exchanged independently.
+- Communication metrics are reported separately from biological results.
+
+### Phase 7 – First complete multilayer demonstrator: fingerprinting
+
+**Indicative period:** 9–18 months, building on M3 and at least an early M4/M5 variant
+
+**Objective:** End-to-end workflow across all layers
+
+#### Reference workflow
+
+1. Nanolocators and nanocollectors are injected into a defined vessel.
+2. The body layer transports them to the target organ.
+3. The organ model transfers them to a capillary bed.
+4. Fingerprint gene products and a disease marker are provided as concentrations or stochastic binding targets.
+5. A nanolocator detects the required combination and releases tiles.
+6. A NetTAS-based surrogate or detailed model determines message assembly.
+7. A nanocollector collects the message.
+8. Return transport leads to the wrist gateway.
+9. Gateway and BAN produce an external measurement containing tissue, marker, and uncertainty information.
+
+#### Incremental realism
+
+- **Level A:** Existing timer logic as a reproducible baseline.
+- **Level B:** Concentration- and binding-based fingerprint detection.
+- **Level C:** Explicit tile release and assembly surrogate.
+- **Level D:** Local communication and gateway model.
+- **Level E:** Sensitivity, robustness, and misclassification analysis.
+
+#### Validation
+
+- Reproduce the mapping of the nine existing MEHLISSA organs.
+- Use localization, assembly, and collection times from the dissertation as a baseline.
+- Do not artificially rescale deviations from new models to published values; explain them.
+- Investigate effects of nanodevice count, injection site, perfusion, concentration, and binding affinity.
+- Report false-positive and false-negative detection.
+
+#### Gate M7 – “Holistic Vertical Slice”
+
+- The workflow functions without scenario-specific changes to the kernel or layers.
+- Every layer can be replaced with a simpler or more detailed variant.
+- The complete run is reproducible with a manifest, seeds, data versions, and result report.
+- Uncertainty and validity limitations are reported with the result.
+
+### Phase 8 – Further medical scenarios
+
+**Indicative period:** from 15 months, depending on the respective gates
+
+**Objective:** Demonstrate platform utility through independent scenario packages
+
+#### 8.1 Continuous monitoring
+
+- generic biomarker and baseline model;
+- personalized thresholds;
+- sensor and gateway model;
+- time-dependent concentration changes;
+- false-positive and false-negative alerts;
+- return channel for confirmation or activation.
+
+#### 8.2 Liquid biopsy
+
+- release model for cfDNA/ctDNA;
+- degradation, half-life, and organ clearance;
+- population-based molecular transport;
+- sampling and detection model;
+- comparison with real blood-sample probabilities;
+- sensitivity analysis for tumor burden and detection radius.
+
+#### 8.3 Endocrinology and AVS
+
+- rebuild the complete endocrine model as a scenario;
+- version the correct 104-vessel/organ model;
+- unambiguously separate adrenal glands, adrenal veins, and IVC;
+- model secretion rates, pulsatility, degradation, and clearance;
+- couple advection and diffusion consistently with physics;
+- implement sampling as a measurement model;
+- do not scale simulation results to values that will later be used for validation;
+- calibrate and validate against independent AVS data.
 
 #### 8.4 CAR-T
 
-- bestehende Implementierungsfehler beheben;
-- mathematisches Referenzmodell separat implementieren;
-- Zellpopulationen statt realistischer Milliarden Einzelagenten verwenden;
-- agentenbasierte Zellen nur für lokale Mikroumgebungen einsetzen;
-- Interaktionen räumlich und zeitlich korrekt definieren;
-- Tumor-, gesunde T- und CAR-T-Populationen koppeln;
-- Therapieparameter und Unsicherheit systematisch untersuchen.
+- fix existing implementation defects;
+- implement the mathematical reference model separately;
+- use cell populations instead of billions of individual agents;
+- use agent-based cells only for local microenvironments;
+- define interactions correctly in space and time;
+- couple tumor, healthy T-cell, and CAR-T populations;
+- investigate treatment parameters and uncertainty systematically.
 
-#### 8.5 Metastasenprävention als Capstone
+#### 8.5 Metastasis prevention as the capstone
 
-Dieses Szenario soll die umfassendste Umsetzung der Dissertation werden:
+This scenario should become the most comprehensive implementation of the dissertation:
 
-1. Tumor- und Zellablösungsmodell;
-2. Eintritt in die lokale Kapillare;
-3. Ganzkörpertransport einer zirkulierenden Tumorzelle;
-4. Detektion durch Nanogeräte;
-5. molekulare Kommunikation;
-6. lokalisierte Wirkstofffreisetzung;
-7. Rezeptorbindung und intrazelluläre Signalkaskade;
-8. Apoptose oder Überleben;
-9. externe Meldung an Gateway und Behandlungssystem.
+1. tumor and cell-detachment model;
+2. entry into the local capillary;
+3. whole-body transport of a circulating tumor cell;
+4. detection by nanodevices;
+5. molecular communication;
+6. localized drug release;
+7. receptor binding and intracellular signaling cascade;
+8. apoptosis or survival;
+9. external report to the gateway and treatment system.
 
-Dieses Szenario beginnt erst, wenn M2 bis M6 jeweils mindestens eine validierte Modellvariante bereitstellen.
+This scenario begins only when M2 through M6 each provide at least one
+validated model variant.
 
-### Phase 9 – Personalisierung und Digital Twin
+### Phase 9 – Personalization and digital twin
 
-**Richtwert:** ab 20–36 Monaten  
-**Ziel:** Von generischen Körpermodellen zu patientenspezifischen Simulationen
+**Indicative period:** from 20–36 months
 
-#### Aufgaben
+**Objective:** Move from generic body models to patient-specific simulations
 
-- kanonisches Patientenparameter- und Anatomiemodell definieren;
-- Bildgebung und segmentierte Gefäßmodelle importieren;
-- SimVascular-/CFD-Pipeline produktionsreif machen;
-- Vitalparameter, Laborwerte und Wearable-Daten anbinden;
-- persönliche Parameter aus Beobachtungen kalibrieren;
-- Modellunsicherheit und Identifizierbarkeit bestimmen;
-- Therapieoptionen als reproduzierbare Experimentvarianten ausführen;
-- Simulationsergebnisse mit realen Folgemessungen aktualisieren;
-- Datenschutz, Einwilligung, Pseudonymisierung und Datenprovenienz berücksichtigen;
-- klar zwischen Forschungszwilling, Entscheidungsunterstützung und klinischem Medizinprodukt unterscheiden.
+#### Tasks
 
-#### Reifestufen
+- define a canonical patient-parameter and anatomy model;
+- import imaging and segmented vascular models;
+- make the SimVascular/CFD pipeline production-ready;
+- connect vital signs, laboratory values, and wearable data;
+- calibrate personal parameters from observations;
+- determine model uncertainty and identifiability;
+- run treatment options as reproducible experiment variants;
+- update simulation results with real follow-up measurements;
+- account for data protection, consent, pseudonymization, and data provenance;
+- clearly distinguish a research twin, decision support, and a clinical medical device.
 
-1. **Geometrisch personalisiert:** individuelle Anatomie.
-2. **Physiologisch personalisiert:** individuelle Perfusion und Vitalparameter.
-3. **Biochemisch personalisiert:** individuelle Marker- und Reaktionsparameter.
-4. **Dynamischer Twin:** Aktualisierung durch fortlaufende Messungen.
-5. **Therapie-Twin:** prospektive Therapievarianten, erst nach unabhängiger Validierung.
+#### Maturity levels
 
-#### Gate M8 – „Research Digital Twin“
+1. **Geometrically personalized:** individual anatomy.
+2. **Physiologically personalized:** individual perfusion and vital parameters.
+3. **Biochemically personalized:** individual marker and reaction parameters.
+4. **Dynamic twin:** updates from continuous measurements.
+5. **Treatment twin:** prospective treatment variants, only after independent validation.
 
-- Patientenspezifische Eingaben sind versioniert, prüfbar und datenschutzkonform.
-- Kalibrier- und Validierungsdaten sind getrennt.
-- Unsicherheit wird quantitativ ausgegeben.
-- Die Plattform erhebt ohne regulatorische Prüfung keinen klinischen Entscheidungsanspruch.
+#### Gate M8 – “Research Digital Twin”
 
-### Phase 10 – Skalierung, HPC und große Experimente
+- Patient-specific inputs are versioned, verifiable, and compliant with data protection.
+- Calibration and validation data are separate.
+- Uncertainty is reported quantitatively.
+- Without regulatory review, the platform makes no clinical decision claim.
 
-**Richtwert:** kontinuierlich nach M2, intensive Arbeit nach M7  
-**Ziel:** Große Szenarien effizient ausführen, ohne Modelltreue zu verlieren
+### Phase 10 – Scaling, HPC, and large experiments
 
-#### Priorisierte Maßnahmen
+**Indicative period:** continuous after M2, intensive work after M7
 
-1. Ausgabevolumen reduzieren und aggregieren.
-2. Profile für CPU, Speicher und I/O erstellen.
-3. Datenlayout von objektzentriert auf cachefreundliche Strukturen umstellen.
-4. große Populationen durch Zähl- oder Kompartimentmodelle ersetzen.
-5. räumliche Indizes für lokale Interaktionen verwenden.
-6. ereignisarme Bereiche mit größeren Zeitschritten behandeln.
-7. unabhängige Experimente und Replikate parallelisieren.
-8. Organe oder Graphpartitionen parallelisieren, wenn Kopplungsinvarianten erhalten bleiben.
-9. GPU- oder verteilte Ausführung nur für nachweislich geeignete Kernel einsetzen.
-10. Surrogatmodelle mit dokumentiertem Fehler für wiederholte Parameterstudien verwenden.
+**Objective:** Run large scenarios efficiently without losing model fidelity
 
-#### Benchmarkklassen
+#### Prioritized measures
 
-- BVS-Verteilung mit 6.359 und 63.590 Nanogeräten;
-- Fingerprinting mit 1.000/10.000 Geräten;
-- CAR-T-Referenzbenchmark aus dem 2.0-Paper;
-- populationsbasierte Varianten mit biologisch skalierten Zellzahlen;
-- Mehrorgan-Co-Simulation;
-- Ensemble- und Sensitivitätsläufe.
+1. Reduce and aggregate output volume.
+2. Profile CPU, memory, and I/O.
+3. Change data layout from object-centric to cache-friendly structures.
+4. Replace large populations with counting or compartment models.
+5. Use spatial indices for local interactions.
+6. Treat event-sparse regions with larger time steps.
+7. Parallelize independent experiments and replicates.
+8. Parallelize organs or graph partitions where coupling invariants remain conserved.
+9. Use GPU or distributed execution only for demonstrably suitable kernels.
+10. Use surrogates with documented error for repeated parameter studies.
 
-Performanceverbesserungen werden nur akzeptiert, wenn Referenzergebnisse innerhalb definierter numerischer und statistischer Toleranzen bleiben.
+#### Benchmark classes
 
-## 6. Querschnittsprogramme
+- BVS distribution with 6,359 and 63,590 nanodevices;
+- fingerprinting with 1,000/10,000 devices;
+- CAR-T reference benchmark from the 2.0 paper;
+- population-based variants with biologically scaled cell counts;
+- multi-organ co-simulation;
+- ensemble and sensitivity runs.
 
-### 6.1 Daten, Einheiten und Provenienz
+Performance improvements are accepted only when reference results remain
+within defined numerical and statistical tolerances.
 
-Für jeden Datensatz werden verpflichtend gespeichert:
+## 6. Cross-cutting programs
 
-- Schema- und Datenversion;
-- Einheit und Koordinatensystem;
-- Quelle und Literaturreferenz;
-- Erstellungs- und Konvertierungsschritte;
-- Unsicherheit und Populationsbezug;
-- gültige Modellvarianten;
-- Prüfsumme und Lizenz.
+### 6.1 Data, units, and provenance
 
-CSV kann als Austauschformat erhalten bleiben, sollte aber durch versionierte Schemata und gegebenenfalls ein effizienteres Laufzeitformat ergänzt werden.
+Every data set must record:
 
-### 6.2 Validierungsstrategie
+- schema and data version;
+- unit and coordinate system;
+- source and literature reference;
+- creation and conversion steps;
+- uncertainty and population context;
+- valid model variants;
+- checksum and license.
 
-Die Validierung folgt einer Pyramide:
+CSV can remain an interchange format but should be complemented by versioned
+schemas and, where appropriate, a more efficient runtime format.
 
-1. **Softwaretests:** Parser, Zeit, Geometrie, RNG und Speicher.
-2. **Numerische Tests:** Konvergenz, Stabilität und Erhaltungssätze.
-3. **Komponententests:** Gefäß, Organ, Kapillare, Kanal und Zelle.
-4. **Vergleich mit analytischen Lösungen:** einfache Fluss-, Diffusions- und Reaktionsfälle.
-5. **Reproduktion publizierter MEHLISSA-Ergebnisse.**
-6. **Vergleich mit unabhängigen Simulationsmodellen.**
-7. **Vergleich mit physiologischen und experimentellen Daten.**
-8. **Wetlab- und langfristig klinische Validierung.**
+### 6.2 Validation strategy
 
-Kalibrierung und Validierung verwenden getrennte Daten. Eine nachträgliche Skalierung auf den Zielwert gilt als Kalibrierung und darf nicht zugleich als Validierung berichtet werden.
+Validation follows a pyramid:
 
-### 6.3 Unsicherheit und Sensitivität
+1. **Software tests:** parsers, time, geometry, RNG, and memory.
+2. **Numerical tests:** convergence, stability, and conservation laws.
+3. **Component tests:** vessel, organ, capillary, channel, and cell.
+4. **Comparison with analytical solutions:** simple flow, diffusion, and reaction cases.
+5. **Reproduction of published MEHLISSA results.**
+6. **Comparison with independent simulation models.**
+7. **Comparison with physiological and experimental data.**
+8. **Wet-lab and, eventually, clinical validation.**
 
-Jedes medizinische Szenario benötigt:
+Calibration and validation use separate data. Subsequent scaling to a target is
+calibration and must not simultaneously be reported as validation.
 
-- Parameterbereiche statt nur einzelner Konstanten;
-- globale oder lokale Sensitivitätsanalyse;
-- Unsicherheitsfortpflanzung;
-- Konfidenz- oder Credible-Intervalle;
-- Analyse struktureller Modellunsicherheit;
-- dokumentierte Grenzen der Übertragbarkeit.
+### 6.3 Uncertainty and sensitivity
 
-### 6.4 Experiment- und Ergebnisformat
+Every medical scenario requires:
 
-Ein Lauf erzeugt mindestens:
+- parameter ranges rather than individual constants only;
+- global or local sensitivity analysis;
+- uncertainty propagation;
+- confidence or credible intervals;
+- analysis of structural model uncertainty;
+- documented limits of transferability.
 
-- `experiment.yaml` oder äquivalentes validiertes Manifest;
-- `provenance.json` mit Versionen, Seeds und Prüfsummen;
-- strukturierte Mess- und Aggregatdateien;
-- optional komprimierte Trajektorien;
-- Validierungsbericht;
-- Performancebericht;
-- maschinenlesbare Zusammenfassung für spätere Vergleichsläufe.
+### 6.4 Experiment and result format
 
-### 6.5 Visualisierung und Nutzerwerkzeuge
+A run produces at least:
 
-Die Visualisierung wird von der Simulation entkoppelt und liest standardisierte Ergebnisformate. Geplant sind:
+- `experiment.yaml` or an equivalent validated manifest;
+- `provenance.json` containing versions, seeds, and checksums;
+- structured measurement and aggregate files;
+- optional compressed trajectories;
+- validation report;
+- performance report;
+- machine-readable summary for later comparison runs.
 
-- 3D-Gefäß- und Organansicht;
-- zeitliche Partikel- und Populationsverteilung;
-- Heatmaps und Flussdarstellung;
-- Schichtwechsel zwischen Körper, Organ und Kapillare;
-- Signal-, Konzentrations- und Gateway-Zeitreihen;
-- Vergleich mehrerer Läufe;
-- Unsicherheitsdarstellung;
-- Export reproduzierbarer Abbildungen.
+### 6.5 Visualization and user tools
 
-BVS-Vis kann als UX- und Funktionsreferenz dienen, sollte aber nicht das interne Datenmodell bestimmen.
+Visualization is decoupled from simulation and reads standardized result
+formats. Planned capabilities are:
 
-### 6.6 Dokumentation
+- 3D vascular and organ view;
+- temporal particle and population distribution;
+- heatmaps and flow display;
+- layer switching among body, organ, and capillary;
+- signal, concentration, and gateway time series;
+- comparison of multiple runs;
+- uncertainty visualization;
+- export of reproducible figures.
 
-Erforderliche Dokumenttypen:
+BVS-Vis can serve as a UX and feature reference but should not determine the
+internal data model.
 
-- Architekturübersicht und Decision Records;
-- Modellbeschreibung je Ebene;
-- Datenwörterbuch und Einheitensystem;
-- Szenariospezifikation;
-- Validierungsbericht;
-- Nutzer- und Entwicklerhandbuch;
-- reproduzierbare Tutorials;
-- Publikations- und Zitierhinweise;
-- Changelog und Release Notes.
+### 6.6 Documentation
 
-## 7. Priorisierung
+Required document types:
 
-### Priorität P0 – unverzichtbar
+- architecture overview and decision records;
+- model description per layer;
+- data dictionary and unit system;
+- scenario specification;
+- validation report;
+- user and developer guides;
+- reproducible tutorials;
+- publication and citation guidance;
+- changelog and release notes.
 
-- Phase 0 und Phase 1;
-- korrekte Zeit, Geometrie, RNG und Speicherverwaltung;
-- Tests, CI, Einheiten und Experimentmanifeste;
-- klare Trennung von Kern und Szenarien;
-- versioniertes Gefäßschema;
-- reproduzierbare BVS-Baseline.
+## 7. Prioritization
 
-### Priorität P1 – Kern der Dissertation
+### Priority P0 – indispensable
 
-- validierte Körperebene;
-- Organ- und Co-Simulationsschnittstelle;
-- erste Kapillar- und Zellmodelle;
-- Nano-IoT-Grundpfad;
-- Fingerprinting als vollständiger vertikaler Demonstrator.
+- Phase 0 and Phase 1;
+- correct time, geometry, RNG, and memory management;
+- tests, CI, units, and experiment manifests;
+- clear separation of kernel and scenarios;
+- versioned vascular schema;
+- reproducible BVS baseline.
 
-### Priorität P2 – Ausbau der Forschungsplattform
+### Priority P1 – core of the dissertation
 
-- Monitoring und Liquid Biopsy;
-- Endokrin-/AVS-Szenario;
-- populationsbasiertes CAR-T-Modell;
-- mehrere Organmodelle;
-- externe Simulatoradapter;
-- integrierte Ergebnisvisualisierung.
+- validated body layer;
+- organ and co-simulation interface;
+- first capillary and cell models;
+- basic nano-IoT path;
+- fingerprinting as a complete vertical demonstrator.
 
-### Priorität P3 – langfristige Vision
+### Priority P2 – expansion of the research platform
 
-- umfassendes Metastasenszenario;
-- patientenspezifische Anatomie und Physiologie;
-- dynamischer Digital Twin;
-- große Ensemble- und HPC-Simulationen;
-- klinische Validierung und gegebenenfalls regulatorischer Pfad.
+- monitoring and liquid biopsy;
+- endocrine/AVS scenario;
+- population-based CAR-T model;
+- multiple organ models;
+- external simulator adapters;
+- integrated result visualization.
 
-## 8. Indikative Zeitachse
+### Priority P3 – long-term vision
 
-| Horizont | Schwerpunkt | Erwartetes Ergebnis |
+- comprehensive metastasis scenario;
+- patient-specific anatomy and physiology;
+- dynamic digital twin;
+- large ensemble and HPC simulations;
+- clinical validation and, where appropriate, a regulatory path.
+
+## 8. Indicative timeline
+
+| Horizon | Focus | Expected result |
 |---|---|---|
-| 0–3 Monate | Auftrag, Architektur, Build, Tests | M0 und wesentliche Teile von M1 |
-| 3–9 Monate | neuer Kern und Körperebene | M1 und M2 |
-| 6–12 Monate | Co-Simulation und erstes Organ | M3 |
-| 9–18 Monate | Kapillarprototyp, Zellprototyp, Fingerprinting | M4/M5 in erster Variante und M7 |
-| 12–24 Monate | Nano-IoT und weitere Szenarien | M6, Monitoring, AVS, CAR-T |
-| 18–30 Monate | Metastasen-Capstone, mehrere Organe | vollständiger Mehrschichtnachweis |
-| ab 24–36 Monaten | Personalisierung, Digital Twin, HPC | M8 und skalierte Forschungsläufe |
+| 0–3 months | charter, architecture, build, tests | M0 and substantial parts of M1 |
+| 3–9 months | new kernel and body layer | M1 and M2 |
+| 6–12 months | co-simulation and first organ | M3 |
+| 9–18 months | capillary prototype, cell prototype, fingerprinting | initial M4/M5 variants and M7 |
+| 12–24 months | nano-IoT and further scenarios | M6, monitoring, AVS, CAR-T |
+| 18–30 months | metastasis capstone, multiple organs | complete multilayer demonstration |
+| from 24–36 months | personalization, digital twin, HPC | M8 and scaled research runs |
 
-Die Zeiträume setzen ein kontinuierlich verfügbares multidisziplinäres Team voraus. Ohne biologische, medizinische und experimentelle Partner können technische Modelle entstehen, aber keine belastbare medizinische Validierung.
+These periods assume a continuously available multidisciplinary team. Without
+biological, medical, and experimental partners, technical models can be built
+but not robustly validated medically.
 
-## 9. Rollen und Kompetenzen
+## 9. Roles and expertise
 
-Die Vision benötigt mindestens folgende Kompetenzen:
+The vision requires at least the following expertise:
 
-- Simulationsarchitektur und Software Engineering;
-- numerische Methoden und Co-Simulation;
-- Hämodynamik und Gefäßmodellierung;
-- molekulare Kommunikation;
-- Zellbiologie und Pharmakologie;
-- Bioinformatik und Proteomik;
-- medizinische Szenariokompetenz;
-- Statistik, Sensitivität und Unsicherheitsquantifizierung;
-- Visualisierung und Forschungsdatenmanagement;
-- langfristig Datenschutz und regulatorische Expertise.
+- simulation architecture and software engineering;
+- numerical methods and co-simulation;
+- hemodynamics and vascular modeling;
+- molecular communication;
+- cell biology and pharmacology;
+- bioinformatics and proteomics;
+- medical scenario expertise;
+- statistics, sensitivity, and uncertainty quantification;
+- visualization and research data management;
+- eventually, data-protection and regulatory expertise.
 
-Nicht jede Rolle muss dauerhaft durch eine eigene Person besetzt sein. Für jedes freizugebende Modell muss aber eine fachlich verantwortliche Person benannt werden.
+Not every role must be filled permanently by a separate person. Every model
+released, however, must have a named person responsible for its domain review.
 
-## 10. Größte Risiken und Gegenmaßnahmen
+## 10. Principal risks and mitigations
 
-| Risiko | Gegenmaßnahme |
+| Risk | Mitigation |
 |---|---|
-| Vision wird erneut als monolithischer Code umgesetzt | Schichtschnittstellen und Architecture Gates verbindlich machen |
-| Zu frühe Entwicklung vieler Szenarien | Fingerprinting als ersten vertikalen Pfad priorisieren |
-| Unrealistische Einzelobjektzahlen | hybride Agenten-, Populations- und Feldmodelle |
-| Performanceoptimierung verändert Resultate | Referenzsuite und statistische Toleranzen |
-| Fehlende experimentelle Daten | Gültigkeitsgrenzen dokumentieren, Partner und externe Daten früh einplanen |
-| Kalibrierung wird als Validierung interpretiert | getrennte Datensätze und unabhängige Validierungsberichte |
-| Patientenspezifität wird nur geometrisch verstanden | stufenweises Digital-Twin-Reifemodell |
-| Externe Simulatoren erzeugen Abhängigkeiten | stabile Adapter und Surrogate mit dokumentiertem Fehler |
-| Daten und Einheiten werden inkonsistent | versionierte Schemata, typsichere Einheiten und CI-Prüfungen |
-| Forschungscode wird nicht reproduzierbar | Manifest, Seeds, Container/Build-Rezepte und archivierte Referenzläufe |
+| The vision is again implemented as monolithic code | Make layer interfaces and architecture gates binding |
+| Too many scenarios are developed too early | Prioritize fingerprinting as the first vertical path |
+| Unrealistic individual-object counts | Use hybrid agent, population, and field models |
+| Performance optimization changes results | Use a reference suite and statistical tolerances |
+| Experimental data is missing | Document validity limitations and plan partners and external data early |
+| Calibration is interpreted as validation | Use separate data sets and independent validation reports |
+| Patient specificity is understood only geometrically | Use an incremental digital-twin maturity model |
+| External simulators create dependencies | Use stable adapters and surrogates with documented error |
+| Data and units become inconsistent | Use versioned schemas, type-safe units, and CI checks |
+| Research code is not reproducible | Use manifests, seeds, containers/build recipes, and archived reference runs |
 
-## 11. Unmittelbar nächste Arbeitspakete
+## 11. Immediate next work packages
 
-Die folgenden Pakete können direkt aus dieser Roadmap abgeleitet werden:
+The following packages are derived directly from this roadmap:
 
-1. ~~Anforderungen aus Kapitel 4–6 der Dissertation als nummerierten Katalog erfassen.~~ Erledigt: [Systemanforderungen](requirements/SYSTEM_REQUIREMENTS.md).
-2. ~~Architekturentscheidung „MEHLISSA Next auf Basis von 2.0 versus neuer Kern“ durch einen kleinen Spike vorbereiten.~~ Erledigt: [ADR-0001](architecture/adr/0001-new-kernel-and-legacy-policy.md).
-3. ~~Legacy-Versionen taggen und die aktuelle Buildbarkeit dokumentieren.~~ Erledigt: Tag `legacy-baseline-2026-08-26` und [Entwicklungsdokumentation](DEVELOPMENT.md).
-4. ~~Minimalen neuen Kern mit korrekter Zeit, 3D-Geometrie und RNG erstellen.~~ Erledigt und in der CI auf MSVC, GCC und Clang geprüft.
-5. 95er-Gefäßmodell in ein versioniertes Schema migrieren und validieren.
-6. BVS-Referenzlauf als ersten automatischen wissenschaftlichen Regressionstest aufbauen.
-7. ~~Szenarioformat und Experimentmanifest definieren.~~ Erledigt: versioniertes
-   Experimentmanifest, Provenienz, Laufprotokoll und Checkpointvertrag in M1.
-8. ~~Fingerprinting-Anforderungen und die Baseline aus der Dissertation als vertikale Spezifikation formulieren.~~ Erledigt: [Fingerprinting-Referenzszenario](requirements/FINGERPRINTING_SCENARIO.md).
-9. ~~Referenzorgan für die erste Body–Organ-Kopplung auswählen.~~ Erledigt: Lunge, dokumentiert in [ADR-0006](architecture/adr/0006-lung-reference-organ.md).
-10. ~~Benötigte biologische und experimentelle Partner beziehungsweise Datenquellen identifizieren.~~ Erledigt: [Datenlücken und Validierungspartner](m0/VALIDATION_AND_DATA_PARTNERS.md).
+1. ~~Capture requirements from Chapters 4–6 of the dissertation as a numbered catalog.~~ Complete: [system requirements](requirements/SYSTEM_REQUIREMENTS.md).
+2. ~~Prepare the architecture decision “MEHLISSA Next based on 2.0 versus a new kernel” through a small spike.~~ Complete: [ADR-0001](architecture/adr/0001-new-kernel-and-legacy-policy.md).
+3. ~~Tag legacy versions and document current buildability.~~ Complete: tag `legacy-baseline-2026-08-26` and [development documentation](DEVELOPMENT.md).
+4. ~~Create a minimal new kernel with correct time, 3D geometry, and RNG.~~ Complete and verified in CI on MSVC, GCC, and Clang.
+5. ~~Migrate and validate the 1995 vascular model into a versioned schema.~~ Complete in M2.2.
+6. ~~Build the BVS reference run as the first automated scientific regression test.~~ Complete in M2.4.
+7. ~~Define the scenario format and experiment manifest.~~ Complete: versioned experiment manifest, provenance, run log, and checkpoint contract in M1.
+8. ~~Formulate fingerprinting requirements and the dissertation baseline as a vertical specification.~~ Complete: [fingerprinting reference scenario](requirements/FINGERPRINTING_SCENARIO.md).
+9. ~~Select the reference organ for the first body–organ coupling.~~ Complete: lung, documented in [ADR-0006](architecture/adr/0006-lung-reference-organ.md).
+10. ~~Identify required biological and experimental partners or data sources.~~ Complete: [data gaps and validation partners](m0/VALIDATION_AND_DATA_PARTNERS.md).
 
-## 12. Definition des langfristigen Erfolgs
+## 12. Definition of long-term success
 
-Die neue MEHLISSA-Generation erfüllt die Dissertation nicht allein dadurch, dass Klassen mit den Namen Body, Organ, Capillary und Cell existieren. Erfolg liegt vor, wenn:
+The new MEHLISSA generation does not fulfill the dissertation merely because
+classes named Body, Organ, Capillary, and Cell exist. Success means:
 
-- die vier Ebenen mit jeweils angemessener Auflösung eigenständig validierbar sind;
-- Zustände und Entitäten nachvollziehbar zwischen ihnen ausgetauscht werden;
-- ein medizinisches Szenario den kompletten Weg von der Injektion über biologische Erkennung bis zur externen Messung oder Therapie durchläuft;
-- detaillierte und abstrahierte Modelle austauschbar sind;
-- realistische Größenordnungen durch Mehrskalen- und Populationsmodelle erreichbar werden;
-- jeder Lauf reproduzierbar ist;
-- Unsicherheiten und Gültigkeitsgrenzen Bestandteil des Ergebnisses sind;
-- neue medizinische Szenarien ohne Veränderung des Simulationskerns ergänzt werden können;
-- Personalisierung schrittweise von Anatomie zu Physiologie und Biochemie erweitert werden kann.
+- the four layers can be validated independently at appropriate resolutions;
+- states and entities are exchanged traceably between them;
+- a medical scenario completes the full path from injection through biological detection to an external measurement or treatment;
+- detailed and abstracted models are interchangeable;
+- realistic scales become feasible through multiscale and population models;
+- every run is reproducible;
+- uncertainty and validity limitations are part of the result;
+- new medical scenarios can be added without changing the simulation kernel;
+- personalization can progress incrementally from anatomy to physiology and biochemistry.
 
-Damit wird MEHLISSA von einer Sammlung wertvoller Forschungsprototypen zu der in der Dissertation angelegten ganzheitlichen Simulationsarchitektur.
+This transforms MEHLISSA from a collection of valuable research prototypes into
+the holistic simulation architecture envisioned in the dissertation.

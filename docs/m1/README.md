@@ -5,52 +5,51 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # M1 – Trustworthy Kernel
 
-**Status:** abgeschlossen
-**Zeitraum:** 26.–27. August 2026
+**Status:** complete
 
-M1 schafft einen kleinen, reproduzierbaren und getesteten Simulationskern. Die
-medizinischen Modelle beginnen erst auf diesem Fundament.
+**Period:** 26–27 August 2026
 
-## Arbeitsstand
+M1 provides a small, reproducible, and tested simulation kernel. Medical models
+are built only on top of this foundation.
 
-| Inkrement | Status | Nachweis |
+## Implementation status
+
+| Increment | Status | Verification |
 |---|---|---|
-| M1.0 C++20/CMake/vcpkg und Plattform-CI | abgeschlossen | MSVC-, GCC- und Clang-Jobs; CTest |
-| M1.0 monotone Zeit, 3D-Geometrie, benannte RNG-Ströme | abgeschlossen | Core-Unit- und Smoke-Tests |
-| M1.1 versioniertes Experimentmanifest | abgeschlossen | Schema `1.0.0`, Parser, Validator, CLI- und Negativtests; Plattform-CI |
-| M1.2 Provenienzmanifest | abgeschlossen | Schema `1.0.0`, automatische Erzeugung, SHA-256- und Vertragstests; Plattform-CI |
-| M1.3 dimensionssicheres Einheitensystem | abgeschlossen | SI-Vertrag, migrierte 3D-Geometrie, Compile- und Unit-Tests; Plattform-CI |
-| M1.4 `SimulationContext` und Komponentenlebenszyklus | abgeschlossen | kontextgebundene Uhr/RNGs, eindeutiges Ownership, Lifecycle- und Fehlerpfadtests; Plattform-CI |
-| M1.5 strukturierte Fehler, Logging und Checkpointvertrag | abgeschlossen | stabile Fehlercodes, JSONL-Schema, Checkpoint-Schema und Manipulationstests; Plattform-CI |
-| M1.6 plattformübergreifender Determinismusnachweis | abgeschlossen | bytegleicher Golden-Reference-Lauf auf MSVC, GCC und Clang; Plattform-CI |
+| M1.0 C++20/CMake/vcpkg and platform CI | complete | MSVC, GCC, and Clang jobs; CTest |
+| M1.0 monotonic time, 3D geometry, named RNG streams | complete | kernel unit and smoke tests |
+| M1.1 versioned experiment manifest | complete | schema `1.0.0`, parser, validator, CLI and negative tests; platform CI |
+| M1.2 provenance manifest | complete | schema `1.0.0`, automatic generation, SHA-256 and contract tests; platform CI |
+| M1.3 dimension-safe unit system | complete | SI contract, migrated 3D geometry, compile-time and unit tests; platform CI |
+| M1.4 `SimulationContext` and component lifecycle | complete | context-bound clock/RNGs, unique ownership, lifecycle and error-path tests; platform CI |
+| M1.5 structured errors, logging, and checkpoint contract | complete | stable error codes, JSONL schema, checkpoint schema, and tamper tests; platform CI |
+| M1.6 cross-platform determinism verification | complete | byte-identical golden-reference run on MSVC, GCC, and Clang; platform CI |
 
-Der verbindliche Größen- und Konversionskatalog für M1.3 steht in
-[`UNITS.md`](UNITS.md).
-Der M1.4-Vertrag ist in [`COMPONENT_LIFECYCLE.md`](COMPONENT_LIFECYCLE.md)
-dokumentiert.
-Fehlerkennungen, Laufprotokoll und Checkpointformat beschreibt
-[`ERRORS_LOGS_CHECKPOINTS.md`](ERRORS_LOGS_CHECKPOINTS.md).
-Der bytegenaue M1.6-Referenzlauf ist in
-[`DETERMINISM.md`](DETERMINISM.md) festgelegt.
+The binding quantity and conversion catalog for M1.3 is in
+[`UNITS.md`](UNITS.md). The M1.4 contract is documented in
+[`COMPONENT_LIFECYCLE.md`](COMPONENT_LIFECYCLE.md). Error identifiers, the run
+log, and the checkpoint format are described in
+[`ERRORS_LOGS_CHECKPOINTS.md`](ERRORS_LOGS_CHECKPOINTS.md). The byte-identical
+M1.6 reference run is defined in [`DETERMINISM.md`](DETERMINISM.md).
 
-## Gate-Ergebnis
+## Gate result
 
-Das Gate „Trustworthy Kernel“ ist erfüllt:
+The “Trustworthy Kernel” gate is satisfied:
 
-- der vollständige Build und alle 40 Tests laufen auf Windows/MSVC,
-  Linux/GCC und Linux/Clang;
-- Clang prüft zusätzlich Formatierung, statische Analyse, ASan und UBSan;
-- Kerninvarianten für Zeit, Einheiten, Geometrie, RNG, Lifecycle, Fehler,
-  Manifeste, Logs und Checkpoints sind automatisiert getestet und dokumentiert;
-- der M1.6-Referenzlauf ist auf allen drei Toolchains bytegleich;
-- `core/` enthält keine medizinische Szenarioklasse.
+- the complete build and all 40 tests run on Windows/MSVC, Linux/GCC, and
+  Linux/Clang;
+- Clang additionally checks formatting, static analysis, ASan, and UBSan;
+- kernel invariants for time, units, geometry, RNG, lifecycle, errors,
+  manifests, logs, and checkpoints are automatically tested and documented;
+- the M1.6 reference run is byte-identical on all three toolchains;
+- `core/` contains no medical scenario class.
 
-Der Abschluss von M1 behauptet noch keine fachliche Validität eines Körper-,
-Lungen-, Kapillar- oder Zellmodells. Diese Nachweise beginnen mit M2.
+Completing M1 does not yet claim domain validity for a body, lung, capillary,
+or cell model. That verification begins with M2.
 
-## M1.1 benutzen
+## Using M1.1
 
-Vom Repository-Root:
+From the repository root:
 
 ```powershell
 build/windows-msvc/Debug/apps/mehlissa.exe validate `
@@ -63,18 +62,19 @@ build/windows-msvc/Debug/apps/mehlissa.exe run `
   --checkpoint-schema data/schemas/checkpoint/1.0.0.schema.json
 ```
 
-Ohne `--schema` verwendet die CLI relativ zum aktuellen Arbeitsverzeichnis
-`data/schemas/experiment/1.0.0.schema.json`.
+Without `--schema`, the CLI uses
+`data/schemas/experiment/1.0.0.schema.json` relative to the current working
+directory.
 
-Das aktuelle Minimalexperiment enthält noch keine medizinischen Modelle. Der
-`run`-Befehl validiert den Vertrag, führt die Simulationsuhr deterministisch bis
-zur konfigurierten Dauer und schreibt anschließend
-`<outputs.directory>/provenance.json`. Das Provenienzmanifest enthält unter
-anderem den SHA-256-Hash der Experimentdatei, Seed, Git- und Buildzustand,
-Compiler, Plattform, Zeitstempel und erreichte Simulationszeit. Sein Vertrag
-liegt unter `data/schemas/provenance/1.0.0.schema.json`.
+The current minimal experiment does not yet contain medical models. The `run`
+command validates the contract, advances the simulation clock deterministically
+to the configured duration, and then writes
+`<outputs.directory>/provenance.json`. Among other fields, the provenance
+manifest contains the SHA-256 hash of the experiment file, seed, Git and build
+state, compiler, platform, timestamp, and reached simulation time. Its contract
+is defined in `data/schemas/provenance/1.0.0.schema.json`.
 
-Zusätzlich entstehen `run.log.jsonl` und `checkpoint-000000.json`. Der
-Checkpoint des Minimalversuchs enthält noch keine fachlichen
-Komponenten-Snapshots, prüft aber bereits Experimentbindung, Zeit, Seed und
-Zufallsstromzähler nach dem versionierten Vertrag.
+The run additionally creates `run.log.jsonl` and `checkpoint-000000.json`. The
+minimal experiment checkpoint does not yet contain domain component snapshots,
+but it already verifies experiment binding, time, seed, and random-stream
+counters against the versioned contract.

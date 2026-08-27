@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:body-state-profile:1.0.0",
+  "title": "MEHLISSA body-state profile",
+  "description": "Versioned overlay for a compatible vascular graph, with cardiac-output scaling and optional topology-preserving transition overrides.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "compatible_model", "validity", "cardiac_output", "transition_overrides", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "compatible_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+      }
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["population", "physiological_state", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "cardiac_output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["anchor_segment_id", "multiplier"],
+      "properties": {
+        "anchor_segment_id": {"$ref": "#/$defs/id"},
+        "multiplier": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "transition_overrides": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["segment_id", "transitions"],
+        "properties": {
+          "segment_id": {"$ref": "#/$defs/id"},
+          "transitions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["successor_id", "probability"],
+              "properties": {
+                "successor_id": {"$ref": "#/$defs/id"},
+                "probability": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}
+              }
+            }
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "citation", "license"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "citation": {"type": "string", "minLength": 1},
+          "license": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"}
+  }
+}

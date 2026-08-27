@@ -69,6 +69,21 @@ set_tests_properties(
     mehlissa_cli_runs_bvs_reference
     PROPERTIES PASS_REGULAR_EXPRESSION "M2.4 BVS reference passed"
 )
+
+add_test(
+    NAME mehlissa_cli_applies_body_state_without_rebuild
+    COMMAND
+        mehlissa apply-body-state
+        --model ${PROJECT_SOURCE_DIR}/data/body-models/bvs95-dissertation-rest-v1.json
+        --profile ${PROJECT_SOURCE_DIR}/data/body-states/bvs95-supine-cycle-exercise-1.9x-v1.json
+        --output ${CMAKE_CURRENT_BINARY_DIR}/bvs95-exercise.generated.json
+        --schema ${PROJECT_SOURCE_DIR}/data/schemas/vascular-graph/1.0.0.schema.json
+        --profile-schema ${PROJECT_SOURCE_DIR}/data/schemas/body-state-profile/1.0.0.schema.json
+)
+set_tests_properties(
+    mehlissa_cli_applies_body_state_without_rebuild
+    PROPERTIES PASS_REGULAR_EXPRESSION "supine-cycle-exercise-1.9x x 1.900000.*95 segments"
+)
 set_tests_properties(
     mehlissa_cli_validates_body_model
     PROPERTIES PASS_REGULAR_EXPRESSION "synthetic-branching-circuit.*4 segments"

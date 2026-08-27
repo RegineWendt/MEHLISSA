@@ -3,87 +3,55 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# ADR-0015: Deterministischer identitätserhaltender Kompartimenttransport
+# ADR-0015: Deterministic Identity-Preserving Compartment Transport
 
 - **Status:** Accepted
-- **Datum:** 27. August 2026
-- **Entscheider:** Projektleitung MEHLISSA Next
-- **Betrifft:** M2.3; `BODY-005`, `BODY-006`, `BODY-007`, `SYS-003`
+- **Date:** 27 August 2026
+- **Decision makers:** MEHLISSA Next project leadership
+- **Applies to:** M2.3; `BODY-005`, `BODY-006`, `BODY-007`, `SYS-003`
 
-## Kontext
+## Context
 
-Nach dem Gefäßgraphvertrag benötigt MEHLISSA eine erste ausführbare
-Transportsemantik. Die Legacy-Implementierung kann eine Entität abhängig von
-der Iterationsreihenfolge innerhalb desselben Simulationszeitpunkts mehrfach
-weiterreichen. Außerdem vermischt sie Bewegung, harte Gefäßtypen,
-Zufallsentscheidungen und medizinische Geräteklassen.
+After the vascular graph contract, MEHLISSA needs its first executable transport
+semantics. Depending on iteration order, the legacy implementation can forward
+an entity several times within the same simulation instant. It also mixes
+movement, hard-coded vessel types, random decisions, and medical device classes.
 
-Für die spätere Mehrschichtkopplung müssen sowohl Populationserhaltung als
-auch die Identität einzelner Nanogeräte oder seltener Zellen nachweisbar sein.
-Gleichzeitig darf der erste Baustein keine noch nicht validierte
-Strömungsphysik behaupten.
+Later multilayer coupling must demonstrate both population conservation and the
+identity of individual nanodevices or rare cells. At the same time, the first
+component must not claim flow physics that have not yet been validated.
 
-## Entscheidung
+## Decision
 
-1. Das erste Strömungsmodell ist ein identitätserhaltendes
-   Transitkompartimentmodell in `models/body`.
-2. Aufenthaltszeiten stammen ausschließlich aus den validierten
-   Segmentfeldern `Länge / mittlere Geschwindigkeit` und werden intern als
-   ganzzahlige Nanosekunden geführt.
-3. Injektionen sind terminierte, validierte Ereignisse. Jede Entität erhält
-   eine stabile, streng monotone ID.
-4. Übergänge werden zweiphasig ausgeführt: erst bestimmen, dann gemeinsam
-   übernehmen. Eine Entität kann daher pro `advance()` höchstens eine Kante
-   passieren.
-5. Der zulässige Zeitschritt ist auf die kürzeste Segmenttransitzeit begrenzt.
-   Das verhindert, dass die Einmalbewegungsregel physikalische Transitzeit
-   verwirft; überschüssige Aufenthaltszeit wird ins Nachfolgersegment
-   übernommen.
-6. Verzweigungen nutzen ausschließlich den benannten Zufallsstrom
-   `body.compartment-transport.transitions`. Die Auswahl verwendet ein
-   festgelegtes 53-Bit-Raster statt `std::discrete_distribution`.
-7. Einzelne Nachfolger sind deterministisch und verbrauchen keine
-   Zufallszahl. Damit hängt der Stromverbrauch nur von echten
-   Verzweigungsentscheidungen ab.
-8. Nach jedem Schritt wird die exakte Populationserhaltung geprüft.
+1. The first flow model is an identity-preserving transit-compartment model in `models/body`.
+2. Residence times derive exclusively from the validated segment fields `length / mean velocity` and are represented internally as integer nanoseconds.
+3. Injections are scheduled, validated events. Every entity receives a stable, strictly monotonic ID.
+4. Transitions execute in two phases: determine first, then commit together. An entity can therefore traverse at most one edge per `advance()`.
+5. The permitted time step is limited to the shortest segment transit time. This prevents the single-movement rule from discarding physical transit time; excess residence time is carried into the successor segment.
+6. Branches use only the named random stream `body.compartment-transport.transitions`. Selection uses a specified 53-bit grid instead of `std::discrete_distribution`.
+7. A single successor is deterministic and consumes no random number. RNG consumption therefore depends only on genuine branching decisions.
+8. Exact population conservation is checked after every step.
 
-## Folgen
+## Consequences
 
-Positiv:
+Positive:
 
-- Iterationsreihenfolge kann keine Mehrfachbewegung mehr auslösen.
-- Identität und Population bleiben über Verzweigungen und Zusammenführungen
-  erhalten.
-- Zufallsentscheidungen sind durch Seed, Streamname und Ziehungszahl
-  reproduzierbar und prüfbar.
-- Dasselbe Transportmodell funktioniert ohne Rebuild mit jedem Graphen des
-  M2.1-Vertrags.
-- Spätere Strömungsmodelle können hinter einer eigenen Komponente ergänzt und
-  gegen dieselben Invarianten getestet werden.
+- Iteration order can no longer cause multiple movements.
+- Identity and population are preserved across branches and merges.
+- Random decisions are reproducible and verifiable through seed, stream name, and draw count.
+- The same transport model works without rebuilding with every graph conforming to the M2.1 contract.
+- Later flow models can be added behind their own component and tested against the same invariants.
 
-Negativ und Grenzen:
+Negative and limitations:
 
-- Einzelentitäten benötigen mehr Speicher als reine Populationsvektoren. Ein
-  populationsbasierter Modus bleibt für Skalierungstests erforderlich.
-- Der feste Transit pro Segment bildet weder laminare Profile noch
-  Transitzeitstreuung ab.
-- Sehr große Simulationsschritte werden bewusst abgelehnt. Ein späterer
-  ereignisgetriebener Scheduler kann mehrere physikalische Übergänge innerhalb
-  eines äußeren Kopplungsschritts ausführen, muss dabei aber weiterhin
-  eindeutige Zeitpunkte garantieren.
-- Entnahme, Messorte, Trajektorienbegrenzung und Checkpoints sind nicht Teil
-  dieser Entscheidung.
+- Individual entities use more memory than pure population vectors. A population-based mode remains necessary for scaling tests.
+- Fixed transit per segment represents neither laminar profiles nor transit-time dispersion.
+- Very large simulation steps are deliberately rejected. A later event-driven scheduler may execute multiple physical transitions within an outer coupling step, but must continue to guarantee unambiguous event times.
+- Extraction, measurement sites, trajectory bounding, and checkpoints are not part of this decision.
 
-## Alternativen
+## Alternatives
 
-- **Direktes Portieren der Legacy-Bewegung:** abgelehnt, weil es die
-  Iterationsabhängigkeit und medizinische Speziallogik übernehmen würde.
-- **Nur Segmentpopulationen ohne IDs:** vorerst abgelehnt, weil
-  Mehrschicht-Szenarien die Identität einzelner Geräte und seltener Zellen
-  benötigen. Eine aggregierte Implementierung kann später parallel folgen.
-- **`std::discrete_distribution`:** abgelehnt, weil deren konkrete Abbildung
-  von Engine-Ausgaben auf Ergebnisse nicht plattformübergreifend festgelegt
-  ist.
-- **Beliebig große Schritte mit mehreren Übergängen:** zurückgestellt, bis ein
-  expliziter Ereignisscheduler Reihenfolge und Kopplungszeitpunkte sauber
-  definiert.
+- **Port the legacy movement directly:** rejected because it would retain iteration dependence and special medical logic.
+- **Only segment populations without IDs:** rejected for now because multilayer scenarios need the identity of individual devices and rare cells. An aggregated implementation may later exist in parallel.
+- **`std::discrete_distribution`:** rejected because its concrete mapping from engine output to results is not specified across platforms.
+- **Arbitrarily large steps with multiple transitions:** deferred until an explicit event scheduler cleanly defines order and coupling times.

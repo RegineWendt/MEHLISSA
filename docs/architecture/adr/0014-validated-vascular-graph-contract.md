@@ -3,83 +3,60 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# ADR-0014: Validierter Gefäßgraphvertrag
+# ADR-0014: Validated Vascular Graph Contract
 
 - **Status:** Accepted
-- **Datum:** 27. August 2026
-- **Entscheider:** Projektleitung MEHLISSA Next
-- **Betrifft:** M2; `BODY-001`, `BODY-002`, `BODY-005`, `BODY-006`, `DATA-001`
+- **Date:** 27 August 2026
+- **Decision makers:** MEHLISSA Next project leadership
+- **Applies to:** M2; `BODY-001`, `BODY-002`, `BODY-005`, `BODY-006`, `DATA-001`
 
-## Kontext
+## Context
 
-Der Legacy-Kreislauf leitet Kanten durch exakte Koordinatengleichheit ab und
-ergänzt Durchmesser, Geschwindigkeit und fehlende Übergänge implizit im Code.
-Damit sind Daten, Annahmen und Algorithmen nicht trennbar. Ungültige oder
-unvollständige Netze werden zudem erst während der Simulation sichtbar.
+The legacy circulation derives edges from exact coordinate equality and adds
+diameter, velocity, and missing transitions implicitly in code. Data,
+assumptions, and algorithms are therefore inseparable. Invalid or incomplete
+networks also become visible only during simulation.
 
-Die neue Körperebene benötigt einen eigenständigen Datenvertrag, der
-alternative Modelle ohne Rebuild lädt und physikalische Inkonsistenzen vor dem
-Simulationsstart erkennt. Er gehört fachlich in `models/body`, nicht in den
-szenarioneutralen Kern.
+The new body layer needs an independent data contract that loads alternative
+models without rebuilding and detects physical inconsistencies before
+simulation. It belongs in `models/body`, not in the scenario-neutral kernel.
 
-## Entscheidung
+## Decision
 
-1. Gefäßmodelle verwenden JSON Schema `vascular-graph/1.0.0` und explizite,
-   nicht zwingend fortlaufende Zeichenketten-IDs.
-2. Version 1.0.0 beschreibt ausschließlich geschlossene Kreisläufe. Jeder
-   Graph muss eine einzige starke Zusammenhangskomponente bilden und jedes
-   Segment mindestens einen expliziten Nachfolger besitzen.
-3. Koordinaten, Länge, Durchmesser, Querschnitt, Volumen, Fluss und mittlere
-   Geschwindigkeit sind Pflichtfelder mit im Namen fixierten SI-Einheiten.
-4. Der semantische Validator prüft zusätzlich zum Schema:
-   - eindeutige Segment-, Nachfolger- und Quellen-IDs;
-   - geometrische Kontinuität jeder Kante;
-   - euklidische Länge, Kreisquerschnitt und Zylindervolumen;
-   - `Fluss = Querschnitt × mittlere Geschwindigkeit`;
-   - Flusserhaltung an jeder geometrischen Verzweigung und Zusammenführung;
-   - auf eins normierte Übergänge und Übereinstimmung ihrer Anteile mit den
-     Flüssen der Nachfolger.
-5. Modellgültigkeit, Quellenzitat und -lizenz, Evidenzqualität sowie relative
-   Unsicherheit sind Datenfelder und keine freie Begleitnotiz.
-6. Kontrollierte fachliche Datenfehler verwenden `MEHLISSA-E2005`.
-7. Der erste Referenzgraph ist bewusst synthetisch und CC BY 4.0. Er enthält
-   vier Segmente, eine Verzweigung, eine Zusammenführung und nicht fortlaufende
-   IDs, trägt aber keine physiologische Aussage.
-8. Der 95er-Legacy-Datensatz wird wegen der ungeklärten Rechtekette nicht in
-   den Next-Datenbereich kopiert. Seine Migration ist außerdem fachlich
-   blockiert, bis insbesondere der fehlende Übergang von Gefäß 9 und belastbare
-   Flussannahmen dokumentiert sind.
+1. Vascular models use JSON Schema `vascular-graph/1.0.0` and explicit string IDs that need not be contiguous.
+2. Version 1.0.0 describes closed circulations only. Every graph must form a single strongly connected component and every segment must have at least one explicit successor.
+3. Coordinates, length, diameter, cross-sectional area, volume, flow, and mean velocity are required fields with SI units fixed in their names.
+4. In addition to the schema, the semantic validator checks:
+   - unique segment, successor, and source IDs;
+   - geometric continuity of every edge;
+   - Euclidean length, circular cross section, and cylindrical volume;
+   - `flow = cross-sectional area × mean velocity`;
+   - flow conservation at every geometric branch and merge;
+   - transitions normalized to one and agreement of their fractions with successor flows.
+5. Model validity, source citation and license, evidence quality, and relative uncertainty are data fields rather than free-form accompanying notes.
+6. Controlled domain-data errors use `MEHLISSA-E2005`.
+7. The first reference graph is deliberately synthetic and CC BY 4.0. It contains four segments, a branch, a merge, and non-contiguous IDs, but makes no physiological claim.
+8. The 1995 legacy data set is not copied into the Next data area because its chain of rights is unresolved. Its migration is also blocked on domain grounds until, in particular, the missing transition from vessel 9 and robust flow assumptions are documented.
 
-## Folgen
+## Consequences
 
-Positiv:
+Positive:
 
-- Ein Modell kann nicht mehr allein durch zufällig passende Koordinaten eine
-  Kante erhalten.
-- Einheiten- und Flussfehler werden vor Beginn eines Experiments abgelehnt.
-- Quellen und Annahmen reisen mit dem Modell und können später in Provenienz
-  und Modellkarten übernommen werden.
-- Synthetische Tests bleiben rechtlich und wissenschaftlich klar von
-  historischen Daten getrennt.
+- A model can no longer gain an edge merely through accidentally matching coordinates.
+- Unit and flow errors are rejected before an experiment begins.
+- Sources and assumptions travel with the model and can later be included in provenance and model cards.
+- Synthetic tests remain legally and scientifically distinct from historical data.
 
-Negativ und Grenzen:
+Negative and limitations:
 
-- Der strikte Vertrag verlangt Parameter, die der Legacy-Datensatz nicht
-  enthält; eine scheinbar schnelle 1:1-Konvertierung ist deshalb nicht möglich.
-- Kreisquerschnitt und gerades Zylindersegment sind M2-Abstraktionen. Spätere
-  1D-/CFD-Modelle benötigen eigene Geometrie- und Strömungsverträge.
-- Exakte Massenerhaltung ist für stationäre Referenzparametersätze sinnvoll;
-  zeitabhängige Compliance und Speicherung erfordern eine neue Modellversion.
-- Relative Unsicherheit wird zunächst dokumentiert, aber noch nicht propagiert.
+- The strict contract requires parameters absent from the legacy data set; an apparently quick one-to-one conversion is therefore impossible.
+- A circular cross section and straight cylindrical segment are M2 abstractions. Later 1D/CFD models need their own geometry and flow contracts.
+- Exact mass conservation is appropriate for stationary reference parameter sets; time-dependent compliance and storage require a new model version.
+- Relative uncertainty is initially documented but not yet propagated.
 
-## Alternativen
+## Alternatives
 
-- **CSV plus implizite Regeln:** abgelehnt, weil Schema, Quellen und Topologie
-  nicht gemeinsam validierbar wären.
-- **Kanten weiter aus Koordinaten ableiten:** abgelehnt, weil Rundung und
-  unbeabsichtigte Punktgleichheit die Topologie verändern können.
-- **Fehlende Flüsse optional lassen:** abgelehnt für den stationären
-  M2-Referenzvertrag, weil dann Übergänge und Massenerhaltung nicht prüfbar
-  wären.
-- **Legacywerte mit Defaults auffüllen:** abgelehnt, weil erfundene
-  Physiologie als Mess- oder Literaturdaten erscheinen könnte.
+- **CSV plus implicit rules:** rejected because schema, sources, and topology could not be validated together.
+- **Continue deriving edges from coordinates:** rejected because rounding and unintended point equality can change topology.
+- **Make missing flows optional:** rejected for the stationary M2 reference contract because transitions and mass conservation would then be unverifiable.
+- **Fill legacy values with defaults:** rejected because invented physiology could appear to be measured or literature data.

@@ -3,101 +3,120 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# Zielnutzer und priorisierte Arbeitsabläufe
+# Target Users and Prioritized Workflows
 
-**Stand:** 26. August 2026  
-**Status:** M0-Baseline
+**As of:** 26 August 2026
 
-## 1. Produktauftrag
+**Status:** M0 baseline
 
-MEHLISSA Next ist primär eine wissenschaftliche Modellierungs- und Experimentplattform. Sie soll verschiedene Fachdisziplinen an einer reproduzierbaren Mehrskalensimulation zusammenarbeiten lassen, ohne von jeder Nutzergruppe C++-Kernentwicklung zu verlangen.
+## 1. Product mission
 
-Klinische Entscheidungsunterstützung, Echtzeitbetrieb an Patientinnen und Patienten und regulatorische Produktfunktionen gehören nicht zum ersten Produktumfang.
+MEHLISSA Next is primarily a scientific modeling and experimentation platform.
+It should let multiple disciplines collaborate on a reproducible multiscale
+simulation without requiring every user group to develop the C++ kernel.
 
-## 2. Nutzerrollen
+Clinical decision support, real-time operation on patients, and regulated
+product functions are outside the initial product scope.
 
-### P1 – Simulations- und Plattformentwickler
+## 2. User roles
 
-**Ziel:** Kern, Kopplung, Datenformate und Performance verlässlich weiterentwickeln.  
-**Benötigt:** C++-API, CMake/CI, Debugging, Invarianten, Benchmarks, ADRs.  
-**Erfolg:** Änderungen sind getestet, reproduzierbar und beeinflussen Referenzläufe nur erklärt.
+### P1 – Simulation and platform developer
 
-### P1 – Nanonetzwerk-/Kommunikationsforscher
+**Goal:** Reliably advance the kernel, coupling, data formats, and performance.
 
-**Ziel:** Geräte-, Kanal-, Gateway- und Protokollvarianten in realistischer Mobilität vergleichen.  
-**Benötigt:** Szenariokonfiguration, austauschbare Kommunikationsmodelle, Netzwerkmetriken, Ensembles.  
-**Erfolg:** Ein Kommunikationsmodell kann ohne Änderung physiologischer Modelle ersetzt werden.
+**Needs:** C++ API, CMake/CI, debugging, invariants, benchmarks, ADRs.
 
-### P1 – Biomedizinischer Modellentwickler
+**Success:** Changes are tested and reproducible and affect reference runs only with an explanation.
 
-**Ziel:** Organ-, Kapillar-, Zell- oder Reaktionsmodelle beitragen und validieren.  
-**Benötigt:** dokumentierte Modellverträge, Einheiten, Python-/Dateiadapter, Modellkarten, Referenzfälle.  
-**Erfolg:** Ein Modell lässt sich unabhängig testen und mit grober/detaillierter Variante vergleichen.
+### P1 – Nanonetwork/communication researcher
 
-### P1 – Experimenteller oder klinischer Forschungspartner
+**Goal:** Compare device, channel, gateway, and protocol variants under realistic mobility.
 
-**Ziel:** Annahmen, Parameterbereiche und Simulationsergebnisse an realen Messungen prüfen.  
-**Benötigt:** verständliche Modellkarten, Datenwörterbuch, Sensitivität, Unsicherheit, exportierbare Berichte.  
-**Erfolg:** Mess- und Simulationsgrößen sind eindeutig zugeordnet; Daten für Kalibrierung und Validierung bleiben getrennt.
+**Needs:** Scenario configuration, interchangeable communication models, network metrics, ensembles.
 
-### P2 – Szenarioautor und wissenschaftlicher Anwender
+**Success:** A communication model can be replaced without changing physiological models.
 
-**Ziel:** Experimente konfigurieren, Replikate ausführen, vergleichen und publizieren.  
-**Benötigt:** validiertes Manifest, CLI/Python-API, Vorlagen, Ergebniszusammenfassung, Provenienz.  
-**Erfolg:** Ein neues Experiment benötigt keine Änderung des Simulationskerns.
+### P1 – Biomedical model developer
 
-### P2 – Studierende und Lehrende
+**Goal:** Contribute and validate organ, capillary, cell, or reaction models.
 
-**Ziel:** Modelle verstehen, kleine Varianten untersuchen und reproduzierbare Übungen durchführen.  
-**Benötigt:** installierbare Releases, Tutorials, kleine Datensätze, Visualisierung, kurze Laufzeiten.  
-**Erfolg:** Ein Referenzexperiment läuft lokal mit nachvollziehbarem Ergebnis.
+**Needs:** Documented model contracts, units, Python/file adapters, model cards, reference cases.
 
-### P2 – Projektleitung, Reviewer und Publikationsleser
+**Success:** A model can be tested independently and compared with coarse/detailed variants.
 
-**Ziel:** wissenschaftliche Aussage, Evidenz und Reproduzierbarkeit beurteilen.  
-**Benötigt:** Traceability, Modellkarten, Commit/Datenversion, Vergleichs- und Validierungsbericht.  
-**Erfolg:** Jede veröffentlichte Zahl lässt sich auf Experiment, Modell und Quelle zurückführen.
+### P1 – Experimental or clinical research partner
 
-## 3. Priorisierte Arbeitsabläufe
+**Goal:** Test assumptions, parameter ranges, and simulation results against real measurements.
 
-| Rang | Workflow | Primäre Rolle | M-Abnahme |
+**Needs:** Understandable model cards, data dictionary, sensitivity, uncertainty, exportable reports.
+
+**Success:** Measurement and simulation quantities are mapped unambiguously; calibration and validation data remain separate.
+
+### P2 – Scenario author and scientific user
+
+**Goal:** Configure, replicate, compare, and publish experiments.
+
+**Needs:** Validated manifest, CLI/Python API, templates, result summary, provenance.
+
+**Success:** A new experiment does not require a simulation-kernel change.
+
+### P2 – Students and educators
+
+**Goal:** Understand models, investigate small variants, and conduct reproducible exercises.
+
+**Needs:** Installable releases, tutorials, small data sets, visualization, short runtimes.
+
+**Success:** A reference experiment runs locally with an understandable result.
+
+### P2 – Project leadership, reviewers, and publication readers
+
+**Goal:** Assess scientific claims, evidence, and reproducibility.
+
+**Needs:** Traceability, model cards, commit/data version, comparison and validation reports.
+
+**Success:** Every published figure can be traced to an experiment, model, and source.
+
+## 3. Prioritized workflows
+
+| Rank | Workflow | Primary role | Milestone acceptance |
 |---:|---|---|---|
-| 1 | vorhandenen Referenzlauf aus Manifest reproduzieren | alle technischen Nutzer | M1/M2 |
-| 2 | Parameter/Seed variieren und Replikate vergleichen | Szenarioautor | M1 |
-| 3 | 95er-Körpermodell laden, validieren und BVS-Verteilung reproduzieren | Plattformentwickler | M2 |
-| 4 | neue Modellvariante über stabilen Vertrag ergänzen | biomedizinischer Modellentwickler | M3–M5 |
-| 5 | Fingerprinting von Injektion bis Handgelenk ausführen | interdisziplinäres Team | M7 |
-| 6 | externen Datensatz importieren und Provenienz prüfen | Daten-/Modellentwickler | M2/M3 |
-| 7 | Kalibrierung, unabhängige Validierung und Unsicherheit berichten | experimenteller Partner | M3–M7 |
-| 8 | Ensemble-/Sensitivitätslauf lokal oder im Batch/HPC starten | wissenschaftlicher Anwender | M7/M10 |
-| 9 | gespeicherte Läufe visualisieren und vergleichen | Studierende/Forschende | M7 |
-| 10 | reproduzierbares Publikationspaket exportieren | Projektleitung/Autor | M7 |
+| 1 | reproduce an existing reference run from a manifest | all technical users | M1/M2 |
+| 2 | vary parameters/seed and compare replicates | scenario author | M1 |
+| 3 | load and validate the 1995 body model and reproduce the BVS distribution | platform developer | M2 |
+| 4 | add a new model variant through a stable contract | biomedical model developer | M3–M5 |
+| 5 | execute fingerprinting from injection to wrist | interdisciplinary team | M7 |
+| 6 | import an external data set and verify provenance | data/model developer | M2/M3 |
+| 7 | report calibration, independent validation, and uncertainty | experimental partner | M3–M7 |
+| 8 | start an ensemble/sensitivity run locally or in batch/HPC | scientific user | M7/M10 |
+| 9 | visualize and compare stored runs | students/researchers | M7 |
+| 10 | export a reproducible publication package | project leadership/author | M7 |
 
-## 4. Bedienoberflächen nach Reifegrad
+## 4. User interfaces by maturity
 
-1. **M1–M2:** C++-CLI, validierte Manifestdatei, strukturierte Resultate.
-2. **M2–M4:** Python-API für Experimente, Ensembles und Analyse.
-3. **M3–M7:** standardisierte Adapter für externe Modelle und Daten.
-4. **M7:** entkoppelte interaktive Visualisierung und Laufvergleich.
-5. **M8+:** kontrollierte Oberflächen für patientenspezifische Forschungsdaten.
+1. **M1–M2:** C++ CLI, validated manifest file, structured results.
+2. **M2–M4:** Python API for experiments, ensembles, and analysis.
+3. **M3–M7:** standardized adapters for external models and data.
+4. **M7:** decoupled interactive visualization and run comparison.
+5. **M8+:** controlled interfaces for patient-specific research data.
 
-Eine grafische Oberfläche ist kein Ersatz für ein archiviertes Manifest. Jeder interaktiv erzeugte Lauf muss in dieselbe reproduzierbare Repräsentation exportiert werden.
+A graphical interface does not replace an archived manifest. Every interactively
+created run must export to the same reproducible representation.
 
-## 5. Definition eines nutzbaren Releases
+## 5. Definition of a usable release
 
-Ein Release ist für eine Rolle nutzbar, wenn:
+A release is usable for a role when:
 
-- Installation und Minimalexperiment dokumentiert sind;
-- mindestens ein typischer Workflow ohne Quellcodeänderung durchläuft;
-- Eingabefehler vor Simulationsstart verständlich gemeldet werden;
-- Ergebnisse Einheiten, Provenienz und Gültigkeitsgrenzen enthalten;
-- die Laufzeit auf der Zielhardware dokumentiert ist;
-- eine zitierbare Version und ein archiviertes Referenzexperiment existieren.
+- installation and the minimal experiment are documented;
+- at least one typical workflow completes without source-code changes;
+- input errors are reported understandably before simulation starts;
+- results contain units, provenance, and validity limitations;
+- runtime on the target hardware is documented;
+- a citable version and archived reference experiment exist.
 
-## 6. Nicht im kurzfristigen Umfang
+## 6. Outside the near-term scope
 
-- Diagnose oder Therapieentscheidung für individuelle Patientinnen und Patienten;
-- automatische Verarbeitung identifizierbarer Gesundheitsdaten;
-- Echtzeitsteuerung realer Nanogeräte;
-- Zertifizierung als Medizinprodukt;
-- universelle biologische Genauigkeit ohne szenariospezifische Validierung.
+- diagnosis or treatment decisions for individual patients;
+- automatic processing of identifiable health data;
+- real-time control of physical nanodevices;
+- certification as a medical device;
+- universal biological accuracy without scenario-specific validation.

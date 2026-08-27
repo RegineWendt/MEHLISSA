@@ -3,80 +3,75 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# Deterministischer Kompartimenttransport
+# Deterministic Compartment Transport
 
-## Zweck und Modellgrenze
+## Purpose and model boundary
 
-`CompartmentTransport` ist die erste ausführbare Transportinterpretation des
-validierten Gefäßgraphen. Sie soll früh die entscheidenden Softwareinvarianten
-beweisen, noch ohne eine räumlich aufgelöste laminare Strömung oder eine
-physiologisch validierte 95-Segment-Parametrisierung vorzutäuschen.
+`CompartmentTransport` is the first executable transport interpretation of the
+validated vascular graph. Its purpose is to demonstrate critical software
+invariants early without claiming spatially resolved laminar flow or a
+physiologically validated 95-segment parameterization.
 
-Jedes Segment ist ein gerichtetes Transitkompartiment. Mobile Entitäten werden
-weiter einzeln geführt, damit ihre Identität später über Körper-, Organ-,
-Kapillar- und Zellebene erhalten bleiben kann. Die aktuelle Komponente kennt
-noch keinen biologischen Entitätstyp; sie transportiert ausschließlich stabile
-numerische IDs.
+Every segment is a directed transit compartment. Mobile entities continue to be
+represented individually so that their identity can later be preserved across
+the body, organ, capillary, and cell layers. The current component does not know
+biological entity types; it transports only stable numeric IDs.
 
-## Zeit- und Übergangsmodell
+## Time and transition model
 
-Für Segment `i` gilt die nominale Transitzeit
+For segment `i`, the nominal transit time is
 
-`t_i = Länge_i / mittlere Geschwindigkeit_i`.
+`t_i = length_i / mean velocity_i`.
 
-Sie wird beim Aufbau in ganzzahlige Nanosekunden umgerechnet und konservativ
-aufgerundet. Ein `advance(delta)` darf höchstens so lang sein wie die kürzeste
-Segmenttransitzeit des geladenen Graphen. Dadurch kann keine Entität innerhalb
-eines Aufrufs zwei Kanten passieren. Alle fälligen Übergänge werden zunächst
-in einem getrennten Puffer gesammelt und erst danach übernommen. Die
-Reihenfolge der Segmente im JSON kann somit keine Kaskadenbewegung im selben
-Simulationszeitpunkt verursachen.
+During construction, it is converted to integer nanoseconds and rounded up
+conservatively. An `advance(delta)` may be no longer than the shortest segment
+transit time in the loaded graph. No entity can therefore traverse two edges in
+one call. All due transitions are first collected in a separate buffer and then
+committed together. Segment order in the JSON cannot cause cascading movement
+at the same simulation instant.
 
-An einer Verzweigung zieht jede fällige Entität genau eine 64-Bit-Zahl aus dem
-benannten Strom `body.compartment-transport.transitions`. Die oberen 53 Bit
-werden in das exakt darstellbare Raster `[0, 1)` abgebildet und gegen die
-kumulierten Wahrscheinlichkeiten geprüft. Ein Segment mit nur einem Nachfolger
-verbraucht keine Zufallszahl. Dieses Verfahren vermeidet die zwischen
-Standardbibliotheken nicht zugesicherte Reproduzierbarkeit von
-`std::discrete_distribution`.
+At a branch, every due entity draws exactly one 64-bit value from the named
+stream `body.compartment-transport.transitions`. The upper 53 bits are mapped
+to the exactly representable grid `[0, 1)` and compared with cumulative
+probabilities. A segment with one successor consumes no random value. This
+method avoids the cross-standard-library reproducibility that
+`std::discrete_distribution` does not guarantee.
 
-## Injektionen
+## Injections
 
-Injektionen sind vorab terminierte Ereignisse mit
+Injections are prescheduled events with
 
-- Simulationszeit in Nanosekunden,
-- Startsegment-ID und
-- positiver Anzahl neuer Entitäten.
+- simulation time in nanoseconds,
+- a start segment ID, and
+- a positive number of new entities.
 
-Ereignisse bei Zeit null werden während `initialize()` ausgeführt. Spätere
-Ereignisse werden in dem Zeitschritt aktiviert, dessen geschlossenes Ende ihre
-Zeit erreicht. Bei gleicher Zeit bleibt die Eingabereihenfolge stabil. IDs
-werden ab eins streng monoton vergeben.
+Events at time zero execute during `initialize()`. Later events are activated in
+the time step whose closed endpoint reaches their time. Input order remains
+stable for equal times. IDs are assigned strictly monotonically from one.
 
-## Automatisch geprüfte Invarianten
+## Automatically verified invariants
 
-- Injektionszeiten sind nicht negativ, Anzahlen positiv und Startsegmente
-  vorhanden.
-- Jeder Zeitschritt ist positiv und überschreitet die sichere Obergrenze nicht.
-- Eine Entität wechselt pro `advance()` höchstens einmal das Segment.
-- Ein Übergang verändert weder Identität noch Gesamtzahl der Entitäten.
-- Summe aller Segmentpopulationen entspricht stets der Zahl injizierter
-  Entitäten.
-- Gleicher Seed und gleiche Eingabe ergeben identische Orte, Restzeiten,
-  Populationen, Übergangszähler und Zufallsstrom-Zähler.
-- Andere Seeds können an echten Verzweigungen andere Wege erzeugen.
+- Injection times are nonnegative, counts positive, and start segments present.
+- Every time step is positive and does not exceed the safe upper bound.
+- An entity changes segment at most once per `advance()`.
+- A transition changes neither identity nor total entity count.
+- The sum of all segment populations always equals the number injected minus entities demonstrably extracted.
+- The same seed and input produce identical locations, residual times, populations, transition counts, and random-stream counters.
+- Different seeds can produce different paths at genuine branches.
 
-Die Nachweise liegen in `tests/compartment_transport_tests.cpp`.
+Verification resides in `tests/compartment_transport_tests.cpp`.
 
-## Bewusste Grenzen von M2.3
+## Extension in M2.5
 
-- Die Transitzeit ist für alle Entitäten eines Segments gleich; es gibt noch
-  kein radiales Geschwindigkeitsprofil.
-- Es gibt noch keine Entnahme, Messorte, begrenzte Trajektorienausgabe oder
-  Checkpoint-Serialisierung des Transportzustands. Diese Punkte gehören zu
-  M2.5 beziehungsweise zur späteren Experimentintegration.
-- Zeitabhängige Flüsse, Gefäßcompliance, Pulsatilität und physiologische
-  Zustände sind noch nicht modelliert.
-- Das synthetische Vier-Segment-Modell ist ein Softwaretest und keine
-  physiologische Evidenz.
-- Fachliche Verteilungs- und Gleichgewichtsregressionen beginnen mit M2.4.
+M2.5 adds scheduled extraction, passive sample/gateway measurement sites,
+bounded trajectories, bounded individual observations, population aggregates,
+and a schema-validated result format. The precise semantics are documented in
+[`TRANSPORT_OBSERVATION.md`](TRANSPORT_OBSERVATION.md).
+
+## Remaining limitations
+
+- Transit time is identical for all entities in a segment; there is no radial velocity profile yet.
+- Transport state does not yet have checkpoint serialization; integration with experiment orchestration and co-simulation follows in M3.
+- Time-dependent flows, vascular compliance, pulsatility, and physiological states are not yet modeled.
+- The synthetic four-segment model is a software test, not physiological evidence.
+- Domain distribution and equilibrium regressions begin with M2.4.
