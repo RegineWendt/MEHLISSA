@@ -250,7 +250,31 @@ The full event-order and truncation contract is documented in
 A CLI/manifest connection for this typed configuration is planned as part of
 M3 orchestration.
 
-## 7. How to interpret model evidence
+## 7. M3 developer preview: the first lung boundary
+
+M3 has started with a typed C++ boundary rather than a scenario-specific body
+shortcut. A `ModelComponent` exposes a stable model ID, named entity entry and
+exit ports, and versioned entity transfers. The first implementation is
+`LungCompartment`, a coarse pulmonary-circulation surrogate with a configured
+fixed transit time.
+
+The current contract verifies that:
+
+- an incoming transfer names its source and target model and port;
+- acceptance occurs at the declared synchronization time;
+- an entity ID cannot exist twice inside the organ boundary;
+- identity and entity type survive pulmonary transit;
+- the outgoing transfer names the configured venous return route; and
+- compatible time-step subdivisions produce the same transfer result.
+
+This is currently a developer API and contract-test slice. The CLI cannot yet
+compose a body and lung experiment, and the existing body transport does not
+yet hand entities to the organ automatically. M3.2 adds that adapter and the
+first complete body → lung → body test. Population and substance-flow exchange
+follow as separate conservative contracts. See the [M3 working plan](m3/README.md)
+and [lung model card](m3/LUNG_COMPARTMENT.md) before interpreting this model.
+
+## 8. How to interpret model evidence
 
 MEHLISSA distinguishes:
 
@@ -271,7 +295,7 @@ These labels are not interchangeable. In particular:
 - none of the current outputs is patient-specific or suitable for clinical
   decision-making.
 
-## 8. Troubleshooting
+## 9. Troubleshooting
 
 ### CMake selects the wrong Visual Studio version
 
@@ -303,11 +327,11 @@ The M2.4 regression simulates both 6,359 and 63,590 particles and recreates its
 Golden Reference. A complete debug suite therefore takes roughly one to two
 minutes on the current Windows reference system.
 
-## 9. Where this guide goes next
+## 10. Where this guide goes next
 
 The guide will be extended with:
 
-- M3 experiment-level body/organ composition and the first lung model;
+- M3 experiment-level body/organ composition and the detailed pulmonary model;
 - M4 capillary models and transport hand-offs;
 - M5 cellular and molecular interaction models;
 - M6 active gateway and Nano-IoT configuration;

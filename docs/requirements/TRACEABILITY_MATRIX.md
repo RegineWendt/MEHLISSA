@@ -37,12 +37,12 @@ Status codes:
 | SYS-006 | RM M0 | PART | M1 | CI rule and review: `core/` does not import `scenarios/` |
 | SYS-007 | RM M1 | DONE | M1 | stable error codes/CLI statuses and negative tests for configuration, overflow, lifecycle, log, and checkpoint invariants |
 | SYS-008 | DISS pp. 95–97, 133 | SPEC | M3–M5 | same scenario with surrogate and detailed model |
-| ARC-001 | DISS pp. 94–96 | SPEC | M3–M5 | four separate `ModelComponent` implementations |
-| ARC-002 | DISS p. 95 | SPEC | M3–M5 | model cards with spatial/temporal scale and validity scope |
-| ARC-003 | DISS pp. 95–97 | SPEC | M3 | schema and contract tests for exchange objects |
-| ARC-004 | RM 3.3 | SPEC | M3 | conservation and identity tests across model boundaries |
+| ARC-001 | DISS pp. 94–96 | PART | M3–M5 | generic `ModelComponent` boundary and first organ implementation; body/capillary/cell implementations follow |
+| ARC-002 | DISS p. 95 | PART | M3–M5 | lung-compartment model card records scale, evidence, and validity; all further models require equivalent cards |
+| ARC-003 | DISS pp. 95–97 | PART | M3 | versioned entity-transfer contract and negative tests exist; population, substance, state, and event contracts follow |
+| ARC-004 | RM 3.3 | PART | M3 | lung boundary preserves entity identity and rejects duplicates/routes/time errors; complete body round trip and quantity conservation follow |
 | ARC-005 | DISS pp. 99–100 | SPEC | M3–M5 | return of a detection/cell event to a higher layer |
-| ARC-006 | RM 3.3 | SPEC | M3 | deterministic multirate-coupling test |
+| ARC-006 | RM 3.3 | PART | M3 | fixed-transit lung result agrees for compatible 0.5 s and 1 s steps; orchestrated multirate synchronization follows |
 | ARC-007 | DISS pp. 96–97, 133 | SPEC | M4/M5 | reference adapter plus equivalent surrogate |
 
 ## 3. Body and organ layers
@@ -59,11 +59,11 @@ Status codes:
 | BODY-008 | DISS pp. 120–122 | PART | M2/M3 | machine-readable rest, 1.9× exercise, and 70° head-up-tilt profiles with sources, validity, and CLI exist; regional exercise redistribution, vertebral drainage, pressure, compliance, and dynamic state transitions follow in M3/M4 |
 | BODY-009 | DISS p. 101 | RESEARCH | M4/M5 | documented blood-model variants and sensitivity |
 | BODY-010 | BVS18 pp. 4–6 | DONE | M2 | deterministic 6,359/63,590-particle regression, equilibrium at minute 7, injection-site comparison, exact population conservation, and schema-validated golden reference |
-| ORG-001 | DISS pp. 118–126 | SPEC | M3 | model card and tests for the reference organ |
+| ORG-001 | DISS pp. 118–126 | PART | M3 | coarse pulmonary-circulation surrogate has a model card and contract tests; anatomy, perfusion, and activity-state variants follow |
 | ORG-002 | DISS pp. 118–122 | PART | M3 | M2.4 checks 23 target/actual perfusions in the whole-body graph; organ-specific lung model and independent physiological validation follow in M3/M2.6 |
-| ORG-003 | DISS pp. 95, 153–154 | SPEC | M3 | body → organ → body round trip |
+| ORG-003 | DISS pp. 95, 153–154 | PART | M3 | named lung entry/exit and return route exist; body-transport adapter and complete round-trip test follow |
 | ORG-004 | DISS pp. 122–123, Ch. 6 | LEGACY | M3/M7 | localization event with tissue and uncertainty |
-| ORG-005 | DISS pp. 123–126 | SPEC | M3 | interchangeable compartment/detailed model |
+| ORG-005 | DISS pp. 123–126 | PART | M3 | coarse lung implements the generic component contract; a second detailed pulmonary implementation must prove interchangeability |
 | ORG-006 | DISS pp. 124–126 | RESEARCH | M3/M8 | reproducible conversion with geometry verification |
 
 ## 4. Capillary and cell layers

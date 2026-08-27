@@ -31,6 +31,7 @@ decisions; a new decision supersedes an existing one through a new ADR.
 | [ADR-0017](adr/0017-bvs-reference-regression.md) | Accepted | separate BVS dynamics and dissertation perfusion regressions with predefined gates |
 | [ADR-0018](adr/0018-bounded-transport-observation.md) | Accepted | bounded trajectories and aggregates, deterministic extraction, and passive sample/gateway measurement sites |
 | [ADR-0019](adr/0019-versioned-body-state-overlays.md) | Accepted | versioned body states with a cardiac-output anchor and flow-conserving recomputation without topology changes |
+| [ADR-0020](adr/0020-model-component-and-entity-exchange.md) | Accepted | versioned model-component boundary and conservative entity hand-off for M3 |
 
 ## Status model
 

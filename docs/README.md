@@ -22,6 +22,8 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 - [Data gaps and validation partners](m0/VALIDATION_AND_DATA_PARTNERS.md) – required evidence, public sources, and potential expert partners.
 - [Development environment and build](DEVELOPMENT.md) – reproducible CMake/vcpkg build, test execution, and quality tools for MEHLISSA Next.
 - [M1 – Trustworthy Kernel](m1/README.md) – implementation status, increments, and use of the versioned experiment manifest.
+- [M2 gate review](m2/M2_GATE_REVIEW.md) – formal review of the validated body-layer milestone and its declared scientific limits.
+- [M3 – Body–Organ Coupling](m3/README.md) – active work on versioned exchange contracts and the lung reference organ.
 
 The historical analysis refers to legacy revision `4f4fc5a` (tag
 `legacy-baseline-2026-08-26`). The development documents describe branch

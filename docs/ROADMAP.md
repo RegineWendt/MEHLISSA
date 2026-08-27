@@ -5,7 +5,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Roadmap for a New MEHLISSA Generation
 
-**As of:** 26 August 2026
+**As of:** 27 August 2026
 
 **Strategic objective:** Implement the MEHLISSA vision described in the
 dissertation as a reproducible, modularly coupled, and scientifically
@@ -353,6 +353,12 @@ models can follow later.
 **Indicative period:** 6–12 months
 
 **Objective:** First genuine coupling between whole-body and regional models
+
+**Current implementation status:** M3 is active. The first increment provides
+the versioned `ModelComponent` entity-transfer boundary and a coarse,
+identity-conserving `LungCompartment`. Body-graph adapters, population and
+substance-flow contracts, the detailed pulmonary variant, and independent
+physiological validation remain open; see [M3 working plan](m3/README.md).
 
 #### Tasks
 
