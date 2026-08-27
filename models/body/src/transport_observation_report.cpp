@@ -71,19 +71,18 @@ using CompiledSchema = jsoncons::jsonschema::json_schema<Json>;
 [[nodiscard]] Json encode(const CompartmentTransport& transport) {
     Json sites = Json::array();
     for (const auto& site : transport.observation_config().measurement_sites) {
-        sites.push_back(Json{jsoncons::json_object_arg,
-                             {{"id", site.id},
-                              {"segment_id", site.segment_id},
-                              {"kind", name(site.kind)}}});
+        sites.push_back(
+            Json{jsoncons::json_object_arg,
+                 {{"id", site.id}, {"segment_id", site.segment_id}, {"kind", name(site.kind)}}});
     }
 
     Json trajectories = Json::array();
     for (const auto& record : transport.trajectory_records()) {
         trajectories.push_back(Json{jsoncons::json_object_arg,
-                                     {{"time_ns", record.time.count()},
-                                      {"particle_id", record.particle_id},
-                                      {"action", name(record.action)},
-                                      {"segment_id", record.segment_id}}});
+                                    {{"time_ns", record.time.count()},
+                                     {"particle_id", record.particle_id},
+                                     {"action", name(record.action)},
+                                     {"segment_id", record.segment_id}}});
     }
 
     Json measurements = Json::array();
@@ -99,10 +98,10 @@ using CompiledSchema = jsoncons::jsonschema::json_schema<Json>;
     Json measurement_counts = Json::array();
     for (const auto& count : transport.measurement_counts()) {
         measurement_counts.push_back(Json{jsoncons::json_object_arg,
-                                           {{"site_id", count.site_id},
-                                            {"segment_id", count.segment_id},
-                                            {"kind", name(count.kind)},
-                                            {"particle_count", count.particle_count}}});
+                                          {{"site_id", count.site_id},
+                                           {"segment_id", count.segment_id},
+                                           {"kind", name(count.kind)},
+                                           {"particle_count", count.particle_count}}});
     }
 
     Json snapshots = Json::array();
@@ -130,15 +129,13 @@ using CompiledSchema = jsoncons::jsonschema::json_schema<Json>;
         {
             {"schema_version", supported_transport_observation_report_schema_version},
             {"model", Json{jsoncons::json_object_arg,
-                            {{"id", transport.graph().model_id},
-                             {"version", transport.graph().model_version}}}},
+                           {{"id", transport.graph().model_id},
+                            {"version", transport.graph().model_version}}}},
             {"summary", Json{jsoncons::json_object_arg,
-                              {{"injected_particle_count",
-                                transport.injected_particle_count()},
-                               {"active_particle_count", transport.particle_count()},
-                               {"extracted_particle_count",
-                                transport.extracted_particle_count()},
-                               {"transition_count", transport.transition_count()}}}},
+                             {{"injected_particle_count", transport.injected_particle_count()},
+                              {"active_particle_count", transport.particle_count()},
+                              {"extracted_particle_count", transport.extracted_particle_count()},
+                              {"transition_count", transport.transition_count()}}}},
             {"configuration",
              Json{jsoncons::json_object_arg,
                   {{"trajectory_selection", name(config.trajectory_selection)},
@@ -149,9 +146,9 @@ using CompiledSchema = jsoncons::jsonschema::json_schema<Json>;
                    {"maximum_aggregate_records", config.maximum_aggregate_records},
                    {"measurement_sites", std::move(sites)}}}},
             {"truncation", Json{jsoncons::json_object_arg,
-                                 {{"trajectories", transport.trajectories_truncated()},
-                                  {"measurements", transport.measurements_truncated()},
-                                  {"aggregates", transport.aggregates_truncated()}}}},
+                                {{"trajectories", transport.trajectories_truncated()},
+                                 {"measurements", transport.measurements_truncated()},
+                                 {"aggregates", transport.aggregates_truncated()}}}},
             {"measurement_counts", std::move(measurement_counts)},
             {"measurement_records", std::move(measurements)},
             {"trajectory_records", std::move(trajectories)},
@@ -160,8 +157,7 @@ using CompiledSchema = jsoncons::jsonschema::json_schema<Json>;
         }};
 }
 
-[[nodiscard]] Json read_json(const std::filesystem::path& path,
-                             const std::string_view role) {
+[[nodiscard]] Json read_json(const std::filesystem::path& path, const std::string_view role) {
     std::ifstream stream{path, std::ios::binary};
     if (!stream) {
         throw core::MehlissaError{core::ErrorCode::input_unreadable,
@@ -171,8 +167,8 @@ using CompiledSchema = jsoncons::jsonschema::json_schema<Json>;
         return Json::parse(stream);
     } catch (const std::exception& error) {
         throw core::MehlissaError{core::ErrorCode::json_invalid,
-                                  "Invalid JSON in " + std::string{role} + " '" +
-                                      path.string() + "': " + error.what()};
+                                  "Invalid JSON in " + std::string{role} + " '" + path.string() +
+                                      "': " + error.what()};
     }
 }
 
@@ -189,9 +185,8 @@ using CompiledSchema = jsoncons::jsonschema::json_schema<Json>;
 
 } // namespace
 
-void write_transport_observation_report(
-    const CompartmentTransport& transport,
-    const TransportObservationReportWriteRequest& request) {
+void write_transport_observation_report(const CompartmentTransport& transport,
+                                        const TransportObservationReportWriteRequest& request) {
     const auto document = encode(transport);
     const auto schema_document = read_json(request.schema_path, "transport observation schema");
     const auto schema = compile_schema(schema_document, request.schema_path);

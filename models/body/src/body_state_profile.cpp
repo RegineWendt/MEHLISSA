@@ -30,8 +30,7 @@ using CompiledSchema = jsoncons::jsonschema::json_schema<Json>;
     throw VascularGraphError{core::ErrorCode::data_invalid, message};
 }
 
-[[nodiscard]] Json read_json(const std::filesystem::path& path,
-                             const std::string_view role) {
+[[nodiscard]] Json read_json(const std::filesystem::path& path, const std::string_view role) {
     std::ifstream stream{path, std::ios::binary};
     if (!stream) {
         throw VascularGraphError{core::ErrorCode::input_unreadable,
@@ -51,9 +50,9 @@ using CompiledSchema = jsoncons::jsonschema::json_schema<Json>;
     try {
         return jsoncons::jsonschema::make_json_schema(document);
     } catch (const std::exception& error) {
-        throw VascularGraphError{core::ErrorCode::schema_invalid,
-                                 "Invalid body-state schema '" + path.string() +
-                                     "': " + error.what()};
+        throw VascularGraphError{core::ErrorCode::schema_invalid, "Invalid body-state schema '" +
+                                                                      path.string() +
+                                                                      "': " + error.what()};
     }
 }
 
@@ -84,24 +83,23 @@ void validate_document(const Json& document, const CompiledSchema& schema,
     const auto& validity = document.at("validity");
     const auto& cardiac_output = document.at("cardiac_output");
 
-    BodyStateProfile profile{
-        document.at("schema_version").as<std::string>(),
-        profile_document.at("id").as<std::string>(),
-        profile_document.at("version").as<std::string>(),
-        profile_document.at("title").as<std::string>(),
-        compatibility.at("id").as<std::string>(),
-        compatibility.at("version").as<std::string>(),
-        {validity.at("population").as<std::string>(),
-         validity.at("physiological_state").as<std::string>(),
-         validity.at("description").as<std::string>()},
-        cardiac_output.at("anchor_segment_id").as<std::string>(),
-        cardiac_output.at("multiplier").as<double>(),
-    };
+    BodyStateProfile profile{};
+    profile.schema_version = document.at("schema_version").as<std::string>();
+    profile.profile_id = profile_document.at("id").as<std::string>();
+    profile.profile_version = profile_document.at("version").as<std::string>();
+    profile.title = profile_document.at("title").as<std::string>();
+    profile.compatible_model_id = compatibility.at("id").as<std::string>();
+    profile.compatible_model_version = compatibility.at("version").as<std::string>();
+    profile.validity = {validity.at("population").as<std::string>(),
+                        validity.at("physiological_state").as<std::string>(),
+                        validity.at("description").as<std::string>()};
+    profile.cardiac_output_anchor_segment_id =
+        cardiac_output.at("anchor_segment_id").as<std::string>();
+    profile.cardiac_output_multiplier = cardiac_output.at("multiplier").as<double>();
 
     for (const auto& item : document.at("transition_overrides").array_range()) {
         profile.transition_overrides.push_back(
-            {item.at("segment_id").as<std::string>(),
-             decode_transitions(item.at("transitions"))});
+            {item.at("segment_id").as<std::string>(), decode_transitions(item.at("transitions"))});
     }
     for (const auto& source : document.at("sources").array_range()) {
         profile.sources.push_back({source.at("id").as<std::string>(),
@@ -119,8 +117,7 @@ void validate_profile(const BodyStateProfile& profile) {
         profile.profile_id.empty() || profile.profile_version.empty() || profile.title.empty() ||
         profile.compatible_model_id.empty() || profile.compatible_model_version.empty() ||
         profile.validity.population.empty() || profile.validity.physiological_state.empty() ||
-        profile.validity.description.empty() ||
-        profile.cardiac_output_anchor_segment_id.empty() ||
+        profile.validity.description.empty() || profile.cardiac_output_anchor_segment_id.empty() ||
         !std::isfinite(profile.cardiac_output_multiplier) ||
         profile.cardiac_output_multiplier <= 0.0 || profile.sources.empty() ||
         profile.limitations.empty()) {
@@ -160,9 +157,9 @@ void validate_profile(const BodyStateProfile& profile) {
     }
 }
 
-[[nodiscard]] std::vector<double>
-solve_stationary_flows(const VascularGraph& graph, const std::size_t anchor_index,
-                       const double anchor_flow) {
+[[nodiscard]] std::vector<double> solve_stationary_flows(const VascularGraph& graph,
+                                                         const std::size_t anchor_index,
+                                                         const double anchor_flow) {
     const auto size = graph.segments.size();
     std::unordered_map<std::string, std::size_t> indices;
     indices.reserve(size);
@@ -274,8 +271,8 @@ VascularGraph apply_body_state_profile(const VascularGraph& base_graph,
         for (const auto& transition : override.transitions) {
             if (std::ranges::find(original, transition.successor_id, &Transition::successor_id) ==
                 original.end()) {
-                invalid("Body-state override changes topology for segment '" +
-                        override.segment_id + "'");
+                invalid("Body-state override changes topology for segment '" + override.segment_id +
+                        "'");
             }
         }
         result.segments[segment->second].transitions = override.transitions;
@@ -283,8 +280,8 @@ VascularGraph apply_body_state_profile(const VascularGraph& base_graph,
 
     const auto base_anchor_flow = core::in_cubic_meters_per_second(
         base_graph.segments[anchor->second].hemodynamics.flow_rate);
-    const auto flows = solve_stationary_flows(
-        result, anchor->second, base_anchor_flow * profile.cardiac_output_multiplier);
+    const auto flows = solve_stationary_flows(result, anchor->second,
+                                              base_anchor_flow * profile.cardiac_output_multiplier);
 
     std::unordered_set<std::string> source_ids;
     for (const auto& source : result.sources) {

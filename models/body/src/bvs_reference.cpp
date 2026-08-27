@@ -51,28 +51,17 @@ struct PublishedPerfusion final {
 };
 
 constexpr PublishedPerfusion published_perfusion[] = {
-    {"heart", "bvs95-095", 5.0, 4.89},
-    {"head", "bvs95-009", 15.0, 14.08},
-    {"right shoulder", "bvs95-011", 1.25, 1.18},
-    {"right upper arm", "bvs95-015", 1.25, 1.19},
-    {"left shoulder", "bvs95-017", 1.25, 1.13},
-    {"right elbow", "bvs95-021", 1.25, 1.37},
-    {"left upper arm", "bvs95-023", 1.25, 0.94},
-    {"chest and back", "bvs95-024", 1.67, 1.67},
-    {"right hand", "bvs95-027", 1.25, 1.27},
-    {"left elbow", "bvs95-029", 1.25, 1.01},
-    {"stomach", "bvs95-030", 10.0, 9.70},
-    {"left hand", "bvs95-033", 1.25, 1.11},
-    {"liver", "bvs95-036", 10.0, 9.37},
-    {"intestine", "bvs95-039", 15.0, 13.90},
-    {"kidneys", "bvs95-040", 20.0, 18.65},
-    {"left pelvis", "bvs95-047", 1.67, 1.54},
-    {"left hip", "bvs95-049", 1.67, 1.81},
-    {"right pelvis", "bvs95-051", 1.67, 1.54},
-    {"right hip", "bvs95-052", 1.67, 1.31},
-    {"left knee", "bvs95-054", 1.67, 1.41},
-    {"right knee", "bvs95-056", 1.67, 1.52},
-    {"left foot", "bvs95-059", 1.67, 1.31},
+    {"heart", "bvs95-095", 5.0, 4.89},           {"head", "bvs95-009", 15.0, 14.08},
+    {"right shoulder", "bvs95-011", 1.25, 1.18}, {"right upper arm", "bvs95-015", 1.25, 1.19},
+    {"left shoulder", "bvs95-017", 1.25, 1.13},  {"right elbow", "bvs95-021", 1.25, 1.37},
+    {"left upper arm", "bvs95-023", 1.25, 0.94}, {"chest and back", "bvs95-024", 1.67, 1.67},
+    {"right hand", "bvs95-027", 1.25, 1.27},     {"left elbow", "bvs95-029", 1.25, 1.01},
+    {"stomach", "bvs95-030", 10.0, 9.70},        {"left hand", "bvs95-033", 1.25, 1.11},
+    {"liver", "bvs95-036", 10.0, 9.37},          {"intestine", "bvs95-039", 15.0, 13.90},
+    {"kidneys", "bvs95-040", 20.0, 18.65},       {"left pelvis", "bvs95-047", 1.67, 1.54},
+    {"left hip", "bvs95-049", 1.67, 1.81},       {"right pelvis", "bvs95-051", 1.67, 1.54},
+    {"right hip", "bvs95-052", 1.67, 1.31},      {"left knee", "bvs95-054", 1.67, 1.41},
+    {"right knee", "bvs95-056", 1.67, 1.52},     {"left foot", "bvs95-059", 1.67, 1.31},
     {"right foot", "bvs95-060", 1.67, 1.44},
 };
 
@@ -102,8 +91,7 @@ struct EventRun final {
     throw VascularGraphError{core::ErrorCode::data_invalid, message};
 }
 
-[[nodiscard]] std::uint64_t checked_product(const std::uint64_t left,
-                                            const std::uint64_t right,
+[[nodiscard]] std::uint64_t checked_product(const std::uint64_t left, const std::uint64_t right,
                                             const std::string_view role) {
     if (left != 0 && right > std::numeric_limits<std::uint64_t>::max() / left) {
         throw core::MehlissaError{core::ErrorCode::numeric_overflow,
@@ -134,10 +122,11 @@ struct EventRun final {
     return static_cast<std::uint64_t>(std::ceil(value));
 }
 
-[[nodiscard]] std::size_t choose_successor(
-    const VascularGraph& graph, const std::vector<std::size_t>& first_successor_indices,
-    const std::vector<std::size_t>& second_successor_indices, const std::size_t segment_index,
-    core::RandomStream& random) {
+[[nodiscard]] std::size_t choose_successor(const VascularGraph& graph,
+                                           const std::vector<std::size_t>& first_successor_indices,
+                                           const std::vector<std::size_t>& second_successor_indices,
+                                           const std::size_t segment_index,
+                                           core::RandomStream& random) {
     const auto& transitions = graph.segments.at(segment_index).transitions;
     if (transitions.size() == 1) {
         return first_successor_indices.at(segment_index);
@@ -172,8 +161,7 @@ struct EventRun final {
     }
     const auto injection = indices.find(std::string{injection_segment_id});
     if (injection == indices.end()) {
-        invalid("BVS reference injection segment is unknown: " +
-                std::string{injection_segment_id});
+        invalid("BVS reference injection segment is unknown: " + std::string{injection_segment_id});
     }
     for (const auto& segment : graph.segments) {
         first_successors.push_back(indices.at(segment.transitions.front().successor_id));
@@ -230,9 +218,8 @@ struct EventRun final {
         std::vector<std::uint64_t> snapshot;
         snapshot.reserve(segment_count);
         for (std::size_t index = 0; index < segment_count; ++index) {
-            const auto pending = checked_product(populations.at(index),
-                                                 boundary_ns - last_change_ns.at(index),
-                                                 "snapshot integral");
+            const auto pending = checked_product(
+                populations.at(index), boundary_ns - last_change_ns.at(index), "snapshot integral");
             snapshot.push_back(
                 checked_sum(accumulated.at(index), pending, "snapshot accumulation"));
         }
@@ -247,8 +234,7 @@ struct EventRun final {
     return result;
 }
 
-[[nodiscard]] std::vector<double> window_average(const EventRun& run,
-                                                 const std::size_t start_index,
+[[nodiscard]] std::vector<double> window_average(const EventRun& run, const std::size_t start_index,
                                                  const std::size_t end_index,
                                                  const std::vector<std::uint64_t>& boundaries_ns) {
     const auto duration = boundaries_ns.at(end_index) - boundaries_ns.at(start_index);
@@ -264,8 +250,8 @@ struct EventRun final {
 }
 
 [[nodiscard]] DistributionComparison compare_distributions(const std::vector<double>& left,
-                                                            const std::vector<double>& right,
-                                                            const std::uint64_t particle_count) {
+                                                           const std::vector<double>& right,
+                                                           const std::uint64_t particle_count) {
     if (left.size() != right.size() || left.empty()) {
         invalid("BVS reference distributions have incompatible dimensions");
     }
@@ -277,8 +263,8 @@ struct EventRun final {
             std::max(comparison.maximum_absolute_difference, difference);
     }
     comparison.mean_absolute_difference_per_segment /= static_cast<double>(left.size());
-    const auto mean_population = static_cast<double>(particle_count) /
-                                 static_cast<double>(left.size());
+    const auto mean_population =
+        static_cast<double>(particle_count) / static_cast<double>(left.size());
     comparison.normalized_mean_difference_percent =
         comparison.mean_absolute_difference_per_segment / mean_population * 100.0;
     return comparison;
@@ -300,49 +286,48 @@ struct EventRun final {
 }
 
 [[nodiscard]] Json encode_comparison(const DistributionComparison& comparison) {
-    return Json{jsoncons::json_object_arg,
-                {
-                    {"mean_absolute_difference_per_segment",
-                     comparison.mean_absolute_difference_per_segment},
-                    {"normalized_mean_difference_percent",
-                     comparison.normalized_mean_difference_percent},
-                    {"maximum_absolute_difference", comparison.maximum_absolute_difference},
-                }};
+    return Json{
+        jsoncons::json_object_arg,
+        {
+            {"mean_absolute_difference_per_segment",
+             comparison.mean_absolute_difference_per_segment},
+            {"normalized_mean_difference_percent", comparison.normalized_mean_difference_percent},
+            {"maximum_absolute_difference", comparison.maximum_absolute_difference},
+        }};
 }
 
 [[nodiscard]] Json encode(const BvsReferenceReport& report) {
     Json perfusion = Json::array();
     for (const auto& row : report.perfusion) {
-        perfusion.push_back(Json{jsoncons::json_object_arg,
-                                {
-                                    {"region", row.region},
-                                    {"segment_id", row.segment_id},
-                                    {"literature_target_percent", row.literature_target_percent},
-                                    {"dissertation_simulation_percent",
-                                     row.dissertation_simulation_percent},
-                                    {"model_percent", row.model_percent},
-                                }});
+        perfusion.push_back(
+            Json{jsoncons::json_object_arg,
+                 {
+                     {"region", row.region},
+                     {"segment_id", row.segment_id},
+                     {"literature_target_percent", row.literature_target_percent},
+                     {"dissertation_simulation_percent", row.dissertation_simulation_percent},
+                     {"model_percent", row.model_percent},
+                 }});
     }
     return Json{
         jsoncons::json_object_arg,
         {
             {"schema_version", report.schema_version},
             {"model", Json{jsoncons::json_object_arg,
-                            {
-                                {"id", report.model_id},
-                                {"version", report.model_version},
-                            }}},
-            {"experiment",
-             Json{jsoncons::json_object_arg,
-                  {
-                      {"master_seed", report.master_seed},
-                      {"reference_particle_count", report.reference_particle_count},
-                      {"large_particle_count", report.large_particle_count},
-                      {"aorta_segment_id", report.aorta_segment_id},
-                      {"popliteal_segment_id", report.popliteal_segment_id},
-                      {"averaging_window_seconds", 60},
-                      {"reference_duration_seconds", 7200},
-                  }}},
+                           {
+                               {"id", report.model_id},
+                               {"version", report.model_version},
+                           }}},
+            {"experiment", Json{jsoncons::json_object_arg,
+                                {
+                                    {"master_seed", report.master_seed},
+                                    {"reference_particle_count", report.reference_particle_count},
+                                    {"large_particle_count", report.large_particle_count},
+                                    {"aorta_segment_id", report.aorta_segment_id},
+                                    {"popliteal_segment_id", report.popliteal_segment_id},
+                                    {"averaging_window_seconds", 60},
+                                    {"reference_duration_seconds", 7200},
+                                }}},
             {"published_reference",
              Json{jsoncons::json_object_arg,
                   {
@@ -371,19 +356,17 @@ struct EventRun final {
                        maximum_dissertation_difference_percentage_points},
                   }}},
             {"dynamic_distribution",
-             Json{jsoncons::json_object_arg,
-                  {
-                      {"minute_1_vs_minute_120",
-                       encode_comparison(report.minute_1_vs_minute_120)},
-                      {"minute_7_vs_minute_120",
-                       encode_comparison(report.minute_7_vs_minute_120)},
-                      {"minute_15_vs_minute_120",
-                       encode_comparison(report.minute_15_vs_minute_120)},
-                      {"aorta_vs_popliteal_at_minute_7",
-                       encode_comparison(report.aorta_vs_popliteal_at_minute_7)},
-                      {"population_scale_total_variation_percent",
-                       report.population_scale_total_variation_percent},
-                  }}},
+             Json{
+                 jsoncons::json_object_arg,
+                 {
+                     {"minute_1_vs_minute_120", encode_comparison(report.minute_1_vs_minute_120)},
+                     {"minute_7_vs_minute_120", encode_comparison(report.minute_7_vs_minute_120)},
+                     {"minute_15_vs_minute_120", encode_comparison(report.minute_15_vs_minute_120)},
+                     {"aorta_vs_popliteal_at_minute_7",
+                      encode_comparison(report.aorta_vs_popliteal_at_minute_7)},
+                     {"population_scale_total_variation_percent",
+                      report.population_scale_total_variation_percent},
+                 }}},
             {"perfusion",
              Json{jsoncons::json_object_arg,
                   {
@@ -434,9 +417,9 @@ struct EventRun final {
     try {
         return jsoncons::jsonschema::make_json_schema(document);
     } catch (const std::exception& error) {
-        throw VascularGraphError{core::ErrorCode::schema_invalid,
-                                 "Invalid BVS reference schema '" + path.string() +
-                                     "': " + error.what()};
+        throw VascularGraphError{core::ErrorCode::schema_invalid, "Invalid BVS reference schema '" +
+                                                                      path.string() +
+                                                                      "': " + error.what()};
     }
 }
 
@@ -471,20 +454,18 @@ BvsReferenceReport run_bvs_reference(const VascularGraph& graph, const std::uint
     const auto minute_7 = window_average(aorta, 2, 3, reference_boundaries);
     const auto minute_15 = window_average(aorta, 4, 5, reference_boundaries);
     const auto minute_120 = window_average(aorta, 6, 7, reference_boundaries);
-    const auto popliteal_minute_7 =
-        window_average(popliteal, 1, 2, minute_7_boundaries);
+    const auto popliteal_minute_7 = window_average(popliteal, 1, 2, minute_7_boundaries);
     const auto large_minute_7 = window_average(large, 1, 2, minute_7_boundaries);
 
-    BvsReferenceReport report{
-        supported_bvs_reference_report_schema_version,
-        graph.model_id,
-        graph.model_version,
-        master_seed,
-        reference_particle_count,
-        large_particle_count,
-        aorta_segment_id,
-        popliteal_segment_id,
-    };
+    BvsReferenceReport report{};
+    report.schema_version = supported_bvs_reference_report_schema_version;
+    report.model_id = graph.model_id;
+    report.model_version = graph.model_version;
+    report.master_seed = master_seed;
+    report.reference_particle_count = reference_particle_count;
+    report.large_particle_count = large_particle_count;
+    report.aorta_segment_id = aorta_segment_id;
+    report.popliteal_segment_id = popliteal_segment_id;
     report.minute_1_vs_minute_120 =
         compare_distributions(minute_1, minute_120, reference_particle_count);
     report.minute_7_vs_minute_120 =
@@ -510,14 +491,13 @@ BvsReferenceReport run_bvs_reference(const VascularGraph& graph, const std::uint
         }
         const auto model_percent =
             core::in_cubic_meters_per_second(segment->hemodynamics.flow_rate) / total_flow * 100.0;
-        report.perfusion.push_back({std::string{published.region}, std::string{published.segment_id},
-                                    published.target_percent, published.simulation_percent,
-                                    model_percent});
+        report.perfusion.push_back({std::string{published.region},
+                                    std::string{published.segment_id}, published.target_percent,
+                                    published.simulation_percent, model_percent});
         const auto target_error = std::abs(model_percent - published.target_percent);
         report.mean_perfusion_error_vs_literature_percentage_points += target_error;
         report.maximum_perfusion_error_vs_literature_percentage_points =
-            std::max(report.maximum_perfusion_error_vs_literature_percentage_points,
-                     target_error);
+            std::max(report.maximum_perfusion_error_vs_literature_percentage_points, target_error);
         report.mean_perfusion_difference_vs_dissertation_percentage_points +=
             std::abs(model_percent - published.simulation_percent);
     }
@@ -545,12 +525,10 @@ BvsReferenceReport run_bvs_reference(const VascularGraph& graph, const std::uint
     report.injection_site_gate_passed =
         report.aorta_vs_popliteal_at_minute_7.normalized_mean_difference_percent <=
         maximum_injection_site_difference_percent;
-    report.population_scale_gate_passed =
-        report.population_scale_total_variation_percent <=
-        maximum_population_scale_total_variation_percent;
+    report.population_scale_gate_passed = report.population_scale_total_variation_percent <=
+                                          maximum_population_scale_total_variation_percent;
     report.overall_passed = report.population_conserved && report.perfusion_gate_passed &&
-                            report.equilibrium_gate_passed &&
-                            report.injection_site_gate_passed &&
+                            report.equilibrium_gate_passed && report.injection_site_gate_passed &&
                             report.population_scale_gate_passed;
     return report;
 }
@@ -573,8 +551,7 @@ void write_bvs_reference_report(const BvsReferenceReport& report,
         std::filesystem::create_directories(request.output_path.parent_path(), error);
         if (error) {
             throw VascularGraphError{core::ErrorCode::output_unwritable,
-                                     "Cannot create BVS reference directory: " +
-                                         error.message()};
+                                     "Cannot create BVS reference directory: " + error.message()};
         }
     }
     std::ofstream output{request.output_path, std::ios::binary | std::ios::trunc};

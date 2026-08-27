@@ -17,8 +17,8 @@ namespace {
 [[nodiscard]] std::filesystem::path root_path() { return MEHLISSA_TEST_ROOT; }
 
 [[nodiscard]] const mehlissa::models::body::BvsReferenceReport& reference_report() {
-    static const auto report = mehlissa::models::body::run_bvs_reference(
-        mehlissa::models::body::load_vascular_graph({
+    static const auto report =
+        mehlissa::models::body::run_bvs_reference(mehlissa::models::body::load_vascular_graph({
             root_path() / "data" / "body-models" / "bvs95-dissertation-rest-v1.json",
             root_path() / "data" / "schemas" / "vascular-graph" / "1.0.0.schema.json",
         }));
@@ -55,9 +55,8 @@ TEST_CASE("M2.4 reference run passes its gates and reproduces its report",
     const auto generated_path = std::filesystem::temp_directory_path() /
                                 ("mehlissa-bvs-reference-" + std::to_string(unique) + ".json");
     mehlissa::models::body::write_bvs_reference_report(
-        reference_report(),
-        {generated_path,
-         root_path() / "data" / "schemas" / "bvs-reference-report" / "1.0.0.schema.json"});
+        reference_report(), {generated_path, root_path() / "data" / "schemas" /
+                                                 "bvs-reference-report" / "1.0.0.schema.json"});
 
     const auto reference_path =
         root_path() / "data" / "reference-results" / "bvs95-dissertation-rest-m2.4.json";

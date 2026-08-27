@@ -157,8 +157,7 @@ TEST_CASE("Scheduled extraction deterministically removes the lowest active part
     auto transport = std::make_unique<mehlissa::models::body::CompartmentTransport>(
         load_reference_graph(),
         std::vector<mehlissa::models::body::InjectionEvent>{{0ns, "artery-10", 5}},
-        std::vector<mehlissa::models::body::ExtractionEvent>{{1s, "artery-10", 2}},
-        observations);
+        std::vector<mehlissa::models::body::ExtractionEvent>{{1s, "artery-10", 2}}, observations);
     auto* observer = transport.get();
     mehlissa::core::ComponentHost host{31};
     host.add(std::move(transport));
@@ -250,13 +249,10 @@ TEST_CASE("Transport observations are written as schema-valid structured output"
 
     const auto unique = std::chrono::steady_clock::now().time_since_epoch().count();
     const auto output_path = std::filesystem::temp_directory_path() /
-                             ("mehlissa-transport-observation-" + std::to_string(unique) +
-                              ".json");
+                             ("mehlissa-transport-observation-" + std::to_string(unique) + ".json");
     mehlissa::models::body::write_transport_observation_report(
-        *observer,
-        {output_path,
-         root_path() / "data" / "schemas" / "transport-observation-report" /
-             "1.0.0.schema.json"});
+        *observer, {output_path, root_path() / "data" / "schemas" / "transport-observation-report" /
+                                     "1.0.0.schema.json"});
 
     std::ifstream input{output_path, std::ios::binary};
     REQUIRE(input);

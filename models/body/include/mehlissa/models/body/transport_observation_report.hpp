@@ -17,9 +17,8 @@ struct TransportObservationReportWriteRequest final {
     std::filesystem::path schema_path;
 };
 
-void write_transport_observation_report(
-    const CompartmentTransport& transport,
-    const TransportObservationReportWriteRequest& request);
+void write_transport_observation_report(const CompartmentTransport& transport,
+                                        const TransportObservationReportWriteRequest& request);
 
 } // namespace mehlissa::models::body
 

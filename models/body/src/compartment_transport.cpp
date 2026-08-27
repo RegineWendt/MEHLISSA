@@ -48,12 +48,12 @@ CompartmentTransport::CompartmentTransport(VascularGraph graph,
                                            std::vector<InjectionEvent> injections)
     : CompartmentTransport(std::move(graph), std::move(injections), {}, {}) {}
 
-CompartmentTransport::CompartmentTransport(
-    VascularGraph graph, std::vector<InjectionEvent> injections,
-    std::vector<ExtractionEvent> extractions, TransportObservationConfig observation_config)
+CompartmentTransport::CompartmentTransport(VascularGraph graph,
+                                           std::vector<InjectionEvent> injections,
+                                           std::vector<ExtractionEvent> extractions,
+                                           TransportObservationConfig observation_config)
     : graph_(std::move(graph)), injections_(std::move(injections)),
-      extractions_(std::move(extractions)),
-      observation_config_(std::move(observation_config)) {
+      extractions_(std::move(extractions)), observation_config_(std::move(observation_config)) {
     validate_vascular_graph(graph_);
 
     segment_indices_.reserve(graph_.segments.size());
@@ -218,8 +218,7 @@ void CompartmentTransport::advance(core::SimulationContext& context,
     if (observation_config_.aggregate_interval > core::SimulationClock::Duration::zero() &&
         interval_end >= next_aggregate_time_) {
         capture_population_snapshot(interval_end);
-        next_aggregate_time_ =
-            checked_add(interval_end, observation_config_.aggregate_interval);
+        next_aggregate_time_ = checked_add(interval_end, observation_config_.aggregate_interval);
     }
     verify_population_invariant();
 }
@@ -287,8 +286,7 @@ const std::vector<MeasurementCount>& CompartmentTransport::measurement_counts() 
     return measurement_counts_;
 }
 
-const std::vector<PopulationSnapshot>&
-CompartmentTransport::population_snapshots() const noexcept {
+const std::vector<PopulationSnapshot>& CompartmentTransport::population_snapshots() const noexcept {
     return population_snapshots_;
 }
 
@@ -304,9 +302,7 @@ bool CompartmentTransport::measurements_truncated() const noexcept {
     return measurements_truncated_;
 }
 
-bool CompartmentTransport::aggregates_truncated() const noexcept {
-    return aggregates_truncated_;
-}
+bool CompartmentTransport::aggregates_truncated() const noexcept { return aggregates_truncated_; }
 
 void CompartmentTransport::inject_until(const core::SimulationClock::Duration cutoff) {
     while (next_injection_ < injections_.size() && injections_[next_injection_].time <= cutoff) {
@@ -338,8 +334,8 @@ void CompartmentTransport::extract_until(const core::SimulationClock::Duration c
            extractions_[next_extraction_].time <= cutoff) {
         const auto& extraction = extractions_[next_extraction_];
         const auto segment_index = segment_indices_.at(extraction.segment_id);
-        const auto limit = extraction.particle_count.value_or(
-            std::numeric_limits<std::uint64_t>::max());
+        const auto limit =
+            extraction.particle_count.value_or(std::numeric_limits<std::uint64_t>::max());
         std::uint64_t extracted{};
         std::vector<Particle> remaining;
         remaining.reserve(particles_.size());
@@ -352,21 +348,19 @@ void CompartmentTransport::extract_until(const core::SimulationClock::Duration c
             }
         }
         particles_ = std::move(remaining);
-        if (extracted > std::numeric_limits<std::uint64_t>::max() -
-                            extracted_particle_count_) {
+        if (extracted > std::numeric_limits<std::uint64_t>::max() - extracted_particle_count_) {
             throw core::MehlissaError{core::ErrorCode::numeric_overflow,
                                       "Extraction counter overflow"};
         }
         extracted_particle_count_ += extracted;
-        extraction_results_.push_back({extraction.time, cutoff, extraction.segment_id,
-                                       extraction.particle_count, extracted});
+        extraction_results_.push_back(
+            {extraction.time, cutoff, extraction.segment_id, extraction.particle_count, extracted});
         ++next_extraction_;
     }
 }
 
 void CompartmentTransport::record_entry(const core::SimulationClock::Duration time,
-                                        const Particle& particle,
-                                        const TrajectoryAction action) {
+                                        const Particle& particle, const TrajectoryAction action) {
     record_trajectory(time, particle, action);
     for (const auto site_index : measurement_sites_by_segment_[particle.segment_index]) {
         auto& count = measurement_counts_[site_index].particle_count;
@@ -376,8 +370,7 @@ void CompartmentTransport::record_entry(const core::SimulationClock::Duration ti
         }
         ++count;
         const auto& site = observation_config_.measurement_sites[site_index];
-        if (measurement_records_.size() <
-            observation_config_.maximum_measurement_records) {
+        if (measurement_records_.size() < observation_config_.maximum_measurement_records) {
             measurement_records_.push_back(
                 {time, site.id, site.segment_id, site.kind, particle.id});
         } else {
@@ -404,8 +397,7 @@ void CompartmentTransport::record_trajectory(const core::SimulationClock::Durati
     }
 }
 
-void CompartmentTransport::capture_population_snapshot(
-    const core::SimulationClock::Duration time) {
+void CompartmentTransport::capture_population_snapshot(const core::SimulationClock::Duration time) {
     if (population_snapshots_.size() < observation_config_.maximum_aggregate_records) {
         population_snapshots_.push_back({time, segment_populations()});
     } else {

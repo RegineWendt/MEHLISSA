@@ -28,8 +28,7 @@ namespace {
     });
 }
 
-[[nodiscard]] mehlissa::models::body::BodyStateProfile
-load_profile(const std::string& filename) {
+[[nodiscard]] mehlissa::models::body::BodyStateProfile load_profile(const std::string& filename) {
     return mehlissa::models::body::load_body_state_profile({
         root_path() / "data" / "body-states" / filename,
         root_path() / "data" / "schemas" / "body-state-profile" / "1.0.0.schema.json",
@@ -58,8 +57,7 @@ TEST_CASE("Checked-in rest exercise and posture profiles load without recompilat
     REQUIRE(flow(rest, "bvs95-002") == Catch::Approx(0.0001));
     REQUIRE(flow(exercise, "bvs95-002") == Catch::Approx(0.00019));
     REQUIRE(flow(upright, "bvs95-002") == Catch::Approx(0.00007833333333333333));
-    REQUIRE(exercise.validity.physiological_state.find("bicycle exercise") !=
-            std::string::npos);
+    REQUIRE(exercise.validity.physiological_state.find("bicycle exercise") != std::string::npos);
     REQUIRE(upright.validity.physiological_state.find("head-up tilt") != std::string::npos);
     REQUIRE_NOTHROW(mehlissa::models::body::validate_vascular_graph(rest));
     REQUIRE_NOTHROW(mehlissa::models::body::validate_vascular_graph(exercise));
@@ -76,8 +74,7 @@ TEST_CASE("State application preserves geometry and consistently changes velocit
     for (std::size_t index = 0; index < base.segments.size(); ++index) {
         REQUIRE(mehlissa::core::in_square_meters(
                     exercise.segments[index].geometry.cross_section_area) ==
-                mehlissa::core::in_square_meters(
-                    base.segments[index].geometry.cross_section_area));
+                mehlissa::core::in_square_meters(base.segments[index].geometry.cross_section_area));
         REQUIRE(flow(exercise, exercise.segments[index].id) ==
                 Catch::Approx(flow(base, base.segments[index].id) * 1.9).epsilon(1.0e-9));
         REQUIRE(mehlissa::core::in_meters_per_second(
@@ -119,7 +116,6 @@ TEST_CASE("A state profile cannot be applied to an incompatible body model",
           "[body][state][validation]") {
     auto profile = load_profile("bvs95-rest-supine-v1.json");
     profile.compatible_model_version = "9.9.9";
-    REQUIRE_THROWS_WITH(
-        mehlissa::models::body::apply_body_state_profile(load_bvs95(), profile),
-        Catch::Matchers::ContainsSubstring("requires model"));
+    REQUIRE_THROWS_WITH(mehlissa::models::body::apply_body_state_profile(load_bvs95(), profile),
+                        Catch::Matchers::ContainsSubstring("requires model"));
 }

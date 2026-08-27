@@ -39,8 +39,7 @@ struct BodyStateProfileLoadRequest final {
     std::filesystem::path schema_path;
 };
 
-[[nodiscard]] BodyStateProfile
-load_body_state_profile(const BodyStateProfileLoadRequest& request);
+[[nodiscard]] BodyStateProfile load_body_state_profile(const BodyStateProfileLoadRequest& request);
 [[nodiscard]] VascularGraph apply_body_state_profile(const VascularGraph& base_graph,
                                                      const BodyStateProfile& profile);
 

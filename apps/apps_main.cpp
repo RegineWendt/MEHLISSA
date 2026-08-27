@@ -29,8 +29,7 @@ constexpr auto default_checkpoint_schema_path = "data/schemas/checkpoint/1.0.0.s
 constexpr auto default_body_schema_path = "data/schemas/vascular-graph/1.0.0.schema.json";
 constexpr auto default_bvs_report_schema_path =
     "data/schemas/bvs-reference-report/1.0.0.schema.json";
-constexpr auto default_body_state_schema_path =
-    "data/schemas/body-state-profile/1.0.0.schema.json";
+constexpr auto default_body_state_schema_path = "data/schemas/body-state-profile/1.0.0.schema.json";
 
 struct CommandLine final {
     enum class Operation : std::uint8_t {
@@ -143,15 +142,13 @@ void print_usage() {
     } else if (command.operation == CommandLine::Operation::apply_body_state) {
         if (command.body_model_path.empty() || command.profile_path.empty() ||
             command.output_path.empty()) {
-            throw mehlissa::core::MehlissaError{
-                mehlissa::core::ErrorCode::command_line_invalid,
-                "--model, --profile and --output are required"};
+            throw mehlissa::core::MehlissaError{mehlissa::core::ErrorCode::command_line_invalid,
+                                                "--model, --profile and --output are required"};
         }
     } else if (command.operation == CommandLine::Operation::reference_bvs) {
         if (command.body_model_path.empty() || command.output_path.empty()) {
-            throw mehlissa::core::MehlissaError{
-                mehlissa::core::ErrorCode::command_line_invalid,
-                "--model and --output are required"};
+            throw mehlissa::core::MehlissaError{mehlissa::core::ErrorCode::command_line_invalid,
+                                                "--model and --output are required"};
         }
     } else if (command.operation == CommandLine::Operation::validate_body) {
         if (command.body_model_path.empty()) {
