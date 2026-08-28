@@ -14,6 +14,13 @@
 
 namespace mehlissa::models::organ {
 
+struct PulmonaryFlowAdaptationParameters final {
+    core::FlowRate reference_cardiac_output;
+    double resistance_exponent{};
+    double compliance_exponent{};
+    core::Dimensionless maximum_flow_ratio;
+};
+
 struct PulmonaryZeroDimensionalParameters final {
     core::FlowRate baseline_cardiac_output;
     core::Pressure left_atrial_pressure;
@@ -21,6 +28,7 @@ struct PulmonaryZeroDimensionalParameters final {
     core::VascularCompliance pulmonary_arterial_compliance;
     core::SimulationClock::Duration pulmonary_transit_time{};
     core::Dimensionless right_lung_perfusion_fraction;
+    std::optional<PulmonaryFlowAdaptationParameters> flow_adaptation;
 };
 
 struct PulmonaryZeroDimensionalConfig final {
@@ -42,6 +50,9 @@ struct PulmonaryZeroDimensionalState final {
     core::VascularResistance right_lung_resistance;
     core::VascularResistance left_lung_resistance;
     core::Time pressure_time_constant;
+    core::VascularResistance effective_pulmonary_vascular_resistance;
+    core::VascularCompliance effective_pulmonary_arterial_compliance;
+    core::Dimensionless effective_flow_ratio;
 };
 
 class PulmonaryZeroDimensionalModel final : public coupling::ModelComponent {

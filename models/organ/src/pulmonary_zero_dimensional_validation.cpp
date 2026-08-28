@@ -266,7 +266,7 @@ PulmonaryZeroDimensionalValidationReport evaluate_pulmonary_zero_dimensional_val
         if (condition.pulmonary_arterial_compliance.has_value()) {
             condition_result.endpoints.push_back(evaluate_endpoint(
                 "pulmonary_arterial_compliance", condition.pulmonary_arterial_compliance.value(),
-                core::in_cubic_meters_per_pascal(parameters.pulmonary_arterial_compliance),
+                core::in_cubic_meters_per_pascal(state.effective_pulmonary_arterial_compliance),
                 validation.maximum_absolute_z_score));
         }
         if (condition.rc_time_constant.has_value()) {

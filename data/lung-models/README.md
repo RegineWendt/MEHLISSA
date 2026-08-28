@@ -17,3 +17,8 @@ the supine position; it is not a patient record or a clinical model. See the
 Its separate independent observations and executable comparison live under
 `data/validation/`; see the
 [validation report](../../docs/m3/PULMONARY_0D_INDEPENDENT_VALIDATION.md).
+
+`healthy-adult-rest-exercise-0d-v2.json` retains the resting v1 values and adds
+a bounded flow-dependent PVR/compliance rule calibrated from a healthy cohort
+that is disjoint from the Bentley validation cohort. See the
+[flow-adaptation model card](../../docs/m3/PULMONARY_0D_FLOW_ADAPTATION.md).

@@ -59,11 +59,11 @@ Status codes:
 | BODY-008 | DISS pp. 120–122 | PART | M2/M3 | machine-readable rest, 1.9× exercise, and 70° head-up-tilt profiles with sources, validity, and CLI exist; regional exercise redistribution, vertebral drainage, pressure, compliance, and dynamic state transitions follow in M3/M4 |
 | BODY-009 | DISS p. 101 | RESEARCH | M4/M5 | documented blood-model variants and sensitivity |
 | BODY-010 | BVS18 pp. 4–6 | DONE | M2 | deterministic 6,359/63,590-particle regression, equilibrium at minute 7, injection-site comparison, exact population conservation, and schema-validated golden reference |
-| ORG-001 | DISS pp. 118–126 | PART | M3 | coarse and serial-region surrogates plus a literature-parameterized mean pulmonary 0D model have model cards and tests; anatomical, pulsatile, and activity-state variants follow |
-| ORG-002 | DISS pp. 118–122 | PART | M3 | M2.4 checks whole-body perfusion; M3.7 adds source-scoped pressure, flow, PVR, compliance, transit, and right/left lung perfusion with uncertainty; M3.8 independently validates aggregate pressure/compliance/resting-RC compatibility and exposes the exercise RC limitation; subject-level joint-data validation follows |
+| ORG-001 | DISS pp. 118–126 | PART | M3 | coarse and serial-region surrogates plus resting and bounded flow-adaptive literature-parameterized mean pulmonary 0D model cards and tests exist; anatomical, pulsatile, and regional activity-state variants follow |
+| ORG-002 | DISS pp. 118–122 | PART | M3 | M2.4 checks whole-body perfusion; M3.7 adds source-scoped pressure, flow, PVR, compliance, transit, and right/left lung perfusion with uncertainty; M3.8 independently validates aggregate pressure/compliance/resting-RC compatibility; M3.9 adds source-disjoint bounded PVR/compliance flow adaptation and reduces the independent exercise RC discrepancy without hiding its remaining failure; subject-level joint-data validation follows |
 | ORG-003 | DISS pp. 95, 153–154 | DONE | M3 | tested body → lung → body ownership round trip with named ports, stable identity, synchronization time, and explicit outside-body ledger |
 | ORG-004 | DISS pp. 122–123, Ch. 6 | LEGACY | M3/M7 | localization event with tissue and uncertainty |
-| ORG-005 | DISS pp. 123–126 | PART | M3 | schema-selected coarse, three-region surrogate, and pulmonary 0D implementations share one component contract; the 0D variant has analytical RC dynamics and measured total transit, while anatomical 1D/geometry refinement follows |
+| ORG-005 | DISS pp. 123–126 | PART | M3 | schema-selected coarse, three-region surrogate, and pulmonary 0D implementations share one component contract; the 0D variant has analytical RC dynamics, bounded effective PVR/compliance, and measured total transit, while anatomical 1D/geometry refinement follows |
 | ORG-006 | DISS pp. 124–126 | PART | M3/M8 | external-data contract preserves checksum, format, axes, units, and transformations; official SimVascular arterial candidate reviewed with access/license/state/unit/coverage blockers; import adapter and geometry verification follow |
 
 ## 4. Capillary and cell layers
@@ -97,7 +97,7 @@ Status codes:
 | DATA-003 | RM 2.4, 6.4 | PART | M1 | schema `1.0.0`, automatically generated `provenance.json`, SHA-256 and contract tests; data-version catalog follows with real models |
 | DATA-004 | VIS20; MEH25 | DONE | M2 | separate extraction events, measurement-site counters, bounded individual observations, time aggregates, and optional complete/first-N trajectories with explicit truncation indicators and JSON Schema |
 | DATA-005 | RM 2.5 | PART | M0/M1 | lung model cards carry evidence class, population, state, sources, uncertainty, and limitations; equivalent enforcement for every future model follows |
-| DATA-006 | RM 6.2 | PART | M0 | M3.7 stores calibration/validation/derived roles separately; M3.8 adds executable source-disjointness and independent aggregate validation while preserving the subject-level limitation; release-wide enforcement follows |
+| DATA-006 | RM 6.2 | PART | M0 | M3.7 stores calibration/validation/derived roles separately; M3.8 adds executable source-disjointness and independent aggregate validation; M3.9 additionally audits cohort overlap, rejects Wright as non-independent, and keeps Claessen calibration separate from Bentley validation while preserving the subject-level limitation; release-wide enforcement follows |
 | DATA-007 | RM 6.3 | SPEC | M7 | result report with intervals and sensitivity |
 | DATA-008 | RM 6.2 | SPEC | M2 | statistical regression tests with justified tolerance |
 

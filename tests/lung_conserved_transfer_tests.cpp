@@ -69,7 +69,8 @@ using mehlissa::models::organ::LungModelVariant;
                                                                           5.0),
                                                                   2s,
                                                                   mehlissa::core::Dimensionless::
-                                                                      from_si(0.5563)}}
+                                                                      from_si(0.5563),
+                                                                  std::nullopt}}
             : std::nullopt,
     };
 }

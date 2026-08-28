@@ -136,8 +136,9 @@ M3 is not closed by this increment alone. The remaining work is:
    measured supine data and a prospectively prespecified analysis;
 3. add lobar/gravity-dependent or anatomical pulmonary structure and compare
    it with the aggregate right/left target;
-4. add a reviewed rest/exercise redistribution decision, informed by the
-   independently exposed exercise RC-time limitation;
+4. extend the implemented bounded PVR/compliance flow adaptation with
+   subject-level uncertainty, pressure-dependent recruitment, and reviewed
+   right/left or lobar exercise redistribution;
 5. qualify the SimVascular archive and combine its arterial geometry with this
    downstream 0D closure, if its data rights and state are resolved; and
 6. implement or formally defer the neutral historical FP9 timing/event

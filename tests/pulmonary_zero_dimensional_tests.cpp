@@ -36,6 +36,7 @@ using mehlissa::models::organ::PulmonaryZeroDimensionalParameters;
             mehlissa::core::milliliters_per_millimeter_of_mercury(5.0),
             6400ms,
             mehlissa::core::Dimensionless::from_si(0.556298773690078),
+            std::nullopt,
         },
     };
 }
@@ -105,4 +106,63 @@ TEST_CASE("Pulmonary 0D parameters reject nonphysical configurations",
     config.parameters.right_lung_perfusion_fraction = mehlissa::core::Dimensionless::from_si(1.0);
     CHECK_THROWS_AS(PulmonaryZeroDimensionalModel{std::move(config)},
                     mehlissa::core::MehlissaError);
+}
+
+TEST_CASE("Pulmonary 0D flow adaptation changes resistance and compliance within sourced bounds",
+          "[m3][organ][pulmonary-0d][physiology][exercise]") {
+    auto config = reference_config();
+    config.parameters.flow_adaptation = mehlissa::models::organ::PulmonaryFlowAdaptationParameters{
+        mehlissa::core::liters_per_minute(6.0),
+        -0.202148574863478,
+        -0.669350145160558,
+        mehlissa::core::Dimensionless::from_si(16.2 / 6.2),
+    };
+    auto model = std::make_unique<PulmonaryZeroDimensionalModel>(std::move(config));
+    auto* observer = model.get();
+    mehlissa::core::ComponentHost host{std::uint64_t{11}};
+    host.add(std::move(model));
+    host.initialize();
+
+    observer->accept_conserved_transfer(flow_transfer(11.2));
+    host.advance(10s);
+
+    const auto state = observer->state();
+    CHECK(state.effective_flow_ratio.si_value() == Catch::Approx(11.2 / 6.0));
+    CHECK(mehlissa::core::in_wood_units(state.effective_pulmonary_vascular_resistance) ==
+          Catch::Approx(1.05775596795013));
+    CHECK(mehlissa::core::in_milliliters_per_millimeter_of_mercury(
+              state.effective_pulmonary_arterial_compliance) == Catch::Approx(3.29254273830432));
+    CHECK(mehlissa::core::in_seconds(state.pressure_time_constant) ==
+          Catch::Approx(0.208962403870336));
+    CHECK(mehlissa::core::in_millimeters_of_mercury(state.mean_pulmonary_arterial_pressure) ==
+          Catch::Approx(19.8468668410415));
+}
+
+TEST_CASE("Pulmonary flow adaptation does not extrapolate below rest or above calibration",
+          "[m3][organ][pulmonary-0d][validation][exercise]") {
+    const auto adapted_config = [] {
+        auto config = reference_config();
+        config.parameters.flow_adaptation =
+            mehlissa::models::organ::PulmonaryFlowAdaptationParameters{
+                mehlissa::core::liters_per_minute(6.0),
+                -0.202148574863478,
+                -0.669350145160558,
+                mehlissa::core::Dimensionless::from_si(16.2 / 6.2),
+            };
+        return config;
+    };
+
+    PulmonaryZeroDimensionalModel low_flow_model{adapted_config()};
+    mehlissa::core::SimulationContext low_flow_context{std::uint64_t{13}};
+    low_flow_model.initialize(low_flow_context);
+    low_flow_model.accept_conserved_transfer(flow_transfer(4.0));
+    low_flow_model.advance(low_flow_context, 1ns);
+    CHECK(low_flow_model.state().effective_flow_ratio.si_value() == Catch::Approx(1.0));
+
+    PulmonaryZeroDimensionalModel high_flow_model{adapted_config()};
+    mehlissa::core::SimulationContext high_flow_context{std::uint64_t{17}};
+    high_flow_model.initialize(high_flow_context);
+    high_flow_model.accept_conserved_transfer(flow_transfer(30.0));
+    high_flow_model.advance(high_flow_context, 1ns);
+    CHECK(high_flow_model.state().effective_flow_ratio.si_value() == Catch::Approx(16.2 / 6.2));
 }

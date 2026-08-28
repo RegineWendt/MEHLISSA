@@ -36,6 +36,18 @@ scenario-layer baseline. See
 The post-M3.8 local Visual Studio Debug suite passed 93/93 tests; CI evidence
 is recorded with the pushed increment.
 
+**Third post-review update, 28 August 2026:** M3.9 adds an immutable v2
+candidate with bounded flow-dependent PVR and compliance. Claessen et al. is
+used for calibration; Wright et al. is excluded because Bentley reused that
+healthy-control cohort. The untouched Bentley stress test retains 6/6 required
+passes and reduces the exercise RC diagnostic z-score from 18.571 to 3.005,
+which remains a fail. State-dependent lumped adaptation is therefore
+implemented, while subject-level uncertainty, regional redistribution,
+anatomy, and FP9 remain open. See
+[Bounded Pulmonary 0D Flow Adaptation](PULMONARY_0D_FLOW_ADAPTATION.md).
+The post-M3.9 local MSVC suite passed 100/100 tests; CI evidence is recorded
+with the pushed increment.
+
 ## 1. Review method
 
 The review checked the Roadmap Gate M3 statements and the additional acceptance
@@ -60,7 +72,7 @@ model” merely because it contained more regions than the coarse surrogate.
 | agent and substance flow complete body–lung–body traversal | satisfied for entity; organ traversal satisfied for conserved quantities | the complete entity round trip reaches the body return ledger; conserved population, substance, and flow traverse both lung endpoints without payload change |
 | no agent or relevant amount is duplicated or lost | satisfied | positive and negative ownership, duplicate-ID, route, time, and exact-payload tests |
 | both lung variants implement the same contract | satisfied | one `ModelComponent` interface, one `LungModelConfig`, schema-selected definitions, generated cross-variant tests |
-| flow, pressure/transit time, and perfusion share have units, sources, uncertainty, and an independent comparison | satisfied for aggregate healthy-cohort evidence after M3.8 | the 0D candidate has executable SI pressure, flow, PVR, compliance, measured total transit, right/left perfusion, uncertainty, evidence roles, source-disjoint independent validation, and explicit stress-test diagnostics; subject-level joint-state validation remains a stronger future tier |
+| flow, pressure/transit time, and perfusion share have units, sources, uncertainty, and an independent comparison | satisfied for aggregate healthy-cohort evidence after M3.9 | the 0D candidates have executable SI pressure, flow, effective PVR/compliance, bounded activity response, measured total transit, right/left perfusion, uncertainty/evidence roles, source- and cohort-disjoint independent validation, and explicit stress-test diagnostics; subject-level joint-state validation remains a stronger future tier |
 | historical FP9 timer baseline runs without scenario-specific kernel logic | not satisfied | the dissertation baseline is specified and traced, but fingerprint detection/assembly/collection is not executable; implementing it prematurely in the organ kernel would violate the architecture |
 
 ## 4. Verification evidence
@@ -105,8 +117,8 @@ M3 can pass only after the following evidence is added and reviewed:
    tier;
 3. implement the anatomical/hemodynamic regional variant and compare it with
    both independent targets and the effective compartment;
-4. decide whether rest/exercise pulmonary redistribution belongs in the M3
-   reference set, then provide reviewed parameters rather than global scaling;
+4. extend the implemented lumped rest/exercise flow adaptation with reviewed
+   right/left or lobar redistribution if it belongs in the M3 reference set;
 5. implement the historical FP9 timing regression at the appropriate scenario
    layer, or formally revise the ADR/M3 boundary if that executable baseline is
    deferred to M7; and

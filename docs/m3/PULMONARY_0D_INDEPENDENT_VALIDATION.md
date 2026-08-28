@@ -119,3 +119,17 @@ and compliance, calibrated on a data set separate from Bentley et al., then
 retain Bentley et al. as the independent stress-test set. A later stronger
 validation should use subject-level, jointly measured supine CO, PAWP, mPAP,
 and compliance with a prespecified analysis plan.
+
+## 7. M3.9 post-calibration update
+
+M3.9 implements that next increment as the separate v2 definition rather than
+rewriting this v1 baseline. Claessen et al. 2015 supplies source- and
+cohort-disjoint rest/peak flow, total-resistance, and compliance ratios. Wright
+et al. 2016 was rejected because Bentley explicitly reuses the earlier Toronto
+healthy-control cohort.
+
+Re-evaluation against the unchanged Bentley observations predicts exercise
+mPAP 26.85 mmHg, compliance 3.29 mL/mmHg, and RC time 0.209 s. All six required
+endpoints remain accepted. The diagnostic RC absolute z-score falls from
+18.571 to 3.005 but still fails, so the limitation remains visible. See
+[Bounded Pulmonary 0D Flow Adaptation](PULMONARY_0D_FLOW_ADAPTATION.md).

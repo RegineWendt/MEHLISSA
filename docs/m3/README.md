@@ -5,8 +5,8 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # M3 – Body–Organ Coupling
 
-**Status:** technical coupling, literature-parameterized 0D reference, and
-independent aggregate validation complete; scientific gate open
+**Status:** technical coupling, literature-parameterized flow-adaptive 0D
+reference, and independent aggregate validation complete; scientific gate open
 
 **Started:** 27 August 2026
 
@@ -27,6 +27,7 @@ respiratory mechanics, or gas exchange.
 | M3.6 orchestration and gate regression | external lung definition and fixed-step matrix verified; FP9 baseline open | deterministic synchronization, coarse/detailed scenario switch, historical FP9 timing baseline, formal M3 gate review |
 | M3.7 healthy-adult resting pulmonary 0D reference | implemented and software-verified; independent validation/anatomical refinement open | source-scoped pressure, flow, resistance, compliance, transit, right/left perfusion, uncertainty, analytical RC dynamics, and lossless coupling |
 | M3.8 independent pulmonary 0D validation | qualified aggregate pass; subject-level/anatomical validation open | executable source-separation guard; supine healthy-rest comparison; invasive rest/exercise crosscheck; 6/6 required endpoints pass; exercise RC limitation exposed |
+| M3.9 bounded rest-to-exercise 0D adaptation | implemented, independently stress-tested; subject-level/anatomical refinement open | immutable v1 baseline; source-disjoint Claessen calibration; bounded effective PVR/compliance; Bentley 6/6 required pass; exercise RC z reduced from 18.571 to 3.005 but remains diagnostic fail |
 
 ## M3.1 result
 
@@ -126,6 +127,14 @@ All six required pressure, compliance, and resting-RC endpoints pass the
 locked one-standard-deviation criterion. The diagnostic exercise RC endpoint
 fails and therefore defines the next physiological model change rather than
 being hidden by refitting.
+
+M3.9 adds a
+[bounded flow-adaptive v2 candidate](PULMONARY_0D_FLOW_ADAPTATION.md). The
+adaptation is calibrated from the independent Claessen healthy-control cohort;
+Wright et al. was rejected because Bentley reused that Toronto cohort. Bentley
+remains untouched as the post-calibration stress test. Pressure and compliance
+remain required-pass endpoints, while exercise RC improves materially but
+still fails its deliberately narrow diagnostic criterion.
 
 An initial [SimVascular Healthy Pulmonary Candidate Review](SIMVASCULAR_PULMONARY_CANDIDATE_REVIEW.md)
 finds the official case useful for an imported pulmonary-artery technical

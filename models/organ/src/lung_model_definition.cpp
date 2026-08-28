@@ -113,6 +113,18 @@ void validate_document(const Json& document, const CompiledSchema& schema,
         const auto value = [&hemodynamics](const std::string_view name) {
             return hemodynamics.at(name).at("value_si").as<double>();
         };
+        std::optional<PulmonaryFlowAdaptationParameters> flow_adaptation;
+        if (hemodynamics.contains("flow_adaptation")) {
+            const auto& adaptation = hemodynamics.at("flow_adaptation");
+            flow_adaptation = PulmonaryFlowAdaptationParameters{
+                core::cubic_meters_per_second(
+                    adaptation.at("reference_cardiac_output").at("value_si").as<double>()),
+                adaptation.at("resistance_exponent").at("value_si").as<double>(),
+                adaptation.at("compliance_exponent").at("value_si").as<double>(),
+                core::Dimensionless::from_si(
+                    adaptation.at("maximum_flow_ratio").at("value_si").as<double>()),
+            };
+        }
         config.zero_dimensional_parameters = PulmonaryZeroDimensionalParameters{
             core::cubic_meters_per_second(value("baseline_cardiac_output")),
             core::pascals(value("left_atrial_pressure")),
@@ -120,6 +132,7 @@ void validate_document(const Json& document, const CompiledSchema& schema,
             core::cubic_meters_per_pascal(value("pulmonary_arterial_compliance")),
             duration_from_seconds(timing.at("pulmonary_transit_time_s").as<double>()),
             core::Dimensionless::from_si(value("right_lung_perfusion_fraction")),
+            flow_adaptation,
         };
     }
     return config;
@@ -145,7 +158,7 @@ void validate_document(const Json& document, const CompiledSchema& schema,
 
 [[nodiscard]] PulmonaryHemodynamicEvidence decode_hemodynamics(const Json& document) {
     const auto& hemodynamics = document.at("hemodynamics");
-    return {
+    PulmonaryHemodynamicEvidence result{
         decode_evidence_quantity(hemodynamics.at("baseline_cardiac_output")),
         decode_evidence_quantity(hemodynamics.at("left_atrial_pressure")),
         decode_evidence_quantity(hemodynamics.at("pulmonary_vascular_resistance")),
@@ -153,7 +166,18 @@ void validate_document(const Json& document, const CompiledSchema& schema,
         decode_evidence_quantity(hemodynamics.at("pulmonary_transit_time")),
         decode_evidence_quantity(hemodynamics.at("right_lung_perfusion_fraction")),
         decode_evidence_quantity(hemodynamics.at("mean_pulmonary_arterial_pressure_target")),
+        std::nullopt,
     };
+    if (hemodynamics.contains("flow_adaptation")) {
+        const auto& adaptation = hemodynamics.at("flow_adaptation");
+        result.flow_adaptation = PulmonaryFlowAdaptationEvidence{
+            decode_evidence_quantity(adaptation.at("reference_cardiac_output")),
+            decode_evidence_quantity(adaptation.at("resistance_exponent")),
+            decode_evidence_quantity(adaptation.at("compliance_exponent")),
+            decode_evidence_quantity(adaptation.at("maximum_flow_ratio")),
+        };
+    }
+    return result;
 }
 
 [[nodiscard]] LungModelDefinition decode(const Json& document) {
@@ -209,7 +233,7 @@ void validate_document(const Json& document, const CompiledSchema& schema,
 
 [[nodiscard]] bool supported_schema_version(const std::string_view version) noexcept {
     return version == earliest_supported_lung_model_definition_schema_version ||
-           version == latest_supported_lung_model_definition_schema_version;
+           version == "1.1.0" || version == latest_supported_lung_model_definition_schema_version;
 }
 
 void validate_evidence_source(const LungModelEvidenceQuantity& parameter,
@@ -270,6 +294,13 @@ void validate_definition(const LungModelDefinition& definition) {
         validate_evidence_source(evidence.pulmonary_transit_time, source_ids);
         validate_evidence_source(evidence.right_lung_perfusion_fraction, source_ids);
         validate_evidence_source(evidence.mean_pulmonary_arterial_pressure_target, source_ids);
+        if (evidence.flow_adaptation.has_value()) {
+            validate_evidence_source(evidence.flow_adaptation->reference_cardiac_output,
+                                     source_ids);
+            validate_evidence_source(evidence.flow_adaptation->resistance_exponent, source_ids);
+            validate_evidence_source(evidence.flow_adaptation->compliance_exponent, source_ids);
+            validate_evidence_source(evidence.flow_adaptation->maximum_flow_ratio, source_ids);
+        }
 
         const auto& parameters = *definition.model.zero_dimensional_parameters;
         const auto transit_seconds =
@@ -283,6 +314,25 @@ void validate_definition(const LungModelDefinition& definition) {
             invalid(core::ErrorCode::data_invalid,
                     "Pulmonary 0D timing or mean-pressure evidence is disconnected from the "
                     "executable parameterization");
+        }
+        if (evidence.flow_adaptation.has_value()) {
+            if (!parameters.flow_adaptation.has_value() ||
+                !nearly_equal(evidence.flow_adaptation->reference_cardiac_output.value_si,
+                              core::in_cubic_meters_per_second(
+                                  parameters.flow_adaptation->reference_cardiac_output)) ||
+                !nearly_equal(evidence.flow_adaptation->resistance_exponent.value_si,
+                              parameters.flow_adaptation->resistance_exponent) ||
+                !nearly_equal(evidence.flow_adaptation->compliance_exponent.value_si,
+                              parameters.flow_adaptation->compliance_exponent) ||
+                !nearly_equal(evidence.flow_adaptation->maximum_flow_ratio.value_si,
+                              parameters.flow_adaptation->maximum_flow_ratio.si_value())) {
+                invalid(core::ErrorCode::data_invalid,
+                        "Pulmonary flow-adaptation evidence is disconnected from the "
+                        "executable parameterization");
+            }
+        } else if (parameters.flow_adaptation.has_value()) {
+            invalid(core::ErrorCode::data_invalid,
+                    "Pulmonary flow adaptation requires evidence metadata");
         }
     } else if (definition.hemodynamics.has_value()) {
         invalid(core::ErrorCode::data_invalid,

@@ -1,0 +1,166 @@
+{
+  "schema_version": "1.2.0",
+  "definition": {
+    "id": "healthy-adult-rest-exercise-0d-v2",
+    "version": "2.0.0",
+    "title": "Healthy-adult pulmonary 0D reference with bounded flow adaptation"
+  },
+  "variant": "pulmonary_zero_dimensional",
+  "component": {
+    "name": "organ.lung",
+    "model_id": "lung.pulmonary-0d.healthy-adult-rest-exercise.v2",
+    "entry_port_id": "pulmonary-arterial-entry",
+    "exit_port_id": "pulmonary-venous-exit",
+    "return_target_model_id": "bvs95-dissertation-rest",
+    "return_target_port_id": "pulmonary-venous-return"
+  },
+  "timing": {
+    "pulmonary_transit_time_s": 6.4
+  },
+  "hemodynamics": {
+    "baseline_cardiac_output": {
+      "value_si": 0.0001,
+      "unit": "m3/s",
+      "uncertainty": {"kind": "reference_interval", "lower_si": 0.00006666666666666667, "upper_si": 0.00013333333333333334},
+      "source_id": "esc-ers-2022",
+      "role": "calibration",
+      "derivation": "Six L/min is the locked v1 nominal resting value within the published 4-8 L/min normal interval and is the denominator of the flow ratio."
+    },
+    "left_atrial_pressure": {
+      "value_si": 1066.57909932,
+      "unit": "Pa",
+      "uncertainty": {"kind": "upper_reference_limit", "upper_si": 1999.835811225},
+      "source_id": "esc-ers-2022",
+      "role": "calibration",
+      "derivation": "Eight mmHg is the locked v1 nominal pressure sink below the published PAWP upper limit of 15 mmHg; PAWP remains a left-atrial pressure surrogate."
+    },
+    "pulmonary_vascular_resistance": {
+      "value_si": 9599211.89388,
+      "unit": "Pa*s/m3",
+      "uncertainty": {"kind": "reference_interval", "lower_si": 2399802.97347, "upper_si": 15998686.4898},
+      "source_id": "esc-ers-2022",
+      "role": "calibration",
+      "derivation": "The locked v1 baseline is 1.2 Wood units within the published 0.3-2.0 Wood-unit normal interval; the flow rule multiplies rather than replaces it."
+    },
+    "pulmonary_arterial_compliance": {
+      "value_si": 0.0000000375030787922828,
+      "unit": "m3/Pa",
+      "uncertainty": {"kind": "lower_reference_limit", "lower_si": 0.00000001725141624445},
+      "source_id": "esc-ers-2022",
+      "role": "calibration",
+      "derivation": "The locked v1 baseline is 5 mL/mmHg above the published normal lower limit of 2.3 mL/mmHg; the flow rule multiplies rather than replaces it."
+    },
+    "pulmonary_transit_time": {
+      "value_si": 6.4,
+      "unit": "s",
+      "uncertainty": {"kind": "interquartile_range", "lower_si": 5.7, "upper_si": 7.1},
+      "source_id": "swift-2012",
+      "role": "calibration",
+      "derivation": "The v1 median right-to-left ventricular first-pass pulmonary transit time is retained; no unsupported exercise transit rule is introduced."
+    },
+    "right_lung_perfusion_fraction": {
+      "value_si": 0.556298773690078,
+      "unit": "1",
+      "uncertainty": {"kind": "propagated_standard_deviation", "lower_si": 0.502922956679961, "upper_si": 0.609674590700195},
+      "source_id": "wong-2014",
+      "role": "calibration",
+      "derivation": "The v1 supine RPA/(RPA+LPA) aggregate split is retained; exercise redistribution remains outside this increment."
+    },
+    "mean_pulmonary_arterial_pressure_target": {
+      "value_si": 2026.500288708,
+      "unit": "Pa",
+      "uncertainty": {"kind": "reference_interval", "lower_si": 1066.57909932, "upper_si": 2666.4477483},
+      "source_id": "esc-ers-2022",
+      "role": "derived",
+      "derivation": "The unchanged baseline prediction is 15.2 mmHg; flow adaptation is exactly neutral at the reference cardiac output."
+    },
+    "flow_adaptation": {
+      "reference_cardiac_output": {
+        "value_si": 0.0001,
+        "unit": "m3/s",
+        "uncertainty": {"kind": "not_propagated"},
+        "source_id": "esc-ers-2022",
+        "role": "calibration",
+        "derivation": "The locked MEHLISSA resting reference of 6 L/min is retained as the denominator even when an independent validation flow is supplied as the simulated condition."
+      },
+      "resistance_exponent": {
+        "value_si": -0.202148574863478,
+        "unit": "1",
+        "uncertainty": {"kind": "not_propagated"},
+        "source_id": "claessen-2015",
+        "role": "calibration",
+        "derivation": "Power-law exponent ln((1.4 WU)/(1.7 WU))/ln((16.2 L/min)/(6.2 L/min)), using healthy-control mean total pulmonary resistance and cardiac output at rest and peak exercise; source SDs are retained in the model card but not propagated into the exponent."
+      },
+      "compliance_exponent": {
+        "value_si": -0.669350145160558,
+        "unit": "1",
+        "uncertainty": {"kind": "not_propagated"},
+        "source_id": "claessen-2015",
+        "role": "calibration",
+        "derivation": "Power-law exponent ln((5.1 mL/mmHg)/(9.7 mL/mmHg))/ln((16.2 L/min)/(6.2 L/min)), using healthy-control mean pulmonary arterial compliance and cardiac output at rest and peak exercise; source SDs are not propagated into the exponent."
+      },
+      "maximum_flow_ratio": {
+        "value_si": 2.6129032258064515,
+        "unit": "1",
+        "uncertainty": {"kind": "not_propagated"},
+        "source_id": "claessen-2015",
+        "role": "calibration",
+        "derivation": "The adaptation is capped at the source cohort mean peak-to-rest cardiac-output ratio, 16.2/6.2. Below the MEHLISSA baseline ratio of one, adaptation is disabled to avoid unsupported low-flow extrapolation."
+      }
+    }
+  },
+  "validity": {
+    "population": "healthy adults represented by guideline ranges and small healthy-volunteer imaging cohorts",
+    "physiological_state": "supine mean-flow rest through bounded peak-exercise flow ratio; measured PAWP may be supplied as an external boundary",
+    "evidence_class": "literature_parameterized",
+    "description": "Two-element mean pulmonary Windkessel with flow-dependent PVR and arterial compliance, a fixed or externally conditioned left-atrial pressure sink, total pulmonary transit delay, and fixed right/left flow partition."
+  },
+  "sources": [
+    {
+      "id": "esc-ers-2022",
+      "citation": "Humbert M, Kovacs G, Hoeper MM, et al. 2022 ESC/ERS Guidelines for the diagnosis and treatment of pulmonary hypertension. Eur Heart J. 2022;43:3618-3731. doi:10.1093/eurheartj/ehac237.",
+      "url": "https://doi.org/10.1093/eurheartj/ehac237",
+      "license": "Copyright ESC/ERS and Oxford University Press; numerical facts cited, source not redistributed",
+      "role": "resting normal hemodynamic intervals and pressure-resistance equation"
+    },
+    {
+      "id": "wong-2014",
+      "citation": "Wong DTH, Lee KJ, Yoo SJ, Tomlinson G, Grosse-Wortmann L. Changes in systemic and pulmonary blood flow distribution in normal adult volunteers in response to posture and exercise. J Physiol Sci. 2014;64:105-112. doi:10.1007/s12576-013-0298-z.",
+      "url": "https://doi.org/10.1007/s12576-013-0298-z",
+      "license": "Publisher terms; numerical facts cited, source not redistributed",
+      "role": "supine right/left pulmonary perfusion split and reported dispersion"
+    },
+    {
+      "id": "swift-2012",
+      "citation": "Swift AJ, Telfer A, Rajaram S, et al. Pulmonary arterial hypertension: MR imaging-derived first-pass bolus kinetic parameters are biomarkers for pulmonary hemodynamics, cardiac function, and ventricular remodeling. Radiology. 2012;263:678-687. doi:10.1148/radiol.12111049.",
+      "url": "https://doi.org/10.1148/radiol.12111049",
+      "license": "Publisher terms; numerical facts cited, source not redistributed",
+      "role": "healthy-control resting pulmonary transit-time calibration target"
+    },
+    {
+      "id": "claessen-2015",
+      "citation": "Claessen G, La Gerche A, Dymarkowski S, Claus P, Delcroix M, Heidbuchel H. Pulmonary vascular and right ventricular reserve in patients with normalized resting hemodynamics after pulmonary endarterectomy. J Am Heart Assoc. 2015;4:e001602. doi:10.1161/JAHA.114.001602.",
+      "url": "https://doi.org/10.1161/JAHA.114.001602",
+      "license": "CC-BY-NC-4.0; only reported aggregate facts are transcribed and the article is not redistributed",
+      "role": "independent healthy-control rest-to-exercise flow adaptation calibration"
+    },
+    {
+      "id": "wendt-dissertation",
+      "citation": "Wendt R. Dissertation simulation chapters, Chapter 4: Simulation architecture for nanonetworks - MEHLISSA.",
+      "url": "../../literature/Diss_WENDT_Simulationchapters.pdf",
+      "license": "Included in repository with author permission; source not modified",
+      "role": "organ-layer intent, perfusion regulation, attribution, and replaceable detailed-model path"
+    }
+  ],
+  "limitations": [
+    "This is a research reference candidate, not a diagnostic or treatment model.",
+    "The model resolves mean pressure only and omits pulsatile ventricular and valve dynamics even though compliance was derived from pulsatile measurements.",
+    "Claessen et al. reported total pulmonary resistance for healthy controls because wedge pressure was unavailable; its rest-to-exercise ratio is used as a proxy for the PVR multiplier and this methodological mismatch is explicit.",
+    "Power-law exponents are point estimates derived from cohort means; covariance and uncertainty were unavailable and are not propagated.",
+    "Flow adaptation is clamped to the interval from the MEHLISSA resting reference to the Claessen cohort mean peak-to-rest flow ratio and must not be extrapolated beyond it.",
+    "The Claessen cohort was small, predominantly male, and younger than the independent Bentley validation cohort.",
+    "PAWP is used as a surrogate for left-atrial pressure; the nominal resting sink remains fixed unless an observed boundary is supplied.",
+    "Transit time and right/left perfusion split remain fixed during exercise.",
+    "Gas exchange, biochemical exchange, lobar recruitment, autoregulation, disease, sex, age, and patient-specific anatomy are outside this version."
+  ]
+}

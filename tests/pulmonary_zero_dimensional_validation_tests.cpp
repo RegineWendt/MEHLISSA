@@ -22,10 +22,26 @@ namespace {
     });
 }
 
+[[nodiscard]] mehlissa::models::organ::LungModelDefinition load_flow_adaptive_model_definition() {
+    return mehlissa::models::organ::load_lung_model_definition({
+        root() / "data" / "lung-models" / "healthy-adult-rest-exercise-0d-v2.json",
+        root() / "data" / "schemas" / "lung-model-definition" / "1.2.0.schema.json",
+    });
+}
+
 [[nodiscard]] mehlissa::models::organ::PulmonaryZeroDimensionalValidationCase load_validation() {
     return mehlissa::models::organ::load_pulmonary_zero_dimensional_validation_case({
         root() / "data" / "validation" / "pulmonary-zero-dimensional" /
             "healthy-adult-independent-v1.json",
+        root() / "data" / "schemas" / "pulmonary-zero-dimensional-validation" / "1.0.0.schema.json",
+    });
+}
+
+[[nodiscard]] mehlissa::models::organ::PulmonaryZeroDimensionalValidationCase
+load_flow_adaptive_validation() {
+    return mehlissa::models::organ::load_pulmonary_zero_dimensional_validation_case({
+        root() / "data" / "validation" / "pulmonary-zero-dimensional" /
+            "healthy-adult-independent-v2.json",
         root() / "data" / "schemas" / "pulmonary-zero-dimensional-validation" / "1.0.0.schema.json",
     });
 }
@@ -95,4 +111,36 @@ TEST_CASE("Pulmonary validation rejects reuse of a model evidence source",
     CHECK_THROWS_AS(mehlissa::models::organ::evaluate_pulmonary_zero_dimensional_validation(
                         validation, model_definition),
                     mehlissa::core::MehlissaError);
+}
+
+TEST_CASE("Independent Bentley stress data assess the Claessen-calibrated flow adaptation",
+          "[m3][organ][pulmonary-0d][independent-validation][exercise]") {
+    const auto validation = load_flow_adaptive_validation();
+    const auto model_definition = load_flow_adaptive_model_definition();
+    const auto report = mehlissa::models::organ::evaluate_pulmonary_zero_dimensional_validation(
+        validation, model_definition);
+
+    CHECK(report.source_independence_verified);
+    CHECK(report.required_endpoints_pass);
+    CHECK(report.required_endpoint_count == 6);
+    CHECK(report.accepted_required_endpoint_count == 6);
+    CHECK(report.failed_diagnostic_endpoint_count == 1);
+    REQUIRE(report.conditions.size() == 3);
+
+    const auto* exercise_pressure =
+        find_endpoint(report.conditions[2], "mean_pulmonary_arterial_pressure");
+    const auto* exercise_compliance =
+        find_endpoint(report.conditions[2], "pulmonary_arterial_compliance");
+    const auto* exercise_rc = find_endpoint(report.conditions[2], "rc_time_constant");
+    REQUIRE(exercise_pressure != nullptr);
+    REQUIRE(exercise_compliance != nullptr);
+    REQUIRE(exercise_rc != nullptr);
+
+    CHECK(exercise_pressure->absolute_z_score == Catch::Approx(0.3693733682083));
+    CHECK(exercise_compliance->absolute_z_score == Catch::Approx(0.7690925068798));
+    CHECK(exercise_rc->absolute_z_score == Catch::Approx(3.0053708756663));
+    CHECK(exercise_pressure->accepted);
+    CHECK(exercise_compliance->accepted);
+    CHECK_FALSE(exercise_rc->accepted);
+    CHECK(exercise_rc->absolute_z_score < 18.5714285714);
 }

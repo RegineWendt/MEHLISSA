@@ -364,15 +364,18 @@ external-data axes/units/provenance. The 0D candidate executes mean pressure,
 flow, PVR, compliance, transit, and right/left perfusion for a healthy adult at
 rest in the supine position. M3.8 adds independent aggregate validation with a
 source-separation guard, a scope-matched supine comparison, and an invasive
-rest/exercise crosscheck. Anatomical refinement, transforming exchange,
-general experiment composition, subject-level validation, and exercise-state
-RC adaptation remain open; see [M3 working plan](m3/README.md).
+rest/exercise crosscheck. M3.9 adds a bounded, independently calibrated
+flow-dependent PVR/compliance variant and repeats the untouched Bentley stress
+test. Anatomical refinement, transforming exchange, general experiment
+composition, subject-level validation, and regional exercise redistribution
+remain open; see [M3 working plan](m3/README.md).
 
 The formal [M3 gate review](m3/M3_GATE_REVIEW.md) therefore keeps the milestone
 open: the software coupling candidate, first literature-parameterized 0D
-reference candidate, and independent aggregate validation are verified, while
-anatomical refinement, subject-level validation, the rest/exercise adaptation
-decision, and the executable historical FP9 baseline remain closure evidence.
+reference candidate, independent aggregate validation, and bounded
+rest/exercise 0D adaptation are verified, while anatomical refinement,
+subject-level validation, regional redistribution, and the executable
+historical FP9 baseline remain closure evidence.
 
 #### Tasks
 

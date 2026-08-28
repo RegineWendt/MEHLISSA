@@ -66,6 +66,7 @@ using mehlissa::models::organ::PulmonaryTransitRegion;
             mehlissa::core::milliliters_per_millimeter_of_mercury(5.0),
             6400ms,
             mehlissa::core::Dimensionless::from_si(0.5563),
+            std::nullopt,
         },
     };
 }

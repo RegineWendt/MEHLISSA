@@ -25,6 +25,7 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 - [M2 gate review](m2/M2_GATE_REVIEW.md) – formal review of the validated body-layer milestone and its declared scientific limits.
 - [M3 – Body–Organ Coupling](m3/README.md) – active work on versioned exchange contracts and the lung reference organ.
 - [Pulmonary 0D independent validation](m3/PULMONARY_0D_INDEPENDENT_VALIDATION.md) – source-disjoint healthy-cohort comparison, acceptance results, and the exercise RC limitation.
+- [Pulmonary 0D flow adaptation](m3/PULMONARY_0D_FLOW_ADAPTATION.md) – independently calibrated bounded rest-to-exercise PVR/compliance response and post-calibration stress test.
 
 The historical analysis refers to legacy revision `4f4fc5a` (tag
 `legacy-baseline-2026-08-26`). The development documents describe branch

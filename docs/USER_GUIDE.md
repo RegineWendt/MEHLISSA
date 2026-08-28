@@ -291,17 +291,23 @@ The executable lung model cards are:
 examples/organ-models/lung-compartment-contract-v1.json
 examples/organ-models/lung-regional-contract-v1.json
 data/lung-models/healthy-adult-rest-supine-0d-v1.json
+data/lung-models/healthy-adult-rest-exercise-0d-v2.json
 ```
 
 The two contract cards validate against
 `data/schemas/lung-model-definition/1.0.0.schema.json`. They are classified as
 `software_test_surrogate`; their transit values are not physiological data.
-The 0D card validates against schema 1.1.0 and records SI pressure, flow,
+The resting 0D card validates against schema 1.1.0 and records SI pressure, flow,
 resistance, compliance, transit, right/left perfusion, uncertainty, evidence
 roles, derivations, and limitations. At its resting reference state it predicts
 15.2 mmHg mean pulmonary-arterial pressure from 6 L/min cardiac output, 8 mmHg
 left-atrial pressure, and 1.2 Wood units PVR. It is a composite healthy-adult
 reference candidate, not a patient or clinical model.
+
+The flow-adaptive v2 card validates against schema 1.2.0. It preserves the v1
+resting state and applies independently sourced, bounded PVR and compliance
+multipliers between the resting reference and the calibrated peak/rest flow
+ratio. It does not extrapolate below or above that interval.
 
 The optional external-data section can preserve a source checksum, format,
 coordinate system, units, and transformation history, but no qualified
@@ -332,9 +338,10 @@ These labels are not interchangeable. In particular:
 - the M2.6 exercise and posture profiles change global flow but do not yet
   model complete regional redistribution;
 - the coarse and serial-region lung variants are verification surrogates;
-- the pulmonary 0D variant has qualified independent aggregate validation for
-  healthy pressure, compliance, and resting RC behavior, but is not anatomical,
-  pulsatile, subject-level validated, patient-specific, or clinically usable;
+- the pulmonary 0D variants have qualified independent aggregate validation
+  for healthy pressure, compliance, and resting RC behavior; v2 also has a
+  source-disjoint exercise adaptation, but neither is anatomical, pulsatile,
+  subject-level validated, patient-specific, or clinically usable;
 - none of the current outputs is patient-specific or suitable for clinical
   decision-making.
 
@@ -348,12 +355,18 @@ ctest --test-dir build/windows-msvc -C Debug `
 ```
 
 The versioned observations are in
-`data/validation/pulmonary-zero-dimensional/healthy-adult-independent-v1.json`.
+`data/validation/pulmonary-zero-dimensional/healthy-adult-independent-v1.json`
+for the immutable resting baseline and `healthy-adult-independent-v2.json` for
+the bounded flow-adaptive candidate.
 The human-readable protocol, results, and limitations are in
 `docs/m3/PULMONARY_0D_INDEPENDENT_VALIDATION.md`. The validator rejects a
 validation source that is also present in the model evidence card. A passing
 aggregate result must still be read together with diagnostic failures and the
 declared validity scope.
+
+The v2 result is not a fitted Bentley reproduction: Claessen et al. supplies
+the adaptation calibration, while Bentley remains the untouched stress-test
+cohort. The exercise RC discrepancy improves but remains a diagnostic failure.
 
 ## 9. Troubleshooting
 

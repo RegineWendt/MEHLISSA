@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## Executable model card
 
-Schemas `lung-model-definition/1.0.0` and `1.1.0` bind model selection and parameters to
+Schemas `lung-model-definition/1.0.0`, `1.1.0`, and `1.2.0` bind model selection and parameters to
 the evidence needed to interpret them. A definition contains:
 
 - stable definition and model identities;
@@ -24,6 +24,10 @@ typed `LungModelConfig`. The factory then performs the concrete model checks.
 Variant timing structures cannot be mixed. Version 1.1.0 adds a pulmonary 0D
 variant and source-linked SI quantities with explicit uncertainty, evidence
 role, and derivation.
+Version 1.2.0 adds optional, evidence-linked flow adaptation with an explicit
+reference flow, resistance and compliance exponents, and a maximum supported
+flow ratio. Derived exponents can state that source uncertainty was not
+propagated rather than inventing bounds.
 
 ## Checked-in definitions
 
@@ -42,6 +46,13 @@ records mean flow, left-atrial pressure sink, PVR, arterial compliance,
 right/left perfusion, pulmonary transit, a mean-pressure comparison target,
 uncertainty, and derivations. Its model card is
 [Pulmonary 0D Reference Candidate](PULMONARY_0D_REFERENCE.md).
+
+The v2 definition
+`data/lung-models/healthy-adult-rest-exercise-0d-v2.json` adds bounded
+rest-to-exercise flow adaptation while retaining v1 as an immutable resting
+baseline. Its derivation, independent source selection, and post-calibration
+test are documented in
+[Bounded Pulmonary 0D Flow Adaptation](PULMONARY_0D_FLOW_ADAPTATION.md).
 
 ## External-data boundary
 

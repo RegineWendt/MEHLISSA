@@ -29,6 +29,12 @@ load_definition_1_1(const std::filesystem::path& path) {
         {path, root() / "data" / "schemas" / "lung-model-definition" / "1.1.0.schema.json"});
 }
 
+[[nodiscard]] mehlissa::models::organ::LungModelDefinition
+load_definition_1_2(const std::filesystem::path& path) {
+    return mehlissa::models::organ::load_lung_model_definition(
+        {path, root() / "data" / "schemas" / "lung-model-definition" / "1.2.0.schema.json"});
+}
+
 } // namespace
 
 TEST_CASE("Checked-in lung definitions are executable and evidence scoped",
@@ -108,4 +114,33 @@ TEST_CASE("Literature-parameterized pulmonary 0D definition preserves evidence a
 
     const auto model = mehlissa::models::organ::make_lung_model(definition.model);
     CHECK(model->model_id() == std::string_view{"lung.pulmonary-0d.healthy-adult-rest-supine.v1"});
+}
+
+TEST_CASE("Flow-adaptive pulmonary 0D definition preserves independent calibration evidence",
+          "[m3][organ][definition][physiology][exercise]") {
+    const auto definition = load_definition_1_2(root() / "data" / "lung-models" /
+                                                "healthy-adult-rest-exercise-0d-v2.json");
+
+    CHECK(definition.schema_version == std::string_view{"1.2.0"});
+    if (!definition.model.zero_dimensional_parameters.has_value() ||
+        !definition.hemodynamics.has_value() ||
+        !definition.model.zero_dimensional_parameters->flow_adaptation.has_value() ||
+        !definition.hemodynamics->flow_adaptation.has_value()) {
+        FAIL("Expected executable flow adaptation and its evidence");
+        return;
+    }
+
+    const auto& adaptation = definition.model.zero_dimensional_parameters->flow_adaptation.value();
+    const auto& evidence = definition.hemodynamics->flow_adaptation.value();
+    CHECK(mehlissa::core::in_liters_per_minute(adaptation.reference_cardiac_output) ==
+          Catch::Approx(6.0));
+    CHECK(adaptation.resistance_exponent == Catch::Approx(-0.202148574863478));
+    CHECK(adaptation.compliance_exponent == Catch::Approx(-0.669350145160558));
+    CHECK(adaptation.maximum_flow_ratio.si_value() == Catch::Approx(16.2 / 6.2));
+    CHECK(evidence.resistance_exponent.source_id == "claessen-2015");
+    CHECK(evidence.compliance_exponent.uncertainty.kind == "not_propagated");
+
+    const auto model = mehlissa::models::organ::make_lung_model(definition.model);
+    CHECK(model->model_id() ==
+          std::string_view{"lung.pulmonary-0d.healthy-adult-rest-exercise.v2"});
 }

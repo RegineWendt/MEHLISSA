@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0.0",
+  "validation": {
+    "id": "healthy-adult-independent-v2",
+    "title": "Independent aggregate validation of the bounded flow-adaptive pulmonary 0D candidate",
+    "model_definition_id": "healthy-adult-rest-exercise-0d-v2"
+  },
+  "protocol": {
+    "maximum_absolute_z_score": 1.0,
+    "decision_rule": "Every required endpoint prediction must lie within one reported cohort standard deviation of the independent mean. Diagnostic endpoints expose limitations but do not determine the qualified validation result.",
+    "execution_status": "protocol_locked_before_repository_evaluation"
+  },
+  "sources": [
+    {
+      "id": "forton-2016",
+      "citation": "Forton K, Motoji Y, Deboeck G, Faoro V, Naeije R. Effects of body position on exercise capacity and pulmonary vascular pressure-flow relationships. Journal of Applied Physiology. 2016;121:1145-1150.",
+      "url": "https://doi.org/10.1152/japplphysiol.00372.2016",
+      "license": "Publisher terms; only reported aggregate facts are transcribed",
+      "measurement_method": "Doppler echocardiography in 26 healthy adult volunteers; supine mPAP estimated from tricuspid-regurgitation velocity and cardiac output from the left-ventricular outflow velocity-time integral"
+    },
+    {
+      "id": "bentley-2020",
+      "citation": "Bentley RF, Barker M, Esfandiari S, et al. Normal and Abnormal Relationships of Pulmonary Artery to Wedge Pressure During Exercise. Journal of the American Heart Association. 2020;9:e016339.",
+      "url": "https://doi.org/10.1161/JAHA.120.016339",
+      "license": "CC-BY-NC-ND-4.0; only reported aggregate facts are transcribed",
+      "measurement_method": "Right-heart catheterization and triplicate thermodilution cardiac output in 36 healthy controls at semiupright rest and steady-state submaximal exercise"
+    }
+  ],
+  "conditions": [
+    {
+      "id": "forton-supine-rest",
+      "source_id": "forton-2016",
+      "description": "Scope-matched healthy-adult supine rest comparison; the model remains fully locked and receives only the independently reported mean cardiac output.",
+      "scope": "declared_scope",
+      "boundary_policy": "locked_left_atrial_pressure",
+      "observations": {
+        "cardiac_output": {
+          "mean_si": 0.0001,
+          "standard_deviation_si": 0.000016666666666666667,
+          "unit": "m3/s",
+          "acceptance_role": "input"
+        },
+        "mean_pulmonary_arterial_pressure": {
+          "mean_si": 2066.4970049325,
+          "standard_deviation_si": 106.657909932,
+          "unit": "Pa",
+          "acceptance_role": "required"
+        }
+      }
+    },
+    {
+      "id": "bentley-semiupright-rest",
+      "source_id": "bentley-2020",
+      "description": "Independent invasive near-scope crosscheck. Reported mean PAWP is applied as an observed boundary condition; baseline PVR, compliance, and the flow-adaptation rule remain locked.",
+      "scope": "near_scope_crosscheck",
+      "boundary_policy": "measured_wedge_pressure",
+      "observations": {
+        "cardiac_output": {
+          "mean_si": 0.00008,
+          "standard_deviation_si": 0.000013333333333333335,
+          "unit": "m3/s",
+          "acceptance_role": "input"
+        },
+        "pulmonary_arterial_wedge_pressure": {
+          "mean_si": 1466.546261565,
+          "standard_deviation_si": 266.64477483,
+          "unit": "Pa",
+          "acceptance_role": "input"
+        },
+        "mean_pulmonary_arterial_pressure": {
+          "mean_si": 2266.480586055,
+          "standard_deviation_si": 399.967162245,
+          "unit": "Pa",
+          "acceptance_role": "required"
+        },
+        "pulmonary_arterial_compliance": {
+          "mean_si": 4.200344824735675e-8,
+          "standard_deviation_si": 1.2000985213530502e-8,
+          "unit": "m3/Pa",
+          "acceptance_role": "required"
+        },
+        "rc_time_constant": {
+          "mean_si": 0.39,
+          "standard_deviation_si": 0.1,
+          "unit": "s",
+          "acceptance_role": "required"
+        }
+      }
+    },
+    {
+      "id": "bentley-semiupright-exercise",
+      "source_id": "bentley-2020",
+      "description": "Independent exercise stress test. Reported mean PAWP and cardiac output are applied as boundary conditions without fitting the Claessen-derived flow-adaptation rule to Bentley.",
+      "scope": "stress_test",
+      "boundary_policy": "measured_wedge_pressure",
+      "observations": {
+        "cardiac_output": {
+          "mean_si": 0.00018666666666666666,
+          "standard_deviation_si": 0.000045,
+          "unit": "m3/s",
+          "acceptance_role": "input"
+        },
+        "pulmonary_arterial_wedge_pressure": {
+          "mean_si": 1999.835811225,
+          "standard_deviation_si": 666.611937075,
+          "unit": "Pa",
+          "acceptance_role": "input"
+        },
+        "mean_pulmonary_arterial_pressure": {
+          "mean_si": 3333.059685375,
+          "standard_deviation_si": 666.611937075,
+          "unit": "Pa",
+          "acceptance_role": "required"
+        },
+        "pulmonary_arterial_compliance": {
+          "mean_si": 3.4502832488900185e-8,
+          "standard_deviation_si": 1.2751046789376157e-8,
+          "unit": "m3/Pa",
+          "acceptance_role": "required"
+        },
+        "rc_time_constant": {
+          "mean_si": 0.23,
+          "standard_deviation_si": 0.007,
+          "unit": "s",
+          "acceptance_role": "diagnostic"
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Only aggregate means and standard deviations are available; this is not subject-level validation.",
+    "Forton et al. used Doppler-derived rather than invasive pulmonary pressure and flow.",
+    "Bentley et al. used a semiupright position, whereas part of the declared adaptive range is based on supine exercise.",
+    "Applying measured PAWP is boundary conditioning, not parameter fitting; all model parameters remain locked.",
+    "Claessen et al. calibrated the flow multipliers and is source- and cohort-disjoint from Bentley et al.; Wright et al. 2016 was explicitly rejected because Bentley reused that Toronto control cohort.",
+    "One-standard-deviation compatibility is an engineering acceptance criterion, not proof of statistical equivalence or clinical validity."
+  ]
+}
