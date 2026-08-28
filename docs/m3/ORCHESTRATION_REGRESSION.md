@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## Composition path
 
-The M3 regression loads either checked-in lung definition through the same
+The M3 regression loads each checked-in lung definition through a versioned
 schema and loader, passes its typed configuration to `make_lung_model`, and
 hands the resulting `ModelComponent` to `BodyOrganCoupler`. The body, coupler,
 and kernel contain no branch for the selected lung resolution.
@@ -33,3 +33,9 @@ These are compatible fixed synchronization steps. They prove deterministic
 step subdivision for the current transit models, not asynchronous or adaptive
 multirate co-simulation. Any future scheduler must preserve the same ownership,
 route, time, and conservation checks.
+
+M3.7 extends the matrix with the literature-parameterized pulmonary 0D card at
+0.1 s and 0.2 s host steps. The same entity completes the body–lung–body route
+at its 6.4 s measured transit. A separate generated two-second contract setup
+runs entity, population, substance, and flow payloads through all three factory
+variants, while the physiological card retains its source-scoped timing.

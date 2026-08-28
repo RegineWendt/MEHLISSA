@@ -25,6 +25,12 @@ static_assert(std::same_as<decltype(mehlissa::core::meters(1.0) / mehlissa::core
                            mehlissa::core::Speed>);
 static_assert(std::same_as<decltype(mehlissa::core::moles(1.0) / mehlissa::core::cubic_meters(1.0)),
                            mehlissa::core::Concentration>);
+static_assert(
+    std::same_as<decltype(mehlissa::core::wood_units(1.0) * mehlissa::core::liters_per_minute(1.0)),
+                 mehlissa::core::Pressure>);
+static_assert(std::same_as<decltype(mehlissa::core::wood_units(1.0) *
+                                    mehlissa::core::milliliters_per_millimeter_of_mercury(1.0)),
+                           mehlissa::core::Time>);
 
 } // namespace
 
@@ -66,4 +72,17 @@ TEST_CASE("Scalar operations retain the physical dimension", "[core][quantity]")
 
     REQUIRE(mehlissa::core::in_meters(doubled) == Catch::Approx(0.01));
     REQUIRE(halved == mehlissa::core::millimeters(5.0));
+}
+
+TEST_CASE("Pulmonary pressure resistance and compliance conversions preserve dimensions",
+          "[core][quantity][m3]") {
+    const auto pressure = mehlissa::core::wood_units(1.2) * mehlissa::core::liters_per_minute(5.0);
+    const auto time_constant = mehlissa::core::wood_units(1.2) *
+                               mehlissa::core::milliliters_per_millimeter_of_mercury(5.0);
+
+    REQUIRE(mehlissa::core::in_millimeters_of_mercury(pressure) == Catch::Approx(6.0));
+    REQUIRE(mehlissa::core::in_seconds(time_constant) == Catch::Approx(0.36));
+    REQUIRE(mehlissa::core::in_wood_units(mehlissa::core::wood_units(1.2)) == Catch::Approx(1.2));
+    REQUIRE(mehlissa::core::in_milliliters_per_millimeter_of_mercury(
+                mehlissa::core::milliliters_per_millimeter_of_mercury(5.0)) == Catch::Approx(5.0));
 }

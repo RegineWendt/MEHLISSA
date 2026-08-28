@@ -20,15 +20,23 @@ namespace {
 void validate_exclusive_parameters(const LungModelConfig& config) {
     switch (config.variant) {
     case LungModelVariant::effective_compartment:
-        if (!config.regions.empty()) {
+        if (!config.regions.empty() || config.zero_dimensional_parameters.has_value()) {
             throw_invalid_config(
-                "An effective lung compartment cannot also define pulmonary regions");
+                "An effective lung compartment cannot also define parameters for another variant");
         }
         return;
     case LungModelVariant::regional_circulation:
-        if (config.compartment_transit_time != core::SimulationClock::Duration::zero()) {
+        if (config.compartment_transit_time != core::SimulationClock::Duration::zero() ||
+            config.zero_dimensional_parameters.has_value()) {
+            throw_invalid_config("A regional pulmonary circulation cannot also define parameters "
+                                 "for another variant");
+        }
+        return;
+    case LungModelVariant::pulmonary_zero_dimensional:
+        if (config.compartment_transit_time != core::SimulationClock::Duration::zero() ||
+            !config.regions.empty() || !config.zero_dimensional_parameters.has_value()) {
             throw_invalid_config(
-                "A regional pulmonary circulation cannot also define a compartment transit time");
+                "A pulmonary 0D model requires only its hemodynamic parameter set");
         }
         return;
     }
@@ -60,6 +68,16 @@ std::unique_ptr<coupling::ModelComponent> make_lung_model(LungModelConfig config
             std::move(config.return_target_model_id),
             std::move(config.return_target_port_id),
             std::move(config.regions),
+        });
+    case LungModelVariant::pulmonary_zero_dimensional:
+        return std::make_unique<PulmonaryZeroDimensionalModel>(PulmonaryZeroDimensionalConfig{
+            std::move(config.component_name),
+            std::move(config.model_id),
+            std::move(config.entry_port_id),
+            std::move(config.exit_port_id),
+            std::move(config.return_target_model_id),
+            std::move(config.return_target_port_id),
+            *config.zero_dimensional_parameters,
         });
     }
     throw_invalid_config("Unknown lung model variant");

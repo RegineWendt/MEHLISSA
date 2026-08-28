@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## Executable model card
 
-Schema `lung-model-definition/1.0.0` binds model selection and parameters to
+Schemas `lung-model-definition/1.0.0` and `1.1.0` bind model selection and parameters to
 the evidence needed to interpret them. A definition contains:
 
 - stable definition and model identities;
@@ -21,7 +21,9 @@ the evidence needed to interpret them. A definition contains:
 
 The loader validates JSON structure and semantic consistency before producing a
 typed `LungModelConfig`. The factory then performs the concrete model checks.
-Variant timing structures cannot be mixed.
+Variant timing structures cannot be mixed. Version 1.1.0 adds a pulmonary 0D
+variant and source-linked SI quantities with explicit uncertainty, evidence
+role, and derivation.
 
 ## Checked-in definitions
 
@@ -34,6 +36,13 @@ Both are deliberately classified as `software_test_surrogate`. Their two-second
 total transit and regional split are verification values. The definitions state
 that they do not represent a human population or physiological state.
 
+The first `literature_parameterized` definition is
+`data/lung-models/healthy-adult-rest-supine-0d-v1.json`. It is executable and
+records mean flow, left-atrial pressure sink, PVR, arterial compliance,
+right/left perfusion, pulmonary transit, a mean-pressure comparison target,
+uncertainty, and derivations. Its model card is
+[Pulmonary 0D Reference Candidate](PULMONARY_0D_REFERENCE.md).
+
 ## External-data boundary
 
 An `externally_derived` definition can identify an immutable source file by
@@ -42,8 +51,8 @@ conversion applied. Definition loading validates this metadata; a future import
 adapter must additionally resolve the file, verify its checksum, apply the
 declared transformations, and validate the derived network.
 
-No SimVascular/VMR geometry or hemodynamic parameter set is included or
-qualified in M3 yet. The metadata test uses a nonexistent dummy path and an all-
+No SimVascular/VMR geometry is included or qualified in M3 yet. The metadata
+test uses a nonexistent dummy path and an all-
 zero checksum solely to exercise decoding. It is not a data release.
 
 ## Qualification rule

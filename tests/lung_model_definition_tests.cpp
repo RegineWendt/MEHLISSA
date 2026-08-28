@@ -4,6 +4,7 @@
 #include <mehlissa/core/error.hpp>
 #include <mehlissa/models/organ/lung_model_definition.hpp>
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 #include <chrono>
@@ -20,6 +21,12 @@ using namespace std::chrono_literals;
 load_definition(const std::filesystem::path& path) {
     return mehlissa::models::organ::load_lung_model_definition(
         {path, root() / "data" / "schemas" / "lung-model-definition" / "1.0.0.schema.json"});
+}
+
+[[nodiscard]] mehlissa::models::organ::LungModelDefinition
+load_definition_1_1(const std::filesystem::path& path) {
+    return mehlissa::models::organ::load_lung_model_definition(
+        {path, root() / "data" / "schemas" / "lung-model-definition" / "1.1.0.schema.json"});
 }
 
 } // namespace
@@ -73,4 +80,29 @@ TEST_CASE("External pulmonary data metadata preserves provenance axes and units"
     CHECK(external.length_unit == "m");
     CHECK(external.flow_unit == "m3/s");
     REQUIRE(external.transformations.size() == 1);
+}
+
+TEST_CASE("Literature-parameterized pulmonary 0D definition preserves evidence and executes",
+          "[m3][organ][definition][physiology]") {
+    const auto definition = load_definition_1_1(root() / "data" / "lung-models" /
+                                                "healthy-adult-rest-supine-0d-v1.json");
+
+    CHECK(definition.schema_version == std::string_view{"1.1.0"});
+    CHECK(definition.model.variant ==
+          mehlissa::models::organ::LungModelVariant::pulmonary_zero_dimensional);
+    REQUIRE(definition.model.zero_dimensional_parameters.has_value());
+    CHECK(mehlissa::core::in_liters_per_minute(
+              definition.model.zero_dimensional_parameters->baseline_cardiac_output) ==
+          Catch::Approx(6.0));
+    CHECK(definition.model.zero_dimensional_parameters->pulmonary_transit_time == 6400ms);
+    REQUIRE(definition.hemodynamics.has_value());
+    CHECK(definition.hemodynamics->mean_pulmonary_arterial_pressure_target.role == "derived");
+    CHECK(definition.hemodynamics->right_lung_perfusion_fraction.uncertainty.kind ==
+          "propagated_standard_deviation");
+    CHECK(definition.hemodynamics->pulmonary_transit_time.uncertainty.kind ==
+          "interquartile_range");
+    CHECK(definition.hemodynamics->right_lung_perfusion_fraction.uncertainty.lower_si.has_value());
+
+    const auto model = mehlissa::models::organ::make_lung_model(definition.model);
+    CHECK(model->model_id() == std::string_view{"lung.pulmonary-0d.healthy-adult-rest-supine.v1"});
 }

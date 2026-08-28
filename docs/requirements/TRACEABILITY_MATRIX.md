@@ -5,7 +5,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Traceability Matrix – MEHLISSA Next
 
-**As of:** 27 August 2026
+**As of:** 28 August 2026
 
 **Reference document:** [system requirements](SYSTEM_REQUIREMENTS.md)
 
@@ -32,17 +32,17 @@ Status codes:
 | SYS-001 | RM M1 | DONE | M1 | `simulation_clock_tests`, cross-platform CTest |
 | SYS-002 | RM 2.4 | PART | M1/M7 | byte-identical M1 kernel reference run on MSVC/GCC/Clang; replicate planning and domain-model verification follow |
 | SYS-003 | RM M1 | DONE | M1 | `random_stream_tests`, including stream names |
-| SYS-004 | RM 3.2 | DONE | M1 | dimension-safe types for time, length, area, volume, speed, amount, and concentration; compile/unit tests |
+| SYS-004 | RM 3.2 | DONE | M1 | dimension-safe types for time, length, area, volume, speed, flow, amount, concentration, pressure, vascular resistance, and vascular compliance; compile/unit tests |
 | SYS-005 | RM 2.1–2.2 | PART | M0/M1 | architecture review of target structure and dependency rules |
 | SYS-006 | RM M0 | PART | M1 | CI rule and review: `core/` does not import `scenarios/` |
 | SYS-007 | RM M1 | DONE | M1 | stable error codes/CLI statuses and negative tests for configuration, overflow, lifecycle, log, and checkpoint invariants |
 | SYS-008 | DISS pp. 95–97, 133 | PART | M3–M5 | one typed scenario and body coupler run unchanged with coarse and regional lung implementations; externally configured multi-resolution experiments follow |
 | ARC-001 | DISS pp. 94–96 | PART | M3–M5 | generic `ModelComponent` boundary and first organ implementation; body/capillary/cell implementations follow |
-| ARC-002 | DISS p. 95 | PART | M3–M5 | schema-validated lung definitions bind scale, evidence, validity, sources, licenses, and limitations to executable selection; future models require the equivalent contract |
+| ARC-002 | DISS p. 95 | PART | M3–M5 | schema-validated lung definitions bind scale, evidence, validity, sources, uncertainty, derivations, licenses, and limitations to executable selection; future models require the equivalent contract |
 | ARC-003 | DISS pp. 95–97 | PART | M3 | versioned entity, population, substance-amount, and volume-flow contracts and lung endpoints exist; physiological-state and event contracts follow |
 | ARC-004 | RM 3.3 | PART | M3 | entity round trip and lossless population, substance, and flow transit pass across both lung variants; transforming exchange and body aggregate endpoints follow |
 | ARC-005 | DISS pp. 99–100 | SPEC | M3–M5 | return of a detection/cell event to a higher layer |
-| ARC-006 | RM 3.3 | PART | M3 | externally selected coarse and regional lung results agree for entity and conserved transfers at compatible 0.5 s and 1 s host steps; asynchronous multirate synchronization follows |
+| ARC-006 | RM 3.3 | PART | M3 | externally selected coarse/regional results agree at 0.5 s and 1 s, and the 6.4 s pulmonary 0D route agrees at 0.1 s and 0.2 s; asynchronous multirate synchronization follows |
 | ARC-007 | DISS pp. 96–97, 133 | SPEC | M4/M5 | reference adapter plus equivalent surrogate |
 
 ## 3. Body and organ layers
@@ -59,11 +59,11 @@ Status codes:
 | BODY-008 | DISS pp. 120–122 | PART | M2/M3 | machine-readable rest, 1.9× exercise, and 70° head-up-tilt profiles with sources, validity, and CLI exist; regional exercise redistribution, vertebral drainage, pressure, compliance, and dynamic state transitions follow in M3/M4 |
 | BODY-009 | DISS p. 101 | RESEARCH | M4/M5 | documented blood-model variants and sensitivity |
 | BODY-010 | BVS18 pp. 4–6 | DONE | M2 | deterministic 6,359/63,590-particle regression, equilibrium at minute 7, injection-site comparison, exact population conservation, and schema-validated golden reference |
-| ORG-001 | DISS pp. 118–126 | PART | M3 | coarse pulmonary-circulation surrogate has a model card and contract tests; anatomy, perfusion, and activity-state variants follow |
-| ORG-002 | DISS pp. 118–122 | PART | M3 | M2.4 checks 23 target/actual perfusions in the whole-body graph; organ-specific lung model and independent physiological validation follow in M3/M2.6 |
+| ORG-001 | DISS pp. 118–126 | PART | M3 | coarse and serial-region surrogates plus a literature-parameterized mean pulmonary 0D model have model cards and tests; anatomical, pulsatile, and activity-state variants follow |
+| ORG-002 | DISS pp. 118–122 | PART | M3 | M2.4 checks whole-body perfusion; M3.7 adds source-scoped pressure, flow, PVR, compliance, transit, and right/left lung perfusion with uncertainty; independent joint-data validation follows |
 | ORG-003 | DISS pp. 95, 153–154 | DONE | M3 | tested body → lung → body ownership round trip with named ports, stable identity, synchronization time, and explicit outside-body ledger |
 | ORG-004 | DISS pp. 122–123, Ch. 6 | LEGACY | M3/M7 | localization event with tissue and uncertainty |
-| ORG-005 | DISS pp. 123–126 | PART | M3 | schema-selected coarse and three-region pulmonary implementations pass the same generated body–organ scenario at two host steps; anatomical 0D/1D refinement follows |
+| ORG-005 | DISS pp. 123–126 | PART | M3 | schema-selected coarse, three-region surrogate, and pulmonary 0D implementations share one component contract; the 0D variant has analytical RC dynamics and measured total transit, while anatomical 1D/geometry refinement follows |
 | ORG-006 | DISS pp. 124–126 | PART | M3/M8 | external-data contract preserves checksum, format, axes, units, and transformations; official SimVascular arterial candidate reviewed with access/license/state/unit/coverage blockers; import adapter and geometry verification follow |
 
 ## 4. Capillary and cell layers
@@ -96,8 +96,8 @@ Status codes:
 | DATA-002 | RM 6.4 | DONE | M1 | JSON Schema `1.0.0`, manifest and CLI negative tests |
 | DATA-003 | RM 2.4, 6.4 | PART | M1 | schema `1.0.0`, automatically generated `provenance.json`, SHA-256 and contract tests; data-version catalog follows with real models |
 | DATA-004 | VIS20; MEH25 | DONE | M2 | separate extraction events, measurement-site counters, bounded individual observations, time aggregates, and optional complete/first-N trajectories with explicit truncation indicators and JSON Schema |
-| DATA-005 | RM 2.5 | SPEC | M0/M1 | evidence class in every model card |
-| DATA-006 | RM 6.2 | SPEC | M0 | documented calibration/validation split |
+| DATA-005 | RM 2.5 | PART | M0/M1 | lung model cards carry evidence class, population, state, sources, uncertainty, and limitations; equivalent enforcement for every future model follows |
+| DATA-006 | RM 6.2 | PART | M0 | M3.7 stores calibration/validation/derived roles separately and documents lack of independent subject-level validation; release-wide enforcement follows |
 | DATA-007 | RM 6.3 | SPEC | M7 | result report with intervals and sensitivity |
 | DATA-008 | RM 6.2 | SPEC | M2 | statistical regression tests with justified tolerance |
 

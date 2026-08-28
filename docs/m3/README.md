@@ -5,7 +5,8 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # M3 – Body–Organ Coupling
 
-**Status:** technical coupling candidate complete; scientific gate open
+**Status:** technical coupling and literature-parameterized 0D reference
+candidate complete; scientific gate open
 
 **Started:** 27 August 2026
 
@@ -22,8 +23,9 @@ respiratory mechanics, or gas exchange.
 | M3.2 body–lung–body entity round trip | verified | body transport hand-off, explicit orchestrator ownership, complete circulation test, no entity loss or duplication |
 | M3.3 conservative population and substance exchange | verified for lossless transit | dimension-safe population, amount, and volume-flow transfers; both lung endpoints; positive and negative balance tests |
 | M3.4 structured pulmonary-circulation variant | software-verified serial regional surrogate; anatomical refinement open | second implementation behind the same contract with artery, regional capillary surrogate, and venous return |
-| M3.5 physiological parameters and external-data pipeline | definition schema, loader, and qualification gate verified; sourced parameters/data open | versioned model cards, rest/exercise parameters, uncertainty, reproducible axes/units/provenance, qualified SimVascular/VMR reference |
+| M3.5 physiological parameters and external-data pipeline | definition schema, loader, qualification gate, and first sourced resting 0D parameter set verified; external anatomy and exercise data open | versioned model cards, rest/exercise parameters, uncertainty, reproducible axes/units/provenance, qualified SimVascular/VMR reference |
 | M3.6 orchestration and gate regression | external lung definition and fixed-step matrix verified; FP9 baseline open | deterministic synchronization, coarse/detailed scenario switch, historical FP9 timing baseline, formal M3 gate review |
+| M3.7 healthy-adult resting pulmonary 0D reference | implemented and software-verified; independent validation/anatomical refinement open | source-scoped pressure, flow, resistance, compliance, transit, right/left perfusion, uncertainty, analytical RC dynamics, and lossless coupling |
 
 ## M3.1 result
 
@@ -65,8 +67,9 @@ The executable regression starts entity 1 in synthetic body segment
   gas exchange, reaction, production, consumption, or barrier transport.
 - `LungCompartment` is a software-verified surrogate, not a physiologically
   calibrated or independently validated pulmonary model.
-- The second implementation is structurally more detailed, but is not yet a
-  sourced anatomical or physiological pulmonary model.
+- The serial-region implementation remains structural. The new 0D
+  implementation is literature-parameterized, but is a composite-population
+  reference candidate rather than an independently validated patient model.
 - The CLI and experiment manifest do not yet compose model components.
 
 These are milestone tasks, not hidden assumptions. The M3 gate remains open.
@@ -84,15 +87,15 @@ It passes the same port, identity, timing, and return contract as
 `LungCompartment`; see its [Model Card](PULMONARY_CIRCULATION.md). It is more
 structural, but not yet an anatomical 0D/1D or imported vascular model.
 
-The `make_lung_model` composition boundary now selects either implementation
+The `make_lung_model` composition boundary now selects any implementation
 from one typed scenario configuration. The same body–lung–body regression runs
 against both variants without coupler branches; see
 [Lung Model Selection](LUNG_MODEL_SELECTION.md). External experiment-manifest
 composition remains open.
 
-The complete body–organ regression now loads those standalone definitions and
-runs both resolutions at 0.5 s and 1.0 s host steps. Entity and conserved-
-quantity results agree across all four combinations; see
+The complete body–organ regression loads the standalone surrogate definitions
+at 0.5 s and 1.0 s host steps and the pulmonary 0D card at compatible 0.1 s and
+0.2 s steps. Entity and conserved-quantity contracts agree across variants; see
 [Orchestration Regression](ORCHESTRATION_REGRESSION.md). General experiment-
 manifest and asynchronous multirate scheduling remain separate extensions.
 
@@ -109,6 +112,12 @@ introduced.
 The formal [M3 Gate Review](M3_GATE_REVIEW.md) records the technical evidence
 and the scientific closure package. M3 remains open until that package and the
 historical FP9 executable reference are complete.
+
+M3.7 adds a [healthy-adult resting pulmonary 0D reference candidate](PULMONARY_0D_REFERENCE.md)
+with executable pressure, resistance, compliance, flow partition, transit,
+uncertainty, and evidence roles. It supplies a physiological downstream
+closure independent of SimVascular and leaves every calibration choice and
+limitation visible in the versioned model definition.
 
 An initial [SimVascular Healthy Pulmonary Candidate Review](SIMVASCULAR_PULMONARY_CANDIDATE_REVIEW.md)
 finds the official case useful for an imported pulmonary-artery technical

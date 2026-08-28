@@ -85,9 +85,13 @@ void validate_document(const Json& document, const CompiledSchema& schema,
     const auto& timing = document.at("timing");
 
     LungModelConfig config{};
-    config.variant = variant_name == "effective_compartment"
-                         ? LungModelVariant::effective_compartment
-                         : LungModelVariant::regional_circulation;
+    if (variant_name == "effective_compartment") {
+        config.variant = LungModelVariant::effective_compartment;
+    } else if (variant_name == "regional_circulation") {
+        config.variant = LungModelVariant::regional_circulation;
+    } else {
+        config.variant = LungModelVariant::pulmonary_zero_dimensional;
+    }
     config.component_name = component.at("name").as<std::string>();
     config.model_id = component.at("model_id").as<std::string>();
     config.entry_port_id = component.at("entry_port_id").as<std::string>();
@@ -98,14 +102,58 @@ void validate_document(const Json& document, const CompiledSchema& schema,
     if (config.variant == LungModelVariant::effective_compartment) {
         config.compartment_transit_time =
             duration_from_seconds(timing.at("transit_time_s").as<double>());
-    } else {
+    } else if (config.variant == LungModelVariant::regional_circulation) {
         for (const auto& region : timing.at("regions").array_range()) {
             config.regions.push_back(
                 {region.at("id").as<std::string>(),
                  duration_from_seconds(region.at("transit_time_s").as<double>())});
         }
+    } else {
+        const auto& hemodynamics = document.at("hemodynamics");
+        const auto value = [&hemodynamics](const std::string_view name) {
+            return hemodynamics.at(name).at("value_si").as<double>();
+        };
+        config.zero_dimensional_parameters = PulmonaryZeroDimensionalParameters{
+            core::cubic_meters_per_second(value("baseline_cardiac_output")),
+            core::pascals(value("left_atrial_pressure")),
+            core::pascal_seconds_per_cubic_meter(value("pulmonary_vascular_resistance")),
+            core::cubic_meters_per_pascal(value("pulmonary_arterial_compliance")),
+            duration_from_seconds(timing.at("pulmonary_transit_time_s").as<double>()),
+            core::Dimensionless::from_si(value("right_lung_perfusion_fraction")),
+        };
     }
     return config;
+}
+
+[[nodiscard]] LungModelEvidenceQuantity decode_evidence_quantity(const Json& value) {
+    const auto& uncertainty = value.at("uncertainty");
+    return {
+        value.at("value_si").as<double>(),
+        value.at("unit").as<std::string>(),
+        {uncertainty.at("kind").as<std::string>(),
+         uncertainty.contains("lower_si")
+             ? std::optional<double>{uncertainty.at("lower_si").as<double>()}
+             : std::nullopt,
+         uncertainty.contains("upper_si")
+             ? std::optional<double>{uncertainty.at("upper_si").as<double>()}
+             : std::nullopt},
+        value.at("source_id").as<std::string>(),
+        value.at("role").as<std::string>(),
+        value.at("derivation").as<std::string>(),
+    };
+}
+
+[[nodiscard]] PulmonaryHemodynamicEvidence decode_hemodynamics(const Json& document) {
+    const auto& hemodynamics = document.at("hemodynamics");
+    return {
+        decode_evidence_quantity(hemodynamics.at("baseline_cardiac_output")),
+        decode_evidence_quantity(hemodynamics.at("left_atrial_pressure")),
+        decode_evidence_quantity(hemodynamics.at("pulmonary_vascular_resistance")),
+        decode_evidence_quantity(hemodynamics.at("pulmonary_arterial_compliance")),
+        decode_evidence_quantity(hemodynamics.at("pulmonary_transit_time")),
+        decode_evidence_quantity(hemodynamics.at("right_lung_perfusion_fraction")),
+        decode_evidence_quantity(hemodynamics.at("mean_pulmonary_arterial_pressure_target")),
+    };
 }
 
 [[nodiscard]] LungModelDefinition decode(const Json& document) {
@@ -123,6 +171,7 @@ void validate_document(const Json& document, const CompiledSchema& schema,
          validity.at("description").as<std::string>()},
         {},
         {},
+        std::nullopt,
         std::nullopt,
     };
 
@@ -152,14 +201,43 @@ void validate_document(const Json& document, const CompiledSchema& schema,
         }
         result.external_data = std::move(reference);
     }
+    if (document.contains("hemodynamics")) {
+        result.hemodynamics = decode_hemodynamics(document);
+    }
     return result;
 }
 
+[[nodiscard]] bool supported_schema_version(const std::string_view version) noexcept {
+    return version == earliest_supported_lung_model_definition_schema_version ||
+           version == latest_supported_lung_model_definition_schema_version;
+}
+
+void validate_evidence_source(const LungModelEvidenceQuantity& parameter,
+                              const std::unordered_set<std::string>& source_ids) {
+    if (!source_ids.contains(parameter.source_id)) {
+        invalid(core::ErrorCode::data_invalid,
+                "Hemodynamic evidence must reference a declared source ID");
+    }
+    const auto lower = parameter.uncertainty.lower_si;
+    const auto upper = parameter.uncertainty.upper_si;
+    if (!std::isfinite(parameter.value_si) ||
+        (lower.has_value() && (!std::isfinite(*lower) || parameter.value_si < *lower)) ||
+        (upper.has_value() && (!std::isfinite(*upper) || parameter.value_si > *upper)) ||
+        (lower.has_value() && upper.has_value() && *lower > *upper)) {
+        invalid(core::ErrorCode::data_invalid,
+                "Hemodynamic evidence value and uncertainty bounds are inconsistent");
+    }
+}
+
+[[nodiscard]] bool nearly_equal(const double left, const double right) noexcept {
+    const auto scale = std::fmax(1.0, std::fmax(std::abs(left), std::abs(right)));
+    return std::abs(left - right) <= scale * 1.0e-10;
+}
+
 void validate_definition(const LungModelDefinition& definition) {
-    if (definition.schema_version != supported_lung_model_definition_schema_version ||
-        definition.definition_id.empty() || definition.definition_version.empty() ||
-        definition.title.empty() || definition.validity.population.empty() ||
-        definition.validity.physiological_state.empty() ||
+    if (!supported_schema_version(definition.schema_version) || definition.definition_id.empty() ||
+        definition.definition_version.empty() || definition.title.empty() ||
+        definition.validity.population.empty() || definition.validity.physiological_state.empty() ||
         definition.validity.evidence_class.empty() || definition.validity.description.empty() ||
         definition.sources.empty() || definition.limitations.empty()) {
         invalid(core::ErrorCode::data_invalid,
@@ -177,6 +255,38 @@ void validate_definition(const LungModelDefinition& definition) {
         !source_ids.contains(definition.external_data->source_id)) {
         invalid(core::ErrorCode::data_invalid,
                 "External pulmonary data must reference a declared source ID");
+    }
+    if (definition.model.variant == LungModelVariant::pulmonary_zero_dimensional) {
+        if (!definition.hemodynamics.has_value() ||
+            !definition.model.zero_dimensional_parameters.has_value()) {
+            invalid(core::ErrorCode::data_invalid,
+                    "Pulmonary 0D definition requires hemodynamic evidence");
+        }
+        const auto& evidence = *definition.hemodynamics;
+        validate_evidence_source(evidence.baseline_cardiac_output, source_ids);
+        validate_evidence_source(evidence.left_atrial_pressure, source_ids);
+        validate_evidence_source(evidence.pulmonary_vascular_resistance, source_ids);
+        validate_evidence_source(evidence.pulmonary_arterial_compliance, source_ids);
+        validate_evidence_source(evidence.pulmonary_transit_time, source_ids);
+        validate_evidence_source(evidence.right_lung_perfusion_fraction, source_ids);
+        validate_evidence_source(evidence.mean_pulmonary_arterial_pressure_target, source_ids);
+
+        const auto& parameters = *definition.model.zero_dimensional_parameters;
+        const auto transit_seconds =
+            static_cast<double>(parameters.pulmonary_transit_time.count()) / 1'000'000'000.0;
+        const auto predicted_pressure = core::in_pascals(parameters.left_atrial_pressure +
+                                                         parameters.pulmonary_vascular_resistance *
+                                                             parameters.baseline_cardiac_output);
+        if (!nearly_equal(evidence.pulmonary_transit_time.value_si, transit_seconds) ||
+            !nearly_equal(evidence.mean_pulmonary_arterial_pressure_target.value_si,
+                          predicted_pressure)) {
+            invalid(core::ErrorCode::data_invalid,
+                    "Pulmonary 0D timing or mean-pressure evidence is disconnected from the "
+                    "executable parameterization");
+        }
+    } else if (definition.hemodynamics.has_value()) {
+        invalid(core::ErrorCode::data_invalid,
+                "Only a pulmonary 0D definition may carry hemodynamic evidence");
     }
 
     static_cast<void>(make_lung_model(definition.model));

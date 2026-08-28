@@ -355,18 +355,22 @@ models can follow later.
 **Objective:** First genuine coupling between whole-body and regional models
 
 **Current implementation status:** M3 is active. The versioned
-`ModelComponent` boundary, body adapter, identity-conserving coarse and
-three-region lung variants, lossless typed population/substance/flow endpoints,
-and a shared programmatic scenario switch are implemented. Schema-validated
-executable lung definitions preserve validity, evidence, sources, and optional
-external-data axes/units/provenance. Anatomical refinement, transforming
-exchange, general experiment composition, and independent physiological
-validation remain open; see [M3 working plan](m3/README.md).
+`ModelComponent` boundary, body adapter, identity-conserving coarse,
+three-region-surrogate, and literature-parameterized pulmonary 0D variants,
+lossless typed population/substance/flow endpoints, and a shared programmatic
+scenario switch are implemented. Schema-validated executable lung definitions
+preserve validity, evidence, sources, uncertainty, derivations, and optional
+external-data axes/units/provenance. The 0D candidate executes mean pressure,
+flow, PVR, compliance, transit, and right/left perfusion for a healthy adult at
+rest in the supine position. Anatomical refinement, transforming exchange,
+general experiment composition, and independent physiological validation
+remain open; see [M3 working plan](m3/README.md).
 
 The formal [M3 gate review](m3/M3_GATE_REVIEW.md) therefore keeps the milestone
-open: the software coupling candidate is verified, while qualification of a
-physiological pulmonary reference and the executable historical FP9 baseline
-remain mandatory closure evidence.
+open: the software coupling candidate and first literature-parameterized 0D
+reference candidate are verified, while independent physiological validation,
+anatomical refinement, the rest/exercise decision, and the executable
+historical FP9 baseline remain mandatory closure evidence.
 
 #### Tasks
 

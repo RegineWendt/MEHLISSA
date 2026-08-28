@@ -43,6 +43,8 @@ gravity-dependent perfusion, uncertainty, or physiological-state parameters.
 The current durations are contract-test values and must not be interpreted as
 human pulmonary transit evidence.
 
-The next scientific refinement must qualify a SimVascular/VMR reference,
-define reproducible units/axes/provenance, and compare a sourced 0D/1D or
-regional parameterization against independent pulmonary hemodynamic data.
+The separate [pulmonary 0D reference candidate](PULMONARY_0D_REFERENCE.md) now
+provides sourced mean hemodynamics and measured total transit without silently
+relabeling these three synthetic timings. Anatomical refinement must next
+qualify a SimVascular/VMR reference or another vascular data set and compare it
+with independent pulmonary targets.

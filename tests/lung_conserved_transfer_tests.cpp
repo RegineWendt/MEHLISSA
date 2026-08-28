@@ -13,6 +13,7 @@
 #include <chrono>
 #include <cstdint>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -27,11 +28,21 @@ using mehlissa::models::coupling::VolumeFlowTransfer;
 using mehlissa::models::organ::LungModelVariant;
 
 [[nodiscard]] mehlissa::models::organ::LungModelConfig lung_config(const LungModelVariant variant) {
+    const auto model_id = [&variant] {
+        switch (variant) {
+        case LungModelVariant::effective_compartment:
+            return "lung.compartment.v1";
+        case LungModelVariant::regional_circulation:
+            return "lung.regional.v1";
+        case LungModelVariant::pulmonary_zero_dimensional:
+            return "lung.pulmonary-0d.v1";
+        }
+        return "unreachable";
+    }();
     return {
         variant,
         "organ.lung",
-        variant == LungModelVariant::effective_compartment ? "lung.compartment.v1"
-                                                           : "lung.regional.v1",
+        model_id,
         "arterial-entry",
         "venous-exit",
         "body",
@@ -43,6 +54,23 @@ using mehlissa::models::organ::LungModelVariant;
                                                                             1s},
                                                                            {"vein", 500ms}}
             : std::vector<mehlissa::models::organ::PulmonaryTransitRegion>{},
+        variant == LungModelVariant::pulmonary_zero_dimensional
+            ? std::optional<
+                  mehlissa::models::organ::
+                      PulmonaryZeroDimensionalParameters>{mehlissa::models::organ::
+                                                              PulmonaryZeroDimensionalParameters{
+                                                                  mehlissa::core::liters_per_minute(
+                                                                      5.0),
+                                                                  mehlissa::core::
+                                                                      millimeters_of_mercury(8.0),
+                                                                  mehlissa::core::wood_units(1.2),
+                                                                  mehlissa::core::
+                                                                      milliliters_per_millimeter_of_mercury(
+                                                                          5.0),
+                                                                  2s,
+                                                                  mehlissa::core::Dimensionless::
+                                                                      from_si(0.5563)}}
+            : std::nullopt,
     };
 }
 
@@ -70,10 +98,11 @@ void check_return_header(const ConservedTransfer& transfer, const std::string& l
 
 } // namespace
 
-TEST_CASE("Both lung variants conserve population substance and volume flow",
+TEST_CASE("All lung variants conserve population substance and volume flow",
           "[m3][organ][conservation]") {
     const auto variant =
-        GENERATE(LungModelVariant::effective_compartment, LungModelVariant::regional_circulation);
+        GENERATE(LungModelVariant::effective_compartment, LungModelVariant::regional_circulation,
+                 LungModelVariant::pulmonary_zero_dimensional);
     const auto step = GENERATE(500ms, 1s);
     auto lung = mehlissa::models::organ::make_lung_model(lung_config(variant));
     auto* observer = lung.get();
@@ -125,10 +154,11 @@ TEST_CASE("Both lung variants conserve population substance and volume flow",
           0.0002);
 }
 
-TEST_CASE("Both lung variants reject invalid conserved transfer ownership",
+TEST_CASE("All lung variants reject invalid conserved transfer ownership",
           "[m3][organ][conservation]") {
     const auto variant =
-        GENERATE(LungModelVariant::effective_compartment, LungModelVariant::regional_circulation);
+        GENERATE(LungModelVariant::effective_compartment, LungModelVariant::regional_circulation,
+                 LungModelVariant::pulmonary_zero_dimensional);
     auto lung = mehlissa::models::organ::make_lung_model(lung_config(variant));
     auto* observer = lung.get();
     const std::string lung_model_id{observer->model_id()};

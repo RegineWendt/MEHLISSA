@@ -9,7 +9,8 @@
 
 namespace mehlissa::core {
 
-template <int LengthExponent, int TimeExponent, int AmountExponent> struct Dimension final {};
+template <int LengthExponent, int TimeExponent, int AmountExponent, int MassExponent = 0>
+struct Dimension final {};
 
 template <typename DimensionType> class Quantity final {
   public:
@@ -57,13 +58,13 @@ operator-(Quantity<DimensionType> left, const Quantity<DimensionType> right) noe
 
 template <typename LeftDimension, typename RightDimension> struct DimensionProduct;
 
-template <int LeftLength, int LeftTime, int LeftAmount, int RightLength, int RightTime,
-          int RightAmount>
-struct DimensionProduct<Dimension<LeftLength, LeftTime, LeftAmount>,
-                        Dimension<RightLength, RightTime, RightAmount>>
+template <int LeftLength, int LeftTime, int LeftAmount, int LeftMass, int RightLength,
+          int RightTime, int RightAmount, int RightMass>
+struct DimensionProduct<Dimension<LeftLength, LeftTime, LeftAmount, LeftMass>,
+                        Dimension<RightLength, RightTime, RightAmount, RightMass>>
     final {
-    using type =
-        Dimension<LeftLength + RightLength, LeftTime + RightTime, LeftAmount + RightAmount>;
+    using type = Dimension<LeftLength + RightLength, LeftTime + RightTime, LeftAmount + RightAmount,
+                           LeftMass + RightMass>;
 };
 
 template <typename LeftDimension, typename RightDimension>
@@ -71,13 +72,13 @@ using DimensionProductType = typename DimensionProduct<LeftDimension, RightDimen
 
 template <typename LeftDimension, typename RightDimension> struct DimensionQuotient;
 
-template <int LeftLength, int LeftTime, int LeftAmount, int RightLength, int RightTime,
-          int RightAmount>
-struct DimensionQuotient<Dimension<LeftLength, LeftTime, LeftAmount>,
-                         Dimension<RightLength, RightTime, RightAmount>>
+template <int LeftLength, int LeftTime, int LeftAmount, int LeftMass, int RightLength,
+          int RightTime, int RightAmount, int RightMass>
+struct DimensionQuotient<Dimension<LeftLength, LeftTime, LeftAmount, LeftMass>,
+                         Dimension<RightLength, RightTime, RightAmount, RightMass>>
     final {
-    using type =
-        Dimension<LeftLength - RightLength, LeftTime - RightTime, LeftAmount - RightAmount>;
+    using type = Dimension<LeftLength - RightLength, LeftTime - RightTime, LeftAmount - RightAmount,
+                           LeftMass - RightMass>;
 };
 
 template <typename LeftDimension, typename RightDimension>
@@ -127,6 +128,10 @@ using Speed = Quantity<Dimension<1, -1, 0>>;
 using FlowRate = Quantity<Dimension<3, -1, 0>>;
 using Amount = Quantity<Dimension<0, 0, 1>>;
 using Concentration = Quantity<Dimension<-3, 0, 1>>;
+using Mass = Quantity<Dimension<0, 0, 0, 1>>;
+using Pressure = Quantity<Dimension<-1, -2, 0, 1>>;
+using VascularResistance = Quantity<Dimension<-4, -1, 0, 1>>;
+using VascularCompliance = Quantity<Dimension<4, 2, 0, -1>>;
 
 [[nodiscard]] constexpr Length meters(const double value) noexcept {
     return Length::from_si(value);
@@ -176,6 +181,10 @@ using Concentration = Quantity<Dimension<-3, 0, 1>>;
     return FlowRate::from_si(value);
 }
 
+[[nodiscard]] constexpr FlowRate liters_per_minute(const double value) noexcept {
+    return cubic_meters_per_second(value * 1.0e-3 / 60.0);
+}
+
 [[nodiscard]] constexpr Amount moles(const double value) noexcept { return Amount::from_si(value); }
 
 [[nodiscard]] constexpr Amount millimoles(const double value) noexcept {
@@ -192,6 +201,32 @@ using Concentration = Quantity<Dimension<-3, 0, 1>>;
 
 [[nodiscard]] constexpr Concentration millimoles_per_liter(const double value) noexcept {
     return moles_per_cubic_meter(value);
+}
+
+[[nodiscard]] constexpr Pressure pascals(const double value) noexcept {
+    return Pressure::from_si(value);
+}
+
+[[nodiscard]] constexpr Pressure millimeters_of_mercury(const double value) noexcept {
+    return pascals(value * 133.322387415);
+}
+
+[[nodiscard]] constexpr VascularResistance
+pascal_seconds_per_cubic_meter(const double value) noexcept {
+    return VascularResistance::from_si(value);
+}
+
+[[nodiscard]] constexpr VascularResistance wood_units(const double value) noexcept {
+    return pascal_seconds_per_cubic_meter(value * 133.322387415 * 60.0 / 1.0e-3);
+}
+
+[[nodiscard]] constexpr VascularCompliance cubic_meters_per_pascal(const double value) noexcept {
+    return VascularCompliance::from_si(value);
+}
+
+[[nodiscard]] constexpr VascularCompliance
+milliliters_per_millimeter_of_mercury(const double value) noexcept {
+    return cubic_meters_per_pascal(value * 1.0e-6 / 133.322387415);
 }
 
 [[nodiscard]] constexpr double in_meters(const Length value) noexcept { return value.si_value(); }
@@ -214,10 +249,40 @@ using Concentration = Quantity<Dimension<-3, 0, 1>>;
     return value.si_value();
 }
 
+[[nodiscard]] constexpr double in_liters_per_minute(const FlowRate value) noexcept {
+    return value.si_value() * 60.0 / 1.0e-3;
+}
+
 [[nodiscard]] constexpr double in_moles(const Amount value) noexcept { return value.si_value(); }
 
 [[nodiscard]] constexpr double in_moles_per_cubic_meter(const Concentration value) noexcept {
     return value.si_value();
+}
+
+[[nodiscard]] constexpr double in_pascals(const Pressure value) noexcept {
+    return value.si_value();
+}
+
+[[nodiscard]] constexpr double in_millimeters_of_mercury(const Pressure value) noexcept {
+    return value.si_value() / 133.322387415;
+}
+
+[[nodiscard]] constexpr double
+in_pascal_seconds_per_cubic_meter(const VascularResistance value) noexcept {
+    return value.si_value();
+}
+
+[[nodiscard]] constexpr double in_wood_units(const VascularResistance value) noexcept {
+    return value.si_value() / (133.322387415 * 60.0 / 1.0e-3);
+}
+
+[[nodiscard]] constexpr double in_cubic_meters_per_pascal(const VascularCompliance value) noexcept {
+    return value.si_value();
+}
+
+[[nodiscard]] constexpr double
+in_milliliters_per_millimeter_of_mercury(const VascularCompliance value) noexcept {
+    return value.si_value() * 133.322387415 / 1.0e-6;
 }
 
 } // namespace mehlissa::core

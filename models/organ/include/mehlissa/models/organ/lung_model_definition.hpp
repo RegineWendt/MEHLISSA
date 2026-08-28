@@ -13,7 +13,8 @@
 
 namespace mehlissa::models::organ {
 
-inline constexpr auto supported_lung_model_definition_schema_version = "1.0.0";
+inline constexpr auto earliest_supported_lung_model_definition_schema_version = "1.0.0";
+inline constexpr auto latest_supported_lung_model_definition_schema_version = "1.1.0";
 
 struct LungModelValidity final {
     std::string population;
@@ -41,6 +42,31 @@ struct ExternalPulmonaryDataReference final {
     std::vector<std::string> transformations;
 };
 
+struct LungModelParameterUncertainty final {
+    std::string kind;
+    std::optional<double> lower_si;
+    std::optional<double> upper_si;
+};
+
+struct LungModelEvidenceQuantity final {
+    double value_si{};
+    std::string unit;
+    LungModelParameterUncertainty uncertainty;
+    std::string source_id;
+    std::string role;
+    std::string derivation;
+};
+
+struct PulmonaryHemodynamicEvidence final {
+    LungModelEvidenceQuantity baseline_cardiac_output;
+    LungModelEvidenceQuantity left_atrial_pressure;
+    LungModelEvidenceQuantity pulmonary_vascular_resistance;
+    LungModelEvidenceQuantity pulmonary_arterial_compliance;
+    LungModelEvidenceQuantity pulmonary_transit_time;
+    LungModelEvidenceQuantity right_lung_perfusion_fraction;
+    LungModelEvidenceQuantity mean_pulmonary_arterial_pressure_target;
+};
+
 struct LungModelDefinition final {
     std::string schema_version;
     std::string definition_id;
@@ -51,6 +77,7 @@ struct LungModelDefinition final {
     std::vector<LungModelSource> sources;
     std::vector<std::string> limitations;
     std::optional<ExternalPulmonaryDataReference> external_data;
+    std::optional<PulmonaryHemodynamicEvidence> hemodynamics;
 };
 
 struct LungModelDefinitionLoadRequest final {

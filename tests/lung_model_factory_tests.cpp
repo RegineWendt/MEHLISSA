@@ -29,6 +29,7 @@ using mehlissa::models::organ::PulmonaryTransitRegion;
         "venous-return",
         2s,
         {},
+        std::nullopt,
     };
 }
 
@@ -43,22 +44,49 @@ using mehlissa::models::organ::PulmonaryTransitRegion;
         "venous-return",
         0s,
         {{"artery", 500ms}, {"capillary-surrogate", 1s}, {"vein", 500ms}},
+        std::nullopt,
+    };
+}
+
+[[nodiscard]] LungModelConfig zero_dimensional_config() {
+    return {
+        LungModelVariant::pulmonary_zero_dimensional,
+        "organ.lung",
+        "lung.pulmonary-0d.v1",
+        "arterial-entry",
+        "venous-exit",
+        "body",
+        "venous-return",
+        0s,
+        {},
+        mehlissa::models::organ::PulmonaryZeroDimensionalParameters{
+            mehlissa::core::liters_per_minute(5.0),
+            mehlissa::core::millimeters_of_mercury(8.0),
+            mehlissa::core::wood_units(1.2),
+            mehlissa::core::milliliters_per_millimeter_of_mercury(5.0),
+            6400ms,
+            mehlissa::core::Dimensionless::from_si(0.5563),
+        },
     };
 }
 
 } // namespace
 
-TEST_CASE("The lung model factory selects either implementation behind one contract",
+TEST_CASE("The lung model factory selects each implementation behind one contract",
           "[m3][organ][factory]") {
     auto compartment = mehlissa::models::organ::make_lung_model(compartment_config());
     auto regional = mehlissa::models::organ::make_lung_model(regional_config());
+    auto zero_dimensional = mehlissa::models::organ::make_lung_model(zero_dimensional_config());
 
     CHECK(compartment->model_id() == std::string_view{"lung.compartment.v1"});
     CHECK(regional->model_id() == std::string_view{"lung.regional.v1"});
+    CHECK(zero_dimensional->model_id() == std::string_view{"lung.pulmonary-0d.v1"});
     CHECK(compartment->accepts_entity_at("arterial-entry"));
     CHECK(regional->accepts_entity_at("arterial-entry"));
+    CHECK(zero_dimensional->accepts_entity_at("arterial-entry"));
     CHECK(compartment->emits_entity_at("venous-exit"));
     CHECK(regional->emits_entity_at("venous-exit"));
+    CHECK(zero_dimensional->emits_entity_at("venous-exit"));
 }
 
 TEST_CASE("A lung scenario cannot mix variant-specific parameters", "[m3][organ][factory]") {
@@ -70,5 +98,10 @@ TEST_CASE("A lung scenario cannot mix variant-specific parameters", "[m3][organ]
     auto regional = regional_config();
     regional.compartment_transit_time = 1s;
     CHECK_THROWS_AS(mehlissa::models::organ::make_lung_model(std::move(regional)),
+                    mehlissa::core::MehlissaError);
+
+    auto zero_dimensional = zero_dimensional_config();
+    zero_dimensional.regions.push_back(PulmonaryTransitRegion{"unexpected", 1s});
+    CHECK_THROWS_AS(mehlissa::models::organ::make_lung_model(std::move(zero_dimensional)),
                     mehlissa::core::MehlissaError);
 }

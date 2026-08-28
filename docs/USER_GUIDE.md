@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Covered software:** M0 through the current M3 body–organ coupling slice
 
-**Last updated:** 27 August 2026
+**Last updated:** 28 August 2026
 
 This guide is the main entry point for people who want to build, inspect, and
 run MEHLISSA Next. It will grow with each milestone. Internal architecture
@@ -34,11 +34,12 @@ The current software can:
   executable;
 - exchange identity-preserving entities, populations, substance amounts, and
   volume flows through a typed body–organ boundary;
-- select a coarse or regional lung implementation from a schema-validated
+- select a coarse, regional-surrogate, or literature-parameterized pulmonary
+  0D implementation from a schema-validated
   executable model card; and
 - run the same body–lung–body regression at two compatible host steps.
 
-The software does not yet contain an anatomical or physiologically validated
+The software does not yet contain an anatomical or independently validated
 pulmonary model, capillary/cellular exchange, or active Nano-IoT communication.
 
 ## 2. Repository orientation
@@ -54,6 +55,7 @@ pulmonary model, capillary/cellular exchange, or active Nano-IoT communication.
 | `models/cosimulation/` | body–organ ownership and route adapter |
 | `data/body-models/` | canonical executable vascular models |
 | `data/body-states/` | state overlays for compatible body models |
+| `data/lung-models/` | executable evidence-scoped pulmonary reference candidates |
 | `data/schemas/` | versioned JSON Schemas |
 | `data/reference-results/` | checked-in scientific Golden References |
 | `examples/` | minimal manifests and synthetic models |
@@ -264,9 +266,11 @@ selection, but the general experiment manifest does not compose them yet.
 
 M3 uses a typed C++ boundary rather than a scenario-specific body shortcut. A
 `ModelComponent` exposes a stable model ID, named entry and exit ports, and
-versioned entity and conserved-quantity transfers. Two implementations exist:
+versioned entity and conserved-quantity transfers. Three implementations exist:
 `LungCompartment`, a coarse transit surrogate, and `PulmonaryCirculation`, a
-serial artery/regional-capillary/vein surrogate.
+serial artery/regional-capillary/vein surrogate, plus
+`PulmonaryZeroDimensionalModel`, a literature-parameterized mean hemodynamic
+reference candidate.
 
 The current contract verifies that:
 
@@ -277,19 +281,28 @@ The current contract verifies that:
 - the outgoing transfer names the configured venous return route; and
 - population count, molar amount, flow rate, interval, and integrated volume
   survive lossless transit; and
-- 0.5 s and 1.0 s compatible time-step subdivisions produce the same result for
-  both model variants.
+- compatible time-step subdivisions produce the same result: 0.5 s/1.0 s for
+  both software surrogates and 0.1 s/0.2 s for the 6.4-second pulmonary 0D
+  card.
 
 The executable lung model cards are:
 
 ```text
 examples/organ-models/lung-compartment-contract-v1.json
 examples/organ-models/lung-regional-contract-v1.json
+data/lung-models/healthy-adult-rest-supine-0d-v1.json
 ```
 
-Both validate against
+The two contract cards validate against
 `data/schemas/lung-model-definition/1.0.0.schema.json`. They are classified as
 `software_test_surrogate`; their transit values are not physiological data.
+The 0D card validates against schema 1.1.0 and records SI pressure, flow,
+resistance, compliance, transit, right/left perfusion, uncertainty, evidence
+roles, derivations, and limitations. At its resting reference state it predicts
+15.2 mmHg mean pulmonary-arterial pressure from 6 L/min cardiac output, 8 mmHg
+left-atrial pressure, and 1.2 Wood units PVR. It is a composite healthy-adult
+reference candidate, not a patient or clinical model.
+
 The optional external-data section can preserve a source checksum, format,
 coordinate system, units, and transformation history, but no qualified
 pulmonary geometry is distributed yet.
@@ -297,7 +310,7 @@ pulmonary geometry is distributed yet.
 This remains a developer API: the first explicit body → lung → body ownership
 round trip is implemented, but the CLI cannot yet compose it automatically.
 See the [M3 working plan](m3/README.md),
-[model-definition guide](m3/LUNG_MODEL_DEFINITIONS.md), and both model cards
+[model-definition guide](m3/LUNG_MODEL_DEFINITIONS.md), and the model cards
 before interpreting results.
 
 ## 8. How to interpret model evidence
@@ -318,8 +331,9 @@ These labels are not interchangeable. In particular:
 - the M2.4 perfusion table is a calibration regression;
 - the M2.6 exercise and posture profiles change global flow but do not yet
   model complete regional redistribution;
-- both current lung variants are verification surrogates rather than validated
-  pulmonary physiology;
+- the coarse and serial-region lung variants are verification surrogates;
+- the pulmonary 0D variant is literature-parameterized but not independently
+  validated, anatomical, pulsatile, or patient-specific;
 - none of the current outputs is patient-specific or suitable for clinical
   decision-making.
 
