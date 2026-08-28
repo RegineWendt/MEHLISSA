@@ -36,6 +36,14 @@ namespace {
     });
 }
 
+[[nodiscard]] mehlissa::models::organ::LungModelDefinition
+load_invasive_young_resistance_model_definition() {
+    return mehlissa::models::organ::load_lung_model_definition({
+        root() / "data" / "lung-models" / "healthy-adult-rest-exercise-age-invasive-0d-v4.json",
+        root() / "data" / "schemas" / "lung-model-definition" / "1.3.0.schema.json",
+    });
+}
+
 [[nodiscard]] mehlissa::models::organ::PulmonaryZeroDimensionalValidationCase load_validation() {
     return mehlissa::models::organ::load_pulmonary_zero_dimensional_validation_case({
         root() / "data" / "validation" / "pulmonary-zero-dimensional" /
@@ -83,6 +91,18 @@ load_age_conditioned_population_multipoint_validation() {
         load_pulmonary_zero_dimensional_population_multipoint_validation_case({
             root() / "data" / "validation" / "pulmonary-zero-dimensional" /
                 "healthy-population-multipoint-v2.json",
+            root() / "data" / "schemas" /
+                "pulmonary-zero-dimensional-population-multipoint-validation" / "1.1.0.schema.json",
+        });
+}
+
+[[nodiscard]]
+mehlissa::models::organ::PulmonaryZeroDimensionalPopulationMultipointValidationCase
+load_invasive_young_resistance_population_multipoint_validation() {
+    return mehlissa::models::organ::
+        load_pulmonary_zero_dimensional_population_multipoint_validation_case({
+            root() / "data" / "validation" / "pulmonary-zero-dimensional" /
+                "healthy-population-multipoint-v3.json",
             root() / "data" / "schemas" /
                 "pulmonary-zero-dimensional-population-multipoint-validation" / "1.1.0.schema.json",
         });
@@ -321,4 +341,28 @@ TEST_CASE("Independent age calibration conditions published population series wi
     CHECK(report.series[2].accepted_stage_count == 5);
     CHECK(report.series[3].accepted_stage_count == 5);
     CHECK_FALSE(report.all_stages_agree);
+}
+
+TEST_CASE("Invasive young resistance resolves the disjoint Wolsk population series without refit",
+          "[m3][organ][pulmonary-0d][population-multipoint-validation][age][invasive]") {
+    const auto validation = load_invasive_young_resistance_population_multipoint_validation();
+    const auto model_definition = load_invasive_young_resistance_model_definition();
+    REQUIRE(validation.sources.size() == 1);
+    REQUIRE(validation.series.size() == 3);
+    CHECK(validation.sources.front().id == "wolsk-2017-age-hemodynamics");
+
+    const auto report = mehlissa::models::organ::
+        evaluate_pulmonary_zero_dimensional_population_multipoint_validation(validation,
+                                                                             model_definition);
+    REQUIRE(report.series.size() == 3);
+    CHECK(report.source_independence_verified);
+    CHECK(report.stage_count == 15);
+    CHECK(report.accepted_stage_count == 15);
+    CHECK(report.all_stages_agree);
+    CHECK(report.series[0].age_resistance_multiplier == Catch::Approx(0.71875));
+    CHECK(report.series[1].age_resistance_multiplier == Catch::Approx(1.0));
+    CHECK(report.series[2].age_resistance_multiplier == Catch::Approx(1.12245955546343));
+    CHECK(report.series[0].accepted_stage_count == 5);
+    CHECK(report.series[1].accepted_stage_count == 5);
+    CHECK(report.series[2].accepted_stage_count == 5);
 }

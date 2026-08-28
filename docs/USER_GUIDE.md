@@ -39,7 +39,7 @@ The current software can:
   executable model card; and
 - run the same body–lung–body regression at two compatible host steps.
 
-The software does not yet contain an anatomical or independently validated
+The software does not yet contain an anatomical or participant-level validated
 pulmonary model, capillary/cellular exchange, or active Nano-IoT communication.
 
 ## 2. Repository orientation
@@ -293,6 +293,7 @@ examples/organ-models/lung-regional-contract-v1.json
 data/lung-models/healthy-adult-rest-supine-0d-v1.json
 data/lung-models/healthy-adult-rest-exercise-0d-v2.json
 data/lung-models/healthy-adult-rest-exercise-age-0d-v3.json
+data/lung-models/healthy-adult-rest-exercise-age-invasive-0d-v4.json
 ```
 
 The two contract cards validate against
@@ -317,6 +318,13 @@ represented by the scenario: 18–<40 applies a PVR multiplier of 0.92335,
 The age factor changes PVR only; it does not imply age-conditioned compliance,
 PAWP, anatomy, or patient physiology. See the
 [age-conditioning model card](m3/PULMONARY_0D_AGE_CONDITIONING.md) before use.
+
+The v4 card also uses schema 1.3.0. For ages 24–under-40 it replaces the v3
+PASP/CO proxy with an invasive resting-PVR multiplier of 0.71875. The middle
+and older bands and the bounded flow law remain unchanged. Ages below 24 are
+outside v4's source support and are rejected. Read the
+[young-adult resistance model card](m3/PULMONARY_0D_YOUNG_RESISTANCE.md) for
+the derivation and evidence-overlap rule.
 
 The optional external-data section can preserve a source checksum, format,
 coordinate system, units, and transformation history, but no qualified
@@ -352,7 +360,10 @@ These labels are not interchangeable. In particular:
   source-disjoint exercise adaptation and a 10/18 published-population result.
   v3 adds a separate Kane-calibrated PVR age factor and improves the unchanged
   population comparison to 14/18 stages, but still agrees with only 1/5 young
-  stages. A software-verified subject-level multipoint analysis path exists;
+  stages. v4 uses invasive young-adult PVR calibration and agrees with all
+  15 stages in the disjoint Wolsk cohort, while the overlapping Kovacs 2009
+  series is not counted. A software-verified subject-level multipoint analysis
+  path exists;
   measured participant-level data have not yet been licensed or evaluated,
   and no variant is anatomical, fully pulsatile,
   patient-specific, or clinically usable;
@@ -386,7 +397,9 @@ cohort. The exercise RC discrepancy improves but remains a diagnostic failure.
 
 The immediately usable multipoint cases contain four non-overlapping healthy
 population series from Kovacs and Wolsk. They apply reported mean PAWP and flow
-as stage boundaries and never refit v2 or v3 parameters.
+as stage boundaries and never refit v2 or v3 parameters. The v4 case contains
+only the three Wolsk series because its Kovacs 2012 calibration overlaps the
+historical corpus underlying Kovacs 2009.
 
 Run its checks with:
 
@@ -400,6 +413,8 @@ The v2 evidence file is
 The v3 evaluation is locked in `healthy-population-multipoint-v2.json`, whose
 Wolsk series add predeclared representative ages of 29.5, 49.5, and 70 years;
 it uses population schema 1.1.0. The v2 case remains on immutable schema 1.0.0.
+The v4 evaluation is `healthy-population-multipoint-v3.json` and also uses
+population schema 1.1.0.
 Reported mmHg and L/min values are converted to SI by the loader. Wolsk cardiac
 index is converted to mean absolute flow using the explicitly recorded mean
 BSA of 1.9 m2.
@@ -407,11 +422,14 @@ BSA of 1.9 m2.
 Both results are deliberately partial. In v2, Kovacs passes 3/3 stages and the
 Wolsk 20–39, 40–59, and 60–80 groups pass 0/5, 5/5, and 2/5. With the separate
 Kane age calibration, v3 yields 3/3, 1/5, 5/5, and 5/5, or 14/18 overall. A
-reported 95% CI is an interval for the population mean, not an individual
+v4 comparison counts only the disjoint Wolsk groups and yields 5/5, 5/5, and
+5/5, or 15/15, without refitting. A reported 95% CI is an interval for the
+population mean, not an individual
 tolerance range. Read the complete
 [population multipoint report](m3/PULMONARY_0D_POPULATION_MULTIPOINT_VALIDATION.md)
-and [age-conditioning model card](m3/PULMONARY_0D_AGE_CONDITIONING.md) before
-interpreting a stage failure.
+and the [v3 age-conditioning](m3/PULMONARY_0D_AGE_CONDITIONING.md) and
+[v4 young-resistance](m3/PULMONARY_0D_YOUNG_RESISTANCE.md) model cards before
+interpreting a stage result.
 
 ### 8.3 Verify the subject-level multipoint analysis path
 

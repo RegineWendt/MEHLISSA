@@ -43,3 +43,10 @@ validation-only. Agreement improves to 14/18 stages without refitting. See the
 [age-conditioning model card](../../docs/m3/PULMONARY_0D_AGE_CONDITIONING.md).
 The v2 validation case uses population schema 1.1.0; the immutable M3.11 case
 continues to validate against schema 1.0.0.
+
+M3.13 adds `healthy-population-multipoint-v3.json` for the v4 invasive
+young-resistance candidate. It contains only the three disjoint Wolsk age
+series (15 stages). Kovacs 2009 is omitted because the v4 Kovacs 2012
+calibration reanalysed part of the same historical literature corpus. All
+15 Wolsk stages agree without refitting; see the
+[young-adult resistance model card](../../docs/m3/PULMONARY_0D_YOUNG_RESISTANCE.md).

@@ -22,3 +22,9 @@ Its separate independent observations and executable comparison live under
 a bounded flow-dependent PVR/compliance rule calibrated from a healthy cohort
 that is disjoint from the Bentley validation cohort. See the
 [flow-adaptation model card](../../docs/m3/PULMONARY_0D_FLOW_ADAPTATION.md).
+
+`healthy-adult-rest-exercise-age-0d-v3.json` adds the Kane-calibrated age
+bands. `healthy-adult-rest-exercise-age-invasive-0d-v4.json` is its immutable
+successor for ages 24–85 and replaces only the young PVR level with an invasive
+aggregate calibration. See the
+[young-adult resistance model card](../../docs/m3/PULMONARY_0D_YOUNG_RESISTANCE.md).

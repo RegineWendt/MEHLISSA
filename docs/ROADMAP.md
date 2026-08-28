@@ -373,7 +373,12 @@ Kovacs/Wolsk population series (255 healthy volunteers, 18 stages). M3.12 adds
 a separate Kane-calibrated, bounded age multiplier on PVR. The immutable
 validation result improves from 10/18 to 14/18 stages: the older stratum reaches
 5/5, the middle stratum remains 5/5, and the young stratum remains incomplete
-at 1/5. Participant-level validation remains a higher-resolution follow-up.
+at 1/5. M3.13 identifies the young resting PVR level—not the already-supported
+flow exponent or BSA conversion—as the dominant discrepancy. An invasive
+Kovacs 2012 calibration yields an immutable v4 candidate; all 15 stages in the
+disjoint Wolsk cohort agree without refitting. Kovacs 2009 is excluded from the
+counted v4 result because its literature corpus overlaps the calibration
+review. Participant-level validation remains a higher-resolution follow-up.
 Anatomical refinement, transforming exchange, general experiment composition,
 continuous/regional activity physiology, and regional exercise redistribution
 remain open; see [M3 working plan](m3/README.md).
@@ -381,9 +386,11 @@ remain open; see [M3 working plan](m3/README.md).
 The formal [M3 gate review](m3/M3_GATE_REVIEW.md) therefore keeps the milestone
 open: the software coupling candidate, first literature-parameterized 0D
 reference candidate, independent aggregate validation, and bounded
-rest/exercise 0D adaptation and bounded age conditioning are verified, the
+rest/exercise 0D adaptation, bounded age conditioning, and invasive
+young-adult resistance refinement are verified, the
 subject-level analysis path is software-verified, and published population
-multipoint validation has produced a qualified 14/18 partial result. Anatomical
+multipoint validation has produced a qualified 15/15 result against the
+calibration-disjoint Wolsk cohort. Anatomical
 refinement, continuous and regional physiology, and the executable historical
 FP9 baseline remain closure evidence.
 

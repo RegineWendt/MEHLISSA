@@ -63,6 +63,12 @@ adds a Kane-calibrated, three-band age multiplier on PVR. Its derivation and
 untouched Kovacs/Wolsk result are documented in
 [Pulmonary 0D Age Conditioning](PULMONARY_0D_AGE_CONDITIONING.md).
 
+The v4 definition
+`data/lung-models/healthy-adult-rest-exercise-age-invasive-0d-v4.json` keeps
+schema 1.3.0 and replaces only the young PVR multiplier with an invasive
+24–50-year calibration. Its overlap-aware Wolsk-only validation is documented
+in [Pulmonary 0D Young-Adult Resistance Qualification](PULMONARY_0D_YOUNG_RESISTANCE.md).
+
 ## External-data boundary
 
 An `externally_derived` definition can identify an immutable source file by

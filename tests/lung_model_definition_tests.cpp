@@ -180,3 +180,32 @@ TEST_CASE("Age-conditioned pulmonary 0D definition preserves separate calibratio
     CHECK(model->model_id() ==
           std::string_view{"lung.pulmonary-0d.healthy-adult-rest-exercise-age.v3"});
 }
+
+TEST_CASE("Invasive young-resistance pulmonary definition narrows its evidence scope",
+          "[m3][organ][definition][physiology][age][invasive]") {
+    const auto definition = load_definition_1_3(
+        root() / "data" / "lung-models" / "healthy-adult-rest-exercise-age-invasive-0d-v4.json");
+
+    REQUIRE(definition.model.zero_dimensional_parameters.has_value());
+    REQUIRE(definition.hemodynamics.has_value());
+    REQUIRE(definition.model.zero_dimensional_parameters->age_conditioning.has_value());
+    REQUIRE(definition.hemodynamics->age_conditioning.has_value());
+
+    const auto& conditioning =
+        definition.model.zero_dimensional_parameters->age_conditioning.value();
+    const auto& evidence = definition.hemodynamics->age_conditioning.value();
+    CHECK(conditioning.minimum_supported_age_years == Catch::Approx(24.0));
+    CHECK(conditioning.young_resistance_multiplier.si_value() == Catch::Approx(0.71875));
+    CHECK(conditioning.older_resistance_multiplier.si_value() == Catch::Approx(1.12245955546343));
+    CHECK(evidence.young_resistance_multiplier.source_id == "kovacs-2012-pvr");
+    CHECK(evidence.older_resistance_multiplier.source_id == "kane-2016");
+
+    const auto model = mehlissa::models::organ::make_lung_model(definition.model);
+    CHECK(model->model_id() ==
+          std::string_view{"lung.pulmonary-0d.healthy-adult-rest-exercise-age-invasive.v4"});
+
+    auto below_supported_age = definition.model;
+    below_supported_age.zero_dimensional_parameters->age_conditioning->age_years = 23.9;
+    CHECK_THROWS_AS(mehlissa::models::organ::make_lung_model(below_supported_age),
+                    mehlissa::core::MehlissaError);
+}

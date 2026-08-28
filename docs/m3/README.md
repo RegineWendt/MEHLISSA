@@ -5,9 +5,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # M3 – Body–Organ Coupling
 
-**Status:** technical coupling, literature-parameterized flow- and
-age-conditioned 0D reference, independent aggregate and published-population
-multipoint validation, and subject-level analysis path complete;
+**Status:** technical coupling, literature-parameterized flow-, age-, and
+invasive-young-resistance-conditioned 0D references, independent aggregate and
+published-population multipoint validation, and subject-level analysis path complete;
 anatomical/FP9 scientific gate open
 
 **Started:** 27 August 2026
@@ -33,6 +33,7 @@ respiratory mechanics, or gas exchange.
 | M3.10 subject-level multipoint validation path | software-verified; measured data access pending | pseudonymous three-stage schema; immutable-model mPAP/PAWP pressure-flow fits; stage PVR/compliance/RC diagnostics; synthetic-evidence guard; UA iCPET request draft |
 | M3.11 published-population multipoint validation | qualified partial result; 10/18 stages agree | independent Kovacs and Wolsk series; 255 healthy volunteers; exact mean/SD and mean/95% CI semantics; age-stratified failure pattern exposed without refitting |
 | M3.12 independent age conditioning | qualified improvement; 14/18 stages agree | separate Kane calibration; bounded 18–85-year three-band PVR multiplier; immutable Kovacs/Wolsk validation; older stratum improves 2/5 to 5/5 while young-stratum limitation remains |
+| M3.13 invasive young-adult resistance qualification | qualified Wolsk population pass; participant-level/anatomical validation open | invasive Kovacs 2012 young-PVR calibration; retained independently supported flow exponent; overlap-aware exclusion of Kovacs 2009; 15/15 disjoint Wolsk stages agree without refitting |
 
 ## M3.1 result
 
@@ -169,6 +170,14 @@ from 10/18 to 14/18 stages. All five older-stratum stages now agree and the
 middle stratum remains 5/5, while only one of five young-stratum stages agrees.
 The residual young high-flow discrepancy remains an explicit open scientific
 question rather than a reason to tune against the validation data.
+
+M3.13 resolves that question with the
+[invasive young-adult resistance candidate](PULMONARY_0D_YOUNG_RESISTANCE.md).
+Kovacs et al. (2012) shows that the retained flow exponent is already
+appropriate but that the young resting PVR level is too high. The immutable v4
+candidate therefore changes only that level. All 15 stages in the disjoint
+Wolsk age-stratified cohort agree; the overlapping Kovacs 2009 literature
+summary is deliberately excluded from the counted v4 result.
 
 An initial [SimVascular Healthy Pulmonary Candidate Review](SIMVASCULAR_PULMONARY_CANDIDATE_REVIEW.md)
 finds the official case useful for an imported pulmonary-artery technical

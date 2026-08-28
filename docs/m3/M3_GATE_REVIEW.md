@@ -86,6 +86,20 @@ evidence. See [Pulmonary 0D Age Conditioning](PULMONARY_0D_AGE_CONDITIONING.md).
 The post-M3.12 local MSVC build and 108/108 CTest suite passed; CI evidence is
 recorded after the isolated increment is pushed.
 
+**Seventh post-review update, 28 August 2026:** M3.13 investigates the young
+v3 residual instead of fitting it away. A published invasive reanalysis reports
+0.8625 WU resting PVR for ages 24–50 and a young moderate-exercise PVR change
+whose implied flow exponent closely matches the existing Claessen rule. The
+immutable v4 candidate therefore changes only the young resistance level and
+narrows its lower age bound to 24. All 15 stages in the calibration-disjoint
+Wolsk cohort agree; pressure RMSE falls from 2.453 to 1.413 mmHg. Kovacs 2009
+is not counted because Kovacs 2012 reanalysed part of the same historical
+corpus. This strengthens population evidence but does not close anatomical,
+participant-level, pulsatile/regional, or FP9 requirements. See
+[Pulmonary 0D Young-Adult Resistance Qualification](PULMONARY_0D_YOUNG_RESISTANCE.md).
+The post-M3.13 local MSVC build and 110/110 CTest suite passed; CI evidence is
+recorded with the pushed increment.
+
 ## 1. Review method
 
 The review checked the Roadmap Gate M3 statements and the additional acceptance
