@@ -73,7 +73,7 @@ std::unique_ptr<coupling::ModelComponent> make_lung_model(LungModelConfig config
         if (!config.zero_dimensional_parameters.has_value()) {
             throw_invalid_config("A pulmonary 0D model requires hemodynamic parameters");
         }
-        auto parameters = std::move(config.zero_dimensional_parameters).value();
+        const auto parameters = config.zero_dimensional_parameters.value();
         return std::make_unique<PulmonaryZeroDimensionalModel>(PulmonaryZeroDimensionalConfig{
             std::move(config.component_name),
             std::move(config.model_id),
@@ -81,7 +81,7 @@ std::unique_ptr<coupling::ModelComponent> make_lung_model(LungModelConfig config
             std::move(config.exit_port_id),
             std::move(config.return_target_model_id),
             std::move(config.return_target_port_id),
-            std::move(parameters),
+            parameters,
         });
     }
     throw_invalid_config("Unknown lung model variant");

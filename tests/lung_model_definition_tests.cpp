@@ -90,18 +90,21 @@ TEST_CASE("Literature-parameterized pulmonary 0D definition preserves evidence a
     CHECK(definition.schema_version == std::string_view{"1.1.0"});
     CHECK(definition.model.variant ==
           mehlissa::models::organ::LungModelVariant::pulmonary_zero_dimensional);
-    REQUIRE(definition.model.zero_dimensional_parameters.has_value());
-    CHECK(mehlissa::core::in_liters_per_minute(
-              definition.model.zero_dimensional_parameters->baseline_cardiac_output) ==
+    if (!definition.model.zero_dimensional_parameters.has_value() ||
+        !definition.hemodynamics.has_value()) {
+        FAIL("Expected pulmonary 0D parameters and hemodynamic evidence");
+        return;
+    }
+    const auto& parameters = definition.model.zero_dimensional_parameters.value();
+    const auto& hemodynamics = definition.hemodynamics.value();
+    CHECK(mehlissa::core::in_liters_per_minute(parameters.baseline_cardiac_output) ==
           Catch::Approx(6.0));
-    CHECK(definition.model.zero_dimensional_parameters->pulmonary_transit_time == 6400ms);
-    REQUIRE(definition.hemodynamics.has_value());
-    CHECK(definition.hemodynamics->mean_pulmonary_arterial_pressure_target.role == "derived");
-    CHECK(definition.hemodynamics->right_lung_perfusion_fraction.uncertainty.kind ==
+    CHECK(parameters.pulmonary_transit_time == 6400ms);
+    CHECK(hemodynamics.mean_pulmonary_arterial_pressure_target.role == "derived");
+    CHECK(hemodynamics.right_lung_perfusion_fraction.uncertainty.kind ==
           "propagated_standard_deviation");
-    CHECK(definition.hemodynamics->pulmonary_transit_time.uncertainty.kind ==
-          "interquartile_range");
-    CHECK(definition.hemodynamics->right_lung_perfusion_fraction.uncertainty.lower_si.has_value());
+    CHECK(hemodynamics.pulmonary_transit_time.uncertainty.kind == "interquartile_range");
+    CHECK(hemodynamics.right_lung_perfusion_fraction.uncertainty.lower_si.has_value());
 
     const auto model = mehlissa::models::organ::make_lung_model(definition.model);
     CHECK(model->model_id() == std::string_view{"lung.pulmonary-0d.healthy-adult-rest-supine.v1"});
