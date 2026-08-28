@@ -24,6 +24,18 @@ and the FP9 scenario-layer baseline is still not executable. See
 The post-review local Visual Studio Debug suite passed 91/91 tests; CI evidence
 is recorded separately when the increment is pushed.
 
+**Second post-review update, 28 August 2026:** M3.8 adds executable independent
+aggregate validation against two previously unused healthy cohorts. A
+scope-matched supine comparison and invasive semiupright rest/exercise
+crosscheck pass all 6 required pressure, compliance, and resting-RC endpoints.
+The diagnostic exercise RC endpoint fails strongly and records the need for
+state-dependent vascular adaptation. This strengthens the scientific evidence
+but does not close anatomical refinement, subject-level validation, or the FP9
+scenario-layer baseline. See
+[Independent Pulmonary 0D Validation](PULMONARY_0D_INDEPENDENT_VALIDATION.md).
+The post-M3.8 local Visual Studio Debug suite passed 93/93 tests; CI evidence
+is recorded with the pushed increment.
+
 ## 1. Review method
 
 The review checked the Roadmap Gate M3 statements and the additional acceptance
@@ -48,7 +60,7 @@ model” merely because it contained more regions than the coarse surrogate.
 | agent and substance flow complete body–lung–body traversal | satisfied for entity; organ traversal satisfied for conserved quantities | the complete entity round trip reaches the body return ledger; conserved population, substance, and flow traverse both lung endpoints without payload change |
 | no agent or relevant amount is duplicated or lost | satisfied | positive and negative ownership, duplicate-ID, route, time, and exact-payload tests |
 | both lung variants implement the same contract | satisfied | one `ModelComponent` interface, one `LungModelConfig`, schema-selected definitions, generated cross-variant tests |
-| flow, pressure/transit time, and perfusion share have units, sources, uncertainty, and a reference comparison | partially satisfied after M3.7 | the 0D candidate has executable SI pressure, flow, PVR, compliance, measured total transit, right/left perfusion, uncertainty, evidence roles, and a normal-range pressure comparison; its composite calibration values are not yet independently validated as one joint physiological state |
+| flow, pressure/transit time, and perfusion share have units, sources, uncertainty, and an independent comparison | satisfied for aggregate healthy-cohort evidence after M3.8 | the 0D candidate has executable SI pressure, flow, PVR, compliance, measured total transit, right/left perfusion, uncertainty, evidence roles, source-disjoint independent validation, and explicit stress-test diagnostics; subject-level joint-state validation remains a stronger future tier |
 | historical FP9 timer baseline runs without scenario-specific kernel logic | not satisfied | the dissertation baseline is specified and traced, but fingerprint detection/assembly/collection is not executable; implementing it prematurely in the organ kernel would violate the architecture |
 
 ## 4. Verification evidence
@@ -88,8 +100,9 @@ M3 can pass only after the following evidence is added and reviewed:
    narrows the open questions but does not qualify the archive;
 2. ~~provide sourced pressure, resistance/flow, perfusion, and transit targets
    in SI units with uncertainty and explicit calibration/validation
-   separation~~ — implemented by M3.7; independent subject-level validation
-   remains under items 1 and 3;
+   separation, followed by an independent aggregate comparison~~ — implemented
+   by M3.7 and M3.8; subject-level validation remains a later strengthening
+   tier;
 3. implement the anatomical/hemodynamic regional variant and compare it with
    both independent targets and the effective compartment;
 4. decide whether rest/exercise pulmonary redistribution belongs in the M3
@@ -102,8 +115,9 @@ M3 can pass only after the following evidence is added and reviewed:
 
 ## 7. Exit decision
 
-The M3 software architecture and lossless coupling slice are verified, but the
-milestone is not closed. The gate remains open on scientific evidence and the
+The M3 software architecture, lossless coupling slice, and first independent
+aggregate physiological comparison are verified, but the milestone is not
+closed. The gate remains open on anatomical/state-dependent refinement and the
 FP9 executable reference, not on a hidden software failure. Downstream
 prototyping may use the verified interfaces provided it retains the explicit
 `software_test_surrogate` validity label and does not cite the current outputs

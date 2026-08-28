@@ -14,3 +14,6 @@ derivations, and limitations.
 reference candidate. It represents composite healthy-adult evidence at rest in
 the supine position; it is not a patient record or a clinical model. See the
 [pulmonary 0D model card](../../docs/m3/PULMONARY_0D_REFERENCE.md).
+Its separate independent observations and executable comparison live under
+`data/validation/`; see the
+[validation report](../../docs/m3/PULMONARY_0D_INDEPENDENT_VALIDATION.md).

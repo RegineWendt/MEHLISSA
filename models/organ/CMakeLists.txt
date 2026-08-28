@@ -10,6 +10,7 @@ add_library(
     src/lung_model_factory.cpp
     src/pulmonary_circulation.cpp
     src/pulmonary_zero_dimensional.cpp
+    src/pulmonary_zero_dimensional_validation.cpp
 )
 add_library(MEHLISSA::organ_model ALIAS mehlissa_organ_model)
 

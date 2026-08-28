@@ -83,7 +83,9 @@ The principal hemodynamic intervals come from Table 11 and the pressure-
 resistance definition in the 2022 ESC/ERS pulmonary-hypertension guideline.
 The model card marks those numerical selections as calibration rather than
 validation. The 15.2 mmHg equilibrium is a model output; it is compared with the
-published normal interval but is not an independent subject-level validation.
+published normal interval but is not itself validation. Independent aggregate
+validation is reported separately in
+[Independent Validation of the Pulmonary 0D Candidate](PULMONARY_0D_INDEPENDENT_VALIDATION.md).
 
 The right/left split is derived from Wong et al.'s phase-contrast MRI study.
 The standard deviation shown for the ratio is a MEHLISSA first-order
@@ -128,13 +130,14 @@ still a **reference candidate**, not a clinically validated lung model.
 
 M3 is not closed by this increment alone. The remaining work is:
 
-1. select a jointly measured healthy calibration data set or explicitly retain
-   this composite population reference;
-2. reserve independent data for quantitative validation rather than reusing a
-   source interval that influenced calibration choices;
+1. explicitly retain the composite population calibration reference until a
+   jointly measured alternative is selected;
+2. extend the completed aggregate validation with subject-level, jointly
+   measured supine data and a prospectively prespecified analysis;
 3. add lobar/gravity-dependent or anatomical pulmonary structure and compare
    it with the aggregate right/left target;
-4. make a reviewed rest/exercise redistribution decision;
+4. add a reviewed rest/exercise redistribution decision, informed by the
+   independently exposed exercise RC-time limitation;
 5. qualify the SimVascular archive and combine its arterial geometry with this
    downstream 0D closure, if its data rights and state are resolved; and
 6. implement or formally defer the neutral historical FP9 timing/event

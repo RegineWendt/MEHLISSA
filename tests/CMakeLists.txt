@@ -99,6 +99,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
             lung_model_factory_tests.cpp
             pulmonary_circulation_tests.cpp
             pulmonary_zero_dimensional_tests.cpp
+            pulmonary_zero_dimensional_validation_tests.cpp
         )
         target_link_libraries(
             mehlissa_organ_model_tests

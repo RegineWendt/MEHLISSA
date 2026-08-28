@@ -5,8 +5,8 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # M3 – Body–Organ Coupling
 
-**Status:** technical coupling and literature-parameterized 0D reference
-candidate complete; scientific gate open
+**Status:** technical coupling, literature-parameterized 0D reference, and
+independent aggregate validation complete; scientific gate open
 
 **Started:** 27 August 2026
 
@@ -26,6 +26,7 @@ respiratory mechanics, or gas exchange.
 | M3.5 physiological parameters and external-data pipeline | definition schema, loader, qualification gate, and first sourced resting 0D parameter set verified; external anatomy and exercise data open | versioned model cards, rest/exercise parameters, uncertainty, reproducible axes/units/provenance, qualified SimVascular/VMR reference |
 | M3.6 orchestration and gate regression | external lung definition and fixed-step matrix verified; FP9 baseline open | deterministic synchronization, coarse/detailed scenario switch, historical FP9 timing baseline, formal M3 gate review |
 | M3.7 healthy-adult resting pulmonary 0D reference | implemented and software-verified; independent validation/anatomical refinement open | source-scoped pressure, flow, resistance, compliance, transit, right/left perfusion, uncertainty, analytical RC dynamics, and lossless coupling |
+| M3.8 independent pulmonary 0D validation | qualified aggregate pass; subject-level/anatomical validation open | executable source-separation guard; supine healthy-rest comparison; invasive rest/exercise crosscheck; 6/6 required endpoints pass; exercise RC limitation exposed |
 
 ## M3.1 result
 
@@ -68,8 +69,8 @@ The executable regression starts entity 1 in synthetic body segment
 - `LungCompartment` is a software-verified surrogate, not a physiologically
   calibrated or independently validated pulmonary model.
 - The serial-region implementation remains structural. The new 0D
-  implementation is literature-parameterized, but is a composite-population
-  reference candidate rather than an independently validated patient model.
+  implementation has independent aggregate validation, but remains a
+  composite-population reference candidate rather than a patient model.
 - The CLI and experiment manifest do not yet compose model components.
 
 These are milestone tasks, not hidden assumptions. The M3 gate remains open.
@@ -118,6 +119,13 @@ with executable pressure, resistance, compliance, flow partition, transit,
 uncertainty, and evidence roles. It supplies a physiological downstream
 closure independent of SimVascular and leaves every calibration choice and
 limitation visible in the versioned model definition.
+
+M3.8 adds an executable
+[independent aggregate validation](PULMONARY_0D_INDEPENDENT_VALIDATION.md).
+All six required pressure, compliance, and resting-RC endpoints pass the
+locked one-standard-deviation criterion. The diagnostic exercise RC endpoint
+fails and therefore defines the next physiological model change rather than
+being hidden by refitting.
 
 An initial [SimVascular Healthy Pulmonary Candidate Review](SIMVASCULAR_PULMONARY_CANDIDATE_REVIEW.md)
 finds the official case useful for an imported pulmonary-artery technical

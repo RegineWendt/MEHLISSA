@@ -332,10 +332,28 @@ These labels are not interchangeable. In particular:
 - the M2.6 exercise and posture profiles change global flow but do not yet
   model complete regional redistribution;
 - the coarse and serial-region lung variants are verification surrogates;
-- the pulmonary 0D variant is literature-parameterized but not independently
-  validated, anatomical, pulsatile, or patient-specific;
+- the pulmonary 0D variant has qualified independent aggregate validation for
+  healthy pressure, compliance, and resting RC behavior, but is not anatomical,
+  pulsatile, subject-level validated, patient-specific, or clinically usable;
 - none of the current outputs is patient-specific or suitable for clinical
   decision-making.
+
+### 8.1 Run the pulmonary 0D independent validation
+
+After building the Debug preset, run only the independent validation checks:
+
+```powershell
+ctest --test-dir build/windows-msvc -C Debug `
+  -R "Independent pulmonary|Pulmonary validation" --output-on-failure
+```
+
+The versioned observations are in
+`data/validation/pulmonary-zero-dimensional/healthy-adult-independent-v1.json`.
+The human-readable protocol, results, and limitations are in
+`docs/m3/PULMONARY_0D_INDEPENDENT_VALIDATION.md`. The validator rejects a
+validation source that is also present in the model evidence card. A passing
+aggregate result must still be read together with diagnostic failures and the
+declared validity scope.
 
 ## 9. Troubleshooting
 
