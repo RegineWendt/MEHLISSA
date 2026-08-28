@@ -29,6 +29,13 @@ namespace {
     });
 }
 
+[[nodiscard]] mehlissa::models::organ::LungModelDefinition load_age_conditioned_model_definition() {
+    return mehlissa::models::organ::load_lung_model_definition({
+        root() / "data" / "lung-models" / "healthy-adult-rest-exercise-age-0d-v3.json",
+        root() / "data" / "schemas" / "lung-model-definition" / "1.3.0.schema.json",
+    });
+}
+
 [[nodiscard]] mehlissa::models::organ::PulmonaryZeroDimensionalValidationCase load_validation() {
     return mehlissa::models::organ::load_pulmonary_zero_dimensional_validation_case({
         root() / "data" / "validation" / "pulmonary-zero-dimensional" /
@@ -66,6 +73,18 @@ load_population_multipoint_validation() {
                 "healthy-population-multipoint-v1.json",
             root() / "data" / "schemas" /
                 "pulmonary-zero-dimensional-population-multipoint-validation" / "1.0.0.schema.json",
+        });
+}
+
+[[nodiscard]]
+mehlissa::models::organ::PulmonaryZeroDimensionalPopulationMultipointValidationCase
+load_age_conditioned_population_multipoint_validation() {
+    return mehlissa::models::organ::
+        load_pulmonary_zero_dimensional_population_multipoint_validation_case({
+            root() / "data" / "validation" / "pulmonary-zero-dimensional" /
+                "healthy-population-multipoint-v2.json",
+            root() / "data" / "schemas" /
+                "pulmonary-zero-dimensional-population-multipoint-validation" / "1.1.0.schema.json",
         });
 }
 
@@ -274,4 +293,32 @@ TEST_CASE("Population multipoint evaluation rejects reuse of a calibration sourc
                         evaluate_pulmonary_zero_dimensional_population_multipoint_validation(
                             validation, model_definition),
                     mehlissa::core::MehlissaError);
+}
+
+TEST_CASE("Independent age calibration conditions published population series without refitting",
+          "[m3][organ][pulmonary-0d][population-multipoint-validation][age]") {
+    const auto validation = load_age_conditioned_population_multipoint_validation();
+    const auto model_definition = load_age_conditioned_model_definition();
+    REQUIRE(validation.series.size() == 4);
+    CHECK_FALSE(validation.series[0].representative_age_years.has_value());
+    CHECK(validation.series[1].representative_age_years.value() == Catch::Approx(29.5));
+    CHECK(validation.series[2].representative_age_years.value() == Catch::Approx(49.5));
+    CHECK(validation.series[3].representative_age_years.value() == Catch::Approx(70.0));
+
+    const auto report = mehlissa::models::organ::
+        evaluate_pulmonary_zero_dimensional_population_multipoint_validation(validation,
+                                                                             model_definition);
+    REQUIRE(report.series.size() == 4);
+    CHECK(report.source_independence_verified);
+    CHECK(report.stage_count == 18);
+    CHECK(report.series[0].age_resistance_multiplier == Catch::Approx(1.0));
+    CHECK(report.series[1].age_resistance_multiplier == Catch::Approx(0.923348796112216));
+    CHECK(report.series[2].age_resistance_multiplier == Catch::Approx(1.0));
+    CHECK(report.series[3].age_resistance_multiplier == Catch::Approx(1.12245955546343));
+    CHECK(report.accepted_stage_count == 14);
+    CHECK(report.series[0].accepted_stage_count == 3);
+    CHECK(report.series[1].accepted_stage_count == 1);
+    CHECK(report.series[2].accepted_stage_count == 5);
+    CHECK(report.series[3].accepted_stage_count == 5);
+    CHECK_FALSE(report.all_stages_agree);
 }

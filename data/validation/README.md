@@ -34,3 +34,12 @@ reported units to SI during loading, and evaluates the immutable v2 model
 without fitting. Its 10/18 stage agreement is a qualified partial result with
 age-stratified failures, not subject-level evidence. See the
 [population multipoint report](../../docs/m3/PULMONARY_0D_POPULATION_MULTIPOINT_VALIDATION.md).
+
+M3.12 preserves that v1 case as the immutable v2-model result and adds
+`healthy-population-multipoint-v2.json` for the age-conditioned v3 model. The
+Wolsk series carry predeclared representative ages that select age bands
+calibrated independently from Kane et al.; Kovacs and Wolsk remain
+validation-only. Agreement improves to 14/18 stages without refitting. See the
+[age-conditioning model card](../../docs/m3/PULMONARY_0D_AGE_CONDITIONING.md).
+The v2 validation case uses population schema 1.1.0; the immutable M3.11 case
+continues to validate against schema 1.0.0.

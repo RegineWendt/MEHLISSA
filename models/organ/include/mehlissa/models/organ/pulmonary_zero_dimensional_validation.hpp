@@ -17,7 +17,7 @@ namespace mehlissa::models::organ {
 inline constexpr auto pulmonary_zero_dimensional_validation_schema_version = "1.0.0";
 inline constexpr auto pulmonary_zero_dimensional_multipoint_validation_schema_version = "1.0.0";
 inline constexpr auto pulmonary_zero_dimensional_population_multipoint_validation_schema_version =
-    "1.0.0";
+    "1.1.0";
 
 enum class PulmonaryValidationScope : std::uint8_t {
     declared_scope,
@@ -230,6 +230,7 @@ struct PulmonaryPopulationSeries final {
     PulmonaryPopulationStatisticKind statistic_kind{};
     PulmonaryPopulationFlowBasis flow_basis{};
     std::optional<double> reference_body_surface_area_m2;
+    std::optional<double> representative_age_years;
     std::string cohort_overlap;
     std::vector<PulmonaryPopulationStage> stages;
 };
@@ -267,6 +268,8 @@ struct PulmonaryPopulationStageResult final {
 struct PulmonaryPopulationSeriesResult final {
     std::string series_id;
     std::size_t sample_size{};
+    std::optional<double> representative_age_years;
+    double age_resistance_multiplier{1.0};
     PulmonaryLinearFit observed_mpap_flow_fit;
     PulmonaryLinearFit predicted_mpap_flow_fit;
     double root_mean_square_pressure_error_si{};

@@ -292,6 +292,7 @@ examples/organ-models/lung-compartment-contract-v1.json
 examples/organ-models/lung-regional-contract-v1.json
 data/lung-models/healthy-adult-rest-supine-0d-v1.json
 data/lung-models/healthy-adult-rest-exercise-0d-v2.json
+data/lung-models/healthy-adult-rest-exercise-age-0d-v3.json
 ```
 
 The two contract cards validate against
@@ -308,6 +309,14 @@ The flow-adaptive v2 card validates against schema 1.2.0. It preserves the v1
 resting state and applies independently sourced, bounded PVR and compliance
 multipliers between the resting reference and the calibrated peak/rest flow
 ratio. It does not extrapolate below or above that interval.
+
+The age-conditioned v3 card validates against schema 1.3.0 and preserves v2's
+flow rules. Set `hemodynamics.age_conditioning.default_age_years` to the age
+represented by the scenario: 18–<40 applies a PVR multiplier of 0.92335,
+40–<60 uses 1.0, and 60–85 applies 1.12246. Values outside 18–85 are rejected.
+The age factor changes PVR only; it does not imply age-conditioned compliance,
+PAWP, anatomy, or patient physiology. See the
+[age-conditioning model card](m3/PULMONARY_0D_AGE_CONDITIONING.md) before use.
 
 The optional external-data section can preserve a source checksum, format,
 coordinate system, units, and transformation history, but no qualified
@@ -340,11 +349,12 @@ These labels are not interchangeable. In particular:
 - the coarse and serial-region lung variants are verification surrogates;
 - the pulmonary 0D variants have qualified independent aggregate validation
   for healthy pressure, compliance, and resting RC behavior; v2 also has a
-  source-disjoint exercise adaptation, published population multipoint
-  validation with 10/18 stages agreeing, and a software-verified subject-level
-  multipoint analysis path. The population result exposes missing age
-  dependence; measured participant-level data have not yet been licensed or
-  evaluated, and neither variant is anatomical, fully pulsatile,
+  source-disjoint exercise adaptation and a 10/18 published-population result.
+  v3 adds a separate Kane-calibrated PVR age factor and improves the unchanged
+  population comparison to 14/18 stages, but still agrees with only 1/5 young
+  stages. A software-verified subject-level multipoint analysis path exists;
+  measured participant-level data have not yet been licensed or evaluated,
+  and no variant is anatomical, fully pulsatile,
   patient-specific, or clinically usable;
 - none of the current outputs is patient-specific or suitable for clinical
   decision-making.
@@ -374,9 +384,9 @@ cohort. The exercise RC discrepancy improves but remains a diagnostic failure.
 
 ### 8.2 Run the published-population multipoint validation
 
-The immediately usable multipoint case contains four non-overlapping healthy
-population series from Kovacs and Wolsk. It applies reported mean PAWP and flow
-as stage boundaries and never refits the v2 parameters.
+The immediately usable multipoint cases contain four non-overlapping healthy
+population series from Kovacs and Wolsk. They apply reported mean PAWP and flow
+as stage boundaries and never refit v2 or v3 parameters.
 
 Run its checks with:
 
@@ -385,20 +395,23 @@ Run its checks with:
   "[population-multipoint-validation]"
 ```
 
-The evidence file is
-`data/validation/pulmonary-zero-dimensional/healthy-population-multipoint-v1.json`;
-the schema is
-`data/schemas/pulmonary-zero-dimensional-population-multipoint-validation/1.0.0.schema.json`.
+The v2 evidence file is
+`data/validation/pulmonary-zero-dimensional/healthy-population-multipoint-v1.json`.
+The v3 evaluation is locked in `healthy-population-multipoint-v2.json`, whose
+Wolsk series add predeclared representative ages of 29.5, 49.5, and 70 years;
+it uses population schema 1.1.0. The v2 case remains on immutable schema 1.0.0.
 Reported mmHg and L/min values are converted to SI by the loader. Wolsk cardiac
 index is converted to mean absolute flow using the explicitly recorded mean
 BSA of 1.9 m2.
 
-The current result is deliberately partial: Kovacs passes 3/3 stages, Wolsk
-ages 40–59 passes 5/5, ages 20–39 passes 0/5, and ages 60–80 passes 2/5. A
+Both results are deliberately partial. In v2, Kovacs passes 3/3 stages and the
+Wolsk 20–39, 40–59, and 60–80 groups pass 0/5, 5/5, and 2/5. With the separate
+Kane age calibration, v3 yields 3/3, 1/5, 5/5, and 5/5, or 14/18 overall. A
 reported 95% CI is an interval for the population mean, not an individual
 tolerance range. Read the complete
 [population multipoint report](m3/PULMONARY_0D_POPULATION_MULTIPOINT_VALIDATION.md)
-before interpreting a stage failure.
+and [age-conditioning model card](m3/PULMONARY_0D_AGE_CONDITIONING.md) before
+interpreting a stage failure.
 
 ### 8.3 Verify the subject-level multipoint analysis path
 

@@ -7,8 +7,8 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## Executable model card
 
-Schemas `lung-model-definition/1.0.0`, `1.1.0`, and `1.2.0` bind model selection and parameters to
-the evidence needed to interpret them. A definition contains:
+Schemas `lung-model-definition/1.0.0` through `1.3.0` bind model selection and
+parameters to the evidence needed to interpret them. A definition contains:
 
 - stable definition and model identities;
 - the selected coarse or regional implementation;
@@ -28,6 +28,9 @@ Version 1.2.0 adds optional, evidence-linked flow adaptation with an explicit
 reference flow, resistance and compliance exponents, and a maximum supported
 flow ratio. Derived exponents can state that source uncertainty was not
 propagated rather than inventing bounds.
+Version 1.3.0 adds optional evidence-linked age conditioning with explicit
+supported age bounds, band boundaries, a scenario age, and young/older PVR
+multipliers. The executable loader rejects ages outside the calibrated range.
 
 ## Checked-in definitions
 
@@ -53,6 +56,12 @@ rest-to-exercise flow adaptation while retaining v1 as an immutable resting
 baseline. Its derivation, independent source selection, and post-calibration
 test are documented in
 [Bounded Pulmonary 0D Flow Adaptation](PULMONARY_0D_FLOW_ADAPTATION.md).
+
+The v3 definition
+`data/lung-models/healthy-adult-rest-exercise-age-0d-v3.json` preserves v2 and
+adds a Kane-calibrated, three-band age multiplier on PVR. Its derivation and
+untouched Kovacs/Wolsk result are documented in
+[Pulmonary 0D Age Conditioning](PULMONARY_0D_AGE_CONDITIONING.md).
 
 ## External-data boundary
 

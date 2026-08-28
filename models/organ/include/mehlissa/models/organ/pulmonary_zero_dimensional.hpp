@@ -21,6 +21,16 @@ struct PulmonaryFlowAdaptationParameters final {
     core::Dimensionless maximum_flow_ratio;
 };
 
+struct PulmonaryAgeConditioningParameters final {
+    double age_years{};
+    double minimum_supported_age_years{};
+    double young_upper_age_years{};
+    double older_lower_age_years{};
+    double maximum_supported_age_years{};
+    core::Dimensionless young_resistance_multiplier;
+    core::Dimensionless older_resistance_multiplier;
+};
+
 struct PulmonaryZeroDimensionalParameters final {
     core::FlowRate baseline_cardiac_output;
     core::Pressure left_atrial_pressure;
@@ -29,6 +39,7 @@ struct PulmonaryZeroDimensionalParameters final {
     core::SimulationClock::Duration pulmonary_transit_time{};
     core::Dimensionless right_lung_perfusion_fraction;
     std::optional<PulmonaryFlowAdaptationParameters> flow_adaptation;
+    std::optional<PulmonaryAgeConditioningParameters> age_conditioning;
 };
 
 struct PulmonaryZeroDimensionalConfig final {
@@ -53,6 +64,7 @@ struct PulmonaryZeroDimensionalState final {
     core::VascularResistance effective_pulmonary_vascular_resistance;
     core::VascularCompliance effective_pulmonary_arterial_compliance;
     core::Dimensionless effective_flow_ratio;
+    core::Dimensionless effective_age_resistance_multiplier;
 };
 
 class PulmonaryZeroDimensionalModel final : public coupling::ModelComponent {

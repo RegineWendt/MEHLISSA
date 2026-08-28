@@ -372,6 +372,7 @@ decode_population_multipoint(const Json& document) {
             decode_population_statistic_kind(series.at("statistic_kind").as<std::string_view>()),
             flow_basis,
             optional_number(series, "reference_body_surface_area_m2"),
+            optional_number(series, "representative_age_years"),
             series.at("cohort_overlap").as<std::string>(),
             {},
         };
@@ -519,8 +520,9 @@ void validate_population_observation(const PulmonaryPopulationObservation& obser
 
 void validate_population_multipoint_semantics(
     const PulmonaryZeroDimensionalPopulationMultipointValidationCase& validation) {
-    if (validation.schema_version !=
-            pulmonary_zero_dimensional_population_multipoint_validation_schema_version ||
+    if ((validation.schema_version != "1.0.0" &&
+         validation.schema_version !=
+             pulmonary_zero_dimensional_population_multipoint_validation_schema_version) ||
         validation.minimum_stage_count < 3 ||
         !positive_finite(validation.standard_deviation_multiplier)) {
         invalid(core::ErrorCode::data_invalid,
@@ -556,6 +558,11 @@ void validate_population_multipoint_semantics(
             !positive_finite(series.reference_body_surface_area_m2.value())) {
             invalid(core::ErrorCode::data_invalid,
                     "Pulmonary population reference BSA must be positive and finite");
+        }
+        if (series.representative_age_years.has_value() &&
+            !positive_finite(series.representative_age_years.value())) {
+            invalid(core::ErrorCode::data_invalid,
+                    "Pulmonary population representative age must be positive and finite");
         }
 
         std::unordered_set<std::string> stage_ids;
@@ -923,8 +930,9 @@ evaluate_pulmonary_zero_dimensional_population_multipoint_validation(
     const auto locked_parameters = model_definition.model.zero_dimensional_parameters.value();
 
     for (const auto& series : validation.series) {
-        PulmonaryPopulationSeriesResult series_result{series.id, series.sample_size, {}, {}, 0.0, 0,
-                                                      {}};
+        PulmonaryPopulationSeriesResult series_result{
+            series.id, series.sample_size, series.representative_age_years, 1.0, {}, {}, 0.0, 0,
+            {}};
         std::vector<double> flows;
         std::vector<double> observed_pressures;
         std::vector<double> predicted_pressures;
@@ -936,6 +944,10 @@ evaluate_pulmonary_zero_dimensional_population_multipoint_validation(
         for (const auto& stage : series.stages) {
             const auto flow = population_absolute_flow(series, stage);
             auto parameters = locked_parameters;
+            if (parameters.age_conditioning.has_value() &&
+                series.representative_age_years.has_value()) {
+                parameters.age_conditioning->age_years = series.representative_age_years.value();
+            }
             parameters.baseline_cardiac_output = core::cubic_meters_per_second(flow);
             parameters.left_atrial_pressure =
                 core::pascals(stage.pulmonary_arterial_wedge_pressure.mean_si);
@@ -948,8 +960,11 @@ evaluate_pulmonary_zero_dimensional_population_multipoint_validation(
                 "pulmonary-venous-return",
                 parameters,
             }};
+            const auto state = model.state();
             const auto predicted_pressure =
-                core::in_pascals(model.state().mean_pulmonary_arterial_pressure);
+                core::in_pascals(state.mean_pulmonary_arterial_pressure);
+            series_result.age_resistance_multiplier =
+                state.effective_age_resistance_multiplier.si_value();
             const auto observed_pressure = stage.mean_pulmonary_arterial_pressure.mean_si;
             const auto residual = predicted_pressure - observed_pressure;
             double lower{};

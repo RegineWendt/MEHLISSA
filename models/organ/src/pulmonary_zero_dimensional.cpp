@@ -48,6 +48,27 @@ void validate_parameters(const PulmonaryZeroDimensionalParameters& parameters) {
                 "maximum flow ratio greater than one"};
         }
     }
+    if (parameters.age_conditioning.has_value()) {
+        const auto& conditioning = *parameters.age_conditioning;
+        const auto young_multiplier = conditioning.young_resistance_multiplier.si_value();
+        const auto older_multiplier = conditioning.older_resistance_multiplier.si_value();
+        if (!std::isfinite(conditioning.age_years) ||
+            !std::isfinite(conditioning.minimum_supported_age_years) ||
+            !std::isfinite(conditioning.young_upper_age_years) ||
+            !std::isfinite(conditioning.older_lower_age_years) ||
+            !std::isfinite(conditioning.maximum_supported_age_years) ||
+            conditioning.minimum_supported_age_years > conditioning.age_years ||
+            conditioning.age_years > conditioning.maximum_supported_age_years ||
+            conditioning.minimum_supported_age_years >= conditioning.young_upper_age_years ||
+            conditioning.young_upper_age_years >= conditioning.older_lower_age_years ||
+            conditioning.older_lower_age_years >= conditioning.maximum_supported_age_years ||
+            !positive_finite(young_multiplier) || !positive_finite(older_multiplier)) {
+            throw core::MehlissaError{
+                core::ErrorCode::data_invalid,
+                "Pulmonary age conditioning requires an age inside ordered calibration bounds "
+                "and positive finite resistance multipliers"};
+        }
+    }
 }
 
 [[nodiscard]] PulmonaryCirculationConfig
@@ -67,26 +88,40 @@ struct EffectiveHemodynamics final {
     core::VascularResistance resistance;
     core::VascularCompliance compliance;
     core::Dimensionless flow_ratio;
+    core::Dimensionless age_resistance_multiplier;
 };
 
 [[nodiscard]] EffectiveHemodynamics
 effective_hemodynamics(const PulmonaryZeroDimensionalParameters& parameters,
                        const core::FlowRate inflow) noexcept {
-    if (!parameters.flow_adaptation.has_value()) {
-        return {parameters.pulmonary_vascular_resistance, parameters.pulmonary_arterial_compliance,
-                core::Dimensionless::from_si(1.0)};
+    auto flow_ratio = 1.0;
+    auto flow_resistance_multiplier = 1.0;
+    auto flow_compliance_multiplier = 1.0;
+    if (parameters.flow_adaptation.has_value()) {
+        const auto& adaptation = *parameters.flow_adaptation;
+        const auto raw_ratio =
+            core::in_cubic_meters_per_second(inflow) /
+            core::in_cubic_meters_per_second(adaptation.reference_cardiac_output);
+        flow_ratio = std::clamp(raw_ratio, 1.0, adaptation.maximum_flow_ratio.si_value());
+        flow_resistance_multiplier = std::pow(flow_ratio, adaptation.resistance_exponent);
+        flow_compliance_multiplier = std::pow(flow_ratio, adaptation.compliance_exponent);
     }
 
-    const auto& adaptation = *parameters.flow_adaptation;
-    const auto raw_ratio = core::in_cubic_meters_per_second(inflow) /
-                           core::in_cubic_meters_per_second(adaptation.reference_cardiac_output);
-    const auto flow_ratio = std::clamp(raw_ratio, 1.0, adaptation.maximum_flow_ratio.si_value());
+    auto age_resistance_multiplier = 1.0;
+    if (parameters.age_conditioning.has_value()) {
+        const auto& conditioning = *parameters.age_conditioning;
+        if (conditioning.age_years < conditioning.young_upper_age_years) {
+            age_resistance_multiplier = conditioning.young_resistance_multiplier.si_value();
+        } else if (conditioning.age_years >= conditioning.older_lower_age_years) {
+            age_resistance_multiplier = conditioning.older_resistance_multiplier.si_value();
+        }
+    }
     return {
-        parameters.pulmonary_vascular_resistance *
-            std::pow(flow_ratio, adaptation.resistance_exponent),
-        parameters.pulmonary_arterial_compliance *
-            std::pow(flow_ratio, adaptation.compliance_exponent),
+        parameters.pulmonary_vascular_resistance * flow_resistance_multiplier *
+            age_resistance_multiplier,
+        parameters.pulmonary_arterial_compliance * flow_compliance_multiplier,
         core::Dimensionless::from_si(flow_ratio),
+        core::Dimensionless::from_si(age_resistance_multiplier),
     };
 }
 
@@ -204,6 +239,7 @@ PulmonaryZeroDimensionalState PulmonaryZeroDimensionalModel::state() const noexc
         effective.resistance,
         effective.compliance,
         effective.flow_ratio,
+        effective.age_resistance_multiplier,
     };
 }
 

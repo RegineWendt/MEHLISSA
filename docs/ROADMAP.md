@@ -369,20 +369,23 @@ flow-dependent PVR/compliance variant and repeats the untouched Bentley stress
 test. M3.10 adds the subject-level multipoint schema, immutable-model evaluator,
 trajectory metrics, synthetic-evidence guard, and a reviewed acquisition plan.
 M3.11 adds immediate no-refit validation against four published, independent
-Kovacs/Wolsk population series (255 healthy volunteers, 18 stages). The 10/18
-stage result exposes an age-dependent limitation rather than hiding subgroup
-failures. Participant-level validation remains a higher-resolution follow-up.
+Kovacs/Wolsk population series (255 healthy volunteers, 18 stages). M3.12 adds
+a separate Kane-calibrated, bounded age multiplier on PVR. The immutable
+validation result improves from 10/18 to 14/18 stages: the older stratum reaches
+5/5, the middle stratum remains 5/5, and the young stratum remains incomplete
+at 1/5. Participant-level validation remains a higher-resolution follow-up.
 Anatomical refinement, transforming exchange, general experiment composition,
-age-conditioned physiology, and regional exercise redistribution remain open;
-see [M3 working plan](m3/README.md).
+continuous/regional activity physiology, and regional exercise redistribution
+remain open; see [M3 working plan](m3/README.md).
 
 The formal [M3 gate review](m3/M3_GATE_REVIEW.md) therefore keeps the milestone
 open: the software coupling candidate, first literature-parameterized 0D
 reference candidate, independent aggregate validation, and bounded
-rest/exercise 0D adaptation are verified, the subject-level analysis path is
-software-verified, and published population multipoint validation has produced
-a qualified partial result. Anatomical refinement, age-conditioned and regional
-physiology, and the executable historical FP9 baseline remain closure evidence.
+rest/exercise 0D adaptation and bounded age conditioning are verified, the
+subject-level analysis path is software-verified, and published population
+multipoint validation has produced a qualified 14/18 partial result. Anatomical
+refinement, continuous and regional physiology, and the executable historical
+FP9 baseline remain closure evidence.
 
 #### Tasks
 

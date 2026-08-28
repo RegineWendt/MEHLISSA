@@ -35,6 +35,12 @@ load_definition_1_2(const std::filesystem::path& path) {
         {path, root() / "data" / "schemas" / "lung-model-definition" / "1.2.0.schema.json"});
 }
 
+[[nodiscard]] mehlissa::models::organ::LungModelDefinition
+load_definition_1_3(const std::filesystem::path& path) {
+    return mehlissa::models::organ::load_lung_model_definition(
+        {path, root() / "data" / "schemas" / "lung-model-definition" / "1.3.0.schema.json"});
+}
+
 } // namespace
 
 TEST_CASE("Checked-in lung definitions are executable and evidence scoped",
@@ -143,4 +149,34 @@ TEST_CASE("Flow-adaptive pulmonary 0D definition preserves independent calibrati
     const auto model = mehlissa::models::organ::make_lung_model(definition.model);
     CHECK(model->model_id() ==
           std::string_view{"lung.pulmonary-0d.healthy-adult-rest-exercise.v2"});
+}
+
+TEST_CASE("Age-conditioned pulmonary 0D definition preserves separate calibration evidence",
+          "[m3][organ][definition][physiology][age]") {
+    const auto definition = load_definition_1_3(root() / "data" / "lung-models" /
+                                                "healthy-adult-rest-exercise-age-0d-v3.json");
+
+    CHECK(definition.schema_version == std::string_view{"1.3.0"});
+    if (!definition.model.zero_dimensional_parameters.has_value() ||
+        !definition.hemodynamics.has_value() ||
+        !definition.model.zero_dimensional_parameters->age_conditioning.has_value() ||
+        !definition.hemodynamics->age_conditioning.has_value()) {
+        FAIL("Expected executable age conditioning and its evidence");
+        return;
+    }
+
+    const auto& conditioning =
+        definition.model.zero_dimensional_parameters->age_conditioning.value();
+    const auto& evidence = definition.hemodynamics->age_conditioning.value();
+    CHECK(conditioning.age_years == Catch::Approx(55.0));
+    CHECK(conditioning.minimum_supported_age_years == Catch::Approx(18.0));
+    CHECK(conditioning.maximum_supported_age_years == Catch::Approx(85.0));
+    CHECK(conditioning.young_resistance_multiplier.si_value() == Catch::Approx(0.923348796112216));
+    CHECK(conditioning.older_resistance_multiplier.si_value() == Catch::Approx(1.12245955546343));
+    CHECK(evidence.young_resistance_multiplier.source_id == "kane-2016");
+    CHECK(evidence.older_resistance_multiplier.role == "derived");
+
+    const auto model = mehlissa::models::organ::make_lung_model(definition.model);
+    CHECK(model->model_id() ==
+          std::string_view{"lung.pulmonary-0d.healthy-adult-rest-exercise-age.v3"});
 }

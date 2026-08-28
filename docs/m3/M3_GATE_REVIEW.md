@@ -74,6 +74,18 @@ do not claim participant-level validation. See
 The post-M3.11 local MSVC build and 105/105 CTest suite passed; CI evidence is
 recorded after the isolated increment is pushed.
 
+**Sixth post-review update, 28 August 2026:** M3.12 adds an immutable v3
+candidate with a separately calibrated age multiplier on PVR. Kane et al.
+(2016) supplies resting PASP/CO age ratios and supported bounds of 18–85 years;
+Kovacs and Wolsk remain untouched validation sources. Under the existing rules,
+agreement improves from 10/18 to 14/18 stages. The older stratum improves from
+2/5 to 5/5, the reference stratum remains 5/5, and the young stratum improves
+only from 0/5 to 1/5. The remaining failure is retained and the gate stays open
+for anatomical, continuous/regional physiological, participant-level, and FP9
+evidence. See [Pulmonary 0D Age Conditioning](PULMONARY_0D_AGE_CONDITIONING.md).
+The post-M3.12 local MSVC build and 108/108 CTest suite passed; CI evidence is
+recorded after the isolated increment is pushed.
+
 ## 1. Review method
 
 The review checked the Roadmap Gate M3 statements and the additional acceptance

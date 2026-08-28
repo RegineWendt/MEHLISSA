@@ -166,3 +166,43 @@ TEST_CASE("Pulmonary flow adaptation does not extrapolate below rest or above ca
     high_flow_model.advance(high_flow_context, 1ns);
     CHECK(high_flow_model.state().effective_flow_ratio.si_value() == Catch::Approx(16.2 / 6.2));
 }
+
+TEST_CASE("Pulmonary age conditioning changes resistance only inside sourced age bounds",
+          "[m3][organ][pulmonary-0d][physiology][age]") {
+    const auto conditioned_config = [](const double age_years) {
+        auto config = reference_config();
+        config.parameters.age_conditioning =
+            mehlissa::models::organ::PulmonaryAgeConditioningParameters{
+                age_years,
+                18.0,
+                40.0,
+                60.0,
+                85.0,
+                mehlissa::core::Dimensionless::from_si(0.923348796112216),
+                mehlissa::core::Dimensionless::from_si(1.12245955546343),
+            };
+        return config;
+    };
+
+    const PulmonaryZeroDimensionalModel young{conditioned_config(29.5)};
+    const PulmonaryZeroDimensionalModel middle{conditioned_config(49.5)};
+    const PulmonaryZeroDimensionalModel older{conditioned_config(70.0)};
+
+    CHECK(young.state().effective_age_resistance_multiplier.si_value() ==
+          Catch::Approx(0.923348796112216));
+    CHECK(middle.state().effective_age_resistance_multiplier.si_value() == Catch::Approx(1.0));
+    CHECK(older.state().effective_age_resistance_multiplier.si_value() ==
+          Catch::Approx(1.12245955546343));
+    CHECK(mehlissa::core::in_wood_units(young.state().effective_pulmonary_vascular_resistance) ==
+          Catch::Approx(1.2 * 0.923348796112216));
+    CHECK(mehlissa::core::in_wood_units(older.state().effective_pulmonary_vascular_resistance) ==
+          Catch::Approx(1.2 * 1.12245955546343));
+    CHECK(mehlissa::core::in_milliliters_per_millimeter_of_mercury(
+              young.state().effective_pulmonary_arterial_compliance) == Catch::Approx(5.0));
+    CHECK(mehlissa::core::in_milliliters_per_millimeter_of_mercury(
+              older.state().effective_pulmonary_arterial_compliance) == Catch::Approx(5.0));
+    CHECK_THROWS_AS(PulmonaryZeroDimensionalModel{conditioned_config(17.9)},
+                    mehlissa::core::MehlissaError);
+    CHECK_THROWS_AS(PulmonaryZeroDimensionalModel{conditioned_config(85.1)},
+                    mehlissa::core::MehlissaError);
+}

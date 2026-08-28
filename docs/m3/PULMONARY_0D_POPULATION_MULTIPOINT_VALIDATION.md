@@ -112,6 +112,12 @@ does not justify changing acceptance thresholds. It justifies a future,
 separately calibrated age-conditioned candidate while retaining Wolsk as an
 untouched validation source.
 
+M3.12 implements that successor using Kane et al. (2016), not Wolsk, for age
+calibration. The v3 no-refit result improves to 14/18: Kovacs remains 3/3, and
+the Wolsk 20–39, 40–59, and 60–80 strata yield 1/5, 5/5, and 5/5. See
+[Pulmonary 0D Age Conditioning](PULMONARY_0D_AGE_CONDITIONING.md). Four young-
+stratum failures remain and prevent a complete validation claim.
+
 ## 6. What is and is not closed
 
 Closed by M3.11:
@@ -126,7 +132,7 @@ Closed by M3.11:
 Still open:
 
 - independent participant-level trajectories and within-person uncertainty;
-- a separately calibrated and independently validated age-conditioned model;
+- participant-level and continuous-age confirmation of the stepwise v3 model;
 - anatomical, pulsatile, and regional pulmonary refinement;
 - posture/protocol harmonization across sources; and
 - clinical validation, which is outside the present model's intended use.

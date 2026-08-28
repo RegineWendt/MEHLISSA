@@ -5,9 +5,10 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # M3 – Body–Organ Coupling
 
-**Status:** technical coupling, literature-parameterized flow-adaptive 0D
-reference, independent aggregate and published-population multipoint validation,
-and subject-level analysis path complete; anatomical/FP9 scientific gate open
+**Status:** technical coupling, literature-parameterized flow- and
+age-conditioned 0D reference, independent aggregate and published-population
+multipoint validation, and subject-level analysis path complete;
+anatomical/FP9 scientific gate open
 
 **Started:** 27 August 2026
 
@@ -31,6 +32,7 @@ respiratory mechanics, or gas exchange.
 | M3.9 bounded rest-to-exercise 0D adaptation | implemented, independently stress-tested; subject-level/anatomical refinement open | immutable v1 baseline; source-disjoint Claessen calibration; bounded effective PVR/compliance; Bentley 6/6 required pass; exercise RC z reduced from 18.571 to 3.005 but remains diagnostic fail |
 | M3.10 subject-level multipoint validation path | software-verified; measured data access pending | pseudonymous three-stage schema; immutable-model mPAP/PAWP pressure-flow fits; stage PVR/compliance/RC diagnostics; synthetic-evidence guard; UA iCPET request draft |
 | M3.11 published-population multipoint validation | qualified partial result; 10/18 stages agree | independent Kovacs and Wolsk series; 255 healthy volunteers; exact mean/SD and mean/95% CI semantics; age-stratified failure pattern exposed without refitting |
+| M3.12 independent age conditioning | qualified improvement; 14/18 stages agree | separate Kane calibration; bounded 18–85-year three-band PVR multiplier; immutable Kovacs/Wolsk validation; older stratum improves 2/5 to 5/5 while young-stratum limitation remains |
 
 ## M3.1 result
 
@@ -158,6 +160,15 @@ systematic missing age dimension. Overall agreement is 10/18 stages under the
 predeclared rules. This is a reproducible partial result, not a relabelled pass.
 Subject-level data remain a valuable higher-resolution follow-up but no longer
 block use of published population evidence.
+
+M3.12 adds the
+[age-conditioned v3 candidate](PULMONARY_0D_AGE_CONDITIONING.md). Relative
+resting PASP/CO age effects from the separate Kane cohort modify PVR only;
+Kovacs and Wolsk remain validation-only. Without refitting, agreement improves
+from 10/18 to 14/18 stages. All five older-stratum stages now agree and the
+middle stratum remains 5/5, while only one of five young-stratum stages agrees.
+The residual young high-flow discrepancy remains an explicit open scientific
+question rather than a reason to tune against the validation data.
 
 An initial [SimVascular Healthy Pulmonary Candidate Review](SIMVASCULAR_PULMONARY_CANDIDATE_REVIEW.md)
 finds the official case useful for an imported pulmonary-artery technical

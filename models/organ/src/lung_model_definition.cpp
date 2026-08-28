@@ -125,6 +125,21 @@ void validate_document(const Json& document, const CompiledSchema& schema,
                     adaptation.at("maximum_flow_ratio").at("value_si").as<double>()),
             };
         }
+        std::optional<PulmonaryAgeConditioningParameters> age_conditioning;
+        if (hemodynamics.contains("age_conditioning")) {
+            const auto& conditioning = hemodynamics.at("age_conditioning");
+            age_conditioning = PulmonaryAgeConditioningParameters{
+                conditioning.at("default_age_years").at("value_si").as<double>(),
+                conditioning.at("minimum_supported_age_years").at("value_si").as<double>(),
+                conditioning.at("young_upper_age_years").at("value_si").as<double>(),
+                conditioning.at("older_lower_age_years").at("value_si").as<double>(),
+                conditioning.at("maximum_supported_age_years").at("value_si").as<double>(),
+                core::Dimensionless::from_si(
+                    conditioning.at("young_resistance_multiplier").at("value_si").as<double>()),
+                core::Dimensionless::from_si(
+                    conditioning.at("older_resistance_multiplier").at("value_si").as<double>()),
+            };
+        }
         config.zero_dimensional_parameters = PulmonaryZeroDimensionalParameters{
             core::cubic_meters_per_second(value("baseline_cardiac_output")),
             core::pascals(value("left_atrial_pressure")),
@@ -133,6 +148,7 @@ void validate_document(const Json& document, const CompiledSchema& schema,
             duration_from_seconds(timing.at("pulmonary_transit_time_s").as<double>()),
             core::Dimensionless::from_si(value("right_lung_perfusion_fraction")),
             flow_adaptation,
+            age_conditioning,
         };
     }
     return config;
@@ -167,6 +183,7 @@ void validate_document(const Json& document, const CompiledSchema& schema,
         decode_evidence_quantity(hemodynamics.at("right_lung_perfusion_fraction")),
         decode_evidence_quantity(hemodynamics.at("mean_pulmonary_arterial_pressure_target")),
         std::nullopt,
+        std::nullopt,
     };
     if (hemodynamics.contains("flow_adaptation")) {
         const auto& adaptation = hemodynamics.at("flow_adaptation");
@@ -175,6 +192,18 @@ void validate_document(const Json& document, const CompiledSchema& schema,
             decode_evidence_quantity(adaptation.at("resistance_exponent")),
             decode_evidence_quantity(adaptation.at("compliance_exponent")),
             decode_evidence_quantity(adaptation.at("maximum_flow_ratio")),
+        };
+    }
+    if (hemodynamics.contains("age_conditioning")) {
+        const auto& conditioning = hemodynamics.at("age_conditioning");
+        result.age_conditioning = PulmonaryAgeConditioningEvidence{
+            decode_evidence_quantity(conditioning.at("default_age_years")),
+            decode_evidence_quantity(conditioning.at("minimum_supported_age_years")),
+            decode_evidence_quantity(conditioning.at("young_upper_age_years")),
+            decode_evidence_quantity(conditioning.at("older_lower_age_years")),
+            decode_evidence_quantity(conditioning.at("maximum_supported_age_years")),
+            decode_evidence_quantity(conditioning.at("young_resistance_multiplier")),
+            decode_evidence_quantity(conditioning.at("older_resistance_multiplier")),
         };
     }
     return result;
@@ -233,7 +262,8 @@ void validate_document(const Json& document, const CompiledSchema& schema,
 
 [[nodiscard]] bool supported_schema_version(const std::string_view version) noexcept {
     return version == earliest_supported_lung_model_definition_schema_version ||
-           version == "1.1.0" || version == latest_supported_lung_model_definition_schema_version;
+           version == "1.1.0" || version == "1.2.0" ||
+           version == latest_supported_lung_model_definition_schema_version;
 }
 
 void validate_evidence_source(const LungModelEvidenceQuantity& parameter,
@@ -301,6 +331,19 @@ void validate_definition(const LungModelDefinition& definition) {
             validate_evidence_source(evidence.flow_adaptation->compliance_exponent, source_ids);
             validate_evidence_source(evidence.flow_adaptation->maximum_flow_ratio, source_ids);
         }
+        if (evidence.age_conditioning.has_value()) {
+            validate_evidence_source(evidence.age_conditioning->default_age_years, source_ids);
+            validate_evidence_source(evidence.age_conditioning->minimum_supported_age_years,
+                                     source_ids);
+            validate_evidence_source(evidence.age_conditioning->young_upper_age_years, source_ids);
+            validate_evidence_source(evidence.age_conditioning->older_lower_age_years, source_ids);
+            validate_evidence_source(evidence.age_conditioning->maximum_supported_age_years,
+                                     source_ids);
+            validate_evidence_source(evidence.age_conditioning->young_resistance_multiplier,
+                                     source_ids);
+            validate_evidence_source(evidence.age_conditioning->older_resistance_multiplier,
+                                     source_ids);
+        }
 
         const auto& parameters = *definition.model.zero_dimensional_parameters;
         const auto transit_seconds =
@@ -333,6 +376,35 @@ void validate_definition(const LungModelDefinition& definition) {
         } else if (parameters.flow_adaptation.has_value()) {
             invalid(core::ErrorCode::data_invalid,
                     "Pulmonary flow adaptation requires evidence metadata");
+        }
+        if (evidence.age_conditioning.has_value()) {
+            const auto& conditioning_evidence = *evidence.age_conditioning;
+            if (!parameters.age_conditioning.has_value()) {
+                invalid(core::ErrorCode::data_invalid,
+                        "Pulmonary age conditioning requires executable parameters");
+            }
+            const auto& conditioning = *parameters.age_conditioning;
+            if (!nearly_equal(conditioning_evidence.default_age_years.value_si,
+                              conditioning.age_years) ||
+                !nearly_equal(conditioning_evidence.minimum_supported_age_years.value_si,
+                              conditioning.minimum_supported_age_years) ||
+                !nearly_equal(conditioning_evidence.young_upper_age_years.value_si,
+                              conditioning.young_upper_age_years) ||
+                !nearly_equal(conditioning_evidence.older_lower_age_years.value_si,
+                              conditioning.older_lower_age_years) ||
+                !nearly_equal(conditioning_evidence.maximum_supported_age_years.value_si,
+                              conditioning.maximum_supported_age_years) ||
+                !nearly_equal(conditioning_evidence.young_resistance_multiplier.value_si,
+                              conditioning.young_resistance_multiplier.si_value()) ||
+                !nearly_equal(conditioning_evidence.older_resistance_multiplier.value_si,
+                              conditioning.older_resistance_multiplier.si_value())) {
+                invalid(core::ErrorCode::data_invalid,
+                        "Pulmonary age-conditioning evidence is disconnected from the "
+                        "executable parameterization");
+            }
+        } else if (parameters.age_conditioning.has_value()) {
+            invalid(core::ErrorCode::data_invalid,
+                    "Pulmonary age conditioning requires evidence metadata");
         }
     } else if (definition.hemodynamics.has_value()) {
         invalid(core::ErrorCode::data_invalid,
