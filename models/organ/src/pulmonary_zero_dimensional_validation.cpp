@@ -106,6 +106,9 @@ decode_boundary_policy(const std::string_view policy) {
         identity.at("title").as<std::string>(),
         identity.at("model_definition_id").as<std::string>(),
         protocol.at("maximum_absolute_z_score").as<double>(),
+        {},
+        {},
+        {},
     };
 
     for (const auto& source : document.at("sources").array_range()) {
@@ -227,10 +230,7 @@ PulmonaryZeroDimensionalValidationReport evaluate_pulmonary_zero_dimensional_val
     }
 
     PulmonaryZeroDimensionalValidationReport report{
-        validation.validation_id,
-        validation.model_definition_id,
-        true,
-        true,
+        validation.validation_id, validation.model_definition_id, true, true, 0, 0, 0, {},
     };
     const auto locked_parameters = model_definition.model.zero_dimensional_parameters.value();
 
@@ -258,7 +258,7 @@ PulmonaryZeroDimensionalValidationReport evaluate_pulmonary_zero_dimensional_val
             parameters,
         }};
         const auto state = model.state();
-        PulmonaryValidationConditionResult condition_result{condition.id, condition.scope};
+        PulmonaryValidationConditionResult condition_result{condition.id, condition.scope, {}};
         condition_result.endpoints.push_back(evaluate_endpoint(
             "mean_pulmonary_arterial_pressure", condition.mean_pulmonary_arterial_pressure,
             core::in_pascals(state.mean_pulmonary_arterial_pressure),
