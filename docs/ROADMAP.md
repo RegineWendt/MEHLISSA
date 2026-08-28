@@ -378,7 +378,13 @@ flow exponent or BSA conversion—as the dominant discrepancy. An invasive
 Kovacs 2012 calibration yields an immutable v4 candidate; all 15 stages in the
 disjoint Wolsk cohort agree without refitting. Kovacs 2009 is excluded from the
 counted v4 result because its literature corpus overlaps the calibration
-review. Participant-level validation remains a higher-resolution follow-up.
+review. M3.14 adds a structurally distinct Linehan pressure-distensible v5
+candidate, using a separately reported healthy distensibility coefficient and
+preserving the resting equilibrium by deriving zero-pressure resistance. Its
+locked Wolsk result is 11/15: both younger strata pass 5/5, while the older
+stratum passes only 1/5. The negative comparison is retained, so empirical v4
+remains the stronger population reference and v5 the structural experiment.
+Participant-level validation remains a higher-resolution follow-up.
 Anatomical refinement, transforming exchange, general experiment composition,
 continuous/regional activity physiology, and regional exercise redistribution
 remain open; see [M3 working plan](m3/README.md).
@@ -386,8 +392,8 @@ remain open; see [M3 working plan](m3/README.md).
 The formal [M3 gate review](m3/M3_GATE_REVIEW.md) therefore keeps the milestone
 open: the software coupling candidate, first literature-parameterized 0D
 reference candidate, independent aggregate validation, and bounded
-rest/exercise 0D adaptation, bounded age conditioning, and invasive
-young-adult resistance refinement are verified, the
+rest/exercise 0D adaptation, bounded age conditioning, invasive young-adult
+resistance refinement, and a pressure-distensible alternative are verified, the
 subject-level analysis path is software-verified, and published population
 multipoint validation has produced a qualified 15/15 result against the
 calibration-disjoint Wolsk cohort. Anatomical

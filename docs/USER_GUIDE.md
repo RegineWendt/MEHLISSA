@@ -294,6 +294,7 @@ data/lung-models/healthy-adult-rest-supine-0d-v1.json
 data/lung-models/healthy-adult-rest-exercise-0d-v2.json
 data/lung-models/healthy-adult-rest-exercise-age-0d-v3.json
 data/lung-models/healthy-adult-rest-exercise-age-invasive-0d-v4.json
+data/lung-models/healthy-adult-pressure-distensible-age-0d-v5.json
 ```
 
 The two contract cards validate against
@@ -325,6 +326,15 @@ and older bands and the bounded flow law remain unchanged. Ages below 24 are
 outside v4's source support and are rejected. Read the
 [young-adult resistance model card](m3/PULMONARY_0D_YOUNG_RESISTANCE.md) for
 the derivation and evidence-overlap rule.
+
+The v5 card validates against schema 1.4.0. It retains v4's resting and age
+calibration but replaces empirical flow adaptation with a Linehan
+pressure-distensible relationship. The schema and runtime reject enabling both
+laws together. A fixed `0.020 mmHg^-1` healthy coefficient is converted to SI,
+and zero-pressure resistance is derived so that the qualified resting state is
+unchanged. Read the
+[pressure-distensibility model card](m3/PULMONARY_0D_PRESSURE_DISTENSIBILITY.md)
+before using v5; its frozen population comparison is weaker than v4.
 
 The optional external-data section can preserve a source checksum, format,
 coordinate system, units, and transformation history, but no qualified
@@ -362,7 +372,10 @@ These labels are not interchangeable. In particular:
   population comparison to 14/18 stages, but still agrees with only 1/5 young
   stages. v4 uses invasive young-adult PVR calibration and agrees with all
   15 stages in the disjoint Wolsk cohort, while the overlapping Kovacs 2009
-  series is not counted. A software-verified subject-level multipoint analysis
+  series is not counted. v5 provides a structurally distinct pressure-
+  distensible experiment and agrees with 11/15 frozen Wolsk stages; its 1/5
+  older-stratum result is a declared limitation, so it does not replace v4. A
+  software-verified subject-level multipoint analysis
   path exists;
   measured participant-level data have not yet been licensed or evaluated,
   and no variant is anatomical, fully pulsatile,
@@ -415,6 +428,9 @@ Wolsk series add predeclared representative ages of 29.5, 49.5, and 70 years;
 it uses population schema 1.1.0. The v2 case remains on immutable schema 1.0.0.
 The v4 evaluation is `healthy-population-multipoint-v3.json` and also uses
 population schema 1.1.0.
+The v5 structural evaluation is
+`healthy-pressure-distensible-population-v1.json` and uses the same schema and
+the same three Wolsk series without fitting.
 Reported mmHg and L/min values are converted to SI by the loader. Wolsk cardiac
 index is converted to mean absolute flow using the explicitly recorded mean
 BSA of 1.9 m2.
@@ -423,13 +439,16 @@ Both results are deliberately partial. In v2, Kovacs passes 3/3 stages and the
 Wolsk 20–39, 40–59, and 60–80 groups pass 0/5, 5/5, and 2/5. With the separate
 Kane age calibration, v3 yields 3/3, 1/5, 5/5, and 5/5, or 14/18 overall. A
 v4 comparison counts only the disjoint Wolsk groups and yields 5/5, 5/5, and
-5/5, or 15/15, without refitting. A reported 95% CI is an interval for the
+5/5, or 15/15, without refitting. The v5 structural comparison yields 5/5,
+5/5, and 1/5, or 11/15, and is deliberately not tuned after that result. A
+reported 95% CI is an interval for the
 population mean, not an individual
 tolerance range. Read the complete
 [population multipoint report](m3/PULMONARY_0D_POPULATION_MULTIPOINT_VALIDATION.md)
 and the [v3 age-conditioning](m3/PULMONARY_0D_AGE_CONDITIONING.md) and
 [v4 young-resistance](m3/PULMONARY_0D_YOUNG_RESISTANCE.md) model cards before
-interpreting a stage result.
+interpreting a stage result. For v5, also read the
+[pressure-distensibility model card](m3/PULMONARY_0D_PRESSURE_DISTENSIBILITY.md).
 
 ### 8.3 Verify the subject-level multipoint analysis path
 

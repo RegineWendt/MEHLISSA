@@ -28,3 +28,10 @@ bands. `healthy-adult-rest-exercise-age-invasive-0d-v4.json` is its immutable
 successor for ages 24–85 and replaces only the young PVR level with an invasive
 aggregate calibration. See the
 [young-adult resistance model card](../../docs/m3/PULMONARY_0D_YOUNG_RESISTANCE.md).
+
+`healthy-adult-pressure-distensible-age-0d-v5.json` is a structural successor
+candidate. It retains v4's resting and age calibration but replaces the
+empirical flow law with a Linehan pressure-distensible vessel relationship.
+The two laws cannot be enabled together. Its independent result and limits are
+documented in the
+[pressure-distensibility model card](../../docs/m3/PULMONARY_0D_PRESSURE_DISTENSIBILITY.md).

@@ -41,6 +41,12 @@ load_definition_1_3(const std::filesystem::path& path) {
         {path, root() / "data" / "schemas" / "lung-model-definition" / "1.3.0.schema.json"});
 }
 
+[[nodiscard]] mehlissa::models::organ::LungModelDefinition
+load_definition_1_4(const std::filesystem::path& path) {
+    return mehlissa::models::organ::load_lung_model_definition(
+        {path, root() / "data" / "schemas" / "lung-model-definition" / "1.4.0.schema.json"});
+}
+
 } // namespace
 
 TEST_CASE("Checked-in lung definitions are executable and evidence scoped",
@@ -211,4 +217,34 @@ TEST_CASE("Invasive young-resistance pulmonary definition narrows its evidence s
     below_supported_age.zero_dimensional_parameters->age_conditioning->age_years = 23.9;
     CHECK_THROWS_AS(mehlissa::models::organ::make_lung_model(below_supported_age),
                     mehlissa::core::MehlissaError);
+}
+
+TEST_CASE("Pressure-distensible definition binds the Linehan equation to human alpha evidence",
+          "[m3][organ][definition][physiology][distensibility]") {
+    const auto definition = load_definition_1_4(
+        root() / "data" / "lung-models" / "healthy-adult-pressure-distensible-age-0d-v5.json");
+
+    if (!definition.model.zero_dimensional_parameters.has_value() ||
+        !definition.hemodynamics.has_value() ||
+        !definition.model.zero_dimensional_parameters->pressure_distensibility.has_value() ||
+        !definition.hemodynamics->pressure_distensibility.has_value()) {
+        FAIL("Expected executable pressure distensibility and its evidence");
+        return;
+    }
+    const auto& parameters =
+        definition.model.zero_dimensional_parameters->pressure_distensibility.value();
+    const auto& evidence = definition.hemodynamics->pressure_distensibility.value();
+    CHECK(definition.schema_version == std::string_view{"1.4.0"});
+    CHECK(mehlissa::core::in_liters_per_minute(parameters.reference_cardiac_output) ==
+          Catch::Approx(6.0));
+    CHECK(mehlissa::core::in_millimeters_of_mercury(parameters.reference_left_atrial_pressure) ==
+          Catch::Approx(8.0));
+    CHECK(mehlissa::core::in_per_millimeter_of_mercury(parameters.coefficient) ==
+          Catch::Approx(0.02));
+    CHECK(evidence.coefficient.source_id == "reeves-2005");
+    CHECK_FALSE(definition.model.zero_dimensional_parameters->flow_adaptation.has_value());
+
+    const auto model = mehlissa::models::organ::make_lung_model(definition.model);
+    CHECK(model->model_id() ==
+          std::string_view{"lung.pulmonary-0d.healthy-adult-pressure-distensible-age.v5"});
 }

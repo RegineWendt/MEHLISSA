@@ -31,6 +31,12 @@ struct PulmonaryAgeConditioningParameters final {
     core::Dimensionless older_resistance_multiplier;
 };
 
+struct PulmonaryPressureDistensibilityParameters final {
+    core::FlowRate reference_cardiac_output;
+    core::Pressure reference_left_atrial_pressure;
+    core::InversePressure coefficient;
+};
+
 struct PulmonaryZeroDimensionalParameters final {
     core::FlowRate baseline_cardiac_output;
     core::Pressure left_atrial_pressure;
@@ -40,6 +46,7 @@ struct PulmonaryZeroDimensionalParameters final {
     core::Dimensionless right_lung_perfusion_fraction;
     std::optional<PulmonaryFlowAdaptationParameters> flow_adaptation;
     std::optional<PulmonaryAgeConditioningParameters> age_conditioning;
+    std::optional<PulmonaryPressureDistensibilityParameters> pressure_distensibility;
 };
 
 struct PulmonaryZeroDimensionalConfig final {
@@ -65,6 +72,8 @@ struct PulmonaryZeroDimensionalState final {
     core::VascularCompliance effective_pulmonary_arterial_compliance;
     core::Dimensionless effective_flow_ratio;
     core::Dimensionless effective_age_resistance_multiplier;
+    core::VascularResistance zero_pressure_pulmonary_vascular_resistance;
+    core::InversePressure effective_pressure_distensibility;
 };
 
 class PulmonaryZeroDimensionalModel final : public coupling::ModelComponent {

@@ -48,6 +48,21 @@ void validate_parameters(const PulmonaryZeroDimensionalParameters& parameters) {
                 "maximum flow ratio greater than one"};
         }
     }
+    if (parameters.pressure_distensibility.has_value()) {
+        const auto& distensibility = *parameters.pressure_distensibility;
+        if (parameters.flow_adaptation.has_value() ||
+            !positive_finite(
+                core::in_cubic_meters_per_second(distensibility.reference_cardiac_output)) ||
+            !std::isfinite(core::in_pascals(distensibility.reference_left_atrial_pressure)) ||
+            core::in_pascals(distensibility.reference_left_atrial_pressure) < 0.0 ||
+            !positive_finite(core::in_per_pascal(distensibility.coefficient))) {
+            throw core::MehlissaError{
+                core::ErrorCode::data_invalid,
+                "Pulmonary pressure distensibility requires positive finite reference flow and "
+                "coefficient, non-negative finite reference left-atrial pressure, and cannot be "
+                "combined with empirical flow adaptation"};
+        }
+    }
     if (parameters.age_conditioning.has_value()) {
         const auto& conditioning = *parameters.age_conditioning;
         const auto young_multiplier = conditioning.young_resistance_multiplier.si_value();
@@ -71,6 +86,12 @@ void validate_parameters(const PulmonaryZeroDimensionalParameters& parameters) {
     }
 }
 
+[[nodiscard]] PulmonaryZeroDimensionalConfig
+validated_config(PulmonaryZeroDimensionalConfig config) {
+    validate_parameters(config.parameters);
+    return config;
+}
+
 [[nodiscard]] PulmonaryCirculationConfig
 make_transit_config(const PulmonaryZeroDimensionalConfig& config) {
     return {
@@ -89,6 +110,9 @@ struct EffectiveHemodynamics final {
     core::VascularCompliance compliance;
     core::Dimensionless flow_ratio;
     core::Dimensionless age_resistance_multiplier;
+    core::Pressure equilibrium_pressure;
+    core::VascularResistance zero_pressure_resistance;
+    core::InversePressure pressure_distensibility;
 };
 
 [[nodiscard]] EffectiveHemodynamics
@@ -116,32 +140,75 @@ effective_hemodynamics(const PulmonaryZeroDimensionalParameters& parameters,
             age_resistance_multiplier = conditioning.older_resistance_multiplier.si_value();
         }
     }
+    const auto age_adjusted_reference_resistance =
+        parameters.pulmonary_vascular_resistance * age_resistance_multiplier;
+    if (parameters.pressure_distensibility.has_value()) {
+        const auto& distensibility = *parameters.pressure_distensibility;
+        const auto alpha = core::in_per_pascal(distensibility.coefficient);
+        const auto reference_flow =
+            core::in_cubic_meters_per_second(distensibility.reference_cardiac_output);
+        const auto reference_left_atrial_pressure =
+            core::in_pascals(distensibility.reference_left_atrial_pressure);
+        const auto reference_target_pressure = core::in_pascals(
+            distensibility.reference_left_atrial_pressure +
+            age_adjusted_reference_resistance * distensibility.reference_cardiac_output);
+        const auto zero_pressure_resistance = core::pascal_seconds_per_cubic_meter(
+            (std::pow(1.0 + alpha * reference_target_pressure, 5.0) -
+             std::pow(1.0 + alpha * reference_left_atrial_pressure, 5.0)) /
+            (5.0 * alpha * reference_flow));
+        const auto left_atrial_pressure = core::in_pascals(parameters.left_atrial_pressure);
+        const auto pressure_term =
+            std::pow(1.0 + alpha * left_atrial_pressure, 5.0) +
+            5.0 * alpha * core::in_pascal_seconds_per_cubic_meter(zero_pressure_resistance) *
+                core::in_cubic_meters_per_second(inflow);
+        const auto equilibrium = core::pascals((std::pow(pressure_term, 0.2) - 1.0) / alpha);
+        const auto effective_resistance = (equilibrium - parameters.left_atrial_pressure) / inflow;
+        return {
+            effective_resistance,
+            parameters.pulmonary_arterial_compliance,
+            core::Dimensionless::from_si(core::in_cubic_meters_per_second(inflow) / reference_flow),
+            core::Dimensionless::from_si(age_resistance_multiplier),
+            equilibrium,
+            zero_pressure_resistance,
+            distensibility.coefficient,
+        };
+    }
+
+    const auto resistance = age_adjusted_reference_resistance * flow_resistance_multiplier;
     return {
-        parameters.pulmonary_vascular_resistance * flow_resistance_multiplier *
-            age_resistance_multiplier,
+        resistance,
         parameters.pulmonary_arterial_compliance * flow_compliance_multiplier,
         core::Dimensionless::from_si(flow_ratio),
         core::Dimensionless::from_si(age_resistance_multiplier),
+        parameters.left_atrial_pressure + resistance * inflow,
+        resistance,
+        core::per_pascal(0.0),
     };
 }
 
-[[nodiscard]] core::Pressure
-equilibrium_pressure(const PulmonaryZeroDimensionalParameters& parameters,
-                     const core::FlowRate inflow,
-                     const core::VascularResistance resistance) noexcept {
-    return parameters.left_atrial_pressure + resistance * inflow;
+[[nodiscard]] core::FlowRate
+outflow_from_pressure(const PulmonaryZeroDimensionalParameters& parameters,
+                      const core::Pressure pressure,
+                      const EffectiveHemodynamics& effective) noexcept {
+    const auto alpha = core::in_per_pascal(effective.pressure_distensibility);
+    if (alpha == 0.0) {
+        return (pressure - parameters.left_atrial_pressure) / effective.resistance;
+    }
+    const auto upstream = 1.0 + alpha * core::in_pascals(pressure);
+    const auto downstream = 1.0 + alpha * core::in_pascals(parameters.left_atrial_pressure);
+    const auto flow =
+        (std::pow(upstream, 5.0) - std::pow(downstream, 5.0)) /
+        (5.0 * alpha * core::in_pascal_seconds_per_cubic_meter(effective.zero_pressure_resistance));
+    return core::cubic_meters_per_second(flow);
 }
 
 } // namespace
 
 PulmonaryZeroDimensionalModel::PulmonaryZeroDimensionalModel(PulmonaryZeroDimensionalConfig config)
-    : config_{std::move(config)}, transit_{make_transit_config(config_)},
+    : config_{validated_config(std::move(config))}, transit_{make_transit_config(config_)},
       prescribed_inflow_{config_.parameters.baseline_cardiac_output},
-      mean_pulmonary_arterial_pressure_{equilibrium_pressure(
-          config_.parameters, prescribed_inflow_,
-          effective_hemodynamics(config_.parameters, prescribed_inflow_).resistance)} {
-    validate_parameters(config_.parameters);
-}
+      mean_pulmonary_arterial_pressure_{
+          effective_hemodynamics(config_.parameters, prescribed_inflow_).equilibrium_pressure} {}
 
 std::string_view PulmonaryZeroDimensionalModel::name() const noexcept { return transit_.name(); }
 std::string_view PulmonaryZeroDimensionalModel::model_id() const noexcept {
@@ -158,9 +225,8 @@ bool PulmonaryZeroDimensionalModel::emits_entity_at(const std::string_view port_
 void PulmonaryZeroDimensionalModel::initialize(core::SimulationContext& context) {
     transit_.initialize(context);
     prescribed_inflow_ = config_.parameters.baseline_cardiac_output;
-    mean_pulmonary_arterial_pressure_ = equilibrium_pressure(
-        config_.parameters, prescribed_inflow_,
-        effective_hemodynamics(config_.parameters, prescribed_inflow_).resistance);
+    mean_pulmonary_arterial_pressure_ =
+        effective_hemodynamics(config_.parameters, prescribed_inflow_).equilibrium_pressure;
     pending_inflow_.reset();
 }
 
@@ -173,8 +239,7 @@ void PulmonaryZeroDimensionalModel::advance(core::SimulationContext& context,
     }
 
     const auto effective = effective_hemodynamics(config_.parameters, prescribed_inflow_);
-    const auto equilibrium =
-        equilibrium_pressure(config_.parameters, prescribed_inflow_, effective.resistance);
+    const auto equilibrium = effective.equilibrium_pressure;
     const auto time_constant = effective.resistance * effective.compliance;
     const auto elapsed_seconds = static_cast<double>(delta.count()) /
                                  static_cast<double>(core::SimulationClock::Duration::period::den);
@@ -224,8 +289,7 @@ std::size_t PulmonaryZeroDimensionalModel::resident_conserved_transfer_count() c
 PulmonaryZeroDimensionalState PulmonaryZeroDimensionalModel::state() const noexcept {
     const auto effective = effective_hemodynamics(config_.parameters, prescribed_inflow_);
     const auto pulmonary_outflow =
-        (mean_pulmonary_arterial_pressure_ - config_.parameters.left_atrial_pressure) /
-        effective.resistance;
+        outflow_from_pressure(config_.parameters, mean_pulmonary_arterial_pressure_, effective);
     const auto right_fraction = config_.parameters.right_lung_perfusion_fraction.si_value();
     return {
         mean_pulmonary_arterial_pressure_,
@@ -240,6 +304,8 @@ PulmonaryZeroDimensionalState PulmonaryZeroDimensionalModel::state() const noexc
         effective.compliance,
         effective.flow_ratio,
         effective.age_resistance_multiplier,
+        effective.zero_pressure_resistance,
+        effective.pressure_distensibility,
     };
 }
 

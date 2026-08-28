@@ -1,0 +1,137 @@
+{
+  "schema_version": "1.4.0",
+  "definition": {
+    "id": "healthy-adult-pressure-distensible-age-0d-v5",
+    "version": "5.0.0",
+    "title": "Healthy-adult pulmonary 0D structural candidate with pressure-distensible resistance vessels"
+  },
+  "variant": "pulmonary_zero_dimensional",
+  "component": {
+    "name": "organ.lung",
+    "model_id": "lung.pulmonary-0d.healthy-adult-pressure-distensible-age.v5",
+    "entry_port_id": "pulmonary-arterial-entry",
+    "exit_port_id": "pulmonary-venous-exit",
+    "return_target_model_id": "bvs95-dissertation-rest",
+    "return_target_port_id": "pulmonary-venous-return"
+  },
+  "timing": {"pulmonary_transit_time_s": 6.4},
+  "hemodynamics": {
+    "baseline_cardiac_output": {
+      "value_si": 0.0001, "unit": "m3/s",
+      "uncertainty": {"kind": "reference_interval", "lower_si": 0.00006666666666666667, "upper_si": 0.00013333333333333334},
+      "source_id": "esc-ers-2022", "role": "calibration",
+      "derivation": "The locked MEHLISSA reference is 6 L/min within the published healthy resting interval."
+    },
+    "left_atrial_pressure": {
+      "value_si": 1066.57909932, "unit": "Pa",
+      "uncertainty": {"kind": "upper_reference_limit", "upper_si": 1999.835811225},
+      "source_id": "esc-ers-2022", "role": "calibration",
+      "derivation": "Eight mmHg is the locked nominal pressure sink; measured PAWP may replace it as an external boundary."
+    },
+    "pulmonary_vascular_resistance": {
+      "value_si": 9599211.89388, "unit": "Pa*s/m3",
+      "uncertainty": {"kind": "reference_interval", "lower_si": 2399802.97347, "upper_si": 15998686.4898},
+      "source_id": "esc-ers-2022", "role": "calibration",
+      "derivation": "The 1.2 WU value is retained as the observable secant PVR at the reference flow and pressure. For v5 it is not R0: the Linehan zero-pressure resistance is derived so that this reference equilibrium is preserved exactly."
+    },
+    "pulmonary_arterial_compliance": {
+      "value_si": 0.0000000375030787922828, "unit": "m3/Pa",
+      "uncertainty": {"kind": "lower_reference_limit", "lower_si": 0.00000001725141624445},
+      "source_id": "esc-ers-2022", "role": "calibration",
+      "derivation": "The locked 5 mL/mmHg arterial compliance is retained for mean-pressure relaxation; resistance-vessel distensibility is a separate mechanical quantity."
+    },
+    "pulmonary_transit_time": {
+      "value_si": 6.4, "unit": "s",
+      "uncertainty": {"kind": "interquartile_range", "lower_si": 5.7, "upper_si": 7.1},
+      "source_id": "swift-2012", "role": "calibration",
+      "derivation": "The measured healthy-control resting first-pass transit reference is retained without an exercise rule."
+    },
+    "right_lung_perfusion_fraction": {
+      "value_si": 0.556298773690078, "unit": "1",
+      "uncertainty": {"kind": "propagated_standard_deviation", "lower_si": 0.502922956679961, "upper_si": 0.609674590700195},
+      "source_id": "wong-2014", "role": "calibration",
+      "derivation": "The source-derived supine RPA/(RPA+LPA) split is retained; regional redistribution remains outside v5."
+    },
+    "mean_pulmonary_arterial_pressure_target": {
+      "value_si": 2026.500288708, "unit": "Pa",
+      "uncertainty": {"kind": "reference_interval", "lower_si": 1066.57909932, "upper_si": 2666.4477483},
+      "source_id": "esc-ers-2022", "role": "derived",
+      "derivation": "The derived R0 normalization makes the default 55-year reference equilibrium exactly 15.2 mmHg at 6 L/min and 8 mmHg left-atrial pressure."
+    },
+    "age_conditioning": {
+      "default_age_years": {
+        "value_si": 55.0, "unit": "year", "uncertainty": {"kind": "not_propagated"},
+        "source_id": "kane-2016", "role": "derived", "derivation": "Midpoint of the 50-59 reference band."
+      },
+      "minimum_supported_age_years": {
+        "value_si": 24.0, "unit": "year", "uncertainty": {"kind": "not_propagated"},
+        "source_id": "kovacs-2012-pvr", "role": "calibration", "derivation": "Lower boundary of the directly applicable invasive resting-PVR stratum."
+      },
+      "young_upper_age_years": {
+        "value_si": 40.0, "unit": "year", "uncertainty": {"kind": "not_propagated"},
+        "source_id": "kane-2016", "role": "calibration", "derivation": "Published under-40 age-band boundary."
+      },
+      "older_lower_age_years": {
+        "value_si": 60.0, "unit": "year", "uncertainty": {"kind": "not_propagated"},
+        "source_id": "kane-2016", "role": "derived", "derivation": "Boundary of the pooled 60-and-older resistance band."
+      },
+      "maximum_supported_age_years": {
+        "value_si": 85.0, "unit": "year", "uncertainty": {"kind": "not_propagated"},
+        "source_id": "kane-2016", "role": "calibration", "derivation": "Upper boundary of the reported healthy-adult age range."
+      },
+      "young_resistance_multiplier": {
+        "value_si": 0.71875, "unit": "1", "uncertainty": {"kind": "not_propagated"},
+        "source_id": "kovacs-2012-pvr", "role": "derived", "derivation": "Invasive 0.8625 WU divided by the locked 1.2 WU reference; limited to ages 24-under-40."
+      },
+      "older_resistance_multiplier": {
+        "value_si": 1.12245955546343, "unit": "1", "uncertainty": {"kind": "not_propagated"},
+        "source_id": "kane-2016", "role": "derived", "derivation": "Published age-stratum PASP/CO ratio relative to the 40-59 reference band."
+      }
+    },
+    "pressure_distensibility": {
+      "reference_cardiac_output": {
+        "value_si": 0.0001, "unit": "m3/s", "uncertainty": {"kind": "not_propagated"},
+        "source_id": "esc-ers-2022", "role": "calibration",
+        "derivation": "The R0 normalization is anchored at the locked 6 L/min MEHLISSA resting flow."
+      },
+      "reference_left_atrial_pressure": {
+        "value_si": 1066.57909932, "unit": "Pa", "uncertainty": {"kind": "not_propagated"},
+        "source_id": "esc-ers-2022", "role": "calibration",
+        "derivation": "The R0 normalization is anchored at the locked 8 mmHg nominal pressure sink."
+      },
+      "coefficient": {
+        "value_si": 0.000150012315169131, "unit": "Pa^-1",
+        "uncertainty": {"kind": "reference_interval", "lower_si": 0.000135011083652218, "upper_si": 0.000165013546686044},
+        "source_id": "reeves-2005", "role": "calibration",
+        "derivation": "The healthy human mean alpha 0.020 +/- 0.002 mmHg^-1 is converted to SI by division by 133.322387415 Pa/mmHg. The Linehan fifth-power equation converts pressure-dependent vessel diameter into the nonlinear mean pressure-flow relation."
+      }
+    }
+  },
+  "validity": {
+    "population": "healthy adults aged 24-85 represented by the retained age-conditioned resistance levels and a healthy-human mean distensibility coefficient",
+    "physiological_state": "fully recruited zone-3 mean pulmonary circulation from rest through exercise with measured PAWP permitted as a boundary",
+    "evidence_class": "literature_parameterized",
+    "description": "Structural mean-flow candidate using the Linehan fifth-power distensible-vessel equation. Observable reference PVR is normalized to a derived zero-pressure resistance; fixed arterial compliance supplies first-order pressure relaxation."
+  },
+  "sources": [
+    {"id": "esc-ers-2022", "citation": "Humbert M, Kovacs G, Hoeper MM, et al. 2022 ESC/ERS Guidelines for the diagnosis and treatment of pulmonary hypertension. Eur Heart J. 2022;43:3618-3731.", "url": "https://doi.org/10.1093/eurheartj/ehac237", "license": "Copyright ESC/ERS and Oxford University Press; numerical facts cited, source not redistributed", "role": "resting reference flow, pressure, resistance, and compliance"},
+    {"id": "linehan-1992", "citation": "Linehan JH, Haworth ST, Nelin LD, Krenz GS, Dawson CA. A simple distensible vessel model for interpreting pulmonary vascular pressure-flow curves. J Appl Physiol. 1992;73:987-994.", "url": "https://doi.org/10.1152/jappl.1992.73.3.987", "license": "Publisher terms; equation and attributed scientific facts cited, article not redistributed", "role": "governing fifth-power distensible-vessel equation and R0/alpha interpretation"},
+    {"id": "reeves-2005", "citation": "Reeves JT, Linehan JH, Stenmark KR. Distensibility of the normal human lung circulation during exercise. Am J Physiol Lung Cell Mol Physiol. 2005;288:L419-L425.", "url": "https://doi.org/10.1152/ajplung.00162.2004", "license": "Publisher terms; attributed aggregate numerical facts cited, article not redistributed", "role": "healthy-human alpha calibration and reported age limitation"},
+    {"id": "wong-2014", "citation": "Wong DTH, Lee KJ, Yoo SJ, Tomlinson G, Grosse-Wortmann L. Changes in systemic and pulmonary blood flow distribution in normal adult volunteers in response to posture and exercise. J Physiol Sci. 2014;64:105-112.", "url": "https://doi.org/10.1007/s12576-013-0298-z", "license": "Publisher terms; numerical facts cited, source not redistributed", "role": "supine right/left pulmonary perfusion split"},
+    {"id": "swift-2012", "citation": "Swift AJ, Telfer A, Rajaram S, et al. Pulmonary arterial hypertension: MR imaging-derived first-pass bolus kinetic parameters are biomarkers for pulmonary hemodynamics, cardiac function, and ventricular remodeling. Radiology. 2012;263:678-687.", "url": "https://doi.org/10.1148/radiol.12111049", "license": "Publisher terms; numerical facts cited, source not redistributed", "role": "healthy-control pulmonary transit time"},
+    {"id": "kane-2016", "citation": "Kane GC, Sachdev A, Villarraga HR, et al. Impact of age on pulmonary artery systolic pressures at rest and with exercise. Echo Res Pract. 2016;3:53-61.", "url": "https://doi.org/10.1530/ERP-16-0006", "license": "CC-BY-NC-4.0; published aggregate facts cited, article not redistributed", "role": "age-band resistance conditioning"},
+    {"id": "kovacs-2012-pvr", "citation": "Kovacs G, Olschewski A, Berghold A, Olschewski H. Pulmonary vascular resistances during exercise in normal subjects: a systematic review. Eur Respir J. 2012;39:319-328.", "url": "https://doi.org/10.1183/09031936.00008611", "license": "Publisher terms; attributed aggregate facts cited, article not redistributed", "role": "young-adult invasive resting-PVR level"}
+  ],
+  "limitations": [
+    "This is a research structural candidate, not a diagnostic or treatment model.",
+    "Linehan 1992 established the equation in isolated dog lung lobes; Reeves 2005 supplies the human exercise calibration of alpha.",
+    "The equation assumes fully recruited zone-3 resistance vessels, constant hematocrit, one alpha throughout the vascular bed, and mean rather than pulsatile flow.",
+    "The empirical Claessen resistance power law is deliberately absent to prevent double-counting the exercise-related fall in apparent PVR.",
+    "The fixed arterial compliance controls transient mean pressure but is not the same quantity as resistance-vessel diameter distensibility.",
+    "The healthy-human mean alpha is held constant even though Reeves reported a tendency to lower values in men over 60 years; age-conditioned alpha is deferred pending a separately qualified rule.",
+    "The zero-pressure resistance R0 is a model quantity derived at runtime, not the observed resting PVR and not a directly measured parameter.",
+    "PAWP is a surrogate for left-atrial pressure and low-flow derecruitment or critical-closing-pressure behavior is outside the fully recruited model.",
+    "Transit time and right/left perfusion remain fixed during exercise.",
+    "Gas exchange, biochemical exchange, lobar recruitment, autoregulation, disease, sex-specific alpha, and patient anatomy are outside v5."
+  ]
+}

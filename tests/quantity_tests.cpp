@@ -28,6 +28,8 @@ static_assert(std::same_as<decltype(mehlissa::core::moles(1.0) / mehlissa::core:
 static_assert(
     std::same_as<decltype(mehlissa::core::wood_units(1.0) * mehlissa::core::liters_per_minute(1.0)),
                  mehlissa::core::Pressure>);
+static_assert(std::same_as<decltype(mehlissa::core::per_pascal(1.0) * mehlissa::core::pascals(1.0)),
+                           mehlissa::core::Dimensionless>);
 static_assert(std::same_as<decltype(mehlissa::core::wood_units(1.0) *
                                     mehlissa::core::milliliters_per_millimeter_of_mercury(1.0)),
                            mehlissa::core::Time>);
@@ -83,6 +85,8 @@ TEST_CASE("Pulmonary pressure resistance and compliance conversions preserve dim
     REQUIRE(mehlissa::core::in_millimeters_of_mercury(pressure) == Catch::Approx(6.0));
     REQUIRE(mehlissa::core::in_seconds(time_constant) == Catch::Approx(0.36));
     REQUIRE(mehlissa::core::in_wood_units(mehlissa::core::wood_units(1.2)) == Catch::Approx(1.2));
+    REQUIRE(mehlissa::core::in_per_millimeter_of_mercury(
+                mehlissa::core::per_millimeter_of_mercury(0.02)) == Catch::Approx(0.02));
     REQUIRE(mehlissa::core::in_milliliters_per_millimeter_of_mercury(
                 mehlissa::core::milliliters_per_millimeter_of_mercury(5.0)) == Catch::Approx(5.0));
 }

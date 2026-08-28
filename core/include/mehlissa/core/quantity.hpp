@@ -130,6 +130,7 @@ using Amount = Quantity<Dimension<0, 0, 1>>;
 using Concentration = Quantity<Dimension<-3, 0, 1>>;
 using Mass = Quantity<Dimension<0, 0, 0, 1>>;
 using Pressure = Quantity<Dimension<-1, -2, 0, 1>>;
+using InversePressure = Quantity<Dimension<1, 2, 0, -1>>;
 using VascularResistance = Quantity<Dimension<-4, -1, 0, 1>>;
 using VascularCompliance = Quantity<Dimension<4, 2, 0, -1>>;
 
@@ -211,6 +212,14 @@ using VascularCompliance = Quantity<Dimension<4, 2, 0, -1>>;
     return pascals(value * 133.322387415);
 }
 
+[[nodiscard]] constexpr InversePressure per_pascal(const double value) noexcept {
+    return InversePressure::from_si(value);
+}
+
+[[nodiscard]] constexpr InversePressure per_millimeter_of_mercury(const double value) noexcept {
+    return per_pascal(value / 133.322387415);
+}
+
 [[nodiscard]] constexpr VascularResistance
 pascal_seconds_per_cubic_meter(const double value) noexcept {
     return VascularResistance::from_si(value);
@@ -265,6 +274,14 @@ milliliters_per_millimeter_of_mercury(const double value) noexcept {
 
 [[nodiscard]] constexpr double in_millimeters_of_mercury(const Pressure value) noexcept {
     return value.si_value() / 133.322387415;
+}
+
+[[nodiscard]] constexpr double in_per_pascal(const InversePressure value) noexcept {
+    return value.si_value();
+}
+
+[[nodiscard]] constexpr double in_per_millimeter_of_mercury(const InversePressure value) noexcept {
+    return value.si_value() * 133.322387415;
 }
 
 [[nodiscard]] constexpr double

@@ -5,10 +5,10 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # M3 – Body–Organ Coupling
 
-**Status:** technical coupling, literature-parameterized flow-, age-, and
-invasive-young-resistance-conditioned 0D references, independent aggregate and
-published-population multipoint validation, and subject-level analysis path complete;
-anatomical/FP9 scientific gate open
+**Status:** technical coupling, empirical and pressure-distensible 0D
+references, independent aggregate and published-population multipoint
+validation, and subject-level analysis path complete; anatomical/FP9
+scientific gate open
 
 **Started:** 27 August 2026
 
@@ -34,6 +34,7 @@ respiratory mechanics, or gas exchange.
 | M3.11 published-population multipoint validation | qualified partial result; 10/18 stages agree | independent Kovacs and Wolsk series; 255 healthy volunteers; exact mean/SD and mean/95% CI semantics; age-stratified failure pattern exposed without refitting |
 | M3.12 independent age conditioning | qualified improvement; 14/18 stages agree | separate Kane calibration; bounded 18–85-year three-band PVR multiplier; immutable Kovacs/Wolsk validation; older stratum improves 2/5 to 5/5 while young-stratum limitation remains |
 | M3.13 invasive young-adult resistance qualification | qualified Wolsk population pass; participant-level/anatomical validation open | invasive Kovacs 2012 young-PVR calibration; retained independently supported flow exponent; overlap-aware exclusion of Kovacs 2009; 15/15 disjoint Wolsk stages agree without refitting |
+| M3.14 pressure-distensible structural candidate | implemented and independently diagnosed; does not replace v4 | Linehan equation; Reeves healthy `alpha`; normalized resting equilibrium; mutually exclusive empirical/structural laws; frozen Wolsk result of 11/15 with the older-stratum limitation exposed |
 
 ## M3.1 result
 
@@ -178,6 +179,15 @@ appropriate but that the young resting PVR level is too high. The immutable v4
 candidate therefore changes only that level. All 15 stages in the disjoint
 Wolsk age-stratified cohort agree; the overlapping Kovacs 2009 literature
 summary is deliberately excluded from the counted v4 result.
+
+M3.14 adds the
+[pressure-distensible v5 structural candidate](PULMONARY_0D_PRESSURE_DISTENSIBILITY.md).
+It replaces—not combines—the empirical flow law with the Linehan relationship,
+normalizes zero-pressure resistance to preserve the qualified reference state,
+and keeps v1–v4 immutable. Under the frozen Wolsk protocol, young and middle
+strata agree at 5/5 each, while the older stratum agrees at only 1/5. The 11/15
+total means v5 is a useful mechanistic candidate but does not supersede the
+15/15 empirical v4 population reference.
 
 An initial [SimVascular Healthy Pulmonary Candidate Review](SIMVASCULAR_PULMONARY_CANDIDATE_REVIEW.md)
 finds the official case useful for an imported pulmonary-artery technical

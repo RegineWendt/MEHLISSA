@@ -14,7 +14,7 @@
 namespace mehlissa::models::organ {
 
 inline constexpr auto earliest_supported_lung_model_definition_schema_version = "1.0.0";
-inline constexpr auto latest_supported_lung_model_definition_schema_version = "1.3.0";
+inline constexpr auto latest_supported_lung_model_definition_schema_version = "1.4.0";
 
 struct LungModelValidity final {
     std::string population;
@@ -74,6 +74,12 @@ struct PulmonaryAgeConditioningEvidence final {
     LungModelEvidenceQuantity older_resistance_multiplier;
 };
 
+struct PulmonaryPressureDistensibilityEvidence final {
+    LungModelEvidenceQuantity reference_cardiac_output;
+    LungModelEvidenceQuantity reference_left_atrial_pressure;
+    LungModelEvidenceQuantity coefficient;
+};
+
 struct PulmonaryHemodynamicEvidence final {
     LungModelEvidenceQuantity baseline_cardiac_output;
     LungModelEvidenceQuantity left_atrial_pressure;
@@ -84,6 +90,7 @@ struct PulmonaryHemodynamicEvidence final {
     LungModelEvidenceQuantity mean_pulmonary_arterial_pressure_target;
     std::optional<PulmonaryFlowAdaptationEvidence> flow_adaptation;
     std::optional<PulmonaryAgeConditioningEvidence> age_conditioning;
+    std::optional<PulmonaryPressureDistensibilityEvidence> pressure_distensibility;
 };
 
 struct LungModelDefinition final {

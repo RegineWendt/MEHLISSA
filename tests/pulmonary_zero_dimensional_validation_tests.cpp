@@ -44,6 +44,14 @@ load_invasive_young_resistance_model_definition() {
     });
 }
 
+[[nodiscard]] mehlissa::models::organ::LungModelDefinition
+load_pressure_distensible_model_definition() {
+    return mehlissa::models::organ::load_lung_model_definition({
+        root() / "data" / "lung-models" / "healthy-adult-pressure-distensible-age-0d-v5.json",
+        root() / "data" / "schemas" / "lung-model-definition" / "1.4.0.schema.json",
+    });
+}
+
 [[nodiscard]] mehlissa::models::organ::PulmonaryZeroDimensionalValidationCase load_validation() {
     return mehlissa::models::organ::load_pulmonary_zero_dimensional_validation_case({
         root() / "data" / "validation" / "pulmonary-zero-dimensional" /
@@ -103,6 +111,18 @@ load_invasive_young_resistance_population_multipoint_validation() {
         load_pulmonary_zero_dimensional_population_multipoint_validation_case({
             root() / "data" / "validation" / "pulmonary-zero-dimensional" /
                 "healthy-population-multipoint-v3.json",
+            root() / "data" / "schemas" /
+                "pulmonary-zero-dimensional-population-multipoint-validation" / "1.1.0.schema.json",
+        });
+}
+
+[[nodiscard]]
+mehlissa::models::organ::PulmonaryZeroDimensionalPopulationMultipointValidationCase
+load_pressure_distensible_population_validation() {
+    return mehlissa::models::organ::
+        load_pulmonary_zero_dimensional_population_multipoint_validation_case({
+            root() / "data" / "validation" / "pulmonary-zero-dimensional" /
+                "healthy-pressure-distensible-population-v1.json",
             root() / "data" / "schemas" /
                 "pulmonary-zero-dimensional-population-multipoint-validation" / "1.1.0.schema.json",
         });
@@ -365,4 +385,28 @@ TEST_CASE("Invasive young resistance resolves the disjoint Wolsk population seri
     CHECK(report.series[0].accepted_stage_count == 5);
     CHECK(report.series[1].accepted_stage_count == 5);
     CHECK(report.series[2].accepted_stage_count == 5);
+}
+
+TEST_CASE("Fixed healthy distensibility exposes the older-stratum structural limitation",
+          "[m3][organ][pulmonary-0d][population-multipoint-validation][distensibility]") {
+    const auto validation = load_pressure_distensible_population_validation();
+    const auto model_definition = load_pressure_distensible_model_definition();
+    const auto report = mehlissa::models::organ::
+        evaluate_pulmonary_zero_dimensional_population_multipoint_validation(validation,
+                                                                             model_definition);
+
+    REQUIRE(report.series.size() == 3);
+    CHECK(report.source_independence_verified);
+    CHECK(report.stage_count == 15);
+    CHECK(report.accepted_stage_count == 11);
+    CHECK_FALSE(report.all_stages_agree);
+    CHECK(report.series[0].accepted_stage_count == 5);
+    CHECK(report.series[1].accepted_stage_count == 5);
+    CHECK(report.series[2].accepted_stage_count == 1);
+    CHECK(mehlissa::core::in_millimeters_of_mercury(
+              mehlissa::core::pascals(report.series[0].root_mean_square_pressure_error_si)) ==
+          Catch::Approx(1.28351281810565));
+    CHECK(mehlissa::core::in_millimeters_of_mercury(
+              mehlissa::core::pascals(report.series[2].root_mean_square_pressure_error_si)) ==
+          Catch::Approx(5.41120283374481));
 }

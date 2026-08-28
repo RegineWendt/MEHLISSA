@@ -50,3 +50,9 @@ series (15 stages). Kovacs 2009 is omitted because the v4 Kovacs 2012
 calibration reanalysed part of the same historical literature corpus. All
 15 Wolsk stages agree without refitting; see the
 [young-adult resistance model card](../../docs/m3/PULMONARY_0D_YOUNG_RESISTANCE.md).
+
+M3.14 adds `healthy-pressure-distensible-population-v1.json`, which binds the
+same 15 Wolsk stages to the structural v5 candidate under a pre-locked,
+no-fitting protocol. Agreement is 5/5, 5/5, and 1/5 by increasing age stratum,
+or 11/15 overall. The older failures are retained as a model limitation; see
+the [pressure-distensibility model card](../../docs/m3/PULMONARY_0D_PRESSURE_DISTENSIBILITY.md).

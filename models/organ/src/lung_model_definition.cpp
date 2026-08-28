@@ -140,6 +140,18 @@ void validate_document(const Json& document, const CompiledSchema& schema,
                     conditioning.at("older_resistance_multiplier").at("value_si").as<double>()),
             };
         }
+        std::optional<PulmonaryPressureDistensibilityParameters> pressure_distensibility;
+        if (hemodynamics.contains("pressure_distensibility")) {
+            const auto& distensibility = hemodynamics.at("pressure_distensibility");
+            pressure_distensibility = PulmonaryPressureDistensibilityParameters{
+                core::cubic_meters_per_second(
+                    distensibility.at("reference_cardiac_output").at("value_si").as<double>()),
+                core::pascals(distensibility.at("reference_left_atrial_pressure")
+                                  .at("value_si")
+                                  .as<double>()),
+                core::per_pascal(distensibility.at("coefficient").at("value_si").as<double>()),
+            };
+        }
         config.zero_dimensional_parameters = PulmonaryZeroDimensionalParameters{
             core::cubic_meters_per_second(value("baseline_cardiac_output")),
             core::pascals(value("left_atrial_pressure")),
@@ -149,6 +161,7 @@ void validate_document(const Json& document, const CompiledSchema& schema,
             core::Dimensionless::from_si(value("right_lung_perfusion_fraction")),
             flow_adaptation,
             age_conditioning,
+            pressure_distensibility,
         };
     }
     return config;
@@ -184,6 +197,7 @@ void validate_document(const Json& document, const CompiledSchema& schema,
         decode_evidence_quantity(hemodynamics.at("mean_pulmonary_arterial_pressure_target")),
         std::nullopt,
         std::nullopt,
+        std::nullopt,
     };
     if (hemodynamics.contains("flow_adaptation")) {
         const auto& adaptation = hemodynamics.at("flow_adaptation");
@@ -204,6 +218,14 @@ void validate_document(const Json& document, const CompiledSchema& schema,
             decode_evidence_quantity(conditioning.at("maximum_supported_age_years")),
             decode_evidence_quantity(conditioning.at("young_resistance_multiplier")),
             decode_evidence_quantity(conditioning.at("older_resistance_multiplier")),
+        };
+    }
+    if (hemodynamics.contains("pressure_distensibility")) {
+        const auto& distensibility = hemodynamics.at("pressure_distensibility");
+        result.pressure_distensibility = PulmonaryPressureDistensibilityEvidence{
+            decode_evidence_quantity(distensibility.at("reference_cardiac_output")),
+            decode_evidence_quantity(distensibility.at("reference_left_atrial_pressure")),
+            decode_evidence_quantity(distensibility.at("coefficient")),
         };
     }
     return result;
@@ -262,7 +284,7 @@ void validate_document(const Json& document, const CompiledSchema& schema,
 
 [[nodiscard]] bool supported_schema_version(const std::string_view version) noexcept {
     return version == earliest_supported_lung_model_definition_schema_version ||
-           version == "1.1.0" || version == "1.2.0" ||
+           version == "1.1.0" || version == "1.2.0" || version == "1.3.0" ||
            version == latest_supported_lung_model_definition_schema_version;
 }
 
@@ -344,6 +366,13 @@ void validate_definition(const LungModelDefinition& definition) {
             validate_evidence_source(evidence.age_conditioning->older_resistance_multiplier,
                                      source_ids);
         }
+        if (evidence.pressure_distensibility.has_value()) {
+            validate_evidence_source(evidence.pressure_distensibility->reference_cardiac_output,
+                                     source_ids);
+            validate_evidence_source(
+                evidence.pressure_distensibility->reference_left_atrial_pressure, source_ids);
+            validate_evidence_source(evidence.pressure_distensibility->coefficient, source_ids);
+        }
 
         const auto& parameters = *definition.model.zero_dimensional_parameters;
         const auto transit_seconds =
@@ -405,6 +434,28 @@ void validate_definition(const LungModelDefinition& definition) {
         } else if (parameters.age_conditioning.has_value()) {
             invalid(core::ErrorCode::data_invalid,
                     "Pulmonary age conditioning requires evidence metadata");
+        }
+        if (evidence.pressure_distensibility.has_value()) {
+            if (!parameters.pressure_distensibility.has_value()) {
+                invalid(core::ErrorCode::data_invalid,
+                        "Pulmonary pressure distensibility requires executable parameters");
+            }
+            const auto& distensibility = *parameters.pressure_distensibility;
+            if (!nearly_equal(
+                    evidence.pressure_distensibility->reference_cardiac_output.value_si,
+                    core::in_cubic_meters_per_second(distensibility.reference_cardiac_output)) ||
+                !nearly_equal(
+                    evidence.pressure_distensibility->reference_left_atrial_pressure.value_si,
+                    core::in_pascals(distensibility.reference_left_atrial_pressure)) ||
+                !nearly_equal(evidence.pressure_distensibility->coefficient.value_si,
+                              core::in_per_pascal(distensibility.coefficient))) {
+                invalid(core::ErrorCode::data_invalid,
+                        "Pulmonary pressure-distensibility evidence is disconnected from the "
+                        "executable parameterization");
+            }
+        } else if (parameters.pressure_distensibility.has_value()) {
+            invalid(core::ErrorCode::data_invalid,
+                    "Pulmonary pressure distensibility requires evidence metadata");
         }
     } else if (definition.hemodynamics.has_value()) {
         invalid(core::ErrorCode::data_invalid,

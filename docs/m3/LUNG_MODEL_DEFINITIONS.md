@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## Executable model card
 
-Schemas `lung-model-definition/1.0.0` through `1.3.0` bind model selection and
+Schemas `lung-model-definition/1.0.0` through `1.4.0` bind model selection and
 parameters to the evidence needed to interpret them. A definition contains:
 
 - stable definition and model identities;
@@ -31,6 +31,9 @@ propagated rather than inventing bounds.
 Version 1.3.0 adds optional evidence-linked age conditioning with explicit
 supported age bounds, band boundaries, a scenario age, and young/older PVR
 multipliers. The executable loader rejects ages outside the calibrated range.
+Version 1.4.0 adds a Linehan pressure-distensibility option with locked
+reference flow, reference left-atrial pressure, and an inverse-pressure
+coefficient. It is mutually exclusive with empirical flow adaptation.
 
 ## Checked-in definitions
 
@@ -68,6 +71,14 @@ The v4 definition
 schema 1.3.0 and replaces only the young PVR multiplier with an invasive
 24–50-year calibration. Its overlap-aware Wolsk-only validation is documented
 in [Pulmonary 0D Young-Adult Resistance Qualification](PULMONARY_0D_YOUNG_RESISTANCE.md).
+
+The v5 definition
+`data/lung-models/healthy-adult-pressure-distensible-age-0d-v5.json` keeps the
+v4 resting and age evidence but replaces empirical flow adaptation with the
+Linehan pressure-distensible relationship and a separately sourced healthy
+coefficient. Its frozen 11/15 Wolsk comparison and older-stratum limitation
+are documented in
+[Pulmonary 0D Pressure Distensibility](PULMONARY_0D_PRESSURE_DISTENSIBILITY.md).
 
 ## External-data boundary
 
