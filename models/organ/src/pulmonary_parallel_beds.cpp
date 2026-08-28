@@ -97,7 +97,8 @@ void PulmonaryParallelBedsModel::finalize(core::SimulationContext& context) noex
 }
 
 void PulmonaryParallelBedsModel::accept_entity(coupling::EntityTransfer transfer) {
-    bed_transits_[bed_index_for_entity(transfer.entity_id)]->accept_entity(std::move(transfer));
+    const auto bed_index = bed_index_for_entity(transfer.entity_id);
+    bed_transits_[bed_index]->accept_entity(std::move(transfer));
 }
 
 std::vector<coupling::EntityTransfer> PulmonaryParallelBedsModel::take_outbound_entities() {
