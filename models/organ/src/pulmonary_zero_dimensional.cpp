@@ -55,12 +55,15 @@ void validate_parameters(const PulmonaryZeroDimensionalParameters& parameters) {
                 core::in_cubic_meters_per_second(distensibility.reference_cardiac_output)) ||
             !std::isfinite(core::in_pascals(distensibility.reference_left_atrial_pressure)) ||
             core::in_pascals(distensibility.reference_left_atrial_pressure) < 0.0 ||
-            !positive_finite(core::in_per_pascal(distensibility.coefficient))) {
+            !positive_finite(core::in_per_pascal(distensibility.coefficient)) ||
+            (distensibility.older_coefficient.has_value() &&
+             (!parameters.age_conditioning.has_value() ||
+              !positive_finite(core::in_per_pascal(*distensibility.older_coefficient))))) {
             throw core::MehlissaError{
                 core::ErrorCode::data_invalid,
                 "Pulmonary pressure distensibility requires positive finite reference flow and "
-                "coefficient, non-negative finite reference left-atrial pressure, and cannot be "
-                "combined with empirical flow adaptation"};
+                "coefficient, non-negative finite reference left-atrial pressure, an age rule for "
+                "any older coefficient, and cannot be combined with empirical flow adaptation"};
         }
     }
     if (parameters.age_conditioning.has_value()) {
@@ -144,7 +147,14 @@ effective_hemodynamics(const PulmonaryZeroDimensionalParameters& parameters,
         parameters.pulmonary_vascular_resistance * age_resistance_multiplier;
     if (parameters.pressure_distensibility.has_value()) {
         const auto& distensibility = *parameters.pressure_distensibility;
-        const auto alpha = core::in_per_pascal(distensibility.coefficient);
+        auto effective_coefficient = distensibility.coefficient;
+        if (distensibility.older_coefficient.has_value() &&
+            parameters.age_conditioning.has_value() &&
+            parameters.age_conditioning->age_years >=
+                parameters.age_conditioning->older_lower_age_years) {
+            effective_coefficient = *distensibility.older_coefficient;
+        }
+        const auto alpha = core::in_per_pascal(effective_coefficient);
         const auto reference_flow =
             core::in_cubic_meters_per_second(distensibility.reference_cardiac_output);
         const auto reference_left_atrial_pressure =
@@ -170,7 +180,7 @@ effective_hemodynamics(const PulmonaryZeroDimensionalParameters& parameters,
             core::Dimensionless::from_si(age_resistance_multiplier),
             equilibrium,
             zero_pressure_resistance,
-            distensibility.coefficient,
+            effective_coefficient,
         };
     }
 

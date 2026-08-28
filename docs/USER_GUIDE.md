@@ -295,6 +295,7 @@ data/lung-models/healthy-adult-rest-exercise-0d-v2.json
 data/lung-models/healthy-adult-rest-exercise-age-0d-v3.json
 data/lung-models/healthy-adult-rest-exercise-age-invasive-0d-v4.json
 data/lung-models/healthy-adult-pressure-distensible-age-0d-v5.json
+data/lung-models/healthy-adult-pressure-distensible-age-0d-v6.json
 ```
 
 The two contract cards validate against
@@ -336,6 +337,13 @@ unchanged. Read the
 [pressure-distensibility model card](m3/PULMONARY_0D_PRESSURE_DISTENSIBILITY.md)
 before using v5; its frozen population comparison is weaker than v4.
 
+The v6 card validates against schema 1.5.0. It keeps `alpha = 0.020 mmHg^-1`
+below age 60 and uses the independently reported older value
+`0.015 mmHg^-1` from age 60. The older calibration is directly supported in
+men, so using v6 as sex-neutral is an explicit extrapolation. Read the
+[age-distensibility model card](m3/PULMONARY_0D_AGE_DISTENSIBILITY.md) before
+interpreting v6.
+
 The optional external-data section can preserve a source checksum, format,
 coordinate system, units, and transformation history, but no qualified
 pulmonary geometry is distributed yet.
@@ -374,7 +382,9 @@ These labels are not interchangeable. In particular:
   15 stages in the disjoint Wolsk cohort, while the overlapping Kovacs 2009
   series is not counted. v5 provides a structurally distinct pressure-
   distensible experiment and agrees with 11/15 frozen Wolsk stages; its 1/5
-  older-stratum result is a declared limitation, so it does not replace v4. A
+  older-stratum result is a declared limitation, so it does not replace v4.
+  V6 uses an independent older coefficient and reduces older pressure RMSE,
+  but stage agreement remains 11/15. A
   software-verified subject-level multipoint analysis
   path exists;
   measured participant-level data have not yet been licensed or evaluated,
@@ -431,6 +441,9 @@ population schema 1.1.0.
 The v5 structural evaluation is
 `healthy-pressure-distensible-population-v1.json` and uses the same schema and
 the same three Wolsk series without fitting.
+The v6 age-distensibility evaluation is
+`healthy-pressure-distensible-population-v2.json`; its Wolsk values and
+acceptance protocol are unchanged from v5.
 Reported mmHg and L/min values are converted to SI by the loader. Wolsk cardiac
 index is converted to mean absolute flow using the explicitly recorded mean
 BSA of 1.9 m2.
@@ -440,7 +453,8 @@ Wolsk 20–39, 40–59, and 60–80 groups pass 0/5, 5/5, and 2/5. With the sepa
 Kane age calibration, v3 yields 3/3, 1/5, 5/5, and 5/5, or 14/18 overall. A
 v4 comparison counts only the disjoint Wolsk groups and yields 5/5, 5/5, and
 5/5, or 15/15, without refitting. The v5 structural comparison yields 5/5,
-5/5, and 1/5, or 11/15, and is deliberately not tuned after that result. A
+5/5, and 1/5, or 11/15, and is deliberately not tuned after that result. V6
+retains those counts while reducing older RMSE from 5.411 to 4.603 mmHg. A
 reported 95% CI is an interval for the
 population mean, not an individual
 tolerance range. Read the complete
@@ -449,6 +463,8 @@ and the [v3 age-conditioning](m3/PULMONARY_0D_AGE_CONDITIONING.md) and
 [v4 young-resistance](m3/PULMONARY_0D_YOUNG_RESISTANCE.md) model cards before
 interpreting a stage result. For v5, also read the
 [pressure-distensibility model card](m3/PULMONARY_0D_PRESSURE_DISTENSIBILITY.md).
+For v6, read the
+[age-distensibility model card](m3/PULMONARY_0D_AGE_DISTENSIBILITY.md).
 
 ### 8.3 Verify the subject-level multipoint analysis path
 

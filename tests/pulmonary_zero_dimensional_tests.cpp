@@ -218,6 +218,7 @@ TEST_CASE("Pressure-distensible vessels preserve the reference point and curve a
             mehlissa::core::liters_per_minute(6.0),
             mehlissa::core::millimeters_of_mercury(8.0),
             mehlissa::core::per_millimeter_of_mercury(0.02),
+            std::nullopt,
         };
 
     const PulmonaryZeroDimensionalModel model{std::move(config)};
@@ -243,7 +244,7 @@ TEST_CASE("Pressure distensibility cannot double-count empirical flow adaptation
     config.parameters.pressure_distensibility =
         mehlissa::models::organ::PulmonaryPressureDistensibilityParameters{
             mehlissa::core::liters_per_minute(6.0), mehlissa::core::millimeters_of_mercury(8.0),
-            mehlissa::core::per_millimeter_of_mercury(0.02)};
+            mehlissa::core::per_millimeter_of_mercury(0.02), std::nullopt};
 
     CHECK_THROWS_AS(PulmonaryZeroDimensionalModel{std::move(config)},
                     mehlissa::core::MehlissaError);
@@ -255,7 +256,55 @@ TEST_CASE("Pressure distensibility rejects a non-positive coefficient before eva
     config.parameters.pressure_distensibility =
         mehlissa::models::organ::PulmonaryPressureDistensibilityParameters{
             mehlissa::core::liters_per_minute(6.0), mehlissa::core::millimeters_of_mercury(8.0),
-            mehlissa::core::per_pascal(0.0)};
+            mehlissa::core::per_pascal(0.0), std::nullopt};
+
+    CHECK_THROWS_AS(PulmonaryZeroDimensionalModel{std::move(config)},
+                    mehlissa::core::MehlissaError);
+}
+
+TEST_CASE("Older pressure distensibility follows the independently sourced age boundary",
+          "[m3][organ][pulmonary-0d][physiology][age][distensibility]") {
+    auto config = reference_config();
+    config.parameters.baseline_cardiac_output = mehlissa::core::liters_per_minute(18.0);
+    config.parameters.age_conditioning =
+        mehlissa::models::organ::PulmonaryAgeConditioningParameters{
+            70.0,
+            24.0,
+            40.0,
+            60.0,
+            85.0,
+            mehlissa::core::Dimensionless::from_si(0.71875),
+            mehlissa::core::Dimensionless::from_si(1.12245955546343),
+        };
+    config.parameters.pressure_distensibility =
+        mehlissa::models::organ::PulmonaryPressureDistensibilityParameters{
+            mehlissa::core::liters_per_minute(6.0),
+            mehlissa::core::millimeters_of_mercury(8.0),
+            mehlissa::core::per_millimeter_of_mercury(0.02),
+            mehlissa::core::per_millimeter_of_mercury(0.015),
+        };
+
+    const PulmonaryZeroDimensionalModel model{std::move(config)};
+    const auto state = model.state();
+    CHECK(mehlissa::core::in_per_millimeter_of_mercury(state.effective_pressure_distensibility) ==
+          Catch::Approx(0.015));
+    CHECK(mehlissa::core::in_millimeters_of_mercury(state.mean_pulmonary_arterial_pressure) ==
+          Catch::Approx(26.4417292638956));
+    CHECK(mehlissa::core::in_wood_units(state.zero_pressure_pulmonary_vascular_resistance) ==
+          Catch::Approx(2.63066739645893));
+    CHECK(mehlissa::core::in_liters_per_minute(state.pulmonary_outflow) == Catch::Approx(18.0));
+}
+
+TEST_CASE("An older distensibility coefficient requires an age-conditioning boundary",
+          "[m3][organ][pulmonary-0d][validation][age][distensibility]") {
+    auto config = reference_config();
+    config.parameters.pressure_distensibility =
+        mehlissa::models::organ::PulmonaryPressureDistensibilityParameters{
+            mehlissa::core::liters_per_minute(6.0),
+            mehlissa::core::millimeters_of_mercury(8.0),
+            mehlissa::core::per_millimeter_of_mercury(0.02),
+            mehlissa::core::per_millimeter_of_mercury(0.015),
+        };
 
     CHECK_THROWS_AS(PulmonaryZeroDimensionalModel{std::move(config)},
                     mehlissa::core::MehlissaError);

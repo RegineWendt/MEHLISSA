@@ -56,3 +56,9 @@ same 15 Wolsk stages to the structural v5 candidate under a pre-locked,
 no-fitting protocol. Agreement is 5/5, 5/5, and 1/5 by increasing age stratum,
 or 11/15 overall. The older failures are retained as a model limitation; see
 the [pressure-distensibility model card](../../docs/m3/PULMONARY_0D_PRESSURE_DISTENSIBILITY.md).
+
+M3.15 adds `healthy-pressure-distensible-population-v2.json`. It copies the v5
+Wolsk stages and protocol unchanged and binds them to the age-conditioned v6
+candidate. The older-stratum RMSE improves from 5.411 to 4.603 mmHg, but stage
+agreement remains 1/5 older and 11/15 overall. See the
+[age-distensibility model card](../../docs/m3/PULMONARY_0D_AGE_DISTENSIBILITY.md).

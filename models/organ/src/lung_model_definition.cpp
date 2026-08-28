@@ -150,6 +150,10 @@ void validate_document(const Json& document, const CompiledSchema& schema,
                                   .at("value_si")
                                   .as<double>()),
                 core::per_pascal(distensibility.at("coefficient").at("value_si").as<double>()),
+                distensibility.contains("older_coefficient")
+                    ? std::optional<core::InversePressure>{core::per_pascal(
+                          distensibility.at("older_coefficient").at("value_si").as<double>())}
+                    : std::nullopt,
             };
         }
         config.zero_dimensional_parameters = PulmonaryZeroDimensionalParameters{
@@ -226,6 +230,10 @@ void validate_document(const Json& document, const CompiledSchema& schema,
             decode_evidence_quantity(distensibility.at("reference_cardiac_output")),
             decode_evidence_quantity(distensibility.at("reference_left_atrial_pressure")),
             decode_evidence_quantity(distensibility.at("coefficient")),
+            distensibility.contains("older_coefficient")
+                ? std::optional<LungModelEvidenceQuantity>{decode_evidence_quantity(
+                      distensibility.at("older_coefficient"))}
+                : std::nullopt,
         };
     }
     return result;
@@ -284,7 +292,7 @@ void validate_document(const Json& document, const CompiledSchema& schema,
 
 [[nodiscard]] bool supported_schema_version(const std::string_view version) noexcept {
     return version == earliest_supported_lung_model_definition_schema_version ||
-           version == "1.1.0" || version == "1.2.0" || version == "1.3.0" ||
+           version == "1.1.0" || version == "1.2.0" || version == "1.3.0" || version == "1.4.0" ||
            version == latest_supported_lung_model_definition_schema_version;
 }
 
@@ -372,6 +380,10 @@ void validate_definition(const LungModelDefinition& definition) {
             validate_evidence_source(
                 evidence.pressure_distensibility->reference_left_atrial_pressure, source_ids);
             validate_evidence_source(evidence.pressure_distensibility->coefficient, source_ids);
+            if (evidence.pressure_distensibility->older_coefficient.has_value()) {
+                validate_evidence_source(*evidence.pressure_distensibility->older_coefficient,
+                                         source_ids);
+            }
         }
 
         const auto& parameters = *definition.model.zero_dimensional_parameters;
@@ -448,7 +460,12 @@ void validate_definition(const LungModelDefinition& definition) {
                     evidence.pressure_distensibility->reference_left_atrial_pressure.value_si,
                     core::in_pascals(distensibility.reference_left_atrial_pressure)) ||
                 !nearly_equal(evidence.pressure_distensibility->coefficient.value_si,
-                              core::in_per_pascal(distensibility.coefficient))) {
+                              core::in_per_pascal(distensibility.coefficient)) ||
+                evidence.pressure_distensibility->older_coefficient.has_value() !=
+                    distensibility.older_coefficient.has_value() ||
+                (evidence.pressure_distensibility->older_coefficient.has_value() &&
+                 !nearly_equal(evidence.pressure_distensibility->older_coefficient->value_si,
+                               core::in_per_pascal(*distensibility.older_coefficient)))) {
                 invalid(core::ErrorCode::data_invalid,
                         "Pulmonary pressure-distensibility evidence is disconnected from the "
                         "executable parameterization");

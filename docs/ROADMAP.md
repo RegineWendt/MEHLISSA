@@ -384,6 +384,11 @@ preserving the resting equilibrium by deriving zero-pressure resistance. Its
 locked Wolsk result is 11/15: both younger strata pass 5/5, while the older
 stratum passes only 1/5. The negative comparison is retained, so empirical v4
 remains the stronger population reference and v5 the structural experiment.
+M3.15 tests a smaller independently calibrated refinement: Reeves' invasive
+older aggregate lowers `alpha` from 0.020 to 0.015 mmHg^-1 at age 60. Against
+the still-frozen Wolsk stages, older RMSE improves from 5.411 to 4.603 mmHg,
+but agreement remains 1/5 older and 11/15 overall. V6 therefore narrows the
+mechanistic question without superseding v4 or resolving the anatomical gap.
 Participant-level validation remains a higher-resolution follow-up.
 Anatomical refinement, transforming exchange, general experiment composition,
 continuous/regional activity physiology, and regional exercise redistribution
@@ -393,7 +398,8 @@ The formal [M3 gate review](m3/M3_GATE_REVIEW.md) therefore keeps the milestone
 open: the software coupling candidate, first literature-parameterized 0D
 reference candidate, independent aggregate validation, and bounded
 rest/exercise 0D adaptation, bounded age conditioning, invasive young-adult
-resistance refinement, and a pressure-distensible alternative are verified, the
+resistance refinement, a pressure-distensible alternative, and its
+age-conditioned sensitivity are verified, the
 subject-level analysis path is software-verified, and published population
 multipoint validation has produced a qualified 15/15 result against the
 calibration-disjoint Wolsk cohort. Anatomical

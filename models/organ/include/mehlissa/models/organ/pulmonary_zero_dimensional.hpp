@@ -35,6 +35,7 @@ struct PulmonaryPressureDistensibilityParameters final {
     core::FlowRate reference_cardiac_output;
     core::Pressure reference_left_atrial_pressure;
     core::InversePressure coefficient;
+    std::optional<core::InversePressure> older_coefficient;
 };
 
 struct PulmonaryZeroDimensionalParameters final {

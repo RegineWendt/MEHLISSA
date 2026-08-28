@@ -88,8 +88,9 @@ Wolsk validation failures.
 ## Interpretation and limitations
 
 - v4 remains the current empirical population-reference candidate.
-- v5 is the preferred structural experiment for investigating pressure-
-  dependent pulmonary haemodynamics.
+- v5 is the immutable fixed-distensibility baseline for investigating
+  pressure-dependent pulmonary haemodynamics; v6 is its age-conditioned
+  sensitivity successor.
 - The fixed coefficient is a population mean, not a patient parameter.
 - The model remains a mean-pressure 0D bed. It has no explicit arteries,
   veins, lobes, pulsatile wave propagation, recruitment threshold, ventilation,
@@ -102,10 +103,11 @@ Wolsk validation failures.
 - Published aggregate confidence intervals are not individual physiological
   tolerance ranges.
 
-The next structural step should therefore qualify an independently sourced
-age- or region-conditioned distensibility rule, or introduce parallel
-anatomical pulmonary beds. Any successor must be calibrated outside Wolsk and
-re-evaluated against the unchanged validation record.
+M3.15 follows the smaller of these paths with an independently sourced older
+coefficient; see
+[Pulmonary 0D Age-Conditioned Distensibility](PULMONARY_0D_AGE_DISTENSIBILITY.md).
+It improves older RMSE but leaves stage agreement unchanged, so parallel
+anatomical pulmonary beds remain the stronger subsequent structural question.
 
 ## Executable evidence
 

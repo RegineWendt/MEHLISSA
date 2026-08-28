@@ -113,6 +113,19 @@ See [Pulmonary 0D Pressure Distensibility](PULMONARY_0D_PRESSURE_DISTENSIBILITY.
 The post-M3.14 local MSVC build and 115/115 CTest suite passed; CI evidence is
 recorded with the pushed increment.
 
+**Ninth post-review update, 28 August 2026:** M3.15 tests the smallest
+independently supported response to v5's older-stratum failure. Reeves et al.
+report `alpha = 0.015 ± 0.001 mmHg^-1` in an invasive 61–83-year group versus
+approximately `0.020 mmHg^-1` in young adults. The immutable v6 candidate uses
+the older value from age 60, records the published uncertainty as standard
+error, and re-normalizes `R0` to preserve each age band's resting equilibrium.
+Against the unchanged Wolsk protocol, older RMSE improves from 5.411 to
+4.603 mmHg but agreement remains 1/5 older and 11/15 overall. The older source
+is male-specific, so sex-general use is also explicitly limited. V6 narrows
+the structural hypothesis but does not replace v4 or close the gate. See
+[Pulmonary 0D Age-Conditioned Distensibility](PULMONARY_0D_AGE_DISTENSIBILITY.md).
+The post-M3.15 local MSVC build and 119/119 CTest suite passed.
+
 ## 1. Review method
 
 The review checked the Roadmap Gate M3 statements and the additional acceptance
@@ -137,7 +150,7 @@ model” merely because it contained more regions than the coarse surrogate.
 | agent and substance flow complete body–lung–body traversal | satisfied for entity; organ traversal satisfied for conserved quantities | the complete entity round trip reaches the body return ledger; conserved population, substance, and flow traverse both lung endpoints without payload change |
 | no agent or relevant amount is duplicated or lost | satisfied | positive and negative ownership, duplicate-ID, route, time, and exact-payload tests |
 | both lung variants implement the same contract | satisfied | one `ModelComponent` interface, one `LungModelConfig`, schema-selected definitions, generated cross-variant tests |
-| flow, pressure/transit time, and perfusion share have units, sources, uncertainty, and an independent comparison | satisfied for aggregate and published multipoint population evidence; participant-level method also verified | the 0D candidates have executable SI pressure, flow, effective PVR/compliance, empirical and pressure-distensible activity response alternatives, measured total transit, right/left perfusion, uncertainty/evidence roles, source- and cohort-disjoint validation, explicit stress-test diagnostics, frozen population comparisons, and a separate pseudonymous participant-level trajectory evaluator; the v5 result exposes the fixed-distensibility age limitation rather than hiding failed strata |
+| flow, pressure/transit time, and perfusion share have units, sources, uncertainty, and an independent comparison | satisfied for aggregate and published multipoint population evidence; participant-level method also verified | the 0D candidates have executable SI pressure, flow, effective PVR/compliance, empirical and fixed/age-conditioned pressure-distensible alternatives, measured total transit, right/left perfusion, uncertainty/evidence roles, source- and cohort-disjoint validation, explicit stress-test diagnostics, frozen population comparisons, and a separate pseudonymous participant-level trajectory evaluator; v5 exposes the fixed-distensibility limitation and v6 shows that the independently sourced older coefficient improves error without resolving failed stages |
 | historical FP9 timer baseline runs without scenario-specific kernel logic | not satisfied | the dissertation baseline is specified and traced, but fingerprint detection/assembly/collection is not executable; implementing it prematurely in the organ kernel would violate the architecture |
 
 ## 4. Verification evidence

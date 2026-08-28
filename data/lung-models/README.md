@@ -35,3 +35,8 @@ empirical flow law with a Linehan pressure-distensible vessel relationship.
 The two laws cannot be enabled together. Its independent result and limits are
 documented in the
 [pressure-distensibility model card](../../docs/m3/PULMONARY_0D_PRESSURE_DISTENSIBILITY.md).
+
+`healthy-adult-pressure-distensible-age-0d-v6.json` adds the independently
+reported Reeves coefficient for adults aged 60 and older. It is intentionally
+a two-band structural experiment, with a declared older-male evidence limit;
+see the [age-distensibility model card](../../docs/m3/PULMONARY_0D_AGE_DISTENSIBILITY.md).

@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## Executable model card
 
-Schemas `lung-model-definition/1.0.0` through `1.4.0` bind model selection and
+Schemas `lung-model-definition/1.0.0` through `1.5.0` bind model selection and
 parameters to the evidence needed to interpret them. A definition contains:
 
 - stable definition and model identities;
@@ -34,6 +34,9 @@ multipliers. The executable loader rejects ages outside the calibrated range.
 Version 1.4.0 adds a Linehan pressure-distensibility option with locked
 reference flow, reference left-atrial pressure, and an inverse-pressure
 coefficient. It is mutually exclusive with empirical flow adaptation.
+Version 1.5.0 adds an optional older-age distensibility coefficient and a
+`standard_error` uncertainty kind. The older coefficient requires the existing
+age-conditioning boundary.
 
 ## Checked-in definitions
 
@@ -79,6 +82,13 @@ Linehan pressure-distensible relationship and a separately sourced healthy
 coefficient. Its frozen 11/15 Wolsk comparison and older-stratum limitation
 are documented in
 [Pulmonary 0D Pressure Distensibility](PULMONARY_0D_PRESSURE_DISTENSIBILITY.md).
+
+The v6 definition
+`data/lung-models/healthy-adult-pressure-distensible-age-0d-v6.json` retains v5
+below age 60 and applies the independently reported Reeves older-male
+coefficient at age 60 and above. Its frozen comparison reduces older RMSE but
+does not increase stage agreement; see
+[Pulmonary 0D Age-Conditioned Distensibility](PULMONARY_0D_AGE_DISTENSIBILITY.md).
 
 ## External-data boundary
 

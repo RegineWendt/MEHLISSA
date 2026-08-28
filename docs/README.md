@@ -31,6 +31,7 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 - [Pulmonary 0D age conditioning](m3/PULMONARY_0D_AGE_CONDITIONING.md) – separate Kane age calibration, executable v3 contract, no-refit population result, and remaining young-stratum limitation.
 - [Pulmonary 0D young-adult resistance qualification](m3/PULMONARY_0D_YOUNG_RESISTANCE.md) – invasive young-PVR calibration, v4 evidence separation, and 15/15 disjoint Wolsk population result.
 - [Pulmonary 0D pressure distensibility](m3/PULMONARY_0D_PRESSURE_DISTENSIBILITY.md) – Linehan v5 structural candidate, reference-state normalization, and frozen 11/15 Wolsk diagnostic.
+- [Pulmonary 0D age-conditioned distensibility](m3/PULMONARY_0D_AGE_DISTENSIBILITY.md) – independently calibrated v6 older coefficient, improved older RMSE, and unchanged 11/15 stage result.
 
 The historical analysis refers to legacy revision `4f4fc5a` (tag
 `legacy-baseline-2026-08-26`). The development documents describe branch

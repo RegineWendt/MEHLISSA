@@ -14,7 +14,7 @@
 namespace mehlissa::models::organ {
 
 inline constexpr auto earliest_supported_lung_model_definition_schema_version = "1.0.0";
-inline constexpr auto latest_supported_lung_model_definition_schema_version = "1.4.0";
+inline constexpr auto latest_supported_lung_model_definition_schema_version = "1.5.0";
 
 struct LungModelValidity final {
     std::string population;
@@ -78,6 +78,7 @@ struct PulmonaryPressureDistensibilityEvidence final {
     LungModelEvidenceQuantity reference_cardiac_output;
     LungModelEvidenceQuantity reference_left_atrial_pressure;
     LungModelEvidenceQuantity coefficient;
+    std::optional<LungModelEvidenceQuantity> older_coefficient;
 };
 
 struct PulmonaryHemodynamicEvidence final {
