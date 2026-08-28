@@ -186,10 +186,13 @@ TEST_CASE("Invasive young-resistance pulmonary definition narrows its evidence s
     const auto definition = load_definition_1_3(
         root() / "data" / "lung-models" / "healthy-adult-rest-exercise-age-invasive-0d-v4.json");
 
-    REQUIRE(definition.model.zero_dimensional_parameters.has_value());
-    REQUIRE(definition.hemodynamics.has_value());
-    REQUIRE(definition.model.zero_dimensional_parameters->age_conditioning.has_value());
-    REQUIRE(definition.hemodynamics->age_conditioning.has_value());
+    if (!definition.model.zero_dimensional_parameters.has_value() ||
+        !definition.hemodynamics.has_value() ||
+        !definition.model.zero_dimensional_parameters->age_conditioning.has_value() ||
+        !definition.hemodynamics->age_conditioning.has_value()) {
+        FAIL("Expected executable invasive age conditioning and its evidence");
+        return;
+    }
 
     const auto& conditioning =
         definition.model.zero_dimensional_parameters->age_conditioning.value();
