@@ -302,8 +302,8 @@ TEST_CASE("Lobar parallel definition binds five evidence-qualified executable be
     CHECK(definition.schema_version == std::string_view{"1.6.0"});
     REQUIRE(definition.model.zero_dimensional_parameters.has_value());
     REQUIRE(definition.hemodynamics.has_value());
-    const auto& parameters = definition.model.zero_dimensional_parameters->parallel_beds;
-    const auto& evidence = definition.hemodynamics->parallel_beds;
+    const auto& parameters = definition.model.zero_dimensional_parameters.value().parallel_beds;
+    const auto& evidence = definition.hemodynamics.value().parallel_beds;
     REQUIRE(parameters.size() == 5);
     REQUIRE(evidence.size() == parameters.size());
     CHECK(parameters[1].id == "right-middle-lobe");
