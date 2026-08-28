@@ -6,6 +6,7 @@
 
 #include <mehlissa/models/coupling/model_component.hpp>
 #include <mehlissa/models/organ/pulmonary_circulation.hpp>
+#include <mehlissa/models/organ/pulmonary_parallel_beds.hpp>
 #include <mehlissa/models/organ/pulmonary_zero_dimensional.hpp>
 
 #include <cstdint>

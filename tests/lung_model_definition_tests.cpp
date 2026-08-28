@@ -53,6 +53,12 @@ load_definition_1_5(const std::filesystem::path& path) {
         {path, root() / "data" / "schemas" / "lung-model-definition" / "1.5.0.schema.json"});
 }
 
+[[nodiscard]] mehlissa::models::organ::LungModelDefinition
+load_definition_1_6(const std::filesystem::path& path) {
+    return mehlissa::models::organ::load_lung_model_definition(
+        {path, root() / "data" / "schemas" / "lung-model-definition" / "1.6.0.schema.json"});
+}
+
 } // namespace
 
 TEST_CASE("Checked-in lung definitions are executable and evidence scoped",
@@ -287,4 +293,24 @@ TEST_CASE("Age-conditioned distensibility binds the older invasive aggregate",
     const auto model = mehlissa::models::organ::make_lung_model(definition.model);
     CHECK(model->model_id() ==
           std::string_view{"lung.pulmonary-0d.healthy-adult-pressure-distensible-age.v6"});
+}
+
+TEST_CASE("Lobar parallel definition binds five evidence-qualified executable beds",
+          "[m3][organ][definition][physiology][parallel]") {
+    const auto definition = load_definition_1_6(root() / "data" / "lung-models" /
+                                                "healthy-adult-lobar-parallel-0d-v7.json");
+    CHECK(definition.schema_version == std::string_view{"1.6.0"});
+    REQUIRE(definition.model.zero_dimensional_parameters.has_value());
+    REQUIRE(definition.hemodynamics.has_value());
+    const auto& parameters = definition.model.zero_dimensional_parameters->parallel_beds;
+    const auto& evidence = definition.hemodynamics->parallel_beds;
+    REQUIRE(parameters.size() == 5);
+    REQUIRE(evidence.size() == parameters.size());
+    CHECK(parameters[1].id == "right-middle-lobe");
+    CHECK(parameters[1].perfusion_fraction.si_value() == Catch::Approx(0.087833145238301935));
+    CHECK(evidence[1].perfusion_fraction.source_id == "lee-2022");
+    CHECK(evidence[1].transit_time.source_id == "swift-2012");
+    const auto model = mehlissa::models::organ::make_lung_model(definition.model);
+    CHECK(dynamic_cast<mehlissa::models::organ::PulmonaryParallelBedsModel*>(model.get()) !=
+          nullptr);
 }

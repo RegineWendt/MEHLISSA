@@ -40,3 +40,9 @@ documented in the
 reported Reeves coefficient for adults aged 60 and older. It is intentionally
 a two-band structural experiment, with a declared older-male evidence limit;
 see the [age-distensibility model card](../../docs/m3/PULMONARY_0D_AGE_DISTENSIBILITY.md).
+
+`healthy-adult-lobar-parallel-0d-v7.json` retains the qualified v4 aggregate
+pressure-flow law and decomposes it into five anatomically named parallel beds.
+Its DE-CT-derived perfusion proxy, exact network equivalence, deterministic
+entity routing, and open regional-validation limits are documented in the
+[lobar parallel-beds model card](../../docs/m3/PULMONARY_LOBAR_PARALLEL_BEDS.md).

@@ -156,6 +156,17 @@ void validate_document(const Json& document, const CompiledSchema& schema,
                     : std::nullopt,
             };
         }
+        std::vector<PulmonaryParallelBedParameters> parallel_beds;
+        if (hemodynamics.contains("parallel_beds")) {
+            for (const auto& bed : hemodynamics.at("parallel_beds").array_range()) {
+                parallel_beds.push_back({
+                    bed.at("id").as<std::string>(),
+                    core::Dimensionless::from_si(
+                        bed.at("perfusion_fraction").at("value_si").as<double>()),
+                    duration_from_seconds(bed.at("transit_time").at("value_si").as<double>()),
+                });
+            }
+        }
         config.zero_dimensional_parameters = PulmonaryZeroDimensionalParameters{
             core::cubic_meters_per_second(value("baseline_cardiac_output")),
             core::pascals(value("left_atrial_pressure")),
@@ -166,6 +177,7 @@ void validate_document(const Json& document, const CompiledSchema& schema,
             flow_adaptation,
             age_conditioning,
             pressure_distensibility,
+            std::move(parallel_beds),
         };
     }
     return config;
@@ -202,6 +214,7 @@ void validate_document(const Json& document, const CompiledSchema& schema,
         std::nullopt,
         std::nullopt,
         std::nullopt,
+        {},
     };
     if (hemodynamics.contains("flow_adaptation")) {
         const auto& adaptation = hemodynamics.at("flow_adaptation");
@@ -235,6 +248,15 @@ void validate_document(const Json& document, const CompiledSchema& schema,
                       distensibility.at("older_coefficient"))}
                 : std::nullopt,
         };
+    }
+    if (hemodynamics.contains("parallel_beds")) {
+        for (const auto& bed : hemodynamics.at("parallel_beds").array_range()) {
+            result.parallel_beds.push_back({
+                bed.at("id").as<std::string>(),
+                decode_evidence_quantity(bed.at("perfusion_fraction")),
+                decode_evidence_quantity(bed.at("transit_time")),
+            });
+        }
     }
     return result;
 }
@@ -293,7 +315,7 @@ void validate_document(const Json& document, const CompiledSchema& schema,
 [[nodiscard]] bool supported_schema_version(const std::string_view version) noexcept {
     return version == earliest_supported_lung_model_definition_schema_version ||
            version == "1.1.0" || version == "1.2.0" || version == "1.3.0" || version == "1.4.0" ||
-           version == latest_supported_lung_model_definition_schema_version;
+           version == "1.5.0" || version == latest_supported_lung_model_definition_schema_version;
 }
 
 void validate_evidence_source(const LungModelEvidenceQuantity& parameter,
@@ -385,8 +407,29 @@ void validate_definition(const LungModelDefinition& definition) {
                                          source_ids);
             }
         }
+        for (const auto& bed : evidence.parallel_beds) {
+            validate_evidence_source(bed.perfusion_fraction, source_ids);
+            validate_evidence_source(bed.transit_time, source_ids);
+        }
 
         const auto& parameters = *definition.model.zero_dimensional_parameters;
+        if (evidence.parallel_beds.size() != parameters.parallel_beds.size()) {
+            invalid(core::ErrorCode::data_invalid,
+                    "Pulmonary parallel-bed evidence is disconnected from executable beds");
+        }
+        for (std::size_t index = 0; index < evidence.parallel_beds.size(); ++index) {
+            const auto transit_seconds =
+                static_cast<double>(parameters.parallel_beds[index].transit_time.count()) /
+                1'000'000'000.0;
+            if (evidence.parallel_beds[index].id != parameters.parallel_beds[index].id ||
+                !nearly_equal(evidence.parallel_beds[index].perfusion_fraction.value_si,
+                              parameters.parallel_beds[index].perfusion_fraction.si_value()) ||
+                !nearly_equal(evidence.parallel_beds[index].transit_time.value_si,
+                              transit_seconds)) {
+                invalid(core::ErrorCode::data_invalid,
+                        "Pulmonary parallel-bed evidence is disconnected from executable beds");
+            }
+        }
         const auto transit_seconds =
             static_cast<double>(parameters.pulmonary_transit_time.count()) / 1'000'000'000.0;
         const auto predicted_pressure = core::in_pascals(parameters.left_atrial_pressure +

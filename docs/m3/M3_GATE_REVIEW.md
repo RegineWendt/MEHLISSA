@@ -126,6 +126,15 @@ the structural hypothesis but does not replace v4 or close the gate. See
 [Pulmonary 0D Age-Conditioned Distensibility](PULMONARY_0D_AGE_DISTENSIBILITY.md).
 The post-M3.15 local MSVC build and 119/119 CTest suite passed.
 
+**Tenth post-review update, 28 August 2026:** M3.16 implements five parallel,
+anatomically named lobar 0D beds. A transparent DE-CT proxy supplies the fixed
+lobar fractions, while `R_i = R/f_i` and `C_i = f_i C` preserve the qualified
+v4 aggregate response exactly. Individual entities follow one deterministic
+lobe transit path. The new structure materially resolves the former serial
+regional surrogate gap, but DE-CT PBV is not direct flow and no independent
+lobar target has yet been evaluated. See
+[Pulmonary Lobar Parallel Beds](PULMONARY_LOBAR_PARALLEL_BEDS.md).
+
 ## 1. Review method
 
 The review checked the Roadmap Gate M3 statements and the additional acceptance
@@ -140,8 +149,8 @@ model” merely because it contained more regions than the coarse surrogate.
 |---|---|---|
 | an agent moves reproducibly from the body graph into an organ and back | satisfied | `BodyOrganCoupler`, explicit outside-body ownership ledger, stable ID and named-port validation, coarse/regional × 0.5/1.0 s matrix |
 | flow, populations, and substance amounts are conserved across the layer boundary | satisfied for lossless transit | dimension-safe contracts, exact boundary ledger, both lung endpoints preserve transfer ID and typed payload; changing biochemical exchange is intentionally not claimed |
-| the organ has an independent, interchangeable model implementation | partially satisfied | two independent `ModelComponent` implementations and one factory/definition path exist; the regional implementation remains a structural test surrogate rather than an independently qualified physiological model |
-| a coarse compartment and more detailed organ model use the same scenario | partially satisfied | the same externally selected body–organ regression runs both implementations without kernel/coupler branches; “more detailed” is structural only, not anatomical 0D/1D or vascular geometry |
+| the organ has an independent, interchangeable model implementation | substantially satisfied; regional qualification open | the factory now selects a distinct five-bed anatomical 0D implementation behind the same contract; aggregate physiology inherits exact v4 equivalence, while the lobar outputs still need independent regional validation |
+| a coarse compartment and more detailed organ model use the same scenario | partially satisfied | all implementations share the definition/factory and coupling contract, and the five-bed model is anatomical 0D; a checked-in end-to-end scenario comparison and vascular geometry remain open |
 
 ## 3. Additional ADR-0006 criteria
 
@@ -193,10 +202,13 @@ M3 can pass only after the following evidence is added and reviewed:
    separation, followed by independent aggregate and multipoint population
    comparisons~~ — implemented by M3.7–M3.11; participant-level validation
    remains a higher-resolution follow-up rather than the immediate M3 blocker;
-3. implement the anatomical/hemodynamic regional variant and compare it with
-   both independent targets and the effective compartment;
-4. extend the implemented lumped rest/exercise flow adaptation with reviewed
-   right/left or lobar redistribution if it belongs in the M3 reference set;
+3. ~~implement an anatomical/hemodynamic regional variant~~ — M3.16 implements
+   five parallel lobar beds with exact aggregate-v4 equivalence; independent
+   regional targets and an end-to-end comparison with the effective compartment
+   remain open;
+4. ~~add an explicitly reviewed baseline lobar distribution~~ — M3.16 adds a
+   fixed DE-CT PBV proxy with limitations; posture/exercise redistribution and
+   regional recruitment remain open;
 5. implement the historical FP9 timing regression at the appropriate scenario
    layer, or formally revise the ADR/M3 boundary if that executable baseline is
    deferred to M7; and

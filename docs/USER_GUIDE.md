@@ -466,6 +466,23 @@ interpreting a stage result. For v5, also read the
 For v6, read the
 [age-distensibility model card](m3/PULMONARY_0D_AGE_DISTENSIBILITY.md).
 
+### 8.2.1 Use the anatomical five-lobe pulmonary model
+
+The v7 definition is
+`data/lung-models/healthy-adult-lobar-parallel-0d-v7.json`. Loading it through
+the normal lung-definition path automatically selects the parallel-bed
+implementation; no scenario or coupler branch is required. Its observable
+state contains flow, resistance, compliance, transit time, and blood volume
+for the right upper, right middle, right lower, left upper, and left lower
+lobes.
+
+Use v7 when an experiment needs a reproducible anatomical lobe assignment or
+regional state. Do not interpret the fixed fractions as patient-specific flow:
+they are a documented DE-CT perfused-blood-volume proxy and currently remain
+fixed across posture and exercise. Read the
+[parallel-beds model card](m3/PULMONARY_LOBAR_PARALLEL_BEDS.md) before reporting
+regional results.
+
 ### 8.3 Verify the subject-level multipoint analysis path
 
 The multipoint path accepts pseudonymous healthy-control records with at least

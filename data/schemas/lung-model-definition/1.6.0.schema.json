@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:lung-model-definition:1.6.0",
+  "title": "MEHLISSA lung model definition",
+  "description": "Executable lung-model selection with sourced uncertainty, optional empirical flow adaptation or age-conditioned pressure distensibility, optional parallel pulmonary beds, age conditioning, and external-data provenance.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "definition", "variant", "component", "timing", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.6.0"},
+    "definition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "variant": {"type": "string", "enum": ["effective_compartment", "regional_circulation", "pulmonary_zero_dimensional"]},
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "model_id", "entry_port_id", "exit_port_id", "return_target_model_id", "return_target_port_id"],
+      "properties": {
+        "name": {"$ref": "#/$defs/id"},
+        "model_id": {"$ref": "#/$defs/id"},
+        "entry_port_id": {"$ref": "#/$defs/id"},
+        "exit_port_id": {"$ref": "#/$defs/id"},
+        "return_target_model_id": {"$ref": "#/$defs/id"},
+        "return_target_port_id": {"$ref": "#/$defs/id"}
+      }
+    },
+    "timing": {
+      "oneOf": [
+        {"$ref": "#/$defs/compartment_timing"},
+        {"$ref": "#/$defs/regional_timing"},
+        {"$ref": "#/$defs/zero_dimensional_timing"}
+      ]
+    },
+    "hemodynamics": {"$ref": "#/$defs/hemodynamics"},
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"type": "string", "enum": ["software_test_surrogate", "literature_parameterized", "externally_derived"]},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "citation", "url", "license", "role"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "citation": {"type": "string", "minLength": 1},
+          "url": {"type": "string", "minLength": 1},
+          "license": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "external_data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "path", "sha256", "format", "coordinate_system", "length_unit", "flow_unit", "transformations"],
+      "properties": {
+        "source_id": {"$ref": "#/$defs/id"},
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "format": {"type": "string", "minLength": 1},
+        "coordinate_system": {"type": "string", "minLength": 1},
+        "length_unit": {"type": "string", "minLength": 1},
+        "flow_unit": {"type": "string", "minLength": 1},
+        "transformations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"variant": {"const": "effective_compartment"}}, "required": ["variant"]},
+      "then": {"properties": {"timing": {"$ref": "#/$defs/compartment_timing"}}, "not": {"required": ["hemodynamics"]}}
+    },
+    {
+      "if": {"properties": {"variant": {"const": "regional_circulation"}}, "required": ["variant"]},
+      "then": {"properties": {"timing": {"$ref": "#/$defs/regional_timing"}}, "not": {"required": ["hemodynamics"]}}
+    },
+    {
+      "if": {"properties": {"variant": {"const": "pulmonary_zero_dimensional"}}, "required": ["variant"]},
+      "then": {"required": ["hemodynamics"], "properties": {"timing": {"$ref": "#/$defs/zero_dimensional_timing"}}}
+    }
+  ],
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "duration_s": {"type": "number", "minimum": 1e-9},
+    "compartment_timing": {
+      "type": "object", "additionalProperties": false, "required": ["transit_time_s"],
+      "properties": {"transit_time_s": {"$ref": "#/$defs/duration_s"}}
+    },
+    "regional_timing": {
+      "type": "object", "additionalProperties": false, "required": ["regions"],
+      "properties": {
+        "regions": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "additionalProperties": false, "required": ["id", "transit_time_s"],
+            "properties": {"id": {"$ref": "#/$defs/id"}, "transit_time_s": {"$ref": "#/$defs/duration_s"}}
+          }
+        }
+      }
+    },
+    "zero_dimensional_timing": {
+      "type": "object", "additionalProperties": false, "required": ["pulmonary_transit_time_s"],
+      "properties": {"pulmonary_transit_time_s": {"$ref": "#/$defs/duration_s"}}
+    },
+    "uncertainty": {
+      "type": "object", "additionalProperties": false, "required": ["kind"],
+      "properties": {
+        "kind": {"type": "string", "enum": ["reference_interval", "upper_reference_limit", "lower_reference_limit", "interquartile_range", "propagated_standard_deviation", "standard_error", "not_propagated"]},
+        "lower_si": {"type": "number"},
+        "upper_si": {"type": "number"}
+      },
+      "allOf": [{
+        "if": {"properties": {"kind": {"const": "not_propagated"}}, "required": ["kind"]},
+        "then": {"not": {"anyOf": [{"required": ["lower_si"]}, {"required": ["upper_si"]}]}},
+        "else": {"anyOf": [{"required": ["lower_si"]}, {"required": ["upper_si"]}]}
+      }]
+    },
+    "evidence_quantity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["value_si", "unit", "uncertainty", "source_id", "role", "derivation"],
+      "properties": {
+        "value_si": {"type": "number"},
+        "unit": {"type": "string", "minLength": 1},
+        "uncertainty": {"$ref": "#/$defs/uncertainty"},
+        "source_id": {"$ref": "#/$defs/id"},
+        "role": {"type": "string", "enum": ["calibration", "validation", "derived"]},
+        "derivation": {"type": "string", "minLength": 1}
+      }
+    },
+    "flow_adaptation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["reference_cardiac_output", "resistance_exponent", "compliance_exponent", "maximum_flow_ratio"],
+      "properties": {
+        "reference_cardiac_output": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "m3/s"}}}]},
+        "resistance_exponent": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "1"}}}]},
+        "compliance_exponent": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "1"}}}]},
+        "maximum_flow_ratio": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "1"}}}]}
+      }
+    },
+    "age_conditioning": {
+      "type": "object", "additionalProperties": false,
+      "required": ["default_age_years", "minimum_supported_age_years", "young_upper_age_years", "older_lower_age_years", "maximum_supported_age_years", "young_resistance_multiplier", "older_resistance_multiplier"],
+      "properties": {
+        "default_age_years": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "year"}}}]},
+        "minimum_supported_age_years": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "year"}}}]},
+        "young_upper_age_years": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "year"}}}]},
+        "older_lower_age_years": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "year"}}}]},
+        "maximum_supported_age_years": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "year"}}}]},
+        "young_resistance_multiplier": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "1"}}}]},
+        "older_resistance_multiplier": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "1"}}}]}
+      }
+    },
+    "pressure_distensibility": {
+      "type": "object", "additionalProperties": false,
+      "required": ["reference_cardiac_output", "reference_left_atrial_pressure", "coefficient"],
+      "properties": {
+        "reference_cardiac_output": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "m3/s"}}}]},
+        "reference_left_atrial_pressure": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "Pa"}}}]},
+        "coefficient": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "Pa^-1"}}}]},
+        "older_coefficient": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "Pa^-1"}}}]}
+      }
+    },
+    "parallel_bed": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "perfusion_fraction", "transit_time"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "perfusion_fraction": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "1"}}}]},
+        "transit_time": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "s"}}}]}
+      }
+    },
+    "hemodynamics": {
+      "type": "object", "additionalProperties": false,
+      "required": ["baseline_cardiac_output", "left_atrial_pressure", "pulmonary_vascular_resistance", "pulmonary_arterial_compliance", "pulmonary_transit_time", "right_lung_perfusion_fraction", "mean_pulmonary_arterial_pressure_target"],
+      "properties": {
+        "baseline_cardiac_output": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "m3/s"}}}]},
+        "left_atrial_pressure": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "Pa"}}}]},
+        "pulmonary_vascular_resistance": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "Pa*s/m3"}}}]},
+        "pulmonary_arterial_compliance": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "m3/Pa"}}}]},
+        "pulmonary_transit_time": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "s"}}}]},
+        "right_lung_perfusion_fraction": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "1"}}}]},
+        "mean_pulmonary_arterial_pressure_target": {"allOf": [{"$ref": "#/$defs/evidence_quantity"}, {"properties": {"unit": {"const": "Pa"}}}]},
+        "flow_adaptation": {"$ref": "#/$defs/flow_adaptation"},
+        "age_conditioning": {"$ref": "#/$defs/age_conditioning"},
+        "pressure_distensibility": {"$ref": "#/$defs/pressure_distensibility"},
+        "parallel_beds": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/parallel_bed"}}
+      },
+      "allOf": [{"not": {"required": ["flow_adaptation", "pressure_distensibility"]}}]
+    }
+  }
+}

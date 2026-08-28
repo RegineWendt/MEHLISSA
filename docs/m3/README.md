@@ -36,6 +36,7 @@ respiratory mechanics, or gas exchange.
 | M3.13 invasive young-adult resistance qualification | qualified Wolsk population pass; participant-level/anatomical validation open | invasive Kovacs 2012 young-PVR calibration; retained independently supported flow exponent; overlap-aware exclusion of Kovacs 2009; 15/15 disjoint Wolsk stages agree without refitting |
 | M3.14 pressure-distensible structural candidate | implemented and independently diagnosed; does not replace v4 | Linehan equation; Reeves healthy `alpha`; normalized resting equilibrium; mutually exclusive empirical/structural laws; frozen Wolsk result of 11/15 with the older-stratum limitation exposed |
 | M3.15 age-conditioned pressure distensibility | implemented and independently diagnosed; does not replace v4 or resolve the v5 gate | Reeves younger/older invasive aggregates; explicit ≥60 coefficient; standard-error metadata; older RMSE improves from 5.411 to 4.603 mmHg while agreement remains 11/15 |
+| M3.16 anatomical lobar parallel beds | implemented; aggregate-qualified, regional validation open | five named lobe beds; DE-CT perfusion proxy; exact v4 aggregate equivalence; deterministic per-entity lobe transit; explicit regional evidence limitations |
 
 ## M3.1 result
 
@@ -198,6 +199,14 @@ The Wolsk stages remain frozen. Older-stratum RMSE improves from 5.411 to
 4.603 mmHg, but agreement remains 1/5 there and 11/15 overall. This rules out
 fixed all-age distensibility as the complete explanation without pretending
 that a two-band age rule closes the structural gap.
+
+M3.16 adds the
+[five-lobe parallel pulmonary candidate](PULMONARY_LOBAR_PARALLEL_BEDS.md).
+It preserves v4's 15/15 aggregate pressure-flow result by exact resistance and
+compliance decomposition while making right upper, right middle, right lower,
+left upper, and left lower lobe beds executable. Lobar fractions use a declared
+DE-CT PBV proxy, not mislabeled direct flow. Individual entities traverse one
+deterministically selected lobe; independent regional validation remains open.
 
 An initial [SimVascular Healthy Pulmonary Candidate Review](SIMVASCULAR_PULMONARY_CANDIDATE_REVIEW.md)
 finds the official case useful for an imported pulmonary-artery technical

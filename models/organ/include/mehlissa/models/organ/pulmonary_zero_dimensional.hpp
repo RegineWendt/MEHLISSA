@@ -38,6 +38,12 @@ struct PulmonaryPressureDistensibilityParameters final {
     std::optional<core::InversePressure> older_coefficient;
 };
 
+struct PulmonaryParallelBedParameters final {
+    std::string id;
+    core::Dimensionless perfusion_fraction;
+    core::SimulationClock::Duration transit_time{};
+};
+
 struct PulmonaryZeroDimensionalParameters final {
     core::FlowRate baseline_cardiac_output;
     core::Pressure left_atrial_pressure;
@@ -48,6 +54,7 @@ struct PulmonaryZeroDimensionalParameters final {
     std::optional<PulmonaryFlowAdaptationParameters> flow_adaptation;
     std::optional<PulmonaryAgeConditioningParameters> age_conditioning;
     std::optional<PulmonaryPressureDistensibilityParameters> pressure_distensibility;
+    std::vector<PulmonaryParallelBedParameters> parallel_beds{};
 };
 
 struct PulmonaryZeroDimensionalConfig final {

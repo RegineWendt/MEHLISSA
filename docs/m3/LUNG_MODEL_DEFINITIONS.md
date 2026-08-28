@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## Executable model card
 
-Schemas `lung-model-definition/1.0.0` through `1.5.0` bind model selection and
+Schemas `lung-model-definition/1.0.0` through `1.6.0` bind model selection and
 parameters to the evidence needed to interpret them. A definition contains:
 
 - stable definition and model identities;
@@ -37,6 +37,10 @@ coefficient. It is mutually exclusive with empirical flow adaptation.
 Version 1.5.0 adds an optional older-age distensibility coefficient and a
 `standard_error` uncertainty kind. The older coefficient requires the existing
 age-conditioning boundary.
+Version 1.6.0 adds optional parallel pulmonary beds. Every bed has a stable ID
+and evidence-linked perfusion fraction and transit time; the executable loader
+checks that evidence and parameters remain connected, while the concrete model
+checks uniqueness, positivity, and exact normalization of the partition.
 
 ## Checked-in definitions
 
@@ -89,6 +93,12 @@ below age 60 and applies the independently reported Reeves older-male
 coefficient at age 60 and above. Its frozen comparison reduces older RMSE but
 does not increase stage agreement; see
 [Pulmonary 0D Age-Conditioned Distensibility](PULMONARY_0D_AGE_DISTENSIBILITY.md).
+
+The v7 definition
+`data/lung-models/healthy-adult-lobar-parallel-0d-v7.json` uses schema 1.6.0
+and selects a distinct five-bed parallel implementation while preserving v4's
+aggregate hemodynamics. Its DE-CT proxy and regional qualification boundary are
+documented in [Pulmonary Lobar Parallel Beds](PULMONARY_LOBAR_PARALLEL_BEDS.md).
 
 ## External-data boundary
 

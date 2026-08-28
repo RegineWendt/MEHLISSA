@@ -389,6 +389,11 @@ older aggregate lowers `alpha` from 0.020 to 0.015 mmHg^-1 at age 60. Against
 the still-frozen Wolsk stages, older RMSE improves from 5.411 to 4.603 mmHg,
 but agreement remains 1/5 older and 11/15 overall. V6 therefore narrows the
 mechanistic question without superseding v4 or resolving the anatomical gap.
+M3.16 introduces a distinct five-lobe parallel 0D implementation. It retains
+v4's aggregate law exactly, derives fixed lobe fractions from a clearly labeled
+DE-CT PBV proxy, and routes individual entities through one deterministic lobe
+bed. The anatomical implementation gap is substantially reduced; independent
+regional validation, dynamic redistribution, and geometry remain open.
 Participant-level validation remains a higher-resolution follow-up.
 Anatomical refinement, transforming exchange, general experiment composition,
 continuous/regional activity physiology, and regional exercise redistribution
@@ -403,7 +408,7 @@ age-conditioned sensitivity are verified, the
 subject-level analysis path is software-verified, and published population
 multipoint validation has produced a qualified 15/15 result against the
 calibration-disjoint Wolsk cohort. Anatomical
-refinement, continuous and regional physiology, and the executable historical
+regional validation, continuous and regional physiology, and the executable historical
 FP9 baseline remain closure evidence.
 
 #### Tasks

@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.6.0",
+  "definition": {"id": "healthy-adult-lobar-parallel-0d-v7", "version": "7.0.0", "title": "Healthy-adult five-lobe parallel pulmonary 0D reference"},
+  "variant": "pulmonary_zero_dimensional",
+  "component": {
+    "name": "organ.lung",
+    "model_id": "lung.pulmonary-0d.healthy-adult-lobar-parallel.v7",
+    "entry_port_id": "pulmonary-arterial-entry",
+    "exit_port_id": "pulmonary-venous-exit",
+    "return_target_model_id": "bvs95-dissertation-rest",
+    "return_target_port_id": "pulmonary-venous-return"
+  },
+  "timing": {"pulmonary_transit_time_s": 6.4},
+  "hemodynamics": {
+    "baseline_cardiac_output": {"value_si": 0.0001, "unit": "m3/s", "uncertainty": {"kind": "reference_interval", "lower_si": 0.00006666666666666667, "upper_si": 0.00013333333333333334}, "source_id": "esc-ers-2022", "role": "calibration", "derivation": "Unchanged six L/min v4 reference flow."},
+    "left_atrial_pressure": {"value_si": 1066.57909932, "unit": "Pa", "uncertainty": {"kind": "upper_reference_limit", "upper_si": 1999.835811225}, "source_id": "esc-ers-2022", "role": "calibration", "derivation": "Unchanged eight mmHg v4 pressure sink."},
+    "pulmonary_vascular_resistance": {"value_si": 9599211.89388, "unit": "Pa*s/m3", "uncertainty": {"kind": "reference_interval", "lower_si": 2399802.97347, "upper_si": 15998686.4898}, "source_id": "esc-ers-2022", "role": "calibration", "derivation": "Unchanged 1.2 Wood-unit v4 aggregate baseline."},
+    "pulmonary_arterial_compliance": {"value_si": 0.0000000375030787922828, "unit": "m3/Pa", "uncertainty": {"kind": "lower_reference_limit", "lower_si": 0.00000001725141624445}, "source_id": "esc-ers-2022", "role": "calibration", "derivation": "Unchanged 5 mL/mmHg v4 aggregate baseline."},
+    "pulmonary_transit_time": {"value_si": 6.4, "unit": "s", "uncertainty": {"kind": "interquartile_range", "lower_si": 5.7, "upper_si": 7.1}, "source_id": "swift-2012", "role": "calibration", "derivation": "Aggregate healthy-control first-pass transit; applied equally to all five beds because no qualified lobe-specific transit series was identified."},
+    "right_lung_perfusion_fraction": {"value_si": 0.56691553086205393, "unit": "1", "uncertainty": {"kind": "not_propagated"}, "source_id": "lee-2022", "role": "derived", "derivation": "Sum of the three right-lobe proxy fractions derived below."},
+    "mean_pulmonary_arterial_pressure_target": {"value_si": 2026.500288708, "unit": "Pa", "uncertainty": {"kind": "reference_interval", "lower_si": 1066.57909932, "upper_si": 2666.4477483}, "source_id": "esc-ers-2022", "role": "derived", "derivation": "Unchanged v4 baseline prediction of 15.2 mmHg."},
+    "flow_adaptation": {
+      "reference_cardiac_output": {"value_si": 0.0001, "unit": "m3/s", "uncertainty": {"kind": "not_propagated"}, "source_id": "esc-ers-2022", "role": "calibration", "derivation": "Unchanged v4 reference flow."},
+      "resistance_exponent": {"value_si": -0.202148574863478, "unit": "1", "uncertainty": {"kind": "not_propagated"}, "source_id": "claessen-2015", "role": "calibration", "derivation": "Unchanged v4 healthy-control rest-to-peak power-law exponent."},
+      "compliance_exponent": {"value_si": -0.669350145160558, "unit": "1", "uncertainty": {"kind": "not_propagated"}, "source_id": "claessen-2015", "role": "calibration", "derivation": "Unchanged v4 healthy-control rest-to-peak power-law exponent."},
+      "maximum_flow_ratio": {"value_si": 2.6129032258064515, "unit": "1", "uncertainty": {"kind": "not_propagated"}, "source_id": "claessen-2015", "role": "calibration", "derivation": "Unchanged v4 bounded peak-to-rest flow ratio."}
+    },
+    "age_conditioning": {
+      "default_age_years": {"value_si": 55.0, "unit": "year", "uncertainty": {"kind": "not_propagated"}, "source_id": "kane-2016", "role": "derived", "derivation": "Unchanged v4 default age."},
+      "minimum_supported_age_years": {"value_si": 24.0, "unit": "year", "uncertainty": {"kind": "not_propagated"}, "source_id": "kovacs-2012-pvr", "role": "calibration", "derivation": "Unchanged v4 lower bound."},
+      "young_upper_age_years": {"value_si": 40.0, "unit": "year", "uncertainty": {"kind": "not_propagated"}, "source_id": "kane-2016", "role": "calibration", "derivation": "Unchanged v4 young-band boundary."},
+      "older_lower_age_years": {"value_si": 60.0, "unit": "year", "uncertainty": {"kind": "not_propagated"}, "source_id": "kane-2016", "role": "derived", "derivation": "Unchanged v4 older-band boundary."},
+      "maximum_supported_age_years": {"value_si": 85.0, "unit": "year", "uncertainty": {"kind": "not_propagated"}, "source_id": "kane-2016", "role": "calibration", "derivation": "Unchanged v4 upper bound."},
+      "young_resistance_multiplier": {"value_si": 0.71875, "unit": "1", "uncertainty": {"kind": "not_propagated"}, "source_id": "kovacs-2012-pvr", "role": "derived", "derivation": "Unchanged v4 invasive young-adult multiplier."},
+      "older_resistance_multiplier": {"value_si": 1.12245955546343, "unit": "1", "uncertainty": {"kind": "not_propagated"}, "source_id": "kane-2016", "role": "derived", "derivation": "Unchanged v4 older-adult multiplier."}
+    },
+    "parallel_beds": [
+      {"id": "right-upper-lobe", "perfusion_fraction": {"value_si": 0.22254970049483463, "unit": "1", "uncertainty": {"kind": "not_propagated"}, "source_id": "lee-2022", "role": "derived", "derivation": "RUL median volume times median normalized PBV, divided by the sum over all lobes."}, "transit_time": {"value_si": 6.4, "unit": "s", "uncertainty": {"kind": "interquartile_range", "lower_si": 5.7, "upper_si": 7.1}, "source_id": "swift-2012", "role": "calibration", "derivation": "Common aggregate transit pending lobe-specific evidence."}},
+      {"id": "right-middle-lobe", "perfusion_fraction": {"value_si": 0.087833145238301935, "unit": "1", "uncertainty": {"kind": "not_propagated"}, "source_id": "lee-2022", "role": "derived", "derivation": "RML median volume times median normalized PBV, divided by the sum over all lobes."}, "transit_time": {"value_si": 6.4, "unit": "s", "uncertainty": {"kind": "interquartile_range", "lower_si": 5.7, "upper_si": 7.1}, "source_id": "swift-2012", "role": "calibration", "derivation": "Common aggregate transit pending lobe-specific evidence."}},
+      {"id": "right-lower-lobe", "perfusion_fraction": {"value_si": 0.25653268512891741, "unit": "1", "uncertainty": {"kind": "not_propagated"}, "source_id": "lee-2022", "role": "derived", "derivation": "RLL median volume times median normalized PBV, divided by the sum over all lobes."}, "transit_time": {"value_si": 6.4, "unit": "s", "uncertainty": {"kind": "interquartile_range", "lower_si": 5.7, "upper_si": 7.1}, "source_id": "swift-2012", "role": "calibration", "derivation": "Common aggregate transit pending lobe-specific evidence."}},
+      {"id": "left-upper-lobe", "perfusion_fraction": {"value_si": 0.23630957548398301, "unit": "1", "uncertainty": {"kind": "not_propagated"}, "source_id": "lee-2022", "role": "derived", "derivation": "LUL median volume times median normalized PBV, divided by the sum over all lobes."}, "transit_time": {"value_si": 6.4, "unit": "s", "uncertainty": {"kind": "interquartile_range", "lower_si": 5.7, "upper_si": 7.1}, "source_id": "swift-2012", "role": "calibration", "derivation": "Common aggregate transit pending lobe-specific evidence."}},
+      {"id": "left-lower-lobe", "perfusion_fraction": {"value_si": 0.19677489365396303, "unit": "1", "uncertainty": {"kind": "not_propagated"}, "source_id": "lee-2022", "role": "derived", "derivation": "LLL median volume times median normalized PBV, divided by the sum over all lobes."}, "transit_time": {"value_si": 6.4, "unit": "s", "uncertainty": {"kind": "interquartile_range", "lower_si": 5.7, "upper_si": 7.1}, "source_id": "swift-2012", "role": "calibration", "derivation": "Common aggregate transit pending lobe-specific evidence."}}
+    ]
+  },
+  "validity": {
+    "population": "healthy adults aged 24-85 for aggregate hemodynamics; suspected-PE patients without PE or cardiopulmonary comorbidity for the lobar proxy",
+    "physiological_state": "supine mean-flow rest through bounded exercise with fixed lobar proportions",
+    "evidence_class": "literature_parameterized",
+    "description": "Five parallel lobar resistance-compliance beds sharing pulmonary arterial and left-atrial pressure boundaries; aggregate behavior is exactly inherited from v4."
+  },
+  "sources": [
+    {"id": "esc-ers-2022", "citation": "Humbert M, Kovacs G, Hoeper MM, et al. 2022 ESC/ERS Guidelines for pulmonary hypertension. Eur Heart J. 2022;43:3618-3731.", "url": "https://doi.org/10.1093/eurheartj/ehac237", "license": "Numerical facts cited; source not redistributed", "role": "aggregate resting hemodynamics"},
+    {"id": "swift-2012", "citation": "Swift AJ, et al. MR imaging-derived first-pass bolus kinetic parameters. Radiology. 2012;263:678-687.", "url": "https://doi.org/10.1148/radiol.12111049", "license": "Numerical facts cited; source not redistributed", "role": "aggregate pulmonary transit"},
+    {"id": "claessen-2015", "citation": "Claessen G, et al. Pulmonary vascular and right ventricular reserve. J Am Heart Assoc. 2015;4:e001602.", "url": "https://doi.org/10.1161/JAHA.114.001602", "license": "CC-BY-NC-4.0; numerical facts only", "role": "aggregate flow adaptation"},
+    {"id": "kane-2016", "citation": "Kane GC, et al. Impact of age on pulmonary artery systolic pressures. Echo Res Pract. 2016;3:53-61.", "url": "https://doi.org/10.1530/ERP-16-0006", "license": "CC-BY-NC-4.0; numerical facts only", "role": "aggregate age conditioning"},
+    {"id": "kovacs-2012-pvr", "citation": "Kovacs G, et al. Pulmonary vascular resistances during exercise in normal subjects. Eur Respir J. 2012;39:319-328.", "url": "https://doi.org/10.1183/09031936.00008611", "license": "Numerical facts cited; source not redistributed", "role": "young-adult resistance level"},
+    {"id": "lee-2022", "citation": "Lee HJ, et al. Lobar pulmonary perfusion quantification with dual-energy CT angiography. Eur J Radiol Open. 2022;9:100428.", "url": "https://doi.org/10.1016/j.ejro.2022.100428", "license": "CC-BY-NC-ND-4.0 article; derived aggregate numerical proxy cited, article not redistributed", "role": "five-lobe perfusion proxy"},
+    {"id": "wendt-dissertation", "citation": "Wendt R. Dissertation simulation chapters, Chapter 4: MEHLISSA.", "url": "../../literature/Diss_WENDT_Simulationchapters.pdf", "license": "Included with author permission; source not modified", "role": "replaceable organ and capillary model architecture"}
+  ],
+  "limitations": [
+    "Research reference candidate only; not a diagnostic or treatment model.",
+    "DE-CTA normalized perfused blood volume is a perfusion surrogate, not a direct dynamic flow measurement.",
+    "The lobar fractions multiply separately reported cohort medians of lobe volume and normalized PBV; they are not subject-level median iodine-content fractions.",
+    "The Lee cohort consisted of suspected-PE patients negative for PE and without cardiopulmonary comorbidity, not prospectively recruited healthy volunteers.",
+    "All beds currently share the aggregate 6.4 s transit because no qualified lobe-specific transit series was identified.",
+    "Lobar fractions are fixed across posture, exercise, gravity, disease, and age; recruitment and autoregulation are not represented.",
+    "Aggregate pressure-flow validation is inherited by exact network equivalence to v4; independent lobar validation remains open.",
+    "The conserved-transfer coupling remains aggregate while individual entities traverse an explicit deterministic lobe path.",
+    "Gas exchange, biochemical exchange, pulsatility, disease, and patient-specific anatomy remain outside this version."
+  ]
+}
