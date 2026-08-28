@@ -340,9 +340,11 @@ These labels are not interchangeable. In particular:
 - the coarse and serial-region lung variants are verification surrogates;
 - the pulmonary 0D variants have qualified independent aggregate validation
   for healthy pressure, compliance, and resting RC behavior; v2 also has a
-  source-disjoint exercise adaptation and a software-verified subject-level
-  multipoint analysis path, but measured subject-level data have not yet been
-  licensed or evaluated, and neither variant is anatomical, fully pulsatile,
+  source-disjoint exercise adaptation, published population multipoint
+  validation with 10/18 stages agreeing, and a software-verified subject-level
+  multipoint analysis path. The population result exposes missing age
+  dependence; measured participant-level data have not yet been licensed or
+  evaluated, and neither variant is anatomical, fully pulsatile,
   patient-specific, or clinically usable;
 - none of the current outputs is patient-specific or suitable for clinical
   decision-making.
@@ -370,7 +372,35 @@ The v2 result is not a fitted Bentley reproduction: Claessen et al. supplies
 the adaptation calibration, while Bentley remains the untouched stress-test
 cohort. The exercise RC discrepancy improves but remains a diagnostic failure.
 
-### 8.2 Verify the subject-level multipoint analysis path
+### 8.2 Run the published-population multipoint validation
+
+The immediately usable multipoint case contains four non-overlapping healthy
+population series from Kovacs and Wolsk. It applies reported mean PAWP and flow
+as stage boundaries and never refits the v2 parameters.
+
+Run its checks with:
+
+```powershell
+& build/windows-msvc/tests/Debug/mehlissa_organ_model_tests.exe `
+  "[population-multipoint-validation]"
+```
+
+The evidence file is
+`data/validation/pulmonary-zero-dimensional/healthy-population-multipoint-v1.json`;
+the schema is
+`data/schemas/pulmonary-zero-dimensional-population-multipoint-validation/1.0.0.schema.json`.
+Reported mmHg and L/min values are converted to SI by the loader. Wolsk cardiac
+index is converted to mean absolute flow using the explicitly recorded mean
+BSA of 1.9 m2.
+
+The current result is deliberately partial: Kovacs passes 3/3 stages, Wolsk
+ages 40–59 passes 5/5, ages 20–39 passes 0/5, and ages 60–80 passes 2/5. A
+reported 95% CI is an interval for the population mean, not an individual
+tolerance range. Read the complete
+[population multipoint report](m3/PULMONARY_0D_POPULATION_MULTIPOINT_VALIDATION.md)
+before interpreting a stage failure.
+
+### 8.3 Verify the subject-level multipoint analysis path
 
 The multipoint path accepts pseudonymous healthy-control records with at least
 three jointly measured cardiac-output, mPAP, and PAWP stages. If heart rate and

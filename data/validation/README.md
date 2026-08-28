@@ -25,3 +25,12 @@ require author approval and explicit reuse terms. The only current multipoint
 record is a clearly marked synthetic software fixture under `tests/data`; the
 default evidence loader rejects it. See the
 [subject-level validation plan](../../docs/m3/PULMONARY_0D_SUBJECT_MULTIPOINT_VALIDATION.md).
+
+M3.11 adds an independent published-population route at
+`healthy-population-multipoint-v1.json`, governed by
+`data/schemas/pulmonary-zero-dimensional-population-multipoint-validation/1.0.0.schema.json`.
+It transcribes attributed Kovacs and Wolsk aggregate series, normalizes the
+reported units to SI during loading, and evaluates the immutable v2 model
+without fitting. Its 10/18 stage agreement is a qualified partial result with
+age-stratified failures, not subject-level evidence. See the
+[population multipoint report](../../docs/m3/PULMONARY_0D_POPULATION_MULTIPOINT_VALIDATION.md).

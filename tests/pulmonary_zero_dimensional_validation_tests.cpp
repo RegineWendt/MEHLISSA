@@ -57,6 +57,18 @@ load_synthetic_multipoint_validation(const bool allow_synthetic = true) {
     });
 }
 
+[[nodiscard]]
+mehlissa::models::organ::PulmonaryZeroDimensionalPopulationMultipointValidationCase
+load_population_multipoint_validation() {
+    return mehlissa::models::organ::
+        load_pulmonary_zero_dimensional_population_multipoint_validation_case({
+            root() / "data" / "validation" / "pulmonary-zero-dimensional" /
+                "healthy-population-multipoint-v1.json",
+            root() / "data" / "schemas" /
+                "pulmonary-zero-dimensional-population-multipoint-validation" / "1.0.0.schema.json",
+        });
+}
+
 [[nodiscard]] const mehlissa::models::organ::PulmonaryValidationEndpointResult*
 find_endpoint(const mehlissa::models::organ::PulmonaryValidationConditionResult& condition,
               const std::string_view endpoint) {
@@ -204,4 +216,62 @@ TEST_CASE("Multipoint evaluation rejects reuse of a calibration source",
         mehlissa::models::organ::evaluate_pulmonary_zero_dimensional_multipoint_validation(
             validation, model_definition),
         mehlissa::core::MehlissaError);
+}
+
+TEST_CASE("Published population multipoint validation preserves independent series and SI flow",
+          "[m3][organ][pulmonary-0d][population-multipoint-validation]") {
+    const auto validation = load_population_multipoint_validation();
+    const auto model_definition = load_flow_adaptive_model_definition();
+    REQUIRE(validation.sources.size() == 2);
+    REQUIRE(validation.series.size() == 4);
+    CHECK(validation.series.front().sample_size == 193);
+    CHECK(validation.series.front().stages.front().cardiac_flow.mean_si ==
+          Catch::Approx(7.4 / 60000.0));
+
+    std::size_t wolsk_sample_size{};
+    for (const auto& series : validation.series) {
+        if (series.source_id == "wolsk-2017-age-hemodynamics") {
+            wolsk_sample_size += series.sample_size;
+        }
+    }
+    CHECK(wolsk_sample_size == 62);
+
+    const auto report = mehlissa::models::organ::
+        evaluate_pulmonary_zero_dimensional_population_multipoint_validation(validation,
+                                                                             model_definition);
+    CHECK(report.source_independence_verified);
+    CHECK(report.published_population_evidence);
+    CHECK(report.series_count == 4);
+    CHECK(report.stage_count == 18);
+    CHECK(report.accepted_stage_count == 10);
+    CHECK(report.all_stages_agree == (report.accepted_stage_count == report.stage_count));
+    REQUIRE(report.series.size() == 4);
+    CHECK(report.series[0].accepted_stage_count == 3);
+    CHECK(report.series[1].accepted_stage_count == 0);
+    CHECK(report.series[2].accepted_stage_count == 5);
+    CHECK(report.series[3].accepted_stage_count == 2);
+    CHECK_FALSE(report.all_stages_agree);
+    CHECK_FALSE(report.series[1].stages.front().accepted);
+    CHECK(report.series[3].stages[2].accepted);
+    CHECK(report.series[3].stages[4].accepted);
+    REQUIRE(report.series.front().stages.size() == 3);
+    CHECK(report.series.front().stages.front().absolute_z_score.has_value());
+    CHECK(report.series.front().stages.front().cardiac_output_si == Catch::Approx(7.4 / 60000.0));
+    REQUIRE(report.series[1].stages.size() == 5);
+    CHECK_FALSE(report.series[1].stages.front().absolute_z_score.has_value());
+    CHECK(report.series[1].stages.front().cardiac_output_si == Catch::Approx(2.9 * 1.9 / 60000.0));
+}
+
+TEST_CASE("Population multipoint evaluation rejects reuse of a calibration source",
+          "[m3][organ][pulmonary-0d][population-multipoint-validation][provenance]") {
+    auto validation = load_population_multipoint_validation();
+    const auto model_definition = load_flow_adaptive_model_definition();
+    REQUIRE_FALSE(validation.sources.empty());
+    REQUIRE_FALSE(model_definition.sources.empty());
+    validation.sources.front().url = model_definition.sources.front().url;
+
+    CHECK_THROWS_AS(mehlissa::models::organ::
+                        evaluate_pulmonary_zero_dimensional_population_multipoint_validation(
+                            validation, model_definition),
+                    mehlissa::core::MehlissaError);
 }

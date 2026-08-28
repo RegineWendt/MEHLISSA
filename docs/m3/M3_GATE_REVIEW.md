@@ -61,6 +61,19 @@ validation remains open. See
 The post-M3.10 local MSVC build and 103/103 CTest suite passed; CI evidence is
 recorded with the pushed increment.
 
+**Fifth post-review update, 28 August 2026:** M3.11 evaluates the immutable v2
+candidate against four directly published, calibration-disjoint population
+series from Kovacs and Wolsk: 255 healthy volunteers and 18 aggregate stages.
+The locked rules yield 10/18 agreeing stages. Kovacs passes 3/3 and the Wolsk
+40–59-year stratum 5/5; the 20–39-year stratum passes 0/5 and the 60–80-year
+stratum 2/5. These failures are retained as evidence that the composite,
+age-independent v2 model needs an age-conditioned successor. Published
+population data therefore remove the immediate controlled-access blocker but
+do not claim participant-level validation. See
+[Published-Population Pulmonary Multipoint Validation](PULMONARY_0D_POPULATION_MULTIPOINT_VALIDATION.md).
+The post-M3.11 local MSVC build and 105/105 CTest suite passed; CI evidence is
+recorded after the isolated increment is pushed.
+
 ## 1. Review method
 
 The review checked the Roadmap Gate M3 statements and the additional acceptance
@@ -85,7 +98,7 @@ model” merely because it contained more regions than the coarse surrogate.
 | agent and substance flow complete body–lung–body traversal | satisfied for entity; organ traversal satisfied for conserved quantities | the complete entity round trip reaches the body return ledger; conserved population, substance, and flow traverse both lung endpoints without payload change |
 | no agent or relevant amount is duplicated or lost | satisfied | positive and negative ownership, duplicate-ID, route, time, and exact-payload tests |
 | both lung variants implement the same contract | satisfied | one `ModelComponent` interface, one `LungModelConfig`, schema-selected definitions, generated cross-variant tests |
-| flow, pressure/transit time, and perfusion share have units, sources, uncertainty, and an independent comparison | satisfied for aggregate healthy-cohort evidence; subject-level method verified after M3.10 | the 0D candidates have executable SI pressure, flow, effective PVR/compliance, bounded activity response, measured total transit, right/left perfusion, uncertainty/evidence roles, source- and cohort-disjoint aggregate validation, explicit stress-test diagnostics, and a no-refit subject-level trajectory evaluator; licensed measured stage records are still required |
+| flow, pressure/transit time, and perfusion share have units, sources, uncertainty, and an independent comparison | satisfied for aggregate and published multipoint population evidence; participant-level method also verified | the 0D candidates have executable SI pressure, flow, effective PVR/compliance, bounded activity response, measured total transit, right/left perfusion, uncertainty/evidence roles, source- and cohort-disjoint validation, explicit stress-test diagnostics, a four-series no-refit population result, and a separate pseudonymous participant-level trajectory evaluator; the population result exposes age dependence rather than hiding failed strata |
 | historical FP9 timer baseline runs without scenario-specific kernel logic | not satisfied | the dissertation baseline is specified and traced, but fingerprint detection/assembly/collection is not executable; implementing it prematurely in the organ kernel would violate the architecture |
 
 ## 4. Verification evidence
@@ -125,9 +138,9 @@ M3 can pass only after the following evidence is added and reviewed:
    narrows the open questions but does not qualify the archive;
 2. ~~provide sourced pressure, resistance/flow, perfusion, and transit targets
    in SI units with uncertainty and explicit calibration/validation
-   separation, followed by an independent aggregate comparison~~ — implemented
-   by M3.7 and M3.8; M3.10 implements the subject-level analysis contract and
-   data request, while measured subject-level validation remains pending;
+   separation, followed by independent aggregate and multipoint population
+   comparisons~~ — implemented by M3.7–M3.11; participant-level validation
+   remains a higher-resolution follow-up rather than the immediate M3 blocker;
 3. implement the anatomical/hemodynamic regional variant and compare it with
    both independent targets and the effective compartment;
 4. extend the implemented lumped rest/exercise flow adaptation with reviewed
@@ -142,9 +155,10 @@ M3 can pass only after the following evidence is added and reviewed:
 
 The M3 software architecture, lossless coupling slice, first independent
 aggregate physiological comparison, and subject-level multipoint analysis path
-are verified, but the milestone is not closed. The gate remains open on
-licensed measured subject-level evidence, anatomical/state-dependent
-refinement, and the FP9 executable reference, not on a hidden software failure. Downstream
+are verified, and published population multipoint validation has produced a
+qualified partial result, but the milestone is not closed. The gate remains
+open on anatomical/state- and age-dependent refinement and the FP9 executable
+reference, not on a hidden software failure. Downstream
 prototyping may use the verified interfaces provided it retains the explicit
 `software_test_surrogate` validity label and does not cite the current outputs
 as pulmonary physiology.

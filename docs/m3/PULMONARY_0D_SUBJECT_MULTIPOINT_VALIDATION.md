@@ -20,6 +20,13 @@ The implementation deliberately keeps three statements separate:
 3. physiological validation remains pending until licensed, pseudonymized
    measurements are received and evaluated without parameter refitting.
 
+M3.11 now provides a separate, executable
+[published-population multipoint validation](PULMONARY_0D_POPULATION_MULTIPOINT_VALIDATION.md)
+from Kovacs and Wolsk. It allows physiological development to continue without
+waiting for the Arizona request, but it does not turn aggregate group means
+into participant-level trajectories. This document therefore remains the
+higher-resolution evidence plan rather than the immediate M3 blocker.
+
 ## 2. Preferred first data set
 
 The first-choice cohort is the five-person healthy control group reported by

@@ -1,0 +1,215 @@
+{
+  "schema_version": "1.0.0",
+  "validation": {
+    "id": "healthy-population-pulmonary-0d-multipoint-v1",
+    "title": "Independent published healthy-population pulmonary pressure-flow series",
+    "model_definition_id": "healthy-adult-rest-exercise-0d-v2",
+    "evidence_status": "published_population_summary"
+  },
+  "protocol": {
+    "minimum_stage_count": 3,
+    "parameter_fitting": "forbidden",
+    "standard_deviation_multiplier": 2.0,
+    "decision_rule": "For mean-plus-SD series, a prediction agrees when it lies within mean plus or minus 2 SD, following the source's upper-limit convention. For mean-plus-95%-CI series, it agrees when it lies within the directly reported confidence interval for the population mean. All stages and failures remain visible.",
+    "execution_status": "protocol_locked_before_repository_evaluation"
+  },
+  "sources": [
+    {
+      "id": "kovacs-2009-healthy-exercise",
+      "citation": "Kovacs G, Berghold A, Scheidl S, Olschewski H. Pulmonary arterial pressure during rest and exercise in healthy subjects: a systematic review. Eur Respir J. 2009;34:888-894.",
+      "url": "https://doi.org/10.1183/09031936.00145608",
+      "license": "Publisher copyright applies to the article; cited numerical facts are transcribed here, while the source article is neither redistributed nor relicensed.",
+      "measurement_method": "Weighted upright invasive hemodynamic summaries from healthy volunteers measured at rest and at least two exercise levels; contributing study methods varied.",
+      "data_access": "Directly published Table 2; no data-use request is required for the attributed aggregate numerical facts.",
+      "cohort_independence": "confirmed_disjoint"
+    },
+    {
+      "id": "wolsk-2017-age-hemodynamics",
+      "citation": "Wolsk E et al. Rest and Exercise Hemodynamics in Relation to Age: A Prospective Study of Normal Human Physiology. JACC Heart Fail. 2017;5(5):337-346.",
+      "url": "https://doi.org/10.1016/j.jchf.2016.10.012",
+      "license": "Copyright 2017 American College of Cardiology Foundation; cited numerical facts are transcribed here, while the source article is neither redistributed nor relicensed.",
+      "measurement_method": "Prospective two-centre supine right-heart catheterization; cardiac output was the average of three thermodilution measurements and was indexed to body surface area.",
+      "data_access": "Directly published age-stratified table; no data-use request is required for the attributed aggregate numerical facts.",
+      "cohort_independence": "confirmed_disjoint"
+    }
+  ],
+  "series": [
+    {
+      "id": "kovacs-upright-pooled",
+      "source_id": "kovacs-2009-healthy-exercise",
+      "phenotype": "healthy_control",
+      "sample_size": 193,
+      "body_position": "upright",
+      "cardiac_output_method": "Pooled invasive studies; the systematic review reports weighted mean cardiac output and SD.",
+      "statistic_kind": "mean_standard_deviation",
+      "flow_basis": "absolute_cardiac_output",
+      "cohort_overlap": "disjoint_from_other_series",
+      "stages": [
+        {
+          "id": "rest",
+          "ordinal": 0,
+          "challenge_kind": "rest",
+          "cardiac_flow": {"mean": 7.4, "standard_deviation": 2.2, "unit": "L/min"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 5.9, "standard_deviation": 2.8, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 13.8, "standard_deviation": 3.1, "unit": "mmHg"}
+        },
+        {
+          "id": "slight-exercise",
+          "ordinal": 1,
+          "challenge_kind": "exercise",
+          "cardiac_flow": {"mean": 14.9, "standard_deviation": 3.9, "unit": "L/min"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 9.1, "standard_deviation": 4.2, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 20.8, "standard_deviation": 4.0, "unit": "mmHg"}
+        },
+        {
+          "id": "maximal-exercise",
+          "ordinal": 2,
+          "challenge_kind": "exercise",
+          "cardiac_flow": {"mean": 20.0, "standard_deviation": 3.8, "unit": "L/min"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 14.9, "standard_deviation": 7.9, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 25.6, "standard_deviation": 5.6, "unit": "mmHg"}
+        }
+      ]
+    },
+    {
+      "id": "wolsk-age-20-39",
+      "source_id": "wolsk-2017-age-hemodynamics",
+      "phenotype": "healthy_control",
+      "sample_size": 20,
+      "body_position": "supine",
+      "cardiac_output_method": "Three-measurement thermodilution mean, reported as cardiac index.",
+      "statistic_kind": "mean_confidence_interval_95",
+      "flow_basis": "cardiac_index",
+      "reference_body_surface_area_m2": 1.9,
+      "cohort_overlap": "disjoint_from_other_series",
+      "stages": [
+        {
+          "id": "rest", "ordinal": 0, "challenge_kind": "rest", "workload_watts_mean": 0,
+          "cardiac_flow": {"mean": 2.9, "confidence_interval_95_lower": 2.6, "confidence_interval_95_upper": 3.1, "unit": "L/min/m2"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 9, "confidence_interval_95_lower": 8, "confidence_interval_95_upper": 9, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 13, "confidence_interval_95_lower": 12, "confidence_interval_95_upper": 14, "unit": "mmHg"}
+        },
+        {
+          "id": "passive-leg-raise", "ordinal": 1, "challenge_kind": "passive_leg_raise", "workload_watts_mean": 0,
+          "cardiac_flow": {"mean": 3.1, "confidence_interval_95_lower": 2.8, "confidence_interval_95_upper": 3.3, "unit": "L/min/m2"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 12, "confidence_interval_95_lower": 11, "confidence_interval_95_upper": 13, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 17, "confidence_interval_95_lower": 15, "confidence_interval_95_upper": 19, "unit": "mmHg"}
+        },
+        {
+          "id": "exercise-25-percent", "ordinal": 2, "challenge_kind": "exercise", "workload_watts_mean": 36,
+          "cardiac_flow": {"mean": 5.6, "confidence_interval_95_lower": 5.0, "confidence_interval_95_upper": 6.2, "unit": "L/min/m2"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 13, "confidence_interval_95_lower": 10, "confidence_interval_95_upper": 15, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 21, "confidence_interval_95_lower": 18, "confidence_interval_95_upper": 23, "unit": "mmHg"}
+        },
+        {
+          "id": "exercise-50-percent", "ordinal": 3, "challenge_kind": "exercise", "workload_watts_mean": 104,
+          "cardiac_flow": {"mean": 8.2, "confidence_interval_95_lower": 7.6, "confidence_interval_95_upper": 8.9, "unit": "L/min/m2"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 15, "confidence_interval_95_lower": 12, "confidence_interval_95_upper": 17, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 24, "confidence_interval_95_lower": 21, "confidence_interval_95_upper": 27, "unit": "mmHg"}
+        },
+        {
+          "id": "exercise-75-percent", "ordinal": 4, "challenge_kind": "exercise", "workload_watts_mean": 174,
+          "cardiac_flow": {"mean": 9.9, "confidence_interval_95_lower": 9.6, "confidence_interval_95_upper": 10.4, "unit": "L/min/m2"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 13, "confidence_interval_95_lower": 10, "confidence_interval_95_upper": 15, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 25, "confidence_interval_95_lower": 22, "confidence_interval_95_upper": 28, "unit": "mmHg"}
+        }
+      ]
+    },
+    {
+      "id": "wolsk-age-40-59",
+      "source_id": "wolsk-2017-age-hemodynamics",
+      "phenotype": "healthy_control",
+      "sample_size": 22,
+      "body_position": "supine",
+      "cardiac_output_method": "Three-measurement thermodilution mean, reported as cardiac index.",
+      "statistic_kind": "mean_confidence_interval_95",
+      "flow_basis": "cardiac_index",
+      "reference_body_surface_area_m2": 1.9,
+      "cohort_overlap": "disjoint_from_other_series",
+      "stages": [
+        {
+          "id": "rest", "ordinal": 0, "challenge_kind": "rest", "workload_watts_mean": 0,
+          "cardiac_flow": {"mean": 2.8, "confidence_interval_95_lower": 2.6, "confidence_interval_95_upper": 2.9, "unit": "L/min/m2"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 9, "confidence_interval_95_lower": 8, "confidence_interval_95_upper": 10, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 15, "confidence_interval_95_lower": 13, "confidence_interval_95_upper": 16, "unit": "mmHg"}
+        },
+        {
+          "id": "passive-leg-raise", "ordinal": 1, "challenge_kind": "passive_leg_raise", "workload_watts_mean": 0,
+          "cardiac_flow": {"mean": 3.0, "confidence_interval_95_lower": 2.8, "confidence_interval_95_upper": 3.3, "unit": "L/min/m2"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 13, "confidence_interval_95_lower": 11, "confidence_interval_95_upper": 15, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 20, "confidence_interval_95_lower": 18, "confidence_interval_95_upper": 22, "unit": "mmHg"}
+        },
+        {
+          "id": "exercise-25-percent", "ordinal": 2, "challenge_kind": "exercise", "workload_watts_mean": 31,
+          "cardiac_flow": {"mean": 5.0, "confidence_interval_95_lower": 4.7, "confidence_interval_95_upper": 5.4, "unit": "L/min/m2"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 17, "confidence_interval_95_lower": 14, "confidence_interval_95_upper": 20, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 26, "confidence_interval_95_lower": 22, "confidence_interval_95_upper": 29, "unit": "mmHg"}
+        },
+        {
+          "id": "exercise-50-percent", "ordinal": 3, "challenge_kind": "exercise", "workload_watts_mean": 85,
+          "cardiac_flow": {"mean": 7.3, "confidence_interval_95_lower": 6.8, "confidence_interval_95_upper": 7.8, "unit": "L/min/m2"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 18, "confidence_interval_95_lower": 15, "confidence_interval_95_upper": 22, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 30, "confidence_interval_95_lower": 26, "confidence_interval_95_upper": 33, "unit": "mmHg"}
+        },
+        {
+          "id": "exercise-75-percent", "ordinal": 4, "challenge_kind": "exercise", "workload_watts_mean": 144,
+          "cardiac_flow": {"mean": 8.8, "confidence_interval_95_lower": 8.4, "confidence_interval_95_upper": 9.3, "unit": "L/min/m2"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 19, "confidence_interval_95_lower": 15, "confidence_interval_95_upper": 23, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 32, "confidence_interval_95_lower": 27, "confidence_interval_95_upper": 38, "unit": "mmHg"}
+        }
+      ]
+    },
+    {
+      "id": "wolsk-age-60-80",
+      "source_id": "wolsk-2017-age-hemodynamics",
+      "phenotype": "healthy_control",
+      "sample_size": 20,
+      "body_position": "supine",
+      "cardiac_output_method": "Three-measurement thermodilution mean, reported as cardiac index.",
+      "statistic_kind": "mean_confidence_interval_95",
+      "flow_basis": "cardiac_index",
+      "reference_body_surface_area_m2": 1.9,
+      "cohort_overlap": "disjoint_from_other_series",
+      "stages": [
+        {
+          "id": "rest", "ordinal": 0, "challenge_kind": "rest", "workload_watts_mean": 0,
+          "cardiac_flow": {"mean": 2.6, "confidence_interval_95_lower": 2.4, "confidence_interval_95_upper": 2.8, "unit": "L/min/m2"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 8, "confidence_interval_95_lower": 7, "confidence_interval_95_upper": 9, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 15, "confidence_interval_95_lower": 14, "confidence_interval_95_upper": 16, "unit": "mmHg"}
+        },
+        {
+          "id": "passive-leg-raise", "ordinal": 1, "challenge_kind": "passive_leg_raise", "workload_watts_mean": 0,
+          "cardiac_flow": {"mean": 3.5, "confidence_interval_95_lower": 3.1, "confidence_interval_95_upper": 4.0, "unit": "L/min/m2"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 16, "confidence_interval_95_lower": 15, "confidence_interval_95_upper": 18, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 26, "confidence_interval_95_lower": 24, "confidence_interval_95_upper": 28, "unit": "mmHg"}
+        },
+        {
+          "id": "exercise-25-percent", "ordinal": 2, "challenge_kind": "exercise", "workload_watts_mean": 28,
+          "cardiac_flow": {"mean": 4.8, "confidence_interval_95_lower": 4.5, "confidence_interval_95_upper": 5.1, "unit": "L/min/m2"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 19, "confidence_interval_95_lower": 17, "confidence_interval_95_upper": 21, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 30, "confidence_interval_95_lower": 27, "confidence_interval_95_upper": 33, "unit": "mmHg"}
+        },
+        {
+          "id": "exercise-50-percent", "ordinal": 3, "challenge_kind": "exercise", "workload_watts_mean": 79,
+          "cardiac_flow": {"mean": 6.6, "confidence_interval_95_lower": 5.9, "confidence_interval_95_upper": 7.2, "unit": "L/min/m2"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 19, "confidence_interval_95_lower": 17, "confidence_interval_95_upper": 22, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 35, "confidence_interval_95_lower": 32, "confidence_interval_95_upper": 38, "unit": "mmHg"}
+        },
+        {
+          "id": "exercise-75-percent", "ordinal": 4, "challenge_kind": "exercise", "workload_watts_mean": 130,
+          "cardiac_flow": {"mean": 7.9, "confidence_interval_95_lower": 7.2, "confidence_interval_95_upper": 8.6, "unit": "L/min/m2"},
+          "pulmonary_arterial_wedge_pressure": {"mean": 23, "confidence_interval_95_lower": 21, "confidence_interval_95_upper": 25, "unit": "mmHg"},
+          "mean_pulmonary_arterial_pressure": {"mean": 39, "confidence_interval_95_lower": 36, "confidence_interval_95_upper": 43, "unit": "mmHg"}
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "These are published population summaries, not linked observations from individual participants.",
+    "Kovacs et al. pool heterogeneous historical exercise protocols; exact workloads were not reported for the three aggregate stages and are therefore omitted.",
+    "Wolsk et al. report cardiac index. Absolute mean flow is derived by multiplying each age-stratum mean by the reported stratum mean body surface area of 1.9 m2.",
+    "A reported 95% confidence interval describes uncertainty around the population mean and is not an individual physiological tolerance interval.",
+    "Upright Kovacs and supine Wolsk series must be interpreted separately; they are not merged into one trajectory.",
+    "No model parameter is fitted to either validation source. Subject-level independent validation remains a later, higher-resolution evidence tier."
+  ]
+}

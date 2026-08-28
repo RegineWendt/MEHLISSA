@@ -125,6 +125,13 @@ claiming measured validation. The preferred independent UA iCPET controls
 require an approved data transfer; see
 [Subject-Level Pulmonary Multipoint Validation](PULMONARY_0D_SUBJECT_MULTIPOINT_VALIDATION.md).
 
+M3.11 meanwhile evaluates four directly published population multipoint series
+without refitting. Its qualified 10/18-stage result and age-stratified failure
+pattern are documented in
+[Published-Population Pulmonary Multipoint Validation](PULMONARY_0D_POPULATION_MULTIPOINT_VALIDATION.md).
+This removes the immediate access blocker but does not relabel population
+summaries as participant-level evidence.
+
 ## 7. M3.9 post-calibration update
 
 M3.9 implements that next increment as the separate v2 definition rather than

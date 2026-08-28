@@ -129,6 +129,13 @@ evaluator; see
 The preferred UA iCPET control records are available only on request, so the
 software path is verified but the measured subject-level result remains open.
 
+M3.11 adds an immediately executable, no-refit population multipoint check
+against independent Kovacs and Wolsk series; see
+[Published-Population Pulmonary Multipoint Validation](PULMONARY_0D_POPULATION_MULTIPOINT_VALIDATION.md).
+Its age-stratified failures identify age dependence as the next candidate
+dimension. Wolsk remains validation-only and must not be reused to fit that
+successor.
+
 ## 6. Sources and rights
 
 1. Claessen G, La Gerche A, Dymarkowski S, et al. Pulmonary vascular and right

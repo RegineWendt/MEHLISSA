@@ -286,6 +286,120 @@ decode_multipoint(const Json& document) {
     return std::isfinite(value) && value > 0.0;
 }
 
+inline constexpr double millimetres_of_mercury_to_pascals = 133.322387415;
+inline constexpr double litres_per_minute_to_cubic_metres_per_second = 1.0 / 60000.0;
+
+[[nodiscard]] PulmonaryPopulationStatisticKind
+decode_population_statistic_kind(const std::string_view kind) {
+    if (kind == "mean_standard_deviation") {
+        return PulmonaryPopulationStatisticKind::mean_standard_deviation;
+    }
+    return PulmonaryPopulationStatisticKind::mean_confidence_interval_95;
+}
+
+[[nodiscard]] PulmonaryPopulationFlowBasis
+decode_population_flow_basis(const std::string_view basis) {
+    if (basis == "absolute_cardiac_output") {
+        return PulmonaryPopulationFlowBasis::absolute_cardiac_output;
+    }
+    return PulmonaryPopulationFlowBasis::cardiac_index;
+}
+
+[[nodiscard]] PulmonaryPopulationChallengeKind
+decode_population_challenge_kind(const std::string_view kind) {
+    if (kind == "rest") {
+        return PulmonaryPopulationChallengeKind::rest;
+    }
+    if (kind == "passive_leg_raise") {
+        return PulmonaryPopulationChallengeKind::passive_leg_raise;
+    }
+    return PulmonaryPopulationChallengeKind::exercise;
+}
+
+[[nodiscard]] PulmonaryPopulationObservation decode_population_observation(const Json& document,
+                                                                           const double si_scale) {
+    const auto scale_optional = [&document, si_scale](const std::string_view key) {
+        const auto value = optional_number(document, key);
+        return value.has_value() ? std::optional<double>{value.value() * si_scale} : std::nullopt;
+    };
+    return {
+        document.at("mean").as<double>() * si_scale,
+        scale_optional("standard_deviation"),
+        scale_optional("confidence_interval_95_lower"),
+        scale_optional("confidence_interval_95_upper"),
+        document.at("unit").as<std::string>(),
+    };
+}
+
+[[nodiscard]] PulmonaryZeroDimensionalPopulationMultipointValidationCase
+decode_population_multipoint(const Json& document) {
+    const auto& identity = document.at("validation");
+    const auto& protocol = document.at("protocol");
+    PulmonaryZeroDimensionalPopulationMultipointValidationCase result{
+        document.at("schema_version").as<std::string>(),
+        identity.at("id").as<std::string>(),
+        identity.at("title").as<std::string>(),
+        identity.at("model_definition_id").as<std::string>(),
+        protocol.at("minimum_stage_count").as<std::size_t>(),
+        protocol.at("standard_deviation_multiplier").as<double>(),
+        {},
+        {},
+        {},
+    };
+
+    for (const auto& source : document.at("sources").array_range()) {
+        result.sources.push_back({
+            source.at("id").as<std::string>(),
+            source.at("citation").as<std::string>(),
+            source.at("url").as<std::string>(),
+            source.at("license").as<std::string>(),
+            source.at("measurement_method").as<std::string>(),
+            source.at("data_access").as<std::string>(),
+            source.at("cohort_independence").as<std::string>(),
+        });
+    }
+    for (const auto& series : document.at("series").array_range()) {
+        const auto flow_basis =
+            decode_population_flow_basis(series.at("flow_basis").as<std::string_view>());
+        const auto flow_scale = litres_per_minute_to_cubic_metres_per_second;
+        PulmonaryPopulationSeries decoded_series{
+            series.at("id").as<std::string>(),
+            series.at("source_id").as<std::string>(),
+            series.at("phenotype").as<std::string>(),
+            series.at("sample_size").as<std::size_t>(),
+            decode_body_position(series.at("body_position").as<std::string_view>()),
+            series.at("cardiac_output_method").as<std::string>(),
+            decode_population_statistic_kind(series.at("statistic_kind").as<std::string_view>()),
+            flow_basis,
+            optional_number(series, "reference_body_surface_area_m2"),
+            series.at("cohort_overlap").as<std::string>(),
+            {},
+        };
+        for (const auto& stage : series.at("stages").array_range()) {
+            decoded_series.stages.push_back({
+                stage.at("id").as<std::string>(),
+                stage.at("ordinal").as<std::size_t>(),
+                decode_population_challenge_kind(stage.at("challenge_kind").as<std::string_view>()),
+                optional_number(stage, "workload_watts_mean"),
+                decode_population_observation(stage.at("cardiac_flow"), flow_scale),
+                decode_population_observation(stage.at("pulmonary_arterial_wedge_pressure"),
+                                              millimetres_of_mercury_to_pascals),
+                decode_population_observation(stage.at("mean_pulmonary_arterial_pressure"),
+                                              millimetres_of_mercury_to_pascals),
+                stage.contains("heart_rate")
+                    ? std::optional<PulmonaryPopulationObservation>{decode_population_observation(
+                          stage.at("heart_rate"), 1.0)}
+                    : std::nullopt,
+            });
+        }
+        result.series.push_back(std::move(decoded_series));
+    }
+    for (const auto& limitation : document.at("limitations").array_range()) {
+        result.limitations.push_back(limitation.as<std::string>());
+    }
+    return result;
+}
+
 void validate_multipoint_semantics(
     const PulmonaryZeroDimensionalMultipointValidationCase& validation,
     const bool allow_synthetic_test_data) {
@@ -361,6 +475,140 @@ void validate_multipoint_semantics(
         if (std::adjacent_find(flows.begin(), flows.end()) != flows.end()) {
             invalid(core::ErrorCode::data_invalid,
                     "Pulmonary multipoint regression requires distinct cardiac outputs");
+        }
+    }
+}
+
+void validate_population_observation(const PulmonaryPopulationObservation& observation,
+                                     const PulmonaryPopulationStatisticKind statistic_kind) {
+    const auto has_standard_deviation = observation.standard_deviation_si.has_value();
+    const auto has_lower = observation.confidence_interval_95_lower_si.has_value();
+    const auto has_upper = observation.confidence_interval_95_upper_si.has_value();
+    if (!positive_finite(observation.mean_si)) {
+        invalid(core::ErrorCode::data_invalid,
+                "Pulmonary population observations require a positive finite mean");
+    }
+    if (statistic_kind == PulmonaryPopulationStatisticKind::mean_standard_deviation) {
+        if (!has_standard_deviation || has_lower || has_upper ||
+            !positive_finite(observation.standard_deviation_si.value())) {
+            invalid(core::ErrorCode::data_invalid,
+                    "Pulmonary population mean/SD series require exactly one positive SD");
+        }
+        return;
+    }
+    if (has_standard_deviation || !has_lower || !has_upper ||
+        !positive_finite(observation.confidence_interval_95_lower_si.value()) ||
+        !positive_finite(observation.confidence_interval_95_upper_si.value()) ||
+        observation.confidence_interval_95_lower_si.value() > observation.mean_si ||
+        observation.mean_si > observation.confidence_interval_95_upper_si.value() ||
+        observation.confidence_interval_95_lower_si.value() >=
+            observation.confidence_interval_95_upper_si.value()) {
+        invalid(core::ErrorCode::data_invalid,
+                "Pulmonary population mean/95% CI series require ordered confidence bounds; "
+                "a rounded bound may equal the rounded mean");
+    }
+}
+
+[[nodiscard]] double population_absolute_flow(const PulmonaryPopulationSeries& series,
+                                              const PulmonaryPopulationStage& stage) {
+    if (series.flow_basis == PulmonaryPopulationFlowBasis::absolute_cardiac_output) {
+        return stage.cardiac_flow.mean_si;
+    }
+    return stage.cardiac_flow.mean_si * series.reference_body_surface_area_m2.value();
+}
+
+void validate_population_multipoint_semantics(
+    const PulmonaryZeroDimensionalPopulationMultipointValidationCase& validation) {
+    if (validation.schema_version !=
+            pulmonary_zero_dimensional_population_multipoint_validation_schema_version ||
+        validation.minimum_stage_count < 3 ||
+        !positive_finite(validation.standard_deviation_multiplier)) {
+        invalid(core::ErrorCode::data_invalid,
+                "Pulmonary population multipoint validation has an unsupported protocol");
+    }
+
+    std::unordered_set<std::string> source_ids;
+    for (const auto& source : validation.sources) {
+        if (!source_ids.insert(source.id).second ||
+            source.cohort_independence != "confirmed_disjoint") {
+            invalid(core::ErrorCode::data_invalid,
+                    "Pulmonary population sources must be unique and cohort-disjoint");
+        }
+    }
+
+    std::unordered_set<std::string> series_ids;
+    for (const auto& series : validation.series) {
+        if (!series_ids.insert(series.id).second || !source_ids.contains(series.source_id) ||
+            series.phenotype != "healthy_control" || series.sample_size == 0 ||
+            series.cohort_overlap != "disjoint_from_other_series" ||
+            series.stages.size() < validation.minimum_stage_count) {
+            invalid(core::ErrorCode::data_invalid,
+                    "Pulmonary population series require unique IDs, disjoint healthy cohorts, "
+                    "declared sources, and sufficient stages");
+        }
+        if ((series.flow_basis == PulmonaryPopulationFlowBasis::cardiac_index) !=
+            series.reference_body_surface_area_m2.has_value()) {
+            invalid(
+                core::ErrorCode::data_invalid,
+                "Cardiac-index series require one reference BSA; absolute-flow series forbid it");
+        }
+        if (series.reference_body_surface_area_m2.has_value() &&
+            !positive_finite(series.reference_body_surface_area_m2.value())) {
+            invalid(core::ErrorCode::data_invalid,
+                    "Pulmonary population reference BSA must be positive and finite");
+        }
+
+        std::unordered_set<std::string> stage_ids;
+        std::vector<double> flows;
+        std::optional<double> previous_exercise_workload;
+        for (std::size_t index = 0; index < series.stages.size(); ++index) {
+            const auto& stage = series.stages[index];
+            if (!stage_ids.insert(stage.id).second || stage.ordinal != index ||
+                (stage.workload_watts_mean.has_value() &&
+                 (!std::isfinite(stage.workload_watts_mean.value()) ||
+                  stage.workload_watts_mean.value() < 0.0)) ||
+                stage.mean_pulmonary_arterial_pressure.mean_si <=
+                    stage.pulmonary_arterial_wedge_pressure.mean_si) {
+                invalid(core::ErrorCode::data_invalid,
+                        "Pulmonary population stages contain invalid identifiers, order, "
+                        "workload, or pressures");
+            }
+            if (stage.challenge_kind == PulmonaryPopulationChallengeKind::exercise) {
+                if (stage.workload_watts_mean.has_value() &&
+                    previous_exercise_workload.has_value() &&
+                    stage.workload_watts_mean.value() < previous_exercise_workload.value()) {
+                    invalid(core::ErrorCode::data_invalid,
+                            "Pulmonary population exercise workload must be nondecreasing");
+                }
+                if (stage.workload_watts_mean.has_value()) {
+                    previous_exercise_workload = stage.workload_watts_mean;
+                }
+            }
+            validate_population_observation(stage.cardiac_flow, series.statistic_kind);
+            validate_population_observation(stage.pulmonary_arterial_wedge_pressure,
+                                            series.statistic_kind);
+            validate_population_observation(stage.mean_pulmonary_arterial_pressure,
+                                            series.statistic_kind);
+            if (stage.heart_rate.has_value()) {
+                validate_population_observation(stage.heart_rate.value(), series.statistic_kind);
+            }
+            const auto expected_flow_unit =
+                series.flow_basis == PulmonaryPopulationFlowBasis::absolute_cardiac_output
+                    ? "L/min"
+                    : "L/min/m2";
+            if (stage.cardiac_flow.reported_unit != expected_flow_unit ||
+                stage.pulmonary_arterial_wedge_pressure.reported_unit != "mmHg" ||
+                stage.mean_pulmonary_arterial_pressure.reported_unit != "mmHg" ||
+                (stage.heart_rate.has_value() && stage.heart_rate->reported_unit != "1/min")) {
+                invalid(core::ErrorCode::data_invalid,
+                        "Pulmonary population observation units do not match the series contract");
+            }
+            flows.push_back(population_absolute_flow(series, stage));
+        }
+        std::ranges::sort(flows);
+        if (std::adjacent_find(flows.begin(), flows.end()) != flows.end()) {
+            invalid(core::ErrorCode::data_invalid,
+                    "Pulmonary population regression requires distinct mean cardiac outputs");
         }
     }
 }
@@ -622,6 +870,137 @@ evaluate_pulmonary_zero_dimensional_multipoint_validation(
             std::sqrt(squared_pressure_error_sum / stage_count);
         report.stage_count += subject.stages.size();
         report.subjects.push_back(std::move(subject_result));
+    }
+    return report;
+}
+
+PulmonaryZeroDimensionalPopulationMultipointValidationCase
+load_pulmonary_zero_dimensional_population_multipoint_validation_case(
+    const PulmonaryPopulationMultipointValidationCaseLoadRequest& request) {
+    const auto document =
+        read_json(request.validation_path, "pulmonary population multipoint validation data");
+    const auto schema_document =
+        read_json(request.schema_path, "pulmonary population multipoint validation schema");
+    const auto schema = compile_schema(schema_document, request.schema_path);
+    validate_document(document, schema, request.validation_path);
+    auto result = decode_population_multipoint(document);
+    validate_population_multipoint_semantics(result);
+    return result;
+}
+
+PulmonaryZeroDimensionalPopulationMultipointValidationReport
+evaluate_pulmonary_zero_dimensional_population_multipoint_validation(
+    const PulmonaryZeroDimensionalPopulationMultipointValidationCase& validation,
+    const LungModelDefinition& model_definition) {
+    if (validation.model_definition_id != model_definition.definition_id ||
+        model_definition.model.variant != LungModelVariant::pulmonary_zero_dimensional ||
+        !model_definition.model.zero_dimensional_parameters.has_value()) {
+        invalid(core::ErrorCode::data_invalid,
+                "Pulmonary population validation and model definition are incompatible");
+    }
+
+    std::unordered_set<std::string> calibration_urls;
+    for (const auto& source : model_definition.sources) {
+        calibration_urls.insert(source.url);
+    }
+    for (const auto& source : validation.sources) {
+        if (calibration_urls.contains(source.url)) {
+            invalid(core::ErrorCode::data_invalid,
+                    "Independent pulmonary population validation reuses a model evidence source");
+        }
+    }
+
+    PulmonaryZeroDimensionalPopulationMultipointValidationReport report{
+        validation.validation_id,
+        validation.model_definition_id,
+        true,
+        true,
+        true,
+        validation.series.size(),
+        0,
+        0,
+        {},
+    };
+    const auto locked_parameters = model_definition.model.zero_dimensional_parameters.value();
+
+    for (const auto& series : validation.series) {
+        PulmonaryPopulationSeriesResult series_result{series.id, series.sample_size, {}, {}, 0.0, 0,
+                                                      {}};
+        std::vector<double> flows;
+        std::vector<double> observed_pressures;
+        std::vector<double> predicted_pressures;
+        double squared_pressure_error_sum{};
+        flows.reserve(series.stages.size());
+        observed_pressures.reserve(series.stages.size());
+        predicted_pressures.reserve(series.stages.size());
+
+        for (const auto& stage : series.stages) {
+            const auto flow = population_absolute_flow(series, stage);
+            auto parameters = locked_parameters;
+            parameters.baseline_cardiac_output = core::cubic_meters_per_second(flow);
+            parameters.left_atrial_pressure =
+                core::pascals(stage.pulmonary_arterial_wedge_pressure.mean_si);
+            PulmonaryZeroDimensionalModel model{PulmonaryZeroDimensionalConfig{
+                "organ.lung.population-multipoint-validation",
+                "lung.pulmonary-0d.population-multipoint-validation",
+                "pulmonary-arterial-entry",
+                "pulmonary-venous-exit",
+                "body.validation",
+                "pulmonary-venous-return",
+                parameters,
+            }};
+            const auto predicted_pressure =
+                core::in_pascals(model.state().mean_pulmonary_arterial_pressure);
+            const auto observed_pressure = stage.mean_pulmonary_arterial_pressure.mean_si;
+            const auto residual = predicted_pressure - observed_pressure;
+            double lower{};
+            double upper{};
+            std::optional<double> z_score;
+            if (series.statistic_kind ==
+                PulmonaryPopulationStatisticKind::mean_standard_deviation) {
+                const auto standard_deviation =
+                    stage.mean_pulmonary_arterial_pressure.standard_deviation_si.value();
+                lower = observed_pressure -
+                        validation.standard_deviation_multiplier * standard_deviation;
+                upper = observed_pressure +
+                        validation.standard_deviation_multiplier * standard_deviation;
+                z_score = std::abs(residual) / standard_deviation;
+            } else {
+                lower =
+                    stage.mean_pulmonary_arterial_pressure.confidence_interval_95_lower_si.value();
+                upper =
+                    stage.mean_pulmonary_arterial_pressure.confidence_interval_95_upper_si.value();
+            }
+            const auto accepted = predicted_pressure >= lower && predicted_pressure <= upper;
+            if (accepted) {
+                ++series_result.accepted_stage_count;
+                ++report.accepted_stage_count;
+            } else {
+                report.all_stages_agree = false;
+            }
+            series_result.stages.push_back({
+                stage.id,
+                stage.workload_watts_mean,
+                flow,
+                observed_pressure,
+                predicted_pressure,
+                residual,
+                lower,
+                upper,
+                z_score,
+                accepted,
+            });
+            flows.push_back(flow);
+            observed_pressures.push_back(observed_pressure);
+            predicted_pressures.push_back(predicted_pressure);
+            squared_pressure_error_sum += residual * residual;
+        }
+        series_result.observed_mpap_flow_fit = linear_fit(flows, observed_pressures);
+        series_result.predicted_mpap_flow_fit = linear_fit(flows, predicted_pressures);
+        series_result.root_mean_square_pressure_error_si =
+            std::sqrt(squared_pressure_error_sum / static_cast<double>(series.stages.size()));
+        report.stage_count += series.stages.size();
+        report.series.push_back(std::move(series_result));
     }
     return report;
 }

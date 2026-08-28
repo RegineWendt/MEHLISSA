@@ -132,13 +132,15 @@ M3 is not closed by this increment alone. The remaining work is:
 
 1. explicitly retain the composite population calibration reference until a
    jointly measured alternative is selected;
-2. extend the completed aggregate validation with subject-level, jointly
-   measured supine data and a prospectively prespecified analysis;
+2. retain the completed aggregate and published-population multipoint
+   validation, and later extend it with participant-level, jointly measured
+   supine data under a prospectively prespecified analysis;
 3. add lobar/gravity-dependent or anatomical pulmonary structure and compare
    it with the aggregate right/left target;
-4. extend the implemented bounded PVR/compliance flow adaptation with
-   subject-level uncertainty, pressure-dependent recruitment, and reviewed
-   right/left or lobar exercise redistribution;
+4. extend the implemented bounded PVR/compliance flow adaptation with a
+   separately calibrated age dimension, participant-level uncertainty,
+   pressure-dependent recruitment, and reviewed right/left or lobar exercise
+   redistribution;
 5. qualify the SimVascular archive and combine its arterial geometry with this
    downstream 0D closure, if its data rights and state are resolved; and
 6. implement or formally defer the neutral historical FP9 timing/event

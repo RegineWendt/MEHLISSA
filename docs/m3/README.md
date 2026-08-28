@@ -6,8 +6,8 @@ SPDX-License-Identifier: CC-BY-4.0
 # M3 – Body–Organ Coupling
 
 **Status:** technical coupling, literature-parameterized flow-adaptive 0D
-reference, independent aggregate validation, and subject-level analysis path
-complete; measured subject-level evidence and scientific gate open
+reference, independent aggregate and published-population multipoint validation,
+and subject-level analysis path complete; anatomical/FP9 scientific gate open
 
 **Started:** 27 August 2026
 
@@ -30,6 +30,7 @@ respiratory mechanics, or gas exchange.
 | M3.8 independent pulmonary 0D validation | qualified aggregate pass; subject-level/anatomical validation open | executable source-separation guard; supine healthy-rest comparison; invasive rest/exercise crosscheck; 6/6 required endpoints pass; exercise RC limitation exposed |
 | M3.9 bounded rest-to-exercise 0D adaptation | implemented, independently stress-tested; subject-level/anatomical refinement open | immutable v1 baseline; source-disjoint Claessen calibration; bounded effective PVR/compliance; Bentley 6/6 required pass; exercise RC z reduced from 18.571 to 3.005 but remains diagnostic fail |
 | M3.10 subject-level multipoint validation path | software-verified; measured data access pending | pseudonymous three-stage schema; immutable-model mPAP/PAWP pressure-flow fits; stage PVR/compliance/RC diagnostics; synthetic-evidence guard; UA iCPET request draft |
+| M3.11 published-population multipoint validation | qualified partial result; 10/18 stages agree | independent Kovacs and Wolsk series; 255 healthy volunteers; exact mean/SD and mean/95% CI semantics; age-stratified failure pattern exposed without refitting |
 
 ## M3.1 result
 
@@ -147,6 +148,16 @@ UA iCPET healthy-control records require an approved data request, so this
 increment verifies the method but does not claim measured subject-level
 validation. A [send-ready request draft](UA_ICPET_DATA_REQUEST.md) records the
 minimal pseudonymized fields and reuse questions.
+
+M3.11 adds the immediately accessible
+[published-population multipoint validation](PULMONARY_0D_POPULATION_MULTIPOINT_VALIDATION.md).
+The locked v2 model is evaluated against four independent series spanning 255
+healthy volunteers and 18 stages. Kovacs passes 3/3 stages and the Wolsk
+40–59-year stratum passes 5/5, while the younger and older strata expose a
+systematic missing age dimension. Overall agreement is 10/18 stages under the
+predeclared rules. This is a reproducible partial result, not a relabelled pass.
+Subject-level data remain a valuable higher-resolution follow-up but no longer
+block use of published population evidence.
 
 An initial [SimVascular Healthy Pulmonary Candidate Review](SIMVASCULAR_PULMONARY_CANDIDATE_REVIEW.md)
 finds the official case useful for an imported pulmonary-artery technical

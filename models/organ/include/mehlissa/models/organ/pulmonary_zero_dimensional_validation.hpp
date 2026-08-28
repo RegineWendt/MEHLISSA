@@ -16,6 +16,8 @@ namespace mehlissa::models::organ {
 
 inline constexpr auto pulmonary_zero_dimensional_validation_schema_version = "1.0.0";
 inline constexpr auto pulmonary_zero_dimensional_multipoint_validation_schema_version = "1.0.0";
+inline constexpr auto pulmonary_zero_dimensional_population_multipoint_validation_schema_version =
+    "1.0.0";
 
 enum class PulmonaryValidationScope : std::uint8_t {
     declared_scope,
@@ -190,6 +192,100 @@ struct PulmonaryZeroDimensionalMultipointValidationReport final {
     std::vector<PulmonaryMultipointSubjectResult> subjects;
 };
 
+enum class PulmonaryPopulationStatisticKind : std::uint8_t {
+    mean_standard_deviation,
+    mean_confidence_interval_95
+};
+
+enum class PulmonaryPopulationFlowBasis : std::uint8_t { absolute_cardiac_output, cardiac_index };
+
+enum class PulmonaryPopulationChallengeKind : std::uint8_t { rest, passive_leg_raise, exercise };
+
+struct PulmonaryPopulationObservation final {
+    double mean_si{};
+    std::optional<double> standard_deviation_si;
+    std::optional<double> confidence_interval_95_lower_si;
+    std::optional<double> confidence_interval_95_upper_si;
+    std::string reported_unit;
+};
+
+struct PulmonaryPopulationStage final {
+    std::string id;
+    std::size_t ordinal{};
+    PulmonaryPopulationChallengeKind challenge_kind{};
+    std::optional<double> workload_watts_mean;
+    PulmonaryPopulationObservation cardiac_flow;
+    PulmonaryPopulationObservation pulmonary_arterial_wedge_pressure;
+    PulmonaryPopulationObservation mean_pulmonary_arterial_pressure;
+    std::optional<PulmonaryPopulationObservation> heart_rate;
+};
+
+struct PulmonaryPopulationSeries final {
+    std::string id;
+    std::string source_id;
+    std::string phenotype;
+    std::size_t sample_size{};
+    PulmonaryBodyPosition body_position{};
+    std::string cardiac_output_method;
+    PulmonaryPopulationStatisticKind statistic_kind{};
+    PulmonaryPopulationFlowBasis flow_basis{};
+    std::optional<double> reference_body_surface_area_m2;
+    std::string cohort_overlap;
+    std::vector<PulmonaryPopulationStage> stages;
+};
+
+struct PulmonaryZeroDimensionalPopulationMultipointValidationCase final {
+    std::string schema_version;
+    std::string validation_id;
+    std::string title;
+    std::string model_definition_id;
+    std::size_t minimum_stage_count{};
+    double standard_deviation_multiplier{};
+    std::vector<PulmonaryValidationSource> sources;
+    std::vector<PulmonaryPopulationSeries> series;
+    std::vector<std::string> limitations;
+};
+
+struct PulmonaryPopulationMultipointValidationCaseLoadRequest final {
+    std::filesystem::path validation_path;
+    std::filesystem::path schema_path;
+};
+
+struct PulmonaryPopulationStageResult final {
+    std::string stage_id;
+    std::optional<double> workload_watts_mean;
+    double cardiac_output_si{};
+    double observed_mean_pulmonary_arterial_pressure_si{};
+    double predicted_mean_pulmonary_arterial_pressure_si{};
+    double pressure_residual_si{};
+    double acceptance_lower_si{};
+    double acceptance_upper_si{};
+    std::optional<double> absolute_z_score;
+    bool accepted{};
+};
+
+struct PulmonaryPopulationSeriesResult final {
+    std::string series_id;
+    std::size_t sample_size{};
+    PulmonaryLinearFit observed_mpap_flow_fit;
+    PulmonaryLinearFit predicted_mpap_flow_fit;
+    double root_mean_square_pressure_error_si{};
+    std::size_t accepted_stage_count{};
+    std::vector<PulmonaryPopulationStageResult> stages;
+};
+
+struct PulmonaryZeroDimensionalPopulationMultipointValidationReport final {
+    std::string validation_id;
+    std::string model_definition_id;
+    bool source_independence_verified{};
+    bool published_population_evidence{};
+    bool all_stages_agree{};
+    std::size_t series_count{};
+    std::size_t stage_count{};
+    std::size_t accepted_stage_count{};
+    std::vector<PulmonaryPopulationSeriesResult> series;
+};
+
 [[nodiscard]] PulmonaryZeroDimensionalValidationCase
 load_pulmonary_zero_dimensional_validation_case(const PulmonaryValidationCaseLoadRequest& request);
 
@@ -205,6 +301,15 @@ load_pulmonary_zero_dimensional_multipoint_validation_case(
 [[nodiscard]] PulmonaryZeroDimensionalMultipointValidationReport
 evaluate_pulmonary_zero_dimensional_multipoint_validation(
     const PulmonaryZeroDimensionalMultipointValidationCase& validation,
+    const LungModelDefinition& model_definition);
+
+[[nodiscard]] PulmonaryZeroDimensionalPopulationMultipointValidationCase
+load_pulmonary_zero_dimensional_population_multipoint_validation_case(
+    const PulmonaryPopulationMultipointValidationCaseLoadRequest& request);
+
+[[nodiscard]] PulmonaryZeroDimensionalPopulationMultipointValidationReport
+evaluate_pulmonary_zero_dimensional_population_multipoint_validation(
+    const PulmonaryZeroDimensionalPopulationMultipointValidationCase& validation,
     const LungModelDefinition& model_definition);
 
 } // namespace mehlissa::models::organ
