@@ -265,15 +265,17 @@ TEST_CASE("Age-conditioned distensibility binds the older invasive aggregate",
     if (!definition.model.zero_dimensional_parameters.has_value() ||
         !definition.hemodynamics.has_value() ||
         !definition.model.zero_dimensional_parameters->pressure_distensibility.has_value() ||
-        !definition.hemodynamics->pressure_distensibility.has_value()) {
+        !definition.model.zero_dimensional_parameters->age_conditioning.has_value() ||
+        !definition.hemodynamics->pressure_distensibility.has_value() ||
+        !definition.model.zero_dimensional_parameters->pressure_distensibility->older_coefficient
+             .has_value() ||
+        !definition.hemodynamics->pressure_distensibility->older_coefficient.has_value()) {
         FAIL("Expected age-conditioned pressure distensibility and its evidence");
         return;
     }
     const auto& parameters =
         definition.model.zero_dimensional_parameters->pressure_distensibility.value();
     const auto& evidence = definition.hemodynamics->pressure_distensibility.value();
-    REQUIRE(parameters.older_coefficient.has_value());
-    REQUIRE(evidence.older_coefficient.has_value());
     CHECK(definition.schema_version == std::string_view{"1.5.0"});
     CHECK(mehlissa::core::in_per_millimeter_of_mercury(*parameters.older_coefficient) ==
           Catch::Approx(0.015));
