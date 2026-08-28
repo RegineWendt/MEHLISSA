@@ -301,9 +301,9 @@ TEST_CASE("Independent age calibration conditions published population series wi
     const auto model_definition = load_age_conditioned_model_definition();
     REQUIRE(validation.series.size() == 4);
     CHECK_FALSE(validation.series[0].representative_age_years.has_value());
-    CHECK(validation.series[1].representative_age_years.value() == Catch::Approx(29.5));
-    CHECK(validation.series[2].representative_age_years.value() == Catch::Approx(49.5));
-    CHECK(validation.series[3].representative_age_years.value() == Catch::Approx(70.0));
+    CHECK(validation.series[1].representative_age_years.value_or(0.0) == Catch::Approx(29.5));
+    CHECK(validation.series[2].representative_age_years.value_or(0.0) == Catch::Approx(49.5));
+    CHECK(validation.series[3].representative_age_years.value_or(0.0) == Catch::Approx(70.0));
 
     const auto report = mehlissa::models::organ::
         evaluate_pulmonary_zero_dimensional_population_multipoint_validation(validation,
