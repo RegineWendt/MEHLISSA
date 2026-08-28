@@ -34,7 +34,8 @@ TEST_CASE("The v7 lung definition creates five anatomical parallel beds",
           "[m3][organ][pulmonary-0d][parallel][anatomy]") {
     const auto definition = lobar_definition();
     REQUIRE(definition.model.zero_dimensional_parameters.has_value());
-    const auto& parameters = definition.model.zero_dimensional_parameters.value();
+    const auto parameters = definition.model.zero_dimensional_parameters.value_or(
+        mehlissa::models::organ::PulmonaryZeroDimensionalParameters{});
     REQUIRE(parameters.parallel_beds.size() == 5);
     CHECK(parameters.parallel_beds[0].id == "right-upper-lobe");
     CHECK(parameters.parallel_beds[1].id == "right-middle-lobe");
@@ -79,10 +80,13 @@ TEST_CASE("The v7 lung definition creates five anatomical parallel beds",
 TEST_CASE("An entity follows one deterministic lobe path and returns exactly once",
           "[m3][organ][pulmonary-0d][parallel][coupling]") {
     auto definition = lobar_definition();
-    auto& beds = definition.model.zero_dimensional_parameters.value().parallel_beds;
+    auto parameters = definition.model.zero_dimensional_parameters.value_or(
+        mehlissa::models::organ::PulmonaryZeroDimensionalParameters{});
+    auto& beds = parameters.parallel_beds;
     for (std::size_t index = 0; index < beds.size(); ++index) {
         beds[index].transit_time = std::chrono::seconds{static_cast<std::int64_t>(index + 1)};
     }
+    definition.model.zero_dimensional_parameters = parameters;
     auto model = mehlissa::models::organ::make_lung_model(definition.model);
     auto* parallel =
         dynamic_cast<mehlissa::models::organ::PulmonaryParallelBedsModel*>(model.get());
@@ -114,8 +118,11 @@ TEST_CASE("An entity follows one deterministic lobe path and returns exactly onc
 TEST_CASE("Parallel beds reject a non-conservative perfusion partition",
           "[m3][organ][pulmonary-0d][parallel][validation]") {
     auto definition = lobar_definition();
-    definition.model.zero_dimensional_parameters.value().parallel_beds.front().perfusion_fraction =
+    auto parameters = definition.model.zero_dimensional_parameters.value_or(
+        mehlissa::models::organ::PulmonaryZeroDimensionalParameters{});
+    parameters.parallel_beds.front().perfusion_fraction =
         mehlissa::core::Dimensionless::from_si(0.5);
+    definition.model.zero_dimensional_parameters = parameters;
     CHECK_THROWS_AS(mehlissa::models::organ::make_lung_model(definition.model),
                     mehlissa::core::MehlissaError);
 }
