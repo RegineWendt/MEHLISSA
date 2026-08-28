@@ -574,14 +574,13 @@ void validate_population_multipoint_semantics(
                         "workload, or pressures");
             }
             if (stage.challenge_kind == PulmonaryPopulationChallengeKind::exercise) {
-                if (stage.workload_watts_mean.has_value() &&
-                    previous_exercise_workload.has_value() &&
-                    stage.workload_watts_mean.value() < previous_exercise_workload.value()) {
-                    invalid(core::ErrorCode::data_invalid,
-                            "Pulmonary population exercise workload must be nondecreasing");
-                }
                 if (stage.workload_watts_mean.has_value()) {
-                    previous_exercise_workload = stage.workload_watts_mean;
+                    const auto workload = stage.workload_watts_mean.value();
+                    if (workload < previous_exercise_workload.value_or(workload)) {
+                        invalid(core::ErrorCode::data_invalid,
+                                "Pulmonary population exercise workload must be nondecreasing");
+                    }
+                    previous_exercise_workload = workload;
                 }
             }
             validate_population_observation(stage.cardiac_flow, series.statistic_kind);
