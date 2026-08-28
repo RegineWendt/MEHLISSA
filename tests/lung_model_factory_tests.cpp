@@ -68,6 +68,7 @@ using mehlissa::models::organ::PulmonaryTransitRegion;
             mehlissa::core::Dimensionless::from_si(0.5563),
             std::nullopt,
             std::nullopt,
+            std::nullopt,
         },
     };
 }
