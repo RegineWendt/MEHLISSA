@@ -123,6 +123,12 @@ and stroke volume. That would permit uncertainty-aware calibration of
 recruitment and pressure-dependent compliance while reserving a genuinely
 disjoint cohort for final validation.
 
+M3.10 now implements the corresponding schema and immutable-model trajectory
+evaluator; see
+[Subject-Level Pulmonary Multipoint Validation](PULMONARY_0D_SUBJECT_MULTIPOINT_VALIDATION.md).
+The preferred UA iCPET control records are available only on request, so the
+software path is verified but the measured subject-level result remains open.
+
 ## 6. Sources and rights
 
 1. Claessen G, La Gerche A, Dymarkowski S, et al. Pulmonary vascular and right

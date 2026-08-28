@@ -120,6 +120,11 @@ retain Bentley et al. as the independent stress-test set. A later stronger
 validation should use subject-level, jointly measured supine CO, PAWP, mPAP,
 and compliance with a prespecified analysis plan.
 
+M3.10 implements that subject-level multipoint input and analysis path without
+claiming measured validation. The preferred independent UA iCPET controls
+require an approved data transfer; see
+[Subject-Level Pulmonary Multipoint Validation](PULMONARY_0D_SUBJECT_MULTIPOINT_VALIDATION.md).
+
 ## 7. M3.9 post-calibration update
 
 M3.9 implements that next increment as the separate v2 definition rather than

@@ -46,6 +46,17 @@ load_flow_adaptive_validation() {
     });
 }
 
+[[nodiscard]] mehlissa::models::organ::PulmonaryZeroDimensionalMultipointValidationCase
+load_synthetic_multipoint_validation(const bool allow_synthetic = true) {
+    return mehlissa::models::organ::load_pulmonary_zero_dimensional_multipoint_validation_case({
+        root() / "tests" / "data" / "pulmonary-zero-dimensional-validation" /
+            "synthetic-multipoint-v1.json",
+        root() / "data" / "schemas" / "pulmonary-zero-dimensional-multipoint-validation" /
+            "1.0.0.schema.json",
+        allow_synthetic,
+    });
+}
+
 [[nodiscard]] const mehlissa::models::organ::PulmonaryValidationEndpointResult*
 find_endpoint(const mehlissa::models::organ::PulmonaryValidationConditionResult& condition,
               const std::string_view endpoint) {
@@ -143,4 +154,54 @@ TEST_CASE("Independent Bentley stress data assess the Claessen-calibrated flow a
     CHECK(exercise_compliance->accepted);
     CHECK_FALSE(exercise_rc->accepted);
     CHECK(exercise_rc->absolute_z_score < 18.5714285714);
+}
+
+TEST_CASE("Subject-level multipoint evaluation preserves stages and pressure-flow trajectories",
+          "[m3][organ][pulmonary-0d][multipoint-validation]") {
+    const auto validation = load_synthetic_multipoint_validation();
+    const auto model_definition = load_flow_adaptive_model_definition();
+    REQUIRE_FALSE(validation.sources.empty());
+    CHECK(validation.sources.front().data_access ==
+          "Repository test fixture; forbidden as scientific evidence");
+    const auto report =
+        mehlissa::models::organ::evaluate_pulmonary_zero_dimensional_multipoint_validation(
+            validation, model_definition);
+
+    CHECK(report.source_independence_verified);
+    CHECK_FALSE(report.measured_evidence);
+    CHECK(report.subject_count == 1);
+    CHECK(report.stage_count == 3);
+    REQUIRE(report.subjects.size() == 1);
+    const auto& subject = report.subjects.front();
+    REQUIRE(subject.stages.size() == 3);
+    CHECK(subject.mean_pressure_error_si == Catch::Approx(-10.0));
+    CHECK(subject.root_mean_square_pressure_error_si == Catch::Approx(31.0912635103));
+    CHECK(subject.observed_mpap_flow_fit.slope > 0.0);
+    CHECK(subject.predicted_mpap_flow_fit.slope > 0.0);
+    CHECK(subject.observed_pawp_flow_fit.slope > 0.0);
+    CHECK(subject.observed_mpap_flow_fit.coefficient_of_determination > 0.99);
+    CHECK(subject.stages.front().pressure_residual_si == Catch::Approx(-20.0));
+    CHECK(subject.stages[1].pressure_residual_si == Catch::Approx(30.0));
+    CHECK(subject.stages.back().pressure_residual_si == Catch::Approx(-40.0));
+    CHECK(subject.stages.front().observed_pulmonary_arterial_compliance_si.has_value());
+    CHECK(subject.stages.front().observed_rc_time_constant_si.has_value());
+}
+
+TEST_CASE("Synthetic multipoint fixtures cannot be loaded as scientific evidence",
+          "[m3][organ][pulmonary-0d][multipoint-validation][provenance]") {
+    CHECK_THROWS_AS(load_synthetic_multipoint_validation(false), mehlissa::core::MehlissaError);
+}
+
+TEST_CASE("Multipoint evaluation rejects reuse of a calibration source",
+          "[m3][organ][pulmonary-0d][multipoint-validation][provenance]") {
+    auto validation = load_synthetic_multipoint_validation();
+    const auto model_definition = load_flow_adaptive_model_definition();
+    REQUIRE_FALSE(validation.sources.empty());
+    REQUIRE_FALSE(model_definition.sources.empty());
+    validation.sources.front().url = model_definition.sources.front().url;
+
+    CHECK_THROWS_AS(
+        mehlissa::models::organ::evaluate_pulmonary_zero_dimensional_multipoint_validation(
+            validation, model_definition),
+        mehlissa::core::MehlissaError);
 }

@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "validation": {
+    "id": "synthetic-multipoint-v1",
+    "title": "Synthetic multipoint fixture for pulmonary validation mechanics",
+    "model_definition_id": "healthy-adult-rest-exercise-0d-v2",
+    "evidence_status": "synthetic_test_only"
+  },
+  "protocol": {
+    "minimum_stage_count": 3,
+    "parameter_fitting": "forbidden",
+    "subject_identifier_policy": "study_pseudonym_only",
+    "decision_rule": "Exercise the deterministic multipoint evaluator only; these values are not scientific evidence.",
+    "execution_status": "protocol_locked_before_repository_evaluation"
+  },
+  "sources": [
+    {
+      "id": "synthetic-fixture",
+      "citation": "MEHLISSA deterministic synthetic test fixture, 2026.",
+      "url": "https://mehlissa.example/test-fixtures/synthetic-multipoint-v1",
+      "license": "CC0-1.0",
+      "measurement_method": "Model-derived values with fixed residuals for software verification",
+      "data_access": "Repository test fixture; forbidden as scientific evidence",
+      "cohort_independence": "confirmed_disjoint"
+    }
+  ],
+  "subjects": [
+    {
+      "id": "SYNTHETIC-001",
+      "source_id": "synthetic-fixture",
+      "phenotype": "healthy_control",
+      "body_position": "supine",
+      "cardiac_output_method": "synthetic",
+      "stages": [
+        {
+          "id": "rest",
+          "ordinal": 0,
+          "workload_watts": 0,
+          "cardiac_output_m3_per_s": 0.0001,
+          "pulmonary_arterial_wedge_pressure_pa": 1066.57909932,
+          "mean_pulmonary_arterial_pressure_pa": 2046.500288708,
+          "systolic_pulmonary_arterial_pressure_pa": 3333.059685375,
+          "diastolic_pulmonary_arterial_pressure_pa": 1333.22387415,
+          "heart_rate_per_minute": 60
+        },
+        {
+          "id": "exercise-1",
+          "ordinal": 1,
+          "workload_watts": 40,
+          "cardiac_output_m3_per_s": 0.00015,
+          "pulmonary_arterial_wedge_pressure_pa": 1333.22387415,
+          "mean_pulmonary_arterial_pressure_pa": 2629.794084302124,
+          "systolic_pulmonary_arterial_pressure_pa": 4666.283559525,
+          "diastolic_pulmonary_arterial_pressure_pa": 1866.51342381,
+          "heart_rate_per_minute": 100
+        },
+        {
+          "id": "exercise-2",
+          "ordinal": 2,
+          "workload_watts": 80,
+          "cardiac_output_m3_per_s": 0.00022,
+          "pulmonary_arterial_wedge_pressure_pa": 1599.86864898,
+          "mean_pulmonary_arterial_pressure_pa": 3440.554708293684,
+          "systolic_pulmonary_arterial_pressure_pa": 5999.507433675,
+          "diastolic_pulmonary_arterial_pressure_pa": 2399.80297347,
+          "heart_rate_per_minute": 140
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "This fixture is synthetic and must never be represented as physiological or validation evidence."
+  ]
+}

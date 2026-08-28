@@ -366,16 +366,20 @@ rest in the supine position. M3.8 adds independent aggregate validation with a
 source-separation guard, a scope-matched supine comparison, and an invasive
 rest/exercise crosscheck. M3.9 adds a bounded, independently calibrated
 flow-dependent PVR/compliance variant and repeats the untouched Bentley stress
-test. Anatomical refinement, transforming exchange, general experiment
-composition, subject-level validation, and regional exercise redistribution
-remain open; see [M3 working plan](m3/README.md).
+test. M3.10 adds the subject-level multipoint schema, immutable-model evaluator,
+trajectory metrics, synthetic-evidence guard, and a reviewed acquisition plan.
+Measured subject-level validation remains blocked on an approved, licensed data
+transfer. Anatomical refinement, transforming exchange, general experiment
+composition, measured subject-level validation, and regional exercise
+redistribution remain open; see [M3 working plan](m3/README.md).
 
 The formal [M3 gate review](m3/M3_GATE_REVIEW.md) therefore keeps the milestone
 open: the software coupling candidate, first literature-parameterized 0D
 reference candidate, independent aggregate validation, and bounded
-rest/exercise 0D adaptation are verified, while anatomical refinement,
-subject-level validation, regional redistribution, and the executable
-historical FP9 baseline remain closure evidence.
+rest/exercise 0D adaptation are verified, and the subject-level analysis path is
+software-verified. Anatomical refinement, measured subject-level results,
+regional redistribution, and the executable historical FP9 baseline remain
+closure evidence.
 
 #### Tasks
 

@@ -6,7 +6,8 @@ SPDX-License-Identifier: CC-BY-4.0
 # M3 – Body–Organ Coupling
 
 **Status:** technical coupling, literature-parameterized flow-adaptive 0D
-reference, and independent aggregate validation complete; scientific gate open
+reference, independent aggregate validation, and subject-level analysis path
+complete; measured subject-level evidence and scientific gate open
 
 **Started:** 27 August 2026
 
@@ -28,6 +29,7 @@ respiratory mechanics, or gas exchange.
 | M3.7 healthy-adult resting pulmonary 0D reference | implemented and software-verified; independent validation/anatomical refinement open | source-scoped pressure, flow, resistance, compliance, transit, right/left perfusion, uncertainty, analytical RC dynamics, and lossless coupling |
 | M3.8 independent pulmonary 0D validation | qualified aggregate pass; subject-level/anatomical validation open | executable source-separation guard; supine healthy-rest comparison; invasive rest/exercise crosscheck; 6/6 required endpoints pass; exercise RC limitation exposed |
 | M3.9 bounded rest-to-exercise 0D adaptation | implemented, independently stress-tested; subject-level/anatomical refinement open | immutable v1 baseline; source-disjoint Claessen calibration; bounded effective PVR/compliance; Bentley 6/6 required pass; exercise RC z reduced from 18.571 to 3.005 but remains diagnostic fail |
+| M3.10 subject-level multipoint validation path | software-verified; measured data access pending | pseudonymous three-stage schema; immutable-model mPAP/PAWP pressure-flow fits; stage PVR/compliance/RC diagnostics; synthetic-evidence guard; UA iCPET request draft |
 
 ## M3.1 result
 
@@ -135,6 +137,16 @@ Wright et al. was rejected because Bentley reused that Toronto cohort. Bentley
 remains untouched as the post-calibration stress test. Pressure and compliance
 remain required-pass endpoints, while exercise RC improves materially but
 still fails its deliberately narrow diagnostic criterion.
+
+M3.10 adds the
+[subject-level multipoint validation path](PULMONARY_0D_SUBJECT_MULTIPOINT_VALIDATION.md).
+It computes observed and predicted pressure-flow trajectories, per-stage PVR,
+optional compliance/RC, mean pressure error, and RMSE without refitting v2.
+Synthetic test data are rejected by the default evidence loader. The preferred
+UA iCPET healthy-control records require an approved data request, so this
+increment verifies the method but does not claim measured subject-level
+validation. A [send-ready request draft](UA_ICPET_DATA_REQUEST.md) records the
+minimal pseudonymized fields and reuse questions.
 
 An initial [SimVascular Healthy Pulmonary Candidate Review](SIMVASCULAR_PULMONARY_CANDIDATE_REVIEW.md)
 finds the official case useful for an imported pulmonary-artery technical

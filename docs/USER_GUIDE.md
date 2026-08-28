@@ -340,8 +340,10 @@ These labels are not interchangeable. In particular:
 - the coarse and serial-region lung variants are verification surrogates;
 - the pulmonary 0D variants have qualified independent aggregate validation
   for healthy pressure, compliance, and resting RC behavior; v2 also has a
-  source-disjoint exercise adaptation, but neither is anatomical, pulsatile,
-  subject-level validated, patient-specific, or clinically usable;
+  source-disjoint exercise adaptation and a software-verified subject-level
+  multipoint analysis path, but measured subject-level data have not yet been
+  licensed or evaluated, and neither variant is anatomical, fully pulsatile,
+  patient-specific, or clinically usable;
 - none of the current outputs is patient-specific or suitable for clinical
   decision-making.
 
@@ -367,6 +369,33 @@ declared validity scope.
 The v2 result is not a fitted Bentley reproduction: Claessen et al. supplies
 the adaptation calibration, while Bentley remains the untouched stress-test
 cohort. The exercise RC discrepancy improves but remains a diagnostic failure.
+
+### 8.2 Verify the subject-level multipoint analysis path
+
+The multipoint path accepts pseudonymous healthy-control records with at least
+three jointly measured cardiac-output, mPAP, and PAWP stages. If heart rate and
+systolic/diastolic PAP are supplied together, it also derives observed
+compliance and RC time. The locked v2 parameters are never fitted to these
+records.
+
+Run the dedicated software checks with:
+
+```powershell
+& build/windows-msvc/tests/Debug/mehlissa_organ_model_tests.exe `
+  "[multipoint-validation]"
+```
+
+The current fixture is synthetic and stored only under `tests/data`. Loading it
+through the normal evidence path fails by design. A report produced from that
+fixture explicitly states that it is not measured evidence.
+
+The data schema is
+`data/schemas/pulmonary-zero-dimensional-multipoint-validation/1.0.0.schema.json`.
+See the
+[subject-level validation plan](m3/PULMONARY_0D_SUBJECT_MULTIPOINT_VALIDATION.md)
+for required fields, formulas, source qualification, and the current data-access
+blocker. Do not add a clinical source file to the repository unless its data-use
+terms explicitly permit redistribution.
 
 ## 9. Troubleshooting
 
