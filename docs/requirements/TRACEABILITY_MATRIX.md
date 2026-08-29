@@ -37,10 +37,10 @@ Status codes:
 | SYS-006 | RM M0 | PART | M1 | CI rule and review: `core/` does not import `scenarios/` |
 | SYS-007 | RM M1 | DONE | M1 | stable error codes/CLI statuses and negative tests for configuration, overflow, lifecycle, log, and checkpoint invariants |
 | SYS-008 | DISS pp. 95–97, 133 | DONE | M3 | M3.18 runs one schema-validated body–lung–body scenario unchanged with the effective compartment and five-lobe v7 implementation; identity, route, ownership, population, substance, and flow meaning agree while model-specific timing remains observable |
-| ARC-001 | DISS pp. 94–96 | PART | M3–M5 | generic `ModelComponent` boundary plus independent organ and capillary implementations exist; a body adapter and cell implementation follow |
+| ARC-001 | DISS pp. 94–96 | PART | M3–M5 | generic `ModelComponent` boundary, independent organ and capillary implementations, and an explicit organ-capillary coupler exist; a body adapter and cell implementation follow |
 | ARC-002 | DISS p. 95 | PART | M3–M5 | schema-validated lung definitions bind scale and scientific evidence to execution; M4.1 adds the equivalent validity/source/limitation baseline for capillary models, while physiological capillary uncertainty and derivations follow |
-| ARC-003 | DISS pp. 95–97 | PART | M3 | versioned entity, population, substance-amount, and volume-flow contracts and lung endpoints exist; physiological-state and event contracts follow |
-| ARC-004 | RM 3.3 | PART | M3 | entity round trip and lossless population, substance, and flow transit pass across both lung variants; transforming exchange and body aggregate endpoints follow |
+| ARC-003 | DISS pp. 95–97 | PART | M3/M4 | versioned entity, population, substance-amount, and volume-flow contracts cross body-organ and organ-capillary boundaries; physiological-state and event contracts follow |
+| ARC-004 | RM 3.3 | PART | M3/M4 | entity round trips and lossless population, substance, and flow transit pass across both lung variants and the synthetic organ-capillary route; transforming exchange and body aggregate endpoints follow |
 | ARC-005 | DISS pp. 99–100 | SPEC | M3–M5 | return of a detection/cell event to a higher layer |
 | ARC-006 | RM 3.3 | PART | M3 | externally selected coarse/regional results agree at 0.5 s and 1 s, the 6.4 s pulmonary 0D route agrees at 0.1 s and 0.2 s, and M3.18 executes one 0.1 s scenario across coarse and five-lobe candidates; asynchronous multirate synchronization follows |
 | ARC-007 | DISS pp. 96–97, 133 | SPEC | M4/M5 | reference adapter plus equivalent surrogate |
@@ -70,7 +70,7 @@ Status codes:
 
 | ID | Source | Status 2026-08-27 | Target | Planned verification |
 |---|---|---|---|---|
-| CAP-001 | DISS pp. 126–129 | PART | M4 | strict schema and executable synthetic arteriole–capillary–venule component preserve identity and conserved payloads; physiological geometry and organ-specific qualification follow |
+| CAP-001 | DISS pp. 126–129 | PART | M4 | strict schema and executable synthetic arteriole–capillary–venule component preserve identity and conserved payloads through a complete organ-capillary-organ route with explicit ownership; physiological geometry and organ-specific qualification follow |
 | CAP-002 | DISS pp. 126–129 | RESEARCH | M4 | organ-specific parameter cards and literature comparison |
 | CAP-003 | DISS pp. 127–128 | SPEC | M4 | sphincter/activity scenario test |
 | CAP-004 | DISS p. 127 | SPEC | M4 | substance balance across blood/interstitium/cell |

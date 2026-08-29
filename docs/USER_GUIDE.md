@@ -576,7 +576,7 @@ assembly. Read the [FP9 timer baseline](m3/FP9_TIMER_BASELINE.md) before using
 these historical outputs; the replay does not model binding, diffusion,
 collector encounter probability, or gateway communication.
 
-## 9. M4 developer preview: the first capillary component
+## 9. M4 developer preview: capillary transit and layer coupling
 
 M4.1 adds an independent capillary-layer component with three explicit serial
 regions: arteriole, capillary, and venule. Its first card is intentionally a
@@ -596,15 +596,26 @@ nanodevice identity, population count, substance amount, flow rate, interval,
 and integrated volume while routing transfers from the arteriole entry to the
 configured organ return port.
 
+M4.2 connects a compatible organ to this component through four explicit
+boundaries: organ departure, capillary entry, capillary exit, and organ return.
+The generic coupler records which entity and conserved-transfer IDs are outside
+the organ, retains failed deliveries for inspection or retry, and only closes a
+round trip after the organ accepts the return. The current test organ is
+scripted and synthetic; this proves layer composition and conservation without
+claiming pulmonary physiology.
+
 To run only this developer test group after building:
 
 ```powershell
 ctest --test-dir build -C Debug --output-on-failure -R capillary
+ctest --test-dir build -C Debug --output-on-failure -R "organ capillary|coupler"
 ```
 
 Read [Capillary Transit Bed](m4/CAPILLARY_TRANSIT_BED.md) before using the
-component. Organ-capillary orchestration, geometry, dynamic recruitment,
-barrier exchange, retention, and molecular channels are subsequent M4 work.
+component and [Organ-Capillary Round Trip](m4/ORGAN_CAPILLARY_ROUND_TRIP.md)
+before composing layers. Physiological organ-capillary gateways, geometry,
+dynamic recruitment, barrier exchange, retention, and molecular channels are
+subsequent M4 work.
 
 ## 10. Troubleshooting
 

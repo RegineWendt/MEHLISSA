@@ -53,6 +53,11 @@ examples/capillary-models/synthetic-arteriole-capillary-venule-v1.json
 - outbound transfers name the capillary model and venule exit as their source
   and the configured organ return port as their target.
 
+M4.2 connects these boundaries to any compatible organ component through the
+generic four-port co-simulation coupler. Its pending queues and outstanding-ID
+ledgers make temporary ownership explicit from organ departure through organ
+return. See [Organ-Capillary Round Trip](ORGAN_CAPILLARY_ROUND_TRIP.md).
+
 Population count, substance amount, flow rate, flow interval, and integrated
 volume remain unchanged. This is an intentionally lossless control case. Later
 exchange must report balanced blood, endothelium, interstitium, and cell terms
@@ -77,6 +82,10 @@ The `[m4][capillary]` tests verify:
 - invalid recruitment counts and region order;
 - wrong routes, wrong synchronization time, and duplicate ownership.
 
+The `[m4][cosimulation][round-trip]` tests additionally verify complete organ
+departure and return, conservation across both boundaries, compatible host
+steps, pending-delivery retention, and invalid endpoint rejection.
+
 ## Explicitly deferred
 
 - physiological diameter, length, density, velocity, pressure, and hematocrit;
@@ -84,4 +93,5 @@ The `[m4][capillary]` tests verify:
 - spatial paths and stochastic transit distributions;
 - barrier exchange, reaction, retention, adhesion, and extravasation;
 - molecular channel, clustering, reachability, and multi-hop behavior;
-- a complete organ -> capillary -> organ co-simulation path.
+- a physiologically parameterized organ-capillary gateway and multirate
+  orchestrator.

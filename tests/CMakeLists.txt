@@ -139,6 +139,16 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
             PRIVATE MEHLISSA_TEST_ROOT="${PROJECT_SOURCE_DIR}"
         )
         mehlissa_configure_target(mehlissa_capillary_model_tests)
+        if(MEHLISSA_BUILD_COSIMULATION)
+            target_sources(
+                mehlissa_capillary_model_tests
+                PRIVATE organ_capillary_coupler_tests.cpp
+            )
+            target_link_libraries(
+                mehlissa_capillary_model_tests
+                PRIVATE MEHLISSA::cosimulation
+            )
+        endif()
         catch_discover_tests(mehlissa_capillary_model_tests DISCOVERY_MODE PRE_TEST)
     endif()
 endif()

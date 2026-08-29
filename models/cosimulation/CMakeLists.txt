@@ -1,7 +1,11 @@
 # SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 # SPDX-License-Identifier: MPL-2.0
 
-add_library(mehlissa_cosimulation src/body_organ_coupler.cpp)
+add_library(
+    mehlissa_cosimulation
+    src/body_organ_coupler.cpp
+    src/organ_capillary_coupler.cpp
+)
 add_library(MEHLISSA::cosimulation ALIAS mehlissa_cosimulation)
 
 target_include_directories(

@@ -480,10 +480,16 @@ arteriole, capillary, and venule regions. A strict schema connects a synthetic
 software-test card to executable state; entity identity and population,
 substance-amount, and volume-flow payloads cross the component without loss.
 Total and perfused parallel-path counts are validated but do not yet drive flow
-redistribution. This creates the conservation baseline for the next increments:
-organ-capillary orchestration, dimension-safe geometry and continuity,
-recruitment dynamics, balanced tissue exchange, and molecular channels. See
-[M4 evidence](m4/README.md) and [ADR-0021](architecture/adr/0021-versioned-capillary-bed-baseline.md).
+redistribution. M4.2 adds a generic four-port organ-capillary coupler with
+pending-delivery queues, explicit outstanding-ownership ledgers, and completed
+entity and conserved-payload round trips across compatible host steps. The
+first Gate M4 statement is therefore executable at the synthetic
+software-contract level, while physiological qualification remains open. The
+next increments add dimension-safe geometry and continuity, recruitment
+dynamics, balanced tissue exchange, and molecular channels. See
+[M4 evidence](m4/README.md),
+[ADR-0021](architecture/adr/0021-versioned-capillary-bed-baseline.md), and
+[ADR-0022](architecture/adr/0022-organ-capillary-round-trip-coupling.md).
 
 #### Model variants
 
