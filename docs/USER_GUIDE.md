@@ -619,9 +619,11 @@ component and [Organ-Capillary Round Trip](m4/ORGAN_CAPILLARY_ROUND_TRIP.md)
 before composing layers. The equations and schema migration are documented in
 [Capillary Geometry and Continuity](m4/CAPILLARY_GEOMETRY_AND_CONTINUITY.md).
 Physiological organ-capillary gateways and geometry, physiologically qualified
-recruitment and exchange, retention, and molecular channels remain subsequent
-M4 work. Aggregate scheduled recruitment is available in M4.4, and a balanced
-synthetic exchange contract is available in M4.5.
+recruitment, exchange, and nanodevice interactions, state-changing retention,
+and molecular channels remain subsequent M4 work. Aggregate scheduled
+recruitment is available in M4.4, a balanced synthetic exchange contract in
+M4.5, and non-state-changing local residence and interaction observations in
+M4.6.
 
 ### 9.1 Dynamic recruitment experiments (M4.4)
 
@@ -712,6 +714,52 @@ instantaneous at the observed capillary-region boundary and has no diffusion,
 concentration gradient, compartment volume, metabolism, reverse flux, or
 clearance. Use it for balance, architecture, and sensitivity experiments only.
 Read [Balanced Capillary Substance Exchange](m4/BALANCED_CAPILLARY_EXCHANGE.md)
+before defining another profile.
+
+### 9.3 Nanodevice residence and interaction observations (M4.6)
+
+M4.6 lets a program inspect where a nanodevice is inside the capillary route
+and how long it has spent in each region. A separate optional profile adds
+residence-sensitive interaction likelihoods:
+
+```text
+examples/capillary-models/synthetic-nanodevice-observation-v1.json
+data/schemas/capillary-entity-observation-profile/1.0.0.schema.json
+```
+
+During transit, `entity_positions()` returns each resident's region, axial
+distance, fraction of that region completed, and total accumulated residence.
+This supports questions such as:
+
+- Where is a specific device after a partial simulation step?
+- How does a recruitment schedule change capillary residence?
+- Which device design assumption produces a larger interaction likelihood?
+- Are results stable when the host uses another compatible step size?
+- Does a large population remain observable without unbounded memory growth?
+
+At exit, the record contains separate arteriole, capillary, and venule times.
+For a matched entity type, three rates in inverse seconds define competing
+retention, adhesion, and extravasation assumptions. MEHLISSA combines them with
+the measured capillary residence and reports four probabilities, including
+pass-through, that sum to one. An unmatched entity still receives a residence
+record and a pass-through probability of one.
+
+These probabilities do **not** execute an outcome. Every device still leaves
+the capillary bed with the same ID, type, target organ, and return port. This is
+important: actual retention or extravasation needs a separate contract saying
+which tissue component takes ownership and how the organ-capillary ledger is
+closed. Until that exists, treating a likelihood as an event would make a
+device disappear from the conservative route.
+
+The profile bounds the number of completed records waiting in memory. If a
+consumer does not drain them quickly enough, additional records are counted as
+dropped. Current positions are computed on request and are not stored as a
+full trajectory.
+
+The included rates are synthetic and useful only for software, sensitivity,
+and composition experiments. They do not represent measured retention,
+adhesion, or extravasation of a real nanodevice. Read
+[Capillary Nanodevice Residence and Interaction Observations](m4/CAPILLARY_ENTITY_OBSERVATION.md)
 before defining another profile.
 
 ## 10. Troubleshooting

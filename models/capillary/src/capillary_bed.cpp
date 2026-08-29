@@ -10,6 +10,7 @@
 #include <cmath>
 #include <limits>
 #include <numbers>
+#include <numeric>
 #include <unordered_map>
 #include <utility>
 #include <variant>
@@ -200,6 +201,15 @@ void validate_exchange_compatibility(const CapillaryBedConfig& config,
     }
 }
 
+void validate_entity_observation_compatibility(const CapillaryBedConfig& config,
+                                               const CapillaryEntityObservationProfile& profile) {
+    validate_capillary_entity_observation_profile(profile);
+    if (profile.compatible_model_id != config.model_id) {
+        throw core::MehlissaError{core::ErrorCode::data_invalid,
+                                  "Capillary-entity-observation profile targets a different model"};
+    }
+}
+
 void validate_conserved_target(const coupling::ConservedTransfer& transfer,
                                const CapillaryBedConfig& config,
                                const core::SimulationClock::Duration synchronization_time,
@@ -243,6 +253,7 @@ void advance_resident(Resident& resident, const std::vector<CapillaryRegion>& re
     constexpr double nanoseconds_per_second = 1'000'000'000.0;
     while (delta > core::SimulationClock::Duration::zero() &&
            resident.region_index < metrics.size()) {
+        const auto active_region_index = resident.region_index;
         const auto region_length = core::in_meters(regions[resident.region_index].length);
         const auto travelled = core::in_meters(resident.region_distance);
         const auto remaining_distance = std::max(0.0, region_length - travelled);
@@ -253,11 +264,13 @@ void advance_resident(Resident& resident, const std::vector<CapillaryRegion>& re
         const auto distance_tolerance = region_length * 1.0e-12;
         if (available_distance + distance_tolerance < remaining_distance) {
             resident.region_distance += core::meters(available_distance);
+            resident.region_residence_times.at(active_region_index) += delta;
             delta = core::SimulationClock::Duration::zero();
         } else {
             const auto required_nanoseconds = static_cast<core::SimulationClock::Duration::rep>(
                 std::llround(remaining_distance / velocity * nanoseconds_per_second));
             const auto required = core::SimulationClock::Duration{required_nanoseconds};
+            resident.region_residence_times.at(active_region_index) += std::min(required, delta);
             delta = required < delta ? delta - required : core::SimulationClock::Duration::zero();
             ++resident.region_index;
             resident.region_distance = {};
@@ -284,28 +297,39 @@ CapillaryBed::CapillaryBed(CapillaryBedConfig config)
       current_volume_flow_rate_{config_.volume_flow_rate},
       current_perfused_path_count_{config_.perfused_path_count} {}
 
-CapillaryBed::CapillaryBed(CapillaryBedConfig config,
-                           CapillaryRecruitmentProfile recruitment_profile)
+CapillaryBed::CapillaryBed(CapillaryBedConfig config, CapillaryBedProfiles profiles)
     : CapillaryBed{std::move(config)} {
-    validate_recruitment_compatibility(config_, recruitment_profile);
-    recruitment_profile_ = std::move(recruitment_profile);
-    apply_recruitment_state(0);
-    next_recruitment_state_index_ = 1;
+    if (profiles.recruitment.has_value()) {
+        validate_recruitment_compatibility(config_, *profiles.recruitment);
+        recruitment_profile_ = std::move(profiles.recruitment);
+        apply_recruitment_state(0);
+        next_recruitment_state_index_ = 1;
+    }
+    if (profiles.exchange.has_value()) {
+        validate_exchange_compatibility(config_, *profiles.exchange);
+        exchange_profile_ = std::move(profiles.exchange);
+    }
+    if (profiles.entity_observation.has_value()) {
+        validate_entity_observation_compatibility(config_, *profiles.entity_observation);
+        entity_observation_profile_ = std::move(profiles.entity_observation);
+    }
 }
 
+CapillaryBed::CapillaryBed(CapillaryBedConfig config,
+                           CapillaryRecruitmentProfile recruitment_profile)
+    : CapillaryBed{std::move(config), CapillaryBedProfiles{std::move(recruitment_profile),
+                                                           std::nullopt, std::nullopt}} {}
+
 CapillaryBed::CapillaryBed(CapillaryBedConfig config, CapillaryExchangeProfile exchange_profile)
-    : CapillaryBed{std::move(config)} {
-    validate_exchange_compatibility(config_, exchange_profile);
-    exchange_profile_ = std::move(exchange_profile);
-}
+    : CapillaryBed{std::move(config),
+                   CapillaryBedProfiles{std::nullopt, std::move(exchange_profile), std::nullopt}} {}
 
 CapillaryBed::CapillaryBed(CapillaryBedConfig config,
                            CapillaryRecruitmentProfile recruitment_profile,
                            CapillaryExchangeProfile exchange_profile)
-    : CapillaryBed{std::move(config), std::move(recruitment_profile)} {
-    validate_exchange_compatibility(config_, exchange_profile);
-    exchange_profile_ = std::move(exchange_profile);
-}
+    : CapillaryBed{std::move(config),
+                   CapillaryBedProfiles{std::move(recruitment_profile), std::move(exchange_profile),
+                                        std::nullopt}} {}
 
 std::string_view CapillaryBed::name() const noexcept { return config_.component_name; }
 
@@ -376,6 +400,7 @@ void CapillaryBed::advance_residents(const AdvanceInterval interval) {
     for (auto& resident : resident_entities_) {
         advance_resident(resident, config_.regions, region_metrics_, interval.delta);
         if (resident.region_index == config_.regions.size()) {
+            record_entity_observation(resident, interval.emitted_at);
             outbound_entities_.push_back({
                 std::string{coupling::entity_transfer_contract_version},
                 resident.transfer.entity_id,
@@ -409,6 +434,33 @@ void CapillaryBed::advance_residents(const AdvanceInterval interval) {
         }
     }
     resident_conserved_transfers_ = std::move(remaining_conserved);
+}
+
+void CapillaryBed::record_entity_observation(const ResidentEntity& resident,
+                                             const core::SimulationClock::Duration reported_at) {
+    if (!entity_observation_profile_.has_value()) {
+        return;
+    }
+    const auto& profile = *entity_observation_profile_;
+    const auto rule =
+        std::find_if(profile.entity_rules.begin(), profile.entity_rules.end(),
+                     [&resident](const auto& candidate) {
+                         return candidate.entity_type == resident.transfer.entity_type;
+                     });
+    const auto* applied_rule = rule == profile.entity_rules.end() ? nullptr : &*rule;
+    auto record = make_capillary_entity_observation(
+        {resident.transfer.entity_id, resident.transfer.entity_type, profile.profile_id,
+         reported_at, resident.region_residence_times},
+        applied_rule);
+    if (!has_normalized_outcome_likelihoods(record)) {
+        throw core::MehlissaError{core::ErrorCode::invariant_violated,
+                                  "Capillary entity-observation likelihoods are not normalized"};
+    }
+    if (entity_observation_records_.size() < profile.maximum_buffered_records) {
+        entity_observation_records_.push_back(std::move(record));
+    } else if (dropped_entity_observation_records_ < std::numeric_limits<std::uint64_t>::max()) {
+        ++dropped_entity_observation_records_;
+    }
 }
 
 void CapillaryBed::apply_substance_exchange(coupling::ConservedTransfer& transfer,
@@ -504,7 +556,7 @@ void CapillaryBed::accept_entity(coupling::EntityTransfer transfer) {
         throw core::MehlissaError{core::ErrorCode::invariant_violated,
                                   "Capillary bed already holds this entity ID"};
     }
-    resident_entities_.push_back({std::move(transfer), {}, {}});
+    resident_entities_.push_back({std::move(transfer), {}, {}, {}});
 }
 
 std::vector<coupling::EntityTransfer> CapillaryBed::take_outbound_entities() {
@@ -528,7 +580,7 @@ void CapillaryBed::accept_conserved_transfer(coupling::ConservedTransfer transfe
         throw core::MehlissaError{core::ErrorCode::invariant_violated,
                                   "Capillary bed already holds this transfer ID"};
     }
-    resident_conserved_transfers_.push_back({std::move(transfer), {}, {}});
+    resident_conserved_transfers_.push_back({std::move(transfer), {}, {}, {}});
 }
 
 std::vector<coupling::ConservedTransfer> CapillaryBed::take_outbound_conserved_transfers() {
@@ -603,6 +655,51 @@ std::size_t CapillaryBed::exchange_record_count() const noexcept {
 std::vector<CapillaryExchangeRecord> CapillaryBed::take_exchange_records() {
     auto result = std::move(exchange_records_);
     exchange_records_.clear();
+    return result;
+}
+
+bool CapillaryBed::has_entity_observation_profile() const noexcept {
+    return entity_observation_profile_.has_value();
+}
+
+std::string_view CapillaryBed::entity_observation_profile_id() const noexcept {
+    if (!entity_observation_profile_.has_value()) {
+        return {};
+    }
+    return entity_observation_profile_->profile_id;
+}
+
+std::vector<CapillaryEntityPosition> CapillaryBed::entity_positions() const {
+    std::vector<CapillaryEntityPosition> result;
+    result.reserve(resident_entities_.size());
+    for (const auto& resident : resident_entities_) {
+        if (resident.region_index >= config_.regions.size()) {
+            continue;
+        }
+        const auto& region = config_.regions[resident.region_index];
+        const auto axial_position = core::in_meters(resident.region_distance);
+        const auto region_length = core::in_meters(region.length);
+        const auto accumulated = std::accumulate(resident.region_residence_times.begin(),
+                                                 resident.region_residence_times.end(),
+                                                 core::SimulationClock::Duration::zero());
+        result.push_back({resident.transfer.entity_id, resident.transfer.entity_type, region.id,
+                          std::string{to_string(region.kind)}, resident.region_distance,
+                          axial_position / region_length, accumulated});
+    }
+    return result;
+}
+
+std::size_t CapillaryBed::entity_observation_record_count() const noexcept {
+    return entity_observation_records_.size();
+}
+
+std::uint64_t CapillaryBed::dropped_entity_observation_record_count() const noexcept {
+    return dropped_entity_observation_records_;
+}
+
+std::vector<CapillaryEntityObservationRecord> CapillaryBed::take_entity_observation_records() {
+    auto result = std::move(entity_observation_records_);
+    entity_observation_records_.clear();
     return result;
 }
 

@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:capillary-entity-observation-profile:1.0.0",
+  "title": "MEHLISSA capillary entity-observation profile",
+  "description": "Strict evidence-scoped competing-rate profile for non-state-changing retention, adhesion, and extravasation likelihood observations.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "compatible_model_id", "unmatched_entity_policy", "maximum_buffered_records", "entity_rules", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "compatible_model_id": {"$ref": "#/$defs/id"},
+    "unmatched_entity_policy": {"const": "observe_residence_only"},
+    "maximum_buffered_records": {"type": "integer", "minimum": 1},
+    "entity_rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["entity_type", "retention_rate_per_second", "adhesion_rate_per_second", "extravasation_rate_per_second"],
+        "properties": {
+          "entity_type": {"$ref": "#/$defs/id"},
+          "retention_rate_per_second": {"$ref": "#/$defs/rate"},
+          "adhesion_rate_per_second": {"$ref": "#/$defs/rate"},
+          "extravasation_rate_per_second": {"$ref": "#/$defs/rate"}
+        }
+      }
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"type": "string", "enum": ["software_test_surrogate", "literature_parameterized", "externally_derived"]},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "citation", "location", "license", "role"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "citation": {"type": "string", "minLength": 1},
+          "location": {"type": "string", "minLength": 1},
+          "license": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "rate": {"type": "number", "minimum": 0}
+  }
+}

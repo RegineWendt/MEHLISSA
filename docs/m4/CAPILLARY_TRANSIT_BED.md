@@ -104,7 +104,8 @@ steps, pending-delivery retention, and invalid endpoint rejection.
 - spatial paths and stochastic transit distributions;
 - physiologically parameterized barrier kinetics, reaction, retention,
   adhesion, and extravasation (a balanced staged exchange surrogate is
-  implemented in M4.5);
+  implemented in M4.5; exact residence and non-state-changing competing
+  interaction likelihoods are implemented in M4.6);
 - molecular channel, clustering, reachability, and multi-hop behavior;
 - a physiologically parameterized organ-capillary gateway and multirate
   orchestrator.

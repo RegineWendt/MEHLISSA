@@ -7,6 +7,8 @@ add_library(
     mehlissa_capillary_model
     src/capillary_bed.cpp
     src/capillary_bed_definition.cpp
+    src/capillary_entity_observation.cpp
+    src/capillary_entity_observation_profile.cpp
     src/capillary_exchange.cpp
     src/capillary_exchange_profile.cpp
     src/capillary_recruitment_profile.cpp

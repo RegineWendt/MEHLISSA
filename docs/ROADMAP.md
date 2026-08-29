@@ -500,14 +500,22 @@ substance amount among outgoing blood, endothelium, interstitium, and cell,
 rejects an unbalanced result, and preserves the complete organ-capillary-organ
 ownership route. Its staged fractions are synthetic, instantaneous, and not a
 physiological transport model. The second Gate M4 statement is therefore
-executable at the software-contract level. The next increments add retention
-observables, physiological qualification, and molecular channels. See
+executable at the software-contract level. M4.6 adds current axial entity
+positions, exact residence accumulated in all three regions, and an optional
+strict profile that converts capillary residence into normalized competing
+pass-through, retention, adhesion, and extravasation likelihoods. These are
+bounded, drainable observations: the entity still returns unchanged because a
+terminal or tissue ownership contract does not yet exist. The synthetic rates
+verify the mechanism but are not physiological parameters. The next increments
+add pulmonary qualification, molecular channels, and a conservative
+state-changing disposition contract. See
 [M4 evidence](m4/README.md),
 [ADR-0021](architecture/adr/0021-versioned-capillary-bed-baseline.md), and
 [ADR-0022](architecture/adr/0022-organ-capillary-round-trip-coupling.md), and
 [ADR-0023](architecture/adr/0023-dimension-safe-capillary-continuity.md), and
 [ADR-0024](architecture/adr/0024-dynamic-capillary-recruitment.md), and
-[ADR-0025](architecture/adr/0025-balanced-capillary-exchange.md).
+[ADR-0025](architecture/adr/0025-balanced-capillary-exchange.md), and
+[ADR-0026](architecture/adr/0026-non-state-changing-capillary-entity-observation.md).
 
 #### Model variants
 

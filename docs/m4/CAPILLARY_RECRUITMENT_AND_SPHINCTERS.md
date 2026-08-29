@@ -135,5 +135,9 @@ endothelium, interstitium, and cell compartments. Recruitment and exchange can
 be configured together without silently coupling synthetic fractions to area
 or flow. See [Balanced Capillary Substance Exchange](BALANCED_CAPILLARY_EXCHANGE.md).
 
+M4.6 accumulates the exact time an entity spends under the resulting regional
+velocities and converts capillary residence into optional, non-state-changing
+interaction likelihoods. See [Capillary Nanodevice Residence and Interaction Observations](CAPILLARY_ENTITY_OBSERVATION.md).
+
 See [ADR-0024](../architecture/adr/0024-dynamic-capillary-recruitment.md) for
 the binding architectural decision.

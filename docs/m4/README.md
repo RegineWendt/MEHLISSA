@@ -96,19 +96,34 @@ and [ADR-0024](../architecture/adr/0024-dynamic-capillary-recruitment.md).
 See [Balanced Capillary Substance Exchange](BALANCED_CAPILLARY_EXCHANGE.md) and
 [ADR-0025](../architecture/adr/0025-balanced-capillary-exchange.md).
 
+### M4.6 - nanodevice residence and interaction observations
+
+- current entity position with region, axial distance, and axial fraction;
+- exact arteriole, capillary, and venule residence accumulation;
+- strict evidence-scoped entity-observation profile schema `1.0.0`;
+- residence-sensitive competing pass-through, retention, adhesion, and
+  extravasation likelihoods;
+- normalized results without changing entity identity, route, or ownership;
+- residence-only observations for unmatched entity types; and
+- bounded drainable completion records with an explicit drop counter.
+
+See [Capillary Nanodevice Residence and Interaction Observations](CAPILLARY_ENTITY_OBSERVATION.md)
+and [ADR-0026](../architecture/adr/0026-non-state-changing-capillary-entity-observation.md).
+
 ## Planned sequence
 
-1. introduce residence, retention, adhesion, and extravasation observables;
-2. qualify an organ-specific pulmonary capillary parameter card;
-3. connect and compare an analytical molecular channel and one licensable
+1. qualify an organ-specific pulmonary capillary parameter card;
+2. connect and compare an analytical molecular channel and one licensable
    external or surrogate adapter;
-4. implement mesoscopic and local detailed variants and compare them against
+3. implement mesoscopic and local detailed variants and compare them against
    the same reference cases;
+4. define a conservative terminal/tissue ownership contract before sampling
+   retention, adhesion, or extravasation outcomes;
 5. perform the formal M4 gate review.
 
 ## Scientific status
 
-M4.1 through M4.5 are software verification, not physiological validation. The
+M4.1 through M4.6 are software verification, not physiological validation. The
 dissertation provides the layer structure, continuity requirement, recruitment
 concept, and communication questions. The executable numbers in the initial
 cards and recruitment profile are synthetic. Their values are internally

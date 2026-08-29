@@ -127,6 +127,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
         add_executable(
             mehlissa_capillary_model_tests
             capillary_bed_tests.cpp
+            capillary_entity_observation_tests.cpp
             capillary_exchange_tests.cpp
             capillary_recruitment_tests.cpp
         )

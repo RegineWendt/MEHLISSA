@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-nanodevice-observation-v1",
+    "version": "1.0.0",
+    "title": "Synthetic capillary nanodevice interaction observations"
+  },
+  "compatible_model_id": "capillary.synthetic.reference.v2",
+  "unmatched_entity_policy": "observe_residence_only",
+  "maximum_buffered_records": 1024,
+  "entity_rules": [
+    {
+      "entity_type": "nanodevice",
+      "retention_rate_per_second": 0.1,
+      "adhesion_rate_per_second": 0.2,
+      "extravasation_rate_per_second": 0.3
+    }
+  ],
+  "validity": {
+    "population": "software contract tests only",
+    "physiological_state": "not applicable",
+    "evidence_class": "software_test_surrogate",
+    "description": "Synthetic competing rates selected to verify residence-sensitive, normalized likelihood calculations without changing entity ownership or route."
+  },
+  "sources": [
+    {
+      "id": "wendt-dissertation-local-capillary-behavior",
+      "citation": "Wendt, Regine (2024), Einsatz von Nanotechnologien in der Präzisionsmedizin, Section 4.4, pp. 128-129",
+      "location": "literature/Diss_WENDT_Simulationchapters.pdf",
+      "license": "source consulted; architecture paraphrased",
+      "role": "local nanodevice position, residence, retention, adhesion, and extravasation requirements"
+    },
+    {
+      "id": "mehlissa-m4-entity-observation-contract",
+      "citation": "MEHLISSA Next M4.6 capillary entity-observation contract, version 1.0.0",
+      "location": "docs/m4/CAPILLARY_ENTITY_OBSERVATION.md",
+      "license": "CC-BY-4.0",
+      "role": "synthetic rates, competing-risk calculation, buffering, and non-state-changing semantics"
+    }
+  ],
+  "limitations": [
+    "All rates are synthetic software-test values and are not physiological nanodevice interaction parameters.",
+    "Reported likelihoods are observations only; this profile does not retain, adhere, extravasate, remove, or reroute an entity.",
+    "Rates are constant competing hazards applied only to capillary-region residence time and omit geometry, surface chemistry, cell state, flow, and concentration dependence.",
+    "A state-changing model requires an explicit terminal ownership and tissue-entry contract in a later increment."
+  ]
+}

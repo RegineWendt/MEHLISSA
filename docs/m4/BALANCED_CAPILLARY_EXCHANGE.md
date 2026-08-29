@@ -124,9 +124,10 @@ product, binding, consumption, reverse flux, metabolism, clearance, or
 uncertainty model. Physiological use requires new evidence-scoped rules or a
 different interchangeable exchange implementation.
 
-The next increment can add residence, retention, adhesion, and extravasation
-observables without conflating those nanodevice outcomes with substance mass
-exchange.
+M4.6 adds residence-sensitive retention, adhesion, and extravasation
+likelihood observations without conflating those nanodevice outcomes with
+substance mass exchange. It deliberately leaves entity state and ownership
+unchanged; see [Capillary Nanodevice Residence and Interaction Observations](CAPILLARY_ENTITY_OBSERVATION.md).
 
 See [ADR-0025](../architecture/adr/0025-balanced-capillary-exchange.md) for the
 binding decision.

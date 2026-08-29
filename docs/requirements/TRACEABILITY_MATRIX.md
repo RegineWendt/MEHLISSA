@@ -5,7 +5,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Traceability Matrix – MEHLISSA Next
 
-**As of:** 28 August 2026
+**As of:** 29 August 2026
 
 **Reference document:** [system requirements](SYSTEM_REQUIREMENTS.md)
 
@@ -74,7 +74,7 @@ Status codes:
 | CAP-002 | DISS pp. 126–129 | RESEARCH | M4 | organ-specific parameter cards and literature comparison |
 | CAP-003 | DISS pp. 127–128 | PART | M4 | strict M4.4 overlay schedules aggregate sphincter groups at exact state boundaries; fixed-flow and equal-path fixed-pressure surrogates recompute perfusion and transit with step-size-independent in-flight progress, while physiological sphincter anatomy, feedback, and qualification follow |
 | CAP-004 | DISS p. 127 | PART | M4 | optional M4.5 profile partitions typed substance amount across outgoing blood, endothelium, interstitium, and cell with an enforced balance record and complete organ-capillary-organ test; physiological kinetics, reverse flux, metabolism, and qualification follow |
-| CAP-005 | DISS pp. 128–129 | RESEARCH | M4/M5 | transit/retention distributions with validity scope |
+| CAP-005 | DISS pp. 128–129 | PART | M4/M5 | M4.6 exposes local axial position and exact regional residence, then applies a strict evidence-scoped profile to produce normalized competing pass-through, retention, adhesion, and extravasation likelihoods in a bounded drainable buffer; physiological rates, uncertainty distributions, sampled outcomes, and a conservative tissue-ownership contract follow |
 | CAP-006 | DISS pp. 129, 154 | SPEC | M4 | analytical channel and one external/surrogate adapter |
 | CAP-007 | DISS p. 129 | RESEARCH | M4/M6 | reachability and multi-hop comparison |
 | CELL-001 | DISS pp. 129–132 | SPEC | M5 | biomarker field with analytical reference case |

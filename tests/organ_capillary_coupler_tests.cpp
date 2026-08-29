@@ -6,6 +6,7 @@
 #include <mehlissa/core/quantity.hpp>
 #include <mehlissa/models/capillary/capillary_bed.hpp>
 #include <mehlissa/models/capillary/capillary_bed_definition.hpp>
+#include <mehlissa/models/capillary/capillary_entity_observation_profile.hpp>
 #include <mehlissa/models/capillary/capillary_exchange_profile.hpp>
 #include <mehlissa/models/cosimulation/organ_capillary_coupler.hpp>
 #include <mehlissa/models/coupling/conserved_transfer.hpp>
@@ -174,6 +175,15 @@ class ScriptedOrgan final : public mehlissa::models::coupling::ModelComponent {
     });
 }
 
+[[nodiscard]] mehlissa::models::capillary::CapillaryEntityObservationProfile
+load_entity_observation_profile() {
+    const auto root = std::filesystem::path{MEHLISSA_TEST_ROOT};
+    return mehlissa::models::capillary::load_capillary_entity_observation_profile({
+        root / "examples/capillary-models/synthetic-nanodevice-observation-v1.json",
+        root / "data/schemas/capillary-entity-observation-profile/1.0.0.schema.json",
+    });
+}
+
 [[nodiscard]] EntityTransfer organ_departure(const std::uint64_t entity_id,
                                              const std::chrono::nanoseconds emitted_at = 0ns) {
     return {
@@ -338,6 +348,38 @@ TEST_CASE("Balanced substance exchange completes the organ capillary organ route
     CHECK(mehlissa::models::capillary::is_balanced(records.front()));
     CHECK(coupler.outstanding_conserved_transfer_count() == 0);
     CHECK(coupler.completed_conserved_round_trip_count() == 1);
+}
+
+TEST_CASE("Entity observations preserve the complete organ capillary ownership route",
+          "[m4][cosimulation][entity-observation][ownership]") {
+    mehlissa::models::capillary::CapillaryBedProfiles profiles;
+    profiles.entity_observation = load_entity_observation_profile();
+    mehlissa::core::ComponentHost host{std::uint64_t{24}};
+    auto organ = std::make_unique<ScriptedOrgan>();
+    auto capillary = std::make_unique<mehlissa::models::capillary::CapillaryBed>(
+        load_capillary_config(), std::move(profiles));
+    auto* organ_observer = organ.get();
+    auto* capillary_observer = capillary.get();
+    host.add(std::move(organ));
+    host.add(std::move(capillary));
+    host.initialize();
+
+    organ_observer->stage_entity(organ_departure(45));
+    mehlissa::models::cosimulation::OrganCapillaryCoupler coupler{
+        {*organ_observer, *capillary_observer}, route()};
+    REQUIRE(coupler.transfer_to_capillary(0ns).entities == 1);
+
+    host.advance(1s);
+    REQUIRE(coupler.transfer_to_organ(1s).entities == 1);
+    REQUIRE(organ_observer->returned_entities().size() == 1);
+    CHECK(organ_observer->returned_entities().front().entity_id == 45);
+    CHECK(coupler.outstanding_entity_count() == 0);
+    CHECK(coupler.completed_entity_round_trip_count() == 1);
+
+    const auto records = capillary_observer->take_entity_observation_records();
+    REQUIRE(records.size() == 1);
+    CHECK(records.front().entity_id == 45);
+    CHECK(mehlissa::models::capillary::has_normalized_outcome_likelihoods(records.front()));
 }
 
 TEST_CASE("The coupler retains transfers rejected at either synchronization boundary",
