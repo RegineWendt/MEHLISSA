@@ -8,10 +8,8 @@
 #include <jsoncons/json.hpp>
 #include <jsoncons_ext/jsonschema/jsonschema.hpp>
 
-#include <cmath>
 #include <cstdint>
 #include <fstream>
-#include <limits>
 #include <string>
 #include <string_view>
 #include <unordered_set>
@@ -62,23 +60,6 @@ void validate_document(const Json& document, const CompiledSchema& schema,
     }
 }
 
-[[nodiscard]] core::SimulationClock::Duration duration_from_seconds(const double seconds) {
-    constexpr double nanoseconds_per_second = 1'000'000'000.0;
-    const auto maximum =
-        static_cast<double>(std::numeric_limits<std::int64_t>::max()) / nanoseconds_per_second;
-    if (!std::isfinite(seconds) || seconds <= 0.0 || seconds > maximum) {
-        invalid(core::ErrorCode::data_invalid,
-                "Capillary-region duration must be positive, finite, and representable");
-    }
-    const auto nanoseconds =
-        static_cast<std::int64_t>(std::llround(seconds * nanoseconds_per_second));
-    if (nanoseconds <= 0) {
-        invalid(core::ErrorCode::data_invalid,
-                "Capillary-region duration is below simulation-clock resolution");
-    }
-    return core::SimulationClock::Duration{nanoseconds};
-}
-
 [[nodiscard]] CapillaryRegionKind decode_kind(const std::string_view kind) {
     if (kind == "arteriole") {
         return CapillaryRegionKind::arteriole;
@@ -107,13 +88,16 @@ void validate_document(const Json& document, const CompiledSchema& schema,
         component.at("return_target_port_id").as<std::string>(),
         network.at("total_parallel_path_count").as<std::uint64_t>(),
         network.at("perfused_path_count").as<std::uint64_t>(),
+        core::cubic_meters_per_second(network.at("volume_flow_rate_m3_s").as<double>()),
         {},
     };
     for (const auto& region : network.at("regions").array_range()) {
         config.regions.push_back({
             region.at("id").as<std::string>(),
             decode_kind(region.at("kind").as<std::string_view>()),
-            duration_from_seconds(region.at("transit_time_s").as<double>()),
+            core::meters(region.at("length_m").as<double>()),
+            core::meters(region.at("diameter_m").as<double>()),
+            region.at("parallel_vessel_count").as<std::uint64_t>(),
         });
     }
 

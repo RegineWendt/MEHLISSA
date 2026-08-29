@@ -1,0 +1,72 @@
+{
+  "schema_version": "2.0.0",
+  "definition": {
+    "id": "synthetic-arteriole-capillary-venule-v2",
+    "version": "2.0.0",
+    "title": "Synthetic geometry-derived capillary-bed contract reference"
+  },
+  "component": {
+    "name": "capillary.synthetic",
+    "model_id": "capillary.synthetic.reference.v2",
+    "entry_port_id": "arteriole-entry",
+    "exit_port_id": "venule-exit",
+    "return_target_model_id": "organ.synthetic",
+    "return_target_port_id": "capillary-return"
+  },
+  "network": {
+    "total_parallel_path_count": 8,
+    "perfused_path_count": 4,
+    "volume_flow_rate_m3_s": 3.141592653589793e-13,
+    "regions": [
+      {
+        "id": "feeding-arteriole",
+        "kind": "arteriole",
+        "length_m": 0.0008,
+        "diameter_m": 0.00001,
+        "parallel_vessel_count": 1
+      },
+      {
+        "id": "exchange-bed",
+        "kind": "capillary",
+        "length_m": 0.0006,
+        "diameter_m": 0.00001,
+        "parallel_vessel_count": 4
+      },
+      {
+        "id": "draining-venule",
+        "kind": "venule",
+        "length_m": 0.0008,
+        "diameter_m": 0.00001,
+        "parallel_vessel_count": 1
+      }
+    ]
+  },
+  "validity": {
+    "population": "software contract tests only",
+    "physiological_state": "not applicable",
+    "evidence_class": "software_test_surrogate",
+    "description": "Synthetic SI geometry and flow selected to derive deterministic 0.2 s, 0.6 s, and 0.2 s region transits from continuity."
+  },
+  "sources": [
+    {
+      "id": "wendt-dissertation-capillary-architecture",
+      "citation": "Wendt, Regine (2024), Einsatz von Nanotechnologien in der Präzisionsmedizin, Section 4.4, pp. 126-129",
+      "location": "literature/Diss_WENDT_Simulationchapters.pdf",
+      "license": "source consulted; facts and architecture paraphrased",
+      "role": "arteriole-capillary-venule architecture and volume-flow continuity requirement"
+    },
+    {
+      "id": "mehlissa-m4-geometry-contract",
+      "citation": "MEHLISSA Next M4.3 dimension-safe capillary geometry contract, version 2.0.0",
+      "location": "docs/m4/CAPILLARY_GEOMETRY_AND_CONTINUITY.md",
+      "license": "CC-BY-4.0",
+      "role": "synthetic executable parameterization and derivation rules"
+    }
+  ],
+  "limitations": [
+    "Lengths, diameters, flow, and path counts are synthetic software-test values, not physiological evidence.",
+    "Perfused path count is static; recruitment and precapillary sphincter dynamics are not implemented in M4.3.",
+    "Substances pass through without exchange, reaction, retention, adhesion, or extravasation.",
+    "The model has no pressure, hematocrit, local position, stochastic dispersion, or molecular channel."
+  ]
+}

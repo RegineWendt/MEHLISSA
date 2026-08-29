@@ -7,7 +7,11 @@
 
 #include <algorithm>
 #include <array>
+#include <cmath>
+#include <limits>
+#include <numbers>
 #include <utility>
+#include <variant>
 
 namespace mehlissa::models::capillary {
 namespace {
@@ -15,7 +19,55 @@ namespace {
 constexpr std::array expected_region_order{
     CapillaryRegionKind::arteriole, CapillaryRegionKind::capillary, CapillaryRegionKind::venule};
 
-void validate_config(const CapillaryBedConfig& config) {
+[[nodiscard]] bool approximately_equal(const double left, const double right) noexcept {
+    constexpr double relative_tolerance = 1.0e-12;
+    const auto scale = std::max(std::abs(left), std::abs(right));
+    return std::abs(left - right) <= relative_tolerance * scale;
+}
+
+struct QuantityContext final {
+    std::string_view quantity;
+    std::string_view region_id;
+};
+
+void require_positive_finite(const double value, const QuantityContext context) {
+    if (!std::isfinite(value) || value <= 0.0) {
+        throw core::MehlissaError{core::ErrorCode::data_invalid,
+                                  "Capillary region '" + std::string{context.region_id} +
+                                      "' requires " + std::string{context.quantity} +
+                                      " to be positive and finite"};
+    }
+}
+
+[[nodiscard]] CapillaryRegionMetrics derive_metrics(const CapillaryRegion& region,
+                                                    const core::FlowRate flow_rate) {
+    const auto radius = region.diameter / 2.0;
+    const auto single_cross_section = std::numbers::pi * radius * radius;
+    const auto total_cross_section = single_cross_section * region.parallel_vessel_count;
+    const auto velocity = flow_rate / total_cross_section;
+    const auto transit = region.length / velocity;
+    const auto transit_nanoseconds = core::in_seconds(transit) * 1'000'000'000.0;
+    const auto maximum =
+        static_cast<double>(std::numeric_limits<core::SimulationClock::Duration::rep>::max());
+    if (!std::isfinite(transit_nanoseconds) || transit_nanoseconds <= 0.0 ||
+        transit_nanoseconds > maximum) {
+        throw core::MehlissaError{core::ErrorCode::numeric_overflow,
+                                  "Capillary region '" + region.id +
+                                      "' has an unrepresentable geometry-derived transit time"};
+    }
+    const auto rounded =
+        static_cast<core::SimulationClock::Duration::rep>(std::llround(transit_nanoseconds));
+    if (rounded <= 0) {
+        throw core::MehlissaError{core::ErrorCode::data_invalid,
+                                  "Capillary region '" + region.id +
+                                      "' transit is below simulation-clock resolution"};
+    }
+    return {single_cross_section, total_cross_section, velocity,
+            core::SimulationClock::Duration{rounded}};
+}
+
+[[nodiscard]] std::vector<CapillaryRegionMetrics>
+validate_config(const CapillaryBedConfig& config) {
     if (config.component_name.empty() || config.model_id.empty() || config.entry_port_id.empty() ||
         config.exit_port_id.empty() || config.return_target_model_id.empty() ||
         config.return_target_port_id.empty()) {
@@ -38,18 +90,32 @@ void validate_config(const CapillaryBedConfig& config) {
             core::ErrorCode::data_invalid,
             "A capillary bed requires exactly arteriole, capillary, and venule regions"};
     }
+    require_positive_finite(core::in_cubic_meters_per_second(config.volume_flow_rate),
+                            {"network volume flow", config.model_id});
 
     std::unordered_set<std::string> region_ids;
+    std::vector<CapillaryRegionMetrics> metrics;
+    metrics.reserve(config.regions.size());
     for (std::size_t index{}; index < config.regions.size(); ++index) {
         const auto& region = config.regions[index];
         if (region.id.empty() || !region_ids.insert(region.id).second ||
-            region.kind != expected_region_order[index] ||
-            region.transit_time <= core::SimulationClock::Duration::zero()) {
+            region.kind != expected_region_order[index] || region.parallel_vessel_count == 0) {
             throw core::MehlissaError{
                 core::ErrorCode::data_invalid,
-                "Capillary regions require unique IDs, positive transit, and physiological order"};
+                "Capillary regions require unique IDs, positive vessel counts, and physiological "
+                "order"};
         }
+        require_positive_finite(core::in_meters(region.length), {"length", region.id});
+        require_positive_finite(core::in_meters(region.diameter), {"diameter", region.id});
+        if (region.kind == CapillaryRegionKind::capillary &&
+            region.parallel_vessel_count != config.perfused_path_count) {
+            throw core::MehlissaError{
+                core::ErrorCode::data_invalid,
+                "The capillary region vessel count must equal the perfused path count"};
+        }
+        metrics.push_back(derive_metrics(region, config.volume_flow_rate));
     }
+    return metrics;
 }
 
 void validate_conserved_target(const coupling::ConservedTransfer& transfer,
@@ -67,6 +133,14 @@ void validate_conserved_target(const coupling::ConservedTransfer& transfer,
             core::ErrorCode::invariant_violated,
             "Conserved transfer must enter the capillary bed at synchronization time"};
     }
+    if (const auto* flow = std::get_if<coupling::VolumeFlowTransfer>(&transfer);
+        flow != nullptr &&
+        !approximately_equal(core::in_cubic_meters_per_second(flow->flow_rate),
+                             core::in_cubic_meters_per_second(config.volume_flow_rate))) {
+        throw core::MehlissaError{
+            core::ErrorCode::invariant_violated,
+            "Volume-flow transfer does not match the capillary-bed continuity flow"};
+    }
 }
 
 void route_conserved_return(coupling::ConservedTransfer& transfer, const CapillaryBedConfig& config,
@@ -80,11 +154,11 @@ void route_conserved_return(coupling::ConservedTransfer& transfer, const Capilla
 }
 
 template <typename Resident>
-void advance_resident(Resident& resident, const std::vector<CapillaryRegion>& regions,
+void advance_resident(Resident& resident, const std::vector<CapillaryRegionMetrics>& metrics,
                       core::SimulationClock::Duration delta) {
     while (delta > core::SimulationClock::Duration::zero() &&
-           resident.region_index < regions.size()) {
-        const auto required = regions[resident.region_index].transit_time - resident.region_time;
+           resident.region_index < metrics.size()) {
+        const auto required = metrics[resident.region_index].transit_time - resident.region_time;
         if (delta < required) {
             resident.region_time += delta;
             delta = {};
@@ -110,9 +184,8 @@ std::string_view to_string(const CapillaryRegionKind kind) noexcept {
     return "unknown";
 }
 
-CapillaryBed::CapillaryBed(CapillaryBedConfig config) : config_{std::move(config)} {
-    validate_config(config_);
-}
+CapillaryBed::CapillaryBed(CapillaryBedConfig config)
+    : config_{std::move(config)}, region_metrics_{validate_config(config_)} {}
 
 std::string_view CapillaryBed::name() const noexcept { return config_.component_name; }
 
@@ -148,7 +221,7 @@ void CapillaryBed::advance(core::SimulationContext& context,
     std::vector<ResidentEntity> remaining_entities;
     remaining_entities.reserve(resident_entities_.size());
     for (auto& resident : resident_entities_) {
-        advance_resident(resident, config_.regions, delta);
+        advance_resident(resident, region_metrics_, delta);
         if (resident.region_index == config_.regions.size()) {
             outbound_entities_.push_back({
                 std::string{coupling::entity_transfer_contract_version},
@@ -169,7 +242,7 @@ void CapillaryBed::advance(core::SimulationContext& context,
     std::vector<ResidentConservedTransfer> remaining_conserved;
     remaining_conserved.reserve(resident_conserved_transfers_.size());
     for (auto& resident : resident_conserved_transfers_) {
-        advance_resident(resident, config_.regions, delta);
+        advance_resident(resident, region_metrics_, delta);
         if (resident.region_index == config_.regions.size()) {
             route_conserved_return(resident.transfer, config_, next.now());
             outbound_conserved_transfers_.push_back(std::move(resident.transfer));
@@ -251,6 +324,19 @@ std::uint64_t CapillaryBed::total_parallel_path_count() const noexcept {
 
 std::uint64_t CapillaryBed::perfused_path_count() const noexcept {
     return config_.perfused_path_count;
+}
+
+core::FlowRate CapillaryBed::volume_flow_rate() const noexcept { return config_.volume_flow_rate; }
+
+const CapillaryRegionMetrics& CapillaryBed::region_metrics(const CapillaryRegionKind kind) const {
+    const auto region =
+        std::find_if(config_.regions.begin(), config_.regions.end(),
+                     [kind](const auto& candidate) { return candidate.kind == kind; });
+    if (region == config_.regions.end()) {
+        throw core::MehlissaError{core::ErrorCode::invariant_violated,
+                                  "Capillary region metrics are unavailable"};
+    }
+    return region_metrics_.at(static_cast<std::size_t>(region - config_.regions.begin()));
 }
 
 std::size_t CapillaryBed::resident_entity_count() const noexcept {

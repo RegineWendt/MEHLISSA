@@ -15,7 +15,8 @@ organ, traverse a capillary component, and return.
 The current executable route is deliberately synthetic. It demonstrates that
 the four-layer architecture can represent this journey; it does not claim that
 one second of transit, eight paths, or four perfused paths describe a human
-lung or another organ.
+lung or another organ. M4.3 preserves that timing through internally consistent
+v2 geometry and continuity rather than prescribed regional transit values.
 
 ## Four-boundary route
 
@@ -81,10 +82,11 @@ retryable synchronization failures.
 ## Scientific boundary and next work
 
 M4.2 satisfies the first Gate M4 criterion only at the synthetic
-software-contract level. Still required are dimension-safe geometry and flow
-continuity, physiological organ-specific cards, recruitment dynamics,
-blood/tissue exchange, retention and extravasation, molecular channels, and
-comparison of detailed and surrogate models against common references.
+software-contract level, and M4.3 supplies its dimension-safe geometry and
+continuity calculation. Still required are physiological organ-specific cards,
+recruitment dynamics, blood/tissue exchange, retention and extravasation,
+molecular channels, and comparison of detailed and surrogate models against
+common references.
 
 See [ADR-0022](../architecture/adr/0022-organ-capillary-round-trip-coupling.md)
 for the binding architectural decision and

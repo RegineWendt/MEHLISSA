@@ -47,24 +47,41 @@ See [Capillary Transit Bed](CAPILLARY_TRANSIT_BED.md) and
 See [Organ-Capillary Round Trip](ORGAN_CAPILLARY_ROUND_TRIP.md) and
 [ADR-0022](../architecture/adr/0022-organ-capillary-round-trip-coupling.md).
 
+### M4.3 - dimension-safe geometry and volume-flow continuity
+
+- breaking definition schema `2.0.0` with explicit SI length, diameter, and
+  network volume flow;
+- explicit parallel-vessel count for every serial region;
+- single-vessel and total cross-section derived from diameter and count;
+- mean velocity derived from total flow divided by total cross-section;
+- transit derived from length divided by velocity and rounded only at the
+  simulation-clock boundary;
+- capillary vessel count bound to the currently perfused path count;
+- rejection of invalid geometry and inconsistent volume-flow transfers;
+- synthetic v2 card retaining the one-second verification route without
+  claiming physiological validity.
+
+See [Capillary Geometry and Continuity](CAPILLARY_GEOMETRY_AND_CONTINUITY.md) and
+[ADR-0023](../architecture/adr/0023-dimension-safe-capillary-continuity.md).
+
 ## Planned sequence
 
-1. add dimension-safe capillary geometry and continuity-derived velocity;
-2. model recruitment and precapillary sphincter state;
-3. add a balanced blood/interstitium exchange contract;
-4. introduce residence, retention, adhesion, and extravasation observables;
-5. qualify an organ-specific pulmonary capillary parameter card;
-6. connect and compare an analytical molecular channel and one licensable
+1. model recruitment and precapillary sphincter state;
+2. add a balanced blood/interstitium exchange contract;
+3. introduce residence, retention, adhesion, and extravasation observables;
+4. qualify an organ-specific pulmonary capillary parameter card;
+5. connect and compare an analytical molecular channel and one licensable
    external or surrogate adapter;
-7. implement mesoscopic and local detailed variants and compare them against
+6. implement mesoscopic and local detailed variants and compare them against
    the same reference cases;
-8. perform the formal M4 gate review.
+7. perform the formal M4 gate review.
 
 ## Scientific status
 
-M4.1 and M4.2 are software verification, not physiological validation. The
+M4.1 through M4.3 are software verification, not physiological validation. The
 dissertation provides the layer structure, continuity requirement, recruitment
 concept, and communication questions. The executable numbers in the initial
-card are synthetic. Physiological geometry, flow, transit, hematocrit, and
-exchange parameters require separately sourced model cards and independent
+cards are synthetic. The v2 values are internally consistent but not
+physiologically qualified. Physiological geometry, flow, transit, hematocrit,
+and exchange parameters require separately sourced model cards and independent
 comparisons.

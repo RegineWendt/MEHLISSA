@@ -10,6 +10,7 @@
 #include <mehlissa/models/coupling/conserved_transfer.hpp>
 #include <mehlissa/models/coupling/entity_transfer.hpp>
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators.hpp>
 
@@ -18,6 +19,7 @@
 #include <cstdint>
 #include <filesystem>
 #include <memory>
+#include <numbers>
 #include <string>
 #include <string_view>
 #include <unordered_set>
@@ -34,6 +36,8 @@ using mehlissa::models::coupling::PopulationTransfer;
 using mehlissa::models::coupling::SubstanceAmountTransfer;
 using mehlissa::models::coupling::TransferHeader;
 using mehlissa::models::coupling::VolumeFlowTransfer;
+
+constexpr double synthetic_continuity_flow_m3_s = std::numbers::pi * 1.0e-13;
 
 class ScriptedOrgan final : public mehlissa::models::coupling::ModelComponent {
   public:
@@ -155,8 +159,8 @@ class ScriptedOrgan final : public mehlissa::models::coupling::ModelComponent {
     const auto root = std::filesystem::path{MEHLISSA_TEST_ROOT};
     return mehlissa::models::capillary::load_capillary_bed_definition(
                {
-                   root / "examples/capillary-models/synthetic-arteriole-capillary-venule-v1.json",
-                   root / "data/schemas/capillary-bed-definition/1.0.0.schema.json",
+                   root / "examples/capillary-models/synthetic-arteriole-capillary-venule-v2.json",
+                   root / "data/schemas/capillary-bed-definition/2.0.0.schema.json",
                })
         .model;
 }
@@ -169,7 +173,7 @@ class ScriptedOrgan final : public mehlissa::models::coupling::ModelComponent {
         "nanodevice",
         "organ.synthetic",
         "capillary-departure",
-        "capillary.synthetic.reference.v1",
+        "capillary.synthetic.reference.v2",
         "arteriole-entry",
         emitted_at,
     };
@@ -181,7 +185,7 @@ class ScriptedOrgan final : public mehlissa::models::coupling::ModelComponent {
         transfer_id,
         "organ.synthetic",
         "capillary-departure",
-        "capillary.synthetic.reference.v1",
+        "capillary.synthetic.reference.v2",
         "arteriole-entry",
         0s,
     };
@@ -211,7 +215,8 @@ TEST_CASE("An entity and conserved payloads complete an organ capillary organ ro
     organ_observer->stage_conserved_transfer(SubstanceAmountTransfer{
         conserved_departure_header("substance-1"), "oxygen", mehlissa::core::millimoles(2.5)});
     organ_observer->stage_conserved_transfer(VolumeFlowTransfer{
-        conserved_departure_header("flow-1"), mehlissa::core::cubic_meters_per_second(0.0001), 1s});
+        conserved_departure_header("flow-1"),
+        mehlissa::core::cubic_meters_per_second(synthetic_continuity_flow_m3_s), 1s});
 
     mehlissa::models::cosimulation::OrganCapillaryCoupler coupler{
         {*organ_observer, *capillary_observer}, route()};
@@ -231,7 +236,7 @@ TEST_CASE("An entity and conserved payloads complete an organ capillary organ ro
     const auto& entity = organ_observer->returned_entities().front();
     CHECK(entity.entity_id == 42);
     CHECK(entity.entity_type == "nanodevice");
-    CHECK(entity.source_model_id == "capillary.synthetic.reference.v1");
+    CHECK(entity.source_model_id == "capillary.synthetic.reference.v2");
     CHECK(entity.source_port_id == "venule-exit");
     CHECK(entity.target_model_id == "organ.synthetic");
     CHECK(entity.target_port_id == "capillary-return");
@@ -243,9 +248,10 @@ TEST_CASE("An entity and conserved payloads complete an organ capillary organ ro
     CHECK(mehlissa::core::in_moles(std::get<SubstanceAmountTransfer>(returned[1]).amount) ==
           0.0025);
     const auto& flow = std::get<VolumeFlowTransfer>(returned[2]);
-    CHECK(mehlissa::core::in_cubic_meters_per_second(flow.flow_rate) == 0.0001);
+    CHECK(mehlissa::core::in_cubic_meters_per_second(flow.flow_rate) ==
+          Catch::Approx(synthetic_continuity_flow_m3_s));
     CHECK(mehlissa::core::in_cubic_meters(mehlissa::models::coupling::integrated_volume(flow)) ==
-          0.0001);
+          Catch::Approx(synthetic_continuity_flow_m3_s));
 
     CHECK(coupler.outstanding_entity_count() == 0);
     CHECK(coupler.outstanding_conserved_transfer_count() == 0);
@@ -283,7 +289,7 @@ TEST_CASE("The organ capillary round trip is stable across compatible host steps
         std::string{mehlissa::models::coupling::entity_transfer_contract_version},
         7,
         "nanodevice",
-        "capillary.synthetic.reference.v1",
+        "capillary.synthetic.reference.v2",
         "venule-exit",
         "organ.synthetic",
         "capillary-return",

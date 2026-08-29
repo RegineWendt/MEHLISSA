@@ -12,7 +12,7 @@
 
 namespace mehlissa::models::capillary {
 
-inline constexpr auto capillary_bed_definition_schema_version = "1.0.0";
+inline constexpr auto capillary_bed_definition_schema_version = "2.0.0";
 
 struct CapillaryBedValidity final {
     std::string population;

@@ -25,22 +25,28 @@ regions:
 2. `capillary`;
 3. `venule`.
 
-Every region has a unique ID and positive transit time. The definition also
-declares total and currently perfused parallel paths. At least one path must be
-perfused and the count cannot exceed the total. In M4.1 these counts express a
-validated recruitment state; they do not yet change flow or transit.
+Every region has a unique ID. M4.1 schema `1.0.0` prescribed positive transit
+times. Current schema `2.0.0` instead requires SI length, SI diameter, and a
+positive parallel-vessel count for each region plus one network volume flow.
+Area, velocity, and transit are derived through continuity. The capillary
+region's vessel count must equal the currently perfused path count.
 
 The loader validates the JSON document against:
 
 ```text
-data/schemas/capillary-bed-definition/1.0.0.schema.json
+data/schemas/capillary-bed-definition/2.0.0.schema.json
 ```
 
 The executable reference is:
 
 ```text
-examples/capillary-models/synthetic-arteriole-capillary-venule-v1.json
+examples/capillary-models/synthetic-arteriole-capillary-venule-v2.json
 ```
+
+The v1 schema and card remain unchanged as historical M4.1 evidence. They are
+not the current executable contract. See
+[Capillary Geometry and Continuity](CAPILLARY_GEOMETRY_AND_CONTINUITY.md) for
+the v2 derivation and migration boundary.
 
 ## Runtime semantics
 
@@ -65,10 +71,11 @@ through a new typed contract; it must not mutate this baseline silently.
 
 ## Synthetic reference
 
-The distributed card contains eight parallel paths, four marked perfused, and
-serial transit times of 0.2 s, 0.6 s, and 0.2 s. These values were selected for
-deterministic tests. They do not describe human microcirculation and must not be
-used for biological conclusions.
+The distributed v2 card contains eight total capillary paths, four marked
+perfused, and geometry and flow that derive serial transit times of 0.2 s,
+0.6 s, and 0.2 s. These coordinated values were selected for deterministic
+tests. They do not describe human microcirculation and must not be used for
+biological conclusions.
 
 ## Verification
 
@@ -79,6 +86,8 @@ The `[m4][capillary]` tests verify:
 - lossless population, substance, and volume-flow payloads;
 - integrated-volume conservation;
 - schema-to-runtime connection;
+- dimension-safe cross-section, continuity velocity, and transit derivation;
+- equality of configured and transferred volume flow;
 - invalid recruitment counts and region order;
 - wrong routes, wrong synchronization time, and duplicate ownership.
 
@@ -88,7 +97,8 @@ steps, pending-delivery retention, and invalid endpoint rejection.
 
 ## Explicitly deferred
 
-- physiological diameter, length, density, velocity, pressure, and hematocrit;
+- physiologically qualified diameter, length, density, velocity, pressure, and
+  hematocrit;
 - flow redistribution and dynamic sphincters;
 - spatial paths and stochastic transit distributions;
 - barrier exchange, reaction, retention, adhesion, and extravasation;

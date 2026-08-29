@@ -34,6 +34,7 @@ decisions; a new decision supersedes an existing one through a new ADR.
 | [ADR-0020](adr/0020-model-component-and-entity-exchange.md) | Accepted | versioned model-component boundary and conservative entity hand-off for M3 |
 | [ADR-0021](adr/0021-versioned-capillary-bed-baseline.md) | Accepted | strict arteriole-capillary-venule component and lossless M4 reference baseline |
 | [ADR-0022](adr/0022-organ-capillary-round-trip-coupling.md) | Accepted | explicit four-port organ-capillary route with pending queues and an ownership ledger |
+| [ADR-0023](adr/0023-dimension-safe-capillary-continuity.md) | Accepted | geometry and flow as inputs; area, velocity, and transit derived with dimensional quantities |
 
 ## Status model
 

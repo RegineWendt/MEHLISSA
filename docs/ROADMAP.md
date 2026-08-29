@@ -484,12 +484,17 @@ redistribution. M4.2 adds a generic four-port organ-capillary coupler with
 pending-delivery queues, explicit outstanding-ownership ledgers, and completed
 entity and conserved-payload round trips across compatible host steps. The
 first Gate M4 statement is therefore executable at the synthetic
-software-contract level, while physiological qualification remains open. The
-next increments add dimension-safe geometry and continuity, recruitment
-dynamics, balanced tissue exchange, and molecular channels. See
+software-contract level, while physiological qualification remains open. M4.3
+replaces prescribed transit with schema-versioned SI geometry and one total
+flow: typed operations derive single and total cross-section, continuity
+velocity, and regional transit, while the capillary vessel count is bound to
+the perfused-path count. The synthetic v2 card is internally consistent but is
+not physiological evidence. The next increments add recruitment dynamics,
+balanced tissue exchange, and molecular channels. See
 [M4 evidence](m4/README.md),
 [ADR-0021](architecture/adr/0021-versioned-capillary-bed-baseline.md), and
-[ADR-0022](architecture/adr/0022-organ-capillary-round-trip-coupling.md).
+[ADR-0022](architecture/adr/0022-organ-capillary-round-trip-coupling.md), and
+[ADR-0023](architecture/adr/0023-dimension-safe-capillary-continuity.md).
 
 #### Model variants
 

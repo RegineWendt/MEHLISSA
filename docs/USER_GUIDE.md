@@ -582,19 +582,22 @@ M4.1 adds an independent capillary-layer component with three explicit serial
 regions: arteriole, capillary, and venule. Its first card is intentionally a
 synthetic software contract, not a physiological microcirculation model.
 
-The executable definition and schema are:
+The current executable definition and schema are:
 
 ```text
-examples/capillary-models/synthetic-arteriole-capillary-venule-v1.json
-data/schemas/capillary-bed-definition/1.0.0.schema.json
+examples/capillary-models/synthetic-arteriole-capillary-venule-v2.json
+data/schemas/capillary-bed-definition/2.0.0.schema.json
 ```
 
 The card declares eight parallel paths, four perfused paths, and a one-second
-total transit. These values make region boundaries easy to verify; they must
-not be interpreted as human anatomy or physiology. The runtime preserves
-nanodevice identity, population count, substance amount, flow rate, interval,
-and integrated volume while routing transfers from the arteriole entry to the
-configured organ return port.
+total transit. M4.3 supplies length, diameter, parallel-vessel count, and total
+flow; MEHLISSA derives area, velocity, and transit through volume-flow
+continuity. The former v1 schema prescribed transit directly and remains only
+as historical M4.1 evidence. The v2 values make region boundaries and equations
+easy to verify; they must not be interpreted as human anatomy or physiology.
+The runtime preserves nanodevice identity, population count, substance amount,
+flow rate, interval, and integrated volume while routing transfers from the
+arteriole entry to the configured organ return port.
 
 M4.2 connects a compatible organ to this component through four explicit
 boundaries: organ departure, capillary entry, capillary exit, and organ return.
@@ -613,9 +616,10 @@ ctest --test-dir build -C Debug --output-on-failure -R "organ capillary|coupler"
 
 Read [Capillary Transit Bed](m4/CAPILLARY_TRANSIT_BED.md) before using the
 component and [Organ-Capillary Round Trip](m4/ORGAN_CAPILLARY_ROUND_TRIP.md)
-before composing layers. Physiological organ-capillary gateways, geometry,
-dynamic recruitment, barrier exchange, retention, and molecular channels are
-subsequent M4 work.
+before composing layers. The equations and schema migration are documented in
+[Capillary Geometry and Continuity](m4/CAPILLARY_GEOMETRY_AND_CONTINUITY.md).
+Physiological organ-capillary gateways and geometry, dynamic recruitment,
+barrier exchange, retention, and molecular channels are subsequent M4 work.
 
 ## 10. Troubleshooting
 

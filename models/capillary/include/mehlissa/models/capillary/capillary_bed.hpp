@@ -22,6 +22,15 @@ enum class CapillaryRegionKind : std::uint8_t { arteriole, capillary, venule };
 struct CapillaryRegion final {
     std::string id;
     CapillaryRegionKind kind{};
+    core::Length length{};
+    core::Length diameter{};
+    std::uint64_t parallel_vessel_count{};
+};
+
+struct CapillaryRegionMetrics final {
+    core::Area single_vessel_cross_section{};
+    core::Area total_cross_section{};
+    core::Speed mean_velocity{};
     core::SimulationClock::Duration transit_time{};
 };
 
@@ -34,6 +43,7 @@ struct CapillaryBedConfig final {
     std::string return_target_port_id;
     std::uint64_t total_parallel_path_count{};
     std::uint64_t perfused_path_count{};
+    core::FlowRate volume_flow_rate{};
     std::vector<CapillaryRegion> regions;
 };
 
@@ -60,6 +70,8 @@ class CapillaryBed final : public coupling::ModelComponent {
     [[nodiscard]] std::size_t region_count() const noexcept;
     [[nodiscard]] std::uint64_t total_parallel_path_count() const noexcept;
     [[nodiscard]] std::uint64_t perfused_path_count() const noexcept;
+    [[nodiscard]] core::FlowRate volume_flow_rate() const noexcept;
+    [[nodiscard]] const CapillaryRegionMetrics& region_metrics(CapillaryRegionKind kind) const;
     [[nodiscard]] std::size_t resident_entity_count() const noexcept;
     [[nodiscard]] std::size_t resident_entity_count_in(CapillaryRegionKind kind) const noexcept;
 
@@ -79,6 +91,7 @@ class CapillaryBed final : public coupling::ModelComponent {
     };
 
     CapillaryBedConfig config_;
+    std::vector<CapillaryRegionMetrics> region_metrics_;
     std::vector<ResidentEntity> resident_entities_;
     std::vector<coupling::EntityTransfer> outbound_entities_;
     std::vector<ResidentConservedTransfer> resident_conserved_transfers_;
