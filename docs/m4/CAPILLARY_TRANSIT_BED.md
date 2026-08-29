@@ -99,7 +99,8 @@ steps, pending-delivery retention, and invalid endpoint rejection.
 
 - physiologically qualified diameter, length, density, velocity, pressure, and
   hematocrit;
-- flow redistribution and dynamic sphincters;
+- physiologically parameterized sphincter anatomy, feedback, and heterogeneous
+  path conductance (aggregate scheduled recruitment is implemented in M4.4);
 - spatial paths and stochastic transit distributions;
 - barrier exchange, reaction, retention, adhesion, and extravasation;
 - molecular channel, clustering, reachability, and multi-hop behavior;

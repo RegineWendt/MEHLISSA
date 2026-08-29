@@ -4,10 +4,12 @@
 #ifndef MEHLISSA_MODELS_CAPILLARY_CAPILLARY_BED_HPP
 #define MEHLISSA_MODELS_CAPILLARY_CAPILLARY_BED_HPP
 
+#include <mehlissa/models/capillary/capillary_recruitment_profile.hpp>
 #include <mehlissa/models/coupling/model_component.hpp>
 
 #include <cstddef>
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <string_view>
 #include <unordered_set>
@@ -50,6 +52,7 @@ struct CapillaryBedConfig final {
 class CapillaryBed final : public coupling::ModelComponent {
   public:
     explicit CapillaryBed(CapillaryBedConfig config);
+    CapillaryBed(CapillaryBedConfig config, CapillaryRecruitmentProfile recruitment_profile);
 
     [[nodiscard]] std::string_view name() const noexcept override;
     [[nodiscard]] std::string_view model_id() const noexcept override;
@@ -71,6 +74,10 @@ class CapillaryBed final : public coupling::ModelComponent {
     [[nodiscard]] std::uint64_t total_parallel_path_count() const noexcept;
     [[nodiscard]] std::uint64_t perfused_path_count() const noexcept;
     [[nodiscard]] core::FlowRate volume_flow_rate() const noexcept;
+    [[nodiscard]] bool has_recruitment_profile() const noexcept;
+    [[nodiscard]] std::string_view recruitment_state_id() const noexcept;
+    [[nodiscard]] std::size_t open_sphincter_group_count() const noexcept;
+    [[nodiscard]] std::optional<CapillaryBoundaryCondition> boundary_condition() const noexcept;
     [[nodiscard]] const CapillaryRegionMetrics& region_metrics(CapillaryRegionKind kind) const;
     [[nodiscard]] std::size_t resident_entity_count() const noexcept;
     [[nodiscard]] std::size_t resident_entity_count_in(CapillaryRegionKind kind) const noexcept;
@@ -81,16 +88,25 @@ class CapillaryBed final : public coupling::ModelComponent {
     struct ResidentEntity final {
         coupling::EntityTransfer transfer;
         std::size_t region_index{};
-        core::SimulationClock::Duration region_time{};
+        core::Length region_distance{};
     };
 
     struct ResidentConservedTransfer final {
         coupling::ConservedTransfer transfer;
         std::size_t region_index{};
-        core::SimulationClock::Duration region_time{};
+        core::Length region_distance{};
     };
 
+    struct AdvanceInterval final {
+        core::SimulationClock::Duration delta{};
+        core::SimulationClock::Duration emitted_at{};
+    };
+
+    void apply_recruitment_state(std::size_t state_index);
+    void advance_residents(AdvanceInterval interval);
+
     CapillaryBedConfig config_;
+    std::optional<CapillaryRecruitmentProfile> recruitment_profile_;
     std::vector<CapillaryRegionMetrics> region_metrics_;
     std::vector<ResidentEntity> resident_entities_;
     std::vector<coupling::EntityTransfer> outbound_entities_;
@@ -99,6 +115,11 @@ class CapillaryBed final : public coupling::ModelComponent {
     std::unordered_set<std::uint64_t> held_entity_ids_;
     std::unordered_set<std::string> held_transfer_ids_;
     core::SimulationClock::Duration synchronization_time_{};
+    core::SimulationClock::Duration recruitment_origin_time_{};
+    core::FlowRate current_volume_flow_rate_{};
+    std::uint64_t current_perfused_path_count_{};
+    std::size_t current_recruitment_state_index_{};
+    std::size_t next_recruitment_state_index_{};
     State state_{State::building};
 };
 

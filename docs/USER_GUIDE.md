@@ -618,8 +618,59 @@ Read [Capillary Transit Bed](m4/CAPILLARY_TRANSIT_BED.md) before using the
 component and [Organ-Capillary Round Trip](m4/ORGAN_CAPILLARY_ROUND_TRIP.md)
 before composing layers. The equations and schema migration are documented in
 [Capillary Geometry and Continuity](m4/CAPILLARY_GEOMETRY_AND_CONTINUITY.md).
-Physiological organ-capillary gateways and geometry, dynamic recruitment,
-barrier exchange, retention, and molecular channels are subsequent M4 work.
+Physiological organ-capillary gateways and geometry, physiologically qualified
+recruitment, barrier exchange, retention, and molecular channels remain
+subsequent M4 work; the aggregate scheduled recruitment mechanism is available
+in M4.4.
+
+### 9.1 Dynamic recruitment experiments (M4.4)
+
+M4.4 adds a separate profile that can open and close groups of capillary paths
+while a simulation is running:
+
+```text
+examples/capillary-models/synthetic-recruitment-fixed-flow-v1.json
+data/schemas/capillary-recruitment-profile/1.0.0.schema.json
+```
+
+Think of each group as one aggregate gate controlling several equivalent
+parallel paths. It is useful for controlled questions such as:
+
+- How does opening additional capillaries change local velocity and transit?
+- Does a nanodevice already in the bed retain the distance it has travelled
+  when perfusion changes?
+- Do the same scheduled changes produce the same result with different host
+  step sizes?
+- How do fixed total flow and a simplified fixed pressure difference lead to
+  different predictions?
+
+The boundary condition is essential. Under `fixed_total_flow`, opening more
+identical paths spreads the same flow over a larger area, reducing velocity per
+path and increasing capillary transit. Under `fixed_pressure_drop`, MEHLISSA
+uses an equal-path-conductance surrogate: total flow increases in proportion to
+the number of open paths, so capillary velocity and transit stay constant. The
+latter is not a pressure solver and does not calculate vascular resistance.
+
+States are scheduled relative to component initialization. The included
+synthetic profile starts with four of eight paths open, recruits all eight at
+one second, and returns to four at two seconds. MEHLISSA applies an event at its
+exact time even if one simulation step crosses it. For an in-flight resident,
+the old velocity applies before the event and the new velocity afterward; the
+resident never restarts its current region.
+
+The runtime exposes the active state ID, number of open groups, number of
+perfused paths, boundary condition, current flow, and recomputed region
+metrics. A programmatic setup loads the base capillary definition and the
+recruitment profile, then constructs `CapillaryBed` with both objects. The
+profile must target the same model, its groups must account for every available
+path exactly once, and its first state must match the base card's initial
+perfused count.
+
+The supplied group sizes, state names, and event times are deliberately
+synthetic. They support software and sensitivity experiments, not conclusions
+about human microvascular physiology. Consult
+[Capillary Recruitment and Precapillary Sphincter Groups](m4/CAPILLARY_RECRUITMENT_AND_SPHINCTERS.md)
+before creating a physiological profile.
 
 ## 10. Troubleshooting
 

@@ -64,24 +64,39 @@ See [Organ-Capillary Round Trip](ORGAN_CAPILLARY_ROUND_TRIP.md) and
 See [Capillary Geometry and Continuity](CAPILLARY_GEOMETRY_AND_CONTINUITY.md) and
 [ADR-0023](../architecture/adr/0023-dimension-safe-capillary-continuity.md).
 
+### M4.4 - dynamic recruitment and precapillary sphincter groups
+
+- strict recruitment-profile schema `1.0.0` layered over a compatible capillary
+  definition;
+- aggregate sphincter groups that partition all available parallel paths;
+- scheduled rest, activity, and recovery states at exact simulation times;
+- dynamic perfused-path count, total capillary area, velocity, and transit;
+- explicit fixed-total-flow and simplified fixed-pressure-drop boundary
+  conditions;
+- distance-based in-flight progress across recruitment events;
+- deterministic verification across host steps that cross an event boundary;
+- synthetic profile with evidence class and explicit scientific limitations.
+
+See [Capillary Recruitment and Precapillary Sphincter Groups](CAPILLARY_RECRUITMENT_AND_SPHINCTERS.md)
+and [ADR-0024](../architecture/adr/0024-dynamic-capillary-recruitment.md).
+
 ## Planned sequence
 
-1. model recruitment and precapillary sphincter state;
-2. add a balanced blood/interstitium exchange contract;
-3. introduce residence, retention, adhesion, and extravasation observables;
-4. qualify an organ-specific pulmonary capillary parameter card;
-5. connect and compare an analytical molecular channel and one licensable
+1. add a balanced blood/interstitium exchange contract;
+2. introduce residence, retention, adhesion, and extravasation observables;
+3. qualify an organ-specific pulmonary capillary parameter card;
+4. connect and compare an analytical molecular channel and one licensable
    external or surrogate adapter;
-6. implement mesoscopic and local detailed variants and compare them against
+5. implement mesoscopic and local detailed variants and compare them against
    the same reference cases;
-7. perform the formal M4 gate review.
+6. perform the formal M4 gate review.
 
 ## Scientific status
 
-M4.1 through M4.3 are software verification, not physiological validation. The
+M4.1 through M4.4 are software verification, not physiological validation. The
 dissertation provides the layer structure, continuity requirement, recruitment
 concept, and communication questions. The executable numbers in the initial
-cards are synthetic. The v2 values are internally consistent but not
-physiologically qualified. Physiological geometry, flow, transit, hematocrit,
-and exchange parameters require separately sourced model cards and independent
-comparisons.
+cards and recruitment profile are synthetic. Their values are internally
+consistent but not physiologically qualified. Physiological geometry, flow,
+transit, sphincter behavior, hematocrit, and exchange parameters require
+separately sourced model cards and independent comparisons.

@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-capillary-recruitment-fixed-flow-v1",
+    "version": "1.0.0",
+    "title": "Synthetic fixed-total-flow capillary recruitment schedule"
+  },
+  "compatible_model_id": "capillary.synthetic.reference.v2",
+  "boundary_condition": "fixed_total_flow",
+  "sphincter_groups": [
+    {
+      "id": "always-perfused",
+      "path_count": 2
+    },
+    {
+      "id": "rest-reserve",
+      "path_count": 2
+    },
+    {
+      "id": "activity-reserve",
+      "path_count": 4
+    }
+  ],
+  "states": [
+    {
+      "id": "rest",
+      "effective_at_s": 0.0,
+      "open_sphincter_group_ids": ["always-perfused", "rest-reserve"]
+    },
+    {
+      "id": "activity",
+      "effective_at_s": 1.0,
+      "open_sphincter_group_ids": ["always-perfused", "rest-reserve", "activity-reserve"]
+    },
+    {
+      "id": "recovery",
+      "effective_at_s": 2.0,
+      "open_sphincter_group_ids": ["always-perfused", "rest-reserve"]
+    }
+  ],
+  "validity": {
+    "population": "software contract tests only",
+    "physiological_state": "synthetic rest-activity-recovery sequence",
+    "evidence_class": "software_test_surrogate",
+    "description": "Synthetic grouped recruitment selected to verify exact state boundaries, path accounting, continuity, and time-step-independent transit."
+  },
+  "sources": [
+    {
+      "id": "wendt-dissertation-capillary-recruitment",
+      "citation": "Wendt, Regine (2024), Einsatz von Nanotechnologien in der Präzisionsmedizin, Section 4.4, pp. 127-128",
+      "location": "literature/Diss_WENDT_Simulationchapters.pdf",
+      "license": "source consulted; concept paraphrased",
+      "role": "precapillary sphincter and activity-dependent recruitment concept"
+    },
+    {
+      "id": "mehlissa-m4-recruitment-contract",
+      "citation": "MEHLISSA Next M4.4 dynamic capillary recruitment contract, version 1.0.0",
+      "location": "docs/m4/CAPILLARY_RECRUITMENT_AND_SPHINCTERS.md",
+      "license": "CC-BY-4.0",
+      "role": "synthetic state schedule and boundary-condition semantics"
+    }
+  ],
+  "limitations": [
+    "Path counts and event times are synthetic software-test values, not physiological evidence.",
+    "Each group is an aggregate gate for identical parallel paths, not an anatomical map of individual sphincters.",
+    "Fixed total flow is an imposed boundary condition and does not derive pressure or vascular resistance.",
+    "The schedule has no feedback, autoregulation, vasomotion, hematocrit, or stochastic recruitment."
+  ]
+}

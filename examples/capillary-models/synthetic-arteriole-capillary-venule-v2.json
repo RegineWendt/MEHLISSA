@@ -65,7 +65,7 @@
   ],
   "limitations": [
     "Lengths, diameters, flow, and path counts are synthetic software-test values, not physiological evidence.",
-    "Perfused path count is static; recruitment and precapillary sphincter dynamics are not implemented in M4.3.",
+    "The base definition supplies only the initial perfused path count; dynamic recruitment requires a separate M4.4 profile.",
     "Substances pass through without exchange, reaction, retention, adhesion, or extravasation.",
     "The model has no pressure, hematocrit, local position, stochastic dispersion, or molecular channel."
   ]

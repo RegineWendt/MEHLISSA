@@ -489,12 +489,19 @@ replaces prescribed transit with schema-versioned SI geometry and one total
 flow: typed operations derive single and total cross-section, continuity
 velocity, and regional transit, while the capillary vessel count is bound to
 the perfused-path count. The synthetic v2 card is internally consistent but is
-not physiological evidence. The next increments add recruitment dynamics,
-balanced tissue exchange, and molecular channels. See
+not physiological evidence. M4.4 now adds a strict
+recruitment overlay: aggregate precapillary sphincter groups open and close at
+exact scheduled times, and each profile declares either fixed total flow or a
+simplified equal-path fixed-pressure-drop surrogate. In-flight progress is
+distance based, so state changes are stable across compatible host steps. The
+synthetic schedule verifies the mechanism but does not qualify sphincter
+physiology. The next increments add balanced tissue exchange and molecular
+channels. See
 [M4 evidence](m4/README.md),
 [ADR-0021](architecture/adr/0021-versioned-capillary-bed-baseline.md), and
 [ADR-0022](architecture/adr/0022-organ-capillary-round-trip-coupling.md), and
-[ADR-0023](architecture/adr/0023-dimension-safe-capillary-continuity.md).
+[ADR-0023](architecture/adr/0023-dimension-safe-capillary-continuity.md), and
+[ADR-0024](architecture/adr/0024-dynamic-capillary-recruitment.md).
 
 #### Model variants
 

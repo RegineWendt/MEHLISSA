@@ -101,9 +101,11 @@ and complete organ-capillary-organ path for the synthetic v2 reference.
 
 ## Next work
 
-M4.4 can now make perfused-path count dynamic through recruitment and a
-precapillary sphincter state. That work must define whether total flow, pressure
-drop, or another boundary condition remains fixed when paths open or close.
+M4.4 now makes perfused-path count dynamic through a versioned recruitment
+overlay and aggregate precapillary sphincter groups. Each profile explicitly
+selects fixed total flow or a simplified fixed-pressure-drop conductance
+surrogate when paths open or close. See
+[Capillary Recruitment and Precapillary Sphincter Groups](CAPILLARY_RECRUITMENT_AND_SPHINCTERS.md).
 Physiological parameter cards and independent comparisons remain separate from
 that mechanism.
 

@@ -7,6 +7,7 @@ add_library(
     mehlissa_capillary_model
     src/capillary_bed.cpp
     src/capillary_bed_definition.cpp
+    src/capillary_recruitment_profile.cpp
 )
 add_library(MEHLISSA::capillary_model ALIAS mehlissa_capillary_model)
 

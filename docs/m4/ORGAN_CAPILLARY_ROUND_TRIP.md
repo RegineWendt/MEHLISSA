@@ -84,7 +84,7 @@ retryable synchronization failures.
 M4.2 satisfies the first Gate M4 criterion only at the synthetic
 software-contract level, and M4.3 supplies its dimension-safe geometry and
 continuity calculation. Still required are physiological organ-specific cards,
-recruitment dynamics, blood/tissue exchange, retention and extravasation,
+physiologically qualified recruitment, blood/tissue exchange, retention and extravasation,
 molecular channels, and comparison of detailed and surrogate models against
 common references.
 
