@@ -36,13 +36,13 @@ Status codes:
 | SYS-005 | RM 2.1–2.2 | PART | M0/M1 | architecture review of target structure and dependency rules |
 | SYS-006 | RM M0 | PART | M1 | CI rule and review: `core/` does not import `scenarios/` |
 | SYS-007 | RM M1 | DONE | M1 | stable error codes/CLI statuses and negative tests for configuration, overflow, lifecycle, log, and checkpoint invariants |
-| SYS-008 | DISS pp. 95–97, 133 | PART | M3–M5 | one typed scenario and body coupler run unchanged with coarse and regional lung implementations; externally configured multi-resolution experiments follow |
+| SYS-008 | DISS pp. 95–97, 133 | DONE | M3 | M3.18 runs one schema-validated body–lung–body scenario unchanged with the effective compartment and five-lobe v7 implementation; identity, route, ownership, population, substance, and flow meaning agree while model-specific timing remains observable |
 | ARC-001 | DISS pp. 94–96 | PART | M3–M5 | generic `ModelComponent` boundary and first organ implementation; body/capillary/cell implementations follow |
 | ARC-002 | DISS p. 95 | PART | M3–M5 | schema-validated lung definitions bind scale, evidence, validity, sources, uncertainty, derivations, licenses, and limitations to executable selection; future models require the equivalent contract |
 | ARC-003 | DISS pp. 95–97 | PART | M3 | versioned entity, population, substance-amount, and volume-flow contracts and lung endpoints exist; physiological-state and event contracts follow |
 | ARC-004 | RM 3.3 | PART | M3 | entity round trip and lossless population, substance, and flow transit pass across both lung variants; transforming exchange and body aggregate endpoints follow |
 | ARC-005 | DISS pp. 99–100 | SPEC | M3–M5 | return of a detection/cell event to a higher layer |
-| ARC-006 | RM 3.3 | PART | M3 | externally selected coarse/regional results agree at 0.5 s and 1 s, and the 6.4 s pulmonary 0D route agrees at 0.1 s and 0.2 s; asynchronous multirate synchronization follows |
+| ARC-006 | RM 3.3 | PART | M3 | externally selected coarse/regional results agree at 0.5 s and 1 s, the 6.4 s pulmonary 0D route agrees at 0.1 s and 0.2 s, and M3.18 executes one 0.1 s scenario across coarse and five-lobe candidates; asynchronous multirate synchronization follows |
 | ARC-007 | DISS pp. 96–97, 133 | SPEC | M4/M5 | reference adapter plus equivalent surrogate |
 
 ## 3. Body and organ layers
@@ -63,7 +63,7 @@ Status codes:
 | ORG-002 | DISS pp. 118–122 | PART | M3 | M2.4 checks whole-body perfusion; M3.7 adds source-scoped aggregate physiology; M3.8–M3.13 add independent evaluation and empirical flow/age refinements; M3.14–M3.15 test pressure distensibility without hiding inferior validation; M3.16 adds five anatomically named parallel lobe beds with a declared DE-CT proxy and exact aggregate equivalence; M3.17 independently qualifies all five fixed normal-supine shares against both published V/Q SPECT/CT reconstructions; dynamic regional states remain open |
 | ORG-003 | DISS pp. 95, 153–154 | DONE | M3 | tested body → lung → body ownership round trip with named ports, stable identity, synchronization time, and explicit outside-body ledger |
 | ORG-004 | DISS pp. 122–123, Ch. 6 | LEGACY | M3/M7 | localization event with tissue and uncertainty |
-| ORG-005 | DISS pp. 123–126 | PART | M3 | schema-selected coarse, three-region surrogate, and pulmonary 0D implementations share one component contract; empirical and fixed/age-conditioned Linehan laws are independently selectable and cannot be double-counted; anatomical 1D/geometry refinement follows |
+| ORG-005 | DISS pp. 123–126 | PART | M3 | schema-selected coarse, three-region surrogate, and pulmonary 0D implementations share one component contract; M3.18 verifies unchanged end-to-end scenario meaning across coarse and five-lobe candidates; anatomical 1D/geometry refinement follows |
 | ORG-006 | DISS pp. 124–126 | PART | M3/M8 | external-data contract preserves checksum, format, axes, units, and transformations; official SimVascular arterial candidate reviewed with access/license/state/unit/coverage blockers; import adapter and geometry verification follow |
 
 ## 4. Capillary and cell layers
@@ -119,7 +119,7 @@ Status codes:
 | QUA-002 | RM M1 | DONE | M1 | clang-tidy, ASan/UBSan, and warnings as errors in CI |
 | QUA-003 | MEH25 pp. 1–2 | SPEC | M2–M7 | versioned benchmark reports plus result comparison |
 | QUA-004 | MEH25 pp. 1–2 | SPEC | M4–M7 | scaling test: agents versus populations/surrogate |
-| QUA-005 | RM 6.6 | PART | M1 ongoing | API/schema/model/scenario documentation |
+| QUA-005 | RM 6.6 | PART | M1 ongoing | API/schema/model/scenario documentation exists; the prioritized User Guide expansion will add a non-expert purpose-and-experiment Part I ahead of the existing technical Part II |
 | QUA-006 | RM M8 | SPEC | M8 | data-protection and data-management review |
 
 ## 7. M0 coverage review

@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mehlissa.org/schemas/body-organ-resolution-comparison/1.0.0.schema.json",
+  "title": "MEHLISSA body-organ resolution comparison scenario",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "scenario", "body", "route", "injection", "simulation",
+    "conserved_payload", "organ_candidates", "acceptance", "limitations"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "research_question"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" },
+        "title": { "type": "string", "minLength": 1 },
+        "research_question": { "type": "string", "minLength": 1 }
+      }
+    },
+    "body": { "$ref": "#/$defs/model_file" },
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "body_departure_segment_id", "body_departure_port_id", "organ_entry_port_id",
+        "organ_exit_port_id", "body_return_port_id", "body_return_segment_id"
+      ],
+      "properties": {
+        "body_departure_segment_id": { "$ref": "#/$defs/nonempty" },
+        "body_departure_port_id": { "$ref": "#/$defs/nonempty" },
+        "organ_entry_port_id": { "$ref": "#/$defs/nonempty" },
+        "organ_exit_port_id": { "$ref": "#/$defs/nonempty" },
+        "body_return_port_id": { "$ref": "#/$defs/nonempty" },
+        "body_return_segment_id": { "$ref": "#/$defs/nonempty" }
+      }
+    },
+    "injection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["time_ms", "segment_id", "entity_count"],
+      "properties": {
+        "time_ms": { "const": 0 },
+        "segment_id": { "$ref": "#/$defs/nonempty" },
+        "entity_count": { "type": "integer", "minimum": 1, "maximum": 1000000 }
+      }
+    },
+    "simulation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["master_seed", "synchronization_step_ms", "maximum_duration_ms"],
+      "properties": {
+        "master_seed": { "type": "integer", "minimum": 0, "maximum": 18446744073709551615 },
+        "synchronization_step_ms": { "type": "integer", "minimum": 1, "maximum": 1000 },
+        "maximum_duration_ms": { "type": "integer", "minimum": 1, "maximum": 60000 }
+      }
+    },
+    "conserved_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "population_type", "population_count", "substance_id", "substance_amount_mmol",
+        "volume_flow_m3_per_s", "flow_interval_ms"
+      ],
+      "properties": {
+        "population_type": { "$ref": "#/$defs/nonempty" },
+        "population_count": { "type": "integer", "minimum": 1 },
+        "substance_id": { "$ref": "#/$defs/nonempty" },
+        "substance_amount_mmol": { "type": "number", "exclusiveMinimum": 0 },
+        "volume_flow_m3_per_s": { "type": "number", "exclusiveMinimum": 0 },
+        "flow_interval_ms": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "organ_candidates": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "allOf": [
+          { "$ref": "#/$defs/model_file" },
+          {
+            "type": "object",
+            "required": ["role"],
+            "properties": { "role": { "enum": ["coarse", "detailed"] } }
+          }
+        ]
+      }
+    },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entity_identity", "return_route", "ownership", "conserved_payload",
+        "cross_candidate_comparison", "timing"
+      ],
+      "properties": {
+        "entity_identity": { "const": "exact" },
+        "return_route": { "const": "exact" },
+        "ownership": { "const": "zero_unowned_or_in_flight_after_completion" },
+        "conserved_payload": { "const": "exact_typed_round_trip" },
+        "cross_candidate_comparison": { "const": "same_entities_route_and_payload" },
+        "timing": { "const": "reported_as_model_output_not_required_to_match" }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "nonempty": { "type": "string", "minLength": 1 },
+    "model_file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["definition_path", "schema_path"],
+      "properties": {
+        "definition_path": { "$ref": "#/$defs/nonempty" },
+        "schema_path": { "$ref": "#/$defs/nonempty" },
+        "role": { "enum": ["coarse", "detailed"] }
+      }
+    }
+  }
+}

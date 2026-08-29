@@ -89,9 +89,12 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
     endif()
 
     if(MEHLISSA_BUILD_MODEL_COUPLING AND MEHLISSA_BUILD_ORGAN_MODELS)
+        find_package(jsoncons CONFIG REQUIRED)
+
         add_executable(
             mehlissa_organ_model_tests
             body_organ_coupler_tests.cpp
+            body_organ_resolution_scenario_tests.cpp
             conserved_transfer_tests.cpp
             lung_compartment_tests.cpp
             lung_conserved_transfer_tests.cpp
@@ -108,6 +111,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
             PRIVATE
                 MEHLISSA::organ_model
                 MEHLISSA::cosimulation
+                jsoncons::jsoncons
                 Catch2::Catch2WithMain
         )
         target_compile_definitions(

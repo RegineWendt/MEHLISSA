@@ -39,3 +39,12 @@ M3.7 extends the matrix with the literature-parameterized pulmonary 0D card at
 at its 6.4 s measured transit. A separate generated two-second contract setup
 runs entity, population, substance, and flow payloads through all three factory
 variants, while the physiological card retains its source-scoped timing.
+
+M3.18 adds a checked-in, schema-validated
+[coarse–detailed scenario comparison](COARSE_DETAILED_SCENARIO_COMPARISON.md).
+Unlike the earlier generated contract matrix, the complete shared experiment
+is now a data artifact. It runs 25 entities plus population, substance, and
+flow transfers through the coarse compartment and the independently qualified
+five-lobe v7 model. Both preserve exact identity, route, ownership, and payload.
+Their 2.0 s and 6.4 s completion times remain model outputs and are correctly
+not required to match.

@@ -149,6 +149,20 @@ and FP9 remain open. See
 The post-M3.17 local Visual Studio Debug build and 127/127 CTest suite passed;
 cross-platform CI evidence is recorded with the pushed increment.
 
+**Twelfth post-review update, 29 August 2026:** M3.18 adds a checked-in,
+schema-validated end-to-end scenario that changes only the pulmonary model
+card. The shared body graph, route, seed, 25 entity identities, population,
+substance amount, volume flow, synchronization step, and acceptance rules are
+identical for the effective compartment and five-lobe v7 model. Both return
+25/25 entities and all three typed payloads exactly with closed ownership. The
+2.0 s and 6.4 s transit results deliberately remain model-specific outputs.
+Candidate-local route overrides are rejected by schema. This satisfies the
+same-scenario Gate M3 criterion without adding resolution branches to the body,
+coupler, or kernel. General CLI composition and FP9 remain open. See
+[Coarse–Detailed Body–Lung Scenario Comparison](COARSE_DETAILED_SCENARIO_COMPARISON.md).
+The post-M3.18 local Visual Studio Debug build and 129/129 CTest suite passed;
+cross-platform CI evidence is recorded with the pushed increment.
+
 ## 1. Review method
 
 The review checked the Roadmap Gate M3 statements and the additional acceptance
@@ -164,7 +178,7 @@ model” merely because it contained more regions than the coarse surrogate.
 | an agent moves reproducibly from the body graph into an organ and back | satisfied | `BodyOrganCoupler`, explicit outside-body ownership ledger, stable ID and named-port validation, coarse/regional × 0.5/1.0 s matrix |
 | flow, populations, and substance amounts are conserved across the layer boundary | satisfied for lossless transit | dimension-safe contracts, exact boundary ledger, both lung endpoints preserve transfer ID and typed payload; changing biochemical exchange is intentionally not claimed |
 | the organ has an independent, interchangeable model implementation | satisfied for the scoped mean 0D reference | the factory selects a distinct five-bed anatomical 0D implementation behind the same contract; aggregate physiology inherits exact v4 equivalence and both independent normal-supine V/Q SPECT/CT reconstruction series pass the regional criteria |
-| a coarse compartment and more detailed organ model use the same scenario | partially satisfied | all implementations share the definition/factory and coupling contract, and the five-bed model is anatomical 0D; a checked-in end-to-end scenario comparison and vascular geometry remain open |
+| a coarse compartment and more detailed organ model use the same scenario | satisfied | M3.18 defines the body, route, injection, seed, step, conserved payload, and acceptance rules once; only the schema-selected organ card changes, and both candidates preserve exact scenario meaning while retaining model-specific timing |
 
 ## 3. Additional ADR-0006 criteria
 
@@ -196,31 +210,31 @@ model” merely because it contained more regions than the coarse surrogate.
 - coarse and regional pulmonary transit implementations behind one interface;
 - schema-validated executable model cards with validity, evidence, sources,
   licenses, limitations, and optional external-data axes/units/provenance;
-- one externally selected scenario across both resolutions and compatible host
-  steps; and
+- one checked-in schema-validated scenario across coarse and five-lobe
+  resolutions, plus compatible host-step regressions; and
 - cross-platform build, analysis, sanitizer, and regression infrastructure.
 
-These contracts are suitable for continued software integration. They do not
-make the current lung models physiological reference models.
+These contracts are suitable for continued software integration. The qualified
+reference candidates remain population-scoped research models, not
+patient-specific or clinically usable simulations.
 
 ## 6. Blocking scientific closure package
 
 M3 can pass only after the following evidence is added and reviewed:
 
-1. qualify and license a concrete pulmonary reference case or a sourced 0D/1D
-   parameterization, including population and physiological state; the initial
-   [SimVascular candidate review](SIMVASCULAR_PULMONARY_CANDIDATE_REVIEW.md)
-   narrows the open questions but does not qualify the archive;
+1. ~~qualify and license a concrete pulmonary reference case or a sourced 0D/1D
+   parameterization, including population and physiological state~~ — M3.7
+   supplies the sourced 0D parameterization and M3.16–M3.17 add and independently
+   evaluate the five-lobe distribution; geometry remains a later refinement;
 2. ~~provide sourced pressure, resistance/flow, perfusion, and transit targets
    in SI units with uncertainty and explicit calibration/validation
    separation, followed by independent aggregate and multipoint population
    comparisons~~ — implemented by M3.7–M3.11; participant-level validation
    remains a higher-resolution follow-up rather than the immediate M3 blocker;
-3. ~~implement and independently evaluate an anatomical/hemodynamic regional
-   variant~~ — M3.16 implements five parallel lobar beds with exact aggregate-v4
-   equivalence and M3.17 qualifies the fixed normal-supine shares; an end-to-end
-   comparison with the effective compartment and dynamic regional states remain
-   open;
+3. ~~implement, independently evaluate, and compare an anatomical/hemodynamic
+   regional variant with the effective compartment~~ — M3.16 implements five
+   parallel beds, M3.17 qualifies the fixed shares, and M3.18 runs both
+   resolutions under one scenario; dynamic regional states remain a refinement;
 4. ~~add an explicitly reviewed baseline lobar distribution~~ — M3.16 adds a
    fixed DE-CT PBV proxy with limitations; posture/exercise redistribution and
    regional recruitment remain open;
@@ -235,10 +249,12 @@ M3 can pass only after the following evidence is added and reviewed:
 The M3 software architecture, lossless coupling slice, first independent
 aggregate physiological comparison, and subject-level multipoint analysis path
 are verified, and published population multipoint validation has produced a
-qualified partial result, and the fixed normal-supine five-lobe distribution is
-independently qualified, but the milestone is not closed. The gate remains
-open on dynamic regional physiology, an end-to-end scenario comparison, and
-the FP9 executable reference, not on a hidden software failure. Downstream
+qualified partial result, the fixed normal-supine five-lobe distribution is
+independently qualified, and the same-scenario resolution comparison is
+verified, but the milestone is not closed. The remaining formal blocker is the
+FP9 executable reference and the resulting final gate/CI review. Dynamic
+regional physiology remains an explicit scientific refinement rather than a
+hidden software failure. Downstream
 prototyping may use the verified interfaces provided it retains each model
 definition's explicit validity and evidence-class labels and does not cite an
 output beyond its qualified physiological scope.

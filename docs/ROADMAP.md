@@ -397,6 +397,11 @@ V/Q SPECT/CT: both attenuation reconstructions pass the declared lobe, RMSE,
 and right-lung criteria without refitting. The fixed normal-supine regional
 reference is therefore qualified; dynamic redistribution, posture/activity
 response, patient-specific geometry, and disease states remain open.
+M3.18 adds a schema-validated end-to-end comparison in which one body graph,
+route, seed, injection, and conserved payload run unchanged through the coarse
+compartment and five-lobe v7 model. Both preserve 25/25 identities and all
+typed payloads; their model-specific 2.0 s and 6.4 s transit times are reported
+rather than forced to agree.
 Participant-level validation remains a higher-resolution follow-up.
 Anatomical refinement, transforming exchange, general experiment composition,
 continuous/regional activity physiology, and regional exercise redistribution
@@ -411,9 +416,9 @@ age-conditioned sensitivity are verified, the
 subject-level analysis path is software-verified, and published population
 multipoint validation has produced a qualified 15/15 result against the
 calibration-disjoint Wolsk cohort, and independent normal-supine five-lobe
-validation passes both published reconstruction series. Continuous and dynamic
-regional physiology, an end-to-end coarse/detailed scenario comparison, and
-the executable historical FP9 baseline remain closure evidence.
+validation passes both published reconstruction series, and the same-scenario
+coarse/detailed comparison is verified. Continuous and dynamic regional
+physiology and the executable historical FP9 baseline remain closure evidence.
 
 #### Tasks
 
@@ -890,6 +895,23 @@ The following packages are derived directly from this roadmap:
 8. ~~Formulate fingerprinting requirements and the dissertation baseline as a vertical specification.~~ Complete: [fingerprinting reference scenario](requirements/FINGERPRINTING_SCENARIO.md).
 9. ~~Select the reference organ for the first body–organ coupling.~~ Complete: lung, documented in [ADR-0006](architecture/adr/0006-lung-reference-organ.md).
 10. ~~Identify required biological and experimental partners or data sources.~~ Complete: [data gaps and validation partners](m0/VALIDATION_AND_DATA_PARTNERS.md).
+11. Expand the English User Guide into a two-level guide for researchers and
+    first-time users before M4 substantially enlarges the software surface:
+    - begin with a non-technical introduction to what MEHLISSA simulates, which
+      research questions it can support, and what it explicitly cannot claim;
+    - explain the mental model—virtual body, transported entities and
+      substances, interchangeable biological resolutions, experiments, and
+      observations—without assuming C++ or simulation expertise;
+    - describe experiment families in plain language before commands: injection
+      and circulation, sampling/gateway observation, physiological-state
+      comparison, coarse-versus-detailed organ comparison, individual versus
+      population transport, and validation/sensitivity studies;
+    - give each experiment family a guided example with research question,
+      inputs, expected outputs, interpretation, and scientific limitations;
+    - add a short glossary and a “choose your first experiment” decision aid;
+      and
+    - retain the current technical guide as Part II, with links from every
+      conceptual example to its runnable files and commands.
 
 ## 12. Definition of long-term success
 

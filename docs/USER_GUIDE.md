@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Covered software:** M0 through the current M3 body–organ coupling slice
 
-**Last updated:** 28 August 2026
+**Last updated:** 29 August 2026
 
 This guide is the main entry point for people who want to build, inspect, and
 run MEHLISSA Next. It will grow with each milestone. Internal architecture
@@ -39,7 +39,12 @@ The current software can:
   executable model card; and
 - run the same body–lung–body regression at two compatible host steps.
 
-The software does not yet contain an anatomical or participant-level validated
+The repository also contains one schema-validated comparison scenario that
+runs unchanged with the coarse lung compartment and the five-lobe pulmonary
+model. This is currently an executable regression rather than a general CLI
+composition feature.
+
+The software does not yet contain a geometry-resolved or participant-level
 pulmonary model, capillary/cellular exchange, or active Nano-IoT communication.
 
 ## 2. Repository orientation
@@ -502,6 +507,28 @@ Both source reconstructions pass without refitting v7. Read the
 [lobar validation report](m3/PULMONARY_LOBAR_PERFUSION_VALIDATION.md) for the
 metrics, acceptance rules, and scope limitations.
 
+### 8.2.2 Compare coarse and detailed lung resolution in one scenario
+
+The scenario file
+`examples/scenarios/body-lung-resolution-comparison-v1.json` defines the body,
+route, injection, random seed, synchronization step, conserved payload, and
+acceptance rules once. It then names the coarse compartment and five-lobe v7
+model as interchangeable candidates.
+
+Run its regression with:
+
+```powershell
+& build/windows-msvc/tests/Debug/mehlissa_organ_model_tests.exe `
+  "[resolution-comparison]"
+```
+
+Both candidates must return all 25 identities, the population, substance
+amount, and volume flow exactly. Their completion times are expected to differ:
+2.0 seconds is the coarse software-test value, while 6.4 seconds is the v7
+literature-derived pulmonary transit. Read the
+[coarse–detailed comparison](m3/COARSE_DETAILED_SCENARIO_COMPARISON.md) before
+interpreting this as a physiological model comparison.
+
 ### 8.3 Verify the subject-level multipoint analysis path
 
 The multipoint path accepts pseudonymous healthy-control records with at least
@@ -562,6 +589,17 @@ Golden Reference. A complete debug suite therefore takes roughly one to two
 minutes on the current Windows reference system.
 
 ## 10. Where this guide goes next
+
+The highest-priority documentation package is a new non-expert Part I. It will
+introduce what MEHLISSA is useful for, explain its virtual body/entities/models
+mental model, and describe the kinds of experiments a researcher can perform
+before presenting installation or command-line details. It will include guided
+examples for circulation and injection, passive observation, physiological
+state comparisons, coarse-versus-detailed organ models, individual-versus-
+population transport, and validation or sensitivity studies. Each example will
+state its research question, inputs, outputs, interpretation, and limitations.
+The current technical material will remain as Part II rather than being lost.
+This work package is tracked explicitly in the Roadmap's immediate to-do list.
 
 The guide will be extended with:
 

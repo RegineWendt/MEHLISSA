@@ -38,6 +38,7 @@ respiratory mechanics, or gas exchange.
 | M3.15 age-conditioned pressure distensibility | implemented and independently diagnosed; does not replace v4 or resolve the v5 gate | Reeves younger/older invasive aggregates; explicit ≥60 coefficient; standard-error metadata; older RMSE improves from 5.411 to 4.603 mmHg while agreement remains 11/15 |
 | M3.16 anatomical lobar parallel beds | implemented; aggregate-qualified, regional validation open | five named lobe beds; DE-CT perfusion proxy; exact v4 aggregate equivalence; deterministic per-entity lobe transit; explicit regional evidence limitations |
 | M3.17 independent lobar perfusion validation | qualified normal-supine regional pass; dynamic-state validation open | calibration-disjoint normal V/Q SPECT/CT reference; both attenuation reconstructions pass five-lobe, RMSE, and right-lung criteria without refitting; published-rounding normalization explicit |
+| M3.18 coarse–detailed end-to-end scenario comparison | verified | one schema-validated body–lung–body scenario; unchanged body, route, seed, inputs, and acceptance rules; 25/25 identities and all typed payloads preserved by the coarse and five-lobe models; model-specific timing reported |
 
 ## M3.1 result
 
@@ -219,6 +220,15 @@ DE-CT calibration. Both attenuation-corrected and uncorrected reconstructions
 pass the declared per-lobe, RMSE, and right-lung criteria. The result qualifies
 the fixed normal-supine distribution; posture, exercise, disease, and dynamic
 regional redistribution remain open.
+
+M3.18 adds the
+[coarse–detailed body–lung scenario comparison](COARSE_DETAILED_SCENARIO_COMPARISON.md).
+One checked-in scenario now drives both the effective compartment and the
+five-lobe v7 model without changing its body graph, route, seed, entities, or
+conserved payload. Both candidates return 25/25 identities and all three typed
+transfers exactly. Their different transit times are retained as model output.
+This closes the same-scenario Gate M3 criterion while leaving general CLI
+composition and the FP9 baseline open.
 
 An initial [SimVascular Healthy Pulmonary Candidate Review](SIMVASCULAR_PULMONARY_CANDIDATE_REVIEW.md)
 finds the official case useful for an imported pulmonary-artery technical

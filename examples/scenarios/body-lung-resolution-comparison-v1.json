@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0.0",
+  "scenario": {
+    "id": "body-lung-resolution-comparison-v1",
+    "title": "One body-lung-body experiment across coarse and five-lobe pulmonary models",
+    "research_question": "Can a single body-organ experiment retain its entity, route, ownership, population, substance, and flow meaning when only the pulmonary model resolution changes?"
+  },
+  "body": {
+    "definition_path": "examples/body-models/synthetic-branching-circuit.json",
+    "schema_path": "data/schemas/vascular-graph/1.0.0.schema.json"
+  },
+  "route": {
+    "body_departure_segment_id": "artery-10",
+    "body_departure_port_id": "pulmonary-arterial-departure",
+    "organ_entry_port_id": "pulmonary-arterial-entry",
+    "organ_exit_port_id": "pulmonary-venous-exit",
+    "body_return_port_id": "pulmonary-venous-return",
+    "body_return_segment_id": "vein-90"
+  },
+  "injection": {
+    "time_ms": 0,
+    "segment_id": "artery-10",
+    "entity_count": 25
+  },
+  "simulation": {
+    "master_seed": 2026,
+    "synchronization_step_ms": 100,
+    "maximum_duration_ms": 7000
+  },
+  "conserved_payload": {
+    "population_type": "nanodevice",
+    "population_count": 10000,
+    "substance_id": "oxygen",
+    "substance_amount_mmol": 2.5,
+    "volume_flow_m3_per_s": 0.0001,
+    "flow_interval_ms": 1000
+  },
+  "organ_candidates": [
+    {
+      "role": "coarse",
+      "definition_path": "examples/organ-models/lung-compartment-contract-v1.json",
+      "schema_path": "data/schemas/lung-model-definition/1.0.0.schema.json"
+    },
+    {
+      "role": "detailed",
+      "definition_path": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json",
+      "schema_path": "data/schemas/lung-model-definition/1.6.0.schema.json"
+    }
+  ],
+  "acceptance": {
+    "entity_identity": "exact",
+    "return_route": "exact",
+    "ownership": "zero_unowned_or_in_flight_after_completion",
+    "conserved_payload": "exact_typed_round_trip",
+    "cross_candidate_comparison": "same_entities_route_and_payload",
+    "timing": "reported_as_model_output_not_required_to_match"
+  },
+  "limitations": [
+    "The synthetic body graph verifies composition and conservation; it is not an anatomical whole-body reference.",
+    "The coarse two-second transit is a software-test value, whereas the five-lobe model uses a literature-derived 6.4-second aggregate transit.",
+    "Equal domain meaning requires identity, route, ownership, and payload agreement; it does not require models at different resolution to produce identical timing or internal state.",
+    "This regression does not yet expose general body-organ composition through the command-line experiment manifest."
+  ]
+}
