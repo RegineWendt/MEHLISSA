@@ -511,36 +511,40 @@ encode_random_streams(const std::vector<mehlissa::core::RandomStreamState>& stre
     return result;
 }
 
-void write_validated_report(const Json& report, const std::filesystem::path& schema_path,
-                            const std::filesystem::path& output_path) {
+struct ValidatedReportWriteRequest final {
+    std::filesystem::path schema_path;
+    std::filesystem::path output_path;
+};
+
+void write_validated_report(const Json& report, const ValidatedReportWriteRequest& request) {
     if (report.at("schema_version").as<std::string_view>() != supported_report_schema_version) {
         throw mehlissa::core::MehlissaError{
             mehlissa::core::ErrorCode::internal_failure,
             "Benchmark report encoder selected an unsupported schema version"};
     }
-    validate_document(report, schema_path, "body-transport benchmark report");
+    validate_document(report, request.schema_path, "body-transport benchmark report");
 
     std::error_code error;
-    if (!output_path.parent_path().empty()) {
-        std::filesystem::create_directories(output_path.parent_path(), error);
+    if (!request.output_path.parent_path().empty()) {
+        std::filesystem::create_directories(request.output_path.parent_path(), error);
         if (error) {
             throw mehlissa::core::MehlissaError{mehlissa::core::ErrorCode::output_unwritable,
                                                 "Cannot create benchmark report directory: " +
                                                     error.message()};
         }
     }
-    std::ofstream output{output_path, std::ios::binary | std::ios::trunc};
+    std::ofstream output{request.output_path, std::ios::binary | std::ios::trunc};
     if (!output) {
         throw mehlissa::core::MehlissaError{mehlissa::core::ErrorCode::output_unwritable,
                                             "Cannot write benchmark report: " +
-                                                output_path.string()};
+                                                request.output_path.string()};
     }
     report.dump_pretty(output);
     output.put('\n');
     if (!output) {
         throw mehlissa::core::MehlissaError{mehlissa::core::ErrorCode::output_unwritable,
                                             "Cannot complete benchmark report: " +
-                                                output_path.string()};
+                                                request.output_path.string()};
     }
 }
 
@@ -751,7 +755,7 @@ void write_validated_report(const Json& report, const std::filesystem::path& sch
                    encode_measurement_counts(transport_view->measurement_counts())}}}},
         }};
 
-    write_validated_report(report, command_line.result_schema_path, command_line.output_path);
+    write_validated_report(report, {command_line.result_schema_path, command_line.output_path});
     std::cout << "benchmark_id=" << manifest.benchmark_id
               << " policy=" << manifest.observation.policy_id
               << " population=" << manifest.injection.particle_count
