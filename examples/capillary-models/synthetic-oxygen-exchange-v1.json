@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-oxygen-exchange-v1",
+    "version": "1.0.0",
+    "title": "Synthetic staged oxygen exchange partition"
+  },
+  "compatible_model_id": "capillary.synthetic.reference.v2",
+  "unmatched_substance_policy": "pass_through",
+  "substance_rules": [
+    {
+      "substance_id": "oxygen",
+      "blood_to_endothelium_fraction": 0.4,
+      "endothelium_to_interstitium_fraction": 0.5,
+      "interstitium_to_cell_fraction": 0.25
+    }
+  ],
+  "validity": {
+    "population": "software contract tests only",
+    "physiological_state": "not applicable",
+    "evidence_class": "software_test_surrogate",
+    "description": "Synthetic fractions selected to produce transparent mass-balance arithmetic across four named compartments."
+  },
+  "sources": [
+    {
+      "id": "wendt-dissertation-capillary-exchange",
+      "citation": "Wendt, Regine (2024), Einsatz von Nanotechnologien in der Präzisionsmedizin, Section 4.4, p. 127",
+      "location": "literature/Diss_WENDT_Simulationchapters.pdf",
+      "license": "source consulted; architecture paraphrased",
+      "role": "blood, endothelium, interstitium, and cell exchange architecture"
+    },
+    {
+      "id": "mehlissa-m4-exchange-contract",
+      "citation": "MEHLISSA Next M4.5 balanced capillary exchange contract, version 1.0.0",
+      "location": "docs/m4/BALANCED_CAPILLARY_EXCHANGE.md",
+      "license": "CC-BY-4.0",
+      "role": "synthetic fractions, staged partition semantics, and balance invariant"
+    }
+  ],
+  "limitations": [
+    "All fractions are synthetic software-test values and are not physiological oxygen-exchange parameters.",
+    "The partition is instantaneous at capillary-region exit and does not model diffusion time, concentration gradients, membrane area, or permeability.",
+    "Transfer is one-way for this increment; release, reverse exchange, metabolism, and clearance are not represented.",
+    "Unmatched substances pass through unchanged and require their own evidence-scoped rules before biological use."
+  ]
+}

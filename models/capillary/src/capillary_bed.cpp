@@ -19,6 +19,7 @@ namespace {
 
 constexpr std::array expected_region_order{
     CapillaryRegionKind::arteriole, CapillaryRegionKind::capillary, CapillaryRegionKind::venule};
+constexpr std::size_t capillary_region_index = 1;
 
 [[nodiscard]] bool approximately_equal(const double left, const double right) noexcept {
     constexpr double relative_tolerance = 1.0e-12;
@@ -190,6 +191,15 @@ void validate_recruitment_compatibility(const CapillaryBedConfig& config,
     }
 }
 
+void validate_exchange_compatibility(const CapillaryBedConfig& config,
+                                     const CapillaryExchangeProfile& profile) {
+    validate_capillary_exchange_profile(profile);
+    if (profile.compatible_model_id != config.model_id) {
+        throw core::MehlissaError{core::ErrorCode::data_invalid,
+                                  "Capillary-exchange profile targets a different model"};
+    }
+}
+
 void validate_conserved_target(const coupling::ConservedTransfer& transfer,
                                const CapillaryBedConfig& config,
                                const core::SimulationClock::Duration synchronization_time,
@@ -283,6 +293,20 @@ CapillaryBed::CapillaryBed(CapillaryBedConfig config,
     next_recruitment_state_index_ = 1;
 }
 
+CapillaryBed::CapillaryBed(CapillaryBedConfig config, CapillaryExchangeProfile exchange_profile)
+    : CapillaryBed{std::move(config)} {
+    validate_exchange_compatibility(config_, exchange_profile);
+    exchange_profile_ = std::move(exchange_profile);
+}
+
+CapillaryBed::CapillaryBed(CapillaryBedConfig config,
+                           CapillaryRecruitmentProfile recruitment_profile,
+                           CapillaryExchangeProfile exchange_profile)
+    : CapillaryBed{std::move(config), std::move(recruitment_profile)} {
+    validate_exchange_compatibility(config_, exchange_profile);
+    exchange_profile_ = std::move(exchange_profile);
+}
+
 std::string_view CapillaryBed::name() const noexcept { return config_.component_name; }
 
 std::string_view CapillaryBed::model_id() const noexcept { return config_.model_id; }
@@ -371,7 +395,12 @@ void CapillaryBed::advance_residents(const AdvanceInterval interval) {
     std::vector<ResidentConservedTransfer> remaining_conserved;
     remaining_conserved.reserve(resident_conserved_transfers_.size());
     for (auto& resident : resident_conserved_transfers_) {
+        const auto previous_region_index = resident.region_index;
         advance_resident(resident, config_.regions, region_metrics_, interval.delta);
+        if (previous_region_index <= capillary_region_index &&
+            resident.region_index > capillary_region_index) {
+            apply_substance_exchange(resident.transfer, interval.emitted_at);
+        }
         if (resident.region_index == config_.regions.size()) {
             route_conserved_return(resident.transfer, config_, interval.emitted_at);
             outbound_conserved_transfers_.push_back(std::move(resident.transfer));
@@ -380,6 +409,57 @@ void CapillaryBed::advance_residents(const AdvanceInterval interval) {
         }
     }
     resident_conserved_transfers_ = std::move(remaining_conserved);
+}
+
+void CapillaryBed::apply_substance_exchange(coupling::ConservedTransfer& transfer,
+                                            const core::SimulationClock::Duration reported_at) {
+    if (!exchange_profile_.has_value()) {
+        return;
+    }
+    auto* substance = std::get_if<coupling::SubstanceAmountTransfer>(&transfer);
+    if (substance == nullptr) {
+        return;
+    }
+    const auto rule =
+        std::find_if(exchange_profile_->substance_rules.begin(),
+                     exchange_profile_->substance_rules.end(), [&substance](const auto& candidate) {
+                         return candidate.substance_id == substance->substance_id;
+                     });
+    if (rule == exchange_profile_->substance_rules.end()) {
+        return;
+    }
+
+    const auto incoming = core::in_moles(substance->amount);
+    const auto transferred_to_endothelium = incoming * rule->blood_to_endothelium_fraction;
+    const auto outgoing_blood = incoming - transferred_to_endothelium;
+    const auto transferred_to_interstitium =
+        transferred_to_endothelium * rule->endothelium_to_interstitium_fraction;
+    const auto retained_endothelium = transferred_to_endothelium - transferred_to_interstitium;
+    const auto transferred_to_cell =
+        transferred_to_interstitium * rule->interstitium_to_cell_fraction;
+    const auto retained_interstitium = transferred_to_interstitium - transferred_to_cell;
+
+    CapillaryExchangeRecord record{
+        substance->header.transfer_id,
+        substance->substance_id,
+        exchange_profile_->profile_id,
+        reported_at,
+        substance->amount,
+        core::moles(outgoing_blood),
+        core::moles(retained_endothelium),
+        core::moles(retained_interstitium),
+        core::moles(transferred_to_cell),
+    };
+    if (!is_balanced(record)) {
+        throw core::MehlissaError{core::ErrorCode::invariant_violated,
+                                  "Capillary substance exchange is not mass balanced"};
+    }
+    auto& inventory = tissue_inventories_[substance->substance_id];
+    inventory.endothelium_amount += record.endothelium_amount;
+    inventory.interstitium_amount += record.interstitium_amount;
+    inventory.cell_amount += record.cell_amount;
+    substance->amount = record.outgoing_blood_amount;
+    exchange_records_.push_back(std::move(record));
 }
 
 void CapillaryBed::apply_recruitment_state(const std::size_t state_index) {
@@ -500,6 +580,30 @@ std::optional<CapillaryBoundaryCondition> CapillaryBed::boundary_condition() con
         return std::nullopt;
     }
     return recruitment_profile_->boundary_condition;
+}
+
+bool CapillaryBed::has_exchange_profile() const noexcept { return exchange_profile_.has_value(); }
+
+std::string_view CapillaryBed::exchange_profile_id() const noexcept {
+    if (!exchange_profile_.has_value()) {
+        return {};
+    }
+    return exchange_profile_->profile_id;
+}
+
+CapillaryTissueInventory CapillaryBed::tissue_inventory(const std::string_view substance_id) const {
+    const auto inventory = tissue_inventories_.find(std::string{substance_id});
+    return inventory == tissue_inventories_.end() ? CapillaryTissueInventory{} : inventory->second;
+}
+
+std::size_t CapillaryBed::exchange_record_count() const noexcept {
+    return exchange_records_.size();
+}
+
+std::vector<CapillaryExchangeRecord> CapillaryBed::take_exchange_records() {
+    auto result = std::move(exchange_records_);
+    exchange_records_.clear();
+    return result;
 }
 
 const CapillaryRegionMetrics& CapillaryBed::region_metrics(const CapillaryRegionKind kind) const {

@@ -80,23 +80,38 @@ See [Capillary Geometry and Continuity](CAPILLARY_GEOMETRY_AND_CONTINUITY.md) an
 See [Capillary Recruitment and Precapillary Sphincter Groups](CAPILLARY_RECRUITMENT_AND_SPHINCTERS.md)
 and [ADR-0024](../architecture/adr/0024-dynamic-capillary-recruitment.md).
 
+### M4.5 - balanced blood-to-tissue substance exchange
+
+- strict exchange-profile schema `1.0.0` for a compatible capillary model;
+- substance-specific staged blood-to-endothelium, endothelium-to-interstitium,
+  and interstitium-to-cell fractions;
+- typed input, outgoing blood, and persistent tissue amounts;
+- enforced four-term mass-balance invariant;
+- explicit pass-through for unmatched substances;
+- unchanged population, flow, and lossless no-profile behavior;
+- drainable, profile-identified exchange records and cumulative tissue
+  inventories;
+- complete transformed organ-capillary-organ route with closed ownership.
+
+See [Balanced Capillary Substance Exchange](BALANCED_CAPILLARY_EXCHANGE.md) and
+[ADR-0025](../architecture/adr/0025-balanced-capillary-exchange.md).
+
 ## Planned sequence
 
-1. add a balanced blood/interstitium exchange contract;
-2. introduce residence, retention, adhesion, and extravasation observables;
-3. qualify an organ-specific pulmonary capillary parameter card;
-4. connect and compare an analytical molecular channel and one licensable
+1. introduce residence, retention, adhesion, and extravasation observables;
+2. qualify an organ-specific pulmonary capillary parameter card;
+3. connect and compare an analytical molecular channel and one licensable
    external or surrogate adapter;
-5. implement mesoscopic and local detailed variants and compare them against
+4. implement mesoscopic and local detailed variants and compare them against
    the same reference cases;
-6. perform the formal M4 gate review.
+5. perform the formal M4 gate review.
 
 ## Scientific status
 
-M4.1 through M4.4 are software verification, not physiological validation. The
+M4.1 through M4.5 are software verification, not physiological validation. The
 dissertation provides the layer structure, continuity requirement, recruitment
 concept, and communication questions. The executable numbers in the initial
 cards and recruitment profile are synthetic. Their values are internally
 consistent but not physiologically qualified. Physiological geometry, flow,
-transit, sphincter behavior, hematocrit, and exchange parameters require
+transit, sphincter behavior, hematocrit, and kinetic exchange parameters require
 separately sourced model cards and independent comparisons.

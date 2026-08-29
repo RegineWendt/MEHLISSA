@@ -73,7 +73,7 @@ Status codes:
 | CAP-001 | DISS pp. 126–129 | PART | M4 | strict v2 schema and executable synthetic arteriole–capillary–venule component derive area, velocity, and transit from SI geometry and continuity flow, then preserve identity and conserved payloads through a complete organ-capillary-organ route; physiological qualification follows |
 | CAP-002 | DISS pp. 126–129 | RESEARCH | M4 | organ-specific parameter cards and literature comparison |
 | CAP-003 | DISS pp. 127–128 | PART | M4 | strict M4.4 overlay schedules aggregate sphincter groups at exact state boundaries; fixed-flow and equal-path fixed-pressure surrogates recompute perfusion and transit with step-size-independent in-flight progress, while physiological sphincter anatomy, feedback, and qualification follow |
-| CAP-004 | DISS p. 127 | SPEC | M4 | substance balance across blood/interstitium/cell |
+| CAP-004 | DISS p. 127 | PART | M4 | optional M4.5 profile partitions typed substance amount across outgoing blood, endothelium, interstitium, and cell with an enforced balance record and complete organ-capillary-organ test; physiological kinetics, reverse flux, metabolism, and qualification follow |
 | CAP-005 | DISS pp. 128–129 | RESEARCH | M4/M5 | transit/retention distributions with validity scope |
 | CAP-006 | DISS pp. 129, 154 | SPEC | M4 | analytical channel and one external/surrogate adapter |
 | CAP-007 | DISS p. 129 | RESEARCH | M4/M6 | reachability and multi-hop comparison |

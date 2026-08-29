@@ -619,9 +619,9 @@ component and [Organ-Capillary Round Trip](m4/ORGAN_CAPILLARY_ROUND_TRIP.md)
 before composing layers. The equations and schema migration are documented in
 [Capillary Geometry and Continuity](m4/CAPILLARY_GEOMETRY_AND_CONTINUITY.md).
 Physiological organ-capillary gateways and geometry, physiologically qualified
-recruitment, barrier exchange, retention, and molecular channels remain
-subsequent M4 work; the aggregate scheduled recruitment mechanism is available
-in M4.4.
+recruitment and exchange, retention, and molecular channels remain subsequent
+M4 work. Aggregate scheduled recruitment is available in M4.4, and a balanced
+synthetic exchange contract is available in M4.5.
 
 ### 9.1 Dynamic recruitment experiments (M4.4)
 
@@ -671,6 +671,48 @@ synthetic. They support software and sensitivity experiments, not conclusions
 about human microvascular physiology. Consult
 [Capillary Recruitment and Precapillary Sphincter Groups](m4/CAPILLARY_RECRUITMENT_AND_SPHINCTERS.md)
 before creating a physiological profile.
+
+### 9.2 Balanced substance-exchange experiments (M4.5)
+
+M4.5 can account for a substance leaving blood and entering three tissue-side
+compartments. It uses a separate exchange profile:
+
+```text
+examples/capillary-models/synthetic-oxygen-exchange-v1.json
+data/schemas/capillary-exchange-profile/1.0.0.schema.json
+```
+
+Without this profile, the capillary bed remains the lossless control model.
+With it, a matching substance is partitioned when it leaves the capillary
+region. The returned transfer contains the amount still in blood. Separate
+inventory terms record what remains in endothelium, interstitium, and cell.
+
+This supports experiments such as:
+
+- verifying that no substance disappears when a blood transfer is reduced;
+- comparing a lossless control with one or more explicit partition profiles;
+- observing cumulative tissue inventory across repeated passages;
+- testing how an exchange-capable bed composes with recruitment and an organ;
+  and
+- checking that unsupported substances remain unchanged.
+
+For the synthetic oxygen example, 2.5 mmol entering the bed produce 1.5 mmol
+in outgoing blood, 0.5 mmol in endothelium, 0.375 mmol in interstitium, and
+0.125 mmol in the cell compartment. These terms sum to the original 2.5 mmol.
+MEHLISSA checks this invariant before emitting the reduced blood transfer.
+
+An exchange record contains the transfer ID, substance ID, profile ID,
+reporting time, incoming amount, and all four accounted outputs. Records can be
+drained for reporting; tissue inventories remain in the component and
+accumulate. Population and volume-flow transfers are never modified by the
+exchange profile.
+
+The fractions are not rates or permeability values. The current operation is
+instantaneous at the observed capillary-region boundary and has no diffusion,
+concentration gradient, compartment volume, metabolism, reverse flux, or
+clearance. Use it for balance, architecture, and sensitivity experiments only.
+Read [Balanced Capillary Substance Exchange](m4/BALANCED_CAPILLARY_EXCHANGE.md)
+before defining another profile.
 
 ## 10. Troubleshooting
 

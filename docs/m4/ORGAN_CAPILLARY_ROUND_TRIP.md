@@ -83,10 +83,12 @@ retryable synchronization failures.
 
 M4.2 satisfies the first Gate M4 criterion only at the synthetic
 software-contract level, and M4.3 supplies its dimension-safe geometry and
-continuity calculation. Still required are physiological organ-specific cards,
-physiologically qualified recruitment, blood/tissue exchange, retention and extravasation,
-molecular channels, and comparison of detailed and surrogate models against
-common references.
+continuity calculation. M4.4 and M4.5 add optional synthetic recruitment and
+balanced exchange overlays without changing this lossless control. Still
+required are physiological organ-specific cards, physiologically qualified
+recruitment and blood/tissue exchange, retention and extravasation, molecular
+channels, and comparison of detailed and surrogate models against common
+references.
 
 See [ADR-0022](../architecture/adr/0022-organ-capillary-round-trip-coupling.md)
 for the binding architectural decision and

@@ -4,6 +4,8 @@
 #ifndef MEHLISSA_MODELS_CAPILLARY_CAPILLARY_BED_HPP
 #define MEHLISSA_MODELS_CAPILLARY_CAPILLARY_BED_HPP
 
+#include <mehlissa/models/capillary/capillary_exchange.hpp>
+#include <mehlissa/models/capillary/capillary_exchange_profile.hpp>
 #include <mehlissa/models/capillary/capillary_recruitment_profile.hpp>
 #include <mehlissa/models/coupling/model_component.hpp>
 
@@ -12,6 +14,7 @@
 #include <optional>
 #include <string>
 #include <string_view>
+#include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
@@ -53,6 +56,9 @@ class CapillaryBed final : public coupling::ModelComponent {
   public:
     explicit CapillaryBed(CapillaryBedConfig config);
     CapillaryBed(CapillaryBedConfig config, CapillaryRecruitmentProfile recruitment_profile);
+    CapillaryBed(CapillaryBedConfig config, CapillaryExchangeProfile exchange_profile);
+    CapillaryBed(CapillaryBedConfig config, CapillaryRecruitmentProfile recruitment_profile,
+                 CapillaryExchangeProfile exchange_profile);
 
     [[nodiscard]] std::string_view name() const noexcept override;
     [[nodiscard]] std::string_view model_id() const noexcept override;
@@ -78,6 +84,11 @@ class CapillaryBed final : public coupling::ModelComponent {
     [[nodiscard]] std::string_view recruitment_state_id() const noexcept;
     [[nodiscard]] std::size_t open_sphincter_group_count() const noexcept;
     [[nodiscard]] std::optional<CapillaryBoundaryCondition> boundary_condition() const noexcept;
+    [[nodiscard]] bool has_exchange_profile() const noexcept;
+    [[nodiscard]] std::string_view exchange_profile_id() const noexcept;
+    [[nodiscard]] CapillaryTissueInventory tissue_inventory(std::string_view substance_id) const;
+    [[nodiscard]] std::size_t exchange_record_count() const noexcept;
+    [[nodiscard]] std::vector<CapillaryExchangeRecord> take_exchange_records();
     [[nodiscard]] const CapillaryRegionMetrics& region_metrics(CapillaryRegionKind kind) const;
     [[nodiscard]] std::size_t resident_entity_count() const noexcept;
     [[nodiscard]] std::size_t resident_entity_count_in(CapillaryRegionKind kind) const noexcept;
@@ -103,15 +114,20 @@ class CapillaryBed final : public coupling::ModelComponent {
     };
 
     void apply_recruitment_state(std::size_t state_index);
+    void apply_substance_exchange(coupling::ConservedTransfer& transfer,
+                                  core::SimulationClock::Duration reported_at);
     void advance_residents(AdvanceInterval interval);
 
     CapillaryBedConfig config_;
     std::optional<CapillaryRecruitmentProfile> recruitment_profile_;
+    std::optional<CapillaryExchangeProfile> exchange_profile_;
     std::vector<CapillaryRegionMetrics> region_metrics_;
     std::vector<ResidentEntity> resident_entities_;
     std::vector<coupling::EntityTransfer> outbound_entities_;
     std::vector<ResidentConservedTransfer> resident_conserved_transfers_;
     std::vector<coupling::ConservedTransfer> outbound_conserved_transfers_;
+    std::vector<CapillaryExchangeRecord> exchange_records_;
+    std::unordered_map<std::string, CapillaryTissueInventory> tissue_inventories_;
     std::unordered_set<std::uint64_t> held_entity_ids_;
     std::unordered_set<std::string> held_transfer_ids_;
     core::SimulationClock::Duration synchronization_time_{};

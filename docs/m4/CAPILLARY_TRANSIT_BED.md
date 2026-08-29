@@ -102,7 +102,9 @@ steps, pending-delivery retention, and invalid endpoint rejection.
 - physiologically parameterized sphincter anatomy, feedback, and heterogeneous
   path conductance (aggregate scheduled recruitment is implemented in M4.4);
 - spatial paths and stochastic transit distributions;
-- barrier exchange, reaction, retention, adhesion, and extravasation;
+- physiologically parameterized barrier kinetics, reaction, retention,
+  adhesion, and extravasation (a balanced staged exchange surrogate is
+  implemented in M4.5);
 - molecular channel, clustering, reachability, and multi-hop behavior;
 - a physiologically parameterized organ-capillary gateway and multirate
   orchestrator.

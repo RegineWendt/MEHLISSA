@@ -36,6 +36,7 @@ decisions; a new decision supersedes an existing one through a new ADR.
 | [ADR-0022](adr/0022-organ-capillary-round-trip-coupling.md) | Accepted | explicit four-port organ-capillary route with pending queues and an ownership ledger |
 | [ADR-0023](adr/0023-dimension-safe-capillary-continuity.md) | Accepted | geometry and flow as inputs; area, velocity, and transit derived with dimensional quantities |
 | [ADR-0024](adr/0024-dynamic-capillary-recruitment.md) | Accepted | versioned sphincter-group schedules with explicit fixed-flow or fixed-pressure boundary semantics |
+| [ADR-0025](adr/0025-balanced-capillary-exchange.md) | Accepted | optional staged substance partition with explicit four-compartment mass balance |
 
 ## Status model
 

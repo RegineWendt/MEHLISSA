@@ -130,10 +130,10 @@ autoregulation, pressure-resistance dynamics, heterogeneous path conductance,
 hematocrit, or physiological parameter qualification. Those features require
 separate evidence and model cards.
 
-The next M4 increment adds a typed, mass-balanced exchange contract among
-blood, endothelium, interstitium, and cell compartments. Recruitment can then
-alter the available perfused area without silently changing the rules of
-substance exchange.
+M4.5 now adds a typed, mass-balanced exchange contract among blood,
+endothelium, interstitium, and cell compartments. Recruitment and exchange can
+be configured together without silently coupling synthetic fractions to area
+or flow. See [Balanced Capillary Substance Exchange](BALANCED_CAPILLARY_EXCHANGE.md).
 
 See [ADR-0024](../architecture/adr/0024-dynamic-capillary-recruitment.md) for
 the binding architectural decision.

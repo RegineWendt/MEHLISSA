@@ -495,13 +495,19 @@ exact scheduled times, and each profile declares either fixed total flow or a
 simplified equal-path fixed-pressure-drop surrogate. In-flight progress is
 distance based, so state changes are stable across compatible host steps. The
 synthetic schedule verifies the mechanism but does not qualify sphincter
-physiology. The next increments add balanced tissue exchange and molecular
-channels. See
+physiology. M4.5 adds an optional exchange overlay that partitions a typed
+substance amount among outgoing blood, endothelium, interstitium, and cell,
+rejects an unbalanced result, and preserves the complete organ-capillary-organ
+ownership route. Its staged fractions are synthetic, instantaneous, and not a
+physiological transport model. The second Gate M4 statement is therefore
+executable at the software-contract level. The next increments add retention
+observables, physiological qualification, and molecular channels. See
 [M4 evidence](m4/README.md),
 [ADR-0021](architecture/adr/0021-versioned-capillary-bed-baseline.md), and
 [ADR-0022](architecture/adr/0022-organ-capillary-round-trip-coupling.md), and
 [ADR-0023](architecture/adr/0023-dimension-safe-capillary-continuity.md), and
-[ADR-0024](architecture/adr/0024-dynamic-capillary-recruitment.md).
+[ADR-0024](architecture/adr/0024-dynamic-capillary-recruitment.md), and
+[ADR-0025](architecture/adr/0025-balanced-capillary-exchange.md).
 
 #### Model variants
 
