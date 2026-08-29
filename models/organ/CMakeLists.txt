@@ -9,6 +9,7 @@ add_library(
     src/lung_model_definition.cpp
     src/lung_model_factory.cpp
     src/pulmonary_circulation.cpp
+    src/pulmonary_lobar_perfusion_validation.cpp
     src/pulmonary_parallel_beds.cpp
     src/pulmonary_zero_dimensional.cpp
     src/pulmonary_zero_dimensional_validation.cpp

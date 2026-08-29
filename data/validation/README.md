@@ -62,3 +62,11 @@ Wolsk stages and protocol unchanged and binds them to the age-conditioned v6
 candidate. The older-stratum RMSE improves from 5.411 to 4.603 mmHg, but stage
 agreement remains 1/5 older and 11/15 overall. See the
 [age-distensibility model card](../../docs/m3/PULMONARY_0D_AGE_DISTENSIBILITY.md).
+
+M3.17 adds the independent five-lobe case at
+`pulmonary-lobar-perfusion/healthy-normal-spect-v1.json`. It preserves the
+aggregate Bourhis V/Q SPECT/CT Table 1 values exactly, explicitly normalizes
+their published rounding, and evaluates the executable v7 lobe state without
+refitting. Both attenuation reconstructions pass the declared compatibility
+criteria. See the
+[lobar validation report](../../docs/m3/PULMONARY_LOBAR_PERFUSION_VALIDATION.md).

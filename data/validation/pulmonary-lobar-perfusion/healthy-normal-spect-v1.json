@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "validation": {
+    "id": "healthy-normal-spect-lobar-perfusion-v1",
+    "title": "Independent five-lobe perfusion validation against normal V/Q SPECT/CT",
+    "model_definition_id": "healthy-adult-lobar-parallel-0d-v7"
+  },
+  "protocol": {
+    "maximum_absolute_lobar_error_percentage_points": 3.0,
+    "maximum_rmse_percentage_points": 2.0,
+    "maximum_right_lung_error_percentage_points": 3.0,
+    "decision_rule": "Both reconstruction series must satisfy every per-lobe bound, the five-lobe RMSE bound, and the right-lung aggregate bound after explicit renormalization of the published rounded fractions. No model parameter may be fitted to these validation values.",
+    "execution_status": "thresholds_declared_from_source_reconstruction_sensitivity_before_executable_evaluation"
+  },
+  "sources": [
+    {
+      "id": "bourhis-2020-normal-vq-spect",
+      "citation": "Bourhis D, Robin P, Essalah A, Abgral R. V/Q SPECT for the Assessment of Regional Lung Function: Generation of Normal Mean and Standard Deviation 3-D Maps. Front Med. 2020;7:143. doi:10.3389/fmed.2020.00143.",
+      "url": "https://doi.org/10.3389/fmed.2020.00143",
+      "license": "CC-BY-4.0",
+      "measurement_method": "Relative lobar 99mTc-MAA perfusion counts from V/Q SPECT/CT, reported with and without CT attenuation correction",
+      "cohort": "Seventy-three consecutive examinations interpreted as strictly normal by two nuclear physicians, with no low-dose CT parenchymal or pleural abnormality and pulmonary disease history excluded",
+      "sample_size": 73,
+      "body_position": "supine",
+      "data_access": "Aggregate lobe means transcribed from Table 1 only; subject-level datasets remain available from the authors on request",
+      "cohort_independence": "Independent authors, cohort, and V/Q SPECT/CT modality relative to the Lee 2022 dual-energy CT calibration source used by model v7"
+    }
+  ],
+  "series": [
+    {
+      "id": "bourhis-2020-no-attenuation-correction",
+      "source_id": "bourhis-2020-normal-vq-spect",
+      "reconstruction": "without_attenuation_correction",
+      "normalization_policy": "renormalize_reported_rounded_fractions_to_unit_sum",
+      "perfusion_fractions": [
+        { "bed_id": "right-upper-lobe", "side": "right", "value": 0.222 },
+        { "bed_id": "right-middle-lobe", "side": "right", "value": 0.097 },
+        { "bed_id": "right-lower-lobe", "side": "right", "value": 0.238 },
+        { "bed_id": "left-upper-lobe", "side": "left", "value": 0.242 },
+        { "bed_id": "left-lower-lobe", "side": "left", "value": 0.202 }
+      ]
+    },
+    {
+      "id": "bourhis-2020-attenuation-corrected",
+      "source_id": "bourhis-2020-normal-vq-spect",
+      "reconstruction": "with_attenuation_correction",
+      "normalization_policy": "renormalize_reported_rounded_fractions_to_unit_sum",
+      "perfusion_fractions": [
+        { "bed_id": "right-upper-lobe", "side": "right", "value": 0.216 },
+        { "bed_id": "right-middle-lobe", "side": "right", "value": 0.080 },
+        { "bed_id": "right-lower-lobe", "side": "right", "value": 0.259 },
+        { "bed_id": "left-upper-lobe", "side": "left", "value": 0.229 },
+        { "bed_id": "left-lower-lobe", "side": "left", "value": 0.216 }
+      ]
+    }
+  ],
+  "limitations": [
+    "The source is an observational reference distribution rather than a controlled prospective validation of MEHLISSA.",
+    "The source cohort was selected from clinically referred patients whose scans and low-dose CT were normal; it is not a population-based healthy-volunteer cohort.",
+    "Both reconstruction series originate from the same 73 examinations and therefore probe reconstruction sensitivity rather than independent cohorts.",
+    "Table 1 values are aggregate means rounded in percentage units; the no-attenuation-correction entries total 100.1 percent and are preserved as published before explicit unit-sum normalization.",
+    "Supine V/Q SPECT/CT perfusion fractions do not establish validity in upright posture, disease, childhood, or subject-specific anatomy.",
+    "The engineering compatibility thresholds are based on the source's attenuation-correction sensitivity and are not statistical equivalence margins."
+  ]
+}

@@ -6,9 +6,9 @@ SPDX-License-Identifier: CC-BY-4.0
 # M3 – Body–Organ Coupling
 
 **Status:** technical coupling, empirical and pressure-distensible 0D
-references, independent aggregate and published-population multipoint
-validation, and subject-level analysis path complete; anatomical/FP9
-scientific gate open
+references, independent aggregate, published-population multipoint, and
+five-lobe regional validation, and subject-level analysis path complete;
+dynamic regional/FP9 scientific gate open
 
 **Started:** 27 August 2026
 
@@ -37,6 +37,7 @@ respiratory mechanics, or gas exchange.
 | M3.14 pressure-distensible structural candidate | implemented and independently diagnosed; does not replace v4 | Linehan equation; Reeves healthy `alpha`; normalized resting equilibrium; mutually exclusive empirical/structural laws; frozen Wolsk result of 11/15 with the older-stratum limitation exposed |
 | M3.15 age-conditioned pressure distensibility | implemented and independently diagnosed; does not replace v4 or resolve the v5 gate | Reeves younger/older invasive aggregates; explicit ≥60 coefficient; standard-error metadata; older RMSE improves from 5.411 to 4.603 mmHg while agreement remains 11/15 |
 | M3.16 anatomical lobar parallel beds | implemented; aggregate-qualified, regional validation open | five named lobe beds; DE-CT perfusion proxy; exact v4 aggregate equivalence; deterministic per-entity lobe transit; explicit regional evidence limitations |
+| M3.17 independent lobar perfusion validation | qualified normal-supine regional pass; dynamic-state validation open | calibration-disjoint normal V/Q SPECT/CT reference; both attenuation reconstructions pass five-lobe, RMSE, and right-lung criteria without refitting; published-rounding normalization explicit |
 
 ## M3.1 result
 
@@ -78,9 +79,10 @@ The executable regression starts entity 1 in synthetic body segment
   gas exchange, reaction, production, consumption, or barrier transport.
 - `LungCompartment` is a software-verified surrogate, not a physiologically
   calibrated or independently validated pulmonary model.
-- The serial-region implementation remains structural. The new 0D
-  implementation has independent aggregate validation, but remains a
-  composite-population reference candidate rather than a patient model.
+- The serial-region implementation remains structural. The five-lobe 0D
+  implementation has independent aggregate and normal-supine regional
+  validation, but remains a composite-population reference rather than a
+  patient model and has no dynamic redistribution.
 - The CLI and experiment manifest do not yet compose model components.
 
 These are milestone tasks, not hidden assumptions. The M3 gate remains open.
@@ -206,7 +208,17 @@ It preserves v4's 15/15 aggregate pressure-flow result by exact resistance and
 compliance decomposition while making right upper, right middle, right lower,
 left upper, and left lower lobe beds executable. Lobar fractions use a declared
 DE-CT PBV proxy, not mislabeled direct flow. Individual entities traverse one
-deterministically selected lobe; independent regional validation remains open.
+deterministically selected lobe; at the end of M3.16, independent regional
+validation was the next open item.
+
+M3.17 adds the
+[independent five-lobe perfusion validation](PULMONARY_LOBAR_PERFUSION_VALIDATION.md).
+The executable v7 state is evaluated without refitting against Bourhis et al.'s
+normal V/Q SPECT/CT lobe shares, a cohort and modality disjoint from v7's
+DE-CT calibration. Both attenuation-corrected and uncorrected reconstructions
+pass the declared per-lobe, RMSE, and right-lung criteria. The result qualifies
+the fixed normal-supine distribution; posture, exercise, disease, and dynamic
+regional redistribution remain open.
 
 An initial [SimVascular Healthy Pulmonary Candidate Review](SIMVASCULAR_PULMONARY_CANDIDATE_REVIEW.md)
 finds the official case useful for an imported pulmonary-artery technical

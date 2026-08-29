@@ -388,8 +388,10 @@ These labels are not interchangeable. In particular:
   software-verified subject-level multipoint analysis
   path exists;
   measured participant-level data have not yet been licensed or evaluated,
-  and no variant is anatomical, fully pulsatile,
-  patient-specific, or clinically usable;
+  and no variant is geometry-resolved or fully pulsatile,
+  patient-specific, or clinically usable. V7 adds five anatomical lobe beds;
+  its fixed healthy-adult supine shares pass an independent V/Q SPECT/CT
+  comparison, but dynamic redistribution is not yet modeled;
 - none of the current outputs is patient-specific or suitable for clinical
   decision-making.
 
@@ -482,6 +484,23 @@ they are a documented DE-CT perfused-blood-volume proxy and currently remain
 fixed across posture and exercise. Read the
 [parallel-beds model card](m3/PULMONARY_LOBAR_PARALLEL_BEDS.md) before reporting
 regional results.
+
+Run the independent regional validation with:
+
+```powershell
+ctest --test-dir build/windows-msvc -C Debug `
+  -R "SPECT|Lobar validation rejects" --output-on-failure
+```
+
+The versioned source observations are in
+`data/validation/pulmonary-lobar-perfusion/healthy-normal-spect-v1.json` and
+their strict schema is
+`data/schemas/pulmonary-lobar-perfusion-validation/1.0.0.schema.json`.
+The uncorrected published fractions total 100.1% because of table rounding;
+the loader preserves them and the evaluator explicitly normalizes the series.
+Both source reconstructions pass without refitting v7. Read the
+[lobar validation report](m3/PULMONARY_LOBAR_PERFUSION_VALIDATION.md) for the
+metrics, acceptance rules, and scope limitations.
 
 ### 8.3 Verify the subject-level multipoint analysis path
 

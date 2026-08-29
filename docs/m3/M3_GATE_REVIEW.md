@@ -135,6 +135,20 @@ regional surrogate gap, but DE-CT PBV is not direct flow and no independent
 lobar target has yet been evaluated. See
 [Pulmonary Lobar Parallel Beds](PULMONARY_LOBAR_PARALLEL_BEDS.md).
 
+**Eleventh post-review update, 29 August 2026:** M3.17 evaluates all five v7
+bed fractions against Bourhis et al.'s independent normal V/Q SPECT/CT lobe
+shares. The source is disjoint from v7's Lee DE-CT calibration by authors,
+cohort, and modality. Both attenuation reconstructions pass the declared
+3-percentage-point per-lobe, 2-percentage-point RMSE, and
+3-percentage-point right-lung limits without refitting. Published rounding is
+preserved and explicitly normalized; the uncorrected values total 100.1% as
+reported. This qualifies the fixed healthy-adult supine distribution, while
+dynamic posture/activity redistribution, disease, participant-level evidence,
+and FP9 remain open. See
+[Independent Pulmonary Lobar Perfusion Validation](PULMONARY_LOBAR_PERFUSION_VALIDATION.md).
+The post-M3.17 local Visual Studio Debug build and 127/127 CTest suite passed;
+cross-platform CI evidence is recorded with the pushed increment.
+
 ## 1. Review method
 
 The review checked the Roadmap Gate M3 statements and the additional acceptance
@@ -149,7 +163,7 @@ model” merely because it contained more regions than the coarse surrogate.
 |---|---|---|
 | an agent moves reproducibly from the body graph into an organ and back | satisfied | `BodyOrganCoupler`, explicit outside-body ownership ledger, stable ID and named-port validation, coarse/regional × 0.5/1.0 s matrix |
 | flow, populations, and substance amounts are conserved across the layer boundary | satisfied for lossless transit | dimension-safe contracts, exact boundary ledger, both lung endpoints preserve transfer ID and typed payload; changing biochemical exchange is intentionally not claimed |
-| the organ has an independent, interchangeable model implementation | substantially satisfied; regional qualification open | the factory now selects a distinct five-bed anatomical 0D implementation behind the same contract; aggregate physiology inherits exact v4 equivalence, while the lobar outputs still need independent regional validation |
+| the organ has an independent, interchangeable model implementation | satisfied for the scoped mean 0D reference | the factory selects a distinct five-bed anatomical 0D implementation behind the same contract; aggregate physiology inherits exact v4 equivalence and both independent normal-supine V/Q SPECT/CT reconstruction series pass the regional criteria |
 | a coarse compartment and more detailed organ model use the same scenario | partially satisfied | all implementations share the definition/factory and coupling contract, and the five-bed model is anatomical 0D; a checked-in end-to-end scenario comparison and vascular geometry remain open |
 
 ## 3. Additional ADR-0006 criteria
@@ -159,7 +173,7 @@ model” merely because it contained more regions than the coarse surrogate.
 | agent and substance flow complete body–lung–body traversal | satisfied for entity; organ traversal satisfied for conserved quantities | the complete entity round trip reaches the body return ledger; conserved population, substance, and flow traverse both lung endpoints without payload change |
 | no agent or relevant amount is duplicated or lost | satisfied | positive and negative ownership, duplicate-ID, route, time, and exact-payload tests |
 | both lung variants implement the same contract | satisfied | one `ModelComponent` interface, one `LungModelConfig`, schema-selected definitions, generated cross-variant tests |
-| flow, pressure/transit time, and perfusion share have units, sources, uncertainty, and an independent comparison | satisfied for aggregate and published multipoint population evidence; participant-level method also verified | the 0D candidates have executable SI pressure, flow, effective PVR/compliance, empirical and fixed/age-conditioned pressure-distensible alternatives, measured total transit, right/left perfusion, uncertainty/evidence roles, source- and cohort-disjoint validation, explicit stress-test diagnostics, frozen population comparisons, and a separate pseudonymous participant-level trajectory evaluator; v5 exposes the fixed-distensibility limitation and v6 shows that the independently sourced older coefficient improves error without resolving failed stages |
+| flow, pressure/transit time, and perfusion share have units, sources, uncertainty, and an independent comparison | satisfied for aggregate, multipoint population, and five-lobe normal-supine evidence; participant-level method also verified | the 0D candidates have executable SI pressure, flow, effective PVR/compliance, measured transit, evidence roles, source- and cohort-disjoint validation, frozen population comparisons, and a separate participant-level evaluator; M3.17 additionally compares all five executable shares with independent V/Q SPECT/CT while preserving source rounding |
 | historical FP9 timer baseline runs without scenario-specific kernel logic | not satisfied | the dissertation baseline is specified and traced, but fingerprint detection/assembly/collection is not executable; implementing it prematurely in the organ kernel would violate the architecture |
 
 ## 4. Verification evidence
@@ -202,10 +216,11 @@ M3 can pass only after the following evidence is added and reviewed:
    separation, followed by independent aggregate and multipoint population
    comparisons~~ — implemented by M3.7–M3.11; participant-level validation
    remains a higher-resolution follow-up rather than the immediate M3 blocker;
-3. ~~implement an anatomical/hemodynamic regional variant~~ — M3.16 implements
-   five parallel lobar beds with exact aggregate-v4 equivalence; independent
-   regional targets and an end-to-end comparison with the effective compartment
-   remain open;
+3. ~~implement and independently evaluate an anatomical/hemodynamic regional
+   variant~~ — M3.16 implements five parallel lobar beds with exact aggregate-v4
+   equivalence and M3.17 qualifies the fixed normal-supine shares; an end-to-end
+   comparison with the effective compartment and dynamic regional states remain
+   open;
 4. ~~add an explicitly reviewed baseline lobar distribution~~ — M3.16 adds a
    fixed DE-CT PBV proxy with limitations; posture/exercise redistribution and
    regional recruitment remain open;
@@ -220,9 +235,10 @@ M3 can pass only after the following evidence is added and reviewed:
 The M3 software architecture, lossless coupling slice, first independent
 aggregate physiological comparison, and subject-level multipoint analysis path
 are verified, and published population multipoint validation has produced a
-qualified partial result, but the milestone is not closed. The gate remains
-open on anatomical/state- and age-dependent refinement and the FP9 executable
-reference, not on a hidden software failure. Downstream
-prototyping may use the verified interfaces provided it retains the explicit
-`software_test_surrogate` validity label and does not cite the current outputs
-as pulmonary physiology.
+qualified partial result, and the fixed normal-supine five-lobe distribution is
+independently qualified, but the milestone is not closed. The gate remains
+open on dynamic regional physiology, an end-to-end scenario comparison, and
+the FP9 executable reference, not on a hidden software failure. Downstream
+prototyping may use the verified interfaces provided it retains each model
+definition's explicit validity and evidence-class labels and does not cite an
+output beyond its qualified physiological scope.

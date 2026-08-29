@@ -84,10 +84,14 @@ Unit tests verify the parallel-network identities and the exact aggregate
 equivalence. This transfers the v4 aggregate qualification to v7's aggregate
 outputs; it does not validate the five lobar outputs independently.
 
-The lobar structure is therefore an evidence-qualified anatomical candidate,
-not a clinically validated regional perfusion model. Independent lobar flow or
-perfusion observations, posture/gravity response, exercise redistribution,
-regional recruitment, and disease-specific changes remain open.
+M3.17 subsequently evaluates the executable five-bed fractions against an
+independent normal V/Q SPECT/CT cohort. Both reported attenuation
+reconstructions pass the declared compatibility criteria without refitting;
+see [Independent Pulmonary Lobar Perfusion Validation](PULMONARY_LOBAR_PERFUSION_VALIDATION.md).
+The lobar structure is therefore qualified for a fixed healthy-adult supine
+mean distribution, not as a clinically validated patient model. Posture/gravity
+response, exercise redistribution, regional recruitment, and disease-specific
+changes remain open.
 
 ## Sources
 

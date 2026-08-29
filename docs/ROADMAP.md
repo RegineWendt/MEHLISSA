@@ -392,8 +392,11 @@ mechanistic question without superseding v4 or resolving the anatomical gap.
 M3.16 introduces a distinct five-lobe parallel 0D implementation. It retains
 v4's aggregate law exactly, derives fixed lobe fractions from a clearly labeled
 DE-CT PBV proxy, and routes individual entities through one deterministic lobe
-bed. The anatomical implementation gap is substantially reduced; independent
-regional validation, dynamic redistribution, and geometry remain open.
+bed. M3.17 independently evaluates all five executable shares against normal
+V/Q SPECT/CT: both attenuation reconstructions pass the declared lobe, RMSE,
+and right-lung criteria without refitting. The fixed normal-supine regional
+reference is therefore qualified; dynamic redistribution, posture/activity
+response, patient-specific geometry, and disease states remain open.
 Participant-level validation remains a higher-resolution follow-up.
 Anatomical refinement, transforming exchange, general experiment composition,
 continuous/regional activity physiology, and regional exercise redistribution
@@ -407,9 +410,10 @@ resistance refinement, a pressure-distensible alternative, and its
 age-conditioned sensitivity are verified, the
 subject-level analysis path is software-verified, and published population
 multipoint validation has produced a qualified 15/15 result against the
-calibration-disjoint Wolsk cohort. Anatomical
-regional validation, continuous and regional physiology, and the executable historical
-FP9 baseline remain closure evidence.
+calibration-disjoint Wolsk cohort, and independent normal-supine five-lobe
+validation passes both published reconstruction series. Continuous and dynamic
+regional physiology, an end-to-end coarse/detailed scenario comparison, and
+the executable historical FP9 baseline remain closure evidence.
 
 #### Tasks
 
