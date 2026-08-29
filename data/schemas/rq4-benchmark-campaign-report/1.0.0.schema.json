@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:rq4-benchmark-campaign-report:1.0.0",
+  "title": "MEHLISSA RQ4 benchmark campaign report",
+  "description": "Persistent schedule, run ledger, summaries, eligibility decision, and correctness audit for Paper 1 RQ4.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "campaign_id", "status", "started_at_utc", "updated_at_utc", "plan", "driver", "schemas", "ordering_seed", "schedule", "runs", "summaries", "correctness", "conditional_population", "suitable_for_analysis"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "campaign_id": {"$ref": "#/$defs/id"},
+    "status": {"enum": ["planned", "running", "complete", "complete_with_failures", "pilot_complete", "pilot_failed"]},
+    "started_at_utc": {"type": "string", "format": "date-time"},
+    "updated_at_utc": {"type": "string", "format": "date-time"},
+    "plan": {"$ref": "#/$defs/file_identity"},
+    "driver": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/file_identity"}]},
+    "schemas": {
+      "type": "object", "additionalProperties": false,
+      "required": ["campaign_plan", "campaign_report", "benchmark_manifest", "benchmark_report", "observation_report"],
+      "properties": {
+        "campaign_plan": {"$ref": "#/$defs/file_identity"},
+        "campaign_report": {"$ref": "#/$defs/file_identity"},
+        "benchmark_manifest": {"$ref": "#/$defs/file_identity"},
+        "benchmark_report": {"$ref": "#/$defs/file_identity"},
+        "observation_report": {"$ref": "#/$defs/file_identity"}
+      }
+    },
+    "ordering_seed": {"$ref": "#/$defs/count"},
+    "schedule": {"type": "array", "items": {"$ref": "#/$defs/schedule_entry"}},
+    "runs": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["phase", "kind", "block", "condition", "sequence", "started_at_utc", "elapsed_seconds", "return_code", "sampled_peak_rss_bytes", "paths", "status", "diagnostic"],
+        "properties": {
+          "phase": {"type": "string", "minLength": 1},
+          "kind": {"enum": ["warmup", "measured"]},
+          "block": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 1, "maximum": 7}]},
+          "condition": {"type": "string", "minLength": 1},
+          "sequence": {"type": "integer", "minimum": 1},
+          "started_at_utc": {"type": "string", "format": "date-time"},
+          "elapsed_seconds": {"type": "number", "minimum": 0},
+          "return_code": {"oneOf": [{"type": "null"}, {"type": "integer"}]},
+          "sampled_peak_rss_bytes": {"$ref": "#/$defs/count"},
+          "paths": {
+            "type": "object", "additionalProperties": false,
+            "required": ["manifest", "result", "observation", "stdout", "stderr"],
+            "properties": {
+              "manifest": {"type": "string", "minLength": 1},
+              "result": {"type": "string", "minLength": 1},
+              "observation": {"type": "string", "minLength": 1},
+              "stdout": {"type": "string", "minLength": 1},
+              "stderr": {"type": "string", "minLength": 1}
+            }
+          },
+          "status": {"enum": ["completed", "driver_failed", "invalid_result", "timeout", "memory_limit"]},
+          "diagnostic": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "summaries": {"type": "object"},
+    "correctness": {
+      "type": "object", "additionalProperties": false,
+      "required": ["passed", "violations"],
+      "properties": {"passed": {"type": "boolean"}, "violations": {"type": "array", "items": {"type": "object"}}}
+    },
+    "conditional_population": {"type": ["object", "null"]},
+    "suitable_for_analysis": {"type": "boolean"},
+    "pilot_recommendation": {"type": "object"}
+  },
+  "$defs": {
+    "count": {"type": "integer", "minimum": 0},
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "file_identity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "schedule_entry": {
+      "type": "object", "additionalProperties": false,
+      "required": ["phase", "kind", "block", "condition"],
+      "properties": {
+        "phase": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["warmup", "measured"]},
+        "block": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 1, "maximum": 7}]},
+        "condition": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

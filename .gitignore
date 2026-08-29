@@ -44,6 +44,9 @@ CMakeUserPresets.json
 compile_commands.json
 .cache/
 .vs/
+__pycache__/
+*.py[cod]
+/tmp/
 
 
 # mehlissa 2.0

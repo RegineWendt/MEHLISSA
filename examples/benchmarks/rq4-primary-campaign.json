@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0.0",
+  "campaign_id": "paper1-rq4-primary",
+  "machine_label": "replace-with-frozen-machine-label",
+  "ordering_seed": 20260827,
+  "measured_blocks": 7,
+  "execution_requirements": {
+    "build_type": "Release",
+    "git_dirty": false
+  },
+  "limits": {
+    "timeout_seconds": 1800,
+    "maximum_physical_memory_fraction": 0.8,
+    "poll_interval_ms": 250
+  },
+  "model": {
+    "path": "../../data/body-models/bvs95-dissertation-rest-v1.json",
+    "schema_path": "../../data/schemas/vascular-graph/1.0.0.schema.json",
+    "expected_id": "bvs95-dissertation-rest",
+    "expected_version": "1.0.0"
+  },
+  "state_profile": {
+    "path": "../../data/body-states/bvs95-rest-supine-v1.json",
+    "schema_path": "../../data/schemas/body-state-profile/1.0.0.schema.json",
+    "expected_id": "rest-supine-identity",
+    "expected_version": "1.0.0"
+  },
+  "scenario": {
+    "master_seed": 2018,
+    "duration_ns": 420000000000,
+    "injection_time_ns": 0,
+    "injection_segment_id": "bvs95-001"
+  },
+  "long_duration_anchor": {
+    "population": 6359,
+    "duration_ns": 7200000000000,
+    "policy_id": "O0"
+  },
+  "population_matrix": {
+    "mandatory": [1000, 10000, 100000],
+    "conditional": 1000000,
+    "eligibility": {
+      "o0_median_simulation_seconds_below": 180,
+      "o0_median_peak_rss_fraction_below": 0.2
+    }
+  },
+  "o3_pilot_status": "frozen",
+  "o3_pilot_evidence_path": "../../benchmarks/pilots/o3-record-limit-pilot-2026-08-27.json",
+  "policies": [
+    {
+      "policy_id": "O0",
+      "trajectory_selection": "none",
+      "trajectory_particle_limit": 0,
+      "maximum_trajectory_records": 0,
+      "maximum_measurement_records": 0,
+      "aggregate_interval_ns": 0,
+      "maximum_aggregate_records": 0,
+      "measurement_sites": [],
+      "required_truncation": {"trajectories": false, "measurements": false, "aggregates": false}
+    },
+    {
+      "policy_id": "O1",
+      "trajectory_selection": "none",
+      "trajectory_particle_limit": 0,
+      "maximum_trajectory_records": 0,
+      "maximum_measurement_records": 0,
+      "aggregate_interval_ns": 60000000000,
+      "maximum_aggregate_records": 8,
+      "measurement_sites": [
+        {"id": "arterial-counter", "segment_id": "bvs95-001", "kind": "sample"},
+        {"id": "venous-counter", "segment_id": "bvs95-033", "kind": "sample"}
+      ],
+      "required_truncation": {"trajectories": false, "measurements": true, "aggregates": false}
+    },
+    {
+      "policy_id": "O2",
+      "trajectory_selection": "first_n",
+      "trajectory_particle_limit": 100,
+      "maximum_trajectory_records": 1000,
+      "maximum_measurement_records": 100,
+      "aggregate_interval_ns": 60000000000,
+      "maximum_aggregate_records": 8,
+      "measurement_sites": [
+        {"id": "arterial-counter", "segment_id": "bvs95-001", "kind": "sample"},
+        {"id": "venous-counter", "segment_id": "bvs95-033", "kind": "sample"}
+      ],
+      "required_truncation": {"trajectories": true, "measurements": true, "aggregates": false}
+    },
+    {
+      "policy_id": "O3",
+      "trajectory_selection": "all",
+      "trajectory_particle_limit": 0,
+      "maximum_trajectory_records": 250000,
+      "maximum_measurement_records": 20000,
+      "aggregate_interval_ns": 60000000000,
+      "maximum_aggregate_records": 8,
+      "measurement_sites": [
+        {"id": "arterial-counter", "segment_id": "bvs95-001", "kind": "sample"},
+        {"id": "venous-counter", "segment_id": "bvs95-033", "kind": "sample"}
+      ],
+      "required_truncation": {"trajectories": false, "measurements": false, "aggregates": false}
+    }
+  ]
+}

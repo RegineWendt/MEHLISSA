@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "purpose": "Unreported deterministic record-count pilot for freezing the Paper 1 RQ4 O3 limits",
+  "executed_at_utc": "2026-08-27T13:42:42Z",
+  "reported_measurement": false,
+  "scenario": {
+    "population": 1000,
+    "duration_ns": 420000000000,
+    "master_seed": 2018,
+    "policy_id": "O3"
+  },
+  "build": {
+    "type": "Debug",
+    "git_commit": "fc7bcbaf60a4a64ab48638817189bb1fb6b43320",
+    "git_dirty": true
+  },
+  "artifacts": {
+    "result_sha256": "9b88a919fc895024c65e42ff6428b87e9bd5bc802500c68bb60b102d8855a7cf",
+    "observation_sha256": "2835a1f06d5df8b8b9f8900a3f7172f78944e162c6566cd9bca95b70e072db06",
+    "observation_bytes": 40383576
+  },
+  "observed": {
+    "trajectory_records": 217798,
+    "measurement_records": 13224,
+    "population_snapshots": 8,
+    "transition_count": 216798,
+    "final_population_hash": "30e45fcfa5845907",
+    "truncation": {
+      "trajectories": false,
+      "measurements": false,
+      "aggregates": false
+    }
+  },
+  "frozen_limits": {
+    "maximum_trajectory_records": 250000,
+    "maximum_measurement_records": 20000,
+    "maximum_aggregate_records": 8
+  },
+  "decision": "Limits were rounded upward from deterministic observed counts; timing and memory from this Debug dirty-tree pilot are excluded from Paper 1."
+}

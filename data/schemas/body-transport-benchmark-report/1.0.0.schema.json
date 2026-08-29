@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:body-transport-benchmark-report:1.0.0",
+  "title": "MEHLISSA body transport benchmark report",
+  "description": "Machine-readable measurements and reproducibility metadata for one RQ4 benchmark execution.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "benchmark", "schemas", "software", "platform", "model", "configuration", "timing", "summary", "observation"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "benchmark": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "manifest"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "manifest": {"$ref": "#/$defs/file_identity"}
+      }
+    },
+    "schemas": {
+      "type": "object", "additionalProperties": false,
+      "required": ["manifest", "result", "observation", "model", "state_profile"],
+      "properties": {
+        "manifest": {"$ref": "#/$defs/file_identity"},
+        "result": {"$ref": "#/$defs/file_identity"},
+        "observation": {"$ref": "#/$defs/file_identity"},
+        "model": {"$ref": "#/$defs/file_identity"},
+        "state_profile": {
+          "oneOf": [
+            {"type": "null"},
+            {"$ref": "#/$defs/file_identity"}
+          ]
+        }
+      }
+    },
+    "software": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "version", "git_commit", "git_dirty", "build_type", "compiler"],
+      "properties": {
+        "name": {"const": "MEHLISSA"},
+        "version": {"type": "string", "minLength": 1},
+        "git_commit": {"type": "string", "minLength": 1},
+        "git_dirty": {"type": "boolean"},
+        "build_type": {"type": "string"},
+        "compiler": {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "version"],
+          "properties": {"id": {"type": "string"}, "version": {"type": "string"}}
+        }
+      }
+    },
+    "platform": {
+      "type": "object", "additionalProperties": false,
+      "required": ["operating_system", "architecture", "machine_label", "cpu_model", "logical_processor_count", "physical_memory_bytes", "peak_resident_set_bytes"],
+      "properties": {
+        "operating_system": {"type": "string", "minLength": 1},
+        "architecture": {"type": "string", "minLength": 1},
+        "machine_label": {"type": "string", "minLength": 1},
+        "cpu_model": {"type": "string", "minLength": 1},
+        "logical_processor_count": {"type": "integer", "minimum": 1},
+        "physical_memory_bytes": {"$ref": "#/$defs/count"},
+        "peak_resident_set_bytes": {"$ref": "#/$defs/count"}
+      }
+    },
+    "model": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "input", "state_profile"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"type": "string", "minLength": 1},
+        "input": {"$ref": "#/$defs/file_identity"},
+        "state_profile": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object", "additionalProperties": false,
+              "required": ["id", "version", "input"],
+              "properties": {
+                "id": {"$ref": "#/$defs/id"},
+                "version": {"type": "string", "minLength": 1},
+                "input": {"$ref": "#/$defs/file_identity"}
+              }
+            }
+          ]
+        }
+      }
+    },
+    "configuration": {
+      "type": "object", "additionalProperties": false,
+      "required": ["master_seed", "duration_ns", "injection", "observation_policy", "maximum_advance_ns", "advance_count"],
+      "properties": {
+        "master_seed": {"$ref": "#/$defs/count"},
+        "duration_ns": {"type": "integer", "minimum": 1},
+        "injection": {
+          "type": "object", "additionalProperties": false,
+          "required": ["time_ns", "segment_id", "particle_count"],
+          "properties": {
+            "time_ns": {"$ref": "#/$defs/count"},
+            "segment_id": {"$ref": "#/$defs/id"},
+            "particle_count": {"type": "integer", "minimum": 1}
+          }
+        },
+        "observation_policy": {"type": "object"},
+        "maximum_advance_ns": {"type": "integer", "minimum": 1},
+        "advance_count": {"type": "integer", "minimum": 1}
+      }
+    },
+    "timing": {
+      "type": "object", "additionalProperties": false,
+      "required": ["initialization_ns", "simulation_ns", "finalization_ns", "observation_encoding_ns", "observation_schema_validation_ns", "observation_serialization_and_write_ns", "end_to_end_ns"],
+      "properties": {
+        "initialization_ns": {"$ref": "#/$defs/count"},
+        "simulation_ns": {"$ref": "#/$defs/count"},
+        "finalization_ns": {"$ref": "#/$defs/count"},
+        "observation_encoding_ns": {"$ref": "#/$defs/count"},
+        "observation_schema_validation_ns": {"$ref": "#/$defs/count"},
+        "observation_serialization_and_write_ns": {"$ref": "#/$defs/count"},
+        "end_to_end_ns": {"$ref": "#/$defs/count"}
+      }
+    },
+    "summary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["injected_particle_count", "active_particle_count", "extracted_particle_count", "transition_count", "transition_throughput_per_second", "final_population_hash", "random_streams"],
+      "properties": {
+        "injected_particle_count": {"$ref": "#/$defs/count"},
+        "active_particle_count": {"$ref": "#/$defs/count"},
+        "extracted_particle_count": {"$ref": "#/$defs/count"},
+        "transition_count": {"$ref": "#/$defs/count"},
+        "transition_throughput_per_second": {"type": "number", "minimum": 0},
+        "final_population_hash": {
+          "type": "object", "additionalProperties": false,
+          "required": ["algorithm", "value"],
+          "properties": {
+            "algorithm": {"const": "fnv1a64"},
+            "value": {"type": "string", "pattern": "^[0-9a-f]{16}$"}
+          }
+        },
+        "random_streams": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["name", "draw_count"],
+            "properties": {"name": {"type": "string", "minLength": 1}, "draw_count": {"$ref": "#/$defs/count"}}
+          }
+        }
+      }
+    },
+    "observation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["output", "record_counts", "truncation", "measurement_counts"],
+      "properties": {
+        "output": {
+          "type": "object", "additionalProperties": false,
+          "required": ["path", "sha256", "bytes"],
+          "properties": {
+            "path": {"type": "string", "minLength": 1},
+            "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            "bytes": {"$ref": "#/$defs/count"}
+          }
+        },
+        "record_counts": {
+          "type": "object", "additionalProperties": false,
+          "required": ["trajectory_records", "measurement_records", "population_snapshots"],
+          "properties": {
+            "trajectory_records": {"$ref": "#/$defs/count"},
+            "measurement_records": {"$ref": "#/$defs/count"},
+            "population_snapshots": {"$ref": "#/$defs/count"}
+          }
+        },
+        "truncation": {
+          "type": "object", "additionalProperties": false,
+          "required": ["trajectories", "measurements", "aggregates"],
+          "properties": {"trajectories": {"type": "boolean"}, "measurements": {"type": "boolean"}, "aggregates": {"type": "boolean"}}
+        },
+        "measurement_counts": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["site_id", "segment_id", "kind", "particle_count"],
+            "properties": {
+              "site_id": {"$ref": "#/$defs/id"}, "segment_id": {"$ref": "#/$defs/id"},
+              "kind": {"enum": ["sample", "gateway"]}, "particle_count": {"$ref": "#/$defs/count"}
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "count": {"type": "integer", "minimum": 0},
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "file_identity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

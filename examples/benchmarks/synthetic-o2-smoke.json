@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "benchmark_id": "synthetic-o2-smoke",
+  "machine_label": "ctest-local",
+  "model": {
+    "path": "../body-models/synthetic-branching-circuit.json",
+    "schema_path": "../../data/schemas/vascular-graph/1.0.0.schema.json",
+    "expected_id": "synthetic-branching-circuit",
+    "expected_version": "1.0.0"
+  },
+  "state_profile": null,
+  "master_seed": 20260827,
+  "duration_ns": 10000000000,
+  "injection": {
+    "time_ns": 0,
+    "segment_id": "artery-10",
+    "particle_count": 64
+  },
+  "observation": {
+    "policy_id": "O2",
+    "trajectory_selection": "first_n",
+    "trajectory_particle_limit": 2,
+    "maximum_trajectory_records": 5,
+    "maximum_measurement_records": 4,
+    "aggregate_interval_ns": 1000000000,
+    "maximum_aggregate_records": 3,
+    "measurement_sites": [
+      {"id": "organ-a-counter", "segment_id": "organ-a", "kind": "sample"},
+      {"id": "venous-gateway", "segment_id": "vein-90", "kind": "gateway"}
+    ]
+  }
+}

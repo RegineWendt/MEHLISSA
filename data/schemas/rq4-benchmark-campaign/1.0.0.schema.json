@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:rq4-benchmark-campaign:1.0.0",
+  "title": "MEHLISSA RQ4 benchmark campaign",
+  "description": "Frozen orchestration contract for the Paper 1 scalability and observation-cost experiment.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "campaign_id", "machine_label", "ordering_seed", "measured_blocks", "execution_requirements", "limits", "model", "state_profile", "scenario", "long_duration_anchor", "population_matrix", "o3_pilot_status", "o3_pilot_evidence_path", "policies"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "campaign_id": {"$ref": "#/$defs/id"},
+    "machine_label": {"type": "string", "minLength": 1},
+    "ordering_seed": {"$ref": "#/$defs/count"},
+    "measured_blocks": {"const": 7},
+    "execution_requirements": {
+      "type": "object", "additionalProperties": false,
+      "required": ["build_type", "git_dirty"],
+      "properties": {
+        "build_type": {"const": "Release"},
+        "git_dirty": {"const": false}
+      }
+    },
+    "limits": {
+      "type": "object", "additionalProperties": false,
+      "required": ["timeout_seconds", "maximum_physical_memory_fraction", "poll_interval_ms"],
+      "properties": {
+        "timeout_seconds": {"const": 1800},
+        "maximum_physical_memory_fraction": {"const": 0.8},
+        "poll_interval_ms": {"type": "integer", "minimum": 50, "maximum": 5000}
+      }
+    },
+    "model": {"$ref": "#/$defs/versioned_input"},
+    "state_profile": {"$ref": "#/$defs/versioned_input"},
+    "scenario": {
+      "type": "object", "additionalProperties": false,
+      "required": ["master_seed", "duration_ns", "injection_time_ns", "injection_segment_id"],
+      "properties": {
+        "master_seed": {"const": 2018},
+        "duration_ns": {"const": 420000000000},
+        "injection_time_ns": {"const": 0},
+        "injection_segment_id": {"const": "bvs95-001"}
+      }
+    },
+    "long_duration_anchor": {
+      "type": "object", "additionalProperties": false,
+      "required": ["population", "duration_ns", "policy_id"],
+      "properties": {
+        "population": {"const": 6359},
+        "duration_ns": {"const": 7200000000000},
+        "policy_id": {"const": "O0"}
+      }
+    },
+    "population_matrix": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mandatory", "conditional", "eligibility"],
+      "properties": {
+        "mandatory": {"const": [1000, 10000, 100000]},
+        "conditional": {"const": 1000000},
+        "eligibility": {
+          "type": "object", "additionalProperties": false,
+          "required": ["o0_median_simulation_seconds_below", "o0_median_peak_rss_fraction_below"],
+          "properties": {
+            "o0_median_simulation_seconds_below": {"const": 180},
+            "o0_median_peak_rss_fraction_below": {"const": 0.2}
+          }
+        }
+      }
+    },
+    "o3_pilot_status": {"enum": ["pending", "frozen"]},
+    "o3_pilot_evidence_path": {"type": ["string", "null"]},
+    "policies": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["policy_id", "trajectory_selection", "trajectory_particle_limit", "maximum_trajectory_records", "maximum_measurement_records", "aggregate_interval_ns", "maximum_aggregate_records", "measurement_sites", "required_truncation"],
+        "properties": {
+          "policy_id": {"enum": ["O0", "O1", "O2", "O3"]},
+          "trajectory_selection": {"enum": ["none", "all", "first_n"]},
+          "trajectory_particle_limit": {"$ref": "#/$defs/count"},
+          "maximum_trajectory_records": {"$ref": "#/$defs/count"},
+          "maximum_measurement_records": {"$ref": "#/$defs/count"},
+          "aggregate_interval_ns": {"$ref": "#/$defs/count"},
+          "maximum_aggregate_records": {"$ref": "#/$defs/count"},
+          "measurement_sites": {"type": "array", "items": {"$ref": "#/$defs/site"}},
+          "required_truncation": {
+            "type": "object", "additionalProperties": false,
+            "required": ["trajectories", "measurements", "aggregates"],
+            "properties": {
+              "trajectories": {"type": ["boolean", "null"]},
+              "measurements": {"type": ["boolean", "null"]},
+              "aggregates": {"type": ["boolean", "null"]}
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "count": {"type": "integer", "minimum": 0},
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "versioned_input": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "schema_path", "expected_id", "expected_version"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "schema_path": {"type": "string", "minLength": 1},
+        "expected_id": {"$ref": "#/$defs/id"},
+        "expected_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+      }
+    },
+    "site": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "segment_id", "kind"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "segment_id": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["sample", "gateway"]}
+      }
+    }
+  }
+}

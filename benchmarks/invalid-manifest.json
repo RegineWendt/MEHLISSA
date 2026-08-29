@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "benchmark_id": "invalid-extra-field",
+  "machine_label": "ctest-local",
+  "model": {
+    "path": "../examples/body-models/synthetic-branching-circuit.json",
+    "schema_path": "../data/schemas/vascular-graph/1.0.0.schema.json",
+    "expected_id": "synthetic-branching-circuit",
+    "expected_version": "1.0.0"
+  },
+  "state_profile": null,
+  "master_seed": 1,
+  "duration_ns": 1,
+  "injection": {"time_ns": 0, "segment_id": "artery-10", "particle_count": 1},
+  "observation": {
+    "policy_id": "O0",
+    "trajectory_selection": "none",
+    "trajectory_particle_limit": 0,
+    "maximum_trajectory_records": 0,
+    "maximum_measurement_records": 0,
+    "aggregate_interval_ns": 0,
+    "maximum_aggregate_records": 0,
+    "measurement_sites": []
+  },
+  "unexpected": true
+}

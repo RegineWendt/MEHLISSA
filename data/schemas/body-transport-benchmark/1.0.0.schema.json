@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:body-transport-benchmark:1.0.0",
+  "title": "MEHLISSA body transport benchmark manifest",
+  "description": "A reproducible single-run configuration for the RQ4 observation-cost benchmark.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "benchmark_id", "machine_label", "model", "state_profile", "master_seed", "duration_ns", "injection", "observation"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "benchmark_id": {"$ref": "#/$defs/id"},
+    "machine_label": {"type": "string", "minLength": 1, "maxLength": 128},
+    "model": {"$ref": "#/$defs/versioned_input"},
+    "state_profile": {
+      "oneOf": [
+        {"type": "null"},
+        {"$ref": "#/$defs/versioned_input"}
+      ]
+    },
+    "master_seed": {"$ref": "#/$defs/count"},
+    "duration_ns": {"type": "integer", "minimum": 1},
+    "injection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["time_ns", "segment_id", "particle_count"],
+      "properties": {
+        "time_ns": {"$ref": "#/$defs/count"},
+        "segment_id": {"$ref": "#/$defs/id"},
+        "particle_count": {"type": "integer", "minimum": 1}
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_id", "trajectory_selection", "trajectory_particle_limit", "maximum_trajectory_records", "maximum_measurement_records", "aggregate_interval_ns", "maximum_aggregate_records", "measurement_sites"],
+      "properties": {
+        "policy_id": {"enum": ["O0", "O1", "O2", "O3"]},
+        "trajectory_selection": {"enum": ["none", "all", "first_n"]},
+        "trajectory_particle_limit": {"$ref": "#/$defs/count"},
+        "maximum_trajectory_records": {"$ref": "#/$defs/count"},
+        "maximum_measurement_records": {"$ref": "#/$defs/count"},
+        "aggregate_interval_ns": {"$ref": "#/$defs/count"},
+        "maximum_aggregate_records": {"$ref": "#/$defs/count"},
+        "measurement_sites": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "segment_id", "kind"],
+            "properties": {
+              "id": {"$ref": "#/$defs/id"},
+              "segment_id": {"$ref": "#/$defs/id"},
+              "kind": {"enum": ["sample", "gateway"]}
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "count": {"type": "integer", "minimum": 0},
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "versioned_input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "schema_path", "expected_id", "expected_version"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "schema_path": {"type": "string", "minLength": 1},
+        "expected_id": {"$ref": "#/$defs/id"},
+        "expected_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+      }
+    }
+  }
+}

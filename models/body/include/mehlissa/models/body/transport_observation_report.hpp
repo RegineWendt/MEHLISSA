@@ -4,6 +4,7 @@
 #ifndef MEHLISSA_MODELS_BODY_TRANSPORT_OBSERVATION_REPORT_HPP
 #define MEHLISSA_MODELS_BODY_TRANSPORT_OBSERVATION_REPORT_HPP
 
+#include <cstdint>
 #include <filesystem>
 
 namespace mehlissa::models::body {
@@ -17,8 +18,16 @@ struct TransportObservationReportWriteRequest final {
     std::filesystem::path schema_path;
 };
 
-void write_transport_observation_report(const CompartmentTransport& transport,
-                                        const TransportObservationReportWriteRequest& request);
+struct TransportObservationReportWriteMetrics final {
+    std::uint64_t document_encoding_ns{};
+    std::uint64_t schema_validation_ns{};
+    std::uint64_t serialization_and_write_ns{};
+    std::uint64_t output_bytes{};
+};
+
+TransportObservationReportWriteMetrics
+write_transport_observation_report(const CompartmentTransport& transport,
+                                   const TransportObservationReportWriteRequest& request);
 
 } // namespace mehlissa::models::body
 

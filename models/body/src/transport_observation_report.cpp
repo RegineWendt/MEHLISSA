@@ -9,8 +9,10 @@
 #include <jsoncons/json.hpp>
 #include <jsoncons_ext/jsonschema/jsonschema.hpp>
 
+#include <chrono>
 #include <filesystem>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <string_view>
 
@@ -185,9 +187,15 @@ using CompiledSchema = jsoncons::jsonschema::json_schema<Json>;
 
 } // namespace
 
-void write_transport_observation_report(const CompartmentTransport& transport,
-                                        const TransportObservationReportWriteRequest& request) {
+TransportObservationReportWriteMetrics
+write_transport_observation_report(const CompartmentTransport& transport,
+                                   const TransportObservationReportWriteRequest& request) {
+    using Clock = std::chrono::steady_clock;
+    const auto encoding_started = Clock::now();
     const auto document = encode(transport);
+    const auto encoding_completed = Clock::now();
+
+    const auto validation_started = Clock::now();
     const auto schema_document = read_json(request.schema_path, "transport observation schema");
     const auto schema = compile_schema(schema_document, request.schema_path);
     try {
@@ -197,6 +205,17 @@ void write_transport_observation_report(const CompartmentTransport& transport,
                                   "Transport observation report does not satisfy its schema: " +
                                       std::string{error.what()}};
     }
+    const auto validation_completed = Clock::now();
+
+    const auto serialization_started = Clock::now();
+    std::ostringstream serialized;
+    document.dump_pretty(serialized);
+    serialized.put('\n');
+    if (!serialized) {
+        throw core::MehlissaError{core::ErrorCode::output_unwritable,
+                                  "Cannot serialize transport observation report"};
+    }
+    const auto bytes = serialized.str();
 
     std::error_code error;
     if (!request.output_path.parent_path().empty()) {
@@ -213,13 +232,23 @@ void write_transport_observation_report(const CompartmentTransport& transport,
                                   "Cannot write transport observation report: " +
                                       request.output_path.string()};
     }
-    document.dump_pretty(output);
-    output.put('\n');
+    output.write(bytes.data(), static_cast<std::streamsize>(bytes.size()));
     if (!output) {
         throw core::MehlissaError{core::ErrorCode::output_unwritable,
                                   "Cannot complete transport observation report: " +
                                       request.output_path.string()};
     }
+    const auto serialization_completed = Clock::now();
+
+    const auto elapsed_ns = [](const auto started, const auto completed) {
+        return static_cast<std::uint64_t>(
+            std::chrono::duration_cast<std::chrono::nanoseconds>(completed - started).count());
+    };
+    return TransportObservationReportWriteMetrics{
+        elapsed_ns(encoding_started, encoding_completed),
+        elapsed_ns(validation_started, validation_completed),
+        elapsed_ns(serialization_started, serialization_completed),
+        static_cast<std::uint64_t>(bytes.size())};
 }
 
 } // namespace mehlissa::models::body
