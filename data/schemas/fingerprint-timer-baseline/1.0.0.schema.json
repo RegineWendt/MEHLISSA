@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mehlissa.org/schemas/fingerprint-timer-baseline/1.0.0.schema.json",
+  "title": "MEHLISSA historical fingerprint timer baseline",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "baseline", "fingerprint", "injection", "population", "timing",
+    "sources", "acceptance", "limitations"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "abstraction", "research_question"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/nonempty" },
+        "abstraction": { "const": "historical-timer-replay" },
+        "research_question": { "$ref": "#/$defs/nonempty" }
+      }
+    },
+    "fingerprint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "target_tissue", "target_region_id", "historical_organ_index"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "target_tissue": { "$ref": "#/$defs/nonempty" },
+        "target_region_id": { "$ref": "#/$defs/id" },
+        "historical_organ_index": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "injection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["site", "historical_segment_index", "time_ms"],
+      "properties": {
+        "site": { "$ref": "#/$defs/nonempty" },
+        "historical_segment_index": { "type": "integer", "minimum": 1 },
+        "time_ms": { "const": 0 }
+      }
+    },
+    "population": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "locator_count", "configured_target_count", "target_locator_count", "residual_rule"
+      ],
+      "properties": {
+        "locator_count": { "type": "integer", "minimum": 1 },
+        "configured_target_count": { "type": "integer", "minimum": 1 },
+        "target_locator_count": { "type": "integer", "minimum": 1 },
+        "residual_rule": { "$ref": "#/$defs/nonempty" }
+      }
+    },
+    "timing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "first_localization_time_ms", "first_localization_resolution_ms",
+        "assembly_duration_ms", "assembly_resolution_ms", "collector_cohorts",
+        "readout_latency_model"
+      ],
+      "properties": {
+        "first_localization_time_ms": { "$ref": "#/$defs/time_ms" },
+        "first_localization_resolution_ms": { "$ref": "#/$defs/positive_time_ms" },
+        "assembly_duration_ms": { "$ref": "#/$defs/positive_time_ms" },
+        "assembly_resolution_ms": { "$ref": "#/$defs/positive_time_ms" },
+        "collector_cohorts": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "collector_count", "external_report_time_ms", "report_time_resolution_ms"
+            ],
+            "properties": {
+              "collector_count": { "type": "integer", "minimum": 1 },
+              "external_report_time_ms": { "$ref": "#/$defs/positive_time_ms" },
+              "report_time_resolution_ms": { "$ref": "#/$defs/positive_time_ms" }
+            }
+          }
+        },
+        "readout_latency_model": { "const": "omitted-as-constant-in-historical-baseline" }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "citation", "repository_path", "page_labels", "role"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "citation": { "$ref": "#/$defs/nonempty" },
+          "repository_path": { "$ref": "#/$defs/nonempty" },
+          "page_labels": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "#/$defs/nonempty" }
+          },
+          "role": { "enum": ["historical-regression", "concept-only"] }
+        }
+      }
+    },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_event_order", "published_times_are_regression_targets",
+        "clinical_validation_claim"
+      ],
+      "properties": {
+        "required_event_order": {
+          "const": ["injection", "first_localization", "message_active", "external_report"]
+        },
+        "published_times_are_regression_targets": { "const": true },
+        "clinical_validation_claim": { "const": false }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/nonempty" }
+    }
+  },
+  "$defs": {
+    "nonempty": { "type": "string", "minLength": 1 },
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" },
+    "time_ms": { "type": "integer", "minimum": 0, "maximum": 10800000 },
+    "positive_time_ms": { "type": "integer", "minimum": 1, "maximum": 10800000 }
+  }
+}

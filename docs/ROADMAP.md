@@ -354,7 +354,7 @@ models can follow later.
 
 **Objective:** First genuine coupling between whole-body and regional models
 
-**Current implementation status:** M3 is active. The versioned
+**Current implementation status:** M3 is complete. The versioned
 `ModelComponent` boundary, body adapter, identity-conserving coarse,
 three-region-surrogate, and literature-parameterized pulmonary 0D variants,
 lossless typed population/substance/flow endpoints, and a shared programmatic
@@ -401,24 +401,23 @@ M3.18 adds a schema-validated end-to-end comparison in which one body graph,
 route, seed, injection, and conserved payload run unchanged through the coarse
 compartment and five-lobe v7 model. Both preserve 25/25 identities and all
 typed payloads; their model-specific 2.0 s and 6.4 s transit times are reported
-rather than forced to agree.
+rather than forced to agree. M3.19 adds a schema-validated historical FP9 timer
+replay at the experiment layer. It reproduces first lung localization at 25 s,
+message activation at 40.99 s, and the published 209/91 s end-to-end report
+times for 1,000/10,000 collectors without fingerprint- or lung-specific kernel
+logic.
 Participant-level validation remains a higher-resolution follow-up.
 Anatomical refinement, transforming exchange, general experiment composition,
 continuous/regional activity physiology, and regional exercise redistribution
-remain open; see [M3 working plan](m3/README.md).
+remain later refinements; see [M3 evidence](m3/README.md).
 
-The formal [M3 gate review](m3/M3_GATE_REVIEW.md) therefore keeps the milestone
-open: the software coupling candidate, first literature-parameterized 0D
-reference candidate, independent aggregate validation, and bounded
-rest/exercise 0D adaptation, bounded age conditioning, invasive young-adult
-resistance refinement, a pressure-distensible alternative, and its
-age-conditioned sensitivity are verified, the
-subject-level analysis path is software-verified, and published population
-multipoint validation has produced a qualified 15/15 result against the
-calibration-disjoint Wolsk cohort, and independent normal-supine five-lobe
-validation passes both published reconstruction series, and the same-scenario
-coarse/detailed comparison is verified. Continuous and dynamic regional
-physiology and the executable historical FP9 baseline remain closure evidence.
+The formal [M3 gate review](m3/M3_GATE_REVIEW.md) passes the milestone: lossless
+coupling, interchangeable coarse and five-lobe models, sourced pulmonary 0D
+physiology, independent aggregate/population/regional comparisons, the shared
+coarse/detailed scenario, and the neutral historical FP9 timing chain are all
+executable. Continuous and dynamic regional physiology, participant-level
+measured validation, and full biological fingerprinting remain explicitly
+scoped follow-up work rather than hidden M3 failures.
 
 #### Tasks
 

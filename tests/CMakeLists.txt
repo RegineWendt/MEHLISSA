@@ -48,6 +48,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
             mehlissa_experiment_tests
             checkpoint_manifest_tests.cpp
             experiment_manifest_tests.cpp
+            fingerprint_timer_baseline_tests.cpp
             provenance_tests.cpp
             run_log_tests.cpp
         )

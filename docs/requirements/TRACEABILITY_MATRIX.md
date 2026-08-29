@@ -109,7 +109,7 @@ Status codes:
 | UX-002 | VIS20 pp. 1–2 | LEGACY | M7 | standardized result format in new visualization |
 | UX-003 | VIS20 pp. 1–2 | LEGACY | M7 | visual acceptance test and run comparison |
 | UX-004 | RM 6.5 | SPEC | M7 | identical rendering from archived run |
-| SCN-001 | DISS pp. 185–190; FP23 | LEGACY | M7 | [fingerprinting reference scenario](FINGERPRINTING_SCENARIO.md) |
+| SCN-001 | DISS pp. 185–190; FP23 | PART | M3/M7 | M3.19 schema-validates and executes the FP9 Level A timer chain for both published collector cohorts without kernel-specific logic; concentration/binding, population distributions, gateway physics, and the complete vertical demonstrator follow in M7 |
 | SCN-002 | DISS pp. 143–152 | LEGACY | Phase 8 | monitoring reference experiment and alert metrics |
 | SCN-003 | DISS pp. 155–160 | LEGACY | Phase 8 | reproduction of published detection rates |
 | SCN-004 | DISS pp. 153–154 | SPEC | Phase 8 | complete multilayer capstone |

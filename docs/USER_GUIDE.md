@@ -556,6 +556,26 @@ for required fields, formulas, source qualification, and the current data-access
 blocker. Do not add a clinical source file to the repository unless its data-use
 terms explicitly permit redistribution.
 
+### 8.4 Reproduce the historical FP9 lung timer
+
+The Level A FP9 baseline replays the dissertation's published event semantics
+without pretending that they are new physiological predictions. Its versioned
+scenario is `examples/scenarios/fp9-lung-historical-timer-v1.json`.
+
+Run the focused regression with:
+
+```powershell
+& build/windows-msvc/tests/Debug/mehlissa_experiment_tests.exe "[fp9]"
+```
+
+The expected event chain is injection at 0 s, first lung localization at 25 s,
+message activation after the 15.99 s assembly timer at 40.99 s, and external
+reporting at 209 s or 91 s for the published 1,000- and 10,000-collector cases.
+The report times are totals from injection, not extra delays added after
+assembly. Read the [FP9 timer baseline](m3/FP9_TIMER_BASELINE.md) before using
+these historical outputs; the replay does not model binding, diffusion,
+collector encounter probability, or gateway communication.
+
 ## 9. Troubleshooting
 
 ### CMake selects the wrong Visual Studio version

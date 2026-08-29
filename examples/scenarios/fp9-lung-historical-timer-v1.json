@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0.0",
+  "baseline": {
+    "id": "fp9-lung-historical-timer-v1",
+    "title": "Historical FP9 lung timer baseline",
+    "abstraction": "historical-timer-replay",
+    "research_question": "Can the published FP9 localization, message-assembly, and external-report timeline be reproduced causally without adding fingerprint logic to the simulation kernel or lung model?"
+  },
+  "fingerprint": {
+    "id": "FP9",
+    "target_tissue": "lung",
+    "target_region_id": "lung",
+    "historical_organ_index": 61
+  },
+  "injection": {
+    "site": "left-arm-vein",
+    "historical_segment_index": 64,
+    "time_ms": 0
+  },
+  "population": {
+    "locator_count": 1000,
+    "configured_target_count": 9,
+    "target_locator_count": 111,
+    "residual_rule": "Historical allocation: 111 locators per target; the unassigned remainder is not used to alter the published FP9 first-event times."
+  },
+  "timing": {
+    "first_localization_time_ms": 25000,
+    "first_localization_resolution_ms": 1000,
+    "assembly_duration_ms": 15990,
+    "assembly_resolution_ms": 10,
+    "collector_cohorts": [
+      {
+        "collector_count": 1000,
+        "external_report_time_ms": 209000,
+        "report_time_resolution_ms": 1000
+      },
+      {
+        "collector_count": 10000,
+        "external_report_time_ms": 91000,
+        "report_time_resolution_ms": 1000
+      }
+    ],
+    "readout_latency_model": "omitted-as-constant-in-historical-baseline"
+  },
+  "sources": [
+    {
+      "id": "wendt-dissertation-2024",
+      "citation": "R. Wendt, MEHLISSA dissertation, Chapter 6, Tables 6.3-6.5 and Section 6.5.2.",
+      "repository_path": "literature/Diss_WENDT_Simulationchapters.pdf",
+      "page_labels": ["184", "186-190"],
+      "role": "historical-regression"
+    },
+    {
+      "id": "wendt-et-al-nanocom-2023",
+      "citation": "R. Wendt et al., Proteome Fingerprinting as a Localization Scheme for Nanobots, NANOCOM 2023.",
+      "repository_path": "literature/wendt_fingerprinting.pdf",
+      "page_labels": ["3-6"],
+      "role": "concept-only"
+    }
+  ],
+  "acceptance": {
+    "required_event_order": [
+      "injection",
+      "first_localization",
+      "message_active",
+      "external_report"
+    ],
+    "published_times_are_regression_targets": true,
+    "clinical_validation_claim": false
+  },
+  "limitations": [
+    "The first-localization and external-report values are published outputs of the historical MEHLISSA abstraction, not independent physiological observations.",
+    "The baseline replays a deterministic timer and does not model gene-product concentration, binding, tile diffusion, message decay, collector encounter probability, or gateway radio physics.",
+    "The dissertation defines external-report time from injection through collection and wrist reporting; it does not publish separate collection and post-collection return times.",
+    "The historical wrist-readout latency is omitted as an assumed constant and must not be interpreted as measured zero latency.",
+    "The two collector cohorts are independent published regression cases; the timer replay is not a predictive interpolation law for other collector counts."
+  ]
+}

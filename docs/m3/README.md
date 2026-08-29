@@ -5,10 +5,8 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # M3 – Body–Organ Coupling
 
-**Status:** technical coupling, empirical and pressure-distensible 0D
-references, independent aggregate, published-population multipoint, and
-five-lobe regional validation, and subject-level analysis path complete;
-dynamic regional/FP9 scientific gate open
+**Status:** M3 implementation and scientific gate complete; dynamic regional,
+participant-level, and detailed fingerprint biology remain later refinements
 
 **Started:** 27 August 2026
 
@@ -26,7 +24,7 @@ respiratory mechanics, or gas exchange.
 | M3.3 conservative population and substance exchange | verified for lossless transit | dimension-safe population, amount, and volume-flow transfers; both lung endpoints; positive and negative balance tests |
 | M3.4 structured pulmonary-circulation variant | software-verified serial regional surrogate; anatomical refinement open | second implementation behind the same contract with artery, regional capillary surrogate, and venous return |
 | M3.5 physiological parameters and external-data pipeline | definition schema, loader, qualification gate, and first sourced resting 0D parameter set verified; external anatomy and exercise data open | versioned model cards, rest/exercise parameters, uncertainty, reproducible axes/units/provenance, qualified SimVascular/VMR reference |
-| M3.6 orchestration and gate regression | external lung definition and fixed-step matrix verified; FP9 baseline open | deterministic synchronization, coarse/detailed scenario switch, historical FP9 timing baseline, formal M3 gate review |
+| M3.6 orchestration and gate regression | verified and closed through M3.19 | deterministic synchronization, coarse/detailed scenario switch, historical FP9 timing baseline, formal M3 gate review |
 | M3.7 healthy-adult resting pulmonary 0D reference | implemented and software-verified; independent validation/anatomical refinement open | source-scoped pressure, flow, resistance, compliance, transit, right/left perfusion, uncertainty, analytical RC dynamics, and lossless coupling |
 | M3.8 independent pulmonary 0D validation | qualified aggregate pass; subject-level/anatomical validation open | executable source-separation guard; supine healthy-rest comparison; invasive rest/exercise crosscheck; 6/6 required endpoints pass; exercise RC limitation exposed |
 | M3.9 bounded rest-to-exercise 0D adaptation | implemented, independently stress-tested; subject-level/anatomical refinement open | immutable v1 baseline; source-disjoint Claessen calibration; bounded effective PVR/compliance; Bentley 6/6 required pass; exercise RC z reduced from 18.571 to 3.005 but remains diagnostic fail |
@@ -39,6 +37,7 @@ respiratory mechanics, or gas exchange.
 | M3.16 anatomical lobar parallel beds | implemented; aggregate-qualified, regional validation open | five named lobe beds; DE-CT perfusion proxy; exact v4 aggregate equivalence; deterministic per-entity lobe transit; explicit regional evidence limitations |
 | M3.17 independent lobar perfusion validation | qualified normal-supine regional pass; dynamic-state validation open | calibration-disjoint normal V/Q SPECT/CT reference; both attenuation reconstructions pass five-lobe, RMSE, and right-lung criteria without refitting; published-rounding normalization explicit |
 | M3.18 coarse–detailed end-to-end scenario comparison | verified | one schema-validated body–lung–body scenario; unchanged body, route, seed, inputs, and acceptance rules; 25/25 identities and all typed payloads preserved by the coarse and five-lobe models; model-specific timing reported |
+| M3.19 historical FP9 lung timer baseline | verified | schema-validated scenario-layer replay; 25 s localization, 40.99 s active message, and 209/91 s reports for the two published collector cohorts; causal checks; no lung or fingerprint branch in the kernel |
 
 ## M3.1 result
 
@@ -86,7 +85,8 @@ The executable regression starts entity 1 in synthetic body segment
   patient model and has no dynamic redistribution.
 - The CLI and experiment manifest do not yet compose model components.
 
-These are milestone tasks, not hidden assumptions. The M3 gate remains open.
+These are explicit follow-up tasks, not hidden assumptions or unrecorded M3
+failures. The scoped M3 gate is closed.
 
 ## Conserved-transfer result
 
@@ -113,19 +113,18 @@ at 0.5 s and 1.0 s host steps and the pulmonary 0D card at compatible 0.1 s and
 [Orchestration Regression](ORCHESTRATION_REGRESSION.md). General experiment-
 manifest and asynchronous multirate scheduling remain separate extensions.
 
-## Next implementation step
+## Increment history and follow-up
 
-M3.5 now has a schema-validated executable model-card format and an explicit
+M3.5 introduced a schema-validated executable model-card format and an explicit
 external-data qualification gate; see
 [Versioned Lung Model Definitions](LUNG_MODEL_DEFINITIONS.md) and the
-[Qualification Checklist](EXTERNAL_PULMONARY_DATA_QUALIFICATION.md). The next
-scientific step is to review and parameterize an actual pulmonary reference.
-No external data set or physiological parameter values have been silently
-introduced.
+[Qualification Checklist](EXTERNAL_PULMONARY_DATA_QUALIFICATION.md). No
+external data set or physiological parameter value was silently introduced.
 
-The formal [M3 Gate Review](M3_GATE_REVIEW.md) records the technical evidence
-and the scientific closure package. M3 remains open until that package and the
-historical FP9 executable reference are complete.
+The formal [M3 Gate Review](M3_GATE_REVIEW.md) records the complete technical
+and scientific closure evidence through M3.19. The next roadmap milestone is
+M4; further pulmonary anatomy, physiology, and participant evidence remain
+research refinements that can proceed without redefining the M3 contracts.
 
 M3.7 adds a [healthy-adult resting pulmonary 0D reference candidate](PULMONARY_0D_REFERENCE.md)
 with executable pressure, resistance, compliance, flow partition, transit,
@@ -228,7 +227,17 @@ five-lobe v7 model without changing its body graph, route, seed, entities, or
 conserved payload. Both candidates return 25/25 identities and all three typed
 transfers exactly. Their different transit times are retained as model output.
 This closes the same-scenario Gate M3 criterion while leaving general CLI
-composition and the FP9 baseline open.
+composition as a later extension.
+
+M3.19 adds the
+[historical FP9 lung timer baseline](FP9_TIMER_BASELINE.md). The dissertation's
+end-to-end semantics are now executable at the scenario layer: first lung
+localization occurs at 25 s, the 15.99 s assembly duration activates the message
+at 40.99 s, and the 1,000/10,000 collector cases report at 209/91 s from
+injection. The generic implementation also runs a synthetic non-lung target,
+demonstrating that no fingerprint or lung branch was added to the kernel,
+coupler, body, or organ model. This closes the final additional ADR-0006
+criterion while retaining the full biological/gateway demonstrator for M7.
 
 An initial [SimVascular Healthy Pulmonary Candidate Review](SIMVASCULAR_PULMONARY_CANDIDATE_REVIEW.md)
 finds the official case useful for an imported pulmonary-artery technical

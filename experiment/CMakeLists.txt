@@ -37,6 +37,7 @@ add_library(
     mehlissa_experiment
     src/checkpoint_manifest.cpp
     src/experiment_manifest.cpp
+    src/fingerprint_timer_baseline.cpp
     src/provenance.cpp
     src/run_log.cpp
 )

@@ -5,12 +5,13 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # M3 Gate Review – Body–Organ Coupling
 
-**Review date:** 27 August 2026
+**Review date:** 29 August 2026
 
-**Reviewed baseline:** `ea2b2932f9e6268e70f0494507a3ab7ceae9ea41`
+**Reviewed baseline:** `29d6e3e` plus the versioned M3.19 artifacts in this
+review increment
 
-**Result:** not passed — technical coupling candidate complete; scientific gate
-remains open
+**Result:** passed — body-organ coupling, pulmonary reference evidence,
+same-scenario resolution comparison, and historical FP9 timer baseline complete
 
 **Post-review update, 28 August 2026:** M3.7 adds the first executable,
 literature-parameterized pulmonary 0D reference candidate. This closes the
@@ -161,7 +162,24 @@ same-scenario Gate M3 criterion without adding resolution branches to the body,
 coupler, or kernel. General CLI composition and FP9 remain open. See
 [Coarse–Detailed Body–Lung Scenario Comparison](COARSE_DETAILED_SCENARIO_COMPARISON.md).
 The post-M3.18 local Visual Studio Debug build and 129/129 CTest suite passed;
-cross-platform CI evidence is recorded with the pushed increment.
+the complete cross-platform matrix passed in
+[run 33242297287](https://github.com/RegineWendt/MEHLISSA/actions/runs/33242297287).
+
+**Thirteenth post-review update, 29 August 2026:** M3.19 adds an executable,
+schema-validated replay of the historical FP9 lung timer at the experiment
+layer. Direct source review confirms that the 91 s value is the complete time
+from injection through collection and wrist reporting, not a delay added after
+the 25 s localization and 15.99 s assembly values. The executable chain is
+therefore 0 s injection, 25 s first localization, 40.99 s active message, and
+209/91 s external report for the published 1,000/10,000 collector cohorts. It
+rejects acausal times and unknown cohorts and runs an altered non-lung target
+through the same implementation. No fingerprint, tissue, or lung branch enters
+the kernel, body, coupler, or organ model. See
+[Historical FP9 Lung Timer Baseline](FP9_TIMER_BASELINE.md).
+The post-M3.19 local Visual Studio Debug build and complete 133/133 CTest suite
+passed, including the separately committed benchmark package now in the
+reviewed baseline. Cross-platform CI evidence is recorded with the pushed
+increment.
 
 ## 1. Review method
 
@@ -188,12 +206,12 @@ model” merely because it contained more regions than the coarse surrogate.
 | no agent or relevant amount is duplicated or lost | satisfied | positive and negative ownership, duplicate-ID, route, time, and exact-payload tests |
 | both lung variants implement the same contract | satisfied | one `ModelComponent` interface, one `LungModelConfig`, schema-selected definitions, generated cross-variant tests |
 | flow, pressure/transit time, and perfusion share have units, sources, uncertainty, and an independent comparison | satisfied for aggregate, multipoint population, and five-lobe normal-supine evidence; participant-level method also verified | the 0D candidates have executable SI pressure, flow, effective PVR/compliance, measured transit, evidence roles, source- and cohort-disjoint validation, frozen population comparisons, and a separate participant-level evaluator; M3.17 additionally compares all five executable shares with independent V/Q SPECT/CT while preserving source rounding |
-| historical FP9 timer baseline runs without scenario-specific kernel logic | not satisfied | the dissertation baseline is specified and traced, but fingerprint detection/assembly/collection is not executable; implementing it prematurely in the organ kernel would violate the architecture |
+| historical FP9 timer baseline runs without scenario-specific kernel logic | satisfied | M3.19 loads a strict versioned scenario and emits the published causal FP9 event chain for both collector cohorts from a reusable experiment-layer implementation; a synthetic non-lung case verifies the absence of lung-specific branching |
 
 ## 4. Verification evidence
 
 - local Visual Studio 2026 Debug build: passed;
-- local CTest suite: 85/85 passed;
+- post-M3.19 local CTest suite: 133/133 passed;
 - local formatting and targeted Clang-Tidy/bugprone checks: passed;
 - `git diff --check`: passed for the reviewed M3 changes;
 - complete M3.5 GitHub matrix: [run 33081276396](https://github.com/RegineWendt/MEHLISSA/actions/runs/33081276396), passed on Windows/MSVC, Linux/GCC, and Linux/Clang with Clang-Tidy, ASan, and UBSan;
@@ -211,7 +229,9 @@ model” merely because it contained more regions than the coarse surrogate.
 - schema-validated executable model cards with validity, evidence, sources,
   licenses, limitations, and optional external-data axes/units/provenance;
 - one checked-in schema-validated scenario across coarse and five-lobe
-  resolutions, plus compatible host-step regressions; and
+  resolutions, plus compatible host-step regressions;
+- one schema-validated historical FP9 timer baseline at the experiment layer,
+  with stable causal event identifiers and no kernel-specific logic; and
 - cross-platform build, analysis, sanitizer, and regression infrastructure.
 
 These contracts are suitable for continued software integration. The qualified
@@ -238,23 +258,24 @@ M3 can pass only after the following evidence is added and reviewed:
 4. ~~add an explicitly reviewed baseline lobar distribution~~ — M3.16 adds a
    fixed DE-CT PBV proxy with limitations; posture/exercise redistribution and
    regional recruitment remain open;
-5. implement the historical FP9 timing regression at the appropriate scenario
-   layer, or formally revise the ADR/M3 boundary if that executable baseline is
-   deferred to M7; and
-6. rerun this gate review on the resulting immutable data/model baseline and
-   complete CI matrix.
+5. ~~implement the historical FP9 timing regression at the appropriate scenario
+   layer~~ — M3.19 executes both published collector cohorts in the experiment
+   layer, with direct source semantics and no kernel/organ special case; and
+6. ~~rerun this gate review on the resulting immutable data/model baseline and
+   complete CI matrix~~ — the post-M3.19 local 133-test suite and final
+   cross-platform build, analysis, sanitizer, and test matrix complete the
+   review evidence.
 
 ## 7. Exit decision
 
-The M3 software architecture, lossless coupling slice, first independent
-aggregate physiological comparison, and subject-level multipoint analysis path
-are verified, and published population multipoint validation has produced a
-qualified partial result, the fixed normal-supine five-lobe distribution is
-independently qualified, and the same-scenario resolution comparison is
-verified, but the milestone is not closed. The remaining formal blocker is the
-FP9 executable reference and the resulting final gate/CI review. Dynamic
-regional physiology remains an explicit scientific refinement rather than a
-hidden software failure. Downstream
-prototyping may use the verified interfaces provided it retains each model
-definition's explicit validity and evidence-class labels and does not cite an
-output beyond its qualified physiological scope.
+M3 passes. The software architecture, lossless coupling slice, independent
+aggregate and population physiological comparisons, five-lobe implementation
+and regional validation, same-scenario coarse/detailed comparison, and neutral
+historical FP9 timing reference are executable and reviewed. The
+subject-level multipoint path is software-verified but still awaits measured
+participant records. Dynamic regional physiology, patient-specific anatomy,
+transforming exchange, and the biological/gateway levels of fingerprinting
+remain explicit later refinements rather than hidden failures. Downstream work
+may use the verified interfaces provided it retains each model definition's
+validity and evidence-class labels and does not cite an output beyond its
+qualified physiological scope.
