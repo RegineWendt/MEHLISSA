@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "definition": {
+    "id": "synthetic-arteriole-capillary-venule-v1",
+    "version": "1.0.0",
+    "title": "Synthetic lossless capillary-bed contract reference"
+  },
+  "component": {
+    "name": "capillary.synthetic",
+    "model_id": "capillary.synthetic.reference.v1",
+    "entry_port_id": "arteriole-entry",
+    "exit_port_id": "venule-exit",
+    "return_target_model_id": "organ.synthetic",
+    "return_target_port_id": "capillary-return"
+  },
+  "network": {
+    "total_parallel_path_count": 8,
+    "perfused_path_count": 4,
+    "regions": [
+      {"id": "feeding-arteriole", "kind": "arteriole", "transit_time_s": 0.2},
+      {"id": "exchange-bed", "kind": "capillary", "transit_time_s": 0.6},
+      {"id": "draining-venule", "kind": "venule", "transit_time_s": 0.2}
+    ]
+  },
+  "validity": {
+    "population": "software contract tests only",
+    "physiological_state": "not applicable",
+    "evidence_class": "software_test_surrogate",
+    "description": "Deterministic one-second transit selected to verify the M4 component boundary and serial region semantics."
+  },
+  "sources": [
+    {
+      "id": "wendt-dissertation-capillary-architecture",
+      "citation": "Wendt, Regine (2024), Einsatz von Nanotechnologien in der Präzisionsmedizin, Section 4.4, pp. 126-129",
+      "location": "literature/Diss_WENDT_Simulationchapters.pdf",
+      "license": "source consulted; facts and architecture paraphrased",
+      "role": "arteriole-capillary-venule architecture and continuity requirement"
+    },
+    {
+      "id": "mehlissa-m4-contract",
+      "citation": "MEHLISSA Next M4 capillary-component contract, version 1.0.0",
+      "location": "docs/m4/CAPILLARY_TRANSIT_BED.md",
+      "license": "CC-BY-4.0",
+      "role": "synthetic executable parameterization"
+    }
+  ],
+  "limitations": [
+    "Path counts and transit times are synthetic software-test values, not physiological evidence.",
+    "Perfused path count is validated metadata; flow redistribution and sphincter dynamics are not implemented in M4.1.",
+    "Substances pass through without exchange, reaction, retention, adhesion, or extravasation.",
+    "The model has no geometry, pressure, hematocrit, local position, stochastic dispersion, or molecular channel."
+  ]
+}

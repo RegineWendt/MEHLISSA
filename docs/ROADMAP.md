@@ -473,6 +473,18 @@ as separate variants. Selection used these criteria:
 - investigate cluster formation and multi-hop communication;
 - derive higher-level abstractions such as reachability, runtime, and success distributions.
 
+#### Current progress
+
+M4.1 establishes an independent, versioned capillary component with explicit
+arteriole, capillary, and venule regions. A strict schema connects a synthetic
+software-test card to executable state; entity identity and population,
+substance-amount, and volume-flow payloads cross the component without loss.
+Total and perfused parallel-path counts are validated but do not yet drive flow
+redistribution. This creates the conservation baseline for the next increments:
+organ-capillary orchestration, dimension-safe geometry and continuity,
+recruitment dynamics, balanced tissue exchange, and molecular channels. See
+[M4 evidence](m4/README.md) and [ADR-0021](architecture/adr/0021-versioned-capillary-bed-baseline.md).
+
 #### Model variants
 
 At least three resolutions should be provided:

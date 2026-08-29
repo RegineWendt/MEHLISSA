@@ -576,7 +576,37 @@ assembly. Read the [FP9 timer baseline](m3/FP9_TIMER_BASELINE.md) before using
 these historical outputs; the replay does not model binding, diffusion,
 collector encounter probability, or gateway communication.
 
-## 9. Troubleshooting
+## 9. M4 developer preview: the first capillary component
+
+M4.1 adds an independent capillary-layer component with three explicit serial
+regions: arteriole, capillary, and venule. Its first card is intentionally a
+synthetic software contract, not a physiological microcirculation model.
+
+The executable definition and schema are:
+
+```text
+examples/capillary-models/synthetic-arteriole-capillary-venule-v1.json
+data/schemas/capillary-bed-definition/1.0.0.schema.json
+```
+
+The card declares eight parallel paths, four perfused paths, and a one-second
+total transit. These values make region boundaries easy to verify; they must
+not be interpreted as human anatomy or physiology. The runtime preserves
+nanodevice identity, population count, substance amount, flow rate, interval,
+and integrated volume while routing transfers from the arteriole entry to the
+configured organ return port.
+
+To run only this developer test group after building:
+
+```powershell
+ctest --test-dir build -C Debug --output-on-failure -R capillary
+```
+
+Read [Capillary Transit Bed](m4/CAPILLARY_TRANSIT_BED.md) before using the
+component. Organ-capillary orchestration, geometry, dynamic recruitment,
+barrier exchange, retention, and molecular channels are subsequent M4 work.
+
+## 10. Troubleshooting
 
 ### CMake selects the wrong Visual Studio version
 
@@ -608,7 +638,7 @@ The M2.4 regression simulates both 6,359 and 63,590 particles and recreates its
 Golden Reference. A complete debug suite therefore takes roughly one to two
 minutes on the current Windows reference system.
 
-## 10. Where this guide goes next
+## 11. Where this guide goes next
 
 The highest-priority documentation package is a new non-expert Part I. It will
 introduce what MEHLISSA is useful for, explain its virtual body/entities/models
