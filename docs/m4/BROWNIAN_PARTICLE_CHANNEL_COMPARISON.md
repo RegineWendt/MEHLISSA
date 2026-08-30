@@ -125,10 +125,11 @@ one synthetic, unbounded free-diffusion problem. It does not validate the M4.8
 small-receiver approximation in all geometries and does not qualify a real
 pulmonary signaling molecule.
 
-Still absent are particle trajectories, time-step convergence, walls,
-advection, heterogeneous media, reactions and binding, interparticle effects,
-receiver kinetics, symbol sequences, and measured biological parameters. The
-next comparison should add a trajectory-resolving local model or a licensable
-external adapter without changing the v1 request/response semantics.
+M4.10 subsequently adds bounded particle trajectories, fixed time steps,
+coarse-refined verification, and reflecting-box software support without
+changing the v1 request/response semantics. Anatomical walls, advection,
+heterogeneous media, reactions and binding, interparticle effects, receiver
+kinetics, symbol sequences, and measured biological parameters remain absent.
 
-See [ADR-0029](../architecture/adr/0029-deterministic-brownian-particle-comparison.md).
+See [ADR-0029](../architecture/adr/0029-deterministic-brownian-particle-comparison.md)
+and [Trajectory-Resolving Brownian Channel](TRAJECTORY_BROWNIAN_CHANNEL.md).

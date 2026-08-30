@@ -161,19 +161,37 @@ and [ADR-0028](../architecture/adr/0028-interchangeable-molecular-channel-contra
 See [Brownian Particle-Channel Comparison](BROWNIAN_PARTICLE_CHANNEL_COMPARISON.md)
 and [ADR-0029](../architecture/adr/0029-deterministic-brownian-particle-comparison.md).
 
+### M4.10 - trajectory-resolving Brownian channel
+
+- fixed-step three-dimensional Brownian paths behind the unchanged channel
+  request and response;
+- strict trajectory-profile schema `1.0.0` bound to the analytical profile;
+- deterministic, step-count-qualified random streams and exact per-step
+  first-order survival;
+- unbounded and reflecting-box boundary modes with receiver containment checks;
+- bounded trace retention with an explicit dropped-point counter;
+- diagnostics for receiver observations, survival, reflections, and mean
+  squared displacement;
+- 8-step and 32-step verification against the shared pulmonary-bound synthetic
+  reference; and
+- predeclared count, analytical, refinement, and `6Dt` displacement gates.
+
+See [Trajectory-Resolving Brownian Channel](TRAJECTORY_BROWNIAN_CHANNEL.md) and
+[ADR-0030](../architecture/adr/0030-trajectory-resolving-brownian-channel.md).
+
 ## Planned sequence
 
-1. add a trajectory-resolving local model or licensable external adapter and
-   compare it through the M4.8/M4.9 channel contract;
-2. implement a mesoscopic variant and compare it against
+1. implement a mesoscopic variant and compare it against
    the same reference cases;
-3. define a conservative terminal/tissue ownership contract before sampling
+2. define a conservative terminal/tissue ownership contract before sampling
    retention, adhesion, or extravasation outcomes;
+3. add a richer shared microscopic case with anatomically qualified surfaces,
+   advection, reactions, or a licensable external adapter; and
 4. perform the formal M4 gate review.
 
 ## Scientific status
 
-M4.1 through M4.9 are software verification, not physiological validation. The
+M4.1 through M4.10 are software verification, not physiological validation. The
 dissertation provides the layer structure, continuity requirement, recruitment
 concept, and communication questions. The initial cards, recruitment profile,
 exchange fractions, and interaction rates remain synthetic. M4.7 adds the first
@@ -181,7 +199,9 @@ literature-parameterized capillary candidate, but its evidence comes from small
 different cohorts and an equivalent rather than anatomical geometry. M4.8 adds
 evidence-based channel architecture but deliberately synthetic molecular
 parameters. M4.9 independently reproduces that synthetic case within
-predeclared Monte Carlo gates; this is implementation comparison, not biological
+predeclared Monte Carlo gates; M4.10 adds bounded explicit paths, an 8-to-32-step
+verification, and reflecting-box software support without claiming that the box
+is pulmonary anatomy. These are implementation comparisons, not biological
 validation. Jointly measured flow and capillary volume, sphincter behavior,
 hematocrit, kinetic exchange parameters, and independent physiological
 comparison remain open.

@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:trajectory-brownian-channel-profile:1.0.0",
+  "title": "MEHLISSA trajectory-resolving Brownian channel profile",
+  "description": "Strict time-stepped Brownian trajectory model, bounded trace policy, and predeclared refinement verification gate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "compatible_analytical_profile_id", "implementation", "refinement", "verification_gate", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "compatible_analytical_profile_id": {"$ref": "#/$defs/id"},
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "model_id", "diffusion_coefficient_m2_s", "first_order_degradation_rate_s_1", "sample_count", "experiment_seed", "random_stream_name", "boundary", "trajectory_retention"],
+      "properties": {
+        "kind": {"const": "brownian_trajectory_3d"},
+        "model_id": {"$ref": "#/$defs/id"},
+        "diffusion_coefficient_m2_s": {"type": "number", "exclusiveMinimum": 0},
+        "first_order_degradation_rate_s_1": {"type": "number", "minimum": 0},
+        "sample_count": {"type": "integer", "minimum": 10000, "maximum": 10000000},
+        "experiment_seed": {"type": "integer", "minimum": 0, "maximum": 18446744073709551615},
+        "random_stream_name": {"$ref": "#/$defs/id"},
+        "boundary": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["kind"],
+              "properties": {"kind": {"const": "unbounded"}}
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["kind", "half_extents_m"],
+              "properties": {
+                "kind": {"const": "reflecting_box"},
+                "half_extents_m": {
+                  "type": "array",
+                  "prefixItems": [
+                    {"type": "number", "exclusiveMinimum": 0},
+                    {"type": "number", "exclusiveMinimum": 0},
+                    {"type": "number", "exclusiveMinimum": 0}
+                  ],
+                  "minItems": 3,
+                  "maxItems": 3
+                }
+              }
+            }
+          ]
+        },
+        "trajectory_retention": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["particle_count", "maximum_point_count"],
+          "properties": {
+            "particle_count": {"type": "integer", "minimum": 0},
+            "maximum_point_count": {"type": "integer", "minimum": 0, "maximum": 1000000}
+          }
+        }
+      }
+    },
+    "refinement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coarse_step_count", "refined_step_count"],
+      "properties": {
+        "coarse_step_count": {"type": "integer", "minimum": 1, "maximum": 4096},
+        "refined_step_count": {"type": "integer", "minimum": 2, "maximum": 4096}
+      }
+    },
+    "verification_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimum_receiver_observation_count", "maximum_absolute_reference_standardized_error", "maximum_relative_fraction_error", "maximum_refinement_standardized_difference", "maximum_relative_mean_squared_displacement_error"],
+      "properties": {
+        "minimum_receiver_observation_count": {"type": "integer", "minimum": 1},
+        "maximum_absolute_reference_standardized_error": {"type": "number", "exclusiveMinimum": 0},
+        "maximum_relative_fraction_error": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "maximum_refinement_standardized_difference": {"type": "number", "exclusiveMinimum": 0},
+        "maximum_relative_mean_squared_displacement_error": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}
+      }
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"const": "software_test_surrogate"},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "citation", "location", "license", "role"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "citation": {"type": "string", "minLength": 1},
+          "location": {"type": "string", "minLength": 1},
+          "license": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+  }
+}

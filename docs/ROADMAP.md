@@ -522,9 +522,12 @@ with an independent implementation follows in M4.9: a deterministic Brownian
 endpoint adapter implements the same channel interface, exposes Monte Carlo
 diagnostics, and passes predeclared minimum-count, standardized-error, and
 relative-error gates against the analytical pulmonary-bound request. CAP-006 is
-therefore complete at the software-contract level. A trajectory-resolving or
-external adapter, richer detailed-versus-surrogate comparison, and a
-conservative state-changing disposition contract remain next increments. See
+therefore complete at the software-contract level. M4.10 adds explicit
+fixed-step Brownian paths, bounded trace retention, reflecting-box software
+support, and an executable 8-to-32-step verification against receiver-fraction
+and `6Dt` displacement gates. A mesoscopic adapter, richer
+detailed-versus-surrogate comparison, and a conservative state-changing
+disposition contract remain next increments. See
 [M4 evidence](m4/README.md),
 [ADR-0021](architecture/adr/0021-versioned-capillary-bed-baseline.md), and
 [ADR-0022](architecture/adr/0022-organ-capillary-round-trip-coupling.md), and
@@ -534,7 +537,8 @@ conservative state-changing disposition contract remain next increments. See
 [ADR-0026](architecture/adr/0026-non-state-changing-capillary-entity-observation.md), and
 [ADR-0027](architecture/adr/0027-evidence-qualified-equivalent-pulmonary-capillary-card.md), and
 [ADR-0028](architecture/adr/0028-interchangeable-molecular-channel-contract.md), and
-[ADR-0029](architecture/adr/0029-deterministic-brownian-particle-comparison.md).
+[ADR-0029](architecture/adr/0029-deterministic-brownian-particle-comparison.md), and
+[ADR-0030](architecture/adr/0030-trajectory-resolving-brownian-channel.md).
 
 #### Model variants
 

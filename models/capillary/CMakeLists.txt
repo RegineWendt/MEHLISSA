@@ -17,6 +17,9 @@ add_library(
     src/capillary_recruitment_profile.cpp
     src/molecular_channel_profile.cpp
     src/molecular_channel_comparison.cpp
+    src/trajectory_brownian_channel.cpp
+    src/trajectory_brownian_channel_profile.cpp
+    src/trajectory_brownian_channel_verification.cpp
 )
 add_library(MEHLISSA::capillary_model ALIAS mehlissa_capillary_model)
 

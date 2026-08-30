@@ -41,6 +41,7 @@ decisions; a new decision supersedes an existing one through a new ADR.
 | [ADR-0027](adr/0027-evidence-qualified-equivalent-pulmonary-capillary-card.md) | Accepted | evidence-qualified pulmonary volume-flow-transit closure with explicit equivalent-geometry semantics |
 | [ADR-0028](adr/0028-interchangeable-molecular-channel-contract.md) | Accepted | typed molecular-channel request/response, analytical free-diffusion adapter, and pulmonary-bound contract case |
 | [ADR-0029](adr/0029-deterministic-brownian-particle-comparison.md) | Accepted | deterministic Brownian endpoint adapter and predeclared statistical comparison with the analytical channel |
+| [ADR-0030](adr/0030-trajectory-resolving-brownian-channel.md) | Accepted | fixed-step Brownian trajectories with bounded trace retention, reflecting-box support, and coarse-refined verification |
 
 ## Status model
 

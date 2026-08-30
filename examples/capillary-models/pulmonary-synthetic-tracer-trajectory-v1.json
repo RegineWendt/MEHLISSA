@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "pulmonary-synthetic-tracer-trajectory-v1",
+    "version": "1.0.0",
+    "title": "Time-resolved Brownian trajectories for the pulmonary channel case"
+  },
+  "compatible_analytical_profile_id": "pulmonary-synthetic-tracer-diffusion-v1",
+  "implementation": {
+    "kind": "brownian_trajectory_3d",
+    "model_id": "channel.brownian-trajectory.synthetic-tracer.pulmonary.v1",
+    "diffusion_coefficient_m2_s": 1e-9,
+    "first_order_degradation_rate_s_1": 0.0,
+    "sample_count": 400000,
+    "experiment_seed": 20260830,
+    "random_stream_name": "capillary.molecular-channel.brownian-trajectory",
+    "boundary": {
+      "kind": "unbounded"
+    },
+    "trajectory_retention": {
+      "particle_count": 4,
+      "maximum_point_count": 132
+    }
+  },
+  "refinement": {
+    "coarse_step_count": 8,
+    "refined_step_count": 32
+  },
+  "verification_gate": {
+    "minimum_receiver_observation_count": 50,
+    "maximum_absolute_reference_standardized_error": 4.0,
+    "maximum_relative_fraction_error": 0.25,
+    "maximum_refinement_standardized_difference": 4.0,
+    "maximum_relative_mean_squared_displacement_error": 0.01
+  },
+  "validity": {
+    "population": "software refinement verification against the M4.8 pulmonary-bound synthetic tracer case",
+    "physiological_state": "healthy-adult resting supine capillary context; synthetic local molecular signal",
+    "evidence_class": "software_test_surrogate",
+    "description": "Independent fixed-step Brownian trajectories at 8 and 32 steps verify receiver occupancy and mean squared displacement against the same unbounded free-diffusion reference. Four refined trajectories are retained under an explicit 132-point bound."
+  },
+  "sources": [
+    {
+      "id": "andrews-bray-2004-smoldyn",
+      "citation": "Andrews SS, Bray D. Stochastic simulation of chemical reactions with spatial resolution and single molecule detail. Phys Biol. 2004;1(3-4):137-151. doi:10.1088/1478-3967/1/3/001.",
+      "location": "https://doi.org/10.1088/1478-3967/1/3/001",
+      "license": "Copyright IOP Publishing; algorithms described, source and code not redistributed",
+      "role": "fixed-step Brownian dynamics and step-refinement verification strategy"
+    },
+    {
+      "id": "andrews-2010-smoldyn",
+      "citation": "Andrews SS, Addy NJ, Brent R, Arkin AP. Detailed simulations of cell biology with Smoldyn 2.1. PLoS Comput Biol. 2010;6(3):e1000705. doi:10.1371/journal.pcbi.1000705.",
+      "location": "https://doi.org/10.1371/journal.pcbi.1000705",
+      "license": "CC-BY",
+      "role": "Gaussian three-dimensional increments, molecular trajectories, and surface interaction context"
+    },
+    {
+      "id": "noel-2017-accord",
+      "citation": "Noel A, Cheung KC, Schober R, Makrakis D, Hafid A. Simulating with AcCoRD: Actor-based communication via reaction-diffusion. Nano Commun Netw. 2017;11:44-75. doi:10.1016/j.nancom.2017.02.002.",
+      "location": "https://doi.org/10.1016/j.nancom.2017.02.002",
+      "license": "Copyright Elsevier; numerical methods and validation strategy cited, source and code not redistributed",
+      "role": "microscopic fixed-step simulation and analytical comparison"
+    },
+    {
+      "id": "mehlissa-m4-analytical-channel",
+      "citation": "MEHLISSA pulmonary-bound analytical diffusion contract case, version 1.0.0.",
+      "location": "pulmonary-synthetic-tracer-diffusion-v1.json",
+      "license": "CC-BY-4.0",
+      "role": "shared diffusion, degradation, geometry, receiver, emission, and observation reference"
+    },
+    {
+      "id": "mehlissa-m4-trajectory-verification",
+      "citation": "MEHLISSA Next M4.10 trajectory-resolving Brownian verification, version 1.0.0.",
+      "location": "../../docs/m4/TRAJECTORY_BROWNIAN_CHANNEL.md",
+      "license": "CC-BY-4.0",
+      "role": "executable time-grid, bounded trace, and verification semantics"
+    }
+  ],
+  "limitations": [
+    "The executable pulmonary reference remains unbounded; reflecting axis-aligned box walls are a software capability, not an anatomical pulmonary geometry.",
+    "Free diffusion has an exact Gaussian transition at every step, so refinement agreement verifies implementation and path statistics rather than measuring a discretization bias in the endpoint distribution.",
+    "Particles are independent and non-interacting; flow, binding, bimolecular reactions, crowding, heterogeneous diffusivity, and receiver kinetics are absent.",
+    "Only a bounded subset of trajectories is retained; aggregate receiver and displacement statistics still include every simulated particle.",
+    "The comparison is software verification with synthetic molecular parameters, not physiological or clinical validation."
+  ]
+}

@@ -874,6 +874,61 @@ biological parameter qualification. Read
 [Brownian Particle-Channel Comparison](m4/BROWNIAN_PARTICLE_CHANNEL_COMPARISON.md)
 for its equations, evidence, gates, and interpretation boundary.
 
+### 9.7 Time-resolved molecular trajectories (M4.10)
+
+M4.10 answers a more detailed software question: can MEHLISSA construct and
+inspect individual Brownian paths while preserving the same aggregate channel
+answer used by the analytical and endpoint models?
+
+The trajectory profile is:
+
+```text
+examples/capillary-models/pulmonary-synthetic-tracer-trajectory-v1.json
+data/schemas/trajectory-brownian-channel-profile/1.0.0.schema.json
+```
+
+Instead of drawing only one final position, the model advances every particle
+through normally distributed three-dimensional increments. The checked-in
+experiment compares 400,000 particles at 8 and 32 steps. Both resolutions use
+the same emission, receiver, diffusion coefficient, and observation time as the
+M4.8 reference, but receive separate deterministic random streams.
+
+The experiment checks more than receiver occupancy. It also verifies that the
+mean squared distance from the transmitter agrees with the Brownian expectation
+`6Dt`. The 8-step run observes 121 receiver endpoints and differs from the
+analytical fraction by 1.90%; the 32-step run observes 119 and differs by 3.52%.
+Their mean squared displacement errors are below 0.04%. All predeclared gates
+pass.
+
+Only the first four refined trajectories are retained, including their initial
+positions, under a limit of 132 points. Aggregate results still include all
+400,000 particles. This lets a developer inspect paths without allowing memory
+use to grow with every particle and step.
+
+The adapter also supports an axis-aligned reflecting box. That capability is
+tested for containment, reflection counting, receiver fit, and bounded output.
+It is not enabled in the pulmonary reference and is not an anatomical lung
+geometry.
+
+Useful experiments now include:
+
+- inspecting how individual paths spread through time;
+- comparing coarse and refined time grids;
+- studying the trade-off between trajectory detail, runtime, and retained
+  output;
+- testing reflecting boundary behavior in synthetic boxes; and
+- checking that a detailed implementation remains compatible with analytical
+  and endpoint-surrogate channel results.
+
+For unbounded free diffusion, Gaussian increments produce the exact final
+distribution at every step count. Agreement between 8 and 32 steps therefore
+verifies path construction and statistics; it does not prove that 32 steps are
+physiologically sufficient for real surfaces or reactions. Flow, anatomical
+walls, binding, heterogeneous tissue, receiver kinetics, and measured molecular
+parameters remain future work. Read
+[Trajectory-Resolving Brownian Channel](m4/TRAJECTORY_BROWNIAN_CHANNEL.md) for
+the equations, evidence, numerical gates, and interpretation limits.
+
 ## 10. Troubleshooting
 
 ### CMake selects the wrong Visual Studio version
