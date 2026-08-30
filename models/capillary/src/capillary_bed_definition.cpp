@@ -162,6 +162,7 @@ void validate_document(const Json& document, const CompiledSchema& schema,
          validity.at("description").as<std::string>()},
         {},
         {},
+        {},
     };
     for (const auto& source : document.at("sources").array_range()) {
         result.sources.push_back(
