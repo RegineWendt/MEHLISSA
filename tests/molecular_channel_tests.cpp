@@ -8,6 +8,8 @@
 #include <mehlissa/models/capillary/capillary_bed_definition.hpp>
 #include <mehlissa/models/capillary/molecular_channel_comparison.hpp>
 #include <mehlissa/models/capillary/molecular_channel_profile.hpp>
+#include <mehlissa/models/capillary/radial_finite_volume_channel_profile.hpp>
+#include <mehlissa/models/capillary/radial_finite_volume_channel_verification.hpp>
 #include <mehlissa/models/capillary/trajectory_brownian_channel_profile.hpp>
 #include <mehlissa/models/capillary/trajectory_brownian_channel_verification.hpp>
 
@@ -26,6 +28,7 @@ namespace {
 using mehlissa::models::capillary::BrownianParticleChannelProfile;
 using mehlissa::models::capillary::CapillaryBedDefinition;
 using mehlissa::models::capillary::MolecularChannelProfile;
+using mehlissa::models::capillary::RadialFiniteVolumeChannelProfile;
 using mehlissa::models::capillary::TrajectoryBrownianChannelProfile;
 
 [[nodiscard]] std::filesystem::path project_root() {
@@ -61,6 +64,14 @@ using mehlissa::models::capillary::TrajectoryBrownianChannelProfile;
     return mehlissa::models::capillary::load_trajectory_brownian_channel_profile({
         root / "examples/capillary-models/pulmonary-synthetic-tracer-trajectory-v1.json",
         root / "data/schemas/trajectory-brownian-channel-profile/1.0.0.schema.json",
+    });
+}
+
+[[nodiscard]] RadialFiniteVolumeChannelProfile load_radial_field_profile() {
+    const auto root = project_root();
+    return mehlissa::models::capillary::load_radial_finite_volume_channel_profile({
+        root / "examples/capillary-models/pulmonary-synthetic-tracer-radial-field-v1.json",
+        root / "data/schemas/radial-finite-volume-channel-profile/1.0.0.schema.json",
     });
 }
 
@@ -377,6 +388,117 @@ TEST_CASE("Brownian trajectory profiles reject incompatible resolution and propa
     incompatible.refined_channel.diffusion_coefficient =
         mehlissa::core::square_meters_per_second(2.0e-9);
     CHECK_THROWS_AS(mehlissa::models::capillary::make_trajectory_brownian_channel(
+                        incompatible, analytical_profile),
+                    mehlissa::core::MehlissaError);
+}
+
+TEST_CASE("A strict radial finite-volume profile loads with conservative refinement gates",
+          "[m4][channel][field][schema]") {
+    const auto profile = load_radial_field_profile();
+
+    CHECK(profile.schema_version == "1.0.0");
+    CHECK(profile.profile_id == "pulmonary-synthetic-tracer-radial-field-v1");
+    CHECK(profile.implementation_kind ==
+          mehlissa::models::capillary::radial_finite_volume_diffusion_3d_kind);
+    CHECK(profile.compatible_analytical_profile_id == "pulmonary-synthetic-tracer-diffusion-v1");
+    CHECK(profile.coarse_radial_cell_count == 128);
+    CHECK(profile.refined_channel.radial_cell_count == 256);
+    CHECK(mehlissa::core::in_meters(profile.refined_channel.radial_domain_radius) ==
+          Catch::Approx(25.2e-6));
+    CHECK(profile.sources.size() == 5);
+    CHECK(profile.limitations.size() == 5);
+}
+
+TEST_CASE("Radial concentration fields conserve amount and pass grid-refinement gates",
+          "[m4][channel][field][refinement]") {
+    const auto analytical_profile = load_channel_profile();
+    const auto field_profile = load_radial_field_profile();
+    const auto analytical = mehlissa::models::capillary::make_molecular_channel(analytical_profile);
+    const auto coarse = mehlissa::models::capillary::make_radial_finite_volume_channel(
+        field_profile, analytical_profile, true);
+    const auto refined = mehlissa::models::capillary::make_radial_finite_volume_channel(
+        field_profile, analytical_profile);
+    const mehlissa::models::capillary::MolecularChannel& interchangeable_refined = refined;
+    const auto request = mehlissa::models::capillary::make_capillary_reference_request(
+        analytical_profile, load_pulmonary_capillary_definition());
+
+    CHECK(interchangeable_refined.kind() ==
+          mehlissa::models::capillary::radial_finite_volume_diffusion_3d_kind);
+    const auto result = mehlissa::models::capillary::verify_radial_finite_volume_refinement(
+        *analytical, coarse, refined, request, field_profile.verification_gate);
+    const auto repeated = refined.evaluate_with_diagnostics(request);
+
+    CAPTURE(result.reference.expected_receiver_fraction,
+            result.coarse.response.expected_receiver_fraction,
+            result.coarse_relative_reference_error, result.coarse.radial_cell_count,
+            result.coarse.time_step_count, result.coarse.escaped_amount_fraction,
+            result.refined.response.expected_receiver_fraction,
+            result.refined_relative_reference_error, result.refined.radial_cell_count,
+            result.refined.time_step_count, result.refined.escaped_amount_fraction,
+            result.relative_refinement_difference);
+    CHECK(result.coarse.radial_cell_count == 128);
+    CHECK(result.refined.radial_cell_count == 256);
+    CHECK(result.coarse.final_field.size() == 128);
+    CHECK(result.refined.final_field.size() == 256);
+    CHECK(result.coarse_relative_reference_error <= 0.1);
+    CHECK(result.refined_relative_reference_error <= 0.03);
+    CHECK(result.relative_refinement_difference <= 0.1);
+    CHECK(std::abs(result.coarse.conservation_residual) <= 1.0e-12);
+    CHECK(std::abs(result.refined.conservation_residual) <= 1.0e-12);
+    CHECK(result.coarse.escaped_amount_fraction <= 1.0e-12);
+    CHECK(result.refined.escaped_amount_fraction <= 1.0e-12);
+    CHECK(result.coarse.active_amount_fraction == Catch::Approx(1.0));
+    CHECK(result.refined.active_amount_fraction == Catch::Approx(1.0));
+    CHECK(result.refined.degraded_amount_fraction == 0.0);
+    CHECK(result.refined.response.expected_receiver_fraction ==
+          repeated.response.expected_receiver_fraction);
+    CHECK(result.refined.conservation_residual == repeated.conservation_residual);
+    CHECK(result.passes);
+}
+
+TEST_CASE("Radial finite-volume degradation and far-boundary loss remain balanced",
+          "[m4][channel][field][balance]") {
+    const auto analytical_profile = load_channel_profile();
+    auto config = load_radial_field_profile().refined_channel;
+    config.model_id = "channel.radial-field.balance-test";
+    config.first_order_degradation_rate = mehlissa::core::per_second(1'000.0);
+    config.radial_cell_count = 64;
+    config.radial_domain_radius = mehlissa::core::meters(5.0e-6);
+    const mehlissa::models::capillary::RadialFiniteVolumeChannel channel{config};
+    const auto request = mehlissa::models::capillary::make_capillary_reference_request(
+        analytical_profile, load_pulmonary_capillary_definition());
+
+    const auto result = channel.evaluate_with_diagnostics(request);
+    const auto expected_active =
+        std::exp(-1'000.0 * std::chrono::duration<double>{request.observation_time}.count());
+
+    CHECK(result.degraded_amount_fraction > 0.0);
+    CHECK(result.escaped_amount_fraction > 0.0);
+    CHECK(result.active_amount_fraction < expected_active);
+    CHECK(std::abs(result.conservation_residual) <= 1.0e-12);
+    for (const auto& cell : result.final_field) {
+        CHECK(cell.active_amount_fraction >= 0.0);
+        CHECK(cell.normalized_concentration_per_cubic_meter >= 0.0);
+    }
+
+    config.radial_domain_radius = mehlissa::core::meters(3.2e-6);
+    const mehlissa::models::capillary::RadialFiniteVolumeChannel invalid_receiver_channel{config};
+    CHECK_THROWS_AS(invalid_receiver_channel.evaluate(request), mehlissa::core::MehlissaError);
+}
+
+TEST_CASE("Radial finite-volume profiles reject incompatible grids and propagation",
+          "[m4][channel][field][validation]") {
+    const auto analytical_profile = load_channel_profile();
+    auto invalid_grid = load_radial_field_profile();
+    invalid_grid.coarse_radial_cell_count = 100;
+    CHECK_THROWS_AS(
+        mehlissa::models::capillary::validate_radial_finite_volume_channel_profile(invalid_grid),
+        mehlissa::core::MehlissaError);
+
+    auto incompatible = load_radial_field_profile();
+    incompatible.refined_channel.diffusion_coefficient =
+        mehlissa::core::square_meters_per_second(2.0e-9);
+    CHECK_THROWS_AS(mehlissa::models::capillary::make_radial_finite_volume_channel(
                         incompatible, analytical_profile),
                     mehlissa::core::MehlissaError);
 }

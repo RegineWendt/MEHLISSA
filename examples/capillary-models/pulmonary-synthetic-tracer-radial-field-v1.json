@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "pulmonary-synthetic-tracer-radial-field-v1",
+    "version": "1.0.0",
+    "title": "Conservative radial concentration field for the pulmonary channel case"
+  },
+  "compatible_analytical_profile_id": "pulmonary-synthetic-tracer-diffusion-v1",
+  "implementation": {
+    "kind": "radial_finite_volume_diffusion_3d",
+    "model_id": "channel.radial-field.synthetic-tracer.pulmonary.v1",
+    "diffusion_coefficient_m2_s": 1e-9,
+    "first_order_degradation_rate_s_1": 0.0,
+    "radial_domain_radius_m": 0.0000252,
+    "outer_boundary": "absorbing_zero_concentration",
+    "cfl_safety_factor": 0.45
+  },
+  "refinement": {
+    "coarse_radial_cell_count": 128,
+    "refined_radial_cell_count": 256
+  },
+  "verification_gate": {
+    "maximum_coarse_relative_reference_error": 0.1,
+    "maximum_refined_relative_reference_error": 0.03,
+    "maximum_relative_refinement_difference": 0.1,
+    "maximum_absolute_conservation_residual": 1e-12,
+    "maximum_escaped_amount_fraction": 1e-12
+  },
+  "validity": {
+    "population": "software grid-refinement verification against the M4.8 pulmonary-bound synthetic tracer case",
+    "physiological_state": "healthy-adult resting supine capillary context; synthetic local molecular signal",
+    "evidence_class": "software_test_surrogate",
+    "description": "A spherically symmetric finite-volume field evolves normalized signal amount through 128 and 256 radial shells, records the complete final field, and verifies receiver response plus active-degraded-escaped balance against the analytical free-diffusion reference."
+  },
+  "sources": [
+    {
+      "id": "bernstein-2005-mesoscopic",
+      "citation": "Bernstein D. Simulating mesoscopic reaction-diffusion systems using the Gillespie algorithm. Phys Rev E. 2005;71:041103. doi:10.1103/PhysRevE.71.041103.",
+      "location": "https://doi.org/10.1103/PhysRevE.71.041103",
+      "license": "Copyright American Physical Society; numerical method described, source and code not redistributed",
+      "role": "mesoscopic subvolume diffusion rates derived from finite-volume heat-equation discretization"
+    },
+    {
+      "id": "guyer-2009-fipy",
+      "citation": "Guyer JE, Wheeler D, Warren JA. FiPy: Partial Differential Equations with Python. Comput Sci Eng. 2009;11(3):6-15. doi:10.1109/MCSE.2009.52.",
+      "location": "https://doi.org/10.1109/MCSE.2009.52",
+      "license": "Copyright IEEE; finite-volume approach cited, source and code not redistributed",
+      "role": "cell-centered finite-volume conservation and PDE-solver context"
+    },
+    {
+      "id": "noel-2017-accord",
+      "citation": "Noel A, Cheung KC, Schober R, Makrakis D, Hafid A. Simulating with AcCoRD: Actor-based communication via reaction-diffusion. Nano Commun Netw. 2017;11:44-75. doi:10.1016/j.nancom.2017.02.002.",
+      "location": "https://doi.org/10.1016/j.nancom.2017.02.002",
+      "license": "Copyright Elsevier; mesoscopic and analytical comparison strategy cited, source and code not redistributed",
+      "role": "hybrid microscopic-mesoscopic molecular communication simulation"
+    },
+    {
+      "id": "mehlissa-m4-analytical-channel",
+      "citation": "MEHLISSA pulmonary-bound analytical diffusion contract case, version 1.0.0.",
+      "location": "pulmonary-synthetic-tracer-diffusion-v1.json",
+      "license": "CC-BY-4.0",
+      "role": "shared diffusion, degradation, geometry, receiver, emission, and observation reference"
+    },
+    {
+      "id": "mehlissa-m4-radial-field-verification",
+      "citation": "MEHLISSA Next M4.11 radial finite-volume molecular channel, version 1.0.0.",
+      "location": "../../docs/m4/RADIAL_FINITE_VOLUME_CHANNEL.md",
+      "license": "CC-BY-4.0",
+      "role": "executable grid, boundary, conservation, and refinement semantics"
+    }
+  ],
+  "limitations": [
+    "Spherical symmetry collapses the three-dimensional environment to radial shells and cannot represent directional flow, asymmetric walls, or localized tissue structures.",
+    "The absorbing outer boundary approximates an unbounded far field only because it is placed eight transmitter-receiver separations from the source and its escaped fraction is explicitly gated.",
+    "The point release is initialized as a uniform normalized amount in the innermost finite-volume shell, introducing a grid-dependent source regularization that is tested by refinement.",
+    "The receiver uses interpolated shell concentration and the same passive small-receiver approximation as the analytical channel rather than integrating an off-center sphere across shells.",
+    "The molecular parameters and geometry remain synthetic software fixtures, not physiologically qualified pulmonary data."
+  ]
+}

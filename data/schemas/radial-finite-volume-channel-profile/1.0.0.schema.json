@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:radial-finite-volume-channel-profile:1.0.0",
+  "title": "MEHLISSA radial finite-volume molecular-channel profile",
+  "description": "Strict conservative radial concentration-field model and predeclared grid-refinement verification gate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "compatible_analytical_profile_id", "implementation", "refinement", "verification_gate", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "compatible_analytical_profile_id": {"$ref": "#/$defs/id"},
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "model_id", "diffusion_coefficient_m2_s", "first_order_degradation_rate_s_1", "radial_domain_radius_m", "outer_boundary", "cfl_safety_factor"],
+      "properties": {
+        "kind": {"const": "radial_finite_volume_diffusion_3d"},
+        "model_id": {"$ref": "#/$defs/id"},
+        "diffusion_coefficient_m2_s": {"type": "number", "exclusiveMinimum": 0},
+        "first_order_degradation_rate_s_1": {"type": "number", "minimum": 0},
+        "radial_domain_radius_m": {"type": "number", "exclusiveMinimum": 0},
+        "outer_boundary": {"const": "absorbing_zero_concentration"},
+        "cfl_safety_factor": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}
+      }
+    },
+    "refinement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coarse_radial_cell_count", "refined_radial_cell_count"],
+      "properties": {
+        "coarse_radial_cell_count": {"type": "integer", "minimum": 16, "maximum": 4096},
+        "refined_radial_cell_count": {"type": "integer", "minimum": 17, "maximum": 4096}
+      }
+    },
+    "verification_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maximum_coarse_relative_reference_error", "maximum_refined_relative_reference_error", "maximum_relative_refinement_difference", "maximum_absolute_conservation_residual", "maximum_escaped_amount_fraction"],
+      "properties": {
+        "maximum_coarse_relative_reference_error": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "maximum_refined_relative_reference_error": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "maximum_relative_refinement_difference": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "maximum_absolute_conservation_residual": {"type": "number", "exclusiveMinimum": 0},
+        "maximum_escaped_amount_fraction": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"const": "software_test_surrogate"},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "citation", "location", "license", "role"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "citation": {"type": "string", "minLength": 1},
+          "location": {"type": "string", "minLength": 1},
+          "license": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+  }
+}

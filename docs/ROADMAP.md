@@ -525,9 +525,11 @@ relative-error gates against the analytical pulmonary-bound request. CAP-006 is
 therefore complete at the software-contract level. M4.10 adds explicit
 fixed-step Brownian paths, bounded trace retention, reflecting-box software
 support, and an executable 8-to-32-step verification against receiver-fraction
-and `6Dt` displacement gates. A mesoscopic adapter, richer
-detailed-versus-surrogate comparison, and a conservative state-changing
-disposition contract remain next increments. See
+and `6Dt` displacement gates. M4.11 adds the mesoscopic resolution: a
+conservative radial finite-volume field with explicit degradation and absorbing-
+boundary loss, complete spatial output, and an executable 128-to-256-shell
+comparison against the same analytical request. A richer shared anatomical case
+and a conservative state-changing disposition contract remain next increments. See
 [M4 evidence](m4/README.md),
 [ADR-0021](architecture/adr/0021-versioned-capillary-bed-baseline.md), and
 [ADR-0022](architecture/adr/0022-organ-capillary-round-trip-coupling.md), and
@@ -538,7 +540,8 @@ disposition contract remain next increments. See
 [ADR-0027](architecture/adr/0027-evidence-qualified-equivalent-pulmonary-capillary-card.md), and
 [ADR-0028](architecture/adr/0028-interchangeable-molecular-channel-contract.md), and
 [ADR-0029](architecture/adr/0029-deterministic-brownian-particle-comparison.md), and
-[ADR-0030](architecture/adr/0030-trajectory-resolving-brownian-channel.md).
+[ADR-0030](architecture/adr/0030-trajectory-resolving-brownian-channel.md), and
+[ADR-0031](architecture/adr/0031-radial-finite-volume-molecular-channel.md).
 
 #### Model variants
 

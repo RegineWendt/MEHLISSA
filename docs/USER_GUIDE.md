@@ -929,6 +929,50 @@ parameters remain future work. Read
 [Trajectory-Resolving Brownian Channel](m4/TRAJECTORY_BROWNIAN_CHANNEL.md) for
 the equations, evidence, numerical gates, and interpretation limits.
 
+### 9.8 Mesoscopic concentration fields (M4.11)
+
+M4.11 answers the same synthetic receiver question without tracking individual
+molecules. It divides a spherical region around the transmitter into concentric
+shells and evolves the fraction of active signal in every shell. This is useful
+when the spatial concentration pattern matters but individual stochastic paths
+would be unnecessarily expensive.
+
+The field profile is:
+
+```text
+examples/capillary-models/pulmonary-synthetic-tracer-radial-field-v1.json
+data/schemas/radial-finite-volume-channel-profile/1.0.0.schema.json
+```
+
+The profile compares 128 and 256 shells. Both use automatically selected stable
+time steps, the same analytical M4.8 request, and a far absorbing boundary. The
+solver records signal that remains active, is degraded, or escapes through that
+boundary; these three fractions must sum to one.
+
+At the shared observation time, the analytical receiver fraction is
+`0.00030836066`. The 128-shell result differs by `0.0351%`, and the 256-shell
+result by `0.00861%`. Their mutual difference is `0.0265%`; the amount-balance
+residual is at most `4.44e-16`, and no amount reaches the far boundary in the
+checked case. All declared gates pass.
+
+Useful experiments include:
+
+- inspecting the whole radial concentration profile instead of only one
+  receiver value;
+- changing grid resolution and checking whether the result converges;
+- testing degradation while distinguishing it from boundary escape;
+- moving the outer boundary and detecting whether it influences the answer;
+- comparing deterministic field and stochastic particle resolutions through
+  the same request.
+
+The current field is deliberately spherical and has no blood-flow direction,
+branching vessels, anatomical wall, localized tissue, binding, or receiver
+kinetics. Its point source is represented by the innermost shell, and its
+off-center receiver uses interpolated local concentration. It is a software
+verification model, not a physiologically validated lung transport model. Read
+[Radial Finite-Volume Molecular Channel](m4/RADIAL_FINITE_VOLUME_CHANNEL.md) for
+the conservation equation, boundary semantics, evidence, and numerical gates.
+
 ## 10. Troubleshooting
 
 ### CMake selects the wrong Visual Studio version

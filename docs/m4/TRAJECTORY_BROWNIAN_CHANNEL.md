@@ -150,9 +150,8 @@ Still absent are flow/advection, anatomical surfaces, heterogeneous diffusion,
 binding and other reactions, interparticle effects, receiver kinetics, and
 measured pulmonary molecular-channel data.
 
-The next M4 resolution increment should add a mesoscopic population or
-concentration-field adapter for the same contract. A later richer microscopic
-case can then compare wall, advection, reaction, and receiver semantics across
-resolutions.
+M4.11 fulfills the next resolution increment with a mesoscopic radial finite-
+volume concentration field on the same contract. A later richer shared case can
+compare wall, advection, reaction, and receiver semantics across resolutions.
 
 See [ADR-0030](../architecture/adr/0030-trajectory-resolving-brownian-channel.md).

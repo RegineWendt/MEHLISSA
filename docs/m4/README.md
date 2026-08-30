@@ -179,19 +179,36 @@ and [ADR-0029](../architecture/adr/0029-deterministic-brownian-particle-comparis
 See [Trajectory-Resolving Brownian Channel](TRAJECTORY_BROWNIAN_CHANNEL.md) and
 [ADR-0030](../architecture/adr/0030-trajectory-resolving-brownian-channel.md).
 
+### M4.11 - conservative radial concentration field
+
+- deterministic mesoscopic population field behind the unchanged channel
+  request and response;
+- strict radial finite-volume profile schema `1.0.0` bound to the analytical
+  profile;
+- conservative fluxes between spherical shells, symmetry at the origin, and an
+  absorbing far boundary with separately accounted escape;
+- exact split first-order degradation and an enforced active-degraded-escaped
+  amount balance;
+- CFL-derived time steps plus hard cell, step, and cell-step work bounds;
+- complete bounded final field and explicit receiver-interpolation diagnostics;
+- 128-to-256-shell verification against the shared pulmonary-bound analytical
+  case; and
+- predeclared analytical, refinement, conservation, and boundary-loss gates.
+
+See [Radial Finite-Volume Molecular Channel](RADIAL_FINITE_VOLUME_CHANNEL.md) and
+[ADR-0031](../architecture/adr/0031-radial-finite-volume-molecular-channel.md).
+
 ## Planned sequence
 
-1. implement a mesoscopic variant and compare it against
-   the same reference cases;
-2. define a conservative terminal/tissue ownership contract before sampling
+1. define a conservative terminal/tissue ownership contract before sampling
    retention, adhesion, or extravasation outcomes;
-3. add a richer shared microscopic case with anatomically qualified surfaces,
+2. add a richer shared microscopic/mesoscopic case with anatomically qualified surfaces,
    advection, reactions, or a licensable external adapter; and
-4. perform the formal M4 gate review.
+3. perform the formal M4 gate review.
 
 ## Scientific status
 
-M4.1 through M4.10 are software verification, not physiological validation. The
+M4.1 through M4.11 are software verification, not physiological validation. The
 dissertation provides the layer structure, continuity requirement, recruitment
 concept, and communication questions. The initial cards, recruitment profile,
 exchange fractions, and interaction rates remain synthetic. M4.7 adds the first
@@ -201,7 +218,9 @@ evidence-based channel architecture but deliberately synthetic molecular
 parameters. M4.9 independently reproduces that synthetic case within
 predeclared Monte Carlo gates; M4.10 adds bounded explicit paths, an 8-to-32-step
 verification, and reflecting-box software support without claiming that the box
-is pulmonary anatomy. These are implementation comparisons, not biological
-validation. Jointly measured flow and capillary volume, sphincter behavior,
+is pulmonary anatomy. M4.11 adds a conservative spherical field, explicit
+boundary-loss accounting, and 128-to-256-shell refinement, but no anatomical
+field geometry. These are implementation comparisons, not biological validation.
+Jointly measured flow and capillary volume, sphincter behavior,
 hematocrit, kinetic exchange parameters, and independent physiological
 comparison remain open.
