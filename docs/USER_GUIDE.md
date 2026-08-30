@@ -576,7 +576,7 @@ assembly. Read the [FP9 timer baseline](m3/FP9_TIMER_BASELINE.md) before using
 these historical outputs; the replay does not model binding, diffusion,
 collector encounter probability, or gateway communication.
 
-## 9. M4 developer preview: capillary transit and layer coupling
+## 9. M4 capillary communication and layer coupling
 
 M4.1 adds an independent capillary-layer component with three explicit serial
 regions: arteriole, capillary, and venule. Its first card is intentionally a
@@ -618,13 +618,14 @@ Read [Capillary Transit Bed](m4/CAPILLARY_TRANSIT_BED.md) before using the
 component and [Organ-Capillary Round Trip](m4/ORGAN_CAPILLARY_ROUND_TRIP.md)
 before composing layers. The equations and schema migration are documented in
 [Capillary Geometry and Continuity](m4/CAPILLARY_GEOMETRY_AND_CONTINUITY.md).
-Physiological organ-capillary gateways and geometry, physiologically qualified
-recruitment, exchange, and nanodevice interactions, state-changing retention,
-and detailed channel comparison remain subsequent M4 work. Aggregate scheduled
-recruitment is available in M4.4, a balanced synthetic exchange contract in
-M4.5, non-state-changing local residence and interaction observations in M4.6,
-an evidence-qualified pulmonary candidate in M4.7, and the first analytical
-molecular-channel contract in M4.8.
+Physiological organ-capillary gateways and geometry and physiologically
+qualified recruitment, exchange, and nanodevice interactions remain post-gate
+scientific work. The accepted M4 software milestone includes aggregate
+scheduled recruitment in M4.4, a balanced synthetic exchange contract in M4.5,
+local residence and interaction observations in M4.6, an evidence-qualified
+pulmonary candidate in M4.7, the stable channel contract in M4.8, and the
+state-changing and multi-resolution increments through M4.13. See the
+[M4 gate review](m4/M4_GATE_REVIEW.md) for the exact acceptance boundary.
 
 ### 9.1 Dynamic recruitment experiments (M4.4)
 

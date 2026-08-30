@@ -5,7 +5,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Traceability Matrix – MEHLISSA Next
 
-**As of:** 29 August 2026
+**As of:** 30 August 2026
 
 **Reference document:** [system requirements](SYSTEM_REQUIREMENTS.md)
 
@@ -27,7 +27,7 @@ Status codes:
 
 ## 2. Foundation and architecture
 
-| ID | Source | Status 2026-08-27 | Target | Planned verification |
+| ID | Source | Status 2026-08-30 | Target | Planned verification |
 |---|---|---|---|---|
 | SYS-001 | RM M1 | DONE | M1 | `simulation_clock_tests`, cross-platform CTest |
 | SYS-002 | RM 2.4 | PART | M1/M7 | byte-identical M1 kernel reference run on MSVC/GCC/Clang; replicate planning and domain-model verification follow |
@@ -47,7 +47,7 @@ Status codes:
 
 ## 3. Body and organ layers
 
-| ID | Source | Status 2026-08-27 | Target | Planned verification |
+| ID | Source | Status 2026-08-30 | Target | Planned verification |
 |---|---|---|---|---|
 | BODY-001 | DISS p. 100; BVS18 | DONE | M2 | complete, strongly connected, schema-validated 95-segment graph; converter and graph-invariant tests |
 | BODY-002 | DISS pp. 100, 113–117 | DONE | M2 | SI schema and validator for ID, type, geometry, length, diameter, cross section, volume, flow, sources, and uncertainty; canonical M2.2 data set |
@@ -68,7 +68,7 @@ Status codes:
 
 ## 4. Capillary and cell layers
 
-| ID | Source | Status 2026-08-27 | Target | Planned verification |
+| ID | Source | Status 2026-08-30 | Target | Planned verification |
 |---|---|---|---|---|
 | CAP-001 | DISS pp. 126–129 | PART | M4 | strict v2/v3 schemas and executable arteriole–capillary–venule components derive volume, area, velocity, and transit from SI geometry and continuity flow, then preserve identity and conserved payloads through a complete organ-capillary-organ route; anatomical network refinement follows |
 | CAP-002 | DISS pp. 126–129 | PART | M4 | M4.7 pulmonary card separates functional perfused volume from morphometric capacity, records parameter-level evidence and uncertainty, and enforces equivalent-geometry volume-flow-transit closure; independent physiological validation, jointly measured cohorts, hematocrit, and further organs follow |
@@ -83,9 +83,16 @@ Status codes:
 | CELL-004 | DISS pp. 131–133, 154 | RESEARCH | M5 | ODE/SSA or distribution model against reference data |
 | CELL-005 | DISS pp. 153–154 | RESEARCH | M5 | apoptosis event plus feedback to scenario |
 
+Gate M4 is closed by the formal
+[M4 gate review](../m4/M4_GATE_REVIEW.md). `CAP-001` through `CAP-005` remain
+`PART` because their complete research scope extends beyond the explicit
+software gate; `CAP-007` likewise remains research. The review records why
+these visible limitations do not invalidate the four accepted milestone
+statements.
+
 ## 5. Nano-IoT and research data
 
-| ID | Source | Status 2026-08-27 | Target | Planned verification |
+| ID | Source | Status 2026-08-30 | Target | Planned verification |
 |---|---|---|---|---|
 | IOT-001 | DISS pp. 113–115, 186–188 | LEGACY | M2/M7 | generic device type plus locator/collector composition |
 | IOT-002 | DISS pp. 96–97 | SPEC | M6 | nano in-body → gateway → BAN → station |
@@ -103,7 +110,7 @@ Status codes:
 
 ## 6. Operation, scenarios, and quality
 
-| ID | Source | Status 2026-08-27 | Target | Planned verification |
+| ID | Source | Status 2026-08-30 | Target | Planned verification |
 |---|---|---|---|---|
 | UX-001 | RM Phase 0/10 | PART | M1 | headless CLI run in CI |
 | UX-002 | VIS20 pp. 1–2 | LEGACY | M7 | standardized result format in new visualization |

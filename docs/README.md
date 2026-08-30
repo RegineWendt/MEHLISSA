@@ -23,7 +23,9 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 - [Development environment and build](DEVELOPMENT.md) – reproducible CMake/vcpkg build, test execution, and quality tools for MEHLISSA Next.
 - [M1 – Trustworthy Kernel](m1/README.md) – implementation status, increments, and use of the versioned experiment manifest.
 - [M2 gate review](m2/M2_GATE_REVIEW.md) – formal review of the validated body-layer milestone and its declared scientific limits.
-- [M3 – Body–Organ Coupling](m3/README.md) – active work on versioned exchange contracts and the lung reference organ.
+- [M3 – Body–Organ Coupling](m3/README.md) – completed milestone evidence for versioned exchange contracts and the lung reference organ.
+- [M4 – Capillary Communication](m4/README.md) – completed implementation evidence for capillary transport and molecular-channel comparisons.
+- [M4 gate review](m4/M4_GATE_REVIEW.md) – passed technical review of capillary transit, balanced exchange, stable molecular channels, and shared multi-resolution cases.
 - [Pulmonary 0D independent validation](m3/PULMONARY_0D_INDEPENDENT_VALIDATION.md) – source-disjoint healthy-cohort comparison, acceptance results, and the exercise RC limitation.
 - [Pulmonary 0D flow adaptation](m3/PULMONARY_0D_FLOW_ADAPTATION.md) – independently calibrated bounded rest-to-exercise PVR/compliance response and post-calibration stress test.
 - [Pulmonary 0D subject-level multipoint validation](m3/PULMONARY_0D_SUBJECT_MULTIPOINT_VALIDATION.md) – pseudonymous stage-data contract, immutable-model trajectory analysis, evidence safeguards, and data-access status.

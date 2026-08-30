@@ -536,8 +536,12 @@ an analytical advected Gaussian, 200,000 deterministic endpoint particles, and
 256-to-512-cell conservative fields use the same M4.7-bound equivalent radius
 and flow, diffusion, bulk reaction, and surface-to-volume wall sink. All
 statistical, refinement, boundary, and amount-balance gates pass, while the
-kinetics remain explicitly synthetic and cross-section averaged. The formal M4
-gate review is now the next action. See
+kinetics remain explicitly synthetic and cross-section averaged. The formal
+[M4 gate review](m4/M4_GATE_REVIEW.md) passes all four milestone statements at
+the software-contract level. Anatomical networks, hematocrit, physiological
+kinetics, external solver adapters, and independent biological validation stay
+explicitly open as post-gate research rather than hidden acceptance claims.
+M4 is closed and M5 is the next implementation phase. See
 [M4 evidence](m4/README.md),
 [ADR-0021](architecture/adr/0021-versioned-capillary-bed-baseline.md), and
 [ADR-0022](architecture/adr/0022-organ-capillary-round-trip-coupling.md), and

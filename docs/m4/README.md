@@ -3,7 +3,7 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# M4 Working Plan and Evidence
+# M4 Implementation and Evidence
 
 ## Objective
 
@@ -11,7 +11,8 @@ M4 turns the capillary layer into an independent co-simulation component and
 then adds microvascular recruitment, balanced substance exchange, local
 nanodevice behavior, and molecular communication incrementally.
 
-The gate remains:
+The formal [M4 gate review](M4_GATE_REVIEW.md) passes the following gate at the
+software-contract level:
 
 - a nanodevice can leave an organ, traverse a capillary bed, and return;
 - substance exchange is mass-conserving and unit-consistent;
@@ -234,11 +235,12 @@ See [Conservative Terminal Entity Ownership](TERMINAL_ENTITY_OWNERSHIP.md) and
 See [Shared Axial Advection-Diffusion-Reaction Case](SHARED_AXIAL_ADVECTION_REACTION_CASE.md)
 and [ADR-0033](../architecture/adr/0033-shared-axial-advection-reaction-case.md).
 
-## Planned sequence
+## Gate status and subsequent work
 
-1. perform the formal M4 gate review; and
-2. record any remaining M4 work as explicit post-gate qualification or external-
-   adapter increments rather than silently extending the milestone.
+M4 is closed by the formal [M4 gate review](M4_GATE_REVIEW.md). Remaining
+anatomical, physiological, external-adapter, and communication research is
+recorded as post-gate qualification or later-roadmap work rather than silently
+extending the accepted milestone. The next implementation phase is M5.
 
 ## Scientific status
 

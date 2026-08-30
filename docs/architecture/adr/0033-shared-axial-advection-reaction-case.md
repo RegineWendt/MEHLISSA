@@ -79,6 +79,7 @@ escape remains an explicit gate.
   across analytical, particle, and field resolutions.
 - The final M4 comparison gate has a richer executable reference beyond free
   diffusion.
-- A formal M4 gate review is the next milestone action.
+- The subsequent formal [M4 gate review](../../m4/M4_GATE_REVIEW.md) passes the
+  milestone at the software-contract level.
 - Explicit radial wall encounters, receptor kinetics, external adapters, and
   physiological signal qualification remain future increments.
