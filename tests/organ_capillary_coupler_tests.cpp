@@ -6,10 +6,12 @@
 #include <mehlissa/core/quantity.hpp>
 #include <mehlissa/models/capillary/capillary_bed.hpp>
 #include <mehlissa/models/capillary/capillary_bed_definition.hpp>
+#include <mehlissa/models/capillary/capillary_entity_disposition_profile.hpp>
 #include <mehlissa/models/capillary/capillary_entity_observation_profile.hpp>
 #include <mehlissa/models/capillary/capillary_exchange_profile.hpp>
 #include <mehlissa/models/cosimulation/organ_capillary_coupler.hpp>
 #include <mehlissa/models/coupling/conserved_transfer.hpp>
+#include <mehlissa/models/coupling/entity_disposition.hpp>
 #include <mehlissa/models/coupling/entity_transfer.hpp>
 
 #include <catch2/catch_approx.hpp>
@@ -181,6 +183,15 @@ load_entity_observation_profile() {
     return mehlissa::models::capillary::load_capillary_entity_observation_profile({
         root / "examples/capillary-models/synthetic-nanodevice-observation-v1.json",
         root / "data/schemas/capillary-entity-observation-profile/1.0.0.schema.json",
+    });
+}
+
+[[nodiscard]] mehlissa::models::capillary::CapillaryEntityDispositionProfile
+load_entity_disposition_profile() {
+    const auto root = std::filesystem::path{MEHLISSA_TEST_ROOT};
+    return mehlissa::models::capillary::load_capillary_entity_disposition_profile({
+        root / "examples/capillary-models/synthetic-nanodevice-disposition-v1.json",
+        root / "data/schemas/capillary-entity-disposition-profile/1.0.0.schema.json",
     });
 }
 
@@ -380,6 +391,97 @@ TEST_CASE("Entity observations preserve the complete organ capillary ownership r
     REQUIRE(records.size() == 1);
     CHECK(records.front().entity_id == 45);
     CHECK(mehlissa::models::capillary::has_normalized_outcome_likelihoods(records.front()));
+}
+
+TEST_CASE("Terminal dispositions close the organ route into exactly one tissue owner",
+          "[m4][cosimulation][entity-disposition][ownership]") {
+    mehlissa::models::capillary::CapillaryBedProfiles profiles;
+    profiles.entity_observation = load_entity_observation_profile();
+    profiles.entity_disposition = load_entity_disposition_profile();
+    mehlissa::core::ComponentHost host{std::uint64_t{20260830}};
+    auto organ = std::make_unique<ScriptedOrgan>();
+    auto capillary = std::make_unique<mehlissa::models::capillary::CapillaryBed>(
+        load_capillary_config(), std::move(profiles));
+    auto* organ_observer = organ.get();
+    auto* capillary_observer = capillary.get();
+    host.add(std::move(organ));
+    host.add(std::move(capillary));
+    host.initialize();
+
+    constexpr std::uint64_t entity_count = 256;
+    for (std::uint64_t id = 1; id <= entity_count; ++id) {
+        organ_observer->stage_entity(organ_departure(id));
+    }
+    mehlissa::models::cosimulation::OrganCapillaryCoupler coupler{
+        {*organ_observer, *capillary_observer}, route()};
+    REQUIRE(coupler.transfer_to_capillary(0ns).entities == entity_count);
+    CHECK(coupler.outstanding_entity_count() == entity_count);
+
+    host.advance(1s);
+    const auto returned = coupler.transfer_to_organ(1s).entities;
+    mehlissa::models::coupling::TerminalEntityStore tissue{
+        "tissue.synthetic",
+        {"capillary-lumen-retained", "endothelial-surface-adhered", "perivascular-interstitium"}};
+    const auto terminal = coupler.transfer_terminal_dispositions(*capillary_observer, tissue, 1s);
+
+    CHECK(returned + terminal == entity_count);
+    CHECK(organ_observer->returned_entities().size() == returned);
+    CHECK(tissue.resident_entity_count() == terminal);
+    CHECK(coupler.completed_entity_round_trip_count() == returned);
+    CHECK(coupler.completed_terminal_disposition_count() == terminal);
+    CHECK(coupler.completed_terminal_disposition_count(
+              mehlissa::models::coupling::EntityDispositionKind::retained) > 0);
+    CHECK(coupler.completed_terminal_disposition_count(
+              mehlissa::models::coupling::EntityDispositionKind::adhered) > 0);
+    CHECK(coupler.completed_terminal_disposition_count(
+              mehlissa::models::coupling::EntityDispositionKind::extravasated) > 0);
+    CHECK(coupler.outstanding_entity_count() == 0);
+    CHECK(coupler.pending_terminal_disposition_count() == 0);
+    CHECK(capillary_observer->resident_entity_count() == 0);
+    CHECK(capillary_observer->pending_entity_disposition_count() == 0);
+}
+
+TEST_CASE("Rejected terminal ownership remains pending until the correct store accepts it",
+          "[m4][cosimulation][entity-disposition][pending]") {
+    mehlissa::models::capillary::CapillaryBedProfiles profiles;
+    profiles.entity_observation = load_entity_observation_profile();
+    profiles.entity_disposition = load_entity_disposition_profile();
+    mehlissa::core::ComponentHost host{std::uint64_t{20260830}};
+    auto organ = std::make_unique<ScriptedOrgan>();
+    auto capillary = std::make_unique<mehlissa::models::capillary::CapillaryBed>(
+        load_capillary_config(), std::move(profiles));
+    auto* organ_observer = organ.get();
+    auto* capillary_observer = capillary.get();
+    host.add(std::move(organ));
+    host.add(std::move(capillary));
+    host.initialize();
+    for (std::uint64_t id = 1; id <= 64; ++id) {
+        organ_observer->stage_entity(organ_departure(id));
+    }
+    mehlissa::models::cosimulation::OrganCapillaryCoupler coupler{
+        {*organ_observer, *capillary_observer}, route()};
+    REQUIRE(coupler.transfer_to_capillary(0ns).entities == 64);
+    host.advance(1s);
+    const auto returned = coupler.transfer_to_organ(1s).entities;
+    REQUIRE(returned < 64);
+
+    mehlissa::models::coupling::TerminalEntityStore wrong_store{
+        "tissue.other",
+        {"capillary-lumen-retained", "endothelial-surface-adhered", "perivascular-interstitium"}};
+    CHECK_THROWS_AS(coupler.transfer_terminal_dispositions(*capillary_observer, wrong_store, 1s),
+                    mehlissa::core::MehlissaError);
+    CHECK(wrong_store.resident_entity_count() == 0);
+    CHECK(coupler.pending_terminal_disposition_count() == 64 - returned);
+    CHECK(coupler.outstanding_entity_count() == 64 - returned);
+
+    mehlissa::models::coupling::TerminalEntityStore correct_store{
+        "tissue.synthetic",
+        {"capillary-lumen-retained", "endothelial-surface-adhered", "perivascular-interstitium"}};
+    CHECK(coupler.transfer_terminal_dispositions(*capillary_observer, correct_store, 1s) ==
+          64 - returned);
+    CHECK(correct_store.resident_entity_count() == 64 - returned);
+    CHECK(coupler.pending_terminal_disposition_count() == 0);
+    CHECK(coupler.outstanding_entity_count() == 0);
 }
 
 TEST_CASE("The coupler retains transfers rejected at either synchronization boundary",

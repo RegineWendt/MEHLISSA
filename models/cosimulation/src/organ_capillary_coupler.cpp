@@ -23,6 +23,24 @@ void append(std::vector<coupling::ConservedTransfer>& destination,
                        std::make_move_iterator(source.end()));
 }
 
+void append(std::vector<coupling::EntityDispositionTransfer>& destination,
+            std::vector<coupling::EntityDispositionTransfer> source) {
+    destination.insert(destination.end(), std::make_move_iterator(source.begin()),
+                       std::make_move_iterator(source.end()));
+}
+
+[[nodiscard]] std::size_t disposition_index(const coupling::EntityDispositionKind kind) noexcept {
+    switch (kind) {
+    case coupling::EntityDispositionKind::retained:
+        return 0;
+    case coupling::EntityDispositionKind::adhered:
+        return 1;
+    case coupling::EntityDispositionKind::extravasated:
+        return 2;
+    }
+    return 0;
+}
+
 } // namespace
 
 OrganCapillaryCoupler::OrganCapillaryCoupler(OrganCapillaryEndpoints endpoints,
@@ -97,6 +115,24 @@ CoupledTransferCounts OrganCapillaryCoupler::transfer_to_organ(
     return transferred;
 }
 
+std::size_t OrganCapillaryCoupler::transfer_terminal_dispositions(
+    coupling::EntityDispositionSource& source, coupling::EntityDispositionSink& sink,
+    const core::SimulationClock::Duration synchronization_time) {
+    append(pending_terminal_dispositions_, source.take_outbound_entity_dispositions());
+
+    std::size_t transferred{};
+    while (!pending_terminal_dispositions_.empty()) {
+        const auto& transfer = pending_terminal_dispositions_.front();
+        validate_terminal_disposition(transfer, sink, synchronization_time);
+        sink.accept_entity_disposition(transfer);
+        outstanding_entity_ids_.erase(transfer.entity_id);
+        ++completed_terminal_dispositions_.at(disposition_index(transfer.disposition));
+        pending_terminal_dispositions_.erase(pending_terminal_dispositions_.begin());
+        ++transferred;
+    }
+    return transferred;
+}
+
 std::size_t OrganCapillaryCoupler::outstanding_entity_count() const noexcept {
     return outstanding_entity_ids_.size();
 }
@@ -113,12 +149,26 @@ std::size_t OrganCapillaryCoupler::pending_return_count() const noexcept {
     return pending_entity_returns_.size() + pending_conserved_returns_.size();
 }
 
+std::size_t OrganCapillaryCoupler::pending_terminal_disposition_count() const noexcept {
+    return pending_terminal_dispositions_.size();
+}
+
 std::uint64_t OrganCapillaryCoupler::completed_entity_round_trip_count() const noexcept {
     return completed_entity_round_trips_;
 }
 
 std::uint64_t OrganCapillaryCoupler::completed_conserved_round_trip_count() const noexcept {
     return completed_conserved_round_trips_;
+}
+
+std::uint64_t OrganCapillaryCoupler::completed_terminal_disposition_count() const noexcept {
+    return completed_terminal_dispositions_[0] + completed_terminal_dispositions_[1] +
+           completed_terminal_dispositions_[2];
+}
+
+std::uint64_t OrganCapillaryCoupler::completed_terminal_disposition_count(
+    const coupling::EntityDispositionKind kind) const noexcept {
+    return completed_terminal_dispositions_[disposition_index(kind)];
 }
 
 void OrganCapillaryCoupler::validate_entity_departure(
@@ -181,6 +231,23 @@ void OrganCapillaryCoupler::validate_conserved_return(
         !outstanding_conserved_transfer_ids_.contains(header.transfer_id)) {
         throw core::MehlissaError{core::ErrorCode::invariant_violated,
                                   "Conserved capillary return does not match an organ departure"};
+    }
+}
+
+void OrganCapillaryCoupler::validate_terminal_disposition(
+    const coupling::EntityDispositionTransfer& transfer,
+    const coupling::EntityDispositionSink& sink,
+    const core::SimulationClock::Duration synchronization_time) const {
+    coupling::validate_entity_disposition(transfer);
+    if (transfer.source_model_id != capillary_.model_id() ||
+        transfer.source_port_id == route_.capillary_exit_port_id ||
+        transfer.target_model_id != sink.disposition_model_id() ||
+        !sink.accepts_disposition_at(transfer.target_compartment_id) ||
+        transfer.decided_at != synchronization_time ||
+        !outstanding_entity_ids_.contains(transfer.entity_id)) {
+        throw core::MehlissaError{
+            core::ErrorCode::invariant_violated,
+            "Terminal disposition does not close an outstanding capillary entity route"};
     }
 }
 

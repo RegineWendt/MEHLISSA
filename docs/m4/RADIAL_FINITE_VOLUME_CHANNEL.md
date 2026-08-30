@@ -144,9 +144,9 @@ approximations, and all molecular parameters remain synthetic.
 
 M4 now contains analytical, endpoint-particle, trajectory-particle, and radial-
 field implementations that can answer the same final-time receiver request.
-The next architectural increment should define conservative terminal ownership
-for state-changing retention, adhesion, or extravasation. A later shared case
-can introduce qualified surfaces, advection, reactions, and receiver kinetics
-across the mesoscopic and microscopic resolutions.
+M4.12 now defines conservative terminal ownership for state-changing retention,
+adhesion, and extravasation. A later shared case can introduce qualified
+surfaces, advection, reactions, and receiver kinetics across the mesoscopic and
+microscopic resolutions.
 
 See [ADR-0031](../architecture/adr/0031-radial-finite-volume-molecular-channel.md).

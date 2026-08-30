@@ -973,6 +973,51 @@ verification model, not a physiologically validated lung transport model. Read
 [Radial Finite-Volume Molecular Channel](m4/RADIAL_FINITE_VOLUME_CHANNEL.md) for
 the conservation equation, boundary semantics, evidence, and numerical gates.
 
+### 9.9 Retention, adhesion, and tissue hand-off (M4.12)
+
+M4.6 can report how likely a nanodevice is to pass through, remain in the
+capillary, adhere to a surface, or leave the blood. M4.12 can now optionally
+turn one of those probabilities into an actual simulated outcome.
+
+The state-changing profile is:
+
+```text
+examples/capillary-models/synthetic-nanodevice-disposition-v1.json
+data/schemas/capillary-entity-disposition-profile/1.0.0.schema.json
+```
+
+The important concept is ownership. A device that does not return to the organ
+must not simply vanish. MEHLISSA keeps its original route open until either the
+organ acknowledges its return or a terminal tissue store acknowledges the new
+owner and compartment. If a store rejects the hand-off, the transfer remains
+pending and can be retried.
+
+For each matched device, a reproducible random draw selects exactly one result.
+Pass-through devices return normally. Retained, adhered, and extravasated
+devices enter distinct compartments in the configured terminal store. Unmatched
+device types still pass through and consume no random draw.
+
+In the checked-in 256-device software example, 184 devices return, 17 are
+retained, 25 adhere, and 30 extravasate. The same individual IDs receive the
+same outcomes at host steps of 100, 250, and 500 ms. These counts verify
+deterministic single-owner accounting; they are not expected physiological
+frequencies.
+
+Useful software experiments include:
+
+- confirming that returned plus terminally owned devices equal the injection;
+- changing the seed and observing a different reproducible allocation;
+- changing residence time and inspecting its effect on interaction
+  probabilities;
+- deliberately rejecting a target to test pending recovery; and
+- replacing the generic terminal store with a future M5 tissue component.
+
+The current outcomes are terminal. A retained or adhered device cannot yet
+detach, move, degrade, enter a cell, or return to circulation. Target
+compartments are ownership labels rather than anatomy. Read
+[Conservative Terminal Entity Ownership](m4/TERMINAL_ENTITY_OWNERSHIP.md) before
+interpreting or extending this state-changing mode.
+
 ## 10. Troubleshooting
 
 ### CMake selects the wrong Visual Studio version

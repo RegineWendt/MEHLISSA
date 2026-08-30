@@ -211,6 +211,20 @@ void validate_entity_observation_compatibility(const CapillaryBedConfig& config,
     }
 }
 
+void validate_entity_disposition_compatibility(
+    const CapillaryBedConfig& config, const CapillaryEntityObservationProfile* observation,
+    const CapillaryEntityDispositionProfile& disposition) {
+    validate_capillary_entity_disposition_profile(disposition);
+    if (observation == nullptr || disposition.compatible_model_id != config.model_id ||
+        disposition.compatible_observation_profile_id != observation->profile_id ||
+        disposition.source_port_id == config.entry_port_id ||
+        disposition.source_port_id == config.exit_port_id) {
+        throw core::MehlissaError{
+            core::ErrorCode::data_invalid,
+            "Entity disposition requires compatible capillary and observation profiles"};
+    }
+}
+
 void validate_conserved_target(const coupling::ConservedTransfer& transfer,
                                const CapillaryBedConfig& config,
                                const core::SimulationClock::Duration synchronization_time,
@@ -314,23 +328,32 @@ CapillaryBed::CapillaryBed(CapillaryBedConfig config, CapillaryBedProfiles profi
         validate_entity_observation_compatibility(config_, *profiles.entity_observation);
         entity_observation_profile_ = std::move(profiles.entity_observation);
     }
+    if (profiles.entity_disposition.has_value()) {
+        validate_entity_disposition_compatibility(
+            config_,
+            entity_observation_profile_.has_value() ? &*entity_observation_profile_ : nullptr,
+            *profiles.entity_disposition);
+        entity_disposition_profile_ = std::move(profiles.entity_disposition);
+    }
 }
 
 CapillaryBed::CapillaryBed(CapillaryBedConfig config,
                            CapillaryRecruitmentProfile recruitment_profile)
-    : CapillaryBed{std::move(config), CapillaryBedProfiles{std::move(recruitment_profile),
-                                                           std::nullopt, std::nullopt}} {}
+    : CapillaryBed{std::move(config),
+                   CapillaryBedProfiles{std::move(recruitment_profile), std::nullopt, std::nullopt,
+                                        std::nullopt}} {}
 
 CapillaryBed::CapillaryBed(CapillaryBedConfig config, CapillaryExchangeProfile exchange_profile)
     : CapillaryBed{std::move(config),
-                   CapillaryBedProfiles{std::nullopt, std::move(exchange_profile), std::nullopt}} {}
+                   CapillaryBedProfiles{std::nullopt, std::move(exchange_profile), std::nullopt,
+                                        std::nullopt}} {}
 
 CapillaryBed::CapillaryBed(CapillaryBedConfig config,
                            CapillaryRecruitmentProfile recruitment_profile,
                            CapillaryExchangeProfile exchange_profile)
     : CapillaryBed{std::move(config),
                    CapillaryBedProfiles{std::move(recruitment_profile), std::move(exchange_profile),
-                                        std::nullopt}} {}
+                                        std::nullopt, std::nullopt}} {}
 
 std::string_view CapillaryBed::name() const noexcept { return config_.component_name; }
 
@@ -371,6 +394,10 @@ void CapillaryBed::advance(core::SimulationContext& context,
 
     core::SimulationClock target_clock{synchronization_time_};
     target_clock.advance(delta);
+    auto* disposition_random =
+        entity_disposition_profile_.has_value()
+            ? &context.random_stream(entity_disposition_profile_->random_stream_name)
+            : nullptr;
     auto cursor = synchronization_time_;
     if (recruitment_profile_.has_value()) {
         const auto& states = recruitment_profile_->states;
@@ -385,33 +412,43 @@ void CapillaryBed::advance(core::SimulationContext& context,
                 throw core::MehlissaError{core::ErrorCode::invariant_violated,
                                           "Capillary-recruitment schedule moved backwards"};
             }
-            advance_residents({event_time - cursor, target_clock.now()});
+            advance_residents({event_time - cursor, target_clock.now()}, disposition_random);
             apply_recruitment_state(next_recruitment_state_index_);
             ++next_recruitment_state_index_;
             cursor = event_time;
         }
     }
-    advance_residents({target_clock.now() - cursor, target_clock.now()});
+    advance_residents({target_clock.now() - cursor, target_clock.now()}, disposition_random);
     synchronization_time_ = target_clock.now();
 }
 
-void CapillaryBed::advance_residents(const AdvanceInterval interval) {
+void CapillaryBed::advance_residents(const AdvanceInterval interval,
+                                     core::RandomStream* disposition_random) {
     std::vector<ResidentEntity> remaining_entities;
     remaining_entities.reserve(resident_entities_.size());
     for (auto& resident : resident_entities_) {
         advance_resident(resident, config_.regions, region_metrics_, interval.delta);
         if (resident.region_index == config_.regions.size()) {
-            record_entity_observation(resident, interval.emitted_at);
-            outbound_entities_.push_back({
-                std::string{coupling::entity_transfer_contract_version},
-                resident.transfer.entity_id,
-                std::move(resident.transfer.entity_type),
-                config_.model_id,
-                config_.exit_port_id,
-                config_.return_target_model_id,
-                config_.return_target_port_id,
-                interval.emitted_at,
-            });
+            const auto observation = record_entity_observation(resident, interval.emitted_at);
+            const auto disposition =
+                observation.has_value() && disposition_random != nullptr
+                    ? sample_entity_disposition(resident, *observation, interval.emitted_at,
+                                                *disposition_random)
+                    : std::nullopt;
+            if (disposition.has_value()) {
+                outbound_entity_dispositions_.push_back(*disposition);
+            } else {
+                outbound_entities_.push_back({
+                    std::string{coupling::entity_transfer_contract_version},
+                    resident.transfer.entity_id,
+                    std::move(resident.transfer.entity_type),
+                    config_.model_id,
+                    config_.exit_port_id,
+                    config_.return_target_model_id,
+                    config_.return_target_port_id,
+                    interval.emitted_at,
+                });
+            }
         } else {
             remaining_entities.push_back(std::move(resident));
         }
@@ -437,10 +474,11 @@ void CapillaryBed::advance_residents(const AdvanceInterval interval) {
     resident_conserved_transfers_ = std::move(remaining_conserved);
 }
 
-void CapillaryBed::record_entity_observation(const ResidentEntity& resident,
-                                             const core::SimulationClock::Duration reported_at) {
+std::optional<CapillaryEntityObservationRecord>
+CapillaryBed::record_entity_observation(const ResidentEntity& resident,
+                                        const core::SimulationClock::Duration reported_at) {
     if (!entity_observation_profile_.has_value()) {
-        return;
+        return std::nullopt;
     }
     const auto& profile = *entity_observation_profile_;
     const auto rule =
@@ -458,10 +496,59 @@ void CapillaryBed::record_entity_observation(const ResidentEntity& resident,
                                   "Capillary entity-observation likelihoods are not normalized"};
     }
     if (entity_observation_records_.size() < profile.maximum_buffered_records) {
-        entity_observation_records_.push_back(std::move(record));
+        entity_observation_records_.push_back(record);
     } else if (dropped_entity_observation_records_ < std::numeric_limits<std::uint64_t>::max()) {
         ++dropped_entity_observation_records_;
     }
+    return record;
+}
+
+std::optional<coupling::EntityDispositionTransfer> CapillaryBed::sample_entity_disposition(
+    const ResidentEntity& resident, const CapillaryEntityObservationRecord& observation,
+    const core::SimulationClock::Duration decided_at, core::RandomStream& random) const {
+    if (!entity_disposition_profile_.has_value() || !observation.interaction_rule_applied) {
+        return std::nullopt;
+    }
+    constexpr double two_to_minus_53 = 1.0 / 9'007'199'254'740'992.0;
+    const auto grid_value = random.next_u64() >> 11U;
+    const auto draw = (static_cast<double>(grid_value) + 0.5) * two_to_minus_53;
+    if (draw < observation.pass_through_likelihood) {
+        return std::nullopt;
+    }
+
+    coupling::EntityDispositionKind kind{};
+    double probability{};
+    const auto retention_end =
+        observation.pass_through_likelihood + observation.retention_likelihood;
+    const auto adhesion_end = retention_end + observation.adhesion_likelihood;
+    if (draw < retention_end) {
+        kind = coupling::EntityDispositionKind::retained;
+        probability = observation.retention_likelihood;
+    } else if (draw < adhesion_end) {
+        kind = coupling::EntityDispositionKind::adhered;
+        probability = observation.adhesion_likelihood;
+    } else {
+        kind = coupling::EntityDispositionKind::extravasated;
+        probability = observation.extravasation_likelihood;
+    }
+    const auto& profile = *entity_disposition_profile_;
+    const auto& target = disposition_target(profile, kind);
+    coupling::EntityDispositionTransfer transfer{
+        std::string{coupling::entity_disposition_contract_version},
+        resident.transfer.entity_id,
+        resident.transfer.entity_type,
+        kind,
+        profile.profile_id,
+        config_.model_id,
+        profile.source_port_id,
+        target.model_id,
+        target.compartment_id,
+        decided_at,
+        draw,
+        probability,
+    };
+    coupling::validate_entity_disposition(transfer);
+    return transfer;
 }
 
 void CapillaryBed::apply_substance_exchange(coupling::ConservedTransfer& transfer,
@@ -701,6 +788,28 @@ std::uint64_t CapillaryBed::dropped_entity_observation_record_count() const noex
 std::vector<CapillaryEntityObservationRecord> CapillaryBed::take_entity_observation_records() {
     auto result = std::move(entity_observation_records_);
     entity_observation_records_.clear();
+    return result;
+}
+
+bool CapillaryBed::has_entity_disposition_profile() const noexcept {
+    return entity_disposition_profile_.has_value();
+}
+
+std::string_view CapillaryBed::entity_disposition_profile_id() const noexcept {
+    return entity_disposition_profile_.has_value() ? entity_disposition_profile_->profile_id
+                                                   : std::string_view{};
+}
+
+std::size_t CapillaryBed::pending_entity_disposition_count() const noexcept {
+    return outbound_entity_dispositions_.size();
+}
+
+std::vector<coupling::EntityDispositionTransfer> CapillaryBed::take_outbound_entity_dispositions() {
+    auto result = std::move(outbound_entity_dispositions_);
+    outbound_entity_dispositions_.clear();
+    for (const auto& transfer : result) {
+        held_entity_ids_.erase(transfer.entity_id);
+    }
     return result;
 }
 

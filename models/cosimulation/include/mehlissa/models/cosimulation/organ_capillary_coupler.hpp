@@ -4,8 +4,10 @@
 #ifndef MEHLISSA_MODELS_COSIMULATION_ORGAN_CAPILLARY_COUPLER_HPP
 #define MEHLISSA_MODELS_COSIMULATION_ORGAN_CAPILLARY_COUPLER_HPP
 
+#include <mehlissa/models/coupling/entity_disposition.hpp>
 #include <mehlissa/models/coupling/model_component.hpp>
 
+#include <array>
 #include <cstddef>
 #include <cstdint>
 #include <string>
@@ -41,13 +43,21 @@ class OrganCapillaryCoupler final {
     transfer_to_capillary(core::SimulationClock::Duration synchronization_time);
     [[nodiscard]] CoupledTransferCounts
     transfer_to_organ(core::SimulationClock::Duration synchronization_time);
+    [[nodiscard]] std::size_t
+    transfer_terminal_dispositions(coupling::EntityDispositionSource& source,
+                                   coupling::EntityDispositionSink& sink,
+                                   core::SimulationClock::Duration synchronization_time);
 
     [[nodiscard]] std::size_t outstanding_entity_count() const noexcept;
     [[nodiscard]] std::size_t outstanding_conserved_transfer_count() const noexcept;
     [[nodiscard]] std::size_t pending_departure_count() const noexcept;
     [[nodiscard]] std::size_t pending_return_count() const noexcept;
+    [[nodiscard]] std::size_t pending_terminal_disposition_count() const noexcept;
     [[nodiscard]] std::uint64_t completed_entity_round_trip_count() const noexcept;
     [[nodiscard]] std::uint64_t completed_conserved_round_trip_count() const noexcept;
+    [[nodiscard]] std::uint64_t completed_terminal_disposition_count() const noexcept;
+    [[nodiscard]] std::uint64_t
+    completed_terminal_disposition_count(coupling::EntityDispositionKind kind) const noexcept;
 
   private:
     void validate_entity_departure(const coupling::EntityTransfer& transfer,
@@ -58,6 +68,9 @@ class OrganCapillaryCoupler final {
                                       core::SimulationClock::Duration synchronization_time) const;
     void validate_conserved_return(const coupling::ConservedTransfer& transfer,
                                    core::SimulationClock::Duration synchronization_time) const;
+    void validate_terminal_disposition(const coupling::EntityDispositionTransfer& transfer,
+                                       const coupling::EntityDispositionSink& sink,
+                                       core::SimulationClock::Duration synchronization_time) const;
 
     coupling::ModelComponent& organ_;
     coupling::ModelComponent& capillary_;
@@ -66,10 +79,12 @@ class OrganCapillaryCoupler final {
     std::vector<coupling::ConservedTransfer> pending_conserved_departures_;
     std::vector<coupling::EntityTransfer> pending_entity_returns_;
     std::vector<coupling::ConservedTransfer> pending_conserved_returns_;
+    std::vector<coupling::EntityDispositionTransfer> pending_terminal_dispositions_;
     std::unordered_set<std::uint64_t> outstanding_entity_ids_;
     std::unordered_set<std::string> outstanding_conserved_transfer_ids_;
     std::uint64_t completed_entity_round_trips_{};
     std::uint64_t completed_conserved_round_trips_{};
+    std::array<std::uint64_t, 3> completed_terminal_dispositions_{};
 };
 
 } // namespace mehlissa::models::cosimulation

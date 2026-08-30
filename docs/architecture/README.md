@@ -43,6 +43,7 @@ decisions; a new decision supersedes an existing one through a new ADR.
 | [ADR-0029](adr/0029-deterministic-brownian-particle-comparison.md) | Accepted | deterministic Brownian endpoint adapter and predeclared statistical comparison with the analytical channel |
 | [ADR-0030](adr/0030-trajectory-resolving-brownian-channel.md) | Accepted | fixed-step Brownian trajectories with bounded trace retention, reflecting-box support, and coarse-refined verification |
 | [ADR-0031](adr/0031-radial-finite-volume-molecular-channel.md) | Accepted | conservative radial finite-volume concentration field with explicit boundary loss and grid-refinement verification |
+| [ADR-0032](adr/0032-conservative-terminal-entity-ownership.md) | Accepted | sampled capillary dispositions close through a retryable hand-off to one explicit terminal owner |
 
 ## Status model
 

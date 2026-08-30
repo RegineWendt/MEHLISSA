@@ -4,6 +4,7 @@
 #ifndef MEHLISSA_MODELS_CAPILLARY_CAPILLARY_BED_HPP
 #define MEHLISSA_MODELS_CAPILLARY_CAPILLARY_BED_HPP
 
+#include <mehlissa/models/capillary/capillary_entity_disposition_profile.hpp>
 #include <mehlissa/models/capillary/capillary_entity_observation.hpp>
 #include <mehlissa/models/capillary/capillary_entity_observation_profile.hpp>
 #include <mehlissa/models/capillary/capillary_exchange.hpp>
@@ -60,9 +61,11 @@ struct CapillaryBedProfiles final {
     std::optional<CapillaryRecruitmentProfile> recruitment;
     std::optional<CapillaryExchangeProfile> exchange;
     std::optional<CapillaryEntityObservationProfile> entity_observation;
+    std::optional<CapillaryEntityDispositionProfile> entity_disposition;
 };
 
-class CapillaryBed final : public coupling::ModelComponent {
+class CapillaryBed final : public coupling::ModelComponent,
+                           public coupling::EntityDispositionSource {
   public:
     explicit CapillaryBed(CapillaryBedConfig config);
     CapillaryBed(CapillaryBedConfig config, CapillaryBedProfiles profiles);
@@ -106,6 +109,11 @@ class CapillaryBed final : public coupling::ModelComponent {
     [[nodiscard]] std::size_t entity_observation_record_count() const noexcept;
     [[nodiscard]] std::uint64_t dropped_entity_observation_record_count() const noexcept;
     [[nodiscard]] std::vector<CapillaryEntityObservationRecord> take_entity_observation_records();
+    [[nodiscard]] bool has_entity_disposition_profile() const noexcept;
+    [[nodiscard]] std::string_view entity_disposition_profile_id() const noexcept;
+    [[nodiscard]] std::size_t pending_entity_disposition_count() const noexcept;
+    [[nodiscard]] std::vector<coupling::EntityDispositionTransfer>
+    take_outbound_entity_dispositions() override;
     [[nodiscard]] const CapillaryRegionMetrics& region_metrics(CapillaryRegionKind kind) const;
     [[nodiscard]] std::size_t resident_entity_count() const noexcept;
     [[nodiscard]] std::size_t resident_entity_count_in(CapillaryRegionKind kind) const noexcept;
@@ -137,14 +145,19 @@ class CapillaryBed final : public coupling::ModelComponent {
     void apply_recruitment_state(std::size_t state_index);
     void apply_substance_exchange(coupling::ConservedTransfer& transfer,
                                   core::SimulationClock::Duration reported_at);
-    void record_entity_observation(const ResidentEntity& resident,
-                                   core::SimulationClock::Duration reported_at);
-    void advance_residents(AdvanceInterval interval);
+    [[nodiscard]] std::optional<CapillaryEntityObservationRecord>
+    record_entity_observation(const ResidentEntity& resident,
+                              core::SimulationClock::Duration reported_at);
+    [[nodiscard]] std::optional<coupling::EntityDispositionTransfer> sample_entity_disposition(
+        const ResidentEntity& resident, const CapillaryEntityObservationRecord& observation,
+        core::SimulationClock::Duration decided_at, core::RandomStream& random) const;
+    void advance_residents(AdvanceInterval interval, core::RandomStream* disposition_random);
 
     CapillaryBedConfig config_;
     std::optional<CapillaryRecruitmentProfile> recruitment_profile_;
     std::optional<CapillaryExchangeProfile> exchange_profile_;
     std::optional<CapillaryEntityObservationProfile> entity_observation_profile_;
+    std::optional<CapillaryEntityDispositionProfile> entity_disposition_profile_;
     std::vector<CapillaryRegionMetrics> region_metrics_;
     std::vector<ResidentEntity> resident_entities_;
     std::vector<coupling::EntityTransfer> outbound_entities_;
@@ -152,6 +165,7 @@ class CapillaryBed final : public coupling::ModelComponent {
     std::vector<coupling::ConservedTransfer> outbound_conserved_transfers_;
     std::vector<CapillaryExchangeRecord> exchange_records_;
     std::vector<CapillaryEntityObservationRecord> entity_observation_records_;
+    std::vector<coupling::EntityDispositionTransfer> outbound_entity_dispositions_;
     std::unordered_map<std::string, CapillaryTissueInventory> tissue_inventories_;
     std::unordered_set<std::uint64_t> held_entity_ids_;
     std::unordered_set<std::string> held_transfer_ids_;

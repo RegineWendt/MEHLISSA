@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-nanodevice-disposition-v1",
+    "version": "1.0.0",
+    "title": "Synthetic state-changing nanodevice disposition"
+  },
+  "compatible_model_id": "capillary.synthetic.reference.v2",
+  "compatible_observation_profile_id": "synthetic-nanodevice-observation-v1",
+  "random_stream_name": "capillary.entity-disposition.synthetic-nanodevice",
+  "source_port_id": "terminal-disposition",
+  "targets": {
+    "retained": {
+      "model_id": "tissue.synthetic",
+      "compartment_id": "capillary-lumen-retained"
+    },
+    "adhered": {
+      "model_id": "tissue.synthetic",
+      "compartment_id": "endothelial-surface-adhered"
+    },
+    "extravasated": {
+      "model_id": "tissue.synthetic",
+      "compartment_id": "perivascular-interstitium"
+    }
+  },
+  "validity": {
+    "population": "software ownership and deterministic sampling tests only",
+    "physiological_state": "not applicable",
+    "evidence_class": "software_test_surrogate",
+    "description": "Samples the normalized synthetic M4.6 competing-risk observation once and maps every non-pass-through result to one explicit terminal owner."
+  },
+  "sources": [
+    {
+      "id": "wendt-dissertation-local-capillary-behavior",
+      "citation": "Wendt, Regine (2024), Einsatz von Nanotechnologien in der Präzisionsmedizin, Section 4.4, pp. 128-129",
+      "location": "literature/Diss_WENDT_Simulationchapters.pdf",
+      "license": "source consulted; architecture paraphrased",
+      "role": "retention, adhesion, extravasation, and layer hand-off requirements"
+    },
+    {
+      "id": "mehlissa-m4-entity-observation-contract",
+      "citation": "MEHLISSA Next M4.6 capillary entity-observation contract, version 1.0.0",
+      "location": "docs/m4/CAPILLARY_ENTITY_OBSERVATION.md",
+      "license": "CC-BY-4.0",
+      "role": "normalized residence-sensitive outcome probabilities"
+    },
+    {
+      "id": "mehlissa-m4-terminal-ownership-contract",
+      "citation": "MEHLISSA Next M4.12 conservative terminal entity-ownership contract, version 1.0.0",
+      "location": "docs/m4/TERMINAL_ENTITY_OWNERSHIP.md",
+      "license": "CC-BY-4.0",
+      "role": "sampling, pending transfer, acknowledgement, and single-owner semantics"
+    }
+  ],
+  "limitations": [
+    "All outcome rates and therefore all sampled frequencies are synthetic software-test values without physiological interpretation.",
+    "Retention, adhesion, and extravasation are terminal in M4.12; detachment, remobilization, tissue motion, uptake, degradation, and return routes are not modeled.",
+    "The target compartments are abstract ownership labels and not anatomical geometry or cellular state.",
+    "A terminal store proves conservative ownership but is not yet an executable M5 tissue or cell model."
+  ]
+}

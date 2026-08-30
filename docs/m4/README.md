@@ -198,17 +198,32 @@ See [Trajectory-Resolving Brownian Channel](TRAJECTORY_BROWNIAN_CHANNEL.md) and
 See [Radial Finite-Volume Molecular Channel](RADIAL_FINITE_VOLUME_CHANNEL.md) and
 [ADR-0031](../architecture/adr/0031-radial-finite-volume-molecular-channel.md).
 
+### M4.12 - conservative terminal entity ownership
+
+- versioned terminal-disposition transfer and explicit source/sink interfaces;
+- strict state-changing profile bound to the compatible M4.6 observation
+  profile;
+- one deterministic named-stream draw for each completed matched entity;
+- exclusive pass-through, retained, adhered, or extravasated result;
+- explicit target owner model and distinct target compartment per terminal
+  result;
+- pending retry after rejected delivery without closing the original ledger;
+- persistent terminal store with duplicate-ID and target validation; and
+- population closure plus identical decisions at 100, 250, and 500 ms host
+  steps.
+
+See [Conservative Terminal Entity Ownership](TERMINAL_ENTITY_OWNERSHIP.md) and
+[ADR-0032](../architecture/adr/0032-conservative-terminal-entity-ownership.md).
+
 ## Planned sequence
 
-1. define a conservative terminal/tissue ownership contract before sampling
-   retention, adhesion, or extravasation outcomes;
-2. add a richer shared microscopic/mesoscopic case with anatomically qualified surfaces,
+1. add a richer shared microscopic/mesoscopic case with anatomically qualified surfaces,
    advection, reactions, or a licensable external adapter; and
-3. perform the formal M4 gate review.
+2. perform the formal M4 gate review.
 
 ## Scientific status
 
-M4.1 through M4.11 are software verification, not physiological validation. The
+M4.1 through M4.12 are software verification, not physiological validation. The
 dissertation provides the layer structure, continuity requirement, recruitment
 concept, and communication questions. The initial cards, recruitment profile,
 exchange fractions, and interaction rates remain synthetic. M4.7 adds the first
@@ -220,7 +235,9 @@ predeclared Monte Carlo gates; M4.10 adds bounded explicit paths, an 8-to-32-ste
 verification, and reflecting-box software support without claiming that the box
 is pulmonary anatomy. M4.11 adds a conservative spherical field, explicit
 boundary-loss accounting, and 128-to-256-shell refinement, but no anatomical
-field geometry. These are implementation comparisons, not biological validation.
+field geometry. M4.12 conserves identity across sampled terminal hand-offs, but
+its rates and target compartments are synthetic. These are implementation
+comparisons, not biological validation.
 Jointly measured flow and capillary volume, sphincter behavior,
 hematocrit, kinetic exchange parameters, and independent physiological
 comparison remain open.

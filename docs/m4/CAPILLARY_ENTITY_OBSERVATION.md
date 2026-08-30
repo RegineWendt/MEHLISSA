@@ -127,11 +127,11 @@ physiological nanodevice rates, surface chemistry, margination, hematocrit,
 wall shear, receptor kinetics, endothelial state, spatially varying hazards,
 or uncertainty distributions. It also does not sample an outcome.
 
-A later state-changing increment must define who owns a retained or
-extravasated entity, how tissue entry is represented, whether adhesion is
-reversible, and how an organ or cell model acknowledges termination. Such an
-increment can use this observation record as a reference without silently
-breaking conservation.
+M4.12 now samples this observation through an optional state-changing profile
+and hands every non-pass-through entity to an explicit terminal owner under a
+retryable acknowledgement contract. Its retention, adhesion, and extravasation
+are terminal; reversibility and subsequent tissue behavior remain open.
 
 See [ADR-0026](../architecture/adr/0026-non-state-changing-capillary-entity-observation.md)
-for the binding decision.
+for the observation decision and [Conservative Terminal Entity Ownership](TERMINAL_ENTITY_OWNERSHIP.md)
+for the optional state-changing extension.

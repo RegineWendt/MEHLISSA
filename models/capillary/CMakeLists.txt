@@ -12,6 +12,7 @@ add_library(
     src/brownian_particle_channel_profile.cpp
     src/capillary_entity_observation.cpp
     src/capillary_entity_observation_profile.cpp
+    src/capillary_entity_disposition_profile.cpp
     src/capillary_exchange.cpp
     src/capillary_exchange_profile.cpp
     src/capillary_recruitment_profile.cpp

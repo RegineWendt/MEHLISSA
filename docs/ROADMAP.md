@@ -528,8 +528,11 @@ support, and an executable 8-to-32-step verification against receiver-fraction
 and `6Dt` displacement gates. M4.11 adds the mesoscopic resolution: a
 conservative radial finite-volume field with explicit degradation and absorbing-
 boundary loss, complete spatial output, and an executable 128-to-256-shell
-comparison against the same analytical request. A richer shared anatomical case
-and a conservative state-changing disposition contract remain next increments. See
+comparison against the same analytical request. M4.12 adds the conservative
+state-changing disposition contract: named-stream sampling maps M4.6 outcomes
+to organ return or a retryable acknowledged terminal owner, preserving every ID
+across 100, 250, and 500 ms host steps. A richer shared anatomical case remains
+before the formal gate review. See
 [M4 evidence](m4/README.md),
 [ADR-0021](architecture/adr/0021-versioned-capillary-bed-baseline.md), and
 [ADR-0022](architecture/adr/0022-organ-capillary-round-trip-coupling.md), and
@@ -541,7 +544,8 @@ and a conservative state-changing disposition contract remain next increments. S
 [ADR-0028](architecture/adr/0028-interchangeable-molecular-channel-contract.md), and
 [ADR-0029](architecture/adr/0029-deterministic-brownian-particle-comparison.md), and
 [ADR-0030](architecture/adr/0030-trajectory-resolving-brownian-channel.md), and
-[ADR-0031](architecture/adr/0031-radial-finite-volume-molecular-channel.md).
+[ADR-0031](architecture/adr/0031-radial-finite-volume-molecular-channel.md), and
+[ADR-0032](architecture/adr/0032-conservative-terminal-entity-ownership.md).
 
 #### Model variants
 
