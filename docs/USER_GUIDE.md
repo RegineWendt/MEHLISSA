@@ -762,6 +762,38 @@ adhesion, or extravasation of a real nanodevice. Read
 [Capillary Nanodevice Residence and Interaction Observations](m4/CAPILLARY_ENTITY_OBSERVATION.md)
 before defining another profile.
 
+### 9.4 Pulmonary capillary reference candidate (M4.7)
+
+The first organ-specific capillary card is:
+
+```text
+examples/capillary-models/pulmonary-healthy-adult-rest-supine-v1.json
+data/schemas/capillary-bed-definition/3.0.0.schema.json
+```
+
+It represents a healthy adult at rest in a recumbent position and reuses the
+6 L/min nominal flow of the M3 pulmonary reference. Human studies anchor an
+85.9 mL functional capillary blood volume and a separate 196 mL morphometric
+lumen capacity. MEHLISSA derives 0.859 s capillary residence as volume divided
+by flow. These quantities remain separate because a post-mortem lumen capacity
+does not mean that the entire volume is perfused at rest.
+
+The current runtime needs a parallel-tube geometry, although the alveolar
+capillary network is a sheet-like, branched structure. The card therefore calls
+its diameter, path counts, and representative length **equivalent** values.
+The path count is a numerical closure variable, not an estimate of how many
+anatomical capillaries exist. The schema checks that the declared functional
+volume, morphometric capacity, diameter, length, flow, and transit agree with
+the executable network.
+
+The arteriole and venule regions are still numerical transition surrogates.
+The functional-volume cohort has only four recumbent participants, the flow
+comes from a separate reference, and hematocrit remains unresolved. Use this
+card for reproducible comparisons and sensitivity studies, not clinical or
+patient-specific conclusions. Read
+[Pulmonary Capillary Reference Candidate](m4/PULMONARY_CAPILLARY_QUALIFICATION.md)
+for the evidence table, calculations, and limitations.
+
 ## 10. Troubleshooting
 
 ### CMake selects the wrong Visual Studio version

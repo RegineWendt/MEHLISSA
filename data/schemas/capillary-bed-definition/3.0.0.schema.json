@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:capillary-bed-definition:3.0.0",
+  "title": "MEHLISSA evidence-qualified capillary-bed definition",
+  "description": "Strict serial capillary-bed definition with executable SI geometry and parameter-level physiological qualification metadata.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "definition", "component", "network", "validity", "sources", "limitations", "qualification"],
+  "properties": {
+    "schema_version": {"const": "3.0.0"},
+    "definition": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "component": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "model_id", "entry_port_id", "exit_port_id", "return_target_model_id", "return_target_port_id"],
+      "properties": {
+        "name": {"$ref": "#/$defs/id"},
+        "model_id": {"$ref": "#/$defs/id"},
+        "entry_port_id": {"$ref": "#/$defs/id"},
+        "exit_port_id": {"$ref": "#/$defs/id"},
+        "return_target_model_id": {"$ref": "#/$defs/id"},
+        "return_target_port_id": {"$ref": "#/$defs/id"}
+      }
+    },
+    "network": {
+      "type": "object", "additionalProperties": false,
+      "required": ["total_parallel_path_count", "perfused_path_count", "volume_flow_rate_m3_s", "regions"],
+      "properties": {
+        "total_parallel_path_count": {"type": "integer", "minimum": 1},
+        "perfused_path_count": {"type": "integer", "minimum": 1},
+        "volume_flow_rate_m3_s": {"$ref": "#/$defs/positive_number"},
+        "regions": {
+          "type": "array", "minItems": 3, "maxItems": 3,
+          "prefixItems": [
+            {"$ref": "#/$defs/arteriole_region"},
+            {"$ref": "#/$defs/capillary_region"},
+            {"$ref": "#/$defs/venule_region"}
+          ],
+          "items": false
+        }
+      }
+    },
+    "validity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"const": "literature_parameterized"},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "sources": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "citation", "location", "license", "role"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "citation": {"type": "string", "minLength": 1},
+          "location": {"type": "string", "minLength": 1},
+          "license": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "limitations": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "qualification": {
+      "type": "object", "additionalProperties": false,
+      "required": ["geometry_semantics", "reference_flow", "capillary", "boundary_regions", "consistency_tolerance_fraction"],
+      "properties": {
+        "geometry_semantics": {"const": "equivalent_parallel_tubes"},
+        "reference_flow": {"$ref": "#/$defs/evidence_quantity"},
+        "capillary": {
+          "type": "object", "additionalProperties": false,
+          "required": ["functional_blood_volume", "morphometric_lumen_volume", "morphometric_surface_area", "equivalent_diameter", "representative_path_length", "reference_transit_time"],
+          "properties": {
+            "functional_blood_volume": {"$ref": "#/$defs/evidence_quantity"},
+            "morphometric_lumen_volume": {"$ref": "#/$defs/evidence_quantity"},
+            "morphometric_surface_area": {"$ref": "#/$defs/evidence_quantity"},
+            "equivalent_diameter": {"$ref": "#/$defs/evidence_quantity"},
+            "representative_path_length": {"$ref": "#/$defs/evidence_quantity"},
+            "reference_transit_time": {"$ref": "#/$defs/evidence_quantity"}
+          }
+        },
+        "boundary_regions": {
+          "type": "object", "additionalProperties": false,
+          "required": ["semantics", "volume_each"],
+          "properties": {
+            "semantics": {"const": "numerical_transition_surrogates"},
+            "volume_each": {"$ref": "#/$defs/evidence_quantity"}
+          }
+        },
+        "consistency_tolerance_fraction": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.001}
+      }
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "positive_number": {"type": "number", "exclusiveMinimum": 0},
+    "uncertainty": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": {"type": "string", "enum": ["standard_deviation", "derived_standard_deviation", "reference_interval", "not_quantified", "numerical_choice"]},
+        "standard_deviation_si": {"type": "number", "minimum": 0},
+        "lower_si": {"type": "number"},
+        "upper_si": {"type": "number"}
+      }
+    },
+    "evidence_quantity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["value_si", "unit", "uncertainty", "source_ids", "role", "derivation"],
+      "properties": {
+        "value_si": {"$ref": "#/$defs/positive_number"},
+        "unit": {"type": "string", "minLength": 1},
+        "uncertainty": {"$ref": "#/$defs/uncertainty"},
+        "source_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "role": {"type": "string", "enum": ["measured", "derived", "calibration", "numerical_closure"]},
+        "derivation": {"type": "string", "minLength": 1}
+      }
+    },
+    "region_base": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "length_m", "diameter_m", "parallel_vessel_count"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "kind": {"type": "string"},
+        "length_m": {"$ref": "#/$defs/positive_number"},
+        "diameter_m": {"$ref": "#/$defs/positive_number"},
+        "parallel_vessel_count": {"type": "integer", "minimum": 1}
+      }
+    },
+    "arteriole_region": {"allOf": [{"$ref": "#/$defs/region_base"}, {"properties": {"kind": {"const": "arteriole"}}}]},
+    "capillary_region": {"allOf": [{"$ref": "#/$defs/region_base"}, {"properties": {"kind": {"const": "capillary"}}}]},
+    "venule_region": {"allOf": [{"$ref": "#/$defs/region_base"}, {"properties": {"kind": {"const": "venule"}}}]}
+  }
+}

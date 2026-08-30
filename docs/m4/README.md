@@ -110,23 +110,41 @@ See [Balanced Capillary Substance Exchange](BALANCED_CAPILLARY_EXCHANGE.md) and
 See [Capillary Nanodevice Residence and Interaction Observations](CAPILLARY_ENTITY_OBSERVATION.md)
 and [ADR-0026](../architecture/adr/0026-non-state-changing-capillary-entity-observation.md).
 
+### M4.7 - evidence-qualified pulmonary capillary candidate
+
+- healthy-adult resting recumbent pulmonary reference state;
+- strict schema `3.0.0` with parameter-level evidence roles, uncertainty,
+  derivations, source IDs, and executable closure checks;
+- separate functional perfused blood volume and morphometric lumen capacity;
+- equivalent diameter derived from human morphometry without claiming tubular
+  alveolar-sheet anatomy;
+- 0.859 s capillary transit derived from 85.9 mL functional volume and the M3
+  nominal 6 L/min reference flow;
+- explicit non-anatomical path-count and representative-length semantics;
+- numerical arteriole and venule transitions kept separate from qualified
+  capillary evidence; and
+- regional blood volume exposed as a derived runtime metric.
+
+See [Pulmonary Capillary Reference Candidate](PULMONARY_CAPILLARY_QUALIFICATION.md)
+and [ADR-0027](../architecture/adr/0027-evidence-qualified-equivalent-pulmonary-capillary-card.md).
+
 ## Planned sequence
 
-1. qualify an organ-specific pulmonary capillary parameter card;
-2. connect and compare an analytical molecular channel and one licensable
+1. connect and compare an analytical molecular channel and one licensable
    external or surrogate adapter;
-3. implement mesoscopic and local detailed variants and compare them against
+2. implement mesoscopic and local detailed variants and compare them against
    the same reference cases;
-4. define a conservative terminal/tissue ownership contract before sampling
+3. define a conservative terminal/tissue ownership contract before sampling
    retention, adhesion, or extravasation outcomes;
-5. perform the formal M4 gate review.
+4. perform the formal M4 gate review.
 
 ## Scientific status
 
-M4.1 through M4.6 are software verification, not physiological validation. The
+M4.1 through M4.7 are software verification, not physiological validation. The
 dissertation provides the layer structure, continuity requirement, recruitment
-concept, and communication questions. The executable numbers in the initial
-cards and recruitment profile are synthetic. Their values are internally
-consistent but not physiologically qualified. Physiological geometry, flow,
-transit, sphincter behavior, hematocrit, and kinetic exchange parameters require
-separately sourced model cards and independent comparisons.
+concept, and communication questions. The initial cards, recruitment profile,
+exchange fractions, and interaction rates remain synthetic. M4.7 adds the first
+literature-parameterized capillary candidate, but its evidence comes from small
+different cohorts and an equivalent rather than anatomical geometry. Jointly
+measured flow and capillary volume, sphincter behavior, hematocrit, kinetic
+exchange parameters, and independent physiological comparison remain open.

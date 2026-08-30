@@ -48,6 +48,7 @@ void require_positive_finite(const double value, const QuantityContext context) 
     const auto radius = region.diameter / 2.0;
     const auto single_cross_section = std::numbers::pi * radius * radius;
     const auto total_cross_section = single_cross_section * parallel_vessel_count;
+    const auto blood_volume = total_cross_section * region.length;
     const auto velocity = flow_rate / total_cross_section;
     const auto transit = region.length / velocity;
     const auto transit_nanoseconds = core::in_seconds(transit) * 1'000'000'000.0;
@@ -66,7 +67,7 @@ void require_positive_finite(const double value, const QuantityContext context) 
                                   "Capillary region '" + region.id +
                                       "' transit is below simulation-clock resolution"};
     }
-    return {single_cross_section, total_cross_section, velocity,
+    return {single_cross_section, total_cross_section, blood_volume, velocity,
             core::SimulationClock::Duration{rounded}};
 }
 

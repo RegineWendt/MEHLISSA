@@ -1,0 +1,163 @@
+{
+  "schema_version": "3.0.0",
+  "definition": {
+    "id": "pulmonary-healthy-adult-rest-supine-v1",
+    "version": "1.0.0",
+    "title": "Healthy-adult resting supine pulmonary capillary reference candidate"
+  },
+  "component": {
+    "name": "capillary.lung",
+    "model_id": "capillary.lung.healthy-adult-rest-supine.v1",
+    "entry_port_id": "pulmonary-microvascular-entry",
+    "exit_port_id": "pulmonary-microvascular-exit",
+    "return_target_model_id": "organ.lung",
+    "return_target_port_id": "pulmonary-capillary-return"
+  },
+  "network": {
+    "total_parallel_path_count": 9126891735,
+    "perfused_path_count": 4000000000,
+    "volume_flow_rate_m3_s": 0.0001,
+    "regions": [
+      {
+        "id": "pulmonary-arteriolar-transition",
+        "kind": "arteriole",
+        "length_m": 0.000707355302630646,
+        "diameter_m": 0.00003,
+        "parallel_vessel_count": 10000000
+      },
+      {
+        "id": "alveolar-capillary-network",
+        "kind": "capillary",
+        "length_m": 0.000688909529432795,
+        "diameter_m": 0.0000063,
+        "parallel_vessel_count": 4000000000
+      },
+      {
+        "id": "pulmonary-venular-transition",
+        "kind": "venule",
+        "length_m": 0.000707355302630646,
+        "diameter_m": 0.00003,
+        "parallel_vessel_count": 10000000
+      }
+    ]
+  },
+  "validity": {
+    "population": "healthy adults represented by two small historical human cohorts",
+    "physiological_state": "resting and recumbent, coupled to the nominal six-litre-per-minute M3 pulmonary reference flow",
+    "evidence_class": "literature_parameterized",
+    "description": "Equivalent parallel-tube closure of functional pulmonary capillary blood volume, morphometric lumen capacity, and resting flow. It is a research reference candidate, not an anatomical reconstruction or patient model."
+  },
+  "sources": [
+    {
+      "id": "lewis-1958",
+      "citation": "Lewis BM, Lin TH, Noe FE, Komisaruk R. The measurement of pulmonary capillary blood volume and pulmonary membrane diffusing capacity in normal subjects; the effects of exercise and position. J Clin Invest. 1958;37(7):1061-1070. doi:10.1172/JCI103687.",
+      "location": "https://doi.org/10.1172/JCI103687",
+      "license": "Copyright American Society for Clinical Investigation; numerical facts cited, source not redistributed",
+      "role": "functional pulmonary capillary blood volume in 19 normal subjects and paired recumbent measurements in four subjects"
+    },
+    {
+      "id": "muehlfeld-2010",
+      "citation": "Muehlfeld C, Weibel ER, Hahn U, Kummer W, Nyengaard JR, Ochs M. Is length an appropriate estimator to characterize pulmonary alveolar capillaries? A critical evaluation in the human lung. Anat Rec (Hoboken). 2010;293(7):1270-1275. doi:10.1002/ar.21158.",
+      "location": "https://doi.org/10.1002/ar.21158",
+      "license": "Copyright Wiley; numerical facts cited, source not redistributed",
+      "role": "human morphometric capillary volume, surface, equivalent radius, and non-identifiability of total capillary length"
+    },
+    {
+      "id": "mehlissa-m3-pulmonary-reference",
+      "citation": "MEHLISSA healthy-adult resting supine pulmonary 0D reference candidate, version 1.0.0.",
+      "location": "../../data/lung-models/healthy-adult-rest-supine-0d-v1.json",
+      "license": "CC-BY-4.0",
+      "role": "nominal resting pulmonary flow and compatible reference-state definition"
+    },
+    {
+      "id": "wendt-dissertation",
+      "citation": "Wendt R. Dissertation simulation chapters, Chapter 4, section 4.4.",
+      "location": "../../literature/Diss_WENDT_Simulationchapters.pdf",
+      "license": "Included with author permission; source not modified",
+      "role": "MEHLISSA capillary-layer intent, serial regions, parallel perfusion, and continuity requirement"
+    }
+  ],
+  "limitations": [
+    "The capillary region is an equivalent parallel-tube closure, not a reconstruction of the alveolar sheet network.",
+    "Equivalent path counts are numerical closure variables and must not be interpreted as anatomical vessel counts.",
+    "The four-person recumbent functional-volume result is small and historical; its method depends on carbon-monoxide diffusing-capacity assumptions and pulmonary capillary hematocrit.",
+    "The morphometric cohort contains five post-mortem lungs and describes lumen capacity rather than the blood volume perfused at rest.",
+    "The representative capillary path length is derived after fixing a round numerical perfused-path count; human total capillary length is not treated as identifiable.",
+    "Arteriolar and venular transition regions are five-millilitre numerical boundary surrogates, not physiologically qualified compartment volumes.",
+    "The nominal flow is inherited from the M3 reference card and was not measured in the same subjects as either capillary data set.",
+    "Recruitment, gravity, lobar heterogeneity, ventilation-perfusion coupling, hematocrit dynamics, pulsatility, exercise, disease, age, sex, and patient specificity remain outside this card."
+  ],
+  "qualification": {
+    "geometry_semantics": "equivalent_parallel_tubes",
+    "reference_flow": {
+      "value_si": 0.0001,
+      "unit": "m3/s",
+      "uncertainty": {"kind": "reference_interval", "lower_si": 0.00006666666666666667, "upper_si": 0.00013333333333333334},
+      "source_ids": ["mehlissa-m3-pulmonary-reference"],
+      "role": "calibration",
+      "derivation": "The six L/min nominal resting flow is reused unchanged from the M3 healthy-adult supine pulmonary reference; it is not a jointly measured value from the capillary cohorts."
+    },
+    "capillary": {
+      "functional_blood_volume": {
+        "value_si": 0.0000859,
+        "unit": "m3",
+        "uncertainty": {"kind": "derived_standard_deviation", "standard_deviation_si": 0.0000144243717367517},
+        "source_ids": ["lewis-1958"],
+        "role": "measured",
+        "derivation": "Published mean Vc of 85.9 mL for four normal subjects measured recumbent. The sample SD is recomputed from the four reported values 87.1, 101.2, 66.4, and 88.8 mL; the published rounded mean remains the executable anchor."
+      },
+      "morphometric_lumen_volume": {
+        "value_si": 0.000196,
+        "unit": "m3",
+        "uncertainty": {"kind": "standard_deviation", "standard_deviation_si": 0.000062},
+        "source_ids": ["muehlfeld-2010"],
+        "role": "measured",
+        "derivation": "Mean whole-lung alveolar capillary lumen volume and SD from five human lungs. It constrains total equivalent capacity, not resting perfused blood volume."
+      },
+      "morphometric_surface_area": {
+        "value_si": 130.0,
+        "unit": "m2",
+        "uncertainty": {"kind": "standard_deviation", "standard_deviation_si": 48.0},
+        "source_ids": ["muehlfeld-2010"],
+        "role": "measured",
+        "derivation": "Mean whole-lung alveolar capillary endothelial surface area and SD from the same five human lungs; retained as evidence even though the current transit runtime does not consume surface area."
+      },
+      "equivalent_diameter": {
+        "value_si": 0.0000063,
+        "unit": "m",
+        "uncertainty": {"kind": "derived_standard_deviation", "standard_deviation_si": 0.00000122},
+        "source_ids": ["muehlfeld-2010"],
+        "role": "derived",
+        "derivation": "Twice the reported model-based mean equivalent radius 3.15 micrometres; twice its reported SD 0.61 micrometres. It is a cylindrical-equivalent diameter, not a claim that the alveolar sheet is tubular."
+      },
+      "representative_path_length": {
+        "value_si": 0.000688909529432795,
+        "unit": "m",
+        "uncertainty": {"kind": "numerical_choice"},
+        "source_ids": ["lewis-1958", "muehlfeld-2010"],
+        "role": "numerical_closure",
+        "derivation": "After selecting four billion equivalent perfused paths, length equals 85.9 mL divided by path count and the area of a 6.30-micrometre equivalent tube. The count is deliberately round and non-anatomical; length is therefore not independent evidence."
+      },
+      "reference_transit_time": {
+        "value_si": 0.859,
+        "unit": "s",
+        "uncertainty": {"kind": "not_quantified"},
+        "source_ids": ["lewis-1958", "mehlissa-m3-pulmonary-reference"],
+        "role": "derived",
+        "derivation": "Functional capillary blood volume divided by nominal pulmonary flow: 85.9 mL / 100 mL/s = 0.859 s. This is a volume-residence closure, not a direct transit measurement."
+      }
+    },
+    "boundary_regions": {
+      "semantics": "numerical_transition_surrogates",
+      "volume_each": {
+        "value_si": 0.000005,
+        "unit": "m3",
+        "uncertainty": {"kind": "numerical_choice"},
+        "source_ids": [],
+        "role": "numerical_closure",
+        "derivation": "Five mL is assigned to each serial transition so the current three-region software contract remains executable without presenting unqualified arteriole or venule volumes as physiological evidence. Each transition contributes 0.05 s at the reference flow."
+      }
+    },
+    "consistency_tolerance_fraction": 1e-9
+  }
+}

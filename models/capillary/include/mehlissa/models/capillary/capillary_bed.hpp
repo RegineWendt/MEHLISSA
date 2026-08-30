@@ -38,6 +38,7 @@ struct CapillaryRegion final {
 struct CapillaryRegionMetrics final {
     core::Area single_vessel_cross_section{};
     core::Area total_cross_section{};
+    core::Volume blood_volume{};
     core::Speed mean_velocity{};
     core::SimulationClock::Duration transit_time{};
 };

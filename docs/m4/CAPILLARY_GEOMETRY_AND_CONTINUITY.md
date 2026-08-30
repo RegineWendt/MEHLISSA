@@ -12,9 +12,9 @@ hemodynamic model. Geometry and total flow are inputs; cross-sectional area,
 mean velocity, and transit time are derived. This prevents a model card from
 claiming mutually incompatible flow, geometry, speed, and travel time.
 
-## Definition contract 2.0.0
+## Definition contracts 2.0.0 and 3.0.0
 
-The current schema and executable software-test card are:
+The geometry contract began with the schema and executable software-test card:
 
 ```text
 data/schemas/capillary-bed-definition/2.0.0.schema.json
@@ -34,7 +34,17 @@ strict JSON Schema.
 
 Version `2.0.0` is intentionally incompatible with the M4.1 `1.0.0` contract,
 which prescribed `transit_time_s`. The v1 files remain historical evidence but
-are not the current executable contract.
+are not the current executable contract. M4.7 schema `3.0.0` retains the same
+runtime geometry while adding required parameter-level evidence and consistency
+metadata for literature-parameterized cards:
+
+```text
+data/schemas/capillary-bed-definition/3.0.0.schema.json
+examples/capillary-models/pulmonary-healthy-adult-rest-supine-v1.json
+```
+
+The loader continues to accept v2 synthetic definitions and requires the new
+qualification block for v3.
 
 ## Continuity derivation
 
@@ -44,11 +54,13 @@ network flow `Q`, MEHLISSA calculates:
 ```text
 A_single = pi * (d / 2)^2
 A_total  = n * A_single
+V_region = A_total * L
 v_mean   = Q / A_total
 t_region = L / v_mean
 ```
 
-The operations are dimension checked by the C++ quantity system. Only the
+Regional blood volume is exposed with the other derived metrics. The operations
+are dimension checked by the C++ quantity system. Only the
 final `Time` value is converted to a nanosecond simulation duration. The
 capillary region's `n` must equal `perfused_path_count`, making the current
 recruitment state part of the actual continuity calculation rather than unused
@@ -106,8 +118,10 @@ overlay and aggregate precapillary sphincter groups. Each profile explicitly
 selects fixed total flow or a simplified fixed-pressure-drop conductance
 surrogate when paths open or close. See
 [Capillary Recruitment and Precapillary Sphincter Groups](CAPILLARY_RECRUITMENT_AND_SPHINCTERS.md).
-Physiological parameter cards and independent comparisons remain separate from
-that mechanism.
+M4.7 now supplies the first pulmonary parameter card, but independent
+physiological comparison and further organ cards remain separate from that
+mechanism. See
+[Pulmonary Capillary Reference Candidate](PULMONARY_CAPILLARY_QUALIFICATION.md).
 
 See [ADR-0023](../architecture/adr/0023-dimension-safe-capillary-continuity.md)
 for the binding decision.

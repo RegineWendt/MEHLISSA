@@ -506,16 +506,22 @@ strict profile that converts capillary residence into normalized competing
 pass-through, retention, adhesion, and extravasation likelihoods. These are
 bounded, drainable observations: the entity still returns unchanged because a
 terminal or tissue ownership contract does not yet exist. The synthetic rates
-verify the mechanism but are not physiological parameters. The next increments
-add pulmonary qualification, molecular channels, and a conservative
-state-changing disposition contract. See
+verify the mechanism but are not physiological parameters. M4.7 adds the first
+organ-specific capillary reference candidate: a strict schema connects human
+functional and morphometric pulmonary evidence to an equivalent geometry,
+preserves parameter-level uncertainty and derivation, and enforces
+volume-flow-transit closure without treating equivalent path counts as anatomy.
+Its small, non-joint cohorts and numerical boundary regions make it a qualified
+candidate, not physiological validation. The next increments add molecular
+channels and a conservative state-changing disposition contract. See
 [M4 evidence](m4/README.md),
 [ADR-0021](architecture/adr/0021-versioned-capillary-bed-baseline.md), and
 [ADR-0022](architecture/adr/0022-organ-capillary-round-trip-coupling.md), and
 [ADR-0023](architecture/adr/0023-dimension-safe-capillary-continuity.md), and
 [ADR-0024](architecture/adr/0024-dynamic-capillary-recruitment.md), and
-[ADR-0025](architecture/adr/0025-balanced-capillary-exchange.md), and
-[ADR-0026](architecture/adr/0026-non-state-changing-capillary-entity-observation.md).
+[ADR-0025](architecture/adr/0025-balanced-capillary-exchange.md),
+[ADR-0026](architecture/adr/0026-non-state-changing-capillary-entity-observation.md), and
+[ADR-0027](architecture/adr/0027-evidence-qualified-equivalent-pulmonary-capillary-card.md).
 
 #### Model variants
 

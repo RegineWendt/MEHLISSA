@@ -133,6 +133,8 @@ TEST_CASE("Capillary geometry derives velocity and transit from volume-flow cont
           Catch::Approx(expected_single_area));
     CHECK(mehlissa::core::in_square_meters(exchange_bed.total_cross_section) ==
           Catch::Approx(4.0 * expected_single_area));
+    CHECK(mehlissa::core::in_cubic_meters(exchange_bed.blood_volume) ==
+          Catch::Approx(4.0 * expected_single_area * 0.0006));
     CHECK(mehlissa::core::in_meters_per_second(arteriole.mean_velocity) == Catch::Approx(0.004));
     CHECK(mehlissa::core::in_meters_per_second(exchange_bed.mean_velocity) == Catch::Approx(0.001));
     CHECK(mehlissa::core::in_meters_per_second(venule.mean_velocity) == Catch::Approx(0.004));
@@ -259,4 +261,43 @@ TEST_CASE("The versioned synthetic capillary definition loads into executable st
 
     const CapillaryBed executable{definition.model};
     CHECK(executable.model_id() == "capillary.synthetic.reference.v2");
+}
+
+TEST_CASE("The pulmonary capillary card closes evidence volume geometry and transit",
+          "[m4][capillary][schema][evidence]") {
+    const auto root = std::filesystem::path{MEHLISSA_TEST_ROOT};
+    const auto definition = mehlissa::models::capillary::load_capillary_bed_definition({
+        root / "examples/capillary-models/pulmonary-healthy-adult-rest-supine-v1.json",
+        root / "data/schemas/capillary-bed-definition/3.0.0.schema.json",
+    });
+
+    CHECK(definition.schema_version == "3.0.0");
+    CHECK(definition.definition_id == "pulmonary-healthy-adult-rest-supine-v1");
+    CHECK(definition.validity.evidence_class == "literature_parameterized");
+    REQUIRE(definition.qualification.has_value());
+    const auto& qualification = *definition.qualification;
+    CHECK(qualification.geometry_semantics == "equivalent_parallel_tubes");
+    CHECK(qualification.functional_blood_volume.value_si == Catch::Approx(85.9e-6));
+    CHECK(qualification.morphometric_lumen_volume.value_si == Catch::Approx(196.0e-6));
+    CHECK(qualification.morphometric_surface_area.value_si == Catch::Approx(130.0));
+    CHECK(qualification.equivalent_diameter.value_si == Catch::Approx(6.30e-6));
+    CHECK(qualification.reference_transit_time.value_si == Catch::Approx(0.859));
+    CHECK(qualification.reference_transit_time.role == "derived");
+    REQUIRE(qualification.functional_blood_volume.uncertainty.standard_deviation_si.has_value());
+    CHECK(*qualification.functional_blood_volume.uncertainty.standard_deviation_si ==
+          Catch::Approx(14.4243717367517e-6));
+
+    const CapillaryBed executable{definition.model};
+    const auto& capillary = executable.region_metrics(CapillaryRegionKind::capillary);
+    CHECK(mehlissa::core::in_cubic_meters(capillary.blood_volume) == Catch::Approx(85.9e-6));
+    CHECK(capillary.transit_time == 859ms);
+    CHECK(executable.total_parallel_path_count() == 9'126'891'735ULL);
+    CHECK(executable.perfused_path_count() == 4'000'000'000ULL);
+
+    const auto& arteriole = executable.region_metrics(CapillaryRegionKind::arteriole);
+    const auto& venule = executable.region_metrics(CapillaryRegionKind::venule);
+    CHECK(mehlissa::core::in_cubic_meters(arteriole.blood_volume) == Catch::Approx(5.0e-6));
+    CHECK(mehlissa::core::in_cubic_meters(venule.blood_volume) == Catch::Approx(5.0e-6));
+    CHECK(arteriole.transit_time == 50ms);
+    CHECK(venule.transit_time == 50ms);
 }
