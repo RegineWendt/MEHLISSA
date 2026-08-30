@@ -129,6 +129,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
             capillary_bed_tests.cpp
             capillary_entity_observation_tests.cpp
             capillary_exchange_tests.cpp
+            molecular_channel_tests.cpp
             capillary_recruitment_tests.cpp
         )
         target_link_libraries(

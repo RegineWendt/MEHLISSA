@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "pulmonary-synthetic-tracer-diffusion-v1",
+    "version": "1.0.0",
+    "title": "Pulmonary-capillary-bound analytical diffusion contract case"
+  },
+  "implementation": {
+    "kind": "analytical_free_diffusion_3d",
+    "model_id": "channel.diffusion.synthetic-tracer.pulmonary.v1",
+    "diffusion_coefficient_m2_s": 1e-9,
+    "first_order_degradation_rate_s_1": 0.0,
+    "maximum_receiver_radius_to_separation_ratio": 0.15
+  },
+  "reference_case": {
+    "request_id": "pulmonary-capillary-diffusion-reference",
+    "signal_id": "synthetic-neutral-tracer",
+    "compatible_capillary_definition_id": "pulmonary-healthy-adult-rest-supine-v1",
+    "capillary_region_id": "alveolar-capillary-network",
+    "separation_fraction_of_diameter": 0.5,
+    "receiver_radius_fraction_of_separation": 0.1,
+    "emitted_amount_mol": 1e-18,
+    "observation_time_mode": "analytical_peak"
+  },
+  "validity": {
+    "population": "software contract tests anchored to the M4.7 pulmonary capillary geometry",
+    "physiological_state": "healthy-adult resting supine capillary context; synthetic local molecular signal",
+    "evidence_class": "software_test_surrogate",
+    "description": "The pulmonary card supplies the local equivalent diameter and residence ceiling. Diffusion and signaling parameters are deliberately synthetic and verify an interchangeable channel contract, not pulmonary molecular physiology."
+  },
+  "sources": [
+    {
+      "id": "pierobon-akyildiz-2010",
+      "citation": "Pierobon M, Akyildiz IF. A physical end-to-end model for molecular communication in nanonetworks. IEEE J Sel Areas Commun. 2010;28(4):602-611. doi:10.1109/JSAC.2010.100509.",
+      "location": "https://doi.org/10.1109/JSAC.2010.100509",
+      "license": "Copyright IEEE; model concepts and equations cited, source not redistributed",
+      "role": "transmitter-propagation-receiver decomposition and free-diffusion analytical channel basis"
+    },
+    {
+      "id": "llatser-2014-n3sim",
+      "citation": "Llatser I, Demiray D, Cabellos-Aparicio A, Altilar DT, Alarcon E. N3Sim: Simulation framework for diffusion-based molecular communication nanonetworks. Simul Model Pract Theory. 2014;42:210-222. doi:10.1016/j.simpat.2013.11.004.",
+      "location": "https://doi.org/10.1016/j.simpat.2013.11.004",
+      "license": "Copyright Elsevier; simulator behavior described, source and code not redistributed",
+      "role": "future independent particle-simulator comparison and adapter target"
+    },
+    {
+      "id": "mehlissa-m4-pulmonary-capillary",
+      "citation": "MEHLISSA pulmonary capillary reference candidate, version 1.0.0.",
+      "location": "pulmonary-healthy-adult-rest-supine-v1.json",
+      "license": "CC-BY-4.0",
+      "role": "compatible capillary definition, equivalent diameter, and residence-time ceiling"
+    },
+    {
+      "id": "mehlissa-m4-channel-contract",
+      "citation": "MEHLISSA Next M4.8 interchangeable molecular-channel contract, version 1.0.0.",
+      "location": "../../docs/m4/MOLECULAR_CHANNEL_INTERFACE.md",
+      "license": "CC-BY-4.0",
+      "role": "synthetic reference parameters, validity boundary, and executable regression semantics"
+    }
+  ],
+  "limitations": [
+    "The diffusion coefficient, emitted amount, signal identity, and receiver size are synthetic software-test parameters and are not pulmonary physiological evidence.",
+    "The analytical solution assumes instantaneous point release, constant isotropic diffusion in unbounded three-dimensional space, a passive small receiver, and optional homogeneous first-order degradation.",
+    "Blood flow, advection, vessel walls, alveolar geometry, heterogeneous media, binding, reactions, stochastic counting noise, intersymbol interference, and receiver detection thresholds are absent.",
+    "The equivalent capillary diameter only bounds a local contract case; it does not turn the M4.7 equivalent-tube network into microscopic alveolar anatomy.",
+    "No external simulator is executed in M4.8; N3Sim or another licensable adapter remains an independent comparison increment."
+  ]
+}

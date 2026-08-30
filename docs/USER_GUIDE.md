@@ -620,10 +620,11 @@ before composing layers. The equations and schema migration are documented in
 [Capillary Geometry and Continuity](m4/CAPILLARY_GEOMETRY_AND_CONTINUITY.md).
 Physiological organ-capillary gateways and geometry, physiologically qualified
 recruitment, exchange, and nanodevice interactions, state-changing retention,
-and molecular channels remain subsequent M4 work. Aggregate scheduled
+and detailed channel comparison remain subsequent M4 work. Aggregate scheduled
 recruitment is available in M4.4, a balanced synthetic exchange contract in
-M4.5, and non-state-changing local residence and interaction observations in
-M4.6.
+M4.5, non-state-changing local residence and interaction observations in M4.6,
+an evidence-qualified pulmonary candidate in M4.7, and the first analytical
+molecular-channel contract in M4.8.
 
 ### 9.1 Dynamic recruitment experiments (M4.4)
 
@@ -793,6 +794,46 @@ card for reproducible comparisons and sensitivity studies, not clinical or
 patient-specific conclusions. Read
 [Pulmonary Capillary Reference Candidate](m4/PULMONARY_CAPILLARY_QUALIFICATION.md)
 for the evidence table, calculations, and limitations.
+
+### 9.5 Molecular diffusion-channel experiments (M4.8)
+
+M4.8 lets a researcher ask a local communication question without embedding a
+particular channel simulator in the lung model: after a transmitter releases a
+known amount of a molecular signal, what concentration and amount should a
+small passive receiver observe at a selected time and distance?
+
+The first profile and its schema are:
+
+```text
+examples/capillary-models/pulmonary-synthetic-tracer-diffusion-v1.json
+data/schemas/molecular-channel-profile/1.0.0.schema.json
+```
+
+The profile selects an analytical free-diffusion implementation. Its request is
+bound to the `alveolar-capillary-network` region of the M4.7 pulmonary card.
+MEHLISSA derives a 3.15-um transmitter-receiver separation from half the
+equivalent capillary diameter, creates a small spherical passive receiver, and
+checks that the analytical peak at 1.65375 ms lies within the 0.859-s capillary
+residence ceiling. The channel then reports expected concentration, expected
+receiver amount, and the fraction of the emitted amount represented by that
+receiver observation.
+
+Useful software and sensitivity experiments include:
+
+- varying diffusion or degradation while keeping capillary context fixed;
+- varying transmitter-receiver placement and receiver size within the declared
+  approximation boundary;
+- checking whether a channel peak still lies inside a capillary residence
+  window; and
+- comparing a future particle simulator with the analytical result using the
+  same request and response.
+
+This is not yet a pulmonary oxygen or biomarker experiment. The signal,
+diffusion coefficient, emitted amount, placement, and receiver are synthetic.
+The model also omits flow, walls, heterogeneous tissue, reactions, stochastic
+counting noise, modulation, and detection thresholds. Read
+[Interchangeable Molecular-Channel Interface](m4/MOLECULAR_CHANNEL_INTERFACE.md)
+before creating a new channel profile or interpreting its output biologically.
 
 ## 10. Troubleshooting
 

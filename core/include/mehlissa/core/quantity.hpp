@@ -125,7 +125,9 @@ using Time = Quantity<Dimension<0, 1, 0>>;
 using Area = Quantity<Dimension<2, 0, 0>>;
 using Volume = Quantity<Dimension<3, 0, 0>>;
 using Speed = Quantity<Dimension<1, -1, 0>>;
+using Diffusivity = Quantity<Dimension<2, -1, 0>>;
 using FlowRate = Quantity<Dimension<3, -1, 0>>;
+using FirstOrderRate = Quantity<Dimension<0, -1, 0>>;
 using Amount = Quantity<Dimension<0, 0, 1>>;
 using Concentration = Quantity<Dimension<-3, 0, 1>>;
 using Mass = Quantity<Dimension<0, 0, 0, 1>>;
@@ -178,12 +180,20 @@ using VascularCompliance = Quantity<Dimension<4, 2, 0, -1>>;
     return meters_per_second(value * 1.0e-3);
 }
 
+[[nodiscard]] constexpr Diffusivity square_meters_per_second(const double value) noexcept {
+    return Diffusivity::from_si(value);
+}
+
 [[nodiscard]] constexpr FlowRate cubic_meters_per_second(const double value) noexcept {
     return FlowRate::from_si(value);
 }
 
 [[nodiscard]] constexpr FlowRate liters_per_minute(const double value) noexcept {
     return cubic_meters_per_second(value * 1.0e-3 / 60.0);
+}
+
+[[nodiscard]] constexpr FirstOrderRate per_second(const double value) noexcept {
+    return FirstOrderRate::from_si(value);
 }
 
 [[nodiscard]] constexpr Amount moles(const double value) noexcept { return Amount::from_si(value); }
@@ -254,12 +264,20 @@ milliliters_per_millimeter_of_mercury(const double value) noexcept {
     return value.si_value();
 }
 
+[[nodiscard]] constexpr double in_square_meters_per_second(const Diffusivity value) noexcept {
+    return value.si_value();
+}
+
 [[nodiscard]] constexpr double in_cubic_meters_per_second(const FlowRate value) noexcept {
     return value.si_value();
 }
 
 [[nodiscard]] constexpr double in_liters_per_minute(const FlowRate value) noexcept {
     return value.si_value() * 60.0 / 1.0e-3;
+}
+
+[[nodiscard]] constexpr double in_per_second(const FirstOrderRate value) noexcept {
+    return value.si_value();
 }
 
 [[nodiscard]] constexpr double in_moles(const Amount value) noexcept { return value.si_value(); }

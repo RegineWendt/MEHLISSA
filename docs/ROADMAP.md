@@ -512,8 +512,14 @@ functional and morphometric pulmonary evidence to an equivalent geometry,
 preserves parameter-level uncertainty and derivation, and enforces
 volume-flow-transit closure without treating equivalent path counts as anatomy.
 Its small, non-joint cohorts and numerical boundary regions make it a qualified
-candidate, not physiological validation. The next increments add molecular
-channels and a conservative state-changing disposition contract. See
+candidate, not physiological validation. M4.8 adds a typed, implementation-
+neutral molecular-channel request and response, a strict evidence-scoped
+profile, and an analytical free-diffusion implementation. Its first reference
+request derives local scale and a residence ceiling from the pulmonary card,
+while all signal and receiver parameters remain synthetic. The third Gate M4
+statement is therefore executable at the software-contract level. Comparison
+with an independent particle or surrogate implementation and a conservative
+state-changing disposition contract remain next increments. See
 [M4 evidence](m4/README.md),
 [ADR-0021](architecture/adr/0021-versioned-capillary-bed-baseline.md), and
 [ADR-0022](architecture/adr/0022-organ-capillary-round-trip-coupling.md), and
@@ -521,7 +527,8 @@ channels and a conservative state-changing disposition contract. See
 [ADR-0024](architecture/adr/0024-dynamic-capillary-recruitment.md), and
 [ADR-0025](architecture/adr/0025-balanced-capillary-exchange.md),
 [ADR-0026](architecture/adr/0026-non-state-changing-capillary-entity-observation.md), and
-[ADR-0027](architecture/adr/0027-evidence-qualified-equivalent-pulmonary-capillary-card.md).
+[ADR-0027](architecture/adr/0027-evidence-qualified-equivalent-pulmonary-capillary-card.md), and
+[ADR-0028](architecture/adr/0028-interchangeable-molecular-channel-contract.md).
 
 #### Model variants
 

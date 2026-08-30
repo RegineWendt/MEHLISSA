@@ -128,10 +128,26 @@ and [ADR-0026](../architecture/adr/0026-non-state-changing-capillary-entity-obse
 See [Pulmonary Capillary Reference Candidate](PULMONARY_CAPILLARY_QUALIFICATION.md)
 and [ADR-0027](../architecture/adr/0027-evidence-qualified-equivalent-pulmonary-capillary-card.md).
 
+### M4.8 - interchangeable analytical molecular channel
+
+- stable typed request/response boundary independent of channel implementation;
+- amount, concentration, length, receiver volume, and observation time in SI;
+- strict molecular-channel profile schema `1.0.0` with evidence and limitations;
+- analytical point-source free-diffusion implementation with optional
+  first-order degradation and a guarded passive small-receiver approximation;
+- pulmonary-bound reference request derived from the M4.7 equivalent diameter
+  and checked against its capillary residence ceiling;
+- factory construction through the abstract channel interface; and
+- deterministic impulse-response regression plus invalid-context and
+  invalid-receiver tests.
+
+See [Interchangeable Molecular-Channel Interface](MOLECULAR_CHANNEL_INTERFACE.md)
+and [ADR-0028](../architecture/adr/0028-interchangeable-molecular-channel-contract.md).
+
 ## Planned sequence
 
-1. connect and compare an analytical molecular channel and one licensable
-   external or surrogate adapter;
+1. connect a licensable external or independently implemented particle
+   surrogate and compare it with M4.8 through the same channel contract;
 2. implement mesoscopic and local detailed variants and compare them against
    the same reference cases;
 3. define a conservative terminal/tissue ownership contract before sampling
@@ -140,11 +156,12 @@ and [ADR-0027](../architecture/adr/0027-evidence-qualified-equivalent-pulmonary-
 
 ## Scientific status
 
-M4.1 through M4.7 are software verification, not physiological validation. The
+M4.1 through M4.8 are software verification, not physiological validation. The
 dissertation provides the layer structure, continuity requirement, recruitment
 concept, and communication questions. The initial cards, recruitment profile,
 exchange fractions, and interaction rates remain synthetic. M4.7 adds the first
 literature-parameterized capillary candidate, but its evidence comes from small
-different cohorts and an equivalent rather than anatomical geometry. Jointly
-measured flow and capillary volume, sphincter behavior, hematocrit, kinetic
+different cohorts and an equivalent rather than anatomical geometry. M4.8 adds
+evidence-based channel architecture but deliberately synthetic molecular
+parameters. Jointly measured flow and capillary volume, sphincter behavior, hematocrit, kinetic
 exchange parameters, and independent physiological comparison remain open.
