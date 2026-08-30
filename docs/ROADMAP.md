@@ -531,8 +531,13 @@ boundary loss, complete spatial output, and an executable 128-to-256-shell
 comparison against the same analytical request. M4.12 adds the conservative
 state-changing disposition contract: named-stream sampling maps M4.6 outcomes
 to organ return or a retryable acknowledged terminal owner, preserving every ID
-across 100, 250, and 500 ms host steps. A richer shared anatomical case remains
-before the formal gate review. See
+across 100, 250, and 500 ms host steps. M4.13 adds the richer shared comparison:
+an analytical advected Gaussian, 200,000 deterministic endpoint particles, and
+256-to-512-cell conservative fields use the same M4.7-bound equivalent radius
+and flow, diffusion, bulk reaction, and surface-to-volume wall sink. All
+statistical, refinement, boundary, and amount-balance gates pass, while the
+kinetics remain explicitly synthetic and cross-section averaged. The formal M4
+gate review is now the next action. See
 [M4 evidence](m4/README.md),
 [ADR-0021](architecture/adr/0021-versioned-capillary-bed-baseline.md), and
 [ADR-0022](architecture/adr/0022-organ-capillary-round-trip-coupling.md), and
@@ -545,7 +550,8 @@ before the formal gate review. See
 [ADR-0029](architecture/adr/0029-deterministic-brownian-particle-comparison.md), and
 [ADR-0030](architecture/adr/0030-trajectory-resolving-brownian-channel.md), and
 [ADR-0031](architecture/adr/0031-radial-finite-volume-molecular-channel.md), and
-[ADR-0032](architecture/adr/0032-conservative-terminal-entity-ownership.md).
+[ADR-0032](architecture/adr/0032-conservative-terminal-entity-ownership.md), and
+[ADR-0033](architecture/adr/0033-shared-axial-advection-reaction-case.md).
 
 #### Model variants
 

@@ -145,8 +145,9 @@ approximations, and all molecular parameters remain synthetic.
 M4 now contains analytical, endpoint-particle, trajectory-particle, and radial-
 field implementations that can answer the same final-time receiver request.
 M4.12 now defines conservative terminal ownership for state-changing retention,
-adhesion, and extravasation. A later shared case can introduce qualified
-surfaces, advection, reactions, and receiver kinetics across the mesoscopic and
-microscopic resolutions.
+adhesion, and extravasation. M4.13 adds a separate shared axial case with
+M4.7-bound equivalent radius and flow, bulk reaction, and a cross-section-
+averaged surface sink across analytical, microscopic, and mesoscopic
+resolutions. Explicit radial wall encounters and receiver kinetics remain open.
 
 See [ADR-0031](../architecture/adr/0031-radial-finite-volume-molecular-channel.md).

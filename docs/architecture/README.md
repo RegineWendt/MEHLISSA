@@ -44,6 +44,7 @@ decisions; a new decision supersedes an existing one through a new ADR.
 | [ADR-0030](adr/0030-trajectory-resolving-brownian-channel.md) | Accepted | fixed-step Brownian trajectories with bounded trace retention, reflecting-box support, and coarse-refined verification |
 | [ADR-0031](adr/0031-radial-finite-volume-molecular-channel.md) | Accepted | conservative radial finite-volume concentration field with explicit boundary loss and grid-refinement verification |
 | [ADR-0032](adr/0032-conservative-terminal-entity-ownership.md) | Accepted | sampled capillary dispositions close through a retryable hand-off to one explicit terminal owner |
+| [ADR-0033](adr/0033-shared-axial-advection-reaction-case.md) | Accepted | geometry-bound analytical, particle, and finite-volume comparison with advection plus separate bulk and wall reactions |
 
 ## Status model
 

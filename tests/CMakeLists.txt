@@ -126,6 +126,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
     if(MEHLISSA_BUILD_MODEL_COUPLING AND MEHLISSA_BUILD_CAPILLARY_MODELS)
         add_executable(
             mehlissa_capillary_model_tests
+            axial_advection_reaction_tests.cpp
             capillary_bed_tests.cpp
             capillary_entity_observation_tests.cpp
             capillary_entity_disposition_tests.cpp

@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "pulmonary-shared-axial-transport-v1",
+    "version": "1.0.0",
+    "title": "Shared pulmonary axial advection-diffusion-reaction verification case"
+  },
+  "context": {
+    "compatible_capillary_definition_id": "pulmonary-healthy-adult-rest-supine-v1",
+    "capillary_region_id": "alveolar-capillary-network"
+  },
+  "implementation": {
+    "kind": "axial_advection_diffusion_reaction_1d",
+    "model_id": "channel.axial-transport.synthetic-tracer.pulmonary.v1"
+  },
+  "geometry": {
+    "domain_length_m": 0.0004,
+    "source_position_m": 0.0001,
+    "receiver_center_m": 0.0001801990139037014,
+    "receiver_width_m": 0.00002,
+    "lumen_radius_m": 0.00000315,
+    "wall_semantics": "cross_section_averaged_cylindrical_surface_sink"
+  },
+  "propagation": {
+    "mean_advection_speed_m_s": 0.000801990139037014,
+    "diffusion_coefficient_m2_s": 1e-9,
+    "bulk_reaction_rate_s_1": 0.1,
+    "wall_interaction_velocity_m_s": 1e-7
+  },
+  "observation_time_s": 0.1,
+  "particle_resolution": {
+    "sample_count": 200000,
+    "experiment_seed": 20260830,
+    "random_stream_name": "capillary.molecular.axial-transport"
+  },
+  "field_resolution": {
+    "coarse_cell_count": 256,
+    "refined_cell_count": 512,
+    "cfl_safety_factor": 0.45
+  },
+  "verification_gate": {
+    "minimum_particle_receiver_count": 50000,
+    "maximum_particle_standardized_error": 4.0,
+    "maximum_coarse_relative_reference_error": 0.03,
+    "maximum_refined_relative_reference_error": 0.015,
+    "maximum_relative_refinement_difference": 0.03,
+    "maximum_relative_active_fraction_error": 0.01,
+    "maximum_absolute_conservation_residual": 1e-10,
+    "maximum_escaped_amount_fraction": 1e-8
+  },
+  "validity": {
+    "population": "software cross-resolution verification bound to the M4.7 equivalent pulmonary capillary geometry",
+    "physiological_state": "healthy-adult resting supine capillary context; synthetic local tracer and reaction kinetics",
+    "evidence_class": "software_test_surrogate",
+    "description": "An infinite-line analytical solution, deterministic endpoint particles, and conservative one-dimensional finite volumes share axial flow, diffusion, bulk reaction, and a cylindrical surface-to-volume wall sink."
+  },
+  "sources": [
+    {
+      "id": "muehlfeld-2010",
+      "citation": "Muehlfeld C, Weibel ER, Hahn U, Kummer W, Nyengaard JR, Ochs M. Is length an appropriate estimator to characterize pulmonary alveolar capillaries? A critical evaluation in the human lung. Anat Rec (Hoboken). 2010;293(7):1270-1275. doi:10.1002/ar.21158.",
+      "location": "https://doi.org/10.1002/ar.21158",
+      "license": "Copyright Wiley; numerical facts cited, source not redistributed",
+      "role": "human morphometric lumen volume and surface used by the M4.7 equivalent-diameter derivation"
+    },
+    {
+      "id": "mehlissa-m4-pulmonary-capillary",
+      "citation": "MEHLISSA M4.7 evidence-qualified equivalent pulmonary capillary reference candidate, version 1.0.0.",
+      "location": "../../docs/m4/PULMONARY_CAPILLARY_QUALIFICATION.md",
+      "license": "CC-BY-4.0",
+      "role": "executable lumen radius, representative path length, perfused path count, and resting mean flow speed"
+    },
+    {
+      "id": "crank-1975-diffusion",
+      "citation": "Crank J. The Mathematics of Diffusion. 2nd ed. Oxford University Press; 1975.",
+      "location": "https://archive.org/details/mathematics-of-diffusion-2nd-edition-j.-crank",
+      "license": "Copyright Oxford University Press; equations cited, source not redistributed",
+      "role": "Gaussian advection-diffusion reference and first-order attenuation context"
+    },
+    {
+      "id": "patankar-1980-finite-volume",
+      "citation": "Patankar SV. Numerical Heat Transfer and Fluid Flow. Hemisphere Publishing; 1980.",
+      "location": "https://www.worldcat.org/oclc/4493649",
+      "license": "Copyright Hemisphere Publishing; numerical method cited, source not redistributed",
+      "role": "conservative finite-volume flux formulation for advection and diffusion"
+    },
+    {
+      "id": "mehlissa-m4-radial-field",
+      "citation": "MEHLISSA M4.11 conservative radial finite-volume molecular channel, version 1.0.0.",
+      "location": "../../docs/m4/RADIAL_FINITE_VOLUME_CHANNEL.md",
+      "license": "CC-BY-4.0",
+      "role": "existing MEHLISSA amount-balance, bounded-work, and grid-refinement conventions"
+    }
+  ],
+  "limitations": [
+    "The equivalent cylindrical lumen is evidence-bound through M4.7 but is not an anatomical alveolar-sheet reconstruction.",
+    "The model is cross-section averaged; wall interaction is a homogeneous sink k_wall = 2 v_wall / radius rather than an explicit radial encounter or receptor-binding process.",
+    "The molecular diffusivity, bulk reaction rate, and wall interaction velocity are synthetic software fixtures and are not qualified pulmonary kinetics.",
+    "The analytical reference assumes an infinite axial line; finite-volume boundary escape is therefore separately bounded and required to remain negligible.",
+    "The microscopic result samples exact final positions and competing reaction outcomes rather than resolving intermediate particle-wall trajectories."
+  ]
+}

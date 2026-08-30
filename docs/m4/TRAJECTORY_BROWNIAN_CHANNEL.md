@@ -151,7 +151,9 @@ binding and other reactions, interparticle effects, receiver kinetics, and
 measured pulmonary molecular-channel data.
 
 M4.11 fulfills the next resolution increment with a mesoscopic radial finite-
-volume concentration field on the same contract. A later richer shared case can
-compare wall, advection, reaction, and receiver semantics across resolutions.
+volume concentration field on the same contract. M4.13 then compares advection,
+bulk reaction, and a surface-to-volume wall sink across analytical, endpoint-
+particle, and axial finite-volume resolutions. Explicit trajectory-wall
+encounters and receiver kinetics remain open.
 
 See [ADR-0030](../architecture/adr/0030-trajectory-resolving-brownian-channel.md).

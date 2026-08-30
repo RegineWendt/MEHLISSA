@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:axial-advection-reaction-profile:1.0.0",
+  "title": "MEHLISSA shared axial advection-diffusion-reaction profile",
+  "description": "Strict analytical, microscopic-particle, and mesoscopic-field reference case with a homogenized cylindrical wall reaction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "context", "implementation", "geometry", "propagation", "observation_time_s", "particle_resolution", "field_resolution", "verification_gate", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["compatible_capillary_definition_id", "capillary_region_id"],
+      "properties": {
+        "compatible_capillary_definition_id": {"$ref": "#/$defs/id"},
+        "capillary_region_id": {"$ref": "#/$defs/id"}
+      }
+    },
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "model_id"],
+      "properties": {
+        "kind": {"const": "axial_advection_diffusion_reaction_1d"},
+        "model_id": {"$ref": "#/$defs/id"}
+      }
+    },
+    "geometry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["domain_length_m", "source_position_m", "receiver_center_m", "receiver_width_m", "lumen_radius_m", "wall_semantics"],
+      "properties": {
+        "domain_length_m": {"type": "number", "exclusiveMinimum": 0},
+        "source_position_m": {"type": "number", "exclusiveMinimum": 0},
+        "receiver_center_m": {"type": "number", "exclusiveMinimum": 0},
+        "receiver_width_m": {"type": "number", "exclusiveMinimum": 0},
+        "lumen_radius_m": {"type": "number", "exclusiveMinimum": 0},
+        "wall_semantics": {"const": "cross_section_averaged_cylindrical_surface_sink"}
+      }
+    },
+    "propagation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mean_advection_speed_m_s", "diffusion_coefficient_m2_s", "bulk_reaction_rate_s_1", "wall_interaction_velocity_m_s"],
+      "properties": {
+        "mean_advection_speed_m_s": {"type": "number", "exclusiveMinimum": 0},
+        "diffusion_coefficient_m2_s": {"type": "number", "exclusiveMinimum": 0},
+        "bulk_reaction_rate_s_1": {"type": "number", "exclusiveMinimum": 0},
+        "wall_interaction_velocity_m_s": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "observation_time_s": {"type": "number", "exclusiveMinimum": 0},
+    "particle_resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sample_count", "experiment_seed", "random_stream_name"],
+      "properties": {
+        "sample_count": {"type": "integer", "minimum": 10000, "maximum": 10000000},
+        "experiment_seed": {"type": "integer", "minimum": 0},
+        "random_stream_name": {"$ref": "#/$defs/id"}
+      }
+    },
+    "field_resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coarse_cell_count", "refined_cell_count", "cfl_safety_factor"],
+      "properties": {
+        "coarse_cell_count": {"type": "integer", "minimum": 16, "maximum": 4096},
+        "refined_cell_count": {"type": "integer", "minimum": 17, "maximum": 4096},
+        "cfl_safety_factor": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.5}
+      }
+    },
+    "verification_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimum_particle_receiver_count", "maximum_particle_standardized_error", "maximum_coarse_relative_reference_error", "maximum_refined_relative_reference_error", "maximum_relative_refinement_difference", "maximum_relative_active_fraction_error", "maximum_absolute_conservation_residual", "maximum_escaped_amount_fraction"],
+      "properties": {
+        "minimum_particle_receiver_count": {"type": "integer", "minimum": 1},
+        "maximum_particle_standardized_error": {"type": "number", "exclusiveMinimum": 0},
+        "maximum_coarse_relative_reference_error": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "maximum_refined_relative_reference_error": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "maximum_relative_refinement_difference": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "maximum_relative_active_fraction_error": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "maximum_absolute_conservation_residual": {"type": "number", "exclusiveMinimum": 0},
+        "maximum_escaped_amount_fraction": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"const": "software_test_surrogate"},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "citation", "location", "license", "role"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "citation": {"type": "string", "minLength": 1},
+          "location": {"type": "string", "minLength": 1},
+          "license": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+  }
+}

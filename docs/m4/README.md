@@ -215,15 +215,34 @@ See [Radial Finite-Volume Molecular Channel](RADIAL_FINITE_VOLUME_CHANNEL.md) an
 See [Conservative Terminal Entity Ownership](TERMINAL_ENTITY_OWNERSHIP.md) and
 [ADR-0032](../architecture/adr/0032-conservative-terminal-entity-ownership.md).
 
+### M4.13 - shared axial advection-diffusion-reaction case
+
+- separate versioned contract for physics that deliberately exceeds the M4.8
+  free-diffusion request;
+- strict binding to the M4.7 equivalent pulmonary capillary radius, path extent,
+  and resting mean flow speed;
+- one shared axial source, receiver, diffusivity, bulk reaction, and
+  surface-to-volume wall reaction;
+- exact advected-Gaussian analytical reference with competing reaction balance;
+- deterministic 200,000-sample microscopic endpoint-particle evaluation;
+- conservative 256- and 512-cell mesoscopic finite-volume fields with explicit
+  boundary escape and complete final output;
+- predeclared statistical, analytical, refinement, conservation, and boundary
+  gates; and
+- synthetic kinetic parameters and explicit cross-section-averaged limitations.
+
+See [Shared Axial Advection-Diffusion-Reaction Case](SHARED_AXIAL_ADVECTION_REACTION_CASE.md)
+and [ADR-0033](../architecture/adr/0033-shared-axial-advection-reaction-case.md).
+
 ## Planned sequence
 
-1. add a richer shared microscopic/mesoscopic case with anatomically qualified surfaces,
-   advection, reactions, or a licensable external adapter; and
-2. perform the formal M4 gate review.
+1. perform the formal M4 gate review; and
+2. record any remaining M4 work as explicit post-gate qualification or external-
+   adapter increments rather than silently extending the milestone.
 
 ## Scientific status
 
-M4.1 through M4.12 are software verification, not physiological validation. The
+M4.1 through M4.13 are software verification, not physiological validation. The
 dissertation provides the layer structure, continuity requirement, recruitment
 concept, and communication questions. The initial cards, recruitment profile,
 exchange fractions, and interaction rates remain synthetic. M4.7 adds the first
@@ -236,8 +255,12 @@ verification, and reflecting-box software support without claiming that the box
 is pulmonary anatomy. M4.11 adds a conservative spherical field, explicit
 boundary-loss accounting, and 128-to-256-shell refinement, but no anatomical
 field geometry. M4.12 conserves identity across sampled terminal hand-offs, but
-its rates and target compartments are synthetic. These are implementation
-comparisons, not biological validation.
+its rates and target compartments are synthetic. M4.13 adds a shared
+analytical/particle/field case with pulmonary-card-bound equivalent radius and
+flow, directed advection, bulk reaction, and a cylindrical surface-derived
+sink. Its kinetic parameters are synthetic, its geometry remains equivalent,
+and its particles sample endpoints rather than explicit wall encounters. These
+are implementation comparisons, not biological validation.
 Jointly measured flow and capillary volume, sphincter behavior,
 hematocrit, kinetic exchange parameters, and independent physiological
 comparison remain open.

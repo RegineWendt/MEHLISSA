@@ -5,6 +5,8 @@ find_package(jsoncons CONFIG REQUIRED)
 
 add_library(
     mehlissa_capillary_model
+    src/axial_advection_reaction_case.cpp
+    src/axial_advection_reaction_profile.cpp
     src/capillary_bed.cpp
     src/capillary_bed_definition.cpp
     src/analytical_diffusion_channel.cpp

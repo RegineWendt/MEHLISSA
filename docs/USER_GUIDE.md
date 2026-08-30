@@ -1018,6 +1018,54 @@ compartments are ownership labels rather than anatomy. Read
 [Conservative Terminal Entity Ownership](m4/TERMINAL_ENTITY_OWNERSHIP.md) before
 interpreting or extending this state-changing mode.
 
+### 9.10 One flow, diffusion, and wall-reaction experiment (M4.13)
+
+M4.13 combines several mechanisms that earlier examples tested separately. A
+synthetic molecular pulse starts inside an equivalent pulmonary capillary,
+moves downstream with blood flow, spreads by diffusion, and can be removed by
+either a reaction in the fluid or an interaction with the vessel wall.
+
+The shared profile is:
+
+```text
+examples/capillary-models/pulmonary-shared-axial-transport-v1.json
+data/schemas/axial-advection-reaction-profile/1.0.0.schema.json
+```
+
+Three models answer exactly the same question: how much active signal lies in a
+small downstream receiver after 0.1 seconds?
+
+- The analytical model supplies the mathematical reference.
+- The microscopic model follows 200,000 statistically independent endpoint
+  particles and assigns each reacted particle to fluid or wall reaction.
+- The mesoscopic model evolves concentration-like amount fields on 256 and 512
+  axial cells.
+
+The radius and mean flow speed must agree with the M4.7 pulmonary capillary card.
+The local molecule and reaction parameters are synthetic. At the observation
+time, the analytical receiver fraction is `0.512059`. The particle result is
+`0.511250`; the refined field result is `0.515598`. The particle difference is
+less than one statistical standard error, and the refined field differs by
+`0.691%`. Every model separately accounts for active signal, bulk reaction,
+wall reaction, and any boundary escape.
+
+Useful experiments include:
+
+- increasing flow speed and observing the receiver peak move downstream;
+- changing diffusivity and observing the signal spread;
+- comparing fluid reaction with wall reaction without confusing either with
+  domain escape;
+- refining the finite-volume grid and checking convergence; and
+- increasing the particle count and observing the statistical uncertainty
+  decrease.
+
+The wall is not resolved radially. Its interaction velocity is converted into a
+cross-section-averaged sink using the cylindrical surface-to-volume ratio. This
+is a transparent and testable first wall model, not a claim about receptor
+binding or pulmonary biochemistry. Read
+[Shared Axial Advection-Diffusion-Reaction Case](m4/SHARED_AXIAL_ADVECTION_REACTION_CASE.md)
+for equations, numerical gates, and interpretation limits.
+
 ## 10. Troubleshooting
 
 ### CMake selects the wrong Visual Studio version
