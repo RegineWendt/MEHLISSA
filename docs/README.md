@@ -12,6 +12,7 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 
 - [Current-state analysis](IST_ANALYSE.md) – comparison of the literature, MEHLISSA 1.x, MEHLISSA 2.0, data sets, and application scenarios.
 - [Roadmap for a new MEHLISSA generation](ROADMAP.md) – dissertation-aligned target architecture, development phases, quality gates, scenarios, and the long-term digital-twin path.
+- [English User Guide](USER_GUIDE.md) – non-expert introduction, experiment decision aid, guided research workflows, installation, commands, models, and interpretation limits.
 - [System requirements](requirements/SYSTEM_REQUIREMENTS.md) – 72 numbered functional, architectural, and quality requirements with origin, priority, and verification method.
 - [Traceability matrix](requirements/TRACEABILITY_MATRIX.md) – mapping of all requirements to the literature, current status, roadmap gate, and planned verification.
 - [Fingerprinting reference scenario](requirements/FINGERPRINTING_SCENARIO.md) – domain baseline, reference values, acceptance levels, and tests for the first vertical demonstrator.

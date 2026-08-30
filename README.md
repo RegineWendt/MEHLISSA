@@ -12,8 +12,8 @@ and technical references.
 
 Start here:
 
-- [User Guide](docs/USER_GUIDE.md) — build, validate models, run reference
-  checks, apply physiological-state profiles, and understand outputs.
+- [User Guide](docs/USER_GUIDE.md) — understand MEHLISSA, choose an experiment,
+  build and run the software, and interpret model evidence and limitations.
 - [Development Guide](docs/DEVELOPMENT.md) — compiler, CMake, vcpkg, CI, and
   contribution-oriented setup.
 - [Roadmap](docs/ROADMAP.md) — implementation strategy from the validated body

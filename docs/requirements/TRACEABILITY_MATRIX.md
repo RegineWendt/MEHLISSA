@@ -126,7 +126,7 @@ statements.
 | QUA-002 | RM M1 | DONE | M1 | clang-tidy, ASan/UBSan, and warnings as errors in CI |
 | QUA-003 | MEH25 pp. 1–2 | SPEC | M2–M7 | versioned benchmark reports plus result comparison |
 | QUA-004 | MEH25 pp. 1–2 | SPEC | M4–M7 | scaling test: agents versus populations/surrogate |
-| QUA-005 | RM 6.6 | PART | M1 ongoing | API/schema/model/scenario documentation exists; the prioritized User Guide expansion will add a non-expert purpose-and-experiment Part I ahead of the existing technical Part II |
+| QUA-005 | RM 6.6 | DONE | M1 ongoing | versioned API/schema/model/scenario documents plus a two-level English User Guide cover non-expert purpose, non-claims, mental model, guided experiment families, decision aid, glossary, and retained M0–M4 technical workflows; every future M-gate now requires a documented guide-impact review |
 | QUA-006 | RM M8 | SPEC | M8 | data-protection and data-management review |
 
 ## 7. M0 coverage review

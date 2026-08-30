@@ -7,16 +7,130 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** M0 through the current M3 body–organ coupling slice
+**Covered software:** accepted M0 through M4 implementation
 
-**Last updated:** 29 August 2026
+**Last updated:** 30 August 2026, after the M4 gate review
 
-This guide is the main entry point for people who want to build, inspect, and
-run MEHLISSA Next. It will grow with each milestone. Internal architecture
-decisions and scientific derivations remain in the linked specialist
-documents; this guide focuses on practical use and interpretation.
+This guide is the main entry point for researchers, students, and developers
+who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
+the simulator and its experiment families without assuming C++ or simulation
+expertise. Part II contains the installation, command, model, validation, and
+developer workflows. Scientific derivations and architecture decisions remain
+in linked specialist documents.
 
-## 1. What you can do today
+Quick navigation:
+
+- [understand the simulator](#part-i--understanding-mehlissa-and-choosing-an-experiment);
+- [choose a first experiment](#6-choose-your-first-experiment);
+- [install and run the software](#part-ii--technical-installation-execution-and-model-workflows); and
+- [check the maintenance policy](#guide-maintenance-and-next-milestones).
+
+## Part I – Understanding MEHLISSA and choosing an experiment
+
+### 1. What MEHLISSA is
+
+MEHLISSA is a research simulation platform for studying how artificial
+nanodevices, biological substances, and molecular signals could move and
+interact across several scales of the human body. Its long-term architecture
+connects four independently replaceable layers:
+
+1. a **body layer** transports entities and substances through systemic
+   circulation;
+2. an **organ layer** represents organ-specific routes and physiology at a
+   selected resolution;
+3. a **capillary layer** represents local microcirculation, exchange, device
+   residence, and molecular communication; and
+4. a **cell layer** will represent receptors, binding, signaling, release, and
+   cellular response.
+
+The software is intended to help formulate and test computational research
+hypotheses. It does not assume that one model resolution is always best. A
+researcher should be able to compare a fast surrogate, a population or field
+model, and a detailed particle model under the same experiment definition.
+
+The name “entity” is deliberately general. Depending on an experiment, an
+entity can stand for a nanodevice, a cell, a carrier, or another individually
+tracked object. A substance amount is not an entity: it is a dimensioned
+quantity that may be transported or partitioned without assigning an identity
+to every molecule.
+
+### 2. What MEHLISSA is useful for—and what it cannot claim
+
+MEHLISSA is useful when the research question concerns one or more of the
+following:
+
+- circulation routes, transit, injection, extraction, or passive sampling;
+- consequences of changing a physiological-state profile;
+- comparison of alternative organ, capillary, particle, population, or field
+  resolutions;
+- conservation and ownership across independently implemented model layers;
+- local residence, exchange, retention, adhesion, or extravasation mechanisms;
+- analytical, stochastic, and numerical molecular-channel comparisons;
+- reproducibility, sensitivity, uncertainty, and evidence-qualified model
+  comparison; or
+- eventually, complete diagnostic or therapeutic Nano-IoT workflows.
+
+MEHLISSA is **not** currently:
+
+- a complete virtual patient or a clinically validated digital twin;
+- a medical device or a basis for diagnosis or treatment decisions;
+- a geometry-resolved model of a particular person's vasculature;
+- a complete representation of blood rheology, hematocrit, capillary anatomy,
+  cell biology, or active external communication;
+- evidence that a synthetic rate, fraction, receiver, or equivalent geometry
+  is physiologically correct; or
+- a guarantee that a software-verified result is biologically predictive.
+
+Every executable scientific model therefore carries an evidence class,
+validity scope, provenance, units, and limitations. A result must be
+interpreted within that scope. The [M4 gate review](m4/M4_GATE_REVIEW.md), for
+example, accepts capillary communication as a technical milestone while
+explicitly rejecting a claim of physiological pulmonary-capillary validation.
+
+### 3. The mental model
+
+A MEHLISSA experiment separates the question being asked from the model used
+to answer it:
+
+```mermaid
+flowchart LR
+    E[Experiment<br/>question, inputs, seed, outputs] --> B[Virtual body<br/>circulation and routes]
+    B --> O[Organ model<br/>coarse or regional]
+    O --> C[Capillary model<br/>transit, exchange, channels]
+    C --> L[Cell model<br/>planned in M5]
+    B --> R[Observations and reports]
+    O --> R
+    C --> R
+    L --> R
+```
+
+The central concepts are:
+
+- **Experiment:** the reproducible definition of the research question,
+  selected models, inputs, time, random seeds, and requested outputs.
+- **Virtual body:** a vascular transport environment. It is a computational
+  model, not automatically a patient-specific anatomy.
+- **Entity:** an individually identified object whose location and ownership
+  must remain unambiguous.
+- **Population:** an aggregate count used when individual entities are
+  unnecessary or too expensive.
+- **Substance:** a physical amount with explicit SI units that can be
+  transported, exchanged, reacted, or measured.
+- **Model component:** an independently implemented body, organ, capillary, or
+  future cell model with named boundaries.
+- **Resolution:** the abstraction level—surrogate, mesoscopic field/population,
+  or detailed particle/trajectory model.
+- **Observation:** a bounded record of something the simulation exposes,
+  distinct from a state change.
+- **Ownership:** the rule that every entity and conserved transfer belongs to
+  exactly one model or acknowledged pending queue at every instant.
+- **Evidence scope:** the population, state, source role, uncertainty, and
+  limitations that determine what a model result may mean.
+
+This separation makes it possible to improve one layer without embedding a
+lung, capillary, or fingerprinting special case in the simulation kernel.
+
+### 4. What you can do today
 
 The current software can:
 
@@ -35,19 +149,202 @@ The current software can:
 - exchange identity-preserving entities, populations, substance amounts, and
   volume flows through a typed body–organ boundary;
 - select a coarse, regional-surrogate, or literature-parameterized pulmonary
-  0D implementation from a schema-validated
-  executable model card; and
-- run the same body–lung–body regression at two compatible host steps.
+  0D implementation from a schema-validated executable model card;
+- run the same body–lung–body scenario with coarse and five-lobe pulmonary
+  implementations;
+- traverse an independent arteriole–capillary–venule component and return to
+  an organ with closed entity and payload ownership;
+- change aggregate capillary recruitment while preserving in-flight progress;
+- partition substance amount among blood, endothelium, interstitium, and cell
+  inventories with an enforced balance;
+- observe local nanodevice position and residence and optionally sample a
+  conservative terminal outcome;
+- compare analytical, endpoint-particle, trajectory, radial-field, and shared
+  axial molecular-transport implementations; and
+- run all accepted M0–M4 contracts in a reproducible cross-platform test suite.
 
-The repository also contains one schema-validated comparison scenario that
-runs unchanged with the coarse lung compartment and the five-lobe pulmonary
-model. This is currently an executable regression rather than a general CLI
-composition feature.
+Not every capability has the same user-interface maturity:
 
-The software does not yet contain a geometry-resolved or participant-level
-pulmonary model, capillary/cellular exchange, or active Nano-IoT communication.
+| Access level | Meaning | Examples |
+|---|---|---|
+| command-line workflow | intended to be invoked directly with `mehlissa-cli` | manifest validation, minimal run, body-model validation, BVS regression, body-state application |
+| executable reference workflow | a checked scenario or evaluator with automated acceptance gates | pulmonary validation, coarse/five-lobe comparison, historical FP9 timer |
+| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, exchange, nanodevice disposition, molecular-channel comparisons |
 
-## 2. Repository orientation
+The access level says how an experiment is run, not how scientifically valid it
+is. A CLI model can still be synthetic; a developer workflow can still be a
+strong software reference.
+
+The software does not yet contain an executable cell layer, active Nano-IoT
+communication, a complete fingerprinting workflow, or a participant-specific
+virtual body. Those begin in M5 and later milestones.
+
+### 5. Experiment families and guided examples
+
+Each example below starts with a research question. The technical links lead
+to runnable commands, checked data, or focused component tests in Part II.
+
+#### 5.1 Injection and systemic circulation
+
+| Question element | Guided example |
+|---|---|
+| research question | How does the injection site influence the distribution of transported entities in the canonical vascular model? |
+| inputs | BVS95 body model, injection vessel, entity count, simulation duration, master seed |
+| workflow | run the deterministic BVS reference experiment or define a smaller synthetic transport case |
+| outputs | active and extracted counts, vessel distributions, optional trajectories and observations, conservation totals |
+| interpretation | compare distributions only after checking exact injected = active + extracted balance and the model's schematic geometry |
+| limitations | BVS95 is a historical transport model with equivalent rather than patient-specific vessels; distribution agreement is not clinical validation |
+
+Start with [the BVS reference workflow](#run-the-m24-scientific-regression) and
+[transport observations and extraction](#transport-observations-and-extraction).
+
+#### 5.2 Passive observation and gateway sampling
+
+| Question element | Guided example |
+|---|---|
+| research question | How many entities pass a selected sampling site, and how much individual detail is needed to answer the question? |
+| inputs | vascular route, passive measurement site, injection schedule, observation bounds |
+| workflow | enable aggregate passage counts and optionally retain only the first N individual records or trajectories |
+| outputs | exact aggregate counts, bounded individual events, truncation indicators, time-resolved observations |
+| interpretation | aggregate counts remain authoritative even when detail is deliberately truncated |
+| limitations | the current gateway is a passive observation site; range, communication errors, energy, and an active external link are M6 work |
+
+Use [transport observations and extraction](#transport-observations-and-extraction).
+
+#### 5.3 Physiological-state comparison
+
+| Question element | Guided example |
+|---|---|
+| research question | How does a declared rest, exercise, or posture profile change transport velocity and distribution without changing vascular topology? |
+| inputs | one compatible body model and two or more versioned state profiles |
+| workflow | validate the model, apply each profile, and compare outputs under otherwise identical experiment settings |
+| outputs | state-adjusted flows, velocities, transitions, and transport observations |
+| interpretation | differences show model sensitivity to the declared profile, not automatically a prediction for every healthy person |
+| limitations | the checked profiles are transparent sensitivity states; they do not yet provide complete pressure, compliance, regional exercise, or vertebral-plexus physiology |
+
+Follow [the body-state workflow](#apply-a-body-state-profile).
+
+#### 5.4 Coarse-versus-detailed organ models
+
+| Question element | Guided example |
+|---|---|
+| research question | Which outputs change when the same body–lung–body scenario uses a coarse transit compartment or five parallel pulmonary lobe beds? |
+| inputs | one shared scenario, route, seed, step, payload, and acceptance definition; two model cards |
+| workflow | run the checked resolution-comparison scenario without allowing either candidate to override shared inputs |
+| outputs | exact ownership and payload closure plus model-specific transit behavior |
+| interpretation | unchanged scenario meaning allows differences to be attributed to model structure rather than configuration drift |
+| limitations | the five-lobe model is more structured but still 0D; it is not geometry-resolved pulmonary anatomy |
+
+See [the shared organ-resolution scenario](#compare-coarse-and-detailed-lung-resolution-in-one-scenario).
+
+#### 5.5 Individual entities versus populations and fields
+
+| Question element | Guided example |
+|---|---|
+| research question | Can a cheaper population or concentration-field model reproduce the output relevant to an individual-particle experiment? |
+| inputs | shared geometry, source, observation time, transport parameters, receiver, and acceptance gates |
+| workflow | compare analytical, particle/trajectory, and field implementations under one reference profile |
+| outputs | receiver fractions or concentrations, stochastic error, grid/step refinement, amount balance, and work diagnostics |
+| interpretation | agreement supports interchangeability for the checked output and parameter domain only |
+| limitations | equal endpoint statistics do not prove equal paths, wall interactions, or biological receiver behavior |
+
+Begin with [analytical-versus-particle comparison](#analytical-versus-particle-channel-comparison-m49),
+[time-resolved trajectories](#time-resolved-molecular-trajectories-m410), and
+[mesoscopic fields](#mesoscopic-concentration-fields-m411).
+
+#### 5.6 Capillary exchange and nanodevice fate
+
+| Question element | Guided example |
+|---|---|
+| research question | During local capillary transit, how is a substance partitioned and which exclusive terminal fate is sampled for a nanodevice? |
+| inputs | capillary card, balanced exchange fractions, residence-sensitive outcome rates, deterministic stream, terminal owner mapping |
+| workflow | complete an organ–capillary route, inspect the non-state-changing observation, and optionally enable the separate disposition profile |
+| outputs | blood/endothelium/interstitium/cell amounts, balance residual, regional residence, outcome probabilities, and final owner |
+| interpretation | conservation and exclusive ownership are hard software invariants; synthetic fractions and rates are experiment assumptions |
+| limitations | no validated bidirectional kinetics, metabolism, reversible adhesion, tissue response, or patient-specific capillary anatomy is implied |
+
+Read [balanced exchange](#balanced-substance-exchange-experiments-m45),
+[residence observations](#nanodevice-residence-and-interaction-observations-m46),
+and [terminal hand-off](#retention-adhesion-and-tissue-hand-off-m412).
+
+#### 5.7 Flow, diffusion, and reaction across resolutions
+
+| Question element | Guided example |
+|---|---|
+| research question | Do analytical, microscopic, and mesoscopic implementations agree when advection, diffusion, bulk reaction, and a wall-derived sink act together? |
+| inputs | one M4.7-bound equivalent radius and velocity, source, receiver, diffusivity, two reaction rates, seed, and grid sizes |
+| workflow | execute the M4.13 shared axial profile with its predeclared statistical, refinement, and conservation gates |
+| outputs | receiver fractions, particle counts, reacted/active/escaped amounts, grid refinement, and balance residuals |
+| interpretation | passing results verify shared semantics and numerical accounting across resolutions |
+| limitations | kinetics are synthetic and cross-section averaged; particles sample endpoints rather than explicit radial wall encounters |
+
+Use [the shared axial experiment](#one-flow-diffusion-and-wall-reaction-experiment-m413).
+
+#### 5.8 Validation and sensitivity studies
+
+| Question element | Guided example |
+|---|---|
+| research question | Does a frozen pulmonary model agree with source-disjoint data, and where does it fail? |
+| inputs | immutable model card, calibration sources, independent validation data, declared comparison rules |
+| workflow | run aggregate, population multipoint, or lobar validation without refitting to the evaluation data |
+| outputs | endpoint agreement, residuals, RMSE, source-overlap checks, and retained failures |
+| interpretation | failures are evidence about model scope; they should motivate a new version, not be hidden by changing the frozen reference |
+| limitations | population-level agreement does not establish participant-level prediction or clinical validity |
+
+Start with [interpreting model evidence](#how-to-interpret-model-evidence) and
+[the pulmonary validation workflows](#run-the-pulmonary-0d-independent-validation).
+
+### 6. Choose your first experiment
+
+Use the smallest workflow that answers the intended question:
+
+| If you want to… | Start with… | Access level |
+|---|---|---|
+| verify that the installation and reproducibility machinery work | minimal deterministic experiment | command line |
+| study whole-body injection and circulation | BVS reference or synthetic body transport | command line |
+| compare rest, exercise, or posture assumptions | body-state profiles | command line |
+| inspect passive sampling and bounded trajectories | transport observation report | command line/reference workflow |
+| compare two pulmonary resolutions without changing the scenario | body–lung resolution comparison | executable reference workflow |
+| evaluate a pulmonary model against independent evidence | pulmonary validation evaluators | executable reference workflow |
+| study capillary recruitment or exchange | M4 recruitment/exchange profiles | component/developer workflow |
+| study nanodevice residence or terminal fate | M4 observation/disposition profiles | component/developer workflow |
+| compare analytical, particle, trajectory, and field transport | M4 molecular-channel profiles | component/developer workflow |
+
+If the desired study needs cell binding, intracellular response, active
+Nano-IoT communication, or a complete fingerprinting chain, treat it as a
+future scenario design rather than silently approximating it with an unrelated
+current model.
+
+### 7. Short glossary
+
+| Term | Meaning in MEHLISSA |
+|---|---|
+| adapter | a boundary implementation that connects an external or alternative model without making the kernel depend on it |
+| calibration | use of evidence to choose or fit model parameters |
+| capillary bed | the local arteriole–capillary–venule transport component; current pulmonary geometry is equivalent rather than anatomical |
+| component | an independently implemented model with a lifecycle and named interfaces |
+| conservation | the requirement that tracked identity or physical amount is neither silently lost nor duplicated |
+| entity | an individually identified transported object such as a nanodevice or cell |
+| evidence class | metadata describing whether a value is synthetic, literature-derived, calibrated, or independently evaluated |
+| experiment manifest | versioned description of a reproducible run, including time and random seed |
+| gate | the explicit acceptance criteria that close a roadmap milestone |
+| model card/profile | schema-validated data selecting parameters, evidence scope, validity, and limitations without recompilation |
+| named random stream | deterministic random sequence isolated by purpose so unrelated stochastic mechanisms do not perturb one another |
+| observation | reported state or event that does not necessarily change routing or ownership |
+| ownership | the model, store, or pending queue currently responsible for one entity or transfer |
+| population model | aggregate representation that tracks counts or amounts instead of every individual |
+| reference case | fixed inputs and expected comparison rules shared by implementations |
+| surrogate | deliberately simplified model preserving selected input/output behavior within a declared scope |
+| validation | comparison with evidence not used to calibrate the evaluated model; always limited to the measured population and endpoints |
+| verification | evidence that software and equations implement their declared contract correctly |
+
+## Part II – Technical installation, execution, and model workflows
+
+Part II assumes that the reader has selected an experiment family. Begin with
+the command-line workflows for installation and body transport. M3 and M4
+sections then explain executable reference and component/developer workflows.
+
+### Repository orientation
 
 | Path | Purpose |
 |---|---|
@@ -58,17 +355,19 @@ pulmonary model, capillary/cellular exchange, or active Nano-IoT communication.
 | `models/coupling/` | versioned cross-model entity and conserved-transfer contracts |
 | `models/organ/` | interchangeable lung implementations and model-definition loader |
 | `models/cosimulation/` | body–organ ownership and route adapter |
+| `models/capillary/` | capillary transit, exchange, nanodevice observation/disposition, and molecular channels |
 | `data/body-models/` | canonical executable vascular models |
 | `data/body-states/` | state overlays for compatible body models |
 | `data/lung-models/` | executable evidence-scoped pulmonary reference candidates |
 | `data/schemas/` | versioned JSON Schemas |
 | `data/reference-results/` | checked-in scientific Golden References |
 | `examples/` | minimal manifests and synthetic models |
+| `examples/capillary-models/` | executable M4 capillary and molecular-channel profiles |
 | `tests/` | software, invariant, schema, and regression tests |
 | `docs/` | user, scientific, architecture, and development documentation |
 | `mehlissa/`, `mehlissa2.0/` | historical implementations retained as references |
 
-## 3. Prerequisites
+### Prerequisites
 
 On Windows, install:
 
@@ -84,7 +383,7 @@ control, but the Visual Studio C++ workload supplies the actual compiler.
 Linux builds use a C++20 compiler, CMake, Ninja, and vcpkg. See the
 [Development Guide](DEVELOPMENT.md) for the supported presets.
 
-## 4. Configure, build, and test on Windows
+### Configure, build, and test on Windows
 
 Open **Developer PowerShell for VS 2026**, change to the repository root, and
 run:
@@ -106,7 +405,7 @@ build/windows-msvc/apps/Debug/mehlissa.exe
 
 All paths in the following examples are relative to the repository root.
 
-## 5. Command overview
+### Command overview
 
 Run the CLI without arguments to print its current syntax:
 
@@ -117,7 +416,7 @@ build/windows-msvc/apps/Debug/mehlissa.exe
 The non-zero exit is intentional because a command is required. Stable exit
 categories are documented in [Errors, Logs, and Checkpoints](m1/ERRORS_LOGS_CHECKPOINTS.md).
 
-### 5.1 Validate an experiment manifest
+#### Validate an experiment manifest
 
 ```powershell
 build/windows-msvc/apps/Debug/mehlissa.exe validate `
@@ -128,7 +427,7 @@ build/windows-msvc/apps/Debug/mehlissa.exe validate `
 Validation first checks the JSON Schema and then semantic constraints such as
 duration, seed, model list, and output directory.
 
-### 5.2 Run the minimal deterministic experiment
+#### Run the minimal deterministic experiment
 
 ```powershell
 build/windows-msvc/apps/Debug/mehlissa.exe run `
@@ -147,7 +446,7 @@ This command currently demonstrates the reproducible M1 runtime contract. The
 M3 body–organ path is tested as a typed developer API but is not yet composed by
 this general CLI command.
 
-### 5.3 Validate a vascular model
+#### Validate a vascular model
 
 ```powershell
 build/windows-msvc/apps/Debug/mehlissa.exe validate-body `
@@ -168,7 +467,7 @@ build/windows-msvc/apps/Debug/mehlissa.exe validate-body `
   --schema data/schemas/vascular-graph/1.0.0.schema.json
 ```
 
-### 5.4 Recreate the canonical 95-segment model
+#### Recreate the canonical 95-segment model
 
 ```powershell
 build/windows-msvc/apps/Debug/mehlissa.exe migrate-legacy-95 `
@@ -182,7 +481,7 @@ The converter is deterministic. Tests require its result to match the
 checked-in canonical graph byte for byte. It does not overwrite the historical
 CSV files.
 
-### 5.5 Run the M2.4 scientific regression
+#### Run the M2.4 scientific regression
 
 ```powershell
 build/windows-msvc/apps/Debug/mehlissa.exe reference-bvs `
@@ -204,7 +503,7 @@ The expected checked-in result is
 `data/reference-results/bvs95-dissertation-rest-m2.4.json`. Scientific meaning
 and limitations are explained in the [M2.4 report](m2/BVS_REFERENCE_REGRESSION.md).
 
-### 5.6 Apply a body-state profile
+#### Apply a body-state profile
 
 The same executable can derive a state-specific graph from a compatible base
 model. No source change or rebuild is required.
@@ -240,7 +539,7 @@ The exercise and tilt files are sensitivity profiles, not clinically validated
 physiological models. Read their `limitations` arrays and the
 [M2.6 model note](m2/BODY_STATE_PROFILES.md) before interpreting results.
 
-## 6. Transport observations and extraction
+### Transport observations and extraction
 
 M2.5 transport observation is currently exposed as a typed C++ API. A
 `CompartmentTransport` can be configured with:
@@ -267,15 +566,14 @@ A CLI/manifest connection for this body observation configuration remains
 planned. Standalone lung definitions already provide schema-validated M3 organ
 selection, but the general experiment manifest does not compose them yet.
 
-## 7. M3 developer preview: the first lung boundary
+### Body–organ coupling and pulmonary models
 
 M3 uses a typed C++ boundary rather than a scenario-specific body shortcut. A
 `ModelComponent` exposes a stable model ID, named entry and exit ports, and
-versioned entity and conserved-quantity transfers. Three implementations exist:
-`LungCompartment`, a coarse transit surrogate, and `PulmonaryCirculation`, a
-serial artery/regional-capillary/vein surrogate, plus
-`PulmonaryZeroDimensionalModel`, a literature-parameterized mean hemodynamic
-reference candidate.
+versioned entity and conserved-quantity transfers. Implementations include
+`LungCompartment`, a coarse transit surrogate; `PulmonaryCirculation`, a serial
+artery/regional-capillary/vein surrogate; literature-parameterized mean 0D
+hemodynamic candidates; and the five-parallel-lobe v7 model.
 
 The current contract verifies that:
 
@@ -301,6 +599,7 @@ data/lung-models/healthy-adult-rest-exercise-age-0d-v3.json
 data/lung-models/healthy-adult-rest-exercise-age-invasive-0d-v4.json
 data/lung-models/healthy-adult-pressure-distensible-age-0d-v5.json
 data/lung-models/healthy-adult-pressure-distensible-age-0d-v6.json
+data/lung-models/healthy-adult-lobar-parallel-0d-v7.json
 ```
 
 The two contract cards validate against
@@ -349,17 +648,25 @@ men, so using v6 as sex-neutral is an explicit extrapolation. Read the
 [age-distensibility model card](m3/PULMONARY_0D_AGE_DISTENSIBILITY.md) before
 interpreting v6.
 
+The v7 card validates against schema 1.6.0 and instantiates five anatomically
+named parallel 0D beds while preserving the qualified v4 aggregate response.
+Its fixed healthy-adult supine lobe shares pass an independent normal V/Q
+SPECT/CT comparison. The shares are population-level and static; they do not
+provide participant anatomy or dynamic posture/activity redistribution. Read
+the [parallel-bed model card](m3/PULMONARY_LOBAR_PARALLEL_BEDS.md) and
+[independent lobe validation](m3/PULMONARY_LOBAR_PERFUSION_VALIDATION.md).
+
 The optional external-data section can preserve a source checksum, format,
 coordinate system, units, and transformation history, but no qualified
 pulmonary geometry is distributed yet.
 
 This remains a developer API: the first explicit body → lung → body ownership
 round trip is implemented, but the CLI cannot yet compose it automatically.
-See the [M3 working plan](m3/README.md),
+See the [M3 implementation evidence](m3/README.md),
 [model-definition guide](m3/LUNG_MODEL_DEFINITIONS.md), and the model cards
 before interpreting results.
 
-## 8. How to interpret model evidence
+### How to interpret model evidence
 
 MEHLISSA distinguishes:
 
@@ -394,13 +701,14 @@ These labels are not interchangeable. In particular:
   path exists;
   measured participant-level data have not yet been licensed or evaluated,
   and no variant is geometry-resolved or fully pulsatile,
-  patient-specific, or clinically usable. V7 adds five anatomical lobe beds;
+  patient-specific, or clinically usable. V7 adds five anatomically named
+  parallel lobe beds;
   its fixed healthy-adult supine shares pass an independent V/Q SPECT/CT
   comparison, but dynamic redistribution is not yet modeled;
 - none of the current outputs is patient-specific or suitable for clinical
   decision-making.
 
-### 8.1 Run the pulmonary 0D independent validation
+#### Run the pulmonary 0D independent validation
 
 After building the Debug preset, run only the independent validation checks:
 
@@ -423,7 +731,7 @@ The v2 result is not a fitted Bentley reproduction: Claessen et al. supplies
 the adaptation calibration, while Bentley remains the untouched stress-test
 cohort. The exercise RC discrepancy improves but remains a diagnostic failure.
 
-### 8.2 Run the published-population multipoint validation
+#### Run the published-population multipoint validation
 
 The immediately usable multipoint cases contain four non-overlapping healthy
 population series from Kovacs and Wolsk. They apply reported mean PAWP and flow
@@ -473,7 +781,7 @@ interpreting a stage result. For v5, also read the
 For v6, read the
 [age-distensibility model card](m3/PULMONARY_0D_AGE_DISTENSIBILITY.md).
 
-### 8.2.1 Use the anatomical five-lobe pulmonary model
+#### Use the five-lobe pulmonary model
 
 The v7 definition is
 `data/lung-models/healthy-adult-lobar-parallel-0d-v7.json`. Loading it through
@@ -483,8 +791,9 @@ state contains flow, resistance, compliance, transit time, and blood volume
 for the right upper, right middle, right lower, left upper, and left lower
 lobes.
 
-Use v7 when an experiment needs a reproducible anatomical lobe assignment or
-regional state. Do not interpret the fixed fractions as patient-specific flow:
+Use v7 when an experiment needs a reproducible anatomically named lobe
+assignment or regional state. Do not interpret the fixed fractions as
+patient-specific flow:
 they are a documented DE-CT perfused-blood-volume proxy and currently remain
 fixed across posture and exercise. Read the
 [parallel-beds model card](m3/PULMONARY_LOBAR_PARALLEL_BEDS.md) before reporting
@@ -507,7 +816,7 @@ Both source reconstructions pass without refitting v7. Read the
 [lobar validation report](m3/PULMONARY_LOBAR_PERFUSION_VALIDATION.md) for the
 metrics, acceptance rules, and scope limitations.
 
-### 8.2.2 Compare coarse and detailed lung resolution in one scenario
+#### Compare coarse and detailed lung resolution in one scenario
 
 The scenario file
 `examples/scenarios/body-lung-resolution-comparison-v1.json` defines the body,
@@ -529,7 +838,7 @@ literature-derived pulmonary transit. Read the
 [coarse–detailed comparison](m3/COARSE_DETAILED_SCENARIO_COMPARISON.md) before
 interpreting this as a physiological model comparison.
 
-### 8.3 Verify the subject-level multipoint analysis path
+#### Verify the subject-level multipoint analysis path
 
 The multipoint path accepts pseudonymous healthy-control records with at least
 three jointly measured cardiac-output, mPAP, and PAWP stages. If heart rate and
@@ -556,7 +865,7 @@ for required fields, formulas, source qualification, and the current data-access
 blocker. Do not add a clinical source file to the repository unless its data-use
 terms explicitly permit redistribution.
 
-### 8.4 Reproduce the historical FP9 lung timer
+#### Reproduce the historical FP9 lung timer
 
 The Level A FP9 baseline replays the dissertation's published event semantics
 without pretending that they are new physiological predictions. Its versioned
@@ -576,7 +885,7 @@ assembly. Read the [FP9 timer baseline](m3/FP9_TIMER_BASELINE.md) before using
 these historical outputs; the replay does not model binding, diffusion,
 collector encounter probability, or gateway communication.
 
-## 9. M4 capillary communication and layer coupling
+### Capillary communication and layer coupling
 
 M4.1 adds an independent capillary-layer component with three explicit serial
 regions: arteriole, capillary, and venule. Its first card is intentionally a
@@ -627,7 +936,7 @@ pulmonary candidate in M4.7, the stable channel contract in M4.8, and the
 state-changing and multi-resolution increments through M4.13. See the
 [M4 gate review](m4/M4_GATE_REVIEW.md) for the exact acceptance boundary.
 
-### 9.1 Dynamic recruitment experiments (M4.4)
+#### Dynamic recruitment experiments (M4.4)
 
 M4.4 adds a separate profile that can open and close groups of capillary paths
 while a simulation is running:
@@ -676,7 +985,7 @@ about human microvascular physiology. Consult
 [Capillary Recruitment and Precapillary Sphincter Groups](m4/CAPILLARY_RECRUITMENT_AND_SPHINCTERS.md)
 before creating a physiological profile.
 
-### 9.2 Balanced substance-exchange experiments (M4.5)
+#### Balanced substance-exchange experiments (M4.5)
 
 M4.5 can account for a substance leaving blood and entering three tissue-side
 compartments. It uses a separate exchange profile:
@@ -718,7 +1027,7 @@ clearance. Use it for balance, architecture, and sensitivity experiments only.
 Read [Balanced Capillary Substance Exchange](m4/BALANCED_CAPILLARY_EXCHANGE.md)
 before defining another profile.
 
-### 9.3 Nanodevice residence and interaction observations (M4.6)
+#### Nanodevice residence and interaction observations (M4.6)
 
 M4.6 lets a program inspect where a nanodevice is inside the capillary route
 and how long it has spent in each region. A separate optional profile adds
@@ -764,7 +1073,7 @@ adhesion, or extravasation of a real nanodevice. Read
 [Capillary Nanodevice Residence and Interaction Observations](m4/CAPILLARY_ENTITY_OBSERVATION.md)
 before defining another profile.
 
-### 9.4 Pulmonary capillary reference candidate (M4.7)
+#### Pulmonary capillary reference candidate (M4.7)
 
 The first organ-specific capillary card is:
 
@@ -796,7 +1105,7 @@ patient-specific conclusions. Read
 [Pulmonary Capillary Reference Candidate](m4/PULMONARY_CAPILLARY_QUALIFICATION.md)
 for the evidence table, calculations, and limitations.
 
-### 9.5 Molecular diffusion-channel experiments (M4.8)
+#### Molecular diffusion-channel experiments (M4.8)
 
 M4.8 lets a researcher ask a local communication question without embedding a
 particular channel simulator in the lung model: after a transmitter releases a
@@ -836,7 +1145,7 @@ counting noise, modulation, and detection thresholds. Read
 [Interchangeable Molecular-Channel Interface](m4/MOLECULAR_CHANNEL_INTERFACE.md)
 before creating a new channel profile or interpreting its output biologically.
 
-### 9.6 Analytical-versus-particle channel comparison (M4.9)
+#### Analytical-versus-particle channel comparison (M4.9)
 
 M4.9 answers a second methodological question: does an independently
 implemented particle model reproduce the analytical M4.8 result when both use
@@ -875,7 +1184,7 @@ biological parameter qualification. Read
 [Brownian Particle-Channel Comparison](m4/BROWNIAN_PARTICLE_CHANNEL_COMPARISON.md)
 for its equations, evidence, gates, and interpretation boundary.
 
-### 9.7 Time-resolved molecular trajectories (M4.10)
+#### Time-resolved molecular trajectories (M4.10)
 
 M4.10 answers a more detailed software question: can MEHLISSA construct and
 inspect individual Brownian paths while preserving the same aggregate channel
@@ -930,7 +1239,7 @@ parameters remain future work. Read
 [Trajectory-Resolving Brownian Channel](m4/TRAJECTORY_BROWNIAN_CHANNEL.md) for
 the equations, evidence, numerical gates, and interpretation limits.
 
-### 9.8 Mesoscopic concentration fields (M4.11)
+#### Mesoscopic concentration fields (M4.11)
 
 M4.11 answers the same synthetic receiver question without tracking individual
 molecules. It divides a spherical region around the transmitter into concentric
@@ -974,7 +1283,7 @@ verification model, not a physiologically validated lung transport model. Read
 [Radial Finite-Volume Molecular Channel](m4/RADIAL_FINITE_VOLUME_CHANNEL.md) for
 the conservation equation, boundary semantics, evidence, and numerical gates.
 
-### 9.9 Retention, adhesion, and tissue hand-off (M4.12)
+#### Retention, adhesion, and tissue hand-off (M4.12)
 
 M4.6 can report how likely a nanodevice is to pass through, remain in the
 capillary, adhere to a surface, or leave the blood. M4.12 can now optionally
@@ -1019,7 +1328,7 @@ compartments are ownership labels rather than anatomy. Read
 [Conservative Terminal Entity Ownership](m4/TERMINAL_ENTITY_OWNERSHIP.md) before
 interpreting or extending this state-changing mode.
 
-### 9.10 One flow, diffusion, and wall-reaction experiment (M4.13)
+#### One flow, diffusion, and wall-reaction experiment (M4.13)
 
 M4.13 combines several mechanisms that earlier examples tested separately. A
 synthetic molecular pulse starts inside an equivalent pulmonary capillary,
@@ -1067,22 +1376,22 @@ binding or pulmonary biochemistry. Read
 [Shared Axial Advection-Diffusion-Reaction Case](m4/SHARED_AXIAL_ADVECTION_REACTION_CASE.md)
 for equations, numerical gates, and interpretation limits.
 
-## 10. Troubleshooting
+### Troubleshooting
 
-### CMake selects the wrong Visual Studio version
+#### CMake selects the wrong Visual Studio version
 
 Use **Developer PowerShell for VS 2026** and the CMake executable installed
 inside Visual Studio, as shown in section 4. A globally installed older CMake
 may not recognize the `Visual Studio 18 2026` generator.
 
-### vcpkg dependencies cannot be downloaded
+#### vcpkg dependencies cannot be downloaded
 
 Check that `VCPKG_ROOT` points to a valid vcpkg installation. If network access
 is temporarily unavailable, use the dependency-free smoke preset described in
 the [Development Guide](DEVELOPMENT.md). It checks the core but does not replace
 the complete suite.
 
-### A model or profile is rejected
+#### A model or profile is rejected
 
 Read the stable error identifier and message. Common causes are:
 
@@ -1093,33 +1402,45 @@ Read the stable error identifier and message. Common causes are:
 - flow, velocity, or geometry values that violate SI invariants;
 - an unknown data-source reference.
 
-### The full test suite takes longer than expected
+#### The full test suite takes longer than expected
 
 The M2.4 regression simulates both 6,359 and 63,590 particles and recreates its
 Golden Reference. A complete debug suite therefore takes roughly one to two
 minutes on the current Windows reference system.
 
-## 11. Where this guide goes next
+### Guide maintenance and next milestones
 
-The highest-priority documentation package is a new non-expert Part I. It will
-introduce what MEHLISSA is useful for, explain its virtual body/entities/models
-mental model, and describe the kinds of experiments a researcher can perform
-before presenting installation or command-line details. It will include guided
-examples for circulation and injection, passive observation, physiological
-state comparisons, coarse-versus-detailed organ models, individual-versus-
-population transport, and validation or sensitivity studies. Each example will
-state its research question, inputs, outputs, interpretation, and limitations.
-The current technical material will remain as Part II rather than being lost.
-This work package is tracked explicitly in the Roadmap's immediate to-do list.
+This edition implements the two-level guide planned in the Roadmap: the new
+non-expert Part I precedes the retained and updated technical Part II. It covers
+the accepted software through M4 while preserving the difference between CLI,
+reference-workflow, and component/developer access.
 
-The guide will be extended with:
+The User Guide is mandatory gate-maintenance evidence. At M5 and every later
+M-gate, the gate review must check and, where applicable, update:
 
-- M3 general CLI composition, qualified pulmonary data, and gate closure;
-- M4 capillary models and transport hand-offs;
-- M5 cellular and molecular interaction models;
+- the covered-software and last-updated metadata;
+- the current capability and explicit non-claim lists;
+- the mental model when a new layer or boundary becomes executable;
+- the experiment-family catalog and first-experiment decision aid;
+- guided examples, commands, runnable files, expected outputs, interpretation,
+  and scientific limitations;
+- the glossary and troubleshooting material; and
+- links to the gate review, model cards, schemas, validation reports, and
+  reference results.
+
+If a gate has no user-visible effect, its review must record that no-impact
+decision instead of silently skipping the guide. This policy is binding in the
+[Roadmap documentation rules](ROADMAP.md#66-documentation) and repeated in
+every future gate checklist.
+
+Planned substantive extensions are:
+
+- M5 cellular and molecular interaction experiments;
 - M6 active gateway and Nano-IoT configuration;
-- end-to-end fingerprinting scenarios;
-- result analysis and visualization workflows.
+- the M7 end-to-end fingerprinting workflow;
+- later medical scenarios, result analysis, and visualization workflows; and
+- participant-specific workflows only after their evidence and governance
+  requirements are met.
 
 For development details, use [MEHLISSA Next Development](DEVELOPMENT.md). For
 scientific scope and milestone gates, use the [Roadmap](ROADMAP.md).

@@ -597,6 +597,8 @@ At least three resolutions should be provided:
 - A cell model can return a measurable event or state change to higher layers.
 - Receptor binding and the reaction network are tested against analytical or external reference data.
 - Single-cell and population variants have documented validity scopes.
+- The English User Guide has passed its gate-impact review and reflects the new
+  cell experiments, access paths, interpretation limits, and evidence links.
 
 ### Phase 6 – Nano-IoT, gateway, and external communication
 
@@ -623,6 +625,8 @@ At least three resolutions should be provided:
 - An external control command can reach a nanodevice or drug release.
 - Communication and physiology models can be exchanged independently.
 - Communication metrics are reported separately from biological results.
+- The English User Guide has passed its gate-impact review and reflects the new
+  Nano-IoT experiments, access paths, interpretation limits, and evidence links.
 
 ### Phase 7 – First complete multilayer demonstrator: fingerprinting
 
@@ -664,6 +668,8 @@ At least three resolutions should be provided:
 - Every layer can be replaced with a simpler or more detailed variant.
 - The complete run is reproducible with a manifest, seeds, data versions, and result report.
 - Uncertainty and validity limitations are reported with the result.
+- The English User Guide has passed its gate-impact review and provides the
+  complete guided fingerprinting workflow with runnable paths and evidence links.
 
 ### Phase 8 – Further medical scenarios
 
@@ -760,6 +766,9 @@ validated model variant.
 - Calibration and validation data are separate.
 - Uncertainty is reported quantitatively.
 - Without regulatory review, the platform makes no clinical decision claim.
+- The English User Guide has passed its gate-impact review and states the
+  personalized workflows, governance requirements, interpretation limits, and
+  evidence links.
 
 ### Phase 10 – Scaling, HPC, and large experiments
 
@@ -879,6 +888,15 @@ Required document types:
 - publication and citation guidance;
 - changelog and release notes.
 
+The English User Guide is mandatory gate-maintenance evidence. Beginning with
+M5, every formal M-gate review must inspect and, where applicable, update its
+covered-software metadata, capability and non-claim lists, conceptual model,
+experiment catalog, decision aid, guided examples, runnable paths, expected
+outputs, interpretation limits, glossary, troubleshooting, and links to gate
+and validation evidence. If a milestone has no user-visible effect, the gate
+review must record an explicit no-impact decision. A gate is not
+documentation-complete until this review is recorded.
+
 ## 7. Prioritization
 
 ### Priority P0 – indispensable
@@ -978,23 +996,12 @@ The following packages are derived directly from this roadmap:
 8. ~~Formulate fingerprinting requirements and the dissertation baseline as a vertical specification.~~ Complete: [fingerprinting reference scenario](requirements/FINGERPRINTING_SCENARIO.md).
 9. ~~Select the reference organ for the first body–organ coupling.~~ Complete: lung, documented in [ADR-0006](architecture/adr/0006-lung-reference-organ.md).
 10. ~~Identify required biological and experimental partners or data sources.~~ Complete: [data gaps and validation partners](m0/VALIDATION_AND_DATA_PARTNERS.md).
-11. Expand the English User Guide into a two-level guide for researchers and
-    first-time users before M4 substantially enlarges the software surface:
-    - begin with a non-technical introduction to what MEHLISSA simulates, which
-      research questions it can support, and what it explicitly cannot claim;
-    - explain the mental model—virtual body, transported entities and
-      substances, interchangeable biological resolutions, experiments, and
-      observations—without assuming C++ or simulation expertise;
-    - describe experiment families in plain language before commands: injection
-      and circulation, sampling/gateway observation, physiological-state
-      comparison, coarse-versus-detailed organ comparison, individual versus
-      population transport, and validation/sensitivity studies;
-    - give each experiment family a guided example with research question,
-      inputs, expected outputs, interpretation, and scientific limitations;
-    - add a short glossary and a “choose your first experiment” decision aid;
-      and
-    - retain the current technical guide as Part II, with links from every
-      conceptual example to its runnable files and commands.
+11. ~~Expand the English User Guide into a two-level guide for researchers and
+    first-time users.~~ Complete: the [User Guide](USER_GUIDE.md) now begins
+    with a non-technical purpose and non-claim statement, mental model, eight
+    guided experiment families, first-experiment decision aid, and glossary.
+    The updated M0–M4 installation and model workflows remain as Part II, and
+    the gate-maintenance rule above requires review after every future M-gate.
 
 ## 12. Definition of long-term success
 
