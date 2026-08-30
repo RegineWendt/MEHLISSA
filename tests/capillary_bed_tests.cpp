@@ -275,7 +275,7 @@ TEST_CASE("The pulmonary capillary card closes evidence volume geometry and tran
     CHECK(definition.definition_id == "pulmonary-healthy-adult-rest-supine-v1");
     CHECK(definition.validity.evidence_class == "literature_parameterized");
     REQUIRE(definition.qualification.has_value());
-    const auto& qualification = *definition.qualification;
+    const auto& qualification = definition.qualification.value();
     CHECK(qualification.geometry_semantics == "equivalent_parallel_tubes");
     CHECK(qualification.functional_blood_volume.value_si == Catch::Approx(85.9e-6));
     CHECK(qualification.morphometric_lumen_volume.value_si == Catch::Approx(196.0e-6));
@@ -284,7 +284,7 @@ TEST_CASE("The pulmonary capillary card closes evidence volume geometry and tran
     CHECK(qualification.reference_transit_time.value_si == Catch::Approx(0.859));
     CHECK(qualification.reference_transit_time.role == "derived");
     REQUIRE(qualification.functional_blood_volume.uncertainty.standard_deviation_si.has_value());
-    CHECK(*qualification.functional_blood_volume.uncertainty.standard_deviation_si ==
+    CHECK(qualification.functional_blood_volume.uncertainty.standard_deviation_si.value() ==
           Catch::Approx(14.4243717367517e-6));
 
     const CapillaryBed executable{definition.model};
