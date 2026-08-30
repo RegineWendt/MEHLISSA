@@ -40,6 +40,7 @@ decisions; a new decision supersedes an existing one through a new ADR.
 | [ADR-0026](adr/0026-non-state-changing-capillary-entity-observation.md) | Accepted | exact regional residence and bounded competing-interaction likelihood observations without changing entity ownership |
 | [ADR-0027](adr/0027-evidence-qualified-equivalent-pulmonary-capillary-card.md) | Accepted | evidence-qualified pulmonary volume-flow-transit closure with explicit equivalent-geometry semantics |
 | [ADR-0028](adr/0028-interchangeable-molecular-channel-contract.md) | Accepted | typed molecular-channel request/response, analytical free-diffusion adapter, and pulmonary-bound contract case |
+| [ADR-0029](adr/0029-deterministic-brownian-particle-comparison.md) | Accepted | deterministic Brownian endpoint adapter and predeclared statistical comparison with the analytical channel |
 
 ## Status model
 

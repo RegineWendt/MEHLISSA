@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "pulmonary-synthetic-tracer-brownian-v1",
+    "version": "1.0.0",
+    "title": "Deterministic Brownian endpoint comparison for the pulmonary channel case"
+  },
+  "compatible_analytical_profile_id": "pulmonary-synthetic-tracer-diffusion-v1",
+  "implementation": {
+    "kind": "brownian_particle_endpoint_3d",
+    "model_id": "channel.brownian.synthetic-tracer.pulmonary.v1",
+    "diffusion_coefficient_m2_s": 1e-9,
+    "first_order_degradation_rate_s_1": 0.0,
+    "sample_count": 2000000,
+    "experiment_seed": 20260830,
+    "random_stream_name": "capillary.molecular-channel.brownian-endpoint"
+  },
+  "comparison_gate": {
+    "minimum_receiver_observation_count": 200,
+    "maximum_absolute_standardized_error": 4.0,
+    "maximum_relative_fraction_error": 0.15
+  },
+  "validity": {
+    "population": "software comparison against the M4.8 pulmonary-bound synthetic tracer case",
+    "physiological_state": "healthy-adult resting supine capillary context; synthetic local molecular signal",
+    "evidence_class": "software_test_surrogate",
+    "description": "Two million independently sampled Brownian endpoints estimate passive-receiver occupancy for the same unbounded free-diffusion case as the analytical channel. The seed and random-stream name make repeated execution reproducible."
+  },
+  "sources": [
+    {
+      "id": "llatser-2014-n3sim",
+      "citation": "Llatser I, Demiray D, Cabellos-Aparicio A, Altilar DT, Alarcon E. N3Sim: Simulation framework for diffusion-based molecular communication nanonetworks. Simul Model Pract Theory. 2014;42:210-222. doi:10.1016/j.simpat.2013.11.004.",
+      "location": "https://doi.org/10.1016/j.simpat.2013.11.004",
+      "license": "Copyright Elsevier; algorithms described, source and code not redistributed",
+      "role": "Brownian particle simulation as an independent molecular-channel modelling strategy"
+    },
+    {
+      "id": "noel-2017-accord",
+      "citation": "Noel A, Cheung KC, Schober R, Makrakis D, Hafid A. Simulating with AcCoRD: Actor-based communication via reaction-diffusion. Nano Commun Netw. 2017;11:44-75. doi:10.1016/j.nancom.2017.02.002.",
+      "location": "https://doi.org/10.1016/j.nancom.2017.02.002",
+      "license": "Copyright Elsevier; numerical methods and validation strategy cited, source and code not redistributed",
+      "role": "microscopic particle simulation and comparison with analytical reaction-diffusion reference cases"
+    },
+    {
+      "id": "mehlissa-m4-analytical-channel",
+      "citation": "MEHLISSA pulmonary-bound analytical diffusion contract case, version 1.0.0.",
+      "location": "pulmonary-synthetic-tracer-diffusion-v1.json",
+      "license": "CC-BY-4.0",
+      "role": "shared diffusion, degradation, geometry, receiver, emission, and observation reference"
+    },
+    {
+      "id": "mehlissa-m4-particle-comparison",
+      "citation": "MEHLISSA Next M4.9 deterministic Brownian particle comparison, version 1.0.0.",
+      "location": "../../docs/m4/BROWNIAN_PARTICLE_CHANNEL_COMPARISON.md",
+      "license": "CC-BY-4.0",
+      "role": "seed, sample count, statistical gate, and executable comparison semantics"
+    }
+  ],
+  "limitations": [
+    "The particle adapter samples exact free-diffusion endpoints and does not retain trajectories or introduce microscopic time steps.",
+    "Particles are independent and non-interacting; inertia, collisions, crowding, boundaries, flow, binding, and reactions beyond homogeneous first-order degradation are absent.",
+    "The comparison quantifies Monte Carlo agreement with the synthetic analytical case, not agreement with biological or clinical measurements.",
+    "The predeclared gate is a software regression criterion; its four-standard-error and 15-percent relative limits are not physiological uncertainty intervals.",
+    "N3Sim and AcCoRD motivate and contextualize the independent strategy, but neither external codebase is bundled or executed in M4.9."
+  ]
+}

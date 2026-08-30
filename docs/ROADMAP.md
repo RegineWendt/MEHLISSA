@@ -518,8 +518,13 @@ profile, and an analytical free-diffusion implementation. Its first reference
 request derives local scale and a residence ceiling from the pulmonary card,
 while all signal and receiver parameters remain synthetic. The third Gate M4
 statement is therefore executable at the software-contract level. Comparison
-with an independent particle or surrogate implementation and a conservative
-state-changing disposition contract remain next increments. See
+with an independent implementation follows in M4.9: a deterministic Brownian
+endpoint adapter implements the same channel interface, exposes Monte Carlo
+diagnostics, and passes predeclared minimum-count, standardized-error, and
+relative-error gates against the analytical pulmonary-bound request. CAP-006 is
+therefore complete at the software-contract level. A trajectory-resolving or
+external adapter, richer detailed-versus-surrogate comparison, and a
+conservative state-changing disposition contract remain next increments. See
 [M4 evidence](m4/README.md),
 [ADR-0021](architecture/adr/0021-versioned-capillary-bed-baseline.md), and
 [ADR-0022](architecture/adr/0022-organ-capillary-round-trip-coupling.md), and
@@ -528,7 +533,8 @@ state-changing disposition contract remain next increments. See
 [ADR-0025](architecture/adr/0025-balanced-capillary-exchange.md),
 [ADR-0026](architecture/adr/0026-non-state-changing-capillary-entity-observation.md), and
 [ADR-0027](architecture/adr/0027-evidence-qualified-equivalent-pulmonary-capillary-card.md), and
-[ADR-0028](architecture/adr/0028-interchangeable-molecular-channel-contract.md).
+[ADR-0028](architecture/adr/0028-interchangeable-molecular-channel-contract.md), and
+[ADR-0029](architecture/adr/0029-deterministic-brownian-particle-comparison.md).
 
 #### Model variants
 

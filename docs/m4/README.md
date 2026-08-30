@@ -144,11 +144,28 @@ and [ADR-0027](../architecture/adr/0027-evidence-qualified-equivalent-pulmonary-
 See [Interchangeable Molecular-Channel Interface](MOLECULAR_CHANNEL_INTERFACE.md)
 and [ADR-0028](../architecture/adr/0028-interchangeable-molecular-channel-contract.md).
 
+### M4.9 - deterministic Brownian particle comparison
+
+- independent particle-surrogate implementation behind the unchanged M4.8
+  channel request and response;
+- direct three-dimensional Brownian endpoint sampling with coordinate variance
+  `2Dt` and optional first-order survival;
+- explicit experiment seed, named random stream, uniform conversion, and
+  Box-Muller transform;
+- strict particle-profile schema `1.0.0` bound to the analytical profile;
+- two million samples for the shared pulmonary-bound synthetic tracer case;
+- diagnostics for sample count, receiver observations, and Monte Carlo standard
+  error; and
+- predeclared minimum-count, standardized-error, and relative-error gates.
+
+See [Brownian Particle-Channel Comparison](BROWNIAN_PARTICLE_CHANNEL_COMPARISON.md)
+and [ADR-0029](../architecture/adr/0029-deterministic-brownian-particle-comparison.md).
+
 ## Planned sequence
 
-1. connect a licensable external or independently implemented particle
-   surrogate and compare it with M4.8 through the same channel contract;
-2. implement mesoscopic and local detailed variants and compare them against
+1. add a trajectory-resolving local model or licensable external adapter and
+   compare it through the M4.8/M4.9 channel contract;
+2. implement a mesoscopic variant and compare it against
    the same reference cases;
 3. define a conservative terminal/tissue ownership contract before sampling
    retention, adhesion, or extravasation outcomes;
@@ -156,12 +173,15 @@ and [ADR-0028](../architecture/adr/0028-interchangeable-molecular-channel-contra
 
 ## Scientific status
 
-M4.1 through M4.8 are software verification, not physiological validation. The
+M4.1 through M4.9 are software verification, not physiological validation. The
 dissertation provides the layer structure, continuity requirement, recruitment
 concept, and communication questions. The initial cards, recruitment profile,
 exchange fractions, and interaction rates remain synthetic. M4.7 adds the first
 literature-parameterized capillary candidate, but its evidence comes from small
 different cohorts and an equivalent rather than anatomical geometry. M4.8 adds
 evidence-based channel architecture but deliberately synthetic molecular
-parameters. Jointly measured flow and capillary volume, sphincter behavior, hematocrit, kinetic
-exchange parameters, and independent physiological comparison remain open.
+parameters. M4.9 independently reproduces that synthetic case within
+predeclared Monte Carlo gates; this is implementation comparison, not biological
+validation. Jointly measured flow and capillary volume, sphincter behavior,
+hematocrit, kinetic exchange parameters, and independent physiological
+comparison remain open.

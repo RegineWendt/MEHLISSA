@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:brownian-particle-channel-profile:1.0.0",
+  "title": "MEHLISSA Brownian particle-channel profile",
+  "description": "Strict deterministic Monte Carlo endpoint surrogate and predeclared comparison gate for one compatible analytical molecular-channel profile.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "compatible_analytical_profile_id", "implementation", "comparison_gate", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "compatible_analytical_profile_id": {"$ref": "#/$defs/id"},
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "model_id", "diffusion_coefficient_m2_s", "first_order_degradation_rate_s_1", "sample_count", "experiment_seed", "random_stream_name"],
+      "properties": {
+        "kind": {"const": "brownian_particle_endpoint_3d"},
+        "model_id": {"$ref": "#/$defs/id"},
+        "diffusion_coefficient_m2_s": {"type": "number", "exclusiveMinimum": 0},
+        "first_order_degradation_rate_s_1": {"type": "number", "minimum": 0},
+        "sample_count": {"type": "integer", "minimum": 10000, "maximum": 100000000},
+        "experiment_seed": {"type": "integer", "minimum": 0, "maximum": 18446744073709551615},
+        "random_stream_name": {"$ref": "#/$defs/id"}
+      }
+    },
+    "comparison_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimum_receiver_observation_count", "maximum_absolute_standardized_error", "maximum_relative_fraction_error"],
+      "properties": {
+        "minimum_receiver_observation_count": {"type": "integer", "minimum": 1},
+        "maximum_absolute_standardized_error": {"type": "number", "exclusiveMinimum": 0},
+        "maximum_relative_fraction_error": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}
+      }
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"const": "software_test_surrogate"},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "citation", "location", "license", "role"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "citation": {"type": "string", "minLength": 1},
+          "location": {"type": "string", "minLength": 1},
+          "license": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+  }
+}

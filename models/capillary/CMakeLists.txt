@@ -8,12 +8,15 @@ add_library(
     src/capillary_bed.cpp
     src/capillary_bed_definition.cpp
     src/analytical_diffusion_channel.cpp
+    src/brownian_particle_channel.cpp
+    src/brownian_particle_channel_profile.cpp
     src/capillary_entity_observation.cpp
     src/capillary_entity_observation_profile.cpp
     src/capillary_exchange.cpp
     src/capillary_exchange_profile.cpp
     src/capillary_recruitment_profile.cpp
     src/molecular_channel_profile.cpp
+    src/molecular_channel_comparison.cpp
 )
 add_library(MEHLISSA::capillary_model ALIAS mehlissa_capillary_model)
 

@@ -835,6 +835,45 @@ counting noise, modulation, and detection thresholds. Read
 [Interchangeable Molecular-Channel Interface](m4/MOLECULAR_CHANNEL_INTERFACE.md)
 before creating a new channel profile or interpreting its output biologically.
 
+### 9.6 Analytical-versus-particle channel comparison (M4.9)
+
+M4.9 answers a second methodological question: does an independently
+implemented particle model reproduce the analytical M4.8 result when both use
+the same emission, geometry, diffusion coefficient, receiver, and observation
+time?
+
+The particle profile is:
+
+```text
+examples/capillary-models/pulmonary-synthetic-tracer-brownian-v1.json
+data/schemas/brownian-particle-channel-profile/1.0.0.schema.json
+```
+
+For the simple unbounded reference environment, MEHLISSA draws two million
+independent Brownian endpoints. Each spatial coordinate has zero mean and
+variance `2Dt`. The receiver observation fraction is then the number of
+endpoints inside the spherical receiver divided by the sample count. A fixed
+seed and named random stream make repeated local execution reproducible.
+
+The checked-in result observes 591 endpoints, compared with an analytical
+expectation of 616.72. The resulting fraction differs by about 4.17% and by
+1.04 standard errors. It passes the thresholds declared in the profile before
+the run: at least 200 observations, at most four absolute standard errors, and
+at most 15% relative error.
+
+This comparison is useful for:
+
+- detecting disagreements between channel implementations;
+- studying Monte Carlo sample size and rare receiver events;
+- checking deterministic experiment configuration; and
+- preparing adapters for an external or trajectory-resolving simulator.
+
+It is still a synthetic software comparison. The endpoint surrogate has no
+stored paths, walls, blood flow, collisions, binding, receiver kinetics, or
+biological parameter qualification. Read
+[Brownian Particle-Channel Comparison](m4/BROWNIAN_PARTICLE_CHANNEL_COMPARISON.md)
+for its equations, evidence, gates, and interpretation boundary.
+
 ## 10. Troubleshooting
 
 ### CMake selects the wrong Visual Studio version
