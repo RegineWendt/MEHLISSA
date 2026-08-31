@@ -162,6 +162,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
         add_executable(
             mehlissa_cell_model_tests
             receptor_ligand_tests.cpp
+            stochastic_receptor_ligand_tests.cpp
             time_varying_receptor_ligand_tests.cpp
         )
         target_link_libraries(

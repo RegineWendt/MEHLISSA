@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {"id": "synthetic-stochastic-receptor-ligand-v1", "version": "1.0.0", "title": "Synthetic stochastic receptor-binding population verification"},
+  "implementation": {
+    "kind": "gillespie_finite_receptor_ligand", "model_id": "cell.receptor-ligand.stochastic.synthetic.v1",
+    "receptor_id": "synthetic-receptor", "ligand_id": "synthetic-ligand", "compartment_id": "cell-surface",
+    "receptor_count": 40, "association_rate_m3_mol_s": 1000.0, "dissociation_rate_s_1": 0.1,
+    "detection_threshold_fraction": 0.5
+  },
+  "solver": {"method": "gillespie_direct_ssa", "trajectory_interpolation": "piecewise_constant_left_closed", "random_stream_policy": "one_named_stream_per_cell", "maximum_reaction_events": 10000, "maximum_recorded_samples": 128},
+  "population_experiment": {
+    "master_seed": 20260831, "stream_prefix": "m5.4.synthetic", "cells_per_cohort": 2000,
+    "signal_positive": {"request_id": "positive-cohort", "observation_time_seconds": 10.0, "initial_bound_receptors": 0, "ligand_trajectory": [{"offset_seconds": 0.0, "concentration_mol_m3": 0.0003}]},
+    "signal_negative": {"request_id": "negative-cohort", "observation_time_seconds": 10.0, "initial_bound_receptors": 0, "ligand_trajectory": [{"offset_seconds": 0.0, "concentration_mol_m3": 0.00005}]},
+    "acceptance_gates": {"expected_positive_mean": 0.7362632708334493, "expected_negative_mean": 0.2589566132838567, "expected_positive_variance": 0.004854491671377, "expected_negative_variance": 0.00479745214301029, "mean_absolute_tolerance": 0.01, "variance_absolute_tolerance": 0.001, "maximum_false_negative_rate": 0.02, "maximum_false_positive_rate": 0.02}
+  },
+  "validity": {"population": "synthetic homogeneous cells with 40 independent identical receptors each", "physiological_state": "software verification only; no physiological state", "evidence_class": "software_test_surrogate", "description": "Finite-count receptor binding noise and threshold classification under two prescribed constant ligand reservoirs."},
+  "sources": [
+    {"id": "wendt-dissertation-cell-dynamics", "citation": "Wendt, Regine (2024), Einsatz von Nanotechnologien in der Praezisionsmedizin, Sections 4.4-4.5, pp. 129-132", "location": "literature/Diss_WENDT_Simulationchapters.pdf", "license": "source consulted; architecture paraphrased", "role": "cell reaction and stochastic population vision"},
+    {"id": "mehlissa-m5-1-analytical-limit", "citation": "MEHLISSA Next M5.1 analytical receptor-ligand baseline", "location": "docs/m5/RECEPTOR_LIGAND_BASELINE.md", "license": "CC-BY-4.0", "role": "mass-action kinetics and exact occupancy moments"},
+    {"id": "mehlissa-adr-0037", "citation": "MEHLISSA Next ADR-0037 stochastic receptor binding", "location": "docs/architecture/adr/0037-stochastic-receptor-binding-and-population-classification.md", "license": "CC-BY-4.0", "role": "SSA, random stream, population and classifier contract"}
+  ],
+  "limitations": [
+    "All parameter values and both cohorts are synthetic software-test inputs.",
+    "The external ligand reservoir is homogeneous, prescribed, and not depleted.",
+    "Receptors are identical and independent; cells differ only through reaction noise.",
+    "The two cohorts are not clinical cases and rates are not diagnostic performance estimates.",
+    "There is no receptor turnover, competition, spatial transport, or intracellular network.",
+    "Threshold crossing is retained as a software event even when occupancy later falls.",
+    "Exact cross-platform equality is guaranteed only by the checked MEHLISSA random-stream implementation and algorithm version."
+  ]
+}

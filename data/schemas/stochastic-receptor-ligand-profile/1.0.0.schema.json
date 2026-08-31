@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:stochastic-receptor-ligand-profile:1.0.0",
+  "title": "MEHLISSA stochastic receptor-ligand profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "implementation", "solver", "population_experiment", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {"$ref": "#/$defs/profile"},
+    "implementation": {"$ref": "#/$defs/implementation"},
+    "solver": {"$ref": "#/$defs/solver"},
+    "population_experiment": {"$ref": "#/$defs/experiment"},
+    "validity": {"$ref": "#/$defs/validity"},
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "fraction": {"type": "number", "minimum": 0, "maximum": 1},
+    "positive": {"type": "number", "exclusiveMinimum": 0},
+    "profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "version": {"$ref": "#/$defs/version"}, "title": {"type": "string", "minLength": 1}}
+    },
+    "implementation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "model_id", "receptor_id", "ligand_id", "compartment_id", "receptor_count", "association_rate_m3_mol_s", "dissociation_rate_s_1", "detection_threshold_fraction"],
+      "properties": {
+        "kind": {"const": "gillespie_finite_receptor_ligand"},
+        "model_id": {"$ref": "#/$defs/id"}, "receptor_id": {"$ref": "#/$defs/id"},
+        "ligand_id": {"$ref": "#/$defs/id"}, "compartment_id": {"$ref": "#/$defs/id"},
+        "receptor_count": {"type": "integer", "minimum": 1, "maximum": 1000000000},
+        "association_rate_m3_mol_s": {"$ref": "#/$defs/positive"},
+        "dissociation_rate_s_1": {"type": "number", "minimum": 0},
+        "detection_threshold_fraction": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}
+      }
+    },
+    "solver": {
+      "type": "object", "additionalProperties": false,
+      "required": ["method", "trajectory_interpolation", "random_stream_policy", "maximum_reaction_events", "maximum_recorded_samples"],
+      "properties": {
+        "method": {"const": "gillespie_direct_ssa"},
+        "trajectory_interpolation": {"const": "piecewise_constant_left_closed"},
+        "random_stream_policy": {"const": "one_named_stream_per_cell"},
+        "maximum_reaction_events": {"type": "integer", "minimum": 1, "maximum": 10000000},
+        "maximum_recorded_samples": {"type": "integer", "minimum": 2, "maximum": 1000000}
+      }
+    },
+    "knot": {
+      "type": "object", "additionalProperties": false,
+      "required": ["offset_seconds", "concentration_mol_m3"],
+      "properties": {"offset_seconds": {"type": "number", "minimum": 0}, "concentration_mol_m3": {"type": "number", "minimum": 0}}
+    },
+    "cohort": {
+      "type": "object", "additionalProperties": false,
+      "required": ["request_id", "observation_time_seconds", "initial_bound_receptors", "ligand_trajectory"],
+      "properties": {
+        "request_id": {"$ref": "#/$defs/id"}, "observation_time_seconds": {"$ref": "#/$defs/positive"},
+        "initial_bound_receptors": {"type": "integer", "minimum": 0},
+        "ligand_trajectory": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/knot"}}
+      }
+    },
+    "gates": {
+      "type": "object", "additionalProperties": false,
+      "required": ["expected_positive_mean", "expected_negative_mean", "expected_positive_variance", "expected_negative_variance", "mean_absolute_tolerance", "variance_absolute_tolerance", "maximum_false_negative_rate", "maximum_false_positive_rate"],
+      "properties": {
+        "expected_positive_mean": {"$ref": "#/$defs/fraction"}, "expected_negative_mean": {"$ref": "#/$defs/fraction"},
+        "expected_positive_variance": {"$ref": "#/$defs/positive"}, "expected_negative_variance": {"$ref": "#/$defs/positive"},
+        "mean_absolute_tolerance": {"$ref": "#/$defs/positive"}, "variance_absolute_tolerance": {"$ref": "#/$defs/positive"},
+        "maximum_false_negative_rate": {"$ref": "#/$defs/fraction"}, "maximum_false_positive_rate": {"$ref": "#/$defs/fraction"}
+      }
+    },
+    "experiment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["master_seed", "stream_prefix", "cells_per_cohort", "signal_positive", "signal_negative", "acceptance_gates"],
+      "properties": {
+        "master_seed": {"type": "integer", "minimum": 0}, "stream_prefix": {"$ref": "#/$defs/id"},
+        "cells_per_cohort": {"type": "integer", "minimum": 2, "maximum": 1000000},
+        "signal_positive": {"$ref": "#/$defs/cohort"}, "signal_negative": {"$ref": "#/$defs/cohort"},
+        "acceptance_gates": {"$ref": "#/$defs/gates"}
+      }
+    },
+    "validity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {"population": {"type": "string", "minLength": 1}, "physiological_state": {"type": "string", "minLength": 1}, "evidence_class": {"const": "software_test_surrogate"}, "description": {"type": "string", "minLength": 1}}
+    },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "citation", "location", "license", "role"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "citation": {"type": "string", "minLength": 1}, "location": {"type": "string", "minLength": 1}, "license": {"type": "string", "minLength": 1}, "role": {"type": "string", "minLength": 1}}
+    }
+  }
+}

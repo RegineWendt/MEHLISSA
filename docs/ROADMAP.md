@@ -578,7 +578,7 @@ At least three resolutions should be provided:
 
 **Objective:** Couple biomarker detection, drug release, and cell response
 
-**Current progress (M5.1–M5.3):** The first independent cell-layer library now
+**Current progress (M5.1–M5.4):** The first independent cell-layer library now
 provides a strict, evidence-scoped receptor-ligand profile and an exact
 reversible one-to-one binding implementation for a constant ligand reservoir.
 It reports conserved free/bound receptor amounts, occupancy, and first threshold
@@ -596,12 +596,18 @@ ligand trajectories. It converges to the independent M5.1 constant-input
 solution and matches a segment-wise analytical pulse with onset, threshold
 crossing, withdrawal, and dissociation. The trajectory remains a synthetic
 external reservoir rather than a dynamic M4 field or an intracellular network.
+M5.4 adds exact finite-receptor Gillespie SSA, named per-cell streams,
+population distributions, analytical binomial-moment checks, and a declared
+synthetic false-positive/false-negative experiment. Its rates are software-test
+results, not diagnostic claims.
 See [M5 implementation evidence](m5/README.md),
 [the M5.2 hand-off](m5/CAPILLARY_CELL_SIGNAL_HANDOFF.md),
 [the M5.3 time-varying baseline](m5/TIME_VARYING_RECEPTOR_BINDING.md),
+[the M5.4 stochastic baseline](m5/STOCHASTIC_RECEPTOR_BINDING.md),
 [ADR-0034](architecture/adr/0034-analytical-receptor-ligand-baseline.md), and
 [ADR-0035](architecture/adr/0035-non-consuming-capillary-cell-signal-handoff.md),
-and [ADR-0036](architecture/adr/0036-time-varying-receptor-ligand-ode.md).
+and [ADR-0036](architecture/adr/0036-time-varying-receptor-ligand-ode.md), and
+[ADR-0037](architecture/adr/0037-stochastic-receptor-binding-and-population-classification.md).
 
 #### Tasks
 
@@ -624,8 +630,9 @@ and [ADR-0036](architecture/adr/0036-time-varying-receptor-ligand-ode.md).
    unit, and conservation semantics.~~ Complete in M5.2.
 3. ~~Time-dependent ODE binding compared with the M5.1 constant-reservoir
    limit.~~ Complete in M5.3 with an additional analytical pulse reference.
-4. Stochastic single-cell binding plus population distributions and detection
-   error experiments.
+4. ~~Stochastic single-cell binding plus population distributions and detection
+   error experiments.~~ Complete in M5.4 with exact SSA, named streams,
+   analytical moment checks, and declared synthetic FP/FN gates.
 5. Executable intracellular signaling network with a shared reference.
 6. Nanodevice activation, conservative drug release, and cellular uptake.
 7. Apoptosis as the first complete response with higher-layer feedback.

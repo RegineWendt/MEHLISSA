@@ -84,6 +84,19 @@ See [Capillary-to-Cell Signal Hand-off](CAPILLARY_CELL_SIGNAL_HANDOFF.md) and
 See [Time-Varying Receptor Binding](TIME_VARYING_RECEPTOR_BINDING.md) and
 [ADR-0036](../architecture/adr/0036-time-varying-receptor-ligand-ode.md).
 
+### M5.4 - stochastic binding and population classification
+
+- exact Gillespie direct SSA for finite free/bound receptor counts;
+- caller-owned named random streams and one stable stream per cohort cell;
+- bounded event traces and exact integer receptor conservation;
+- population mean, variance, quantiles, event, and random-draw summaries;
+- declared positive and negative cohorts with TP/FN/FP/TN accounting;
+- analytical binomial means and variances as independent references; and
+- fixed-seed results inside predeclared moment and FP/FN gates.
+
+See [Stochastic Receptor Binding](STOCHASTIC_RECEPTOR_BINDING.md) and
+[ADR-0037](../architecture/adr/0037-stochastic-receptor-binding-and-population-classification.md).
+
 ## M5.1 reference result
 
 The checked-in profile uses synthetic values and asks how a receptor population
@@ -119,17 +132,14 @@ under step halving.
 
 ## Planned increments
 
-1. **M5.4 - stochastic single-cell binding:** add an SSA variant, named random
-   streams, population distributions, and declared false-positive/false-negative
-   experiments.
-2. **M5.5 - intracellular response network:** convert detection into a
+1. **M5.5 - intracellular response network:** convert detection into a
    schema-defined signaling state and compare ODE/SSA or an external solver
    against a shared reference.
-3. **M5.6 - activation and drug release:** couple a nanodevice decision to a
+2. **M5.6 - activation and drug release:** couple a nanodevice decision to a
    conservative release and uptake contract.
-4. **M5.7 - apoptosis and higher-layer feedback:** implement the first complete
+3. **M5.7 - apoptosis and higher-layer feedback:** implement the first complete
    response event and return it through an explicit boundary.
-5. **M5.8 - population model and gate review:** provide a scalable population
+4. **M5.8 - population model and gate review:** provide a scalable population
    variant, document both validity scopes, complete sensitivity/evidence work,
    and perform the mandatory User Guide review.
 
@@ -139,19 +149,20 @@ scientific qualification or an architecture decision requires it.
 
 ## Current scientific boundary
 
-M5.1 through M5.3 are software verification only. Both the constant and
+M5.1 through M5.4 are software verification only. The deterministic and
 time-varying models prescribe a non-depleting external ligand reservoir. The
 M5.3 trajectory is not yet produced by a dynamic capillary tissue field, and
-the M5.2 snapshot remains constant during its exposure. A homogeneous
-deterministic occupancy fraction cannot represent cell-to-cell variability or
-molecule-count noise. Receptor abundance does not change, and no binding site
-is internalized. The threshold is not a classifier with measured sensitivity
+the M5.2 snapshot remains constant during its exposure. M5.4 adds finite-count
+reaction noise but no biological cell heterogeneity. Receptor abundance does
+not change, and no binding site is internalized. Its threshold classification
+rates describe only the two synthetic cohorts and are not clinical sensitivity
 or specificity. No intracellular or higher-layer state is changed.
 
 M5.2 satisfies the first M5 statement at the synthetic software-contract level:
 an M4 extracellular tissue signal triggers receptor binding and threshold
-detection. The other four gate statements remain open, as do physiological and
-dynamic-tissue qualification of the first statement. M5.3 adds analytical and
-convergence evidence for the receptor-binding part of the third statement, but
-an intracellular reaction network and external or biological reference remain
-open.
+detection. The other four gate statements remain open at full M5 scope, as do
+physiological and dynamic-tissue qualification of the first statement. M5.3 and M5.4 add
+analytical, convergence, stochastic-moment, and population evidence for the
+receptor-binding part of the third statement. M5.4 also establishes documented
+synthetic single-cell and population scopes toward the fourth statement. An
+intracellular reaction network and external or biological reference remain open.
