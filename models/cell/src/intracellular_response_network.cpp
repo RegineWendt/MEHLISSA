@@ -284,12 +284,16 @@ IntracellularSsaResponse IntracellularSsaModel::evaluate(const IntracellularNetw
                 invalid("Intracellular SSA request exceeds its reaction-event bound");
             }
             time = event_time;
-            auto selector = uniform_open(random) * total;
+            const auto selector = uniform_open(random) * total;
+            const auto messenger_deactivation_boundary =
+                rates.messenger_activation + rates.messenger_deactivation;
+            const auto effector_activation_boundary =
+                messenger_deactivation_boundary + rates.effector_activation;
             if (selector < rates.messenger_activation) {
                 ++messenger;
-            } else if ((selector -= rates.messenger_activation) < rates.messenger_deactivation) {
+            } else if (selector < messenger_deactivation_boundary) {
                 --messenger;
-            } else if ((selector -= rates.messenger_deactivation) < rates.effector_activation) {
+            } else if (selector < effector_activation_boundary) {
                 ++effector;
             } else {
                 --effector;
