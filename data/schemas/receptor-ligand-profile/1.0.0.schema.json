@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:receptor-ligand-profile:1.0.0",
+  "title": "MEHLISSA receptor-ligand profile",
+  "description": "Strict evidence-scoped profile for a constant-reservoir analytical receptor-ligand binding and detection reference case.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "implementation", "reference_case", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "model_id", "receptor_id", "ligand_id", "compartment_id", "cell_volume_m3", "total_receptor_concentration_mol_m3", "association_rate_m3_mol_s", "dissociation_rate_s_1", "detection_threshold_fraction"],
+      "properties": {
+        "kind": {"const": "analytical_receptor_ligand_constant_reservoir"},
+        "model_id": {"$ref": "#/$defs/id"},
+        "receptor_id": {"$ref": "#/$defs/id"},
+        "ligand_id": {"$ref": "#/$defs/id"},
+        "compartment_id": {"$ref": "#/$defs/id"},
+        "cell_volume_m3": {"type": "number", "exclusiveMinimum": 0},
+        "total_receptor_concentration_mol_m3": {"type": "number", "exclusiveMinimum": 0},
+        "association_rate_m3_mol_s": {"type": "number", "exclusiveMinimum": 0},
+        "dissociation_rate_s_1": {"type": "number", "minimum": 0},
+        "detection_threshold_fraction": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}
+      }
+    },
+    "reference_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request_id", "ligand_concentration_mol_m3", "observation_time_seconds", "initial_bound_fraction", "expected_final_bound_fraction", "expected_threshold_crossing_seconds", "absolute_tolerance"],
+      "properties": {
+        "request_id": {"$ref": "#/$defs/id"},
+        "ligand_concentration_mol_m3": {"type": "number", "minimum": 0},
+        "observation_time_seconds": {"type": "number", "exclusiveMinimum": 0},
+        "initial_bound_fraction": {"$ref": "#/$defs/fraction"},
+        "expected_final_bound_fraction": {"$ref": "#/$defs/fraction"},
+        "expected_threshold_crossing_seconds": {"type": "number", "minimum": 0},
+        "absolute_tolerance": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"type": "string", "enum": ["software_test_surrogate", "literature_parameterized", "externally_derived"]},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "citation", "location", "license", "role"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "citation": {"type": "string", "minLength": 1},
+          "location": {"type": "string", "minLength": 1},
+          "license": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "fraction": {"type": "number", "minimum": 0, "maximum": 1}
+  }
+}

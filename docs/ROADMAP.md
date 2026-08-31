@@ -578,6 +578,17 @@ At least three resolutions should be provided:
 
 **Objective:** Couple biomarker detection, drug release, and cell response
 
+**Current progress (M5.1):** The first independent cell-layer library now
+provides a strict, evidence-scoped receptor-ligand profile and an exact
+reversible one-to-one binding implementation for a constant ligand reservoir.
+It reports conserved free/bound receptor amounts, occupancy, and first threshold
+crossing through a stable request/response boundary. The checked case is a
+synthetic software-verification reference, not a qualified biological model.
+M5.2 will connect a time-scoped extracellular signal from the M4
+capillary/tissue boundary without making either layer depend on the other's
+implementation. See [M5 implementation evidence](m5/README.md) and
+[ADR-0034](architecture/adr/0034-analytical-receptor-ligand-baseline.md).
+
 #### Tasks
 
 - define a general receptor/ligand model;
@@ -590,6 +601,21 @@ At least three resolutions should be provided:
 - implement apoptosis as the first complete cell-response model;
 - provide population-based models for large cell counts;
 - record model provenance, calibration range, and uncertainty.
+
+#### Working implementation sequence
+
+1. ~~Independent analytical receptor-ligand contract and synthetic reference.~~
+   Complete in M5.1.
+2. Capillary/tissue-to-cell signal hand-off with explicit compartment, time,
+   unit, and conservation semantics.
+3. Time-dependent ODE binding compared with the M5.1 constant-reservoir limit.
+4. Stochastic single-cell binding plus population distributions and detection
+   error experiments.
+5. Executable intracellular signaling network with a shared reference.
+6. Nanodevice activation, conservative drug release, and cellular uptake.
+7. Apoptosis as the first complete response with higher-layer feedback.
+8. Population-scale variant, evidence qualification, User Guide review, and
+   formal M5 gate review.
 
 #### Gate M5 – “Cell Response”
 

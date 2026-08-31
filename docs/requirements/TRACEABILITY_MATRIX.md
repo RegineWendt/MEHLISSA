@@ -27,7 +27,7 @@ Status codes:
 
 ## 2. Foundation and architecture
 
-| ID | Source | Status 2026-08-30 | Target | Planned verification |
+| ID | Source | Status 2026-08-31 | Target | Planned verification |
 |---|---|---|---|---|
 | SYS-001 | RM M1 | DONE | M1 | `simulation_clock_tests`, cross-platform CTest |
 | SYS-002 | RM 2.4 | PART | M1/M7 | byte-identical M1 kernel reference run on MSVC/GCC/Clang; replicate planning and domain-model verification follow |
@@ -47,7 +47,7 @@ Status codes:
 
 ## 3. Body and organ layers
 
-| ID | Source | Status 2026-08-30 | Target | Planned verification |
+| ID | Source | Status 2026-08-31 | Target | Planned verification |
 |---|---|---|---|---|
 | BODY-001 | DISS p. 100; BVS18 | DONE | M2 | complete, strongly connected, schema-validated 95-segment graph; converter and graph-invariant tests |
 | BODY-002 | DISS pp. 100, 113–117 | DONE | M2 | SI schema and validator for ID, type, geometry, length, diameter, cross section, volume, flow, sources, and uncertainty; canonical M2.2 data set |
@@ -68,7 +68,7 @@ Status codes:
 
 ## 4. Capillary and cell layers
 
-| ID | Source | Status 2026-08-30 | Target | Planned verification |
+| ID | Source | Status 2026-08-31 | Target | Planned verification |
 |---|---|---|---|---|
 | CAP-001 | DISS pp. 126–129 | PART | M4 | strict v2/v3 schemas and executable arteriole–capillary–venule components derive volume, area, velocity, and transit from SI geometry and continuity flow, then preserve identity and conserved payloads through a complete organ-capillary-organ route; anatomical network refinement follows |
 | CAP-002 | DISS pp. 126–129 | PART | M4 | M4.7 pulmonary card separates functional perfused volume from morphometric capacity, records parameter-level evidence and uncertainty, and enforces equivalent-geometry volume-flow-transit closure; independent physiological validation, jointly measured cohorts, hematocrit, and further organs follow |
@@ -78,10 +78,16 @@ Status codes:
 | CAP-006 | DISS pp. 129, 154 | DONE | M4 | M4.8 defines a typed implementation-neutral request/response and analytical free-diffusion adapter; M4.9–M4.11 add deterministic endpoint particles, bounded paths, and a conservative radial field; M4.13 adds a separate pulmonary-card-bound shared case in which analytical, 200,000-particle, and 256-to-512-cell field resolutions compare directed advection, diffusion, bulk reaction, and a surface-to-volume wall sink with explicit balance and refinement gates; explicit radial wall encounters, receptor kinetics, external tools, noise, and physiological signal qualification follow without reopening the stable contracts |
 | CAP-007 | DISS p. 129 | RESEARCH | M4/M6 | reachability and multi-hop comparison |
 | CELL-001 | DISS pp. 129–132 | SPEC | M5 | biomarker field with analytical reference case |
-| CELL-002 | DISS pp. 130–132 | RESEARCH | M5/M7 | binding/threshold model with FP/FN evaluation |
+| CELL-002 | DISS pp. 130–132 | PART | M5/M7 | M5.1 provides an independent, typed receptor-ligand contract, exact constant-reservoir binding/dissociation transient, threshold-crossing event, receptor balance, strict evidence-scoped profile, and analytical/negative tests; time-dependent and stochastic variants, biological kinetics, population variability, and FP/FN evaluation follow |
 | CELL-003 | DISS pp. 130–132, 153–154 | SPEC | M5 | release–diffusion–binding end-to-end test |
 | CELL-004 | DISS pp. 131–133, 154 | RESEARCH | M5 | ODE/SSA or distribution model against reference data |
 | CELL-005 | DISS pp. 153–154 | RESEARCH | M5 | apoptosis event plus feedback to scenario |
+
+M5 is open. M5.1 advances only `CELL-002`: it verifies a synthetic homogeneous
+binding case independently of all other layers. It does not yet satisfy the M5
+capillary-signal, intracellular-response, higher-layer-feedback, or population
+gate statements. See [M5 implementation evidence](../m5/README.md) and
+[ADR-0034](../architecture/adr/0034-analytical-receptor-ligand-baseline.md).
 
 Gate M4 is closed by the formal
 [M4 gate review](../m4/M4_GATE_REVIEW.md). `CAP-001` through `CAP-005` remain
@@ -92,7 +98,7 @@ statements.
 
 ## 5. Nano-IoT and research data
 
-| ID | Source | Status 2026-08-30 | Target | Planned verification |
+| ID | Source | Status 2026-08-31 | Target | Planned verification |
 |---|---|---|---|---|
 | IOT-001 | DISS pp. 113–115, 186–188 | LEGACY | M2/M7 | generic device type plus locator/collector composition |
 | IOT-002 | DISS pp. 96–97 | SPEC | M6 | nano in-body → gateway → BAN → station |
@@ -110,7 +116,7 @@ statements.
 
 ## 6. Operation, scenarios, and quality
 
-| ID | Source | Status 2026-08-30 | Target | Planned verification |
+| ID | Source | Status 2026-08-31 | Target | Planned verification |
 |---|---|---|---|---|
 | UX-001 | RM Phase 0/10 | PART | M1 | headless CLI run in CI |
 | UX-002 | VIS20 pp. 1–2 | LEGACY | M7 | standardized result format in new visualization |
@@ -126,7 +132,7 @@ statements.
 | QUA-002 | RM M1 | DONE | M1 | clang-tidy, ASan/UBSan, and warnings as errors in CI |
 | QUA-003 | MEH25 pp. 1–2 | SPEC | M2–M7 | versioned benchmark reports plus result comparison |
 | QUA-004 | MEH25 pp. 1–2 | SPEC | M4–M7 | scaling test: agents versus populations/surrogate |
-| QUA-005 | RM 6.6 | DONE | M1 ongoing | versioned API/schema/model/scenario documents plus a two-level English User Guide cover non-expert purpose, non-claims, mental model, guided experiment families, decision aid, glossary, and retained M0–M4 technical workflows; every future M-gate now requires a documented guide-impact review |
+| QUA-005 | RM 6.6 | DONE | M1 ongoing | versioned API/schema/model/scenario documents plus a two-level English User Guide cover non-expert purpose, non-claims, mental model, guided experiment families, decision aid, glossary, retained M0–M4 workflows, and the open M5.1 cell baseline; every future M-gate requires a documented guide-impact review |
 | QUA-006 | RM M8 | SPEC | M8 | data-protection and data-management review |
 
 ## 7. M0 coverage review

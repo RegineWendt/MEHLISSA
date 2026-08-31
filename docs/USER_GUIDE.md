@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M4 implementation
+**Covered software:** accepted M0 through M4 plus the open M5.1 cell baseline
 
-**Last updated:** 30 August 2026, after the M4 gate review
+**Last updated:** 31 August 2026, after the M5.1 implementation
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -40,8 +40,9 @@ connects four independently replaceable layers:
    selected resolution;
 3. a **capillary layer** represents local microcirculation, exchange, device
    residence, and molecular communication; and
-4. a **cell layer** will represent receptors, binding, signaling, release, and
-   cellular response.
+4. a **cell layer** begins with independently verified receptor binding and
+   threshold detection and will expand to signaling, release, and cellular
+   response.
 
 The software is intended to help formulate and test computational research
 hypotheses. It does not assume that one model resolution is always best. A
@@ -97,7 +98,7 @@ flowchart LR
     E[Experiment<br/>question, inputs, seed, outputs] --> B[Virtual body<br/>circulation and routes]
     B --> O[Organ model<br/>coarse or regional]
     O --> C[Capillary model<br/>transit, exchange, channels]
-    C --> L[Cell model<br/>planned in M5]
+    C -. M5.2 hand-off .-> L[Cell model<br/>binding baseline in M5.1]
     B --> R[Observations and reports]
     O --> R
     C --> R
@@ -160,8 +161,11 @@ The current software can:
 - observe local nanodevice position and residence and optionally sample a
   conservative terminal outcome;
 - compare analytical, endpoint-particle, trajectory, radial-field, and shared
-  axial molecular-transport implementations; and
-- run all accepted M0–M4 contracts in a reproducible cross-platform test suite.
+  axial molecular-transport implementations;
+- evaluate an independently configured reversible receptor-ligand binding case,
+  including occupancy, receptor balance, and a threshold-crossing event; and
+- run all accepted M0–M4 and current M5.1 contracts in a reproducible
+  cross-platform test suite.
 
 Not every capability has the same user-interface maturity:
 
@@ -169,15 +173,16 @@ Not every capability has the same user-interface maturity:
 |---|---|---|
 | command-line workflow | intended to be invoked directly with `mehlissa-cli` | manifest validation, minimal run, body-model validation, BVS regression, body-state application |
 | executable reference workflow | a checked scenario or evaluator with automated acceptance gates | pulmonary validation, coarse/five-lobe comparison, historical FP9 timer |
-| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, exchange, nanodevice disposition, molecular-channel comparisons |
+| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, exchange, nanodevice disposition, molecular-channel comparisons, receptor-ligand binding |
 
 The access level says how an experiment is run, not how scientifically valid it
 is. A CLI model can still be synthetic; a developer workflow can still be a
 strong software reference.
 
-The software does not yet contain an executable cell layer, active Nano-IoT
-communication, a complete fingerprinting workflow, or a participant-specific
-virtual body. Those begin in M5 and later milestones.
+The software does not yet connect the executable cell baseline to M4, model an
+intracellular response or cell population, provide active Nano-IoT
+communication, complete the fingerprinting workflow, or represent a
+participant-specific virtual body. Those remain M5 and later work.
 
 ### 5. Experiment families and guided examples
 
@@ -294,6 +299,19 @@ Use [the shared axial experiment](#one-flow-diffusion-and-wall-reaction-experime
 Start with [interpreting model evidence](#how-to-interpret-model-evidence) and
 [the pulmonary validation workflows](#run-the-pulmonary-0d-independent-validation).
 
+#### 5.9 Receptor binding and threshold detection
+
+| Question element | Guided example |
+|---|---|
+| research question | Under a constant extracellular signal, how quickly does reversible receptor binding approach equilibrium, and is a chosen occupancy threshold reached? |
+| inputs | receptor and ligand identities, compartment, cell volume, receptor concentration, association and dissociation rates, ligand concentration, initial occupancy, threshold, and observation duration |
+| workflow | load the strict M5.1 profile and compare the cell-model response with its closed-form reference |
+| outputs | equilibrium and final bound fractions, total/free/bound receptor amounts, balance error, detection state, and first threshold-crossing time |
+| interpretation | agreement verifies units, binding semantics, conservation, and event timing for the declared mathematical case |
+| limitations | values are synthetic; ligand is a constant reservoir; there is no depletion, transport hand-off, stochastic cell variation, intracellular signaling, classification error, or biological validation |
+
+Use [the analytical receptor-ligand baseline](#analytical-receptor-ligand-cell-baseline-m51).
+
 ### 6. Choose your first experiment
 
 Use the smallest workflow that answers the intended question:
@@ -309,11 +327,12 @@ Use the smallest workflow that answers the intended question:
 | study capillary recruitment or exchange | M4 recruitment/exchange profiles | component/developer workflow |
 | study nanodevice residence or terminal fate | M4 observation/disposition profiles | component/developer workflow |
 | compare analytical, particle, trajectory, and field transport | M4 molecular-channel profiles | component/developer workflow |
+| study reversible receptor occupancy and a detection threshold | M5.1 receptor-ligand profile | component/developer workflow |
 
-If the desired study needs cell binding, intracellular response, active
-Nano-IoT communication, or a complete fingerprinting chain, treat it as a
-future scenario design rather than silently approximating it with an unrelated
-current model.
+If the desired study needs a capillary-driven or time-varying cell signal,
+intracellular response, population variability, active Nano-IoT communication,
+or a complete fingerprinting chain, treat it as a future scenario design rather
+than silently approximating it with the M5.1 constant-reservoir baseline.
 
 ### 7. Short glossary
 
@@ -333,6 +352,7 @@ current model.
 | observation | reported state or event that does not necessarily change routing or ownership |
 | ownership | the model, store, or pending queue currently responsible for one entity or transfer |
 | population model | aggregate representation that tracks counts or amounts instead of every individual |
+| receptor occupancy | fraction of the declared receptor population bound to its ligand at a specified time |
 | reference case | fixed inputs and expected comparison rules shared by implementations |
 | surrogate | deliberately simplified model preserving selected input/output behavior within a declared scope |
 | validation | comparison with evidence not used to calibrate the evaluated model; always limited to the measured population and endpoints |
@@ -341,7 +361,7 @@ current model.
 ## Part II – Technical installation, execution, and model workflows
 
 Part II assumes that the reader has selected an experiment family. Begin with
-the command-line workflows for installation and body transport. M3 and M4
+the command-line workflows for installation and body transport. M3 through M5.1
 sections then explain executable reference and component/developer workflows.
 
 ### Repository orientation
@@ -356,6 +376,7 @@ sections then explain executable reference and component/developer workflows.
 | `models/organ/` | interchangeable lung implementations and model-definition loader |
 | `models/cosimulation/` | body–organ ownership and route adapter |
 | `models/capillary/` | capillary transit, exchange, nanodevice observation/disposition, and molecular channels |
+| `models/cell/` | receptor-ligand and future intracellular cell models |
 | `data/body-models/` | canonical executable vascular models |
 | `data/body-states/` | state overlays for compatible body models |
 | `data/lung-models/` | executable evidence-scoped pulmonary reference candidates |
@@ -363,6 +384,7 @@ sections then explain executable reference and component/developer workflows.
 | `data/reference-results/` | checked-in scientific Golden References |
 | `examples/` | minimal manifests and synthetic models |
 | `examples/capillary-models/` | executable M4 capillary and molecular-channel profiles |
+| `examples/cell-models/` | executable M5 cell-model profiles |
 | `tests/` | software, invariant, schema, and regression tests |
 | `docs/` | user, scientific, architecture, and development documentation |
 | `mehlissa/`, `mehlissa2.0/` | historical implementations retained as references |
@@ -1376,6 +1398,53 @@ binding or pulmonary biochemistry. Read
 [Shared Axial Advection-Diffusion-Reaction Case](m4/SHARED_AXIAL_ADVECTION_REACTION_CASE.md)
 for equations, numerical gates, and interpretation limits.
 
+#### Analytical receptor-ligand cell baseline (M5.1)
+
+M5.1 introduces the first executable cell-layer model. It asks a deliberately
+small question: if a homogeneous receptor population sees a constant ligand
+concentration, what fraction is bound after a declared time, and when is an
+occupancy threshold first crossed?
+
+The profile and schema are:
+
+```text
+examples/cell-models/synthetic-receptor-ligand-v1.json
+data/schemas/receptor-ligand-profile/1.0.0.schema.json
+```
+
+The model implements reversible one-to-one mass-action binding. For bound
+fraction `f`, constant ligand concentration `L`, association rate `kon`, and
+dissociation rate `koff`, it uses the exact transient:
+
+```text
+f_eq = kon L / (kon L + koff)
+f(t) = f_eq + (f(0) - f_eq) exp(-(kon L + koff)t)
+```
+
+The checked profile starts unbound, uses a ten-second observation and a `0.5`
+threshold, and produces:
+
+- equilibrium bound fraction `0.75`;
+- final bound fraction `0.7362632708334493`; and
+- first threshold crossing at `2.7465307216702746 s`.
+
+It also reports total, free, and bound receptor amounts and verifies their exact
+balance. Run the focused tests after building:
+
+```powershell
+ctest --test-dir build/windows-msvc -C Debug --output-on-failure `
+  -R "receptor|Receptor|binding|dissociation"
+```
+
+This is a component/developer workflow; there is no general cell CLI yet. Its
+parameters are synthetic, and the constant-reservoir assumption excludes ligand
+depletion and feedback. No M4 signal hand-off, spatial cell, receptor turnover,
+stochastic variability, intracellular network, drug release, apoptosis, or
+validated diagnostic threshold is present. Read
+[Receptor-Ligand Baseline](m5/RECEPTOR_LIGAND_BASELINE.md) and
+[ADR-0034](architecture/adr/0034-analytical-receptor-ligand-baseline.md) before
+extending or interpreting this model.
+
 ### Troubleshooting
 
 #### CMake selects the wrong Visual Studio version
@@ -1412,8 +1481,9 @@ minutes on the current Windows reference system.
 
 This edition implements the two-level guide planned in the Roadmap: the new
 non-expert Part I precedes the retained and updated technical Part II. It covers
-the accepted software through M4 while preserving the difference between CLI,
-reference-workflow, and component/developer access.
+the accepted software through M4 and the explicitly open M5.1 cell baseline
+while preserving the difference between CLI, reference-workflow, and
+component/developer access.
 
 The User Guide is mandatory gate-maintenance evidence. At M5 and every later
 M-gate, the gate review must check and, where applicable, update:
@@ -1435,7 +1505,8 @@ every future gate checklist.
 
 Planned substantive extensions are:
 
-- M5 cellular and molecular interaction experiments;
+- M5 capillary-to-cell coupling, time-dependent/stochastic binding,
+  intracellular response, drug release, apoptosis, and population experiments;
 - M6 active gateway and Nano-IoT configuration;
 - the M7 end-to-end fingerprinting workflow;
 - later medical scenarios, result analysis, and visualization workflows; and

@@ -33,6 +33,9 @@ static_assert(std::same_as<decltype(mehlissa::core::per_pascal(1.0) * mehlissa::
 static_assert(std::same_as<decltype(mehlissa::core::wood_units(1.0) *
                                     mehlissa::core::milliliters_per_millimeter_of_mercury(1.0)),
                            mehlissa::core::Time>);
+static_assert(std::same_as<decltype(mehlissa::core::cubic_meters_per_mole_second(1.0) *
+                                    mehlissa::core::moles_per_cubic_meter(1.0)),
+                           mehlissa::core::FirstOrderRate>);
 
 } // namespace
 
@@ -89,4 +92,12 @@ TEST_CASE("Pulmonary pressure resistance and compliance conversions preserve dim
                 mehlissa::core::per_millimeter_of_mercury(0.02)) == Catch::Approx(0.02));
     REQUIRE(mehlissa::core::in_milliliters_per_millimeter_of_mercury(
                 mehlissa::core::milliliters_per_millimeter_of_mercury(5.0)) == Catch::Approx(5.0));
+}
+
+TEST_CASE("Association rate and concentration derive a first-order binding rate",
+          "[core][quantity][m5]") {
+    const auto binding_rate = mehlissa::core::cubic_meters_per_mole_second(1000.0) *
+                              mehlissa::core::moles_per_cubic_meter(0.0003);
+
+    REQUIRE(mehlissa::core::in_per_second(binding_rate) == Catch::Approx(0.3));
 }

@@ -128,6 +128,7 @@ using Speed = Quantity<Dimension<1, -1, 0>>;
 using Diffusivity = Quantity<Dimension<2, -1, 0>>;
 using FlowRate = Quantity<Dimension<3, -1, 0>>;
 using FirstOrderRate = Quantity<Dimension<0, -1, 0>>;
+using SecondOrderAssociationRate = Quantity<Dimension<3, -1, -1>>;
 using Amount = Quantity<Dimension<0, 0, 1>>;
 using Concentration = Quantity<Dimension<-3, 0, 1>>;
 using Mass = Quantity<Dimension<0, 0, 0, 1>>;
@@ -194,6 +195,11 @@ using VascularCompliance = Quantity<Dimension<4, 2, 0, -1>>;
 
 [[nodiscard]] constexpr FirstOrderRate per_second(const double value) noexcept {
     return FirstOrderRate::from_si(value);
+}
+
+[[nodiscard]] constexpr SecondOrderAssociationRate
+cubic_meters_per_mole_second(const double value) noexcept {
+    return SecondOrderAssociationRate::from_si(value);
 }
 
 [[nodiscard]] constexpr Amount moles(const double value) noexcept { return Amount::from_si(value); }
@@ -277,6 +283,11 @@ milliliters_per_millimeter_of_mercury(const double value) noexcept {
 }
 
 [[nodiscard]] constexpr double in_per_second(const FirstOrderRate value) noexcept {
+    return value.si_value();
+}
+
+[[nodiscard]] constexpr double
+in_cubic_meters_per_mole_second(const SecondOrderAssociationRate value) noexcept {
     return value.si_value();
 }
 

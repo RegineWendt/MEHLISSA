@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-receptor-ligand-v1",
+    "version": "1.0.0",
+    "title": "Synthetic constant-reservoir receptor-ligand reference"
+  },
+  "implementation": {
+    "kind": "analytical_receptor_ligand_constant_reservoir",
+    "model_id": "cell.receptor-ligand.synthetic.v1",
+    "receptor_id": "synthetic-receptor",
+    "ligand_id": "synthetic-ligand",
+    "compartment_id": "synthetic-cell-surface",
+    "cell_volume_m3": 1e-15,
+    "total_receptor_concentration_mol_m3": 1e-6,
+    "association_rate_m3_mol_s": 1000.0,
+    "dissociation_rate_s_1": 0.1,
+    "detection_threshold_fraction": 0.5
+  },
+  "reference_case": {
+    "request_id": "synthetic-binding-step-v1",
+    "ligand_concentration_mol_m3": 0.0003,
+    "observation_time_seconds": 10.0,
+    "initial_bound_fraction": 0.0,
+    "expected_final_bound_fraction": 0.7362632708334493,
+    "expected_threshold_crossing_seconds": 2.7465307216702746,
+    "absolute_tolerance": 1e-12
+  },
+  "validity": {
+    "population": "software contract tests only",
+    "physiological_state": "not applicable",
+    "evidence_class": "software_test_surrogate",
+    "description": "Synthetic parameters selected for an exactly solvable 1:1 binding step with transparent equilibrium, transient, threshold, and receptor-balance checks."
+  },
+  "sources": [
+    {
+      "id": "wendt-dissertation-cell-layer",
+      "citation": "Wendt, Regine (2024), Einsatz von Nanotechnologien in der Praezisionsmedizin, Sections 4.4-4.5, pp. 129-132",
+      "location": "literature/Diss_WENDT_Simulationchapters.pdf",
+      "license": "source consulted; architecture paraphrased",
+      "role": "receptor, binding, detection, and cell-layer architecture"
+    },
+    {
+      "id": "mehlissa-m5-binding-contract",
+      "citation": "MEHLISSA Next M5.1 analytical receptor-ligand baseline, version 1.0.0",
+      "location": "docs/m5/RECEPTOR_LIGAND_BASELINE.md",
+      "license": "CC-BY-4.0",
+      "role": "synthetic parameters, analytical equations, reference result, and acceptance rules"
+    }
+  ],
+  "limitations": [
+    "All kinetic, concentration, volume, receptor, and threshold values are synthetic software-test parameters.",
+    "The ligand concentration is a constant external reservoir and is not depleted by receptor binding.",
+    "The model assumes homogeneous deterministic 1:1 mass-action binding without cooperativity, internalization, synthesis, degradation, spatial gradients, or stochastic molecule counts.",
+    "Threshold crossing is a software event only and does not yet activate a nanodevice or return a cell-state change to another layer.",
+    "The cell volume only converts receptor concentration to amount and is not a geometry-resolved cell."
+  ]
+}
