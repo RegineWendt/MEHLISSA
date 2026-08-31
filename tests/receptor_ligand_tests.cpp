@@ -67,7 +67,9 @@ TEST_CASE("The analytical binding step matches equilibrium transient threshold a
           Catch::Approx(0.0).margin(1.0e-32));
     REQUIRE(response.detection_threshold_reached);
     REQUIRE(response.first_threshold_crossing_time.has_value());
-    CHECK(std::chrono::duration<double>{*response.first_threshold_crossing_time}.count() ==
+    const auto crossing = response.first_threshold_crossing_time.value_or(
+        mehlissa::core::SimulationClock::Duration::min());
+    CHECK(std::chrono::duration<double>{crossing}.count() ==
           Catch::Approx(profile.reference_case.expected_threshold_crossing_seconds).margin(1.0e-9));
 }
 
@@ -90,7 +92,8 @@ TEST_CASE("Zero-ligand dissociation follows the analytical first-order limit",
     CHECK(response.equilibrium_bound_fraction == 0.0);
     CHECK(response.final_bound_fraction == Catch::Approx(0.5).margin(1.0e-9));
     REQUIRE(response.first_threshold_crossing_time.has_value());
-    CHECK(*response.first_threshold_crossing_time ==
+    CHECK(response.first_threshold_crossing_time.value_or(
+              mehlissa::core::SimulationClock::Duration::min()) ==
           mehlissa::core::SimulationClock::Duration::zero());
 }
 
