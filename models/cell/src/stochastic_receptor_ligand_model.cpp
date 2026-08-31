@@ -57,9 +57,7 @@ void validate_request(const StochasticReceptorLigandModelConfig& config,
 }
 
 void retain_sample(std::vector<StochasticBindingSample>& samples, std::size_t& dropped,
-                   const std::size_t maximum, const double time_seconds,
-                   const std::uint32_t bound) {
-    const StochasticBindingSample sample{duration_from_seconds(time_seconds), bound};
+                   const std::size_t maximum, const StochasticBindingSample sample) {
     if (samples.size() < maximum) {
         samples.push_back(sample);
     } else {
@@ -156,12 +154,13 @@ StochasticReceptorLigandModel::evaluate(const StochasticReceptorLigandRequest& r
             if (!crossing.has_value() && previous < threshold_count && bound >= threshold_count) {
                 crossing = duration_from_seconds(time);
             }
-            retain_sample(samples, dropped, config_.maximum_recorded_samples, time, bound);
+            retain_sample(samples, dropped, config_.maximum_recorded_samples,
+                          {duration_from_seconds(time), bound});
         }
     }
     if (samples.back().offset != request.observation_time) {
-        retain_sample(samples, dropped, config_.maximum_recorded_samples, observation_seconds,
-                      bound);
+        retain_sample(samples, dropped, config_.maximum_recorded_samples,
+                      {duration_from_seconds(observation_seconds), bound});
     }
 
     const auto fraction = static_cast<double>(bound) / config_.receptor_count;
