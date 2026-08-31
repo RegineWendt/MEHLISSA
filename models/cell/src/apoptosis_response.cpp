@@ -32,18 +32,17 @@ std::string_view to_string(const CellState state) noexcept {
 }
 
 double synthetic_hill_effect(const core::Amount intracellular_amount,
-                             const core::Amount half_max_effect_amount,
-                             const double hill_coefficient) {
+                             const SyntheticHillParameters& parameters) {
     const auto amount = core::in_moles(intracellular_amount);
-    const auto half_max = core::in_moles(half_max_effect_amount);
+    const auto half_max = core::in_moles(parameters.half_max_effect_amount);
     if (!std::isfinite(amount) || amount < 0.0 || !std::isfinite(half_max) || half_max <= 0.0 ||
-        !std::isfinite(hill_coefficient) || hill_coefficient <= 0.0) {
+        !std::isfinite(parameters.hill_coefficient) || parameters.hill_coefficient <= 0.0) {
         invalid("Synthetic Hill-effect inputs are nonphysical");
     }
     if (amount == 0.0) {
         return 0.0;
     }
-    const auto log_ratio = hill_coefficient * std::log(amount / half_max);
+    const auto log_ratio = parameters.hill_coefficient * std::log(amount / half_max);
     if (log_ratio >= 0.0) {
         return 1.0 / (1.0 + std::exp(-log_ratio));
     }
@@ -107,8 +106,8 @@ SyntheticHillApoptosisModel::evaluate(const ApoptosisResponseRequest& request) c
     }
 
     const auto effect =
-        synthetic_hill_effect(delivery.intracellular_drug_amount, config_.half_max_effect_amount,
-                              config_.hill_coefficient);
+        synthetic_hill_effect(delivery.intracellular_drug_amount,
+                              {config_.half_max_effect_amount, config_.hill_coefficient});
     const auto state = effect >= config_.apoptosis_commitment_threshold
                            ? CellState::apoptosis_committed
                            : CellState::viable;

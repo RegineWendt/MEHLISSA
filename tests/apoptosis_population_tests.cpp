@@ -112,8 +112,8 @@ TEST_CASE("Population requests reject ambiguous cohorts limits and count overflo
         {"overflow", 1, mehlissa::core::moles(0.0)}};
     CHECK_THROWS_AS(model.evaluate(overflowing), mehlissa::core::MehlissaError);
 
-    CHECK_THROWS_AS(mehlissa::models::cell::synthetic_hill_effect(mehlissa::core::moles(-1.0),
-                                                                  mehlissa::core::moles(1.0), 2.0),
+    CHECK_THROWS_AS(mehlissa::models::cell::synthetic_hill_effect(
+                        mehlissa::core::moles(-1.0), {mehlissa::core::moles(1.0), 2.0}),
                     mehlissa::core::MehlissaError);
 
     auto changed_reference = profile;

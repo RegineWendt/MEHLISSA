@@ -113,8 +113,8 @@ ApoptosisPopulationResponse CohortCompressedApoptosisPopulationModel::evaluate(
     long double weighted_effect_sum = 0.0;
     for (const auto& cohort : request.cohorts) {
         const auto effect =
-            synthetic_hill_effect(cohort.intracellular_drug_amount, config_.half_max_effect_amount,
-                                  config_.hill_coefficient);
+            synthetic_hill_effect(cohort.intracellular_drug_amount,
+                                  {config_.half_max_effect_amount, config_.hill_coefficient});
         const auto state = effect >= config_.apoptosis_commitment_threshold
                                ? CellState::apoptosis_committed
                                : CellState::viable;
