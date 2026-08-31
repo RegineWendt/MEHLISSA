@@ -49,6 +49,7 @@ decisions; a new decision supersedes an existing one through a new ADR.
 | [ADR-0035](adr/0035-non-consuming-capillary-cell-signal-handoff.md) | Accepted | neutral non-consuming amount/volume snapshot connecting M4 tissue inventory to M5 receptor binding |
 | [ADR-0036](adr/0036-time-varying-receptor-ligand-ode.md) | Accepted | bounded RK4 binding under piecewise-constant ligand trajectories, verified against constant and pulsed analytical references |
 | [ADR-0037](adr/0037-stochastic-receptor-binding-and-population-classification.md) | Accepted | exact finite-receptor SSA with named per-cell streams, population distributions, and synthetic FP/FN classification |
+| [ADR-0038](adr/0038-shared-intracellular-ode-ssa-network.md) | Accepted | one conserved two-stage intracellular network shared by bounded RK4 and exact SSA variants |
 
 ## Status model
 

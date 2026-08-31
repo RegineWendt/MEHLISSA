@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M4 plus the open M5.1–M5.4 cell work
+**Covered software:** accepted M0 through M4 plus the open M5.1–M5.5 cell work
 
-**Last updated:** 31 August 2026, after the M5.4 implementation
+**Last updated:** 31 August 2026, after the M5.5 implementation
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -42,8 +42,8 @@ connects four independently replaceable layers:
    residence, and molecular communication; and
 4. a **cell layer** begins with independently verified receptor binding and
    threshold detection, now accepts a neutral time-scoped signal observation
-   from capillary tissue, can evaluate deterministic or stochastic exposure, and
-   will expand to intracellular signaling, release, and cellular response.
+   from capillary tissue, can evaluate deterministic or stochastic exposure,
+   and now propagates receptor state into a synthetic intracellular response;
 
 The software is intended to help formulate and test computational research
 hypotheses. It does not assume that one model resolution is always best. A
@@ -99,7 +99,7 @@ flowchart LR
     E[Experiment<br/>question, inputs, seed, outputs] --> B[Virtual body<br/>circulation and routes]
     B --> O[Organ model<br/>coarse or regional]
     O --> C[Capillary model<br/>transit, exchange, channels]
-    C -->|non-consuming tissue signal snapshot| L[Cell model<br/>binding baseline]
+    C -->|non-consuming tissue signal snapshot| L[Cell model<br/>binding and intracellular response]
     B --> R[Observations and reports]
     O --> R
     C --> R
@@ -170,8 +170,11 @@ The current software can:
   the configured receptor response through a separate adapter;
 - evaluate binding, threshold detection, signal withdrawal, and dissociation
   under a prescribed piecewise-constant ligand trajectory with a bounded
-  numerical solver; and
-- run all accepted M0–M4 and current M5.1–M5.4 contracts in a reproducible
+  numerical solver;
+- propagate receptor occupancy through a conserved two-stage intracellular
+  messenger/effector network using either deterministic ODE or stochastic SSA;
+  and
+- run all accepted M0–M4 and current M5.1–M5.5 contracts in a reproducible
   cross-platform test suite.
 
 Not every capability has the same user-interface maturity:
@@ -180,7 +183,7 @@ Not every capability has the same user-interface maturity:
 |---|---|---|
 | command-line workflow | intended to be invoked directly with `mehlissa-cli` | manifest validation, minimal run, body-model validation, BVS regression, body-state application |
 | executable reference workflow | a checked scenario or evaluator with automated acceptance gates | pulmonary validation, coarse/five-lobe comparison, historical FP9 timer |
-| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, exchange, nanodevice disposition, molecular-channel comparisons, constant and time-varying receptor binding, capillary-to-cell signal hand-off |
+| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, molecular channels, receptor binding, capillary-to-cell hand-off, intracellular ODE/SSA network |
 
 The access level says how an experiment is run, not how scientifically valid it
 is. A CLI model can still be synthetic; a developer workflow can still be a
@@ -189,8 +192,8 @@ strong software reference.
 The M4-to-M5 connection is currently a non-consuming, spatially uniform snapshot
 at an exact synchronization time. M5.3 can accept a prescribed time-varying
 trajectory, but M4 does not yet generate that trajectory dynamically. The
-software does not yet model tissue depletion or feedback, an intracellular
-response or cell population, active Nano-IoT communication, the complete
+software does not yet model tissue depletion, receptor-network feedback,
+biological cell heterogeneity, active Nano-IoT communication, the complete
 fingerprinting workflow, or a participant-specific virtual body. Those remain
 M5 and later work.
 
@@ -314,16 +317,17 @@ Start with [interpreting model evidence](#how-to-interpret-model-evidence) and
 | Question element | Guided example |
 |---|---|
 | research question | Can a retained capillary-tissue substance trigger the configured cell response, how does exposure change receptor occupancy, and what reaction-noise distribution and threshold errors arise in a synthetic population? |
-| inputs | source snapshot or prescribed trajectory, ligand and compartment identities, receptor concentration or integer count, rates, initial occupancy, threshold, duration, solver bounds, and for M5.4 a seed, stream prefix, and cohort size |
-| workflow | choose the exact M5.1 constant case, M5.2 hand-off, M5.3 numerical trajectory, or M5.4 SSA population; compare deterministic results with analytical transients and stochastic means/variances with binomial moments |
-| outputs | final and peak occupancy, bounded samples, receptor balance, threshold time, or population distributions and a TP/FN/FP/TN confusion matrix |
-| interpretation | agreement verifies identity, units, time, binding, conservation, deterministic numerics, stochastic moments, named-stream replay, and classifier accounting within the declared synthetic case |
-| limitations | values and cohorts are synthetic; ligand remains a homogeneous non-depleting reservoir; M4 does not yet generate a dynamic field, and there is no biological heterogeneity, intracellular signaling, clinical classifier, or biological validation |
+| inputs | signal snapshot or trajectory, binding parameters, receptor occupancy, messenger/effector rates or counts, thresholds, duration, solver bounds, seed, stream prefix, and cohort size as applicable |
+| workflow | choose M5.1 binding, M5.2 hand-off, M5.3 trajectory, M5.4 receptor SSA population, or M5.5 intracellular ODE/SSA comparison |
+| outputs | receptor occupancy and threshold time; population distributions and confusion matrix; or active messenger/effector state and internal response time |
+| interpretation | agreement verifies identity, units, conservation, numerical references, stochastic moments, named-stream replay, and shared ODE/SSA reaction semantics within synthetic cases |
+| limitations | values, topology, and cohorts are synthetic; ligand remains non-depleting; M4 does not generate a dynamic field, and there is no biological heterogeneity, clinical classifier, pathway validation, release, or feedback |
 
 Use [the analytical receptor-ligand baseline](#analytical-receptor-ligand-cell-baseline-m51)
 and [the capillary-to-cell hand-off](#capillary-to-cell-signal-hand-off-m52), or
 [the time-varying baseline](#time-varying-receptor-binding-m53), or
-[the stochastic baseline](#stochastic-receptor-binding-and-populations-m54).
+[the stochastic baseline](#stochastic-receptor-binding-and-populations-m54), or
+[the intracellular network](#intracellular-response-network-m55).
 
 ### 6. Choose your first experiment
 
@@ -344,12 +348,13 @@ Use the smallest workflow that answers the intended question:
 | trigger that receptor response from retained capillary tissue | M5.2 capillary-cell signal profile | component/developer workflow |
 | study a prescribed ligand pulse, withdrawal, and dissociation | M5.3 time-varying receptor-ligand profile | component/developer workflow |
 | explore finite-receptor noise, population occupancy, and synthetic detection errors | M5.4 stochastic receptor-ligand profile | component/developer workflow |
+| compare deterministic and stochastic intracellular response | M5.5 intracellular response profile | component/developer workflow |
 
 If the desired study needs a capillary-generated time-varying or consuming cell
-signal, intracellular response, population variability, active Nano-IoT
+signal, biologically qualified intracellular response, active Nano-IoT
 communication, or a complete fingerprinting chain, treat it as a future scenario
-design rather than silently approximating it with the M5.1–M5.4 non-depleting
-reservoir models.
+design rather than silently approximating it with the M5.1–M5.5 synthetic
+models.
 
 ### 7. Short glossary
 
@@ -379,7 +384,7 @@ reservoir models.
 ## Part II – Technical installation, execution, and model workflows
 
 Part II assumes that the reader has selected an experiment family. Begin with
-the command-line workflows for installation and body transport. M3 through M5.4
+the command-line workflows for installation and body transport. M3 through M5.5
 sections then explain executable reference and component/developer workflows.
 
 ### Repository orientation
@@ -394,7 +399,7 @@ sections then explain executable reference and component/developer workflows.
 | `models/organ/` | interchangeable lung implementations and model-definition loader |
 | `models/cosimulation/` | body–organ ownership/route adapter and capillary-signal-to-cell adapter |
 | `models/capillary/` | capillary transit, exchange, nanodevice observation/disposition, and molecular channels |
-| `models/cell/` | receptor-ligand and future intracellular cell models |
+| `models/cell/` | receptor-ligand and intracellular response models |
 | `data/body-models/` | canonical executable vascular models |
 | `data/body-states/` | state overlays for compatible body models |
 | `data/lung-models/` | executable evidence-scoped pulmonary reference candidates |
@@ -1580,6 +1585,44 @@ reservoir. Read [Stochastic Receptor Binding](m5/STOCHASTIC_RECEPTOR_BINDING.md)
 and [ADR-0037](architecture/adr/0037-stochastic-receptor-binding-and-population-classification.md)
 before changing the seed, threshold, cohort definition, or kinetic values.
 
+#### Intracellular response network (M5.5)
+
+M5.5 continues beyond receptor binding. A bound-receptor fraction activates an
+intracellular messenger pool, active messenger activates an effector pool, and
+both stages can deactivate. The first time active effector reaches its threshold
+is the internal cell-response event. This is still a component/developer
+workflow rather than a general cell-simulation command.
+
+The profile binds deterministic and stochastic solvers to exactly the same
+network:
+
+```text
+examples/cell-models/synthetic-intracellular-response-v1.json
+data/schemas/intracellular-response-profile/1.0.0.schema.json
+```
+
+With a constant synthetic receptor occupancy of `0.75`, the ten-second ODE case
+ends at messenger fraction `0.7499953918` and effector fraction `0.7494434333`;
+the effector crosses `0.5` after `2.202913832 s`. The corresponding exact SSA
+uses 200 molecules in each conserved pool for 1,000 independently named cells.
+Its mean final fractions are `0.75017` and `0.74938`, inside the predeclared ODE
+comparison tolerances, while nonzero variances expose finite-count noise.
+
+Run the focused checks after building:
+
+```powershell
+ctest --test-dir build/windows-msvc -C Debug --output-on-failure `
+  -R "intracellular|ODE|SSA"
+```
+
+This demonstrates an internal state and interchangeable solver semantics, not
+a validated signaling pathway. The topology, rates, molecule counts, receptor
+input, and threshold are synthetic; there is no named cell type, spatial
+localization, transcription, metabolism, pathway competition, release, or
+higher-layer feedback. Read [Intracellular Response Network](m5/INTRACELLULAR_RESPONSE_NETWORK.md)
+and [ADR-0038](architecture/adr/0038-shared-intracellular-ode-ssa-network.md)
+before changing topology, kinetics, resolution, or acceptance gates.
+
 ### Troubleshooting
 
 #### CMake selects the wrong Visual Studio version
@@ -1616,7 +1659,7 @@ minutes on the current Windows reference system.
 
 This edition implements the two-level guide planned in the Roadmap: the new
 non-expert Part I precedes the retained and updated technical Part II. It covers
-the accepted software through M4 and the explicitly open M5.1–M5.4 cell work
+the accepted software through M4 and the explicitly open M5.1–M5.5 cell work
 while preserving the difference between CLI, reference-workflow, and
 component/developer access.
 
@@ -1640,8 +1683,8 @@ every future gate checklist.
 
 Planned substantive extensions are:
 
-- M5 intracellular response, conservative drug release and uptake, apoptosis,
-  population scaling, and formal gate review;
+- M5 conservative drug release and uptake, apoptosis, population scaling, and
+  formal gate review;
 - M6 active gateway and Nano-IoT configuration;
 - the M7 end-to-end fingerprinting workflow;
 - later medical scenarios, result analysis, and visualization workflows; and

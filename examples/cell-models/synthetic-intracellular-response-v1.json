@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {"id": "synthetic-intracellular-response-v1", "version": "1.0.0", "title": "Synthetic two-stage intracellular ODE/SSA comparison"},
+  "network": {"network_id": "cell.intracellular.two-stage.synthetic.v1", "topology": "receptor_to_messenger_to_effector", "messenger_activation_rate_s_1": 1.2, "messenger_deactivation_rate_s_1": 0.3, "effector_activation_rate_s_1": 0.8, "effector_deactivation_rate_s_1": 0.2, "response_threshold_fraction": 0.5},
+  "ode_solver": {"kind": "rk4_two_stage_intracellular", "method": "fixed_step_rk4", "integration_step_seconds": 0.005, "maximum_integration_steps": 10000, "maximum_recorded_samples": 512},
+  "ssa_solver": {"kind": "gillespie_two_stage_intracellular", "method": "gillespie_direct_ssa", "messenger_molecule_count": 200, "effector_molecule_count": 200, "maximum_reaction_events": 100000, "maximum_recorded_samples": 256, "random_stream_policy": "one_named_stream_per_cell"},
+  "comparison_reference": {
+    "request_id": "m5-5-constant-receptor-signal", "observation_time_seconds": 10.0,
+    "initial_active_messenger_fraction": 0.0, "initial_active_effector_fraction": 0.0,
+    "receptor_trajectory": [{"offset_seconds": 0.0, "bound_fraction": 0.75}],
+    "master_seed": 20260831, "stream_prefix": "m5.5.synthetic", "population_size": 1000,
+    "acceptance_gates": {"expected_ode_messenger_fraction": 0.7499953918, "expected_ode_effector_fraction": 0.7494434333, "expected_ode_response_seconds": 2.202913832, "ode_fraction_tolerance": 0.000001, "ode_time_tolerance_seconds": 0.0001, "maximum_ssa_messenger_mean_error": 0.01, "maximum_ssa_effector_mean_error": 0.015}
+  },
+  "validity": {"population": "synthetic homogeneous cells with conserved 200-molecule messenger and effector pools", "physiological_state": "software verification only; no physiological state", "evidence_class": "software_test_surrogate", "description": "Two-stage receptor-to-messenger-to-effector activation/deactivation network compared through deterministic fractions and stochastic molecule counts."},
+  "sources": [
+    {"id": "wendt-dissertation-cell-network", "citation": "Wendt, Regine (2024), Einsatz von Nanotechnologien in der Praezisionsmedizin, Sections 4.4-4.5, pp. 129-132", "location": "literature/Diss_WENDT_Simulationchapters.pdf", "license": "source consulted; architecture paraphrased", "role": "intracellular reaction-network vision"},
+    {"id": "mehlissa-m5-4-stochastic-contract", "citation": "MEHLISSA Next M5.4 stochastic receptor-binding baseline", "location": "docs/m5/STOCHASTIC_RECEPTOR_BINDING.md", "license": "CC-BY-4.0", "role": "named-stream SSA and population comparison pattern"},
+    {"id": "mehlissa-adr-0038", "citation": "MEHLISSA Next ADR-0038 shared intracellular ODE/SSA network", "location": "docs/architecture/adr/0038-shared-intracellular-ode-ssa-network.md", "license": "CC-BY-4.0", "role": "network topology, solver, and comparison contract"}
+  ],
+  "limitations": [
+    "All topology, rates, molecule counts, receptor input, and thresholds are synthetic software-test values.",
+    "The receptor trajectory is prescribed and does not receive feedback from intracellular state.",
+    "Messenger and effector pools are homogeneous, well mixed, conserved, and contain identical molecules.",
+    "The network omits amplification chains, transcription, metabolism, spatial localization, and competing pathways.",
+    "The ODE/SSA comparison is numerical verification and not biological validation.",
+    "The response threshold does not yet release a drug, induce apoptosis, or notify a higher layer.",
+    "Population variation arises only from reaction noise and does not represent biological heterogeneity."
+  ]
+}

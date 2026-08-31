@@ -6,6 +6,8 @@ find_package(jsoncons CONFIG REQUIRED)
 add_library(
     mehlissa_cell_model
     src/analytical_receptor_ligand_model.cpp
+    src/intracellular_response_network.cpp
+    src/intracellular_response_profile.cpp
     src/receptor_ligand_profile.cpp
     src/stochastic_receptor_ligand_model.cpp
     src/stochastic_receptor_ligand_population.cpp

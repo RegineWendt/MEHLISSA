@@ -97,6 +97,20 @@ See [Time-Varying Receptor Binding](TIME_VARYING_RECEPTOR_BINDING.md) and
 See [Stochastic Receptor Binding](STOCHASTIC_RECEPTOR_BINDING.md) and
 [ADR-0037](../architecture/adr/0037-stochastic-receptor-binding-and-population-classification.md).
 
+### M5.5 - intracellular response network
+
+- shared receptor-to-messenger-to-effector activation/deactivation topology;
+- conserved bounded messenger and effector pools;
+- deterministic fixed-step RK4 and exact finite-count Gillespie SSA variants;
+- common piecewise-constant receptor-occupancy input and effector response event;
+- strict profile binding both solvers to identical kinetics and thresholds;
+- checked ODE state and response-time references;
+- 1,000-cell named-stream SSA population compared with the ODE means; and
+- silent-input, replay, conservation, budget, schema, and provenance tests.
+
+See [Intracellular Response Network](INTRACELLULAR_RESPONSE_NETWORK.md) and
+[ADR-0038](../architecture/adr/0038-shared-intracellular-ode-ssa-network.md).
+
 ## M5.1 reference result
 
 The checked-in profile uses synthetic values and asks how a receptor population
@@ -132,14 +146,11 @@ under step halving.
 
 ## Planned increments
 
-1. **M5.5 - intracellular response network:** convert detection into a
-   schema-defined signaling state and compare ODE/SSA or an external solver
-   against a shared reference.
-2. **M5.6 - activation and drug release:** couple a nanodevice decision to a
+1. **M5.6 - activation and drug release:** couple a nanodevice decision to a
    conservative release and uptake contract.
-3. **M5.7 - apoptosis and higher-layer feedback:** implement the first complete
+2. **M5.7 - apoptosis and higher-layer feedback:** implement the first complete
    response event and return it through an explicit boundary.
-4. **M5.8 - population model and gate review:** provide a scalable population
+3. **M5.8 - population model and gate review:** provide a scalable population
    variant, document both validity scopes, complete sensitivity/evidence work,
    and perform the mandatory User Guide review.
 
@@ -149,20 +160,23 @@ scientific qualification or an architecture decision requires it.
 
 ## Current scientific boundary
 
-M5.1 through M5.4 are software verification only. The deterministic and
-time-varying models prescribe a non-depleting external ligand reservoir. The
+M5.1 through M5.5 are software verification only. The receptor-binding models
+prescribe a non-depleting external ligand reservoir. The
 M5.3 trajectory is not yet produced by a dynamic capillary tissue field, and
 the M5.2 snapshot remains constant during its exposure. M5.4 adds finite-count
 reaction noise but no biological cell heterogeneity. Receptor abundance does
 not change, and no binding site is internalized. Its threshold classification
 rates describe only the two synthetic cohorts and are not clinical sensitivity
-or specificity. No intracellular or higher-layer state is changed.
+or specificity. M5.5 creates messenger and effector states, but its generic
+network and kinetics are synthetic and no higher-layer state is changed.
 
 M5.2 satisfies the first M5 statement at the synthetic software-contract level:
 an M4 extracellular tissue signal triggers receptor binding and threshold
 detection. The other four gate statements remain open at full M5 scope, as do
-physiological and dynamic-tissue qualification of the first statement. M5.3 and M5.4 add
+physiological and dynamic-tissue qualification of the first statement. M5.3 and
+M5.4 add
 analytical, convergence, stochastic-moment, and population evidence for the
 receptor-binding part of the third statement. M5.4 also establishes documented
-synthetic single-cell and population scopes toward the fourth statement. An
-intracellular reaction network and external or biological reference remain open.
+synthetic single-cell and population scopes toward the fourth statement. M5.5
+adds the intracellular-network part of the third statement with shared ODE/SSA
+software evidence. External or biological validation remains open.
