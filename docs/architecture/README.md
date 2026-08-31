@@ -46,6 +46,7 @@ decisions; a new decision supersedes an existing one through a new ADR.
 | [ADR-0032](adr/0032-conservative-terminal-entity-ownership.md) | Accepted | sampled capillary dispositions close through a retryable hand-off to one explicit terminal owner |
 | [ADR-0033](adr/0033-shared-axial-advection-reaction-case.md) | Accepted | geometry-bound analytical, particle, and finite-volume comparison with advection plus separate bulk and wall reactions |
 | [ADR-0034](adr/0034-analytical-receptor-ligand-baseline.md) | Accepted | independent cell-layer contract with exact reversible receptor-ligand binding and threshold detection |
+| [ADR-0035](adr/0035-non-consuming-capillary-cell-signal-handoff.md) | Accepted | neutral non-consuming amount/volume snapshot connecting M4 tissue inventory to M5 receptor binding |
 
 ## Status model
 

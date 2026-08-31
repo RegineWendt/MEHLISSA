@@ -176,6 +176,27 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
         mehlissa_configure_target(mehlissa_cell_model_tests)
         catch_discover_tests(mehlissa_cell_model_tests DISCOVERY_MODE PRE_TEST)
     endif()
+
+    if(MEHLISSA_BUILD_CAPILLARY_MODELS AND MEHLISSA_BUILD_CELL_MODELS AND
+       MEHLISSA_BUILD_COSIMULATION)
+        add_executable(
+            mehlissa_cell_cosimulation_tests
+            capillary_cell_signal_coupler_tests.cpp
+        )
+        target_link_libraries(
+            mehlissa_cell_cosimulation_tests
+            PRIVATE
+                MEHLISSA::capillary_model
+                MEHLISSA::cell_cosimulation
+                Catch2::Catch2WithMain
+        )
+        target_compile_definitions(
+            mehlissa_cell_cosimulation_tests
+            PRIVATE MEHLISSA_TEST_ROOT="${PROJECT_SOURCE_DIR}"
+        )
+        mehlissa_configure_target(mehlissa_cell_cosimulation_tests)
+        catch_discover_tests(mehlissa_cell_cosimulation_tests DISCOVERY_MODE PRE_TEST)
+    endif()
 endif()
 
 if(MEHLISSA_BUILD_APPS AND MEHLISSA_ENABLE_EXPERIMENT_IO)

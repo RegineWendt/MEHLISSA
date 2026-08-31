@@ -6,6 +6,7 @@ add_library(
     src/conserved_transfer.cpp
     src/entity_disposition.cpp
     src/entity_transfer.cpp
+    src/extracellular_signal.cpp
 )
 add_library(MEHLISSA::model_coupling ALIAS mehlissa_model_coupling)
 

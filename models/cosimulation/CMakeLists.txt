@@ -20,3 +20,27 @@ target_link_libraries(
         MEHLISSA::model_coupling
 )
 mehlissa_configure_target(mehlissa_cosimulation)
+
+if(MEHLISSA_BUILD_CELL_MODELS)
+    find_package(jsoncons CONFIG REQUIRED)
+    add_library(
+        mehlissa_cell_cosimulation
+        src/capillary_cell_signal_coupler.cpp
+        src/capillary_cell_signal_profile.cpp
+    )
+    add_library(MEHLISSA::cell_cosimulation ALIAS mehlissa_cell_cosimulation)
+    target_include_directories(
+        mehlissa_cell_cosimulation
+        PUBLIC
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    )
+    target_link_libraries(
+        mehlissa_cell_cosimulation
+        PUBLIC
+            MEHLISSA::cell_model
+            MEHLISSA::model_coupling
+        PRIVATE jsoncons::jsoncons
+    )
+    target_compile_definitions(mehlissa_cell_cosimulation PRIVATE JSONCONS_NO_DEPRECATED)
+    mehlissa_configure_target(mehlissa_cell_cosimulation)
+endif()

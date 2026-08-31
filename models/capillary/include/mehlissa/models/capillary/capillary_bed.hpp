@@ -10,6 +10,7 @@
 #include <mehlissa/models/capillary/capillary_exchange.hpp>
 #include <mehlissa/models/capillary/capillary_exchange_profile.hpp>
 #include <mehlissa/models/capillary/capillary_recruitment_profile.hpp>
+#include <mehlissa/models/coupling/extracellular_signal.hpp>
 #include <mehlissa/models/coupling/model_component.hpp>
 
 #include <array>
@@ -65,7 +66,8 @@ struct CapillaryBedProfiles final {
 };
 
 class CapillaryBed final : public coupling::ModelComponent,
-                           public coupling::EntityDispositionSource {
+                           public coupling::EntityDispositionSource,
+                           public coupling::ExtracellularSignalSource {
   public:
     explicit CapillaryBed(CapillaryBedConfig config);
     CapillaryBed(CapillaryBedConfig config, CapillaryBedProfiles profiles);
@@ -114,6 +116,9 @@ class CapillaryBed final : public coupling::ModelComponent,
     [[nodiscard]] std::size_t pending_entity_disposition_count() const noexcept;
     [[nodiscard]] std::vector<coupling::EntityDispositionTransfer>
     take_outbound_entity_dispositions() override;
+    [[nodiscard]] std::string_view signal_source_model_id() const noexcept override;
+    [[nodiscard]] coupling::ExtracellularSignalSample observe_extracellular_signal(
+        const coupling::ExtracellularSignalObservationRequest& request) const override;
     [[nodiscard]] const CapillaryRegionMetrics& region_metrics(CapillaryRegionKind kind) const;
     [[nodiscard]] std::size_t resident_entity_count() const noexcept;
     [[nodiscard]] std::size_t resident_entity_count_in(CapillaryRegionKind kind) const noexcept;

@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M4 plus the open M5.1 cell baseline
+**Covered software:** accepted M0 through M4 plus the open M5.1–M5.2 cell work
 
-**Last updated:** 31 August 2026, after the M5.1 implementation
+**Last updated:** 31 August 2026, after the M5.2 implementation
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -41,8 +41,9 @@ connects four independently replaceable layers:
 3. a **capillary layer** represents local microcirculation, exchange, device
    residence, and molecular communication; and
 4. a **cell layer** begins with independently verified receptor binding and
-   threshold detection and will expand to signaling, release, and cellular
-   response.
+   threshold detection, now accepts a neutral time-scoped signal observation
+   from capillary tissue, and will expand to intracellular signaling, release,
+   and cellular response.
 
 The software is intended to help formulate and test computational research
 hypotheses. It does not assume that one model resolution is always best. A
@@ -98,7 +99,7 @@ flowchart LR
     E[Experiment<br/>question, inputs, seed, outputs] --> B[Virtual body<br/>circulation and routes]
     B --> O[Organ model<br/>coarse or regional]
     O --> C[Capillary model<br/>transit, exchange, channels]
-    C -. M5.2 hand-off .-> L[Cell model<br/>binding baseline in M5.1]
+    C -->|non-consuming tissue signal snapshot| L[Cell model<br/>binding baseline]
     B --> R[Observations and reports]
     O --> R
     C --> R
@@ -163,8 +164,11 @@ The current software can:
 - compare analytical, endpoint-particle, trajectory, radial-field, and shared
   axial molecular-transport implementations;
 - evaluate an independently configured reversible receptor-ligand binding case,
-  including occupancy, receptor balance, and a threshold-crossing event; and
-- run all accepted M0–M4 and current M5.1 contracts in a reproducible
+  including occupancy, receptor balance, and a threshold-crossing event;
+- observe a retained endothelium or interstitium signal without consuming it,
+  derive concentration from explicit amount and represented volume, and trigger
+  the configured receptor response through a separate adapter; and
+- run all accepted M0–M4 and current M5.1–M5.2 contracts in a reproducible
   cross-platform test suite.
 
 Not every capability has the same user-interface maturity:
@@ -173,16 +177,17 @@ Not every capability has the same user-interface maturity:
 |---|---|---|
 | command-line workflow | intended to be invoked directly with `mehlissa-cli` | manifest validation, minimal run, body-model validation, BVS regression, body-state application |
 | executable reference workflow | a checked scenario or evaluator with automated acceptance gates | pulmonary validation, coarse/five-lobe comparison, historical FP9 timer |
-| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, exchange, nanodevice disposition, molecular-channel comparisons, receptor-ligand binding |
+| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, exchange, nanodevice disposition, molecular-channel comparisons, receptor-ligand binding, capillary-to-cell signal hand-off |
 
 The access level says how an experiment is run, not how scientifically valid it
 is. A CLI model can still be synthetic; a developer workflow can still be a
 strong software reference.
 
-The software does not yet connect the executable cell baseline to M4, model an
-intracellular response or cell population, provide active Nano-IoT
-communication, complete the fingerprinting workflow, or represent a
-participant-specific virtual body. Those remain M5 and later work.
+The M4-to-M5 connection is currently a non-consuming, spatially uniform snapshot
+at an exact synchronization time. The software does not yet model dynamic tissue
+concentration, depletion or feedback, an intracellular response or cell
+population, active Nano-IoT communication, the complete fingerprinting workflow,
+or a participant-specific virtual body. Those remain M5 and later work.
 
 ### 5. Experiment families and guided examples
 
@@ -299,18 +304,19 @@ Use [the shared axial experiment](#one-flow-diffusion-and-wall-reaction-experime
 Start with [interpreting model evidence](#how-to-interpret-model-evidence) and
 [the pulmonary validation workflows](#run-the-pulmonary-0d-independent-validation).
 
-#### 5.9 Receptor binding and threshold detection
+#### 5.9 Capillary signal, receptor binding, and threshold detection
 
 | Question element | Guided example |
 |---|---|
-| research question | Under a constant extracellular signal, how quickly does reversible receptor binding approach equilibrium, and is a chosen occupancy threshold reached? |
-| inputs | receptor and ligand identities, compartment, cell volume, receptor concentration, association and dissociation rates, ligand concentration, initial occupancy, threshold, and observation duration |
-| workflow | load the strict M5.1 profile and compare the cell-model response with its closed-form reference |
+| research question | Can a retained capillary-tissue substance trigger the configured cell response, and under that constant extracellular signal how quickly does reversible receptor binding approach equilibrium and cross a threshold? |
+| inputs | source model, tissue compartment, signal identity, represented volume and validity interval, target cell and ligand mapping, receptor concentration, association and dissociation rates, initial occupancy, threshold, and observation duration |
+| workflow | run the M4 exchange, take a non-consuming M5.2 tissue observation at the exact synchronization time, map amount/volume to the strict M5.1 receptor request, and compare the response with its closed-form reference |
 | outputs | equilibrium and final bound fractions, total/free/bound receptor amounts, balance error, detection state, and first threshold-crossing time |
-| interpretation | agreement verifies units, binding semantics, conservation, and event timing for the declared mathematical case |
-| limitations | values are synthetic; ligand is a constant reservoir; there is no depletion, transport hand-off, stochastic cell variation, intracellular signaling, classification error, or biological validation |
+| interpretation | agreement verifies the cross-layer identity, compartment, unit, time, non-consumption, binding, receptor-conservation, and event-timing semantics for the declared mathematical case |
+| limitations | values are synthetic; the observation treats a compartment inventory as spatially uniform and the ligand as a constant reservoir; there is no dynamic field, depletion, feedback, stochastic cell variation, intracellular signaling, classification error, or biological validation |
 
-Use [the analytical receptor-ligand baseline](#analytical-receptor-ligand-cell-baseline-m51).
+Use [the analytical receptor-ligand baseline](#analytical-receptor-ligand-cell-baseline-m51)
+and [the capillary-to-cell hand-off](#capillary-to-cell-signal-hand-off-m52).
 
 ### 6. Choose your first experiment
 
@@ -328,11 +334,13 @@ Use the smallest workflow that answers the intended question:
 | study nanodevice residence or terminal fate | M4 observation/disposition profiles | component/developer workflow |
 | compare analytical, particle, trajectory, and field transport | M4 molecular-channel profiles | component/developer workflow |
 | study reversible receptor occupancy and a detection threshold | M5.1 receptor-ligand profile | component/developer workflow |
+| trigger that receptor response from retained capillary tissue | M5.2 capillary-cell signal profile | component/developer workflow |
 
-If the desired study needs a capillary-driven or time-varying cell signal,
-intracellular response, population variability, active Nano-IoT communication,
-or a complete fingerprinting chain, treat it as a future scenario design rather
-than silently approximating it with the M5.1 constant-reservoir baseline.
+If the desired study needs a time-varying or consuming capillary-driven cell
+signal, intracellular response, population variability, active Nano-IoT
+communication, or a complete fingerprinting chain, treat it as a future scenario
+design rather than silently approximating it with the M5.1–M5.2 snapshot and
+constant-reservoir baseline.
 
 ### 7. Short glossary
 
@@ -361,7 +369,7 @@ than silently approximating it with the M5.1 constant-reservoir baseline.
 ## Part II – Technical installation, execution, and model workflows
 
 Part II assumes that the reader has selected an experiment family. Begin with
-the command-line workflows for installation and body transport. M3 through M5.1
+the command-line workflows for installation and body transport. M3 through M5.2
 sections then explain executable reference and component/developer workflows.
 
 ### Repository orientation
@@ -374,7 +382,7 @@ sections then explain executable reference and component/developer workflows.
 | `models/body/` | validated vascular graphs, transport, state profiles, and body-level reports |
 | `models/coupling/` | versioned cross-model entity and conserved-transfer contracts |
 | `models/organ/` | interchangeable lung implementations and model-definition loader |
-| `models/cosimulation/` | body–organ ownership and route adapter |
+| `models/cosimulation/` | body–organ ownership/route adapter and capillary-signal-to-cell adapter |
 | `models/capillary/` | capillary transit, exchange, nanodevice observation/disposition, and molecular channels |
 | `models/cell/` | receptor-ligand and future intracellular cell models |
 | `data/body-models/` | canonical executable vascular models |
@@ -385,6 +393,7 @@ sections then explain executable reference and component/developer workflows.
 | `examples/` | minimal manifests and synthetic models |
 | `examples/capillary-models/` | executable M4 capillary and molecular-channel profiles |
 | `examples/cell-models/` | executable M5 cell-model profiles |
+| `examples/cosimulation/` | executable cross-layer adapter profiles |
 | `tests/` | software, invariant, schema, and regression tests |
 | `docs/` | user, scientific, architecture, and development documentation |
 | `mehlissa/`, `mehlissa2.0/` | historical implementations retained as references |
@@ -1438,12 +1447,52 @@ ctest --test-dir build/windows-msvc -C Debug --output-on-failure `
 
 This is a component/developer workflow; there is no general cell CLI yet. Its
 parameters are synthetic, and the constant-reservoir assumption excludes ligand
-depletion and feedback. No M4 signal hand-off, spatial cell, receptor turnover,
-stochastic variability, intracellular network, drug release, apoptosis, or
-validated diagnostic threshold is present. Read
+depletion and feedback. M5.2 supplies a separately configured M4 signal hand-off,
+but no spatial cell, receptor turnover, stochastic variability, intracellular
+network, drug release, apoptosis, or validated diagnostic threshold is present. Read
 [Receptor-Ligand Baseline](m5/RECEPTOR_LIGAND_BASELINE.md) and
 [ADR-0034](architecture/adr/0034-analytical-receptor-ligand-baseline.md) before
 extending or interpreting this model.
+
+#### Capillary-to-cell signal hand-off (M5.2)
+
+M5.2 connects the M4 tissue inventory and M5.1 receptor model while keeping both
+implementations independent. The neutral coupling contract observes a signal in
+the endothelium or interstitium at an exact synchronization time. It records the
+source amount, represented volume, compartment, observation time, and validity
+interval. The observation is explicitly non-consuming: taking it does not remove
+or duplicate any amount in the M4 balance.
+
+The adapter profile and schema are:
+
+```text
+examples/cosimulation/synthetic-capillary-cell-signal-v1.json
+data/schemas/capillary-cell-signal-profile/1.0.0.schema.json
+```
+
+In the checked synthetic route, M4.5 partitions `2e-18 mol` of oxygen into
+`1.2e-18 mol` outgoing blood, `4e-19 mol` endothelium, `3e-19 mol`
+interstitium, and `3e-19 mol` cell-labelled inventory. At `1 s`, the adapter
+observes the interstitial amount over `1e-15 m^3`, derives `0.0003 mol/m^3`,
+maps `oxygen` to `synthetic-ligand`, and evaluates the M5.1 model for ten
+seconds. It obtains the checked final occupancy `0.7362632708334493` and first
+threshold crossing at `2.7465307216702746 s`; all M4 inventories remain
+unchanged.
+
+Run the focused hand-off tests after building:
+
+```powershell
+ctest --test-dir build/windows-msvc -C Debug --output-on-failure `
+  -R "capillary-cell|M4 tissue|Capillary-cell"
+```
+
+The adapter rejects stale observations, wrong model/compartment/signal mappings,
+invalid profiles, and duplicate completed sample IDs. This verifies a software
+contract, not pulmonary oxygen kinetics or biological receptor parameters. The
+uniform snapshot has no diffusion, depletion, feedback, or time-dependent tissue
+field. Read [Capillary-to-Cell Signal Hand-off](m5/CAPILLARY_CELL_SIGNAL_HANDOFF.md)
+and [ADR-0035](architecture/adr/0035-non-consuming-capillary-cell-signal-handoff.md)
+before extending or interpreting it.
 
 ### Troubleshooting
 
@@ -1481,7 +1530,7 @@ minutes on the current Windows reference system.
 
 This edition implements the two-level guide planned in the Roadmap: the new
 non-expert Part I precedes the retained and updated technical Part II. It covers
-the accepted software through M4 and the explicitly open M5.1 cell baseline
+the accepted software through M4 and the explicitly open M5.1–M5.2 cell work
 while preserving the difference between CLI, reference-workflow, and
 component/developer access.
 
@@ -1505,8 +1554,8 @@ every future gate checklist.
 
 Planned substantive extensions are:
 
-- M5 capillary-to-cell coupling, time-dependent/stochastic binding,
-  intracellular response, drug release, apoptosis, and population experiments;
+- M5 time-dependent/stochastic binding, intracellular response, conservative
+  drug release and uptake, apoptosis, and population experiments;
 - M6 active gateway and Nano-IoT configuration;
 - the M7 end-to-end fingerprinting workflow;
 - later medical scenarios, result analysis, and visualization workflows; and

@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-capillary-cell-signal-v1",
+    "version": "1.0.0",
+    "title": "Synthetic capillary interstitium to receptor-ligand hand-off"
+  },
+  "source": {
+    "model_id": "capillary.synthetic.reference.v2",
+    "compartment_id": "interstitium",
+    "signal_id": "oxygen",
+    "represented_volume_m3": 1e-15,
+    "sampling_semantics": "non_consuming_uniform_inventory_snapshot"
+  },
+  "target": {
+    "cell_model_id": "cell.receptor-ligand.synthetic.v1",
+    "ligand_id": "synthetic-ligand",
+    "compartment_id": "synthetic-cell-surface"
+  },
+  "exposure": {
+    "duration_seconds": 10.0,
+    "initial_bound_fraction": 0.0
+  },
+  "reference_case": {
+    "sample_id": "synthetic-capillary-cell-sample-v1",
+    "observed_at_seconds": 1.0,
+    "expected_source_amount_mol": 3e-19,
+    "expected_ligand_concentration_mol_m3": 0.0003,
+    "expected_final_bound_fraction": 0.7362632708334493,
+    "expected_threshold_crossing_seconds": 2.7465307216702746,
+    "absolute_tolerance": 1e-12
+  },
+  "validity": {
+    "population": "software contract tests only",
+    "physiological_state": "not applicable",
+    "evidence_class": "software_test_surrogate",
+    "description": "Synthetic M4 exchange amount and represented volume selected to reproduce the independently verified M5.1 constant-reservoir concentration and binding result."
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m4-balanced-exchange",
+      "citation": "MEHLISSA Next M4.5 balanced capillary substance exchange",
+      "location": "docs/m4/BALANCED_CAPILLARY_EXCHANGE.md",
+      "license": "CC-BY-4.0",
+      "role": "source tissue-inventory and amount-balance semantics"
+    },
+    {
+      "id": "mehlissa-m5-receptor-baseline",
+      "citation": "MEHLISSA Next M5.1 analytical receptor-ligand baseline",
+      "location": "docs/m5/RECEPTOR_LIGAND_BASELINE.md",
+      "license": "CC-BY-4.0",
+      "role": "target ligand concentration, exposure, and analytical response"
+    },
+    {
+      "id": "wendt-dissertation-cell-coupling",
+      "citation": "Wendt, Regine (2024), Einsatz von Nanotechnologien in der Praezisionsmedizin, Sections 4.4-4.5, pp. 129-132",
+      "location": "literature/Diss_WENDT_Simulationchapters.pdf",
+      "license": "source consulted; architecture paraphrased",
+      "role": "capillary, molecular-detection, and cell-layer coupling concept"
+    }
+  ],
+  "limitations": [
+    "All substance amounts, compartment volumes, exposure times, kinetics, and thresholds are synthetic software-test parameters.",
+    "The complete accumulated interstitium inventory is assumed homogeneous within the represented volume.",
+    "The snapshot is non-consuming: receptor binding does not deplete or otherwise change the capillary tissue inventory.",
+    "The snapshot concentration is held constant for the configured exposure duration and has no transport feedback or temporal trajectory.",
+    "The oxygen-to-synthetic-ligand mapping verifies identifiers and units only and has no biological interpretation.",
+    "The target receptor model is stateless; the hand-off returns a response but does not yet persist cell state or notify a higher layer."
+  ]
+}

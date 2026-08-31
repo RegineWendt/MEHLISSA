@@ -578,16 +578,23 @@ At least three resolutions should be provided:
 
 **Objective:** Couple biomarker detection, drug release, and cell response
 
-**Current progress (M5.1):** The first independent cell-layer library now
+**Current progress (M5.1–M5.2):** The first independent cell-layer library now
 provides a strict, evidence-scoped receptor-ligand profile and an exact
 reversible one-to-one binding implementation for a constant ligand reservoir.
 It reports conserved free/bound receptor amounts, occupancy, and first threshold
 crossing through a stable request/response boundary. The checked case is a
 synthetic software-verification reference, not a qualified biological model.
-M5.2 will connect a time-scoped extracellular signal from the M4
-capillary/tissue boundary without making either layer depend on the other's
-implementation. See [M5 implementation evidence](m5/README.md) and
-[ADR-0034](architecture/adr/0034-analytical-receptor-ligand-baseline.md).
+M5.2 now connects a time-scoped extracellular amount/volume snapshot from the
+M4 capillary/tissue boundary to that cell response through a separate adapter,
+without making either layer depend on the other's implementation. The
+non-consuming synthetic reference makes a retained interstitial oxygen amount
+trigger the checked receptor response and therefore satisfies the first M5 gate
+statement at the software-contract level. Time-dependent tissue kinetics,
+biological parameter qualification, and the remaining M5 gate statements stay
+open. See [M5 implementation evidence](m5/README.md),
+[the M5.2 hand-off](m5/CAPILLARY_CELL_SIGNAL_HANDOFF.md),
+[ADR-0034](architecture/adr/0034-analytical-receptor-ligand-baseline.md), and
+[ADR-0035](architecture/adr/0035-non-consuming-capillary-cell-signal-handoff.md).
 
 #### Tasks
 
@@ -606,8 +613,8 @@ implementation. See [M5 implementation evidence](m5/README.md) and
 
 1. ~~Independent analytical receptor-ligand contract and synthetic reference.~~
    Complete in M5.1.
-2. Capillary/tissue-to-cell signal hand-off with explicit compartment, time,
-   unit, and conservation semantics.
+2. ~~Capillary/tissue-to-cell signal hand-off with explicit compartment, time,
+   unit, and conservation semantics.~~ Complete in M5.2.
 3. Time-dependent ODE binding compared with the M5.1 constant-reservoir limit.
 4. Stochastic single-cell binding plus population distributions and detection
    error experiments.

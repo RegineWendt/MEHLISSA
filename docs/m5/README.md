@@ -42,6 +42,26 @@ The M5 gate remains open. Its acceptance statements require:
 See [Receptor-Ligand Baseline](RECEPTOR_LIGAND_BASELINE.md) and
 [ADR-0034](../architecture/adr/0034-analytical-receptor-ligand-baseline.md).
 
+### M5.2 - capillary/tissue-to-cell signal hand-off
+
+- neutral extracellular-signal contract in `MEHLISSA::model_coupling`;
+- explicit signal, source model, source compartment, amount, represented volume,
+  observation time, and validity duration;
+- concentration derived dimension-safely from amount divided by volume;
+- non-consuming uniform-inventory snapshot semantics;
+- M4 capillary source for endothelium and interstitium inventories without a
+  dependency on Cell;
+- separate `MEHLISSA::cell_cosimulation` adapter without adding a Capillary
+  dependency to the Cell library;
+- strict mapping profile schema `1.0.0` with source/target identity, exposure,
+  provenance, validity, limitations, and executable reference results;
+- duplicate-sample prevention and retry after a rejected stale-time attempt;
+- complete synthetic M4.5 exchange-to-M5.1 receptor response test; and
+- proof that observation leaves all M4 tissue inventories unchanged.
+
+See [Capillary-to-Cell Signal Hand-off](CAPILLARY_CELL_SIGNAL_HANDOFF.md) and
+[ADR-0035](../architecture/adr/0035-non-consuming-capillary-cell-signal-handoff.md).
+
 ## M5.1 reference result
 
 The checked-in profile uses synthetic values and asks how a receptor population
@@ -61,22 +81,19 @@ human population.
 
 ## Planned increments
 
-1. **M5.2 - capillary/tissue-to-cell signal hand-off:** define signal ownership,
-   compartment mapping, temporal concentration semantics, and a conservative
-   M4-to-M5 reference route.
-2. **M5.3 - time-dependent binding and detection:** add a numerical ODE adapter,
+1. **M5.3 - time-dependent binding and detection:** add a numerical ODE adapter,
    pulses or trajectories, and comparison with the M5.1 analytical limit.
-3. **M5.4 - stochastic single-cell binding:** add an SSA variant, named random
+2. **M5.4 - stochastic single-cell binding:** add an SSA variant, named random
    streams, population distributions, and declared false-positive/false-negative
    experiments.
-4. **M5.5 - intracellular response network:** convert detection into a
+3. **M5.5 - intracellular response network:** convert detection into a
    schema-defined signaling state and compare ODE/SSA or an external solver
    against a shared reference.
-5. **M5.6 - activation and drug release:** couple a nanodevice decision to a
+4. **M5.6 - activation and drug release:** couple a nanodevice decision to a
    conservative release and uptake contract.
-6. **M5.7 - apoptosis and higher-layer feedback:** implement the first complete
+5. **M5.7 - apoptosis and higher-layer feedback:** implement the first complete
    response event and return it through an explicit boundary.
-7. **M5.8 - population model and gate review:** provide a scalable population
+6. **M5.8 - population model and gate review:** provide a scalable population
    variant, document both validity scopes, complete sensitivity/evidence work,
    and perform the mandatory User Guide review.
 
@@ -86,11 +103,14 @@ scientific qualification or an architecture decision requires it.
 
 ## Current scientific boundary
 
-M5.1 is software verification only. The constant reservoir excludes depletion
+M5.1 and M5.2 are software verification only. The constant reservoir excludes depletion
 and transport feedback. A homogeneous deterministic occupancy fraction cannot
 represent cell-to-cell variability or molecule-count noise. Receptor abundance
 does not change, and no binding site is internalized. The threshold is not a
 classifier with measured sensitivity or specificity. No capillary output is yet
 wired to the request, and no intracellular or higher-layer state is changed.
 
-Consequently, none of the five M5 gate statements is closed by M5.1 alone.
+M5.2 satisfies the first M5 statement at the synthetic software-contract level:
+an M4 extracellular tissue signal triggers receptor binding and threshold
+detection. The other four gate statements remain open, as do physiological and
+time-dependent qualification of the first statement.

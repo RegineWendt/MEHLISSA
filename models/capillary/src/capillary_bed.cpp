@@ -736,6 +736,50 @@ CapillaryTissueInventory CapillaryBed::tissue_inventory(const std::string_view s
     return inventory == tissue_inventories_.end() ? CapillaryTissueInventory{} : inventory->second;
 }
 
+std::string_view CapillaryBed::signal_source_model_id() const noexcept { return config_.model_id; }
+
+coupling::ExtracellularSignalSample CapillaryBed::observe_extracellular_signal(
+    const coupling::ExtracellularSignalObservationRequest& request) const {
+    if (state_ != State::initialized) {
+        throw core::MehlissaError{
+            core::ErrorCode::lifecycle_invalid,
+            "Only an initialized capillary bed can expose extracellular signals"};
+    }
+    coupling::validate_extracellular_signal_request(request);
+    if (request.observed_at != synchronization_time_) {
+        throw core::MehlissaError{
+            core::ErrorCode::invariant_violated,
+            "Extracellular signal must be observed at the capillary synchronization time"};
+    }
+
+    const auto inventory = tissue_inventory(request.signal_id);
+    core::Amount amount{};
+    if (request.source_compartment_id == "endothelium") {
+        amount = inventory.endothelium_amount;
+    } else if (request.source_compartment_id == "interstitium") {
+        amount = inventory.interstitium_amount;
+    } else {
+        throw core::MehlissaError{
+            core::ErrorCode::data_invalid,
+            "Capillary extracellular signals require endothelium or interstitium inventory"};
+    }
+
+    coupling::ExtracellularSignalSample sample{
+        std::string{coupling::extracellular_signal_contract_version},
+        request.sample_id,
+        request.signal_id,
+        config_.model_id,
+        request.source_compartment_id,
+        std::string{coupling::non_consuming_uniform_inventory_snapshot},
+        amount,
+        request.represented_volume,
+        request.observed_at,
+        request.valid_for,
+    };
+    coupling::validate_extracellular_signal_sample(sample);
+    return sample;
+}
+
 std::size_t CapillaryBed::exchange_record_count() const noexcept {
     return exchange_records_.size();
 }

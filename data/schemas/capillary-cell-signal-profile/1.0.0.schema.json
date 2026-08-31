@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:capillary-cell-signal-profile:1.0.0",
+  "title": "MEHLISSA capillary-cell signal profile",
+  "description": "Strict evidence-scoped mapping from a non-consuming extracellular tissue-inventory snapshot to a cell receptor-ligand request.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "source", "target", "exposure", "reference_case", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model_id", "compartment_id", "signal_id", "represented_volume_m3", "sampling_semantics"],
+      "properties": {
+        "model_id": {"$ref": "#/$defs/id"},
+        "compartment_id": {"enum": ["endothelium", "interstitium"]},
+        "signal_id": {"$ref": "#/$defs/id"},
+        "represented_volume_m3": {"type": "number", "exclusiveMinimum": 0},
+        "sampling_semantics": {"const": "non_consuming_uniform_inventory_snapshot"}
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cell_model_id", "ligand_id", "compartment_id"],
+      "properties": {
+        "cell_model_id": {"$ref": "#/$defs/id"},
+        "ligand_id": {"$ref": "#/$defs/id"},
+        "compartment_id": {"$ref": "#/$defs/id"}
+      }
+    },
+    "exposure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["duration_seconds", "initial_bound_fraction"],
+      "properties": {
+        "duration_seconds": {"type": "number", "exclusiveMinimum": 0},
+        "initial_bound_fraction": {"$ref": "#/$defs/fraction"}
+      }
+    },
+    "reference_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sample_id", "observed_at_seconds", "expected_source_amount_mol", "expected_ligand_concentration_mol_m3", "expected_final_bound_fraction", "expected_threshold_crossing_seconds", "absolute_tolerance"],
+      "properties": {
+        "sample_id": {"$ref": "#/$defs/id"},
+        "observed_at_seconds": {"type": "number", "minimum": 0},
+        "expected_source_amount_mol": {"type": "number", "minimum": 0},
+        "expected_ligand_concentration_mol_m3": {"type": "number", "minimum": 0},
+        "expected_final_bound_fraction": {"$ref": "#/$defs/fraction"},
+        "expected_threshold_crossing_seconds": {"type": "number", "minimum": 0},
+        "absolute_tolerance": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"type": "string", "enum": ["software_test_surrogate", "literature_parameterized", "externally_derived"]},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "citation", "location", "license", "role"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "citation": {"type": "string", "minLength": 1},
+          "location": {"type": "string", "minLength": 1},
+          "license": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "fraction": {"type": "number", "minimum": 0, "maximum": 1}
+  }
+}

@@ -78,16 +78,21 @@ Status codes:
 | CAP-006 | DISS pp. 129, 154 | DONE | M4 | M4.8 defines a typed implementation-neutral request/response and analytical free-diffusion adapter; M4.9–M4.11 add deterministic endpoint particles, bounded paths, and a conservative radial field; M4.13 adds a separate pulmonary-card-bound shared case in which analytical, 200,000-particle, and 256-to-512-cell field resolutions compare directed advection, diffusion, bulk reaction, and a surface-to-volume wall sink with explicit balance and refinement gates; explicit radial wall encounters, receptor kinetics, external tools, noise, and physiological signal qualification follow without reopening the stable contracts |
 | CAP-007 | DISS p. 129 | RESEARCH | M4/M6 | reachability and multi-hop comparison |
 | CELL-001 | DISS pp. 129–132 | SPEC | M5 | biomarker field with analytical reference case |
-| CELL-002 | DISS pp. 130–132 | PART | M5/M7 | M5.1 provides an independent, typed receptor-ligand contract, exact constant-reservoir binding/dissociation transient, threshold-crossing event, receptor balance, strict evidence-scoped profile, and analytical/negative tests; time-dependent and stochastic variants, biological kinetics, population variability, and FP/FN evaluation follow |
+| CELL-002 | DISS pp. 130–132 | PART | M5/M7 | M5.1 provides an independent, typed receptor-ligand contract, exact constant-reservoir binding/dissociation transient, threshold-crossing event, receptor balance, strict evidence-scoped profile, and analytical/negative tests; M5.2 adds a neutral, non-consuming, time-scoped capillary/tissue amount-and-volume snapshot plus a separately configured adapter that triggers the checked cell response without coupling the implementations; time-dependent and stochastic variants, biological kinetics, population variability, and FP/FN evaluation follow |
 | CELL-003 | DISS pp. 130–132, 153–154 | SPEC | M5 | release–diffusion–binding end-to-end test |
 | CELL-004 | DISS pp. 131–133, 154 | RESEARCH | M5 | ODE/SSA or distribution model against reference data |
 | CELL-005 | DISS pp. 153–154 | RESEARCH | M5 | apoptosis event plus feedback to scenario |
 
-M5 is open. M5.1 advances only `CELL-002`: it verifies a synthetic homogeneous
-binding case independently of all other layers. It does not yet satisfy the M5
-capillary-signal, intracellular-response, higher-layer-feedback, or population
-gate statements. See [M5 implementation evidence](../m5/README.md) and
-[ADR-0034](../architecture/adr/0034-analytical-receptor-ligand-baseline.md).
+M5 is open. M5.1 and M5.2 advance `CELL-002`: they verify a synthetic
+homogeneous binding case and connect a retained M4 tissue inventory to it through
+a neutral, time-scoped observation and adapter. The first M5 gate statement is
+therefore satisfied at the software-contract level. Intracellular response,
+higher-layer feedback, population variants, dynamic extracellular fields, and
+biological qualification remain open. See
+[M5 implementation evidence](../m5/README.md),
+[the M5.2 hand-off](../m5/CAPILLARY_CELL_SIGNAL_HANDOFF.md),
+[ADR-0034](../architecture/adr/0034-analytical-receptor-ligand-baseline.md), and
+[ADR-0035](../architecture/adr/0035-non-consuming-capillary-cell-signal-handoff.md).
 
 Gate M4 is closed by the formal
 [M4 gate review](../m4/M4_GATE_REVIEW.md). `CAP-001` through `CAP-005` remain
@@ -132,7 +137,7 @@ statements.
 | QUA-002 | RM M1 | DONE | M1 | clang-tidy, ASan/UBSan, and warnings as errors in CI |
 | QUA-003 | MEH25 pp. 1–2 | SPEC | M2–M7 | versioned benchmark reports plus result comparison |
 | QUA-004 | MEH25 pp. 1–2 | SPEC | M4–M7 | scaling test: agents versus populations/surrogate |
-| QUA-005 | RM 6.6 | DONE | M1 ongoing | versioned API/schema/model/scenario documents plus a two-level English User Guide cover non-expert purpose, non-claims, mental model, guided experiment families, decision aid, glossary, retained M0–M4 workflows, and the open M5.1 cell baseline; every future M-gate requires a documented guide-impact review |
+| QUA-005 | RM 6.6 | DONE | M1 ongoing | versioned API/schema/model/scenario documents plus a two-level English User Guide cover non-expert purpose, non-claims, mental model, guided experiment families, decision aid, glossary, retained M0–M4 workflows, and the open M5.1–M5.2 cell work; every future M-gate requires a documented guide-impact review |
 | QUA-006 | RM M8 | SPEC | M8 | data-protection and data-management review |
 
 ## 7. M0 coverage review
