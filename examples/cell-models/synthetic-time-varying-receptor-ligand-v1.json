@@ -1,0 +1,96 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-time-varying-receptor-ligand-v1",
+    "version": "1.0.0",
+    "title": "Synthetic time-varying receptor-ligand verification profile"
+  },
+  "implementation": {
+    "kind": "rk4_piecewise_constant_receptor_ligand",
+    "model_id": "cell.receptor-ligand.time-varying.synthetic.v1",
+    "receptor_id": "synthetic-receptor",
+    "ligand_id": "synthetic-ligand",
+    "compartment_id": "cell-surface",
+    "cell_volume_m3": 1e-15,
+    "total_receptor_concentration_mol_m3": 1e-6,
+    "association_rate_m3_mol_s": 1000.0,
+    "dissociation_rate_s_1": 0.1,
+    "detection_threshold_fraction": 0.5
+  },
+  "solver": {
+    "method": "fixed_step_rk4",
+    "trajectory_interpolation": "piecewise_constant_left_closed",
+    "integration_step_seconds": 0.05,
+    "maximum_integration_steps": 10000
+  },
+  "reference_cases": [
+    {
+      "role": "constant_analytical_limit",
+      "request_id": "m5-3-constant-limit",
+      "observation_time_seconds": 10.0,
+      "initial_bound_fraction": 0.0,
+      "ligand_trajectory": [
+        {"offset_seconds": 0.0, "concentration_mol_m3": 0.0003}
+      ],
+      "expected_final_bound_fraction": 0.7362632708334493,
+      "expected_peak_bound_fraction": 0.7362632708334493,
+      "expected_threshold_crossing_seconds": 2.7465307216702746,
+      "fraction_absolute_tolerance": 1e-8,
+      "time_absolute_tolerance_seconds": 0.0001
+    },
+    {
+      "role": "piecewise_analytical_pulse",
+      "request_id": "m5-3-pulse",
+      "observation_time_seconds": 12.0,
+      "initial_bound_fraction": 0.0,
+      "ligand_trajectory": [
+        {"offset_seconds": 0.0, "concentration_mol_m3": 0.0},
+        {"offset_seconds": 2.0, "concentration_mol_m3": 0.0003},
+        {"offset_seconds": 7.0, "concentration_mol_m3": 0.0}
+      ],
+      "expected_final_bound_fraction": 0.39333424581655096,
+      "expected_peak_bound_fraction": 0.6484985375725405,
+      "expected_threshold_crossing_seconds": 4.746530721670274,
+      "fraction_absolute_tolerance": 1e-8,
+      "time_absolute_tolerance_seconds": 0.0001
+    }
+  ],
+  "validity": {
+    "population": "synthetic homogeneous receptor population on one representative cell",
+    "physiological_state": "software verification only; no physiological state",
+    "evidence_class": "software_test_surrogate",
+    "description": "Deterministic one-to-one mass-action binding under prescribed piecewise-constant external ligand concentrations."
+  },
+  "sources": [
+    {
+      "id": "wendt-dissertation-cell-dynamics",
+      "citation": "Wendt, Regine (2024), Einsatz von Nanotechnologien in der Praezisionsmedizin, Sections 4.4-4.5, pp. 129-132",
+      "location": "literature/Diss_WENDT_Simulationchapters.pdf",
+      "license": "source consulted; architecture paraphrased",
+      "role": "cell-layer reaction-network and time-dependent response vision"
+    },
+    {
+      "id": "mehlissa-m5-1-analytical-limit",
+      "citation": "MEHLISSA Next M5.1 analytical receptor-ligand baseline, version 1.0.0",
+      "location": "docs/m5/RECEPTOR_LIGAND_BASELINE.md",
+      "license": "CC-BY-4.0",
+      "role": "binding equation, synthetic parameters, constant-input exact solution, and threshold semantics"
+    },
+    {
+      "id": "mehlissa-m5-3-numerical-contract",
+      "citation": "MEHLISSA Next ADR-0036 time-varying receptor-ligand ODE baseline",
+      "location": "docs/architecture/adr/0036-time-varying-receptor-ligand-ode.md",
+      "license": "CC-BY-4.0",
+      "role": "trajectory, solver, bounded-output, and verification semantics"
+    }
+  ],
+  "limitations": [
+    "All kinetic, concentration, volume, receptor, threshold, and pulse values are synthetic software-test parameters.",
+    "The prescribed ligand trajectory is an external reservoir and is not depleted by receptor binding.",
+    "Concentration is homogeneous inside each time segment and changes discontinuously at declared knots.",
+    "The model is deterministic and excludes molecule-count noise and cell-to-cell variability.",
+    "There is no receptor synthesis, degradation, internalization, recycling, cooperativity, competition, or spatial transport.",
+    "Threshold crossing is a software event and does not yet change intracellular or higher-layer state.",
+    "Fixed-step RK4 is verified only inside the declared rate-step bound and is not an adaptive stiff solver."
+  ]
+}

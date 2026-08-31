@@ -62,6 +62,28 @@ See [Receptor-Ligand Baseline](RECEPTOR_LIGAND_BASELINE.md) and
 See [Capillary-to-Cell Signal Hand-off](CAPILLARY_CELL_SIGNAL_HANDOFF.md) and
 [ADR-0035](../architecture/adr/0035-non-consuming-capillary-cell-signal-handoff.md).
 
+### M5.3 - time-varying receptor binding and detection
+
+- separate time-varying request/response without changing the exact M5.1
+  contract;
+- prescribed piecewise-constant, left-closed ligand trajectories with strict
+  identity, time, order, concentration, and origin checks;
+- fixed-step classical fourth-order Runge-Kutta integration of reversible
+  one-to-one receptor binding;
+- exact step boundaries at every concentration knot;
+- explicit rate-step safety criterion and maximum integration-step budget;
+- bounded state samples plus final and peak occupancy, receptor amounts, and
+  first upward threshold crossing;
+- constant-input convergence against the independent M5.1 closed-form result;
+- a segment-wise analytical pulse reference covering signal onset, detection,
+  withdrawal, and dissociation;
+- exact final total/free/bound receptor balance; and
+- negative tests for malformed trajectories, unsafe solver configuration,
+  exhausted step budgets, no-signal exposure, and invalid profile metadata.
+
+See [Time-Varying Receptor Binding](TIME_VARYING_RECEPTOR_BINDING.md) and
+[ADR-0036](../architecture/adr/0036-time-varying-receptor-ligand-ode.md).
+
 ## M5.1 reference result
 
 The checked-in profile uses synthetic values and asks how a receptor population
@@ -79,21 +101,35 @@ These values verify the implementation against its closed-form solution. They
 do not represent a particular ligand, receptor, cell type, disease, drug, or
 human population.
 
+## M5.3 reference results
+
+The checked pulse is off for two seconds, exposes the receptor to
+`0.0003 mol/m3` for five seconds, and returns to zero concentration for five
+seconds. With the M5.1 kinetics and a `0.05 s` RK4 step:
+
+| Output | Segment-wise analytical value |
+|---|---:|
+| peak bound fraction | `0.6484985375725405` |
+| bound fraction after 12 s | `0.39333424581655096` |
+| first crossing of a `0.5` threshold | `4.746530721670274 s` |
+
+The constant reference separately reproduces the M5.1 ten-second result. Runs
+at `0.5 s`, `0.25 s`, and `0.125 s` demonstrate decreasing numerical error
+under step halving.
+
 ## Planned increments
 
-1. **M5.3 - time-dependent binding and detection:** add a numerical ODE adapter,
-   pulses or trajectories, and comparison with the M5.1 analytical limit.
-2. **M5.4 - stochastic single-cell binding:** add an SSA variant, named random
+1. **M5.4 - stochastic single-cell binding:** add an SSA variant, named random
    streams, population distributions, and declared false-positive/false-negative
    experiments.
-3. **M5.5 - intracellular response network:** convert detection into a
+2. **M5.5 - intracellular response network:** convert detection into a
    schema-defined signaling state and compare ODE/SSA or an external solver
    against a shared reference.
-4. **M5.6 - activation and drug release:** couple a nanodevice decision to a
+3. **M5.6 - activation and drug release:** couple a nanodevice decision to a
    conservative release and uptake contract.
-5. **M5.7 - apoptosis and higher-layer feedback:** implement the first complete
+4. **M5.7 - apoptosis and higher-layer feedback:** implement the first complete
    response event and return it through an explicit boundary.
-6. **M5.8 - population model and gate review:** provide a scalable population
+5. **M5.8 - population model and gate review:** provide a scalable population
    variant, document both validity scopes, complete sensitivity/evidence work,
    and perform the mandatory User Guide review.
 
@@ -103,14 +139,19 @@ scientific qualification or an architecture decision requires it.
 
 ## Current scientific boundary
 
-M5.1 and M5.2 are software verification only. The constant reservoir excludes depletion
-and transport feedback. A homogeneous deterministic occupancy fraction cannot
-represent cell-to-cell variability or molecule-count noise. Receptor abundance
-does not change, and no binding site is internalized. The threshold is not a
-classifier with measured sensitivity or specificity. No capillary output is yet
-wired to the request, and no intracellular or higher-layer state is changed.
+M5.1 through M5.3 are software verification only. Both the constant and
+time-varying models prescribe a non-depleting external ligand reservoir. The
+M5.3 trajectory is not yet produced by a dynamic capillary tissue field, and
+the M5.2 snapshot remains constant during its exposure. A homogeneous
+deterministic occupancy fraction cannot represent cell-to-cell variability or
+molecule-count noise. Receptor abundance does not change, and no binding site
+is internalized. The threshold is not a classifier with measured sensitivity
+or specificity. No intracellular or higher-layer state is changed.
 
 M5.2 satisfies the first M5 statement at the synthetic software-contract level:
 an M4 extracellular tissue signal triggers receptor binding and threshold
 detection. The other four gate statements remain open, as do physiological and
-time-dependent qualification of the first statement.
+dynamic-tissue qualification of the first statement. M5.3 adds analytical and
+convergence evidence for the receptor-binding part of the third statement, but
+an intracellular reaction network and external or biological reference remain
+open.

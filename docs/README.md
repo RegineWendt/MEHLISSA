@@ -27,9 +27,10 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 - [M3 – Body–Organ Coupling](m3/README.md) – completed milestone evidence for versioned exchange contracts and the lung reference organ.
 - [M4 – Capillary Communication](m4/README.md) – completed implementation evidence for capillary transport and molecular-channel comparisons.
 - [M4 gate review](m4/M4_GATE_REVIEW.md) – passed technical review of capillary transit, balanced exchange, stable molecular channels, and shared multi-resolution cases.
-- [M5 – Cell Response](m5/README.md) – open milestone and current analytical receptor-ligand cell baseline.
+- [M5 – Cell Response](m5/README.md) – open milestone covering the analytical baseline, capillary signal hand-off, and time-varying receptor binding.
 - [M5.1 receptor-ligand baseline](m5/RECEPTOR_LIGAND_BASELINE.md) – exact binding transient, threshold semantics, executable reference, and scientific limits.
 - [M5.2 capillary-to-cell signal hand-off](m5/CAPILLARY_CELL_SIGNAL_HANDOFF.md) – neutral non-consuming tissue observation, adapter profile, executable reference path, and scientific limits.
+- [M5.3 time-varying receptor binding](m5/TIME_VARYING_RECEPTOR_BINDING.md) – bounded RK4 trajectory model, constant-limit convergence, pulsed reference, and scientific limits.
 - [Pulmonary 0D independent validation](m3/PULMONARY_0D_INDEPENDENT_VALIDATION.md) – source-disjoint healthy-cohort comparison, acceptance results, and the exercise RC limitation.
 - [Pulmonary 0D flow adaptation](m3/PULMONARY_0D_FLOW_ADAPTATION.md) – independently calibrated bounded rest-to-exercise PVR/compliance response and post-calibration stress test.
 - [Pulmonary 0D subject-level multipoint validation](m3/PULMONARY_0D_SUBJECT_MULTIPOINT_VALIDATION.md) – pseudonymous stage-data contract, immutable-model trajectory analysis, evidence safeguards, and data-access status.

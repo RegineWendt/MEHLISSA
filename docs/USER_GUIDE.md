@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M4 plus the open M5.1–M5.2 cell work
+**Covered software:** accepted M0 through M4 plus the open M5.1–M5.3 cell work
 
-**Last updated:** 31 August 2026, after the M5.2 implementation
+**Last updated:** 31 August 2026, after the M5.3 implementation
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -42,8 +42,8 @@ connects four independently replaceable layers:
    residence, and molecular communication; and
 4. a **cell layer** begins with independently verified receptor binding and
    threshold detection, now accepts a neutral time-scoped signal observation
-   from capillary tissue, and will expand to intracellular signaling, release,
-   and cellular response.
+   from capillary tissue, can evaluate prescribed time-varying exposure, and
+   will expand to intracellular signaling, release, and cellular response.
 
 The software is intended to help formulate and test computational research
 hypotheses. It does not assume that one model resolution is always best. A
@@ -167,8 +167,11 @@ The current software can:
   including occupancy, receptor balance, and a threshold-crossing event;
 - observe a retained endothelium or interstitium signal without consuming it,
   derive concentration from explicit amount and represented volume, and trigger
-  the configured receptor response through a separate adapter; and
-- run all accepted M0–M4 and current M5.1–M5.2 contracts in a reproducible
+  the configured receptor response through a separate adapter;
+- evaluate binding, threshold detection, signal withdrawal, and dissociation
+  under a prescribed piecewise-constant ligand trajectory with a bounded
+  numerical solver; and
+- run all accepted M0–M4 and current M5.1–M5.3 contracts in a reproducible
   cross-platform test suite.
 
 Not every capability has the same user-interface maturity:
@@ -177,17 +180,19 @@ Not every capability has the same user-interface maturity:
 |---|---|---|
 | command-line workflow | intended to be invoked directly with `mehlissa-cli` | manifest validation, minimal run, body-model validation, BVS regression, body-state application |
 | executable reference workflow | a checked scenario or evaluator with automated acceptance gates | pulmonary validation, coarse/five-lobe comparison, historical FP9 timer |
-| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, exchange, nanodevice disposition, molecular-channel comparisons, receptor-ligand binding, capillary-to-cell signal hand-off |
+| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, exchange, nanodevice disposition, molecular-channel comparisons, constant and time-varying receptor binding, capillary-to-cell signal hand-off |
 
 The access level says how an experiment is run, not how scientifically valid it
 is. A CLI model can still be synthetic; a developer workflow can still be a
 strong software reference.
 
 The M4-to-M5 connection is currently a non-consuming, spatially uniform snapshot
-at an exact synchronization time. The software does not yet model dynamic tissue
-concentration, depletion or feedback, an intracellular response or cell
-population, active Nano-IoT communication, the complete fingerprinting workflow,
-or a participant-specific virtual body. Those remain M5 and later work.
+at an exact synchronization time. M5.3 can accept a prescribed time-varying
+trajectory, but M4 does not yet generate that trajectory dynamically. The
+software does not yet model tissue depletion or feedback, an intracellular
+response or cell population, active Nano-IoT communication, the complete
+fingerprinting workflow, or a participant-specific virtual body. Those remain
+M5 and later work.
 
 ### 5. Experiment families and guided examples
 
@@ -308,15 +313,16 @@ Start with [interpreting model evidence](#how-to-interpret-model-evidence) and
 
 | Question element | Guided example |
 |---|---|
-| research question | Can a retained capillary-tissue substance trigger the configured cell response, and under that constant extracellular signal how quickly does reversible receptor binding approach equilibrium and cross a threshold? |
-| inputs | source model, tissue compartment, signal identity, represented volume and validity interval, target cell and ligand mapping, receptor concentration, association and dissociation rates, initial occupancy, threshold, and observation duration |
-| workflow | run the M4 exchange, take a non-consuming M5.2 tissue observation at the exact synchronization time, map amount/volume to the strict M5.1 receptor request, and compare the response with its closed-form reference |
-| outputs | equilibrium and final bound fractions, total/free/bound receptor amounts, balance error, detection state, and first threshold-crossing time |
-| interpretation | agreement verifies the cross-layer identity, compartment, unit, time, non-consumption, binding, receptor-conservation, and event-timing semantics for the declared mathematical case |
-| limitations | values are synthetic; the observation treats a compartment inventory as spatially uniform and the ligand as a constant reservoir; there is no dynamic field, depletion, feedback, stochastic cell variation, intracellular signaling, classification error, or biological validation |
+| research question | Can a retained capillary-tissue substance trigger the configured cell response, and how do constant exposure, a pulse, and signal withdrawal change receptor occupancy and threshold timing? |
+| inputs | source model and tissue snapshot or prescribed concentration trajectory, ligand and compartment identities, receptor concentration, association and dissociation rates, initial occupancy, threshold, observation duration, and bounded solver settings |
+| workflow | choose the exact M5.1 constant case, the M5.2 snapshot hand-off, or the M5.3 numerical trajectory; compare constant input with M5.1 and the pulse with its segment-wise analytical reference |
+| outputs | equilibrium where defined, final and peak bound fractions, bounded time samples, total/free/bound receptor amounts, balance error, detection state, and first threshold-crossing time |
+| interpretation | agreement verifies the declared identity, unit, time, binding, receptor-conservation, numerical-convergence, and event-timing semantics; falling occupancy after withdrawal represents dissociation in the model |
+| limitations | values and trajectories are synthetic; ligand remains a homogeneous non-depleting reservoir; M4 does not yet generate a dynamic field, and there is no feedback, stochastic cell variation, intracellular signaling, classification error, or biological validation |
 
 Use [the analytical receptor-ligand baseline](#analytical-receptor-ligand-cell-baseline-m51)
-and [the capillary-to-cell hand-off](#capillary-to-cell-signal-hand-off-m52).
+and [the capillary-to-cell hand-off](#capillary-to-cell-signal-hand-off-m52), or
+[the time-varying baseline](#time-varying-receptor-binding-m53).
 
 ### 6. Choose your first experiment
 
@@ -335,12 +341,13 @@ Use the smallest workflow that answers the intended question:
 | compare analytical, particle, trajectory, and field transport | M4 molecular-channel profiles | component/developer workflow |
 | study reversible receptor occupancy and a detection threshold | M5.1 receptor-ligand profile | component/developer workflow |
 | trigger that receptor response from retained capillary tissue | M5.2 capillary-cell signal profile | component/developer workflow |
+| study a prescribed ligand pulse, withdrawal, and dissociation | M5.3 time-varying receptor-ligand profile | component/developer workflow |
 
-If the desired study needs a time-varying or consuming capillary-driven cell
+If the desired study needs a capillary-generated time-varying or consuming cell
 signal, intracellular response, population variability, active Nano-IoT
 communication, or a complete fingerprinting chain, treat it as a future scenario
-design rather than silently approximating it with the M5.1–M5.2 snapshot and
-constant-reservoir baseline.
+design rather than silently approximating it with the M5.1–M5.3 non-depleting
+reservoir models.
 
 ### 7. Short glossary
 
@@ -362,6 +369,7 @@ constant-reservoir baseline.
 | population model | aggregate representation that tracks counts or amounts instead of every individual |
 | receptor occupancy | fraction of the declared receptor population bound to its ligand at a specified time |
 | reference case | fixed inputs and expected comparison rules shared by implementations |
+| trajectory knot | time offset at which a prescribed piecewise-constant input changes value |
 | surrogate | deliberately simplified model preserving selected input/output behavior within a declared scope |
 | validation | comparison with evidence not used to calibrate the evaluated model; always limited to the measured population and endpoints |
 | verification | evidence that software and equations implement their declared contract correctly |
@@ -369,7 +377,7 @@ constant-reservoir baseline.
 ## Part II – Technical installation, execution, and model workflows
 
 Part II assumes that the reader has selected an experiment family. Begin with
-the command-line workflows for installation and body transport. M3 through M5.2
+the command-line workflows for installation and body transport. M3 through M5.3
 sections then explain executable reference and component/developer workflows.
 
 ### Repository orientation
@@ -1494,6 +1502,43 @@ field. Read [Capillary-to-Cell Signal Hand-off](m5/CAPILLARY_CELL_SIGNAL_HANDOFF
 and [ADR-0035](architecture/adr/0035-non-consuming-capillary-cell-signal-handoff.md)
 before extending or interpreting it.
 
+#### Time-varying receptor binding (M5.3)
+
+M5.3 adds a second receptor-binding model without changing the exact M5.1
+contract. Its input is a prescribed series of time and concentration knots. A
+concentration applies from its knot until the next knot, and the bounded
+fixed-step RK4 solver ends steps exactly at every change.
+
+The profile and schema are:
+
+```text
+examples/cell-models/synthetic-time-varying-receptor-ligand-v1.json
+data/schemas/time-varying-receptor-ligand-profile/1.0.0.schema.json
+```
+
+Two cases are included. A constant ten-second exposure reproduces the M5.1
+result and demonstrates decreasing numerical error when the step is halved. A
+twelve-second pulse is zero for two seconds, `0.0003 mol/m3` for five seconds,
+and zero for the final five seconds. Its checked analytical outputs are:
+
+- peak bound fraction `0.6484985375725405`;
+- final bound fraction after dissociation `0.39333424581655096`; and
+- first threshold crossing at `4.746530721670274 s` from experiment start.
+
+Run the focused checks after building:
+
+```powershell
+ctest --test-dir build/windows-msvc -C Debug --output-on-failure `
+  -R "time-varying|RK4|ligand pulse|bounded-solver"
+```
+
+This is still a component/developer workflow. The trajectory is prescribed by
+the experiment, not produced by dynamic capillary tissue. Ligand is not
+depleted, and the result does not yet change intracellular or higher-layer
+state. Read [Time-Varying Receptor Binding](m5/TIME_VARYING_RECEPTOR_BINDING.md)
+and [ADR-0036](architecture/adr/0036-time-varying-receptor-ligand-ode.md) before
+using another trajectory or step size.
+
 ### Troubleshooting
 
 #### CMake selects the wrong Visual Studio version
@@ -1530,7 +1575,7 @@ minutes on the current Windows reference system.
 
 This edition implements the two-level guide planned in the Roadmap: the new
 non-expert Part I precedes the retained and updated technical Part II. It covers
-the accepted software through M4 and the explicitly open M5.1–M5.2 cell work
+the accepted software through M4 and the explicitly open M5.1–M5.3 cell work
 while preserving the difference between CLI, reference-workflow, and
 component/developer access.
 
@@ -1554,8 +1599,8 @@ every future gate checklist.
 
 Planned substantive extensions are:
 
-- M5 time-dependent/stochastic binding, intracellular response, conservative
-  drug release and uptake, apoptosis, and population experiments;
+- M5 stochastic binding, intracellular response, conservative drug release and
+  uptake, apoptosis, and population experiments;
 - M6 active gateway and Nano-IoT configuration;
 - the M7 end-to-end fingerprinting workflow;
 - later medical scenarios, result analysis, and visualization workflows; and

@@ -7,6 +7,8 @@ add_library(
     mehlissa_cell_model
     src/analytical_receptor_ligand_model.cpp
     src/receptor_ligand_profile.cpp
+    src/time_varying_receptor_ligand_model.cpp
+    src/time_varying_receptor_ligand_profile.cpp
 )
 add_library(MEHLISSA::cell_model ALIAS mehlissa_cell_model)
 

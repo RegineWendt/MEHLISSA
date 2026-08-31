@@ -578,7 +578,7 @@ At least three resolutions should be provided:
 
 **Objective:** Couple biomarker detection, drug release, and cell response
 
-**Current progress (M5.1–M5.2):** The first independent cell-layer library now
+**Current progress (M5.1–M5.3):** The first independent cell-layer library now
 provides a strict, evidence-scoped receptor-ligand profile and an exact
 reversible one-to-one binding implementation for a constant ligand reservoir.
 It reports conserved free/bound receptor amounts, occupancy, and first threshold
@@ -591,10 +591,17 @@ non-consuming synthetic reference makes a retained interstitial oxygen amount
 trigger the checked receptor response and therefore satisfies the first M5 gate
 statement at the software-contract level. Time-dependent tissue kinetics,
 biological parameter qualification, and the remaining M5 gate statements stay
-open. See [M5 implementation evidence](m5/README.md),
+open. M5.3 adds a separate bounded RK4 model for prescribed piecewise-constant
+ligand trajectories. It converges to the independent M5.1 constant-input
+solution and matches a segment-wise analytical pulse with onset, threshold
+crossing, withdrawal, and dissociation. The trajectory remains a synthetic
+external reservoir rather than a dynamic M4 field or an intracellular network.
+See [M5 implementation evidence](m5/README.md),
 [the M5.2 hand-off](m5/CAPILLARY_CELL_SIGNAL_HANDOFF.md),
+[the M5.3 time-varying baseline](m5/TIME_VARYING_RECEPTOR_BINDING.md),
 [ADR-0034](architecture/adr/0034-analytical-receptor-ligand-baseline.md), and
-[ADR-0035](architecture/adr/0035-non-consuming-capillary-cell-signal-handoff.md).
+[ADR-0035](architecture/adr/0035-non-consuming-capillary-cell-signal-handoff.md),
+and [ADR-0036](architecture/adr/0036-time-varying-receptor-ligand-ode.md).
 
 #### Tasks
 
@@ -615,7 +622,8 @@ open. See [M5 implementation evidence](m5/README.md),
    Complete in M5.1.
 2. ~~Capillary/tissue-to-cell signal hand-off with explicit compartment, time,
    unit, and conservation semantics.~~ Complete in M5.2.
-3. Time-dependent ODE binding compared with the M5.1 constant-reservoir limit.
+3. ~~Time-dependent ODE binding compared with the M5.1 constant-reservoir
+   limit.~~ Complete in M5.3 with an additional analytical pulse reference.
 4. Stochastic single-cell binding plus population distributions and detection
    error experiments.
 5. Executable intracellular signaling network with a shared reference.

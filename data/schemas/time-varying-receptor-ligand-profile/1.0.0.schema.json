@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:time-varying-receptor-ligand-profile:1.0.0",
+  "title": "MEHLISSA time-varying receptor-ligand profile",
+  "description": "Strict evidence-scoped profile for deterministic receptor binding driven by a piecewise-constant ligand trajectory and solved with bounded fixed-step RK4.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "implementation", "solver", "reference_cases", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "model_id", "receptor_id", "ligand_id", "compartment_id", "cell_volume_m3", "total_receptor_concentration_mol_m3", "association_rate_m3_mol_s", "dissociation_rate_s_1", "detection_threshold_fraction"],
+      "properties": {
+        "kind": {"const": "rk4_piecewise_constant_receptor_ligand"},
+        "model_id": {"$ref": "#/$defs/id"},
+        "receptor_id": {"$ref": "#/$defs/id"},
+        "ligand_id": {"$ref": "#/$defs/id"},
+        "compartment_id": {"$ref": "#/$defs/id"},
+        "cell_volume_m3": {"type": "number", "exclusiveMinimum": 0},
+        "total_receptor_concentration_mol_m3": {"type": "number", "exclusiveMinimum": 0},
+        "association_rate_m3_mol_s": {"type": "number", "exclusiveMinimum": 0},
+        "dissociation_rate_s_1": {"type": "number", "minimum": 0},
+        "detection_threshold_fraction": {"$ref": "#/$defs/positive_fraction"}
+      }
+    },
+    "solver": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "trajectory_interpolation", "integration_step_seconds", "maximum_integration_steps"],
+      "properties": {
+        "method": {"const": "fixed_step_rk4"},
+        "trajectory_interpolation": {"const": "piecewise_constant_left_closed"},
+        "integration_step_seconds": {"type": "number", "exclusiveMinimum": 0},
+        "maximum_integration_steps": {"type": "integer", "minimum": 1, "maximum": 1000000}
+      }
+    },
+    "reference_cases": {
+      "type": "array",
+      "minItems": 2,
+      "items": {"$ref": "#/$defs/reference_case"}
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"type": "string", "enum": ["software_test_surrogate", "literature_parameterized", "externally_derived"]},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "citation", "location", "license", "role"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "citation": {"type": "string", "minLength": 1},
+          "location": {"type": "string", "minLength": 1},
+          "license": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "fraction": {"type": "number", "minimum": 0, "maximum": 1},
+    "positive_fraction": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+    "trajectory_knot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["offset_seconds", "concentration_mol_m3"],
+      "properties": {
+        "offset_seconds": {"type": "number", "minimum": 0},
+        "concentration_mol_m3": {"type": "number", "minimum": 0}
+      }
+    },
+    "reference_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "request_id", "observation_time_seconds", "initial_bound_fraction", "ligand_trajectory", "expected_final_bound_fraction", "expected_peak_bound_fraction", "expected_threshold_crossing_seconds", "fraction_absolute_tolerance", "time_absolute_tolerance_seconds"],
+      "properties": {
+        "role": {"enum": ["constant_analytical_limit", "piecewise_analytical_pulse"]},
+        "request_id": {"$ref": "#/$defs/id"},
+        "observation_time_seconds": {"type": "number", "exclusiveMinimum": 0},
+        "initial_bound_fraction": {"$ref": "#/$defs/fraction"},
+        "ligand_trajectory": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/trajectory_knot"}
+        },
+        "expected_final_bound_fraction": {"$ref": "#/$defs/fraction"},
+        "expected_peak_bound_fraction": {"$ref": "#/$defs/fraction"},
+        "expected_threshold_crossing_seconds": {"type": "number", "minimum": 0},
+        "fraction_absolute_tolerance": {"type": "number", "exclusiveMinimum": 0},
+        "time_absolute_tolerance_seconds": {"type": "number", "exclusiveMinimum": 0}
+      }
+    }
+  }
+}
