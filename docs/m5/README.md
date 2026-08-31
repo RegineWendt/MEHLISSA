@@ -111,6 +111,20 @@ See [Stochastic Receptor Binding](STOCHASTIC_RECEPTOR_BINDING.md) and
 See [Intracellular Response Network](INTRACELLULAR_RESPONSE_NETWORK.md) and
 [ADR-0038](../architecture/adr/0038-shared-intracellular-ode-ssa-network.md).
 
+### M5.6 - conservative nanodevice drug delivery
+
+- versioned activation signal derived from a consistent M5.5 ODE or SSA event;
+- stable device, payload, source-network, source-request, and time identity;
+- sealed payload when no intracellular threshold is reached;
+- analytical first-order device release and cellular uptake;
+- explicit device, extracellular, and intracellular amount ownership;
+- exact balance and an analytical equal-rate limit;
+- strict profile with synthetic reference values, evidence, and limitations; and
+- end-to-end M5.5-to-M5.6, conservation, negative, and provenance tests.
+
+See [Conservative Nanodevice Drug Delivery](CONSERVATIVE_DRUG_DELIVERY.md) and
+[ADR-0039](../architecture/adr/0039-conservative-nanodevice-release-and-uptake.md).
+
 ## M5.1 reference result
 
 The checked-in profile uses synthetic values and asks how a receptor population
@@ -146,11 +160,9 @@ under step halving.
 
 ## Planned increments
 
-1. **M5.6 - activation and drug release:** couple a nanodevice decision to a
-   conservative release and uptake contract.
-2. **M5.7 - apoptosis and higher-layer feedback:** implement the first complete
+1. **M5.7 - apoptosis and higher-layer feedback:** implement the first complete
    response event and return it through an explicit boundary.
-3. **M5.8 - population model and gate review:** provide a scalable population
+2. **M5.8 - population model and gate review:** provide a scalable population
    variant, document both validity scopes, complete sensitivity/evidence work,
    and perform the mandatory User Guide review.
 
@@ -160,7 +172,7 @@ scientific qualification or an architecture decision requires it.
 
 ## Current scientific boundary
 
-M5.1 through M5.5 are software verification only. The receptor-binding models
+M5.1 through M5.6 are software verification only. The receptor-binding models
 prescribe a non-depleting external ligand reservoir. The
 M5.3 trajectory is not yet produced by a dynamic capillary tissue field, and
 the M5.2 snapshot remains constant during its exposure. M5.4 adds finite-count
@@ -169,14 +181,19 @@ not change, and no binding site is internalized. Its threshold classification
 rates describe only the two synthetic cohorts and are not clinical sensitivity
 or specificity. M5.5 creates messenger and effector states, but its generic
 network and kinetics are synthetic and no higher-layer state is changed.
+M5.6 transfers a synthetic payload conservatively from device to extracellular
+and intracellular inventories after a response event. It does not model spatial
+diffusion, binding, dose response, efficacy, toxicity, or apoptosis.
 
 M5.2 satisfies the first M5 statement at the synthetic software-contract level:
 an M4 extracellular tissue signal triggers receptor binding and threshold
 detection. The other four gate statements remain open at full M5 scope, as do
 physiological and dynamic-tissue qualification of the first statement. M5.3 and
-M5.4 add
-analytical, convergence, stochastic-moment, and population evidence for the
-receptor-binding part of the third statement. M5.4 also establishes documented
+M5.4 add analytical, convergence, stochastic-moment, and population evidence
+for the receptor-binding part of the third statement. M5.4 also establishes documented
 synthetic single-cell and population scopes toward the fourth statement. M5.5
 adds the intracellular-network part of the third statement with shared ODE/SSA
 software evidence. External or biological validation remains open.
+M5.6 advances `CELL-003` with executable activation, release, and uptake, but
+the release-diffusion-binding chain and measurable higher-layer response remain
+open.

@@ -63,9 +63,9 @@ transcription factor, cell type, drug, disease, or patient population. It has
 no spatial localization, transcription, metabolism, competing pathway,
 biological heterogeneity, feedback to receptor binding, or calibrated assay.
 
-M5.6 may consume the effector event through a separate conservative activation
-and release boundary. It must not reinterpret these synthetic kinetics as
-biological evidence.
+M5.6 consumes the effector event through a separate conservative activation and
+release boundary. It does not reinterpret these synthetic kinetics as biological
+evidence.
 
 ## Verification
 

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:drug-delivery-profile:1.0.0",
+  "title": "MEHLISSA conservative nanodevice drug-delivery profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "implementation_kind", "model", "reference_case", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {"$ref": "#/$defs/profile"},
+    "implementation_kind": {"const": "analytical_conservative_release_uptake"},
+    "model": {"$ref": "#/$defs/model"},
+    "reference_case": {"$ref": "#/$defs/reference"},
+    "validity": {"$ref": "#/$defs/validity"},
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "positive": {"type": "number", "exclusiveMinimum": 0},
+    "nonnegative": {"type": "number", "minimum": 0},
+    "profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "version": {"$ref": "#/$defs/version"}, "title": {"type": "string", "minLength": 1}}
+    },
+    "model": {
+      "type": "object", "additionalProperties": false,
+      "required": ["model_id", "nanodevice_id", "payload_id", "drug_id", "loaded_amount_mol", "release_rate_s_1", "uptake_rate_s_1"],
+      "properties": {
+        "model_id": {"$ref": "#/$defs/id"}, "nanodevice_id": {"$ref": "#/$defs/id"},
+        "payload_id": {"$ref": "#/$defs/id"}, "drug_id": {"$ref": "#/$defs/id"},
+        "loaded_amount_mol": {"$ref": "#/$defs/positive"},
+        "release_rate_s_1": {"$ref": "#/$defs/positive"}, "uptake_rate_s_1": {"$ref": "#/$defs/positive"}
+      }
+    },
+    "activation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["activation_id", "nanodevice_id", "payload_id", "source_request_id", "source_network_id", "expected_trigger_offset_seconds"],
+      "properties": {
+        "activation_id": {"$ref": "#/$defs/id"}, "nanodevice_id": {"$ref": "#/$defs/id"},
+        "payload_id": {"$ref": "#/$defs/id"}, "source_request_id": {"$ref": "#/$defs/id"},
+        "source_network_id": {"$ref": "#/$defs/id"}, "expected_trigger_offset_seconds": {"$ref": "#/$defs/nonnegative"}
+      }
+    },
+    "expected": {
+      "type": "object", "additionalProperties": false,
+      "required": ["device_payload_amount_mol", "extracellular_drug_amount_mol", "intracellular_drug_amount_mol", "amount_tolerance_mol", "activation_time_tolerance_seconds"],
+      "properties": {
+        "device_payload_amount_mol": {"$ref": "#/$defs/positive"},
+        "extracellular_drug_amount_mol": {"$ref": "#/$defs/positive"},
+        "intracellular_drug_amount_mol": {"$ref": "#/$defs/positive"},
+        "amount_tolerance_mol": {"$ref": "#/$defs/positive"},
+        "activation_time_tolerance_seconds": {"$ref": "#/$defs/positive"}
+      }
+    },
+    "reference": {
+      "type": "object", "additionalProperties": false,
+      "required": ["request_id", "activation", "observation_after_activation_seconds", "expected"],
+      "properties": {
+        "request_id": {"$ref": "#/$defs/id"}, "activation": {"$ref": "#/$defs/activation"},
+        "observation_after_activation_seconds": {"$ref": "#/$defs/positive"}, "expected": {"$ref": "#/$defs/expected"}
+      }
+    },
+    "validity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1}, "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"const": "software_test_surrogate"}, "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "citation", "location", "license", "role"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "citation": {"type": "string", "minLength": 1},
+        "location": {"type": "string", "minLength": 1}, "license": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {"id": "synthetic-conservative-drug-delivery-v1", "version": "1.0.0", "title": "Synthetic threshold-activated conservative drug delivery"},
+  "implementation_kind": "analytical_conservative_release_uptake",
+  "model": {
+    "model_id": "cell.drug-delivery.synthetic.v1", "nanodevice_id": "nanodevice.synthetic.1",
+    "payload_id": "payload.synthetic.drug.1", "drug_id": "drug.synthetic.1",
+    "loaded_amount_mol": 1.0e-7, "release_rate_s_1": 0.4, "uptake_rate_s_1": 0.2
+  },
+  "reference_case": {
+    "request_id": "m5-6-conservative-delivery", "observation_after_activation_seconds": 10.0,
+    "activation": {
+      "activation_id": "m5-6-intracellular-threshold-activation", "nanodevice_id": "nanodevice.synthetic.1",
+      "payload_id": "payload.synthetic.drug.1", "source_request_id": "m5-5-constant-receptor-signal",
+      "source_network_id": "cell.intracellular.two-stage.synthetic.v1", "expected_trigger_offset_seconds": 2.202913832
+    },
+    "expected": {
+      "device_payload_amount_mol": 1.83156388887342e-9,
+      "extracellular_drug_amount_mol": 2.34039288695757e-8,
+      "intracellular_drug_amount_mol": 7.47645072415509e-8,
+      "amount_tolerance_mol": 1.0e-18, "activation_time_tolerance_seconds": 0.0001
+    }
+  },
+  "validity": {
+    "population": "one synthetic nanodevice, one homogeneous extracellular compartment, and one homogeneous cellular sink",
+    "physiological_state": "software verification only; no physiological state",
+    "evidence_class": "software_test_surrogate",
+    "description": "An M5.5 threshold event activates irreversible first-order payload release followed by irreversible first-order cellular uptake."
+  },
+  "sources": [
+    {"id": "wendt-dissertation-drug-release", "citation": "Wendt, Regine (2024), Einsatz von Nanotechnologien in der Praezisionsmedizin, Sections 4.4-4.5 and 5.4", "location": "literature/Diss_WENDT_Simulationchapters.pdf", "license": "source consulted; architecture paraphrased", "role": "nanodevice activation, localized release, uptake, and cell-response vision"},
+    {"id": "mehlissa-m5-5-response-event", "citation": "MEHLISSA Next M5.5 intracellular response network", "location": "docs/m5/INTRACELLULAR_RESPONSE_NETWORK.md", "license": "CC-BY-4.0", "role": "typed threshold event and source identity"},
+    {"id": "mehlissa-adr-0039", "citation": "MEHLISSA Next ADR-0039 conservative nanodevice release and uptake", "location": "docs/architecture/adr/0039-conservative-nanodevice-release-and-uptake.md", "license": "CC-BY-4.0", "role": "ownership, analytical chain, and validity boundary"}
+  ],
+  "limitations": [
+    "The drug identity, payload, device, rates, amount, compartment semantics, and trigger are synthetic software-test values.",
+    "Release and uptake are irreversible homogeneous first-order processes with no diffusion distance, binding, saturation, metabolism, or elimination.",
+    "The intracellular threshold is used as an abstract activation decision and does not establish a physical cell-to-device signaling mechanism.",
+    "Intracellular drug amount is inventory only and does not yet alter the M5.5 reaction network or cause apoptosis.",
+    "The reference verifies conservation and analytical kinetics, not efficacy, dose, toxicity, safety, or clinical validity."
+  ]
+}

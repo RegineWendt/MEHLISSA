@@ -578,7 +578,7 @@ At least three resolutions should be provided:
 
 **Objective:** Couple biomarker detection, drug release, and cell response
 
-**Current progress (M5.1–M5.5):** The first independent cell-layer library now
+**Current progress (M5.1–M5.6):** The first independent cell-layer library now
 provides a strict, evidence-scoped receptor-ligand profile and an exact
 reversible one-to-one binding implementation for a constant ligand reservoir.
 It reports conserved free/bound receptor amounts, occupancy, and first threshold
@@ -604,16 +604,22 @@ M5.5 adds a conserved receptor-to-messenger-to-effector network implemented
 from one strict profile as both bounded RK4 and exact SSA. A fixed ODE reference
 and a 1,000-cell named-stream population comparison verify the internal response
 contract without claiming biological pathway validity.
+M5.6 converts a consistent response event into a versioned nanodevice activation
+and analytically transfers a synthetic payload through device, extracellular,
+and intracellular owners with exact amount balance. Spatial diffusion, binding,
+therapeutic response, and biological qualification remain open.
 See [M5 implementation evidence](m5/README.md),
 [the M5.2 hand-off](m5/CAPILLARY_CELL_SIGNAL_HANDOFF.md),
 [the M5.3 time-varying baseline](m5/TIME_VARYING_RECEPTOR_BINDING.md),
 [the M5.4 stochastic baseline](m5/STOCHASTIC_RECEPTOR_BINDING.md),
 [the M5.5 intracellular network](m5/INTRACELLULAR_RESPONSE_NETWORK.md),
+[the M5.6 conservative drug delivery](m5/CONSERVATIVE_DRUG_DELIVERY.md),
 [ADR-0034](architecture/adr/0034-analytical-receptor-ligand-baseline.md),
 [ADR-0035](architecture/adr/0035-non-consuming-capillary-cell-signal-handoff.md),
 [ADR-0036](architecture/adr/0036-time-varying-receptor-ligand-ode.md),
-[ADR-0037](architecture/adr/0037-stochastic-receptor-binding-and-population-classification.md), and
-[ADR-0038](architecture/adr/0038-shared-intracellular-ode-ssa-network.md).
+[ADR-0037](architecture/adr/0037-stochastic-receptor-binding-and-population-classification.md),
+[ADR-0038](architecture/adr/0038-shared-intracellular-ode-ssa-network.md), and
+[ADR-0039](architecture/adr/0039-conservative-nanodevice-release-and-uptake.md).
 
 #### Tasks
 
@@ -642,7 +648,9 @@ See [M5 implementation evidence](m5/README.md),
 5. ~~Executable intracellular signaling network with a shared reference.~~
    Complete in M5.5 with identical ODE/SSA topology, fixed ODE values, and a
    predeclared stochastic population comparison.
-6. Nanodevice activation, conservative drug release, and cellular uptake.
+6. ~~Nanodevice activation, conservative drug release, and cellular uptake.~~
+   Complete in M5.6 with a threshold-derived activation signal, analytical
+   release/uptake chain, explicit ownership, and exact amount balance.
 7. Apoptosis as the first complete response with higher-layer feedback.
 8. Population-scale variant, evidence qualification, User Guide review, and
    formal M5 gate review.

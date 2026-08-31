@@ -161,6 +161,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
     if(MEHLISSA_BUILD_CELL_MODELS)
         add_executable(
             mehlissa_cell_model_tests
+            drug_delivery_tests.cpp
             intracellular_response_network_tests.cpp
             receptor_ligand_tests.cpp
             stochastic_receptor_ligand_tests.cpp
