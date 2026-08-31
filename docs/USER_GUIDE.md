@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M4 plus the open M5.1–M5.7 cell work
+**Covered software:** accepted M0 through M5
 
-**Last updated:** 31 August 2026, after the M5.7 implementation
+**Last updated:** 31 August 2026, after the M5 gate review
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -45,7 +45,8 @@ connects four independently replaceable layers:
    from capillary tissue, can evaluate deterministic or stochastic exposure,
    propagates receptor state into a synthetic intracellular response,
    conservatively transfers an activated device payload into a cellular
-   inventory, and can return a synthetic apoptosis-commitment event;
+   inventory, can return a synthetic apoptosis-commitment event, and can
+   aggregate that deterministic response over very large weighted cohorts;
 
 The software is intended to help formulate and test computational research
 hypotheses. It does not assume that one model resolution is always best. A
@@ -90,6 +91,9 @@ validity scope, provenance, units, and limitations. A result must be
 interpreted within that scope. The [M4 gate review](m4/M4_GATE_REVIEW.md), for
 example, accepts capillary communication as a technical milestone while
 explicitly rejecting a claim of physiological pulmonary-capillary validation.
+The [M5 gate review](m5/M5_GATE_REVIEW.md) applies the same rule to the accepted
+synthetic cell-response chain and explicitly does not claim biological
+apoptosis or treatment validity.
 
 ### 3. The mental model
 
@@ -179,7 +183,7 @@ The current software can:
   nanodevice activation and analytical, amount-conserving release/uptake chain;
 - map intracellular amount to a bounded synthetic response and return an
   apoptosis-commitment event through a neutral higher-layer boundary; and
-- run all accepted M0–M4 and current M5.1–M5.7 contracts in a reproducible
+- run all accepted M0–M5 contracts in a reproducible
   cross-platform test suite.
 
 Not every capability has the same user-interface maturity:
@@ -323,11 +327,11 @@ Start with [interpreting model evidence](#how-to-interpret-model-evidence) and
 | Question element | Guided example |
 |---|---|
 | research question | Can a capillary-tissue signal trigger binding and intracellular response, activate conservative device release and uptake, and return a declared cell-state transition? |
-| inputs | signal trajectory, binding and network parameters, activation and response thresholds, device/payload/drug/cell identity, amount/rates, Hill parameters, duration, solver bounds, seed, and cohort size as applicable |
-| workflow | choose M5.1 binding, M5.2 hand-off, M5.3 trajectory, M5.4 receptor SSA population, M5.5 intracellular ODE/SSA comparison, M5.6 delivery, or the connected M5.5-to-M5.7 response reference |
-| outputs | receptor occupancy, intracellular messenger/effector state and threshold time, stochastic distributions, drug inventories and balance, bounded synthetic effect, cell state, or neutral higher-layer event |
-| interpretation | agreement verifies identity, time, units, solver references, named-stream replay, activation gating, conservation, response gating, and event routing within declared synthetic cases |
-| limitations | values, topology, device, drug, cell, response, and cohorts are synthetic; there is no dynamic M4 field, spatial drug diffusion/binding, biological heterogeneity, qualified pharmacodynamics, mechanistic apoptosis, or clinical validation |
+| inputs | signal trajectory, binding and network parameters, activation and response thresholds, device/payload/drug/cell identity, amount/rates, Hill parameters, duration, solver bounds, seed, explicit-cell count, or weighted amount cohorts as applicable |
+| workflow | choose M5.1 binding, M5.2 hand-off, M5.3 trajectory, M5.4 receptor SSA population, M5.5 intracellular ODE/SSA comparison, M5.6 delivery, the connected M5.5-to-M5.7 response reference, or the M5.8 compressed population |
+| outputs | receptor occupancy, intracellular messenger/effector state and threshold time, stochastic distributions, drug inventories and balance, bounded synthetic effect, cell state/event, or exact weighted population aggregates |
+| interpretation | agreement verifies identity, time, units, solver references, named-stream replay, activation gating, conservation, response/event routing, population aggregation, bounded output, and declared sensitivities within synthetic cases |
+| limitations | values, topology, device, drug, cell, response, and cohorts are synthetic; there is no dynamic M4 field, spatial drug diffusion/binding, calibrated heterogeneity, qualified pharmacodynamics, mechanistic apoptosis, or clinical validation |
 
 Use [the analytical receptor-ligand baseline](#analytical-receptor-ligand-cell-baseline-m51)
 and [the capillary-to-cell hand-off](#capillary-to-cell-signal-hand-off-m52), or
@@ -335,7 +339,8 @@ and [the capillary-to-cell hand-off](#capillary-to-cell-signal-hand-off-m52), or
 [the stochastic baseline](#stochastic-receptor-binding-and-populations-m54), or
 [the intracellular network](#intracellular-response-network-m55), or
 [the conservative delivery model](#conservative-nanodevice-drug-delivery-m56), or
-[the apoptosis response](#apoptosis-and-higher-layer-feedback-m57).
+[the apoptosis response](#apoptosis-and-higher-layer-feedback-m57), or
+[the compressed population](#cohort-compressed-apoptosis-population-m58).
 
 ### 6. Choose your first experiment
 
@@ -359,12 +364,13 @@ Use the smallest workflow that answers the intended question:
 | compare deterministic and stochastic intracellular response | M5.5 intracellular response profile | component/developer workflow |
 | activate a device and audit release plus cellular uptake | M5.6 conservative drug-delivery profile | component/developer workflow |
 | inspect a synthetic apoptosis decision and higher-layer event | M5.7 apoptosis-response profile | component/developer workflow |
+| aggregate a prescribed response over very large homogeneous cohorts | M5.8 apoptosis-population profile | component/developer workflow |
 
 If the desired study needs a capillary-generated time-varying or consuming cell
 signal, spatial drug diffusion/binding, biologically qualified response, active
 Nano-IoT communication, or a complete fingerprinting chain, treat it as a
 future scenario design rather than silently approximating it with the
-M5.1–M5.7 synthetic models.
+M5.1–M5.8 synthetic models.
 
 ### 7. Short glossary
 
@@ -394,7 +400,7 @@ M5.1–M5.7 synthetic models.
 ## Part II – Technical installation, execution, and model workflows
 
 Part II assumes that the reader has selected an experiment family. Begin with
-the command-line workflows for installation and body transport. M3 through M5.7
+the command-line workflows for installation and body transport. M3 through M5.8
 sections then explain executable reference and component/developer workflows.
 
 ### Repository orientation
@@ -1707,6 +1713,45 @@ Its commitment label is not biological or clinical evidence. Read
 and [ADR-0040](architecture/adr/0040-synthetic-apoptosis-and-higher-layer-feedback.md)
 before changing the response equation, threshold, identity, or event route.
 
+#### Cohort-compressed apoptosis population (M5.8)
+
+M5.8 applies the same deterministic M5.7 Hill rule to weighted cohorts. It is
+the scalable choice when many cells can defensibly share one prescribed final
+intracellular amount. It is not the choice when individual stochastic receptor
+or pathway trajectories matter; use M5.4 or M5.5 for those questions.
+
+The population profile is:
+
+```text
+examples/cell-models/synthetic-apoptosis-population-v1.json
+data/schemas/apoptosis-population-profile/1.0.0.schema.json
+```
+
+The reference represents one trillion cells as four cohorts containing 0,
+25, 50, or 100 nmol per cell. The model evaluates four cohort states, not one
+trillion cell objects. It reports 750 billion viable and 250 billion committed
+cells, committed fraction `0.25`, and weighted mean effect `0.385`. The request
+retains two cohort details but the aggregates include all four. Scaling the
+same weights to 1,000 cells gives the same fractions.
+
+Run the focused checks after building:
+
+```powershell
+ctest --test-dir build/windows-msvc -C Debug --output-on-failure `
+  -R "population profile|One trillion cells|represented cell-count|response sensitivities|ambiguous cohorts"
+```
+
+The profile also predeclares lower/higher half-max amounts and a lower
+commitment threshold. These checks expose assumption sensitivity; they are not
+uncertainty intervals or experimental dose-response data. Cells within a
+cohort are identical and deterministic. The model does not generate an amount
+distribution, cell heterogeneity, spatial correlation, lineage, turnover, or
+interaction. Read [Population Scale and Validity](m5/POPULATION_SCALE_AND_VALIDITY.md),
+[M5 Evidence Qualification](m5/M5_EVIDENCE_QUALIFICATION.md),
+[M5 Gate Review](m5/M5_GATE_REVIEW.md), and
+[ADR-0041](architecture/adr/0041-cohort-compressed-apoptosis-population.md)
+before selecting a population resolution or interpreting its output.
+
 ### Troubleshooting
 
 #### CMake selects the wrong Visual Studio version
@@ -1743,7 +1788,7 @@ minutes on the current Windows reference system.
 
 This edition implements the two-level guide planned in the Roadmap: the new
 non-expert Part I precedes the retained and updated technical Part II. It covers
-the accepted software through M4 and the explicitly open M5.1–M5.7 cell work
+the accepted software through M5
 while preserving the difference between CLI, reference-workflow, and
 component/developer access.
 
@@ -1767,7 +1812,6 @@ every future gate checklist.
 
 Planned substantive extensions are:
 
-- M5 population scaling, evidence qualification, and formal gate review;
 - M6 active gateway and Nano-IoT configuration;
 - the M7 end-to-end fingerprinting workflow;
 - later medical scenarios, result analysis, and visualization workflows; and

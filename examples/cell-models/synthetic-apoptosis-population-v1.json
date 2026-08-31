@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-apoptosis-population-v1",
+    "version": "1.0.0",
+    "title": "Cohort-compressed synthetic apoptosis population"
+  },
+  "implementation_kind": "cohort_compressed_synthetic_hill_apoptosis_population",
+  "model": {
+    "model_id": "cell.apoptosis-population.synthetic.v1",
+    "population_id": "cell-population.synthetic.1",
+    "drug_id": "drug.synthetic.1",
+    "half_max_effect_amount_mol": 5.0e-8,
+    "hill_coefficient": 2.0,
+    "apoptosis_commitment_threshold": 0.65
+  },
+  "reference_case": {
+    "request_id": "m5-8-apoptosis-population",
+    "observed_at_s": 12.202913832,
+    "maximum_reported_cohorts": 2,
+    "cohorts": [
+      {"cohort_id": "unexposed", "cell_count": 200000000000, "intracellular_drug_amount_mol": 0.0},
+      {"cohort_id": "low", "cell_count": 300000000000, "intracellular_drug_amount_mol": 2.5e-8},
+      {"cohort_id": "half-max", "cell_count": 250000000000, "intracellular_drug_amount_mol": 5.0e-8},
+      {"cohort_id": "high", "cell_count": 250000000000, "intracellular_drug_amount_mol": 1.0e-7}
+    ],
+    "expected": {
+      "total_cells": 1000000000000,
+      "viable_cells": 750000000000,
+      "apoptosis_committed_cells": 250000000000,
+      "apoptosis_committed_fraction": 0.25,
+      "cell_weighted_mean_effect_fraction": 0.385,
+      "fraction_tolerance": 1.0e-12
+    }
+  },
+  "sensitivity_cases": [
+    {
+      "case_id": "lower-half-max",
+      "half_max_effect_amount_mol": 2.5e-8,
+      "hill_coefficient": 2.0,
+      "apoptosis_commitment_threshold": 0.65,
+      "expected_apoptosis_committed_fraction": 0.5,
+      "expected_mean_effect_fraction": 0.5852941176470589
+    },
+    {
+      "case_id": "higher-half-max",
+      "half_max_effect_amount_mol": 7.5e-8,
+      "hill_coefficient": 2.0,
+      "apoptosis_commitment_threshold": 0.65,
+      "expected_apoptosis_committed_fraction": 0.0,
+      "expected_mean_effect_fraction": 0.26692307692307693
+    },
+    {
+      "case_id": "lower-commitment-threshold",
+      "half_max_effect_amount_mol": 5.0e-8,
+      "hill_coefficient": 2.0,
+      "apoptosis_commitment_threshold": 0.5,
+      "expected_apoptosis_committed_fraction": 0.5,
+      "expected_mean_effect_fraction": 0.385
+    }
+  ],
+  "validity": {
+    "population": "one synthetic population represented by four internally homogeneous weighted amount cohorts; each cohort is evaluated once regardless of its cell count",
+    "physiological_state": "software verification only; no physiological, disease, therapeutic, or demographic population",
+    "evidence_class": "software_test_surrogate",
+    "description": "The M5.7 deterministic Hill rule is aggregated exactly over weighted cohorts. Aggregate work and retained output scale with cohort count rather than represented cell count. The reference represents one trillion synthetic cells in four evaluations and retains two cohort details."
+  },
+  "sources": [
+    {
+      "id": "wendt-dissertation-population-vision",
+      "citation": "Wendt, Regine (2024), Einsatz von Nanotechnologien in der Praezisionsmedizin, Sections 4.4-4.5 and 5.4",
+      "location": "literature/Diss_WENDT_Simulationchapters.pdf",
+      "license": "source consulted; architecture paraphrased",
+      "role": "multi-scale cell-response and treatment-scenario vision"
+    },
+    {
+      "id": "mehlissa-m5-7-response",
+      "citation": "MEHLISSA Next M5.7 apoptosis and higher-layer feedback",
+      "location": "docs/m5/APOPTOSIS_AND_HIGHER_LAYER_FEEDBACK.md",
+      "license": "CC-BY-4.0",
+      "role": "single-cell Hill rule and commitment-state semantics"
+    },
+    {
+      "id": "mehlissa-adr-0041",
+      "citation": "MEHLISSA Next ADR-0041 cohort-compressed apoptosis population",
+      "location": "docs/architecture/adr/0041-cohort-compressed-apoptosis-population.md",
+      "license": "CC-BY-4.0",
+      "role": "population aggregation, bounded-output, and validity decision"
+    }
+  ],
+  "limitations": [
+    "All cell counts, amount cohorts, response parameters, and sensitivity cases are synthetic software-test values.",
+    "Cells within a cohort are identical and deterministic; within-cohort variability, stochastic response, spatial correlation, lineage, turnover, and interactions are absent.",
+    "The model aggregates a prescribed final intracellular amount distribution and does not simulate how that population distribution arose.",
+    "Cohort compression is exact only for cells that share the same declared amount and response parameters; discretizing a continuous distribution introduces user-controlled approximation error.",
+    "The reference verifies scaling, arithmetic, parameter sensitivity, bounded output, and validity metadata; it makes no biological, efficacy, safety, treatment, or clinical claim."
+  ]
+}

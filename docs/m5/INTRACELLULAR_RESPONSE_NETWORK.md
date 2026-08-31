@@ -54,6 +54,14 @@ Both means lie inside their predeclared ODE-comparison gates. Exact replay,
 pool bounds, a silent zero-input network, malformed inputs, event-budget
 exhaustion, and provenance rejection are also tested.
 
+For the same constant `0.75` receptor input, the independent steady-state
+balances are
+`m* = (1.2 × 0.75) / (1.2 × 0.75 + 0.3) = 0.75` and
+`e* = (0.8 × m*) / (0.8 × m* + 0.2) = 0.75`. A separate 60-second test verifies
+that both RK4 states converge to these analytical equilibria within `1e-12`.
+This supplies an analytical reaction-network reference in addition to the
+ODE/SSA cross-implementation comparison.
+
 ## Interpretation boundary
 
 This is a deliberately generic two-stage software surrogate. It establishes

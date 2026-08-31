@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:apoptosis-population-profile:1.0.0",
+  "title": "MEHLISSA cohort-compressed apoptosis-population profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "implementation_kind", "model", "reference_case", "sensitivity_cases", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {"$ref": "#/$defs/profile"},
+    "implementation_kind": {"const": "cohort_compressed_synthetic_hill_apoptosis_population"},
+    "model": {"$ref": "#/$defs/model"},
+    "reference_case": {"$ref": "#/$defs/reference"},
+    "sensitivity_cases": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/sensitivity"}},
+    "validity": {"$ref": "#/$defs/validity"},
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "positive": {"type": "number", "exclusiveMinimum": 0},
+    "fraction": {"type": "number", "minimum": 0, "maximum": 1},
+    "open_fraction": {"type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1},
+    "count": {"type": "integer", "minimum": 1},
+    "profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "model": {
+      "type": "object", "additionalProperties": false,
+      "required": ["model_id", "population_id", "drug_id", "half_max_effect_amount_mol", "hill_coefficient", "apoptosis_commitment_threshold"],
+      "properties": {
+        "model_id": {"$ref": "#/$defs/id"},
+        "population_id": {"$ref": "#/$defs/id"},
+        "drug_id": {"$ref": "#/$defs/id"},
+        "half_max_effect_amount_mol": {"$ref": "#/$defs/positive"},
+        "hill_coefficient": {"$ref": "#/$defs/positive"},
+        "apoptosis_commitment_threshold": {"$ref": "#/$defs/open_fraction"}
+      }
+    },
+    "cohort": {
+      "type": "object", "additionalProperties": false,
+      "required": ["cohort_id", "cell_count", "intracellular_drug_amount_mol"],
+      "properties": {
+        "cohort_id": {"$ref": "#/$defs/id"},
+        "cell_count": {"$ref": "#/$defs/count"},
+        "intracellular_drug_amount_mol": {"type": "number", "minimum": 0}
+      }
+    },
+    "expected": {
+      "type": "object", "additionalProperties": false,
+      "required": ["total_cells", "viable_cells", "apoptosis_committed_cells", "apoptosis_committed_fraction", "cell_weighted_mean_effect_fraction", "fraction_tolerance"],
+      "properties": {
+        "total_cells": {"$ref": "#/$defs/count"},
+        "viable_cells": {"type": "integer", "minimum": 0},
+        "apoptosis_committed_cells": {"type": "integer", "minimum": 0},
+        "apoptosis_committed_fraction": {"$ref": "#/$defs/fraction"},
+        "cell_weighted_mean_effect_fraction": {"$ref": "#/$defs/fraction"},
+        "fraction_tolerance": {"$ref": "#/$defs/positive"}
+      }
+    },
+    "reference": {
+      "type": "object", "additionalProperties": false,
+      "required": ["request_id", "observed_at_s", "maximum_reported_cohorts", "cohorts", "expected"],
+      "properties": {
+        "request_id": {"$ref": "#/$defs/id"},
+        "observed_at_s": {"type": "number", "minimum": 0},
+        "maximum_reported_cohorts": {"$ref": "#/$defs/count"},
+        "cohorts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/cohort"}},
+        "expected": {"$ref": "#/$defs/expected"}
+      }
+    },
+    "sensitivity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["case_id", "half_max_effect_amount_mol", "hill_coefficient", "apoptosis_commitment_threshold", "expected_apoptosis_committed_fraction", "expected_mean_effect_fraction"],
+      "properties": {
+        "case_id": {"$ref": "#/$defs/id"},
+        "half_max_effect_amount_mol": {"$ref": "#/$defs/positive"},
+        "hill_coefficient": {"$ref": "#/$defs/positive"},
+        "apoptosis_commitment_threshold": {"$ref": "#/$defs/open_fraction"},
+        "expected_apoptosis_committed_fraction": {"$ref": "#/$defs/fraction"},
+        "expected_mean_effect_fraction": {"$ref": "#/$defs/fraction"}
+      }
+    },
+    "validity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"const": "software_test_surrogate"},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "citation", "location", "license", "role"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "citation": {"type": "string", "minLength": 1},
+        "location": {"type": "string", "minLength": 1},
+        "license": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

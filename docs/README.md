@@ -27,7 +27,7 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 - [M3 – Body–Organ Coupling](m3/README.md) – completed milestone evidence for versioned exchange contracts and the lung reference organ.
 - [M4 – Capillary Communication](m4/README.md) – completed implementation evidence for capillary transport and molecular-channel comparisons.
 - [M4 gate review](m4/M4_GATE_REVIEW.md) – passed technical review of capillary transit, balanced exchange, stable molecular channels, and shared multi-resolution cases.
-- [M5 – Cell Response](m5/README.md) – open milestone covering deterministic and stochastic binding, capillary signal hand-off, and population classification.
+- [M5 – Cell Response](m5/README.md) – completed technical milestone covering deterministic and stochastic binding, capillary signal hand-off, intracellular response, delivery, apoptosis feedback, and population scaling.
 - [M5.1 receptor-ligand baseline](m5/RECEPTOR_LIGAND_BASELINE.md) – exact binding transient, threshold semantics, executable reference, and scientific limits.
 - [M5.2 capillary-to-cell signal hand-off](m5/CAPILLARY_CELL_SIGNAL_HANDOFF.md) – neutral non-consuming tissue observation, adapter profile, executable reference path, and scientific limits.
 - [M5.3 time-varying receptor binding](m5/TIME_VARYING_RECEPTOR_BINDING.md) – bounded RK4 trajectory model, constant-limit convergence, pulsed reference, and scientific limits.
@@ -35,6 +35,9 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 - [M5.5 intracellular response network](m5/INTRACELLULAR_RESPONSE_NETWORK.md) – shared two-stage ODE/SSA network, internal effector event, population comparison, and validity boundary.
 - [M5.6 conservative drug delivery](m5/CONSERVATIVE_DRUG_DELIVERY.md) – threshold-derived nanodevice activation, analytical release/uptake chain, exact amount ownership, and validity boundary.
 - [M5.7 apoptosis and higher-layer feedback](m5/APOPTOSIS_AND_HIGHER_LAYER_FEEDBACK.md) – synthetic bounded dose response, irreversible commitment state, neutral feedback event, and validity boundary.
+- [M5.8 population scale and validity](m5/POPULATION_SCALE_AND_VALIDITY.md) – cohort-compressed one-trillion-cell reference, bounded output, parameter sensitivities, and model-selection scopes.
+- [M5 evidence qualification](m5/M5_EVIDENCE_QUALIFICATION.md) – analytical software evidence, external comparison candidates, and retained biological gaps.
+- [M5 gate review](m5/M5_GATE_REVIEW.md) – passed technical review of signal-to-response coupling, higher-layer feedback, analytical references, population validity, and User Guide impact.
 - [Pulmonary 0D independent validation](m3/PULMONARY_0D_INDEPENDENT_VALIDATION.md) – source-disjoint healthy-cohort comparison, acceptance results, and the exercise RC limitation.
 - [Pulmonary 0D flow adaptation](m3/PULMONARY_0D_FLOW_ADAPTATION.md) – independently calibrated bounded rest-to-exercise PVR/compliance response and post-calibration stress test.
 - [Pulmonary 0D subject-level multipoint validation](m3/PULMONARY_0D_SUBJECT_MULTIPOINT_VALIDATION.md) – pseudonymous stage-data contract, immutable-model trajectory analysis, evidence safeguards, and data-access status.

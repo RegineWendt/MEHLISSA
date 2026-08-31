@@ -578,7 +578,7 @@ At least three resolutions should be provided:
 
 **Objective:** Couple biomarker detection, drug release, and cell response
 
-**Current progress (M5.1–M5.7):** The first independent cell-layer library now
+**Current progress (M5 complete):** The independent cell-layer library now
 provides a strict, evidence-scoped receptor-ligand profile and an exact
 reversible one-to-one binding implementation for a constant ligand reservoir.
 It reports conserved free/bound receptor amounts, occupancy, and first threshold
@@ -589,12 +589,12 @@ M4 capillary/tissue boundary to that cell response through a separate adapter,
 without making either layer depend on the other's implementation. The
 non-consuming synthetic reference makes a retained interstitial oxygen amount
 trigger the checked receptor response and therefore satisfies the first M5 gate
-statement at the software-contract level. Time-dependent tissue kinetics,
-biological parameter qualification, and the remaining M5 gate statements stay
-open. M5.3 adds a separate bounded RK4 model for prescribed piecewise-constant
-ligand trajectories. It converges to the independent M5.1 constant-input
-solution and matches a segment-wise analytical pulse with onset, threshold
-crossing, withdrawal, and dissociation. The trajectory remains a synthetic
+statement at the software-contract level. Time-dependent tissue kinetics and
+biological parameter qualification remain open; later increments below address
+the remaining technical gate statements. M5.3 adds a separate bounded RK4 model
+for prescribed piecewise-constant ligand trajectories. It converges to the
+independent M5.1 constant-input solution and matches a segment-wise analytical
+pulse with onset, threshold crossing, withdrawal, and dissociation. The trajectory remains a synthetic
 external reservoir rather than a dynamic M4 field or an intracellular network.
 M5.4 adds exact finite-receptor Gillespie SSA, named per-cell streams,
 population distributions, analytical binomial-moment checks, and a declared
@@ -613,6 +613,13 @@ an irreversible apoptosis-commitment state, then returns that transition
 through a neutral, versioned higher-layer event. The complete path is a
 software-verification reference; pharmacodynamic calibration, pathway kinetics,
 population heterogeneity, and an executable scenario consumer remain open.
+M5.8 adds an exact cohort-compressed population response whose work and retained
+output scale with cohort count rather than represented cell count. A strict
+one-trillion-cell reference, count-scale invariant, predeclared response
+sensitivities, evidence qualification, validity comparison, mandatory English
+User Guide impact review, and formal gate review close M5 at the synthetic
+software-contract level. Biological and external validation remain later
+versioned research rather than implied gate evidence.
 See [M5 implementation evidence](m5/README.md),
 [the M5.2 hand-off](m5/CAPILLARY_CELL_SIGNAL_HANDOFF.md),
 [the M5.3 time-varying baseline](m5/TIME_VARYING_RECEPTOR_BINDING.md),
@@ -620,13 +627,17 @@ See [M5 implementation evidence](m5/README.md),
 [the M5.5 intracellular network](m5/INTRACELLULAR_RESPONSE_NETWORK.md),
 [the M5.6 conservative drug delivery](m5/CONSERVATIVE_DRUG_DELIVERY.md),
 [the M5.7 apoptosis response](m5/APOPTOSIS_AND_HIGHER_LAYER_FEEDBACK.md),
+[the M5.8 population validity guide](m5/POPULATION_SCALE_AND_VALIDITY.md),
+[the M5 evidence qualification](m5/M5_EVIDENCE_QUALIFICATION.md),
+[the M5 gate review](m5/M5_GATE_REVIEW.md),
 [ADR-0034](architecture/adr/0034-analytical-receptor-ligand-baseline.md),
 [ADR-0035](architecture/adr/0035-non-consuming-capillary-cell-signal-handoff.md),
 [ADR-0036](architecture/adr/0036-time-varying-receptor-ligand-ode.md),
 [ADR-0037](architecture/adr/0037-stochastic-receptor-binding-and-population-classification.md),
 [ADR-0038](architecture/adr/0038-shared-intracellular-ode-ssa-network.md),
-[ADR-0039](architecture/adr/0039-conservative-nanodevice-release-and-uptake.md), and
-[ADR-0040](architecture/adr/0040-synthetic-apoptosis-and-higher-layer-feedback.md).
+[ADR-0039](architecture/adr/0039-conservative-nanodevice-release-and-uptake.md),
+[ADR-0040](architecture/adr/0040-synthetic-apoptosis-and-higher-layer-feedback.md), and
+[ADR-0041](architecture/adr/0041-cohort-compressed-apoptosis-population.md).
 
 #### Tasks
 
@@ -661,8 +672,10 @@ See [M5 implementation evidence](m5/README.md),
 7. ~~Apoptosis as the first complete response with higher-layer feedback.~~
    Complete in M5.7 with a stable synthetic Hill response, irreversible
    commitment state, neutral cell-state event, and silent viable-state gate.
-8. Population-scale variant, evidence qualification, User Guide review, and
-   formal M5 gate review.
+8. ~~Population-scale variant, evidence qualification, User Guide review, and
+   formal M5 gate review.~~ Complete in M5.8 with an exact cohort-compressed
+   one-trillion-cell reference, explicit single/population scopes, predeclared
+   response sensitivities, qualified evidence, and formal gate acceptance.
 
 #### Gate M5 – “Cell Response”
 

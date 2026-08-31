@@ -12,7 +12,8 @@ signals into binding, detection, intracellular state, and ultimately a
 measurable cellular response. It must preserve the distinction between software
 verification and biological validation.
 
-The M5 gate remains open. Its acceptance statements require:
+The M5 gate passed its formal review on 31 August 2026. Its accepted statements
+are:
 
 - a molecular signal from the capillary model to trigger a cell reaction;
 - a cell model to return a measurable event or state change to higher layers;
@@ -20,6 +21,10 @@ The M5 gate remains open. Its acceptance statements require:
   external references;
 - documented single-cell and population validity scopes; and
 - a completed English User Guide gate-impact review.
+
+This is a synthetic software-contract milestone, not biological validation.
+See the [formal gate review](M5_GATE_REVIEW.md) and
+[evidence qualification](M5_EVIDENCE_QUALIFICATION.md).
 
 ## Implemented increments
 
@@ -142,6 +147,29 @@ See [Conservative Nanodevice Drug Delivery](CONSERVATIVE_DRUG_DELIVERY.md) and
 See [Apoptosis and Higher-Layer Feedback](APOPTOSIS_AND_HIGHER_LAYER_FEEDBACK.md)
 and [ADR-0040](../architecture/adr/0040-synthetic-apoptosis-and-higher-layer-feedback.md).
 
+### M5.8 - population scale, evidence, and gate review
+
+- cohort-compressed deterministic apoptosis population with exact weighted
+  aggregate counts, fractions, and mean effect;
+- work proportional to cohort count rather than represented cell count;
+- caller-bounded cohort-detail retention while all cohorts contribute to
+  aggregates;
+- a checked one-trillion-cell/four-cohort reference and a scale-equivalent
+  1,000-cell comparison;
+- predeclared half-max and threshold sensitivities;
+- one model-selection table separating homogeneous single-cell, explicit-cell
+  stochastic, and compressed-population validity scopes;
+- an evidence audit that keeps analytical verification separate from external
+  biological validation;
+- a completed mandatory English User Guide impact review; and
+- formal acceptance of all five Gate M5 statements at the synthetic
+  software-contract level.
+
+See [Population Scale and Validity](POPULATION_SCALE_AND_VALIDITY.md),
+[M5 Evidence Qualification](M5_EVIDENCE_QUALIFICATION.md),
+[M5 Gate Review](M5_GATE_REVIEW.md), and
+[ADR-0041](../architecture/adr/0041-cohort-compressed-apoptosis-population.md).
+
 ## M5.1 reference result
 
 The checked-in profile uses synthetic values and asks how a receptor population
@@ -175,19 +203,15 @@ The constant reference separately reproduces the M5.1 ten-second result. Runs
 at `0.5 s`, `0.25 s`, and `0.125 s` demonstrate decreasing numerical error
 under step halving.
 
-## Planned increments
+## M5 completion
 
-1. **M5.8 - population model and gate review:** provide a scalable population
-   variant, document both validity scopes, complete sensitivity/evidence work,
-   and perform the mandatory User Guide review.
-
-The numbering is a working implementation sequence, not evidence that later
-increments are already designed or accepted. Each increment may be split when
-scientific qualification or an architecture decision requires it.
+M5.1 through M5.8 and the formal gate review are complete. Later biological
+qualification is new versioned work, not an unrecorded extension of the
+accepted synthetic references.
 
 ## Current scientific boundary
 
-M5.1 through M5.7 are software verification only. The receptor-binding models
+M5.1 through M5.8 are software verification only. The receptor-binding models
 prescribe a non-depleting external ligand reservoir. The
 M5.3 trajectory is not yet produced by a dynamic capillary tissue field, and
 the M5.2 snapshot remains constant during its exposure. M5.4 adds finite-count
@@ -202,18 +226,23 @@ diffusion, binding, dose response, efficacy, toxicity, or apoptosis.
 M5.7 adds an amount-based synthetic Hill response, irreversible commitment
 label, and neutral higher-layer event. It does not establish pharmacodynamics,
 biological apoptosis, efficacy, toxicity, safety, or clinical relevance.
+M5.8 aggregates that deterministic response over prescribed homogeneous amount
+cohorts. Its one-trillion-cell reference demonstrates computational scaling,
+not population realism; it adds no biological heterogeneity, correlation,
+lineage, spatial interaction, or evidence.
 
 M5.2 satisfies the first M5 statement at the synthetic software-contract level:
 an M4 extracellular tissue signal triggers receptor binding and threshold
-detection. The other four gate statements remain open at full M5 scope, as do
-physiological and dynamic-tissue qualification of the first statement. M5.3 and
+detection. Physiological and dynamic-tissue qualification remains open. M5.3 and
 M5.4 add analytical, convergence, stochastic-moment, and population evidence
-for the receptor-binding part of the third statement. M5.4 also establishes documented
-synthetic single-cell and population scopes toward the fourth statement. M5.5
+for the receptor-binding part of the third statement. M5.4 establishes explicit
+stochastic single-cell and population scopes; M5.8 adds a scalable compressed
+population and the complete fourth-statement validity comparison. M5.5
 adds the intracellular-network part of the third statement with shared ODE/SSA
 software evidence. External or biological validation remains open.
 M5.6 advances `CELL-003` with executable activation, release, and uptake, but
 the release-diffusion-binding chain remains open. M5.7 advances `CELL-005` and
 satisfies the measurable higher-layer-response gate statement at the synthetic
-software-contract level. M5 remains open for population scaling, evidence
-qualification, the mandatory User Guide gate review, and formal review.
+software-contract level. The evidence qualification and mandatory User Guide
+review are complete. M5 is closed as a technical gate; the limitations above
+remain binding.

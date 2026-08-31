@@ -5,6 +5,8 @@ find_package(jsoncons CONFIG REQUIRED)
 
 add_library(
     mehlissa_cell_model
+    src/apoptosis_population.cpp
+    src/apoptosis_population_profile.cpp
     src/analytical_receptor_ligand_model.cpp
     src/apoptosis_response.cpp
     src/apoptosis_response_profile.cpp

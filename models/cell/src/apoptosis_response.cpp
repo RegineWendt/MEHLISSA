@@ -19,19 +19,6 @@ namespace {
     return std::isfinite(value) && value >= 0.0 && value <= 1.0;
 }
 
-[[nodiscard]] double hill_effect(const double amount, const double half_max,
-                                 const double coefficient) noexcept {
-    if (amount == 0.0) {
-        return 0.0;
-    }
-    const auto log_ratio = coefficient * std::log(amount / half_max);
-    if (log_ratio >= 0.0) {
-        return 1.0 / (1.0 + std::exp(-log_ratio));
-    }
-    const auto ratio = std::exp(log_ratio);
-    return ratio / (1.0 + ratio);
-}
-
 } // namespace
 
 std::string_view to_string(const CellState state) noexcept {
@@ -42,6 +29,26 @@ std::string_view to_string(const CellState state) noexcept {
         return "apoptosis_committed";
     }
     return "unknown";
+}
+
+double synthetic_hill_effect(const core::Amount intracellular_amount,
+                             const core::Amount half_max_effect_amount,
+                             const double hill_coefficient) {
+    const auto amount = core::in_moles(intracellular_amount);
+    const auto half_max = core::in_moles(half_max_effect_amount);
+    if (!std::isfinite(amount) || amount < 0.0 || !std::isfinite(half_max) || half_max <= 0.0 ||
+        !std::isfinite(hill_coefficient) || hill_coefficient <= 0.0) {
+        invalid("Synthetic Hill-effect inputs are nonphysical");
+    }
+    if (amount == 0.0) {
+        return 0.0;
+    }
+    const auto log_ratio = hill_coefficient * std::log(amount / half_max);
+    if (log_ratio >= 0.0) {
+        return 1.0 / (1.0 + std::exp(-log_ratio));
+    }
+    const auto ratio = std::exp(log_ratio);
+    return ratio / (1.0 + ratio);
 }
 
 void validate_apoptosis_response(const ApoptosisResponse& response) {
@@ -99,8 +106,9 @@ SyntheticHillApoptosisModel::evaluate(const ApoptosisResponseRequest& request) c
         observed_at += activation;
     }
 
-    const auto effect = hill_effect(intracellular, core::in_moles(config_.half_max_effect_amount),
-                                    config_.hill_coefficient);
+    const auto effect =
+        synthetic_hill_effect(delivery.intracellular_drug_amount, config_.half_max_effect_amount,
+                              config_.hill_coefficient);
     const auto state = effect >= config_.apoptosis_commitment_threshold
                            ? CellState::apoptosis_committed
                            : CellState::viable;

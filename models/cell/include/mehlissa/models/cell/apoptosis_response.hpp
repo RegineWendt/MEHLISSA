@@ -19,6 +19,10 @@ enum class CellState : std::uint8_t { viable, apoptosis_committed };
 
 [[nodiscard]] std::string_view to_string(CellState state) noexcept;
 
+[[nodiscard]] double synthetic_hill_effect(core::Amount intracellular_amount,
+                                           core::Amount half_max_effect_amount,
+                                           double hill_coefficient);
+
 struct ApoptosisResponseConfig final {
     std::string model_id;
     std::string cell_id;

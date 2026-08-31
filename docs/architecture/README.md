@@ -52,6 +52,7 @@ decisions; a new decision supersedes an existing one through a new ADR.
 | [ADR-0038](adr/0038-shared-intracellular-ode-ssa-network.md) | Accepted | one conserved two-stage intracellular network shared by bounded RK4 and exact SSA variants |
 | [ADR-0039](adr/0039-conservative-nanodevice-release-and-uptake.md) | Accepted | threshold-derived device activation plus analytical, ownership-conserving payload release and cellular uptake |
 | [ADR-0040](adr/0040-synthetic-apoptosis-and-higher-layer-feedback.md) | Accepted | stable synthetic apoptosis commitment plus a neutral higher-layer cell-state event |
+| [ADR-0041](adr/0041-cohort-compressed-apoptosis-population.md) | Accepted | exact weighted apoptosis aggregates with work and retained output bounded by cohort count |
 
 ## Status model
 

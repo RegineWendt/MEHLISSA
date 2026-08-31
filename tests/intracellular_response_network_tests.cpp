@@ -60,6 +60,37 @@ TEST_CASE("The intracellular ODE produces the checked messenger and effector res
     CHECK(response.dropped_samples == 1489);
 }
 
+TEST_CASE("The intracellular network converges to its analytical constant-input equilibrium",
+          "[m5][cell][intracellular][ode][analytical]") {
+    auto profile = load_profile();
+    profile.ode.maximum_integration_steps = 20'000;
+    auto request = profile.reference.request;
+    request.request_id = "m5-5-analytical-equilibrium";
+    request.observation_time = 60s;
+
+    const auto receptor = request.receptor_trajectory.front().bound_fraction;
+    const auto messenger_on =
+        mehlissa::core::in_per_second(profile.ode.kinetics.messenger_activation_rate) * receptor;
+    const auto messenger_off =
+        mehlissa::core::in_per_second(profile.ode.kinetics.messenger_deactivation_rate);
+    const auto expected_messenger = messenger_on / (messenger_on + messenger_off);
+    const auto effector_on =
+        mehlissa::core::in_per_second(profile.ode.kinetics.effector_activation_rate) *
+        expected_messenger;
+    const auto effector_off =
+        mehlissa::core::in_per_second(profile.ode.kinetics.effector_deactivation_rate);
+    const auto expected_effector = effector_on / (effector_on + effector_off);
+
+    const auto response =
+        mehlissa::models::cell::IntracellularOdeModel{profile.ode}.evaluate(request);
+    CHECK(expected_messenger == Catch::Approx(0.75));
+    CHECK(expected_effector == Catch::Approx(0.75));
+    CHECK(response.final_active_messenger_fraction ==
+          Catch::Approx(expected_messenger).margin(1.0e-12));
+    CHECK(response.final_active_effector_fraction ==
+          Catch::Approx(expected_effector).margin(1.0e-12));
+}
+
 TEST_CASE("The intracellular SSA is exactly replayable and conserves both pools",
           "[m5][cell][intracellular][ssa][determinism][conservation]") {
     const auto profile = load_profile();
