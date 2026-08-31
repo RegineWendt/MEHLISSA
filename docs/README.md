@@ -34,6 +34,7 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 - [M5.4 stochastic receptor binding](m5/STOCHASTIC_RECEPTOR_BINDING.md) – exact finite-receptor SSA, named cell streams, analytical population moments, and declared FP/FN experiment.
 - [M5.5 intracellular response network](m5/INTRACELLULAR_RESPONSE_NETWORK.md) – shared two-stage ODE/SSA network, internal effector event, population comparison, and validity boundary.
 - [M5.6 conservative drug delivery](m5/CONSERVATIVE_DRUG_DELIVERY.md) – threshold-derived nanodevice activation, analytical release/uptake chain, exact amount ownership, and validity boundary.
+- [M5.7 apoptosis and higher-layer feedback](m5/APOPTOSIS_AND_HIGHER_LAYER_FEEDBACK.md) – synthetic bounded dose response, irreversible commitment state, neutral feedback event, and validity boundary.
 - [Pulmonary 0D independent validation](m3/PULMONARY_0D_INDEPENDENT_VALIDATION.md) – source-disjoint healthy-cohort comparison, acceptance results, and the exercise RC limitation.
 - [Pulmonary 0D flow adaptation](m3/PULMONARY_0D_FLOW_ADAPTATION.md) – independently calibrated bounded rest-to-exercise PVR/compliance response and post-calibration stress test.
 - [Pulmonary 0D subject-level multipoint validation](m3/PULMONARY_0D_SUBJECT_MULTIPOINT_VALIDATION.md) – pseudonymous stage-data contract, immutable-model trajectory analysis, evidence safeguards, and data-access status.

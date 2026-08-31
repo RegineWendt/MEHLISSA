@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-apoptosis-response-v1",
+    "version": "1.0.0",
+    "title": "Synthetic intracellular-amount apoptosis commitment and feedback"
+  },
+  "implementation_kind": "synthetic_hill_apoptosis_commitment",
+  "model": {
+    "model_id": "cell.apoptosis.synthetic.v1",
+    "cell_id": "cell.synthetic.1",
+    "drug_id": "drug.synthetic.1",
+    "half_max_effect_amount_mol": 5.0e-8,
+    "hill_coefficient": 2.0,
+    "apoptosis_commitment_threshold": 0.65
+  },
+  "higher_layer_feedback": {
+    "event_id": "m5-7-apoptosis-committed",
+    "target_model_id": "scenario.synthetic.metastasis-prevention",
+    "target_port_id": "cell-state-events"
+  },
+  "reference_case": {
+    "request_id": "m5-7-apoptosis-response",
+    "source_delivery_request_id": "m5-6-conservative-delivery",
+    "source_delivery_model_id": "cell.drug-delivery.synthetic.v1",
+    "expected": {
+      "intracellular_drug_amount_mol": 7.47645072415509e-8,
+      "effect_fraction": 0.6909662593017674,
+      "state": "apoptosis_committed",
+      "amount_tolerance_mol": 1.0e-18,
+      "effect_tolerance": 1.0e-12
+    }
+  },
+  "validity": {
+    "population": "one synthetic cell represented by one homogeneous intracellular drug inventory",
+    "physiological_state": "software verification only; no physiological or disease state",
+    "evidence_class": "software_test_surrogate",
+    "description": "A dimensionless Hill surrogate maps final intracellular drug amount to an effect fraction; crossing a declared synthetic threshold commits the cell to an irreversible apoptosis state and emits a neutral higher-layer event."
+  },
+  "sources": [
+    {
+      "id": "wendt-dissertation-cell-response",
+      "citation": "Wendt, Regine (2024), Einsatz von Nanotechnologien in der Praezisionsmedizin, Sections 4.4-4.5 and 5.4",
+      "location": "literature/Diss_WENDT_Simulationchapters.pdf",
+      "license": "source consulted; architecture paraphrased",
+      "role": "localized drug release, cell response, apoptosis, and higher-layer scenario vision"
+    },
+    {
+      "id": "mehlissa-m5-6-delivery",
+      "citation": "MEHLISSA Next M5.6 conservative nanodevice drug delivery",
+      "location": "docs/m5/CONSERVATIVE_DRUG_DELIVERY.md",
+      "license": "CC-BY-4.0",
+      "role": "typed intracellular drug inventory, source identity, and observation time"
+    },
+    {
+      "id": "mehlissa-adr-0040",
+      "citation": "MEHLISSA Next ADR-0040 synthetic apoptosis commitment and higher-layer feedback",
+      "location": "docs/architecture/adr/0040-synthetic-apoptosis-and-higher-layer-feedback.md",
+      "license": "CC-BY-4.0",
+      "role": "dose-response surrogate, irreversible state transition, and feedback boundary"
+    }
+  ],
+  "limitations": [
+    "Drug, cell, half-maximal amount, Hill coefficient, threshold, and target scenario are synthetic software-test values.",
+    "The response uses final intracellular amount rather than concentration, exposure history, target binding, metabolism, or pathway dynamics.",
+    "Apoptosis commitment is an abstract irreversible state label; morphology, caspase signaling, execution time, clearance, and neighboring-tissue effects are not modeled.",
+    "The event timestamp is the model observation time and not an inferred biological commitment time.",
+    "The reference verifies arithmetic, identity, gating, and boundary semantics; it makes no efficacy, toxicity, dose, safety, treatment, or clinical claim."
+  ]
+}

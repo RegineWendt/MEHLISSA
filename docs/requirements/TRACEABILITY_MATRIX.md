@@ -78,38 +78,45 @@ Status codes:
 | CAP-006 | DISS pp. 129, 154 | DONE | M4 | M4.8 defines a typed implementation-neutral request/response and analytical free-diffusion adapter; M4.9–M4.11 add deterministic endpoint particles, bounded paths, and a conservative radial field; M4.13 adds a separate pulmonary-card-bound shared case in which analytical, 200,000-particle, and 256-to-512-cell field resolutions compare directed advection, diffusion, bulk reaction, and a surface-to-volume wall sink with explicit balance and refinement gates; explicit radial wall encounters, receptor kinetics, external tools, noise, and physiological signal qualification follow without reopening the stable contracts |
 | CAP-007 | DISS p. 129 | RESEARCH | M4/M6 | reachability and multi-hop comparison |
 | CELL-001 | DISS pp. 129–132 | SPEC | M5 | biomarker field with analytical reference case |
-| CELL-002 | DISS pp. 130–132 | PART | M5/M7 | M5.1 provides the exact binding baseline; M5.2 adds a neutral capillary/tissue signal hand-off; M5.3 adds bounded RK4 trajectories and an analytical pulse; M5.4 adds finite-receptor SSA, population moments, and synthetic FP/FN evaluation; M5.5 adds a conserved receptor-to-messenger-to-effector state, response event, and shared ODE/SSA comparison; M5.6 consumes that event through a separate device-activation boundary; biological kinetics and response coupling follow |
-| CELL-003 | DISS pp. 130–132, 153–154 | PART | M5 | M5.6 provides threshold-derived activation plus an analytical, amount-conserving device-to-extracellular-to-intracellular release/uptake chain; spatial diffusion, receptor binding, biological calibration, and cellular response remain open |
+| CELL-002 | DISS pp. 130–132 | PART | M5/M7 | M5.1 provides the exact binding baseline; M5.2 adds a neutral capillary/tissue signal hand-off; M5.3 adds bounded RK4 trajectories and an analytical pulse; M5.4 adds finite-receptor SSA, population moments, and synthetic FP/FN evaluation; M5.5 adds a conserved receptor-to-messenger-to-effector state, response event, and shared ODE/SSA comparison; M5.6 consumes that event through a separate device-activation boundary; M5.7 connects final uptake to a synthetic apoptosis state and neutral event; biological kinetics remain open |
+| CELL-003 | DISS pp. 130–132, 153–154 | PART | M5 | M5.6 provides threshold-derived activation plus an analytical, amount-conserving device-to-extracellular-to-intracellular release/uptake chain; M5.7 consumes the final intracellular inventory in a separate synthetic response; spatial diffusion, receptor binding, concentration/exposure kinetics, and biological calibration remain open |
 | CELL-004 | DISS pp. 131–133, 154 | RESEARCH | M5 | ODE/SSA or distribution model against reference data |
-| CELL-005 | DISS pp. 153–154 | RESEARCH | M5 | apoptosis event plus feedback to scenario |
+| CELL-005 | DISS pp. 153–154 | PART | M5 | M5.7 provides a bounded synthetic effect, irreversible apoptosis-commitment state, and versioned neutral higher-layer event; biological pathway qualification, uncertainty, population heterogeneity, and an executable scenario consumer remain open |
 
-M5 is open. M5.1 through M5.6 advance `CELL-002`: they verify constant,
+M5 is open. M5.1 through M5.7 advance `CELL-002`: they verify constant,
 pulsed homogeneous binding, numerical convergence, detection and dissociation,
 and connect a retained M4 tissue inventory through a neutral, time-scoped
 observation and adapter. The first M5 gate statement is therefore satisfied at
 the software-contract level, and receptor binding has analytical evidence toward
-the third statement. Higher-layer feedback, dynamic capillary fields, biological
-heterogeneity, and biological qualification remain open. M5.4 provides a
+the third statement. M5.7 also satisfies the measurable higher-layer event
+statement at the synthetic software-contract level. Dynamic capillary fields,
+biological heterogeneity, and biological qualification remain open. M5.4 provides a
 binding SSA/distribution and M5.5 provides a shared
 intracellular ODE/SSA network toward `CELL-004`. `CELL-004` remains research
 because neither is externally or biologically validated.
 M5.6 advances `CELL-003` from specification to a partial executable contract:
 a typed response event activates one addressed device/payload, and an analytical
 chain conserves substance across device, extracellular, and intracellular
-owners. It does not yet connect spatial diffusion, drug-receptor binding, or a
-cell-state response. See
+owners. M5.7 consumes that final intracellular inventory through a separate
+synthetic Hill response, changes the declared cell state to
+`apoptosis_committed`, and emits a neutral versioned event without coupling the
+cell model to a scenario. It does not yet connect spatial diffusion,
+drug-receptor binding, concentration/exposure kinetics, mechanistic apoptosis,
+or biological calibration. See
 [M5 implementation evidence](../m5/README.md),
 [the M5.2 hand-off](../m5/CAPILLARY_CELL_SIGNAL_HANDOFF.md),
 [the M5.3 time-varying baseline](../m5/TIME_VARYING_RECEPTOR_BINDING.md),
 [the M5.4 stochastic baseline](../m5/STOCHASTIC_RECEPTOR_BINDING.md),
 [the M5.5 intracellular network](../m5/INTRACELLULAR_RESPONSE_NETWORK.md),
 [the M5.6 conservative drug delivery](../m5/CONSERVATIVE_DRUG_DELIVERY.md),
+[the M5.7 apoptosis response](../m5/APOPTOSIS_AND_HIGHER_LAYER_FEEDBACK.md),
 [ADR-0034](../architecture/adr/0034-analytical-receptor-ligand-baseline.md),
 [ADR-0035](../architecture/adr/0035-non-consuming-capillary-cell-signal-handoff.md),
 [ADR-0036](../architecture/adr/0036-time-varying-receptor-ligand-ode.md),
 [ADR-0037](../architecture/adr/0037-stochastic-receptor-binding-and-population-classification.md),
-[ADR-0038](../architecture/adr/0038-shared-intracellular-ode-ssa-network.md), and
-[ADR-0039](../architecture/adr/0039-conservative-nanodevice-release-and-uptake.md).
+[ADR-0038](../architecture/adr/0038-shared-intracellular-ode-ssa-network.md),
+[ADR-0039](../architecture/adr/0039-conservative-nanodevice-release-and-uptake.md), and
+[ADR-0040](../architecture/adr/0040-synthetic-apoptosis-and-higher-layer-feedback.md).
 
 Gate M4 is closed by the formal
 [M4 gate review](../m4/M4_GATE_REVIEW.md). `CAP-001` through `CAP-005` remain
@@ -154,7 +161,7 @@ statements.
 | QUA-002 | RM M1 | DONE | M1 | clang-tidy, ASan/UBSan, and warnings as errors in CI |
 | QUA-003 | MEH25 pp. 1–2 | SPEC | M2–M7 | versioned benchmark reports plus result comparison |
 | QUA-004 | MEH25 pp. 1–2 | SPEC | M4–M7 | scaling test: agents versus populations/surrogate |
-| QUA-005 | RM 6.6 | DONE | M1 ongoing | versioned API/schema/model/scenario documents plus a two-level English User Guide cover non-expert purpose, non-claims, mental model, guided experiment families, decision aid, glossary, retained M0–M4 workflows, and the open M5.1–M5.6 cell work; every future M-gate requires a documented guide-impact review |
+| QUA-005 | RM 6.6 | DONE | M1 ongoing | versioned API/schema/model/scenario documents plus a two-level English User Guide cover non-expert purpose, non-claims, mental model, guided experiment families, decision aid, glossary, retained M0–M4 workflows, and the open M5.1–M5.7 cell work; every future M-gate requires a documented guide-impact review |
 | QUA-006 | RM M8 | SPEC | M8 | data-protection and data-management review |
 
 ## 7. M0 coverage review

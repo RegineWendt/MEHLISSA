@@ -161,6 +161,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
     if(MEHLISSA_BUILD_CELL_MODELS)
         add_executable(
             mehlissa_cell_model_tests
+            apoptosis_response_tests.cpp
             drug_delivery_tests.cpp
             intracellular_response_network_tests.cpp
             receptor_ligand_tests.cpp
@@ -186,6 +187,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
         add_executable(
             mehlissa_cell_cosimulation_tests
             capillary_cell_signal_coupler_tests.cpp
+            cell_state_feedback_tests.cpp
         )
         target_link_libraries(
             mehlissa_cell_cosimulation_tests

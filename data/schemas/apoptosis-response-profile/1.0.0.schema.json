@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:apoptosis-response-profile:1.0.0",
+  "title": "MEHLISSA synthetic apoptosis-response profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "implementation_kind", "model", "higher_layer_feedback", "reference_case", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {"$ref": "#/$defs/profile"},
+    "implementation_kind": {"const": "synthetic_hill_apoptosis_commitment"},
+    "model": {"$ref": "#/$defs/model"},
+    "higher_layer_feedback": {"$ref": "#/$defs/feedback"},
+    "reference_case": {"$ref": "#/$defs/reference"},
+    "validity": {"$ref": "#/$defs/validity"},
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "positive": {"type": "number", "exclusiveMinimum": 0},
+    "fraction": {"type": "number", "minimum": 0, "maximum": 1},
+    "open_fraction": {"type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1},
+    "profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "model": {
+      "type": "object", "additionalProperties": false,
+      "required": ["model_id", "cell_id", "drug_id", "half_max_effect_amount_mol", "hill_coefficient", "apoptosis_commitment_threshold"],
+      "properties": {
+        "model_id": {"$ref": "#/$defs/id"},
+        "cell_id": {"$ref": "#/$defs/id"},
+        "drug_id": {"$ref": "#/$defs/id"},
+        "half_max_effect_amount_mol": {"$ref": "#/$defs/positive"},
+        "hill_coefficient": {"$ref": "#/$defs/positive"},
+        "apoptosis_commitment_threshold": {"$ref": "#/$defs/open_fraction"}
+      }
+    },
+    "feedback": {
+      "type": "object", "additionalProperties": false,
+      "required": ["event_id", "target_model_id", "target_port_id"],
+      "properties": {
+        "event_id": {"$ref": "#/$defs/id"},
+        "target_model_id": {"$ref": "#/$defs/id"},
+        "target_port_id": {"$ref": "#/$defs/id"}
+      }
+    },
+    "expected": {
+      "type": "object", "additionalProperties": false,
+      "required": ["intracellular_drug_amount_mol", "effect_fraction", "state", "amount_tolerance_mol", "effect_tolerance"],
+      "properties": {
+        "intracellular_drug_amount_mol": {"$ref": "#/$defs/positive"},
+        "effect_fraction": {"$ref": "#/$defs/fraction"},
+        "state": {"enum": ["viable", "apoptosis_committed"]},
+        "amount_tolerance_mol": {"$ref": "#/$defs/positive"},
+        "effect_tolerance": {"$ref": "#/$defs/positive"}
+      }
+    },
+    "reference": {
+      "type": "object", "additionalProperties": false,
+      "required": ["request_id", "source_delivery_request_id", "source_delivery_model_id", "expected"],
+      "properties": {
+        "request_id": {"$ref": "#/$defs/id"},
+        "source_delivery_request_id": {"$ref": "#/$defs/id"},
+        "source_delivery_model_id": {"$ref": "#/$defs/id"},
+        "expected": {"$ref": "#/$defs/expected"}
+      }
+    },
+    "validity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"const": "software_test_surrogate"},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "citation", "location", "license", "role"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "citation": {"type": "string", "minLength": 1},
+        "location": {"type": "string", "minLength": 1},
+        "license": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -66,8 +66,10 @@ is an abstract test connection and does not claim a physical signaling path.
 
 Release and uptake are homogeneous, irreversible first-order processes. There
 is no diffusion distance, membrane or receptor binding, saturation, metabolism,
-elimination, toxicity, efficacy, feedback, or apoptosis. Intracellular amount
-is an inventory only. Therefore M5.6 advances but does not complete `CELL-003`.
+elimination, toxicity, efficacy, feedback, or apoptosis. Within M5.6,
+intracellular amount is an inventory only; M5.7 consumes it through a separate
+synthetic response without changing these delivery kinetics. Therefore M5.6
+advances but does not complete `CELL-003`.
 
 ## Verification
 

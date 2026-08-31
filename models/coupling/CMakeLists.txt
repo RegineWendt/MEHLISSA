@@ -3,6 +3,7 @@
 
 add_library(
     mehlissa_model_coupling
+    src/cell_state_event.cpp
     src/conserved_transfer.cpp
     src/entity_disposition.cpp
     src/entity_transfer.cpp

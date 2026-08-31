@@ -6,6 +6,8 @@ find_package(jsoncons CONFIG REQUIRED)
 add_library(
     mehlissa_cell_model
     src/analytical_receptor_ligand_model.cpp
+    src/apoptosis_response.cpp
+    src/apoptosis_response_profile.cpp
     src/drug_delivery.cpp
     src/drug_delivery_profile.cpp
     src/intracellular_response_network.cpp

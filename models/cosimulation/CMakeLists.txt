@@ -27,6 +27,7 @@ if(MEHLISSA_BUILD_CELL_MODELS)
         mehlissa_cell_cosimulation
         src/capillary_cell_signal_coupler.cpp
         src/capillary_cell_signal_profile.cpp
+        src/cell_state_feedback.cpp
     )
     add_library(MEHLISSA::cell_cosimulation ALIAS mehlissa_cell_cosimulation)
     target_include_directories(
