@@ -67,7 +67,8 @@ TEST_CASE("An intracellular response activates conservative release and cellular
     const auto delivery = load_delivery_profile();
     const auto activation = run_activation(intracellular, delivery);
     REQUIRE(activation.has_value());
-    const auto activation_signal = activation.value_or({});
+    const auto activation_signal =
+        activation.value_or(mehlissa::models::cell::NanodeviceActivationSignal{});
     CHECK(activation_signal.source_request_id == delivery.reference_case.source_request_id);
     CHECK(activation_signal.source_network_id == delivery.reference_case.source_network_id);
     CHECK(seconds(activation_signal.trigger_offset) ==
@@ -105,8 +106,8 @@ TEST_CASE("An intracellular response activates conservative release and cellular
     const auto stochastic_activation = mehlissa::models::cell::make_nanodevice_activation_signal(
         stochastic_response, delivery.reference_case.activation_target);
     REQUIRE(stochastic_activation.has_value());
-    CHECK(stochastic_activation.value_or({}).source_network_id ==
-          activation_signal.source_network_id);
+    CHECK(stochastic_activation.value_or(mehlissa::models::cell::NanodeviceActivationSignal{})
+              .source_network_id == activation_signal.source_network_id);
 }
 
 TEST_CASE("A silent intracellular network leaves the payload sealed",
@@ -139,7 +140,9 @@ TEST_CASE("Equal release and uptake rates retain the analytical limiting solutio
     const mehlissa::models::cell::AnalyticalDrugDeliveryModel model{profile.model};
     const auto activation = run_activation(load_intracellular_profile(), profile);
     REQUIRE(activation.has_value());
-    const auto response = model.evaluate({"equal-rate-limit", 10s, activation.value_or({})});
+    const auto response =
+        model.evaluate({"equal-rate-limit", 10s,
+                        activation.value_or(mehlissa::models::cell::NanodeviceActivationSignal{})});
     const auto expected_external = 1.0e-7 * 0.3 * 10.0 * std::exp(-3.0);
     CHECK(in_moles(response.extracellular_drug_amount) ==
           Catch::Approx(expected_external).margin(1.0e-18));
@@ -153,7 +156,8 @@ TEST_CASE("Drug delivery rejects inconsistent events identities and provenance",
     const auto profile = load_delivery_profile();
     const auto activation = run_activation(intracellular, profile);
     REQUIRE(activation.has_value());
-    const auto activation_signal = activation.value_or({});
+    const auto activation_signal =
+        activation.value_or(mehlissa::models::cell::NanodeviceActivationSignal{});
 
     auto wrong_identity = activation_signal;
     wrong_identity.payload_id = "payload.other";
