@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 This document is the entry point for developers who want to understand,
 integrate, or extend MEHLISSA Next. It describes the implemented architecture
-through the accepted M6 gate and the implemented M7.1 composition contract, the public C++
+through the accepted M6 gate and the implemented M7.1-M7.4 contracts, the public C++
 and command-line interfaces, the data contracts, and the workflow for adding a
 module such as a new organ model. It also explains
 which forms of personalization are possible today and which remain roadmap
@@ -36,7 +36,7 @@ modifying one another's internal state.
 flowchart TB
     Manifest[Experiment and model profiles<br/>JSON + JSON Schema]
     Runner[Application / experiment runtime]
-    Composer[M7.1 fingerprinting composer<br/>profile, artifacts, stage contract]
+    Composer[M7 fingerprinting scenario<br/>composition, runtime, result, binding]
     Kernel[Core kernel<br/>clock, units, RNG, lifecycle, errors]
     Body[Body layer<br/>vascular graph and transport]
     Organ[Organ layer<br/>lung variants]
@@ -85,12 +85,12 @@ actuator delivery. M6.6 adds the solid, metadata-only request/response boundary
 through which an optional external network simulator can supply BAN outcomes
 and communication costs. The dotted path from capillary tissue to a dedicated
 detector remains future composition. M6.7 exercises transport failures and
-boundary misuse against the solid M6 components and closes Gate M6. M7.1 now
-adds a separate scenario-owned composer that schema-validates one selected
-artifact for every M2-M6 role, checks FP9/lung/timer identity, and fixes the
-complete causal stage order. It returns a typed plan; only the historical timer
-is executed at this increment. The general CLI and M7.1 composer do not yet
-advance all parts together in one run.
+boundary misuse against the solid M6 components and closes Gate M6. M7.1 adds
+a scenario-owned composer that validates the selected stack and causal order.
+M7.2-M7.4 add a typed physiological component probe, identity-preserving stage
+trace, artifact-hashed result report, and concentration-driven receptor
+detection. Tile assembly and the selected IoT path are not yet executed by the
+scenario coordinator, and the general CLI does not yet expose this workflow.
 
 ### 2.1 Governing principles
 
@@ -405,11 +405,12 @@ strings, and output directory. The CLI `run` command creates provenance, a
 checkpoint manifest, and a JSONL run log. It does **not** yet resolve the model
 strings, instantiate the four layers, or wire their couplers. Current
 multilayer scenarios are therefore executable developer APIs and dedicated
-reference/benchmark drivers, not one declarative general run. M7.1 adds a
-separate strict fingerprinting scenario profile and `LevelAPlan`: it resolves
-and validates all selected artifacts plus the timer target/cohort, but it does
-not yet instantiate and advance the non-timer components. This explicit
-selection/execution boundary is the input to M7.2.
+reference/benchmark drivers, not one declarative general run. M7 adds a
+separate strict fingerprinting scenario profile and `LevelAPlan`, then uses
+`run_level_a_runtime` for typed initialization and a qualified stage trace,
+`make_fingerprinting_result_report` for a reproducibility manifest, and
+`run_level_b_detection` for mechanistic receptor-threshold evaluation. These
+scenario APIs remain outside the generic CLI.
 
 This distinction is important for both extension and personalization: new
 models should use the existing loaders, factories, and coupling contracts so
@@ -694,13 +695,11 @@ sequenceDiagram
 ```
 
 Through M6, the individual lifecycle, exchange, and communication mechanisms
-exist. M7.1 implements the schema-loader and initial composition portion of
-this sequence for FP9: the complete candidate stack is selected and validated,
-and the historical timer is run deterministically. The general component
-initialization, synchronization loop, cross-layer event trace, and result
-report remain incomplete. M7.2 begins that runtime coordination; later M7
-increments replace timer-only stages with increasingly detailed models. M8
-adds the canonical and governed personalization layer.
+exist. M7.1-M7.4 implement selection, a deterministic physiological component
+probe, a qualified cross-layer event trace, a strict artifact-hashed report,
+and receptor-binding replacement of the timer-only recognition decision.
+Later M7 increments execute tile assembly and the IoT path and add Level-E
+uncertainty analysis. M8 adds the canonical and governed personalization layer.
 
 ## 12. Developer definition of done
 

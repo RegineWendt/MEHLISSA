@@ -6,6 +6,9 @@ find_package(jsoncons CONFIG REQUIRED)
 add_library(
     mehlissa_fingerprinting_scenario
     src/level_a_composer.cpp
+    src/level_b_detection.cpp
+    src/result_report.cpp
+    src/runtime_coordinator.cpp
     src/scenario_profile.cpp
 )
 add_library(MEHLISSA::fingerprinting_scenario ALIAS mehlissa_fingerprinting_scenario)

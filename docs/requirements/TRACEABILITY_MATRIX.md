@@ -146,7 +146,7 @@ statements.
 | DATA-004 | VIS20; MEH25 | DONE | M2 | separate extraction events, measurement-site counters, bounded individual observations, time aggregates, and optional complete/first-N trajectories with explicit truncation indicators and JSON Schema |
 | DATA-005 | RM 2.5 | PART | M0/M1 | lung model cards carry evidence class, population, state, sources, uncertainty, and limitations; equivalent enforcement for every future model follows |
 | DATA-006 | RM 6.2 | PART | M0 | M3.7 stores calibration/validation/derived roles separately; M3.8–M3.13 enforce source separation, overlap accounting, exact aggregate-statistic semantics, and frozen comparisons; M3.14–M3.15 preserve negative structural results; M3.17 adds an executable calibration-source-reuse guard and explicit normalization of published rounded lobe fractions; participant-level data and release-wide enforcement follow |
-| DATA-007 | RM 6.3 | SPEC | M7 | result report with intervals and sensitivity |
+| DATA-007 | RM 6.3 | PART | M7 | M7.3 adds a strict artifact-hashed result and validity report; quantitative intervals and sensitivity follow in M7.7 |
 | DATA-008 | RM 6.2 | SPEC | M2 | statistical regression tests with justified tolerance |
 
 ## 6. Operation, scenarios, and quality
@@ -157,7 +157,7 @@ statements.
 | UX-002 | VIS20 pp. 1–2 | LEGACY | M7 | standardized result format in new visualization |
 | UX-003 | VIS20 pp. 1–2 | LEGACY | M7 | visual acceptance test and run comparison |
 | UX-004 | RM 6.5 | SPEC | M7 | identical rendering from archived run |
-| SCN-001 | DISS pp. 185–190; FP23 | PART | M3/M7 | M3.19 executes the published FP9 Level-A timer cohorts; M7.1 adds a strict scenario-owned selection of all M2–M6 artifacts, exact FP9/lung/cohort identity, and the canonical injection-to-external-report stage contract without kernel-specific logic. Runtime coordination, concentration/binding, tile assembly, distributions, communication execution, gateway physics, and the complete result follow in later M7 increments |
+| SCN-001 | DISS pp. 185–190; FP23 | PART | M3/M7 | M3.19 executes the published FP9 Level-A timer cohorts; M7.1-M7.4 add strict M2-M6 selection, typed physiological initialization, a causal identity trace, artifact-hashed result, and concentration-driven receptor binding with a negative control. Tile assembly, distribution effects, executed communication/gateway behavior, and Level-E analysis remain |
 | SCN-002 | DISS pp. 143–152 | LEGACY | Phase 8 | monitoring reference experiment and alert metrics |
 | SCN-003 | DISS pp. 155–160 | LEGACY | Phase 8 | reproduction of published detection rates |
 | SCN-004 | DISS pp. 153–154 | SPEC | Phase 8 | complete multilayer capstone |
@@ -167,7 +167,7 @@ statements.
 | QUA-002 | RM M1 | DONE | M1 | clang-tidy, ASan/UBSan, and warnings as errors in CI |
 | QUA-003 | MEH25 pp. 1–2 | SPEC | M2–M7 | versioned benchmark reports plus result comparison |
 | QUA-004 | MEH25 pp. 1–2 | SPEC | M4–M7 | scaling test: agents versus populations/surrogate |
-| QUA-005 | RM 6.6 | DONE | M1 ongoing | versioned API/schema/model/scenario documents plus a two-level English User Guide cover non-expert purpose, non-claims, mental model, guided experiment families, decision aid, glossary, and accepted M0–M6 workflows; the M5 and M6 gate-impact reviews are recorded and every future M-gate requires the same review |
+| QUA-005 | RM 6.6 | DONE | M1 ongoing | versioned API/schema/model/scenario documents plus a two-level English User Guide cover non-expert purpose, non-claims, mental model, guided experiment families, decision aid, glossary, accepted M0–M6 workflows, and the implemented M7.1-M7.4 developer path; the M5 and M6 gate-impact reviews are recorded and every future M-gate requires the same review |
 | QUA-006 | RM M8 | SPEC | M8 | data-protection and data-management review |
 
 ## 7. M0 coverage review

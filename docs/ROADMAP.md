@@ -786,13 +786,19 @@ See [M5 implementation evidence](m5/README.md),
    [M7 implementation status](m7/README.md),
    [the composition contract](m7/LEVEL_A_COMPOSITION_CONTRACT.md), and
    [ADR-0049](architecture/adr/0049-scenario-owned-fingerprinting-composition.md).
-2. **M7.2 – scenario coordinator (next):** instantiate and advance the selected
-   typed M2–M6 components, bridge their existing contracts, and emit one
-   deterministic identity-preserving stage trace without changing the kernel
-   or model-specific internals.
-3. **M7.3 and later:** replace the timer-only decisions incrementally with
-   binding, tile/assembly, communication/gateway, and uncertainty/robustness
-   behavior corresponding to Levels B–E.
+2. **M7.2 – scenario coordinator (complete):** typed loading of the selected
+   M2–M6 stack, actual initialization and advancement of the physiological
+   components, and one deterministic ten-stage identity-preserving trace with
+   an explicit model/timer/surrogate evidence basis.
+3. **M7.3 – result contract (complete):** strict versioned result schema,
+   artifact and schema SHA-256 manifest, component execution state, causal
+   trace, validity limitations, and byte-stable repeated serialization.
+4. **M7.4 – Level-B detection (complete):** concentration-driven analytical
+   receptor binding, threshold-crossing detection event, trace replacement,
+   and a below-threshold negative control. Parameters remain a synthetic
+   interface surrogate rather than an FP9-specific proteomic calibration.
+5. **M7.5 – next:** explicit tile release and an assembly surrogate, followed
+   by executed communication/gateway behavior and Level-E analysis.
 
 #### Validation
 

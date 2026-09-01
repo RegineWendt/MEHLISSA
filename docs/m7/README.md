@@ -12,11 +12,11 @@ MEHLISSA multilayer demonstrator. The reference scenario is the dissertation's
 FP9 lung fingerprinting workflow. It must remain reproducible, replaceable by
 layer, and free of fingerprint- or lung-specific kernel branches.
 
-Gate M7 is **not yet accepted**. M7.1 establishes the composition contract and
-selects a complete set of versioned artifacts. M7.2 will instantiate and
-advance those components through the causal stage sequence; later increments
-add biological detection, tile assembly, communication execution, uncertainty,
-and robustness analysis.
+Gate M7 is **not yet accepted**. M7.1 establishes the composition contract;
+M7.2-M7.4 add typed runtime initialization, a deterministic identity-preserving
+trace, a manifest-complete result contract, and concentration-driven receptor
+binding. Tile assembly, executed communication, uncertainty, and robustness
+analysis remain open.
 
 ## Implemented increment
 
@@ -41,22 +41,34 @@ and robustness analysis.
 See [M7.1 Level-A Composition Contract](LEVEL_A_COMPOSITION_CONTRACT.md) and
 [ADR-0049](../architecture/adr/0049-scenario-owned-fingerprinting-composition.md).
 
+### M7.2-M7.4 - runtime, result, and Level-B detection
+
+- typed loading of all selected components and actual initialization/advancement
+  of the body, body-state, lung, and capillary stack;
+- exact ten-stage causal trace with continuous identities and an explicit
+  evidence basis per stage;
+- strict result schema with paths and SHA-256 hashes for all selected data and
+  schema artifacts;
+- byte-stable repeated result generation;
+- concentration-driven analytical receptor binding and conversion to the
+  existing molecular-detection event contract; and
+- a below-threshold negative control that emits no event.
+
+See [Runtime, Result, and Level-B Detection Contracts](RUNTIME_RESULT_AND_LEVEL_B_DETECTION.md).
+
 ## Next increment
 
-M7.2 will add the scenario-owned runtime coordinator. It must instantiate the
-selected typed components, preserve experiment/entity/event identities at
-every hand-off, and produce one deterministic execution trace. It may add
-adapters in the scenario or co-simulation packages, but it must not add FP9
-branches to the kernel or model libraries.
+M7.5 adds explicit tile release and an assembly surrogate. M7.6 then executes
+locator-to-collector-to-gateway-to-station communication instead of retaining
+the Level-A communication placeholders.
 
 ## Gate status
 
 Open items include:
 
-- actual M2-M6 component advancement in one run;
-- concentration- and binding-driven FP9 detection;
 - tile release and assembly;
 - executed collector, gateway, and BAN hand-offs;
-- a versioned result report with uncertainty and validity limits;
+- extension of the versioned result report with Levels B-E outcomes and
+  quantitative uncertainty;
 - sensitivity, false-positive, and false-negative analysis; and
 - the mandatory Gate M7 User Guide review.

@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M6 plus the M7.1 composition contract
+**Covered software:** accepted M0 through M6 plus M7.1-M7.4
 
-**Last updated:** 1 September 2026, after M7.1
+**Last updated:** 2 September 2026, after M7.4
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -64,11 +64,11 @@ measurement, or command payload content. M6.7 adds reproducible failure and
 boundary-misuse experiments that distinguish accounted transport non-delivery
 from fail-closed rejection while making the synthetic security scope explicit.
 
-M7.1 begins the first complete scenario package. It does not yet simulate all
+M7 begins the first complete scenario package. It does not yet simulate all
 layers together. Instead, it provides a versioned FP9/lung Level-A declaration
 that selects and schema-validates the complete M2–M6 candidate stack, fixes the
 master seed and collector cohort, checks the historical timer target, and
-defines the ten causal stages from injection to external report. M7.2 will turn
+defines the ten causal stages from injection to external report. M7.2-M7.4 turn
 that checked plan into the first coordinated multilayer execution.
 
 The software is intended to help formulate and test computational research
@@ -2212,6 +2212,37 @@ files are checked selections for the M7.2 coordinator. The cellular and
 communication values remain synthetic and no clinical claim is made. Read the
 [M7.1 Level-A Composition Contract](m7/LEVEL_A_COMPOSITION_CONTRACT.md) before
 interpreting this as an end-to-end experiment.
+
+#### Run the M7.2-M7.4 coordinated and binding-aware increment
+
+The same scenario package now has three additional developer-facing contracts:
+
+```text
+runtime_coordinator.hpp  -> typed component probe and ten-stage identity trace
+result_report.hpp        -> strict artifact-hashed reproducibility report
+level_b_detection.hpp    -> concentration and receptor-threshold evaluation
+```
+
+Run their focused verification with:
+
+```powershell
+ctest --test-dir build/windows-msvc -C Debug `
+  --output-on-failure -R "M7\.[234]"
+```
+
+The Level-B reference uses the selected synthetic receptor profile. At
+`0.0003 mol/m3`, the analytical model crosses its configured occupancy
+threshold and creates a traceable locator detection event. The negative
+control at `1e-9 mol/m3` does not cross the threshold and creates no event.
+This is useful for studying how concentration, affinity, exposure time, and a
+detection threshold affect the computational result. It is not evidence that
+these particular values represent FP9 biology or a patient.
+
+The generated M7.3 report records the run/seed/cohort, all selected definition
+and schema hashes, component execution state, and the ten causal stages. Read
+[Runtime, Result, and Level-B Detection Contracts](m7/RUNTIME_RESULT_AND_LEVEL_B_DETECTION.md)
+for the distinction between model execution, the historical timer, and
+synthetic software-surrogate stages.
 
 ### Troubleshooting
 

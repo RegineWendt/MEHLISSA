@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mehlissa.org/schemas/fingerprinting-result/1.0.0.schema.json",
+  "title": "MEHLISSA M7 fingerprinting result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scenario", "run", "target", "reproducibility", "runtime", "validity"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "scenario": {"$ref": "#/$defs/scenario"},
+    "run": {"$ref": "#/$defs/run"},
+    "target": {"$ref": "#/$defs/target"},
+    "reproducibility": {
+      "type": "object", "additionalProperties": false,
+      "required": ["deterministic_replay_required", "artifacts"],
+      "properties": {
+        "deterministic_replay_required": {"const": true},
+        "artifacts": {"type": "array", "minItems": 12, "maxItems": 12, "items": {"$ref": "#/$defs/artifact"}}
+      }
+    },
+    "runtime": {
+      "type": "object", "additionalProperties": false,
+      "required": ["contract_version", "component_probe_duration_ns", "components", "stages"],
+      "properties": {
+        "contract_version": {"const": "1.0.0"},
+        "component_probe_duration_ns": {"type": "integer", "minimum": 1},
+        "components": {"type": "array", "minItems": 11, "items": {"$ref": "#/$defs/component"}},
+        "stages": {
+          "type": "array", "minItems": 10, "maxItems": 10,
+          "prefixItems": [
+            {"allOf": [{"$ref": "#/$defs/stage"}, {"properties": {"ordinal": {"const": 0}, "stage": {"const": "injection"}}}]},
+            {"allOf": [{"$ref": "#/$defs/stage"}, {"properties": {"ordinal": {"const": 1}, "stage": {"const": "body_transport"}}}]},
+            {"allOf": [{"$ref": "#/$defs/stage"}, {"properties": {"ordinal": {"const": 2}, "stage": {"const": "organ_transfer"}}}]},
+            {"allOf": [{"$ref": "#/$defs/stage"}, {"properties": {"ordinal": {"const": 3}, "stage": {"const": "capillary_localization"}}}]},
+            {"allOf": [{"$ref": "#/$defs/stage"}, {"properties": {"ordinal": {"const": 4}, "stage": {"const": "molecular_recognition"}}}]},
+            {"allOf": [{"$ref": "#/$defs/stage"}, {"properties": {"ordinal": {"const": 5}, "stage": {"const": "fingerprint_assembly"}}}]},
+            {"allOf": [{"$ref": "#/$defs/stage"}, {"properties": {"ordinal": {"const": 6}, "stage": {"const": "local_collection"}}}]},
+            {"allOf": [{"$ref": "#/$defs/stage"}, {"properties": {"ordinal": {"const": 7}, "stage": {"const": "collector_return"}}}]},
+            {"allOf": [{"$ref": "#/$defs/stage"}, {"properties": {"ordinal": {"const": 8}, "stage": {"const": "gateway_measurement"}}}]},
+            {"allOf": [{"$ref": "#/$defs/stage"}, {"properties": {"ordinal": {"const": 9}, "stage": {"const": "external_report"}}}]}
+          ],
+          "items": false
+        }
+      }
+    },
+    "validity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["clinical_validation_claim", "limitations"],
+      "properties": {
+        "clinical_validation_claim": {"const": false},
+        "limitations": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/nonempty"}}
+      }
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1},
+    "nonempty": {"type": "string", "minLength": 1},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "scenario": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "title", "acceptance_level"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "version": {"$ref": "#/$defs/id"}, "title": {"$ref": "#/$defs/nonempty"}, "acceptance_level": {"const": "A"}}
+    },
+    "run": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "master_seed", "collector_count"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "master_seed": {"type": "integer", "minimum": 0}, "collector_count": {"type": "integer", "minimum": 1}}
+    },
+    "target": {
+      "type": "object", "additionalProperties": false,
+      "required": ["fingerprint_id", "tissue", "region_id"],
+      "properties": {"fingerprint_id": {"$ref": "#/$defs/id"}, "tissue": {"$ref": "#/$defs/nonempty"}, "region_id": {"$ref": "#/$defs/id"}}
+    },
+    "artifact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["role", "definition_path", "definition_sha256", "schema_path", "schema_sha256"],
+      "properties": {
+        "role": {"$ref": "#/$defs/id"}, "definition_path": {"$ref": "#/$defs/nonempty"},
+        "definition_sha256": {"$ref": "#/$defs/sha256"}, "schema_path": {"$ref": "#/$defs/nonempty"}, "schema_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "component": {
+      "type": "object", "additionalProperties": false,
+      "required": ["role", "profile_id", "model_id", "instantiated", "advanced"],
+      "properties": {"role": {"$ref": "#/$defs/id"}, "profile_id": {"$ref": "#/$defs/nonempty"}, "model_id": {"$ref": "#/$defs/nonempty"}, "instantiated": {"const": true}, "advanced": {"type": "boolean"}}
+    },
+    "stage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["ordinal", "stage", "time_ns", "basis", "component_id", "input_identity", "output_identity", "qualification"],
+      "properties": {
+        "ordinal": {"type": "integer", "minimum": 0, "maximum": 9}, "stage": {"$ref": "#/$defs/id"}, "time_ns": {"type": "integer", "minimum": 0},
+        "basis": {"enum": ["model_execution", "historical_timer", "software_surrogate"]}, "component_id": {"$ref": "#/$defs/nonempty"},
+        "input_identity": {"$ref": "#/$defs/nonempty"}, "output_identity": {"$ref": "#/$defs/nonempty"}, "qualification": {"$ref": "#/$defs/nonempty"}
+      }
+    }
+  }
+}
