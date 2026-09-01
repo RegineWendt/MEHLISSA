@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mehlissa.org/schemas/fingerprinting-result/2.0.0.schema.json",
+  "title": "MEHLISSA M7 holistic fingerprinting result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scenario", "run", "target", "reproducibility", "runtime", "validity", "level_b_detection", "level_c_assembly", "level_d_communication", "level_e_analysis"],
+  "properties": {
+    "schema_version": {"const": "2.0.0"},
+    "scenario": {"$ref": "#/$defs/scenario"},
+    "run": {"$ref": "#/$defs/run"},
+    "target": {"$ref": "#/$defs/target"},
+    "reproducibility": {"$ref": "#/$defs/reproducibility"},
+    "runtime": {"$ref": "#/$defs/runtime"},
+    "validity": {"$ref": "#/$defs/validity"},
+    "level_b_detection": {"$ref": "#/$defs/detection"},
+    "level_c_assembly": {"$ref": "#/$defs/assembly"},
+    "level_d_communication": {"$ref": "#/$defs/communication"},
+    "level_e_analysis": {"$ref": "#/$defs/analysis"}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1},
+    "nonnegative_integer": {"type": "integer", "minimum": 0},
+    "positive_integer": {"type": "integer", "minimum": 1},
+    "fraction": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "string_array": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/id"}},
+    "scenario": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "title", "acceptance_level"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "version": {"$ref": "#/$defs/id"}, "title": {"$ref": "#/$defs/id"}, "acceptance_level": {"const": "A"}}
+    },
+    "run": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "master_seed", "collector_count"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "master_seed": {"$ref": "#/$defs/nonnegative_integer"}, "collector_count": {"$ref": "#/$defs/positive_integer"}}
+    },
+    "target": {
+      "type": "object", "additionalProperties": false,
+      "required": ["fingerprint_id", "tissue", "region_id"],
+      "properties": {"fingerprint_id": {"$ref": "#/$defs/id"}, "tissue": {"$ref": "#/$defs/id"}, "region_id": {"$ref": "#/$defs/id"}}
+    },
+    "artifact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["role", "definition_path", "definition_sha256", "schema_path", "schema_sha256"],
+      "properties": {"role": {"$ref": "#/$defs/id"}, "definition_path": {"$ref": "#/$defs/id"}, "definition_sha256": {"$ref": "#/$defs/sha256"}, "schema_path": {"$ref": "#/$defs/id"}, "schema_sha256": {"$ref": "#/$defs/sha256"}}
+    },
+    "reproducibility": {
+      "type": "object", "additionalProperties": false,
+      "required": ["deterministic_replay_required", "artifacts"],
+      "properties": {"deterministic_replay_required": {"const": true}, "artifacts": {"type": "array", "minItems": 13, "maxItems": 13, "items": {"$ref": "#/$defs/artifact"}}}
+    },
+    "component": {
+      "type": "object", "additionalProperties": false,
+      "required": ["role", "profile_id", "model_id", "instantiated", "advanced"],
+      "properties": {"role": {"$ref": "#/$defs/id"}, "profile_id": {"$ref": "#/$defs/id"}, "model_id": {"$ref": "#/$defs/id"}, "instantiated": {"const": true}, "advanced": {"type": "boolean"}}
+    },
+    "stage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["ordinal", "stage", "time_ns", "basis", "component_id", "input_identity", "output_identity", "qualification"],
+      "properties": {"ordinal": {"type": "integer", "minimum": 0, "maximum": 9}, "stage": {"$ref": "#/$defs/id"}, "time_ns": {"$ref": "#/$defs/nonnegative_integer"}, "basis": {"enum": ["model_execution", "historical_timer", "software_surrogate"]}, "component_id": {"$ref": "#/$defs/id"}, "input_identity": {"$ref": "#/$defs/id"}, "output_identity": {"$ref": "#/$defs/id"}, "qualification": {"$ref": "#/$defs/id"}}
+    },
+    "runtime": {
+      "type": "object", "additionalProperties": false,
+      "required": ["contract_version", "component_probe_duration_ns", "components", "stages"],
+      "properties": {"contract_version": {"const": "1.0.0"}, "component_probe_duration_ns": {"$ref": "#/$defs/positive_integer"}, "components": {"type": "array", "minItems": 12, "items": {"$ref": "#/$defs/component"}}, "stages": {"type": "array", "minItems": 10, "maxItems": 10, "items": {"$ref": "#/$defs/stage"}}}
+    },
+    "validity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["clinical_validation_claim", "limitations"],
+      "properties": {"clinical_validation_claim": {"const": false}, "limitations": {"$ref": "#/$defs/string_array"}}
+    },
+    "detection": {
+      "type": "object", "additionalProperties": false,
+      "required": ["receptor_profile_id", "receptor_model_id", "detector_device_id", "event_id", "signal_id", "ligand_concentration_mol_m3", "exposure_duration_ns", "equilibrium_bound_fraction", "final_bound_fraction", "detected", "relative_threshold_crossing_ns", "absolute_detection_time_ns"],
+      "properties": {"receptor_profile_id": {"$ref": "#/$defs/id"}, "receptor_model_id": {"$ref": "#/$defs/id"}, "detector_device_id": {"$ref": "#/$defs/id"}, "event_id": {"$ref": "#/$defs/id"}, "signal_id": {"$ref": "#/$defs/id"}, "ligand_concentration_mol_m3": {"type": "number", "minimum": 0.0}, "exposure_duration_ns": {"$ref": "#/$defs/positive_integer"}, "equilibrium_bound_fraction": {"$ref": "#/$defs/fraction"}, "final_bound_fraction": {"$ref": "#/$defs/fraction"}, "detected": {"const": true}, "relative_threshold_crossing_ns": {"$ref": "#/$defs/positive_integer"}, "absolute_detection_time_ns": {"$ref": "#/$defs/positive_integer"}}
+    },
+    "release": {
+      "type": "object", "additionalProperties": false,
+      "required": ["release_id", "payload_id", "tile_id", "source_detection_event_id", "released_at_ns"],
+      "properties": {"release_id": {"$ref": "#/$defs/id"}, "payload_id": {"$ref": "#/$defs/id"}, "tile_id": {"$ref": "#/$defs/id"}, "source_detection_event_id": {"$ref": "#/$defs/id"}, "released_at_ns": {"$ref": "#/$defs/nonnegative_integer"}}
+    },
+    "assembly": {
+      "type": "object", "additionalProperties": false,
+      "required": ["assembly_id", "fingerprint_id", "releases", "required_unique_tiles", "complete", "started_at_ns", "completed_at_ns", "qualification"],
+      "properties": {"assembly_id": {"$ref": "#/$defs/id"}, "fingerprint_id": {"$ref": "#/$defs/id"}, "releases": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/release"}}, "required_unique_tiles": {"$ref": "#/$defs/positive_integer"}, "complete": {"const": true}, "started_at_ns": {"$ref": "#/$defs/nonnegative_integer"}, "completed_at_ns": {"$ref": "#/$defs/positive_integer"}, "qualification": {"$ref": "#/$defs/id"}}
+    },
+    "communication": {
+      "type": "object", "additionalProperties": false,
+      "required": ["local_collection_message_id", "collector_uplink_message_id", "gateway_measurement_id", "ban_frame_id", "external_report_id", "local_collection_route", "collector_uplink_route", "local_collection_completed_at_ns", "collector_uplink_completed_at_ns", "gateway_measurement_at_ns", "external_report_at_ns", "attempted_local_messages", "delivered_local_messages", "attempted_ban_frames", "delivered_ban_frames", "local_transmitter_energy_j", "local_receiver_energy_j", "local_link_energy_j", "ban_transmitter_energy_j", "ban_receiver_energy_j", "ban_link_energy_j", "qualification"],
+      "properties": {
+        "local_collection_message_id": {"$ref": "#/$defs/id"}, "collector_uplink_message_id": {"$ref": "#/$defs/id"}, "gateway_measurement_id": {"$ref": "#/$defs/id"}, "ban_frame_id": {"$ref": "#/$defs/id"}, "external_report_id": {"$ref": "#/$defs/id"},
+        "local_collection_route": {"$ref": "#/$defs/string_array"}, "collector_uplink_route": {"$ref": "#/$defs/string_array"},
+        "local_collection_completed_at_ns": {"$ref": "#/$defs/positive_integer"}, "collector_uplink_completed_at_ns": {"$ref": "#/$defs/positive_integer"}, "gateway_measurement_at_ns": {"$ref": "#/$defs/positive_integer"}, "external_report_at_ns": {"$ref": "#/$defs/positive_integer"},
+        "attempted_local_messages": {"const": 2}, "delivered_local_messages": {"const": 2}, "attempted_ban_frames": {"const": 1}, "delivered_ban_frames": {"const": 1},
+        "local_transmitter_energy_j": {"type": "number", "minimum": 0.0}, "local_receiver_energy_j": {"type": "number", "minimum": 0.0}, "local_link_energy_j": {"type": "number", "minimum": 0.0}, "ban_transmitter_energy_j": {"type": "number", "minimum": 0.0}, "ban_receiver_energy_j": {"type": "number", "minimum": 0.0}, "ban_link_energy_j": {"type": "number", "minimum": 0.0}, "qualification": {"$ref": "#/$defs/id"}
+      }
+    },
+    "interval": {
+      "type": "object", "additionalProperties": false,
+      "required": ["estimate", "lower_95", "upper_95"],
+      "properties": {"estimate": {"$ref": "#/$defs/fraction"}, "lower_95": {"$ref": "#/$defs/fraction"}, "upper_95": {"$ref": "#/$defs/fraction"}}
+    },
+    "analysis_case": {
+      "type": "object", "additionalProperties": false,
+      "required": ["case_id", "ligand_concentration_mol_m3", "exposure_duration_ns", "target_present", "detected", "final_bound_fraction", "classification"],
+      "properties": {"case_id": {"$ref": "#/$defs/id"}, "ligand_concentration_mol_m3": {"type": "number", "minimum": 0.0}, "exposure_duration_ns": {"$ref": "#/$defs/positive_integer"}, "target_present": {"type": "boolean"}, "detected": {"type": "boolean"}, "final_bound_fraction": {"$ref": "#/$defs/fraction"}, "classification": {"enum": ["true_positive", "true_negative", "false_positive", "false_negative"]}}
+    },
+    "analysis": {
+      "type": "object", "additionalProperties": false,
+      "required": ["analysis_id", "cases", "summary", "varied_parameters", "limitations"],
+      "properties": {
+        "analysis_id": {"$ref": "#/$defs/id"}, "cases": {"type": "array", "minItems": 4, "items": {"$ref": "#/$defs/analysis_case"}},
+        "summary": {"type": "object", "additionalProperties": false, "required": ["true_positive", "true_negative", "false_positive", "false_negative", "sensitivity", "specificity", "false_positive_rate", "false_negative_rate"], "properties": {"true_positive": {"$ref": "#/$defs/nonnegative_integer"}, "true_negative": {"$ref": "#/$defs/nonnegative_integer"}, "false_positive": {"$ref": "#/$defs/nonnegative_integer"}, "false_negative": {"$ref": "#/$defs/nonnegative_integer"}, "sensitivity": {"$ref": "#/$defs/interval"}, "specificity": {"$ref": "#/$defs/interval"}, "false_positive_rate": {"$ref": "#/$defs/interval"}, "false_negative_rate": {"$ref": "#/$defs/interval"}}},
+        "varied_parameters": {"$ref": "#/$defs/string_array"}, "limitations": {"$ref": "#/$defs/string_array"}
+      }
+    }
+  }
+}

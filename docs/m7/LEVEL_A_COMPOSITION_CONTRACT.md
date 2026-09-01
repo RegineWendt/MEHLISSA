@@ -10,7 +10,7 @@ SPDX-License-Identifier: CC-BY-4.0
 M7.1 defines one machine-checkable answer to “which concrete models form the
 first fingerprinting run?” It separates component selection from component
 execution. This prevents hidden file choices and interface gaps from being
-buried in an application while avoiding the false claim that loading twelve
+buried in an application while avoiding the false claim that loading thirteen
 profiles already simulates the complete workflow.
 
 ## Contract and reference files
@@ -33,7 +33,8 @@ The scenario profile fixes:
 
 The selected roles are body model, body state, organ model, capillary model,
 capillary-to-cell signal, receptor model, locator, collector, communication
-cluster, active gateway, BAN station, and historical timer baseline. The
+cluster, active-gateway endpoint, active gateway, BAN station, and historical
+timer baseline. The
 scenario-specific cluster is configuration data using the general M6.3 schema;
 it joins the existing locator, uplink collector, and wrist-gateway identities
 without adding behavior to the IoT library.
@@ -73,7 +74,7 @@ silently reorder the scenario semantics.
 
 The focused test target checks:
 
-- all twelve artifact definitions and schemas exist and validate;
+- all thirteen artifact definitions and schemas exist and validate;
 - the FP9/lung identity and 1,000-collector historical timer resolve;
 - the ten-stage order is stable;
 - repeated composition produces identical paths and timer events; and

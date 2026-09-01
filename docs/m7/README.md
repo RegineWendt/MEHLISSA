@@ -12,11 +12,11 @@ MEHLISSA multilayer demonstrator. The reference scenario is the dissertation's
 FP9 lung fingerprinting workflow. It must remain reproducible, replaceable by
 layer, and free of fingerprint- or lung-specific kernel branches.
 
-Gate M7 is **not yet accepted**. M7.1 establishes the composition contract;
-M7.2-M7.4 add typed runtime initialization, a deterministic identity-preserving
-trace, a manifest-complete result contract, and concentration-driven receptor
-binding. Tile assembly, executed communication, uncertainty, and robustness
-analysis remain open.
+Gate M7 **passed on 2 September 2026 for the reproducible research-software
+demonstrator**. This is not a clinical or physiologically validated FP9 assay.
+M7.1-M7.7 cover composition, typed runtime initialization, deterministic
+identity flow, artifact-hashed results, receptor binding, explicit tiles,
+executed communication, and misclassification analysis.
 
 ## Implemented increment
 
@@ -26,7 +26,7 @@ analysis remain open.
   libraries;
 - strict scenario-profile schema `1.0.0` with scenario, run, seed, target,
   artifact, acceptance, source, and limitation fields;
-- exactly one selected definition and schema for each of twelve required
+- exactly one selected definition and schema for each of thirteen required
   physiological, cellular, device, communication, gateway, BAN, and timer
   roles;
 - repository-relative path safety, file existence, JSON parsing, and schema
@@ -56,19 +56,19 @@ See [M7.1 Level-A Composition Contract](LEVEL_A_COMPOSITION_CONTRACT.md) and
 
 See [Runtime, Result, and Level-B Detection Contracts](RUNTIME_RESULT_AND_LEVEL_B_DETECTION.md).
 
-## Next increment
+### M7.5-M7.7 - Levels C-E and holistic result
 
-M7.5 adds explicit tile release and an assembly surrogate. M7.6 then executes
-locator-to-collector-to-gateway-to-station communication instead of retaining
-the Level-A communication placeholders.
+- nine explicit FP9 tile identities and an all-required assembly rule;
+- incomplete-assembly negative control;
+- executed locator-to-collector and collector-to-gateway links;
+- active-gateway measurement, BAN frame, and external-station reception;
+- separate local and BAN timing and energy metrics;
+- labelled sensitivity/misclassification cases with Wilson intervals; and
+- strict holistic result schema 2.0.0 with byte-stable deterministic output.
+
+See [Levels C-E and the Holistic Fingerprinting Run](LEVELS_C_TO_E_AND_HOLISTIC_RUN.md).
 
 ## Gate status
 
-Open items include:
-
-- tile release and assembly;
-- executed collector, gateway, and BAN hand-offs;
-- extension of the versioned result report with Levels B-E outcomes and
-  quantitative uncertainty;
-- sensitivity, false-positive, and false-negative analysis; and
-- the mandatory Gate M7 User Guide review.
+The formal criterion-by-criterion decision, retained limitations, and User
+Guide review are recorded in the [M7 Gate Review](M7_GATE_REVIEW.md).

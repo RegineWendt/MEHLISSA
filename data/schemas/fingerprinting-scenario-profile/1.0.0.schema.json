@@ -40,8 +40,8 @@
     },
     "artifacts": {
       "type": "array",
-      "minItems": 12,
-      "maxItems": 12,
+      "minItems": 13,
+      "maxItems": 13,
       "items": {"$ref": "#/$defs/artifact"}
     },
     "acceptance": {
@@ -84,7 +84,7 @@
       "additionalProperties": false,
       "required": ["role", "definition_path", "schema_path"],
       "properties": {
-        "role": {"enum": ["body_model", "body_state", "organ_model", "capillary_model", "capillary_cell_signal", "receptor_model", "locator_device", "collector_device", "communication_cluster", "active_gateway", "ban_station", "timer_baseline"]},
+        "role": {"enum": ["body_model", "body_state", "organ_model", "capillary_model", "capillary_cell_signal", "receptor_model", "locator_device", "collector_device", "communication_cluster", "gateway_endpoint", "active_gateway", "ban_station", "timer_baseline"]},
         "definition_path": {"$ref": "#/$defs/repository_json_path"},
         "schema_path": {"$ref": "#/$defs/repository_json_path"}
       }

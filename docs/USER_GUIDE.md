@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M6 plus M7.1-M7.4
+**Covered software:** accepted M0 through M7
 
-**Last updated:** 2 September 2026, after M7.4
+**Last updated:** 2 September 2026, after the M7 gate review
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -64,12 +64,12 @@ measurement, or command payload content. M6.7 adds reproducible failure and
 boundary-misuse experiments that distinguish accounted transport non-delivery
 from fail-closed rejection while making the synthetic security scope explicit.
 
-M7 begins the first complete scenario package. It does not yet simulate all
-layers together. Instead, it provides a versioned FP9/lung Level-A declaration
-that selects and schema-validates the complete M2–M6 candidate stack, fixes the
-master seed and collector cohort, checks the historical timer target, and
-defines the ten causal stages from injection to external report. M7.2-M7.4 turn
-that checked plan into the first coordinated multilayer execution.
+M7 is the first complete scenario package. Its FP9/lung declaration selects
+and validates the M2-M6 stack, fixes the seed and collector cohort, and defines
+the ten causal stages. The holistic runner adds concentration-based receptor
+binding, explicit tiles, locator-to-station communication, and labelled
+misclassification analysis. Historical timing and synthetic-interface stages
+remain visibly qualified in the result.
 
 The software is intended to help formulate and test computational research
 hypotheses. It does not assume that one model resolution is always best. A
@@ -2244,6 +2244,50 @@ and schema hashes, component execution state, and the ten causal stages. Read
 for the distinction between model execution, the historical timer, and
 synthetic software-surrogate stages.
 
+#### Run the complete M7 Levels A-E workflow
+
+The holistic developer API executes the accepted reference path in one call:
+
+```cpp
+const auto profile = load_scenario_profile({profile_path, profile_schema_path});
+const auto plan = compose_level_a_plan(profile, repository_root);
+const auto result = run_holistic_fingerprinting_scenario(
+    plan, default_level_e_cases(plan));
+write_holistic_fingerprinting_result_report(
+    result, output_path, holistic_result_schema_path);
+```
+
+The relevant files are:
+
+```text
+examples/scenarios/fp9-lung-level-a-v1.json
+data/schemas/fingerprinting-scenario-profile/1.0.0.schema.json
+data/schemas/fingerprinting-result/2.0.0.schema.json
+docs/m7/LEVELS_C_TO_E_AND_HOLISTIC_RUN.md
+docs/m7/M7_GATE_REVIEW.md
+```
+
+Run all M7 tests with:
+
+```powershell
+ctest --test-dir build/windows-msvc -C Debug `
+  --output-on-failure -R "M7|holistic"
+```
+
+The positive reference releases nine unique tiles, assembles FP9, delivers a
+local message to the collector, publishes a gateway measurement, and delivers
+one BAN frame to the external station. The result 2.0.0 records all thirteen
+definition/schema hashes, the ten-stage identity trace, binding and assembly
+details, communication timing and separated energy, and Level-E classification
+metrics with 95% Wilson intervals.
+
+The default four labelled Level-E cases deliberately yield one true positive,
+one true negative, one false positive, and one false negative. Their 0.5
+sensitivity and specificity only demonstrate the metrics. They are not assay
+performance estimates. The receptor, tile, communication, and labels remain
+synthetic; published FP9 localization/return values remain historical. Read
+the [M7 Gate Review](m7/M7_GATE_REVIEW.md) before making scientific claims.
+
 ### Troubleshooting
 
 #### CMake selects the wrong Visual Studio version
@@ -2280,7 +2324,7 @@ minutes on the current Windows reference system.
 
 This edition implements the two-level guide planned in the Roadmap: the new
 non-expert Part I precedes the retained and updated technical Part II. It covers
-the accepted software through M6 and the implemented M7.1 composition boundary
+the accepted software through M7
 while preserving the difference between CLI, reference-workflow, and
 component/developer access.
 
@@ -2304,8 +2348,7 @@ every future gate checklist.
 
 Planned substantive extensions are:
 
-- the M7 end-to-end fingerprinting workflow;
-- later medical scenarios, result analysis, and visualization workflows; and
+- later medical scenarios, expanded result analysis, and visualization workflows;
 - participant-specific workflows only after their evidence and governance
   requirements are met.
 

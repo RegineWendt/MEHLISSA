@@ -48,9 +48,11 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 - [M6.6 external network-simulator adapter](m6/EXTERNAL_NETWORK_SIMULATOR_ADAPTER.md) – metadata-only request/response boundary, typed and JSON clients, identity checks, and external-model non-claims.
 - [M6.7 resilience and boundary misuse](m6/M6_RESILIENCE_AND_BOUNDARY_MISUSE.md) – strict twelve-case catalog, failure accounting, fail-closed production boundaries, and explicit security non-claims.
 - [M6 gate review](m6/M6_GATE_REVIEW.md) – passed technical review of the end-to-end Nano-IoT path, communication metrics, resilience scope, and User Guide impact.
-- [M7 – Fingerprinting vertical slice](m7/README.md) – open milestone with composition, runtime trace, reproducible result, and Level-B binding through M7.4.
+- [M7 – Fingerprinting vertical slice](m7/README.md) – accepted research-software demonstrator spanning composition, binding, tiles, executed communication, uncertainty, and one holistic result.
 - [M7.1 Level-A composition contract](m7/LEVEL_A_COMPOSITION_CONTRACT.md) – versioned FP9 scenario selection, causal stage order, schema-validated M2–M6 artifacts, typed composer, and current execution boundary.
 - [M7.2-M7.4 runtime, result, and Level-B detection](m7/RUNTIME_RESULT_AND_LEVEL_B_DETECTION.md) – typed runtime probe, identity trace, SHA-256 result manifest, receptor binding, and negative control.
+- [M7.5-M7.7 Levels C-E and holistic run](m7/LEVELS_C_TO_E_AND_HOLISTIC_RUN.md) – explicit tiles, executed locator-to-station path, sensitivity/misclassification analysis, and strict result 2.0.0.
+- [M7 gate review](m7/M7_GATE_REVIEW.md) – passed software-demonstrator review with explicit historical, synthetic, physiological, and clinical limitations.
 - [Pulmonary 0D independent validation](m3/PULMONARY_0D_INDEPENDENT_VALIDATION.md) – source-disjoint healthy-cohort comparison, acceptance results, and the exercise RC limitation.
 - [Pulmonary 0D flow adaptation](m3/PULMONARY_0D_FLOW_ADAPTATION.md) – independently calibrated bounded rest-to-exercise PVR/compliance response and post-calibration stress test.
 - [Pulmonary 0D subject-level multipoint validation](m3/PULMONARY_0D_SUBJECT_MULTIPOINT_VALIDATION.md) – pseudonymous stage-data contract, immutable-model trajectory analysis, evidence safeguards, and data-access status.

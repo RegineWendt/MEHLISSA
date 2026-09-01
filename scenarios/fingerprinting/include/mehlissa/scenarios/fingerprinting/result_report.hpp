@@ -4,6 +4,8 @@
 #ifndef MEHLISSA_SCENARIOS_FINGERPRINTING_RESULT_REPORT_HPP
 #define MEHLISSA_SCENARIOS_FINGERPRINTING_RESULT_REPORT_HPP
 
+#include <mehlissa/scenarios/fingerprinting/level_d_communication.hpp>
+#include <mehlissa/scenarios/fingerprinting/level_e_analysis.hpp>
 #include <mehlissa/scenarios/fingerprinting/runtime_coordinator.hpp>
 
 #include <filesystem>
@@ -14,6 +16,7 @@
 namespace mehlissa::scenarios::fingerprinting {
 
 inline constexpr std::string_view fingerprinting_result_schema_version = "1.0.0";
+inline constexpr std::string_view holistic_fingerprinting_result_schema_version = "2.0.0";
 
 struct ResultArtifactManifestEntry final {
     ArtifactRole role{};
@@ -45,6 +48,25 @@ make_fingerprinting_result_report(const LevelAPlan& plan, const LevelARuntimeRes
 void write_fingerprinting_result_report(const FingerprintingResultReport& report,
                                         const std::filesystem::path& output_path,
                                         const std::filesystem::path& schema_path);
+
+struct HolisticFingerprintingResultReport final {
+    FingerprintingResultReport reproducibility;
+    LevelBDetectionResult detection;
+    LevelCAssemblyResult assembly;
+    LevelDCommunicationResult communication;
+    LevelEAnalysisResult analysis;
+
+    [[nodiscard]] bool
+    operator==(const HolisticFingerprintingResultReport&) const noexcept = default;
+};
+
+[[nodiscard]] HolisticFingerprintingResultReport
+run_holistic_fingerprinting_scenario(const LevelAPlan& plan,
+                                     const std::vector<LevelECase>& analysis_cases);
+
+void write_holistic_fingerprinting_result_report(const HolisticFingerprintingResultReport& report,
+                                                 const std::filesystem::path& output_path,
+                                                 const std::filesystem::path& schema_path);
 
 } // namespace mehlissa::scenarios::fingerprinting
 

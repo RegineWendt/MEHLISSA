@@ -26,6 +26,7 @@ enum class ArtifactRole : std::uint8_t {
     locator_device,
     collector_device,
     communication_cluster,
+    gateway_endpoint,
     active_gateway,
     ban_station,
     timer_baseline

@@ -15,7 +15,7 @@
       "required": ["deterministic_replay_required", "artifacts"],
       "properties": {
         "deterministic_replay_required": {"const": true},
-        "artifacts": {"type": "array", "minItems": 12, "maxItems": 12, "items": {"$ref": "#/$defs/artifact"}}
+        "artifacts": {"type": "array", "minItems": 13, "maxItems": 13, "items": {"$ref": "#/$defs/artifact"}}
       }
     },
     "runtime": {

@@ -45,6 +45,7 @@ using Json = jsoncons::json;
                                ArtifactRole::locator_device,
                                ArtifactRole::collector_device,
                                ArtifactRole::communication_cluster,
+                               ArtifactRole::gateway_endpoint,
                                ArtifactRole::active_gateway,
                                ArtifactRole::ban_station,
                                ArtifactRole::timer_baseline};
@@ -155,6 +156,8 @@ std::string_view to_string(const ArtifactRole role) noexcept {
         return "collector_device";
     case ArtifactRole::communication_cluster:
         return "communication_cluster";
+    case ArtifactRole::gateway_endpoint:
+        return "gateway_endpoint";
     case ArtifactRole::active_gateway:
         return "active_gateway";
     case ArtifactRole::ban_station:
@@ -213,6 +216,7 @@ void validate_scenario_profile(const ScenarioProfile& profile) {
                                         ArtifactRole::locator_device,
                                         ArtifactRole::collector_device,
                                         ArtifactRole::communication_cluster,
+                                        ArtifactRole::gateway_endpoint,
                                         ArtifactRole::active_gateway,
                                         ArtifactRole::ban_station,
                                         ArtifactRole::timer_baseline};

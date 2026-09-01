@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 This document is the entry point for developers who want to understand,
 integrate, or extend MEHLISSA Next. It describes the implemented architecture
-through the accepted M6 gate and the implemented M7.1-M7.4 contracts, the public C++
+through the accepted M7 gate, the public C++
 and command-line interfaces, the data contracts, and the workflow for adding a
 module such as a new organ model. It also explains
 which forms of personalization are possible today and which remain roadmap
@@ -89,8 +89,9 @@ boundary misuse against the solid M6 components and closes Gate M6. M7.1 adds
 a scenario-owned composer that validates the selected stack and causal order.
 M7.2-M7.4 add a typed physiological component probe, identity-preserving stage
 trace, artifact-hashed result report, and concentration-driven receptor
-detection. Tile assembly and the selected IoT path are not yet executed by the
-scenario coordinator, and the general CLI does not yet expose this workflow.
+detection. M7.5-M7.7 add explicit tile assembly, the executed selected IoT path,
+misclassification analysis, and one holistic result 2.0.0. The general CLI does
+not yet expose this scenario-owned workflow.
 
 ### 2.1 Governing principles
 
@@ -172,8 +173,9 @@ initializes them in registration order, advances all components over the same
 interval, and finalizes them in reverse order. The shared clock is committed
 only after every component has advanced successfully.
 
-Current limitation: `ComponentHost` is a lifecycle host, not yet the complete
-multi-rate/event orchestrator required for the end-to-end M7 scenario.
+Current limitation: `ComponentHost` is a lifecycle host, not a general
+multi-rate/event orchestrator. M7 therefore keeps its cross-layer coordination
+in the independent fingerprinting scenario package rather than the kernel.
 
 ### 4.2 Time, units, randomness, and errors
 
@@ -433,7 +435,7 @@ headers add typed configurations, states, and verification functions.
 | `mehlissa::models::cell` | `models/cell/include/mehlissa/models/cell/*.hpp` | profile loaders, binding models, intracellular network, delivery, and apoptosis; cellular response |
 | `mehlissa::models::iot` | `models/iot/include/mehlissa/models/iot/*.hpp` | nanodevice runtime, detection/message translation, local and multihop transport, active gateway, replaceable BAN and external-simulator adapters, station policy, strict resilience-scenario profile, outcomes, and communication metrics |
 | `mehlissa::models::cosimulation` | `models/cosimulation/include/mehlissa/models/cosimulation/*.hpp` | explicit body/organ/capillary/cell/IoT adapters; synchronization and dependency-safe routing |
-| `mehlissa::scenarios::fingerprinting` | `scenarios/fingerprinting/include/mehlissa/scenarios/fingerprinting/*.hpp` | M7 scenario profile, artifact/stage roles, safe resolution, all-artifact schema validation, and typed Level-A composition plan |
+| `mehlissa::scenarios::fingerprinting` | `scenarios/fingerprinting/include/mehlissa/scenarios/fingerprinting/*.hpp` | M7 profile/composer, runtime trace, Levels B-E detection/assembly/communication/analysis APIs, holistic runner, and versioned result writers |
 
 These are in-process C++ APIs. There is no stable C ABI, REST API, plugin ABI,
 or Python API yet. The roadmap reserves a Python experiment/analysis API for a
@@ -695,11 +697,10 @@ sequenceDiagram
 ```
 
 Through M6, the individual lifecycle, exchange, and communication mechanisms
-exist. M7.1-M7.4 implement selection, a deterministic physiological component
-probe, a qualified cross-layer event trace, a strict artifact-hashed report,
-and receptor-binding replacement of the timer-only recognition decision.
-Later M7 increments execute tile assembly and the IoT path and add Level-E
-uncertainty analysis. M8 adds the canonical and governed personalization layer.
+exist. M7 implements selection, a deterministic physiological component probe,
+a qualified cross-layer event trace, a strict artifact-hashed result,
+receptor-binding recognition, explicit tile assembly, the executed IoT path,
+and Level-E analysis. M8 adds the canonical and governed personalization layer.
 
 ## 12. Developer definition of done
 

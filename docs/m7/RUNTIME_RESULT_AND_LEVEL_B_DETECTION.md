@@ -40,7 +40,7 @@ the published 209-second FP9 result.
 The strict `fingerprinting-result/1.0.0` schema records:
 
 - scenario, run, seed, collector cohort, and target identity;
-- repository-relative paths and SHA-256 hashes for all twelve selected
+- repository-relative paths and SHA-256 hashes for all thirteen selected
   definitions and their schemas;
 - instantiated component identities and whether each component was advanced;
 - the full ten-stage trace with evidence basis and qualification; and
@@ -76,4 +76,3 @@ ctest --test-dir build/windows-msvc -C Debug --output-on-failure -R "M7\.[234]"
 The focused suite checks deterministic coordination, causal identity flow,
 strict result validation, byte-stable report reproduction, positive
 concentration-driven binding, and the below-threshold negative control.
-

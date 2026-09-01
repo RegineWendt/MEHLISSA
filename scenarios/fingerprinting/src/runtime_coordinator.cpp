@@ -202,12 +202,15 @@ LevelARuntimeResult run_level_a_runtime(const LevelAPlan& plan) {
     const auto& gateway_file = artifact(plan, ArtifactRole::active_gateway);
     const auto gateway = models::iot::load_active_gateway_profile(
         {gateway_file.definition_path, gateway_file.schema_path});
+    const auto& endpoint_file = artifact(plan, ArtifactRole::gateway_endpoint);
+    const auto endpoint = models::iot::load_nanodevice_profile(
+        {endpoint_file.definition_path, endpoint_file.schema_path});
     const auto& ban_file = artifact(plan, ArtifactRole::ban_station);
     const auto ban =
         models::iot::load_ban_station_profile({ban_file.definition_path, ban_file.schema_path});
 
     std::vector<RuntimeComponentIdentity> components;
-    components.reserve(11);
+    components.reserve(12);
     components.push_back(
         identity(ArtifactRole::body_model, body_model_version, body_model_id, true));
     components.push_back(identity(ArtifactRole::body_state, state.profile_id, body_model_id, true));
@@ -225,6 +228,8 @@ LevelARuntimeResult run_level_a_runtime(const LevelAPlan& plan) {
                                   collector.device.device_id, false));
     components.push_back(identity(ArtifactRole::communication_cluster, cluster.profile_id,
                                   cluster.cluster.cluster_id, false));
+    components.push_back(identity(ArtifactRole::gateway_endpoint, endpoint.profile_id,
+                                  endpoint.device.device_id, false));
     components.push_back(identity(ArtifactRole::active_gateway, gateway.profile_id,
                                   gateway.gateway.gateway_id, false));
     components.push_back(

@@ -63,6 +63,11 @@
       "schema_path": "data/schemas/cluster-communication-profile/1.0.0.schema.json"
     },
     {
+      "role": "gateway_endpoint",
+      "definition_path": "examples/iot-models/synthetic-gateway-endpoint-v1.json",
+      "schema_path": "data/schemas/nanodevice-profile/1.0.0.schema.json"
+    },
+    {
       "role": "active_gateway",
       "definition_path": "examples/iot-models/synthetic-active-gateway-v1.json",
       "schema_path": "data/schemas/active-gateway-profile/1.0.0.schema.json"
@@ -111,9 +116,9 @@
     }
   ],
   "limitations": [
-    "Level A uses the historical FP9 timer as the only executed behavior; the selected M2-M6 artifacts are schema-validated but not yet advanced together.",
-    "The cellular signal and receptor profiles remain synthetic interface surrogates and do not represent an FP9-specific proteomic mechanism.",
-    "The communication topology, gateway, and BAN parameters are synthetic software-contract values.",
+    "The Level-A stage times remain a historical FP9 timer replay; M7.2 and later execute selected components without turning the published times into physiological predictions.",
+    "The cellular signal and receptor profiles remain synthetic interface surrogates and do not represent an FP9-specific gene-product combination or proteomic mechanism.",
+    "The executed communication topology, gateway, and BAN parameters are synthetic software-contract values rather than calibrated physical channels.",
     "This composition is a reproducible software demonstrator and makes no clinical validation claim."
   ]
 }

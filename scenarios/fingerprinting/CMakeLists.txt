@@ -7,6 +7,9 @@ add_library(
     mehlissa_fingerprinting_scenario
     src/level_a_composer.cpp
     src/level_b_detection.cpp
+    src/level_c_assembly.cpp
+    src/level_d_communication.cpp
+    src/level_e_analysis.cpp
     src/result_report.cpp
     src/runtime_coordinator.cpp
     src/scenario_profile.cpp

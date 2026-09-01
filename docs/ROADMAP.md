@@ -797,8 +797,17 @@ See [M5 implementation evidence](m5/README.md),
    receptor binding, threshold-crossing detection event, trace replacement,
    and a below-threshold negative control. Parameters remain a synthetic
    interface surrogate rather than an FP9-specific proteomic calibration.
-5. **M7.5 – next:** explicit tile release and an assembly surrogate, followed
-   by executed communication/gateway behavior and Level-E analysis.
+5. **M7.5 – Level-C assembly (complete):** nine explicit FP9 tile identities,
+   an all-required-tiles assembly rule, historical-duration qualification, and
+   an incomplete-assembly negative control.
+6. **M7.6 – Level-D communication (complete):** executed locator-collector and
+   collector-gateway paths, active-gateway publication, BAN delivery, external
+   station reception, and separated communication timing/energy metrics. The
+   gateway endpoint is now an explicit thirteenth manifest artifact.
+7. **M7.7 – Level-E analysis (complete):** deterministic labelled
+   concentration/exposure cases, all four classification outcomes, sensitivity,
+   specificity, false-positive/false-negative rates, and 95% Wilson intervals.
+   The holistic runner writes one strict, byte-stable Levels A-E result 2.0.0.
 
 #### Validation
 
@@ -816,6 +825,10 @@ See [M5 implementation evidence](m5/README.md),
 - Uncertainty and validity limitations are reported with the result.
 - The English User Guide has passed its gate-impact review and provides the
   complete guided fingerprinting workflow with runnable paths and evidence links.
+
+**Status:** passed on 2 September 2026 for the reproducible research-software
+demonstrator; no clinical or physiological-validation claim. See the
+[formal M7 gate review](m7/M7_GATE_REVIEW.md).
 
 ### Phase 8 – Further medical scenarios
 
