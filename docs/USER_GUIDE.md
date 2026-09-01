@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M5 and the M6.1–M6.6 development increments
+**Covered software:** accepted M0 through M6
 
-**Last updated:** 1 September 2026, after the M6.6 implementation review
+**Last updated:** 1 September 2026, after the formal Gate M6 review
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -60,7 +60,9 @@ transport, an external analysis/control station, an explicit allow/deny policy,
 and a causally checked command return to a local actuator. M6.6 lets an optional
 external network simulator determine BAN delivery, timing, and communication
 energy through a versioned metadata-only boundary, without receiving biological,
-measurement, or command payload content.
+measurement, or command payload content. M6.7 adds reproducible failure and
+boundary-misuse experiments that distinguish accounted transport non-delivery
+from fail-closed rejection while making the synthetic security scope explicit.
 
 The software is intended to help formulate and test computational research
 hypotheses. It does not assume that one model resolution is always best. A
@@ -212,8 +214,10 @@ The current software can:
   actuator with causal and replay checks;
 - delegate BAN delivery outcomes, completion time, and communication energy to
   an optional external network simulator through a strict payload-free
-  request/response contract; and
-- run all accepted M0–M5 contracts plus the M6.1–M6.6 increments in a
+  request/response contract;
+- run twelve declared failure, miscontrol, replay, identity, capacity, and
+  resource cases without unintended downstream mutation; and
+- run all accepted M0–M6 contracts in a
   reproducible cross-platform test suite.
 
 Not every capability has the same user-interface maturity:
@@ -416,6 +420,21 @@ and [BAN and external-station communication](#ban-and-external-analysiscontrol-s
 Use [external network-simulator integration](#external-network-simulator-adapter-m66)
 and the [M6.6 adapter specification](m6/EXTERNAL_NETWORK_SIMULATOR_ADAPTER.md).
 
+#### 5.13 Resilience and boundary-misuse experiments
+
+| Question element | Guided example |
+|---|---|
+| research question | Do prescribed communication failures and invalid, replayed, disallowed, or excess inputs stop at the intended boundary without silently changing protected state? |
+| inputs | strict M6.7 resilience profile, M6.1 device resources, M6.5 BAN/station baseline, and M6.6 external-adapter baseline |
+| workflow | inject each of twelve declared cases, compare the typed result or rejection with its expected disposition, inspect communication metrics where a transport attempt occurred, and verify unchanged station/gateway/client/device observations |
+| outputs | loss/corruption/expiry metrics, governance denials, invariant/resource rejections, counts, bytes, energy, and protected-state checks |
+| interpretation | passing cases verify deterministic software-boundary behavior and fail-closed semantics under the declared synthetic threat model |
+| limitations | this is not authentication, encryption, intrusion detection, adaptive-attacker resistance, clinical authorization, or evidence for a real failure distribution or secure medical device |
+
+Use [the technical M6.7 workflow](#nano-iot-resilience-and-boundary-misuse-m67),
+[the resilience specification](m6/M6_RESILIENCE_AND_BOUNDARY_MISUSE.md), and
+[the formal M6 gate review](m6/M6_GATE_REVIEW.md).
+
 ### 6. Choose your first experiment
 
 Use the smallest workflow that answers the intended question:
@@ -445,6 +464,7 @@ Use the smallest workflow that answers the intended question:
 | publish a local measurement and route a gateway command | M6.4 active-gateway and gateway-cluster profiles | component/developer workflow |
 | inspect BAN outcomes and an explicitly governed measurement-to-command return path | M6.5 BAN/station profile | component/developer workflow |
 | use an external model for BAN outcome, timing, and energy without exposing payloads | M6.6 external network-simulator profile | component/developer workflow |
+| inspect fail-closed behavior for transport failures, miscontrol, replay, identity mismatch, capacity, and resource exhaustion | M6.7 resilience profile | component/developer workflow |
 
 If the desired study needs a capillary-generated time-varying or consuming cell
 signal, spatial drug diffusion/binding, biologically qualified response, a
@@ -2078,6 +2098,44 @@ retransmission, BAN protocol behavior, or physiological tissue effects. Read
 and [ADR-0047](architecture/adr/0047-versioned-external-network-simulator-boundary.md)
 before connecting or interpreting an external model.
 
+#### Nano-IoT resilience and boundary misuse (M6.7)
+
+The Gate M6 resilience reference uses:
+
+```text
+examples/iot-models/synthetic-iot-resilience-scenarios-v1.json
+data/schemas/iot-resilience-scenario-profile/1.0.0.schema.json
+tests/iot_resilience_scenario_tests.cpp
+```
+
+The typed profile requires twelve unique cases spanning transport loss,
+corruption and expiry; wrong target and content type; correlation mismatch;
+duplicate request and gateway replay; station and external-simulator capacity;
+external-response identity mismatch; and local device-resource exhaustion.
+Every case declares its owning boundary, expected disposition, whether
+communication metrics apply, and that protected state must remain unchanged.
+
+Run the focused component suite from the configured build directory:
+
+```powershell
+build\windows-msvc\tests\mehlissa_iot_model_tests.exe "[m6][iot][resilience]"
+```
+
+The checked reference produces 99 assertions in six test cases. Prescribed
+transport non-delivery remains visible in attempts, bytes, outcomes, and energy.
+Policy, trace, identity, replay, capacity, and resource violations are rejected
+before a second command approval/acceptance, excess simulator call, excess
+device transmission, or energy debit occurs.
+
+“Fail closed” is limited to these deterministic software boundaries. There are
+no credentials, keys, encryption, signatures, authenticated principals,
+intrusion detection, secure hardware, clinical safety controller, or guarantee
+against an adaptive attacker. Read
+[M6.7 Nano-IoT Resilience and Boundary-Misuse Scenarios](m6/M6_RESILIENCE_AND_BOUNDARY_MISUSE.md),
+[ADR-0048](architecture/adr/0048-fail-closed-synthetic-resilience-scope.md), and
+[the M6 Gate Review](m6/M6_GATE_REVIEW.md) before describing an M6 experiment
+as secure or safe.
+
 ### Troubleshooting
 
 #### CMake selects the wrong Visual Studio version
@@ -2114,7 +2172,7 @@ minutes on the current Windows reference system.
 
 This edition implements the two-level guide planned in the Roadmap: the new
 non-expert Part I precedes the retained and updated technical Part II. It covers
-the accepted software through M5 and the M6.1–M6.6 development increments
+the accepted software through M6
 while preserving the difference between CLI, reference-workflow, and
 component/developer access.
 
@@ -2138,7 +2196,6 @@ every future gate checklist.
 
 Planned substantive extensions are:
 
-- M6.7 failure/security experiments and the formal M6 gate review;
 - the M7 end-to-end fingerprinting workflow;
 - later medical scenarios, result analysis, and visualization workflows; and
 - participant-specific workflows only after their evidence and governance

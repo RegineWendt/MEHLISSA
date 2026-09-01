@@ -13,7 +13,7 @@ gateway, a body-area network, and an external analysis/control station while
 keeping communication models replaceable and their metrics separate from
 biological results.
 
-Gate M6 is **in progress**. M6.1 supplies the device and message foundation;
+Gate M6 is **accepted**. M6.1 supplies the device and message foundation;
 M6.2 connects a checked M5 detection to a local collector over an explicit
 one-hop link. M6.3 adds bounded cluster routing and relay forwarding. M6.4 adds
 an active local gateway, a neutral measurement publication boundary, and a
@@ -21,7 +21,9 @@ routed local command downlink. M6.5 adds replaceable BAN transport, an external
 analysis/control station, explicit transport-policy governance, and a causal
 return path to a local actuator. M6.6 adds a versioned metadata-only adapter
 for optional external network simulators. Authenticated or clinical control
-and command-driven actuation effects do not exist yet.
+and command-driven actuation effects do not exist. M6.7 closes the gate with a
+strict synthetic failure/boundary-misuse catalog, fail-closed tests, explicit
+security non-claims, and the mandatory English User Guide review.
 
 ## Implemented increments
 
@@ -143,6 +145,28 @@ See [BAN and External Analysis/Control Station](BAN_AND_EXTERNAL_STATION.md) and
 See [External Network-Simulator Adapter](EXTERNAL_NETWORK_SIMULATOR_ADAPTER.md)
 and [ADR-0047](../architecture/adr/0047-versioned-external-network-simulator-boundary.md).
 
+### M6.7 - resilience scenarios and Gate M6 review
+
+- strict versioned profile with twelve mandatory availability, integrity,
+  miscontrol, traceability, capacity, and resource injections;
+- explicit owning boundary, expected disposition, communication-accounting,
+  and unchanged-state declaration for every scenario;
+- typed transport outcomes for loss, corruption, and expiry;
+- fail-closed rejection of wrong targets/content, correlation mismatch,
+  duplicate/replayed commands, simulator identity mismatch, and exhausted
+  capacities/resources;
+- explicit synthetic threat model, protected properties, excluded security
+  claims, sources, and limitations;
+- six focused executable tests with 99 assertions against production M6
+  components;
+- mandatory English User Guide impact review; and
+- formal acceptance of all five Roadmap Gate M6 criteria at the declared
+  synthetic software-contract level.
+
+See [M6.7 Nano-IoT Resilience and Boundary-Misuse Scenarios](M6_RESILIENCE_AND_BOUNDARY_MISUSE.md),
+[M6 Gate Review](M6_GATE_REVIEW.md), and
+[ADR-0048](../architecture/adr/0048-fail-closed-synthetic-resilience-scope.md).
+
 ## Planned sequence
 
 1. ~~Device, resource, lifecycle, and local-message foundation.~~ M6.1 complete.
@@ -155,8 +179,8 @@ and [ADR-0047](../architecture/adr/0047-versioned-external-network-simulator-bou
    path.~~ M6.5 complete.
 6. ~~Optional external network-simulator adapter without physiological
    dependencies.~~ M6.6 complete.
-7. Loss, latency, error, energy, capacity, failure/security scenarios, User
-   Guide review, and formal Gate M6 review.
+7. ~~Loss, latency, error, energy, capacity, failure/security scenarios, User
+   Guide review, and formal Gate M6 review.~~ M6.7 complete and Gate M6 passed.
 
 ## Current scientific boundary
 
@@ -171,3 +195,9 @@ authorization or integrity, encryption, clinical safety policy, or
 command-driven biological actuation. The gateway, station, policy, and BAN
 adapter and external-simulator client contract are implementation-neutral
 software boundaries, not validated hardware or medical-device controls.
+
+Gate M6 is closed by the formal [M6 gate review](M6_GATE_REVIEW.md). `IOT-003`
+and `IOT-004` remain `PART` because anatomical/hardware qualification and
+calibrated channel/noise/capacity statistics extend beyond the narrower
+software gate. The review records why these limitations do not invalidate the
+five accepted milestone statements.

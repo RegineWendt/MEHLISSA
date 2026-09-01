@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:iot-resilience-scenario-profile:1.0.0",
+  "title": "MEHLISSA Nano-IoT resilience scenario profile",
+  "description": "Versioned synthetic failure, miscontrol, trace-integrity, capacity, and resource scenarios for Gate M6.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "baseline_profile_id", "scenarios", "security_scope", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {"$ref": "#/$defs/profile"},
+    "baseline_profile_id": {"$ref": "#/$defs/id"},
+    "scenarios": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {"$ref": "#/$defs/scenario"}
+    },
+    "security_scope": {"$ref": "#/$defs/security_scope"},
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "limitations": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "category", "injection", "expected_boundary", "expected_disposition", "protected_state_unchanged", "communication_metrics_accounted"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "category": {"enum": ["availability", "integrity", "miscontrol", "traceability", "capacity", "resource"]},
+        "injection": {"enum": ["uplink_loss", "uplink_corruption", "frame_expiry", "unauthorized_target", "disallowed_content_type", "correlation_mismatch", "duplicate_request", "station_command_capacity", "gateway_command_replay", "external_response_identity_mismatch", "external_attempt_capacity", "local_resource_exhaustion"]},
+        "expected_boundary": {"enum": ["ban_transport", "station_governance", "gateway_adapter", "external_simulator_adapter", "nanodevice"]},
+        "expected_disposition": {"enum": ["lost", "corrupted", "expired", "denied_target", "denied_content_type", "denied_correlation_mismatch", "denied_duplicate_request", "denied_capacity", "rejected_invariant", "rejected_resource"]},
+        "protected_state_unchanged": {"const": true},
+        "communication_metrics_accounted": {"type": "boolean"}
+      }
+    },
+    "security_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["threat_model", "protected_properties", "excluded_claims"],
+      "properties": {
+        "threat_model": {"type": "string", "minLength": 1},
+        "protected_properties": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "excluded_claims": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "citation", "location", "license", "role"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "citation": {"type": "string", "minLength": 1},
+        "location": {"type": "string", "minLength": 1},
+        "license": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

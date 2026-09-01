@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 This document is the entry point for developers who want to understand,
 integrate, or extend MEHLISSA Next. It describes the implemented architecture
-through the accepted M5 gate and the M6.6 development increment, the public C++
+through the accepted M6 gate, the public C++
 and command-line interfaces, the data contracts, and the workflow for adding a
 module such as a new organ model. It also explains
 which forms of personalization are possible today and which remain roadmap
@@ -47,6 +47,7 @@ flowchart TB
     Gateway[M6.4 active gateway<br/>measurement and command boundary]
     External[M6.5 BAN and station<br/>adapters plus command policy]
     NetworkSim[M6.6 external network-simulator<br/>metadata boundary]
+    Resilience[M6.7 resilience profile<br/>failures and boundary misuse]
     Evidence[Logs, checkpoints, provenance,<br/>reports and validation results]
 
     Manifest --> Runner
@@ -66,6 +67,9 @@ flowchart TB
     Cluster <-->|measurement / control message| Gateway
     Gateway <-->|BAN frames and metrics| External
     External <-->|versioned request / response| NetworkSim
+    Resilience -.->|prescribed injections| IoT
+    Resilience -.->|prescribed injections| External
+    Resilience --> Evidence
     Runner --> Evidence
 ```
 
@@ -78,7 +82,8 @@ solid BAN/station round trip with explicit command governance and a local
 actuator delivery. M6.6 adds the solid, metadata-only request/response boundary
 through which an optional external network simulator can supply BAN outcomes
 and communication costs. The dotted path from capillary tissue to a dedicated
-detector remains future composition. The general CLI does not yet compose all
+detector remains future composition. M6.7 exercises transport failures and
+boundary misuse against the solid M6 components and closes Gate M6. The general CLI does not yet compose all
 parts into one run.
 
 ### 2.1 Governing principles
@@ -321,6 +326,14 @@ energy into the unchanged `BanTransferResult`. The JSON exchange is deliberately
 narrow so an in-process library, child process, or remote service can be
 attached without introducing simulator types into MEHLISSA.
 
+M6.7 adds the typed `ResilienceScenarioProfile` and a strict twelve-case
+catalog. Prescribed loss, corruption, and expiry remain communication results
+and metrics. Misrouted, disallowed, replayed, identity-mismatched, or excess
+input is rejected at the owning production boundary before protected
+downstream state changes. The profile records its threat model and explicitly
+excludes authentication, cryptography, adaptive-attacker resistance, clinical
+authorization, and medical-device safety claims.
+
 `MEHLISSA::iot_cosimulation` alone maps an M5 `ReceptorLigandResponse` to the
 neutral event. Body, organ, capillary, and cell libraries do not depend on the
 IoT library. Scheduled links and declared topology have no anatomical
@@ -407,7 +420,7 @@ headers add typed configurations, states, and verification functions.
 | `mehlissa::models::organ` | `models/organ/include/mehlissa/models/organ/*.hpp` | lung definition loader, `make_lung_model`, pulmonary variants, and state; organ simulation |
 | `mehlissa::models::capillary` | `models/capillary/include/mehlissa/models/capillary/*.hpp` | capillary definition/profile loaders, `CapillaryBed`, and `MolecularChannel` variants; microvascular and molecular transport |
 | `mehlissa::models::cell` | `models/cell/include/mehlissa/models/cell/*.hpp` | profile loaders, binding models, intracellular network, delivery, and apoptosis; cellular response |
-| `mehlissa::models::iot` | `models/iot/include/mehlissa/models/iot/*.hpp` | nanodevice runtime, detection/message translation, local and multihop transport, active gateway, replaceable BAN adapter, station policy, outcomes, and communication metrics |
+| `mehlissa::models::iot` | `models/iot/include/mehlissa/models/iot/*.hpp` | nanodevice runtime, detection/message translation, local and multihop transport, active gateway, replaceable BAN and external-simulator adapters, station policy, strict resilience-scenario profile, outcomes, and communication metrics |
 | `mehlissa::models::cosimulation` | `models/cosimulation/include/mehlissa/models/cosimulation/*.hpp` | explicit body/organ/capillary/cell/IoT adapters; synchronization and dependency-safe routing |
 
 These are in-process C++ APIs. There is no stable C ABI, REST API, plugin ABI,

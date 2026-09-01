@@ -19,6 +19,7 @@ add_library(
     src/nanodevice.cpp
     src/nanodevice_profile.cpp
     src/one_hop_link.cpp
+    src/resilience_scenario_profile.cpp
 )
 add_library(MEHLISSA::iot_model ALIAS mehlissa_iot_model)
 

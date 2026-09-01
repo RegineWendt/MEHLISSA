@@ -188,6 +188,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
             mehlissa_iot_model_tests
             active_gateway_tests.cpp
             ban_station_tests.cpp
+            iot_resilience_scenario_tests.cpp
             multi_hop_network_tests.cpp
             nanodevice_tests.cpp
             network_simulator_adapter_tests.cpp

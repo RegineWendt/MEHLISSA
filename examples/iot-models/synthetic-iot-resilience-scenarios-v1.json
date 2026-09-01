@@ -1,0 +1,159 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-iot-resilience-scenarios-v1",
+    "version": "1.0.0",
+    "title": "Synthetic Nano-IoT failure and boundary-misuse scenarios"
+  },
+  "baseline_profile_id": "synthetic-ban-station-v1",
+  "scenarios": [
+    {
+      "id": "m6-7.uplink-loss",
+      "category": "availability",
+      "injection": "uplink_loss",
+      "expected_boundary": "ban_transport",
+      "expected_disposition": "lost",
+      "protected_state_unchanged": true,
+      "communication_metrics_accounted": true
+    },
+    {
+      "id": "m6-7.uplink-corruption",
+      "category": "integrity",
+      "injection": "uplink_corruption",
+      "expected_boundary": "ban_transport",
+      "expected_disposition": "corrupted",
+      "protected_state_unchanged": true,
+      "communication_metrics_accounted": true
+    },
+    {
+      "id": "m6-7.frame-expiry",
+      "category": "availability",
+      "injection": "frame_expiry",
+      "expected_boundary": "ban_transport",
+      "expected_disposition": "expired",
+      "protected_state_unchanged": true,
+      "communication_metrics_accounted": true
+    },
+    {
+      "id": "m6-7.unauthorized-target",
+      "category": "miscontrol",
+      "injection": "unauthorized_target",
+      "expected_boundary": "station_governance",
+      "expected_disposition": "denied_target",
+      "protected_state_unchanged": true,
+      "communication_metrics_accounted": false
+    },
+    {
+      "id": "m6-7.disallowed-content-type",
+      "category": "miscontrol",
+      "injection": "disallowed_content_type",
+      "expected_boundary": "station_governance",
+      "expected_disposition": "denied_content_type",
+      "protected_state_unchanged": true,
+      "communication_metrics_accounted": false
+    },
+    {
+      "id": "m6-7.correlation-mismatch",
+      "category": "traceability",
+      "injection": "correlation_mismatch",
+      "expected_boundary": "station_governance",
+      "expected_disposition": "denied_correlation_mismatch",
+      "protected_state_unchanged": true,
+      "communication_metrics_accounted": false
+    },
+    {
+      "id": "m6-7.duplicate-request",
+      "category": "traceability",
+      "injection": "duplicate_request",
+      "expected_boundary": "station_governance",
+      "expected_disposition": "denied_duplicate_request",
+      "protected_state_unchanged": true,
+      "communication_metrics_accounted": false
+    },
+    {
+      "id": "m6-7.station-command-capacity",
+      "category": "capacity",
+      "injection": "station_command_capacity",
+      "expected_boundary": "station_governance",
+      "expected_disposition": "denied_capacity",
+      "protected_state_unchanged": true,
+      "communication_metrics_accounted": false
+    },
+    {
+      "id": "m6-7.gateway-command-replay",
+      "category": "traceability",
+      "injection": "gateway_command_replay",
+      "expected_boundary": "gateway_adapter",
+      "expected_disposition": "rejected_invariant",
+      "protected_state_unchanged": true,
+      "communication_metrics_accounted": false
+    },
+    {
+      "id": "m6-7.external-response-identity-mismatch",
+      "category": "integrity",
+      "injection": "external_response_identity_mismatch",
+      "expected_boundary": "external_simulator_adapter",
+      "expected_disposition": "rejected_invariant",
+      "protected_state_unchanged": true,
+      "communication_metrics_accounted": false
+    },
+    {
+      "id": "m6-7.external-attempt-capacity",
+      "category": "capacity",
+      "injection": "external_attempt_capacity",
+      "expected_boundary": "external_simulator_adapter",
+      "expected_disposition": "rejected_invariant",
+      "protected_state_unchanged": true,
+      "communication_metrics_accounted": false
+    },
+    {
+      "id": "m6-7.local-resource-exhaustion",
+      "category": "resource",
+      "injection": "local_resource_exhaustion",
+      "expected_boundary": "nanodevice",
+      "expected_disposition": "rejected_resource",
+      "protected_state_unchanged": true,
+      "communication_metrics_accounted": false
+    }
+  ],
+  "security_scope": {
+    "threat_model": "Deterministic malformed, replayed, misrouted, disallowed, or excess communication input at explicit MEHLISSA software boundaries, plus prescribed transport non-delivery.",
+    "protected_properties": [
+      "causal and correlation identity",
+      "configured target and content-type policy",
+      "duplicate and replay rejection",
+      "bounded resource and command capacity",
+      "no receiver or actuator mutation after rejected input",
+      "separate accounting of attempted communication"
+    ],
+    "excluded_claims": [
+      "user or device authentication",
+      "cryptographic confidentiality or integrity",
+      "network intrusion detection",
+      "clinical authorization or treatment safety",
+      "availability guarantees under an adaptive attacker"
+    ]
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m6-contracts",
+      "citation": "MEHLISSA Next M6.1-M6.6 software contracts",
+      "location": "docs/m6/README.md",
+      "license": "CC-BY-4.0",
+      "role": "executable boundary, resource, transport, governance, and external-adapter semantics"
+    },
+    {
+      "id": "mehlissa-roadmap-gate-m6",
+      "citation": "MEHLISSA Next Roadmap Gate M6",
+      "location": "docs/ROADMAP.md",
+      "license": "CC-BY-4.0",
+      "role": "milestone acceptance and explicit failure/security task"
+    }
+  ],
+  "limitations": [
+    "All injected outcomes, capacities, timings, and resource values are synthetic software-verification inputs.",
+    "The scenarios demonstrate explicit boundary rejection and accounting, not resistance to a real attacker or network failure distribution.",
+    "No key material, identity provider, encryption, signature, secure channel, clinical policy, or fail-safe controller is implemented.",
+    "A delivered local control message remains a communication event and does not execute payload release or alter physiology."
+  ]
+}

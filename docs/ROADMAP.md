@@ -732,10 +732,15 @@ See [M5 implementation evidence](m5/README.md),
    dependencies.~~ Complete in M6.6 with a versioned metadata-only
    request/response contract, typed and JSON client boundaries, strict identity
    and validity checks, and mapping into the unchanged BAN result/metric API.
-7. Failure/security experiments, User Guide impact review, and formal Gate M6
-   review.
+7. ~~Failure/security experiments, User Guide impact review, and formal Gate M6
+   review.~~ Complete in M6.7 with a strict twelve-case synthetic resilience
+   profile, fail-closed production-boundary tests, explicit security non-claims,
+   an English User Guide impact review, and formal gate acceptance.
 
 #### Gate M6 – “End-to-End Nano-IoT”
+
+**Status:** passed on 1 September 2026; see the
+[formal M6 gate review](m6/M6_GATE_REVIEW.md).
 
 - A simulated molecular detection produces a traceable external measurement.
 - An external control command can reach a nanodevice or drug release.
