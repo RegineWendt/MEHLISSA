@@ -26,16 +26,6 @@ namespace {
         config.members, [device_id](const auto& member) { return member.device_id == device_id; });
 }
 
-[[nodiscard]] ClusterMemberRole member_role(const NanodeviceClusterConfig& config,
-                                            const std::string_view device_id) {
-    const auto iterator = std::ranges::find_if(
-        config.members, [device_id](const auto& member) { return member.device_id == device_id; });
-    if (iterator == config.members.end()) {
-        invalid(core::ErrorCode::data_invalid, "Cluster route references an unknown member");
-    }
-    return iterator->role;
-}
-
 void add_count(std::uint64_t& target, const std::uint64_t value) {
     if (value > std::numeric_limits<std::uint64_t>::max() - target) {
         invalid(core::ErrorCode::numeric_overflow, "Multi-hop metric counter overflows");
