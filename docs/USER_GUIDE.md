@@ -226,7 +226,7 @@ Not every capability has the same user-interface maturity:
 |---|---|---|
 | command-line workflow | intended to be invoked directly with `mehlissa-cli` | manifest validation, minimal run, body-model validation, BVS regression, body-state application |
 | executable reference workflow | a checked scenario or evaluator with automated acceptance gates | pulmonary validation, coarse/five-lobe comparison, historical FP9 timer |
-| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, molecular channels, receptor binding, capillary-to-cell hand-off, intracellular ODE/SSA network, conservative device release/uptake, synthetic apoptosis feedback, nanodevices, local/multihop communication, active gateway, BAN, and external station |
+| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, molecular channels, receptor binding, capillary-to-cell hand-off, intracellular ODE/SSA network, conservative device release/uptake, synthetic apoptosis feedback, nanodevices, local/multihop communication, active gateway, BAN and external station, external network-simulator adapter, and resilience scenarios |
 
 The access level says how an experiment is run, not how scientifically valid it
 is. A CLI model can still be synthetic; a developer workflow can still be a
@@ -500,7 +500,7 @@ current synthetic component models.
 ## Part II – Technical installation, execution, and model workflows
 
 Part II assumes that the reader has selected an experiment family. Begin with
-the command-line workflows for installation and body transport. M3 through M6.2
+the command-line workflows for installation and body transport. M3 through M6.7
 sections then explain executable reference and component/developer workflows.
 
 ### Repository orientation
@@ -1972,6 +1972,13 @@ deliveries, 640 hop-bytes, 25 ms summed latency, 0.8 µJ transmitter energy,
 0.45 µJ receiver energy, and 0.12 µJ link-model energy. A separate case loses
 the second hop and verifies that the collector remains unchanged.
 
+Run the focused M6.3 checks from the repository root after a Debug build:
+
+```powershell
+& .\build\windows-msvc\tests\Debug\mehlissa_iot_model_tests.exe `
+  "[m6][iot][cluster]"
+```
+
 These route and resource values are synthetic. They do not establish physical
 reachability, anatomical placement, molecular or radio propagation, queues,
 contention, congestion, retransmission, capacity, mobility, or security. Read
@@ -2011,6 +2018,13 @@ The 256-byte measurement uplink takes `20 ms` and uses `0.35 µJ` collector
 transmitter, `0.4 µJ` gateway receiver, and `0.1 µJ` link energy. The 128-byte
 two-hop command takes `20 ms`, accounts for 256 hop-bytes, and uses `1.1 µJ`
 transmitter, `0.45 µJ` receiver, and `0.1 µJ` link energy.
+
+Run the focused M6.4 checks from the repository root after a Debug build:
+
+```powershell
+& .\build\windows-msvc\tests\Debug\mehlissa_iot_model_tests.exe `
+  "[m6][iot][gateway]"
+```
 
 Within the M6.4 contract, “uplink” ends at the gateway's
 implementation-neutral upper boundary; M6.5 attaches the separate BAN/station
@@ -2054,6 +2068,13 @@ The checked reference uses a 256-byte measurement with 10 ms BAN uplink and a
 two-hop local command route. Its energy values and delivery outcomes are
 synthetic and are useful only to verify accounting and replacement boundaries.
 
+Run the focused M6.5 checks from the repository root after a Debug build:
+
+```powershell
+& .\build\windows-msvc\tests\Debug\mehlissa_iot_model_tests.exe `
+  "[m6][iot][ban]"
+```
+
 The word “governed” is deliberately narrow: it means explicit, traceable
 simulation transport policy. It does not mean user authentication,
 cryptographic integrity, clinician authorization, safe dosing, treatment
@@ -2090,6 +2111,13 @@ other language can instead implement the narrow JSON exchange used by
 `JsonNetworkSimulatorClient`. Thus ns-3 is one possible future integration, not
 a mandatory MEHLISSA dependency.
 
+Run the focused M6.6 checks from the repository root after a Debug build:
+
+```powershell
+& .\build\windows-msvc\tests\Debug\mehlissa_iot_model_tests.exe `
+  "[m6][iot][network-sim]~[resilience]"
+```
+
 The bundled response is only a deterministic contract fixture. It demonstrates
 serialization, payload exclusion, validation, mapping, and failure handling;
 it makes no claim about radio propagation, topology, interference, queues,
@@ -2115,10 +2143,11 @@ external-response identity mismatch; and local device-resource exhaustion.
 Every case declares its owning boundary, expected disposition, whether
 communication metrics apply, and that protected state must remain unchanged.
 
-Run the focused component suite from the configured build directory:
+Run the focused M6.7 checks from the repository root after a Debug build:
 
 ```powershell
-build\windows-msvc\tests\mehlissa_iot_model_tests.exe "[m6][iot][resilience]"
+& .\build\windows-msvc\tests\Debug\mehlissa_iot_model_tests.exe `
+  "[m6][iot][resilience]"
 ```
 
 The checked reference produces 99 assertions in six test cases. Prescribed
