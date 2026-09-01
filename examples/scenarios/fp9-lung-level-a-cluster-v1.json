@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "fp9-lung-level-a-cluster-v1",
+    "version": "1.0.0",
+    "title": "FP9 locator, collector, and wrist-gateway contract topology"
+  },
+  "cluster": {
+    "id": "cluster.fp9.lung.level-a.1",
+    "maximum_hops": 2,
+    "members": [
+      {"device_id": "locator.synthetic.1", "role": "endpoint"},
+      {"device_id": "collector.synthetic.uplink.1", "role": "collector"},
+      {"device_id": "gateway.synthetic.wrist", "role": "gateway"}
+    ],
+    "links": [
+      {
+        "kind": "scheduled_one_hop_link",
+        "id": "link.fp9.locator-collector",
+        "source_device_id": "locator.synthetic.1",
+        "target_device_id": "collector.synthetic.uplink.1",
+        "latency_seconds": 0.01,
+        "energy_per_attempt_j": 0.00000005,
+        "repeating_outcomes": ["delivered"]
+      },
+      {
+        "kind": "scheduled_one_hop_link",
+        "id": "link.fp9.collector-gateway",
+        "source_device_id": "collector.synthetic.uplink.1",
+        "target_device_id": "gateway.synthetic.wrist",
+        "latency_seconds": 0.02,
+        "energy_per_attempt_j": 0.0000001,
+        "repeating_outcomes": ["delivered"]
+      }
+    ]
+  },
+  "reference_case": {
+    "source_device_id": "locator.synthetic.1",
+    "target_device_id": "gateway.synthetic.wrist",
+    "strategy": "fewest_hops",
+    "expected_route_device_ids": ["locator.synthetic.1", "collector.synthetic.uplink.1", "gateway.synthetic.wrist"],
+    "expected_total_latency_seconds": 0.03,
+    "expected_total_link_energy_j": 0.00000015
+  },
+  "validity": {
+    "population": "synthetic M7.1 contract topology",
+    "physiological_state": "abstract local collection and wrist uplink",
+    "evidence_class": "software_test_surrogate",
+    "description": "Connects the existing M6 locator, uplink collector, and active wrist gateway identities without adding scenario behavior to a model library."
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m6-cluster-contract",
+      "citation": "MEHLISSA Next M6 bounded cluster communication contract",
+      "location": "docs/m6/CLUSTER_RELAY_AND_MULTI_HOP.md",
+      "license": "CC-BY-4.0",
+      "role": "topology and deterministic-link semantics"
+    }
+  ],
+  "limitations": [
+    "Link latency, energy, and delivery outcomes are synthetic verification values.",
+    "M7.1 validates composition only; M7.2 will execute the local collection and gateway hand-off."
+  ]
+}

@@ -13,6 +13,12 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Associated requirement:** `SCN-001`
 
+**Implementation status (1 September 2026):** M3.19 executes the historical
+Level-A timer. M7.1 now selects and validates the complete M2–M6 candidate stack
+and fixes the causal stage/identity contract in a separate scenario package;
+it does not yet advance those components together. See
+[the M7.1 composition contract](../m7/LEVEL_A_COMPOSITION_CONTRACT.md).
+
 ## 1. Purpose and research question
 
 The scenario investigates whether nanodevices transported in the bloodstream

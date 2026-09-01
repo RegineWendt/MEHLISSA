@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mehlissa.org/schemas/fingerprinting-scenario-profile/1.0.0.schema.json",
+  "title": "MEHLISSA M7 fingerprinting scenario profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scenario", "run", "target", "artifacts", "acceptance", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title", "acceptance_level"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"$ref": "#/$defs/nonempty"},
+        "acceptance_level": {"const": "A"}
+      }
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "master_seed", "collector_count"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "master_seed": {"type": "integer", "minimum": 0},
+        "collector_count": {"type": "integer", "minimum": 1}
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fingerprint_id", "tissue", "region_id"],
+      "properties": {
+        "fingerprint_id": {"$ref": "#/$defs/id"},
+        "tissue": {"$ref": "#/$defs/nonempty"},
+        "region_id": {"$ref": "#/$defs/id"}
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {"$ref": "#/$defs/artifact"}
+    },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_stage_order", "deterministic_replay_required", "clinical_validation_claim"],
+      "properties": {
+        "required_stage_order": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "injection"},
+            {"const": "body_transport"},
+            {"const": "organ_transfer"},
+            {"const": "capillary_localization"},
+            {"const": "molecular_recognition"},
+            {"const": "fingerprint_assembly"},
+            {"const": "local_collection"},
+            {"const": "collector_return"},
+            {"const": "gateway_measurement"},
+            {"const": "external_report"}
+          ],
+          "items": false,
+          "minItems": 10,
+          "maxItems": 10
+        },
+        "deterministic_replay_required": {"const": true},
+        "clinical_validation_claim": {"const": false}
+      }
+    },
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "limitations": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/nonempty"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "nonempty": {"type": "string", "minLength": 1},
+    "repository_json_path": {"type": "string", "minLength": 6, "pattern": "^[^/\\\\].*\\.json$"},
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "definition_path", "schema_path"],
+      "properties": {
+        "role": {"enum": ["body_model", "body_state", "organ_model", "capillary_model", "capillary_cell_signal", "receptor_model", "locator_device", "collector_device", "communication_cluster", "active_gateway", "ban_station", "timer_baseline"]},
+        "definition_path": {"$ref": "#/$defs/repository_json_path"},
+        "schema_path": {"$ref": "#/$defs/repository_json_path"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "citation", "location", "license", "role"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "citation": {"$ref": "#/$defs/nonempty"},
+        "location": {"$ref": "#/$defs/nonempty"},
+        "license": {"$ref": "#/$defs/nonempty"},
+        "role": {"$ref": "#/$defs/nonempty"}
+      }
+    }
+  }
+}

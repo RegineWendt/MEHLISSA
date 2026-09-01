@@ -775,6 +775,25 @@ See [M5 implementation evidence](m5/README.md),
 - **Level D:** Local communication and gateway model.
 - **Level E:** Sensitivity, robustness, and misclassification analysis.
 
+#### Implemented increments
+
+1. **M7.1 – Level-A composition contract (complete):** an independent
+   fingerprinting scenario package, strict schema, and typed composer select
+   exactly one artifact for every required M2–M6 role; validate all selected
+   definitions against their schemas; enforce FP9/lung/timer/cohort identity;
+   and preserve a canonical ten-stage causal order. Only the historical timer
+   executes at this increment. See
+   [M7 implementation status](m7/README.md),
+   [the composition contract](m7/LEVEL_A_COMPOSITION_CONTRACT.md), and
+   [ADR-0049](architecture/adr/0049-scenario-owned-fingerprinting-composition.md).
+2. **M7.2 – scenario coordinator (next):** instantiate and advance the selected
+   typed M2–M6 components, bridge their existing contracts, and emit one
+   deterministic identity-preserving stage trace without changing the kernel
+   or model-specific internals.
+3. **M7.3 and later:** replace the timer-only decisions incrementally with
+   binding, tile/assembly, communication/gateway, and uncertainty/robustness
+   behavior corresponding to Levels B–E.
+
 #### Validation
 
 - Reproduce the mapping of the nine existing MEHLISSA organs.
@@ -1123,6 +1142,10 @@ The following packages are derived directly from this roadmap:
     guided experiment families, first-experiment decision aid, and glossary.
     The updated M0–M4 installation and model workflows remain as Part II, and
     the gate-maintenance rule above requires review after every future M-gate.
+12. ~~Define the complete M7 fingerprinting artifact-selection and stage-order
+    contract.~~ Complete in M7.1: strict schema, reference profile, typed
+    scenario-owned composer, deterministic tests, and explicit execution
+    boundary. Runtime coordination follows in M7.2.
 
 ## 12. Definition of long-term success
 

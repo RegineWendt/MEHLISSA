@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 This document is the entry point for developers who want to understand,
 integrate, or extend MEHLISSA Next. It describes the implemented architecture
-through the accepted M6 gate, the public C++
+through the accepted M6 gate and the implemented M7.1 composition contract, the public C++
 and command-line interfaces, the data contracts, and the workflow for adding a
 module such as a new organ model. It also explains
 which forms of personalization are possible today and which remain roadmap
@@ -22,7 +22,7 @@ device. A technically executable model is not automatically physiologically or
 clinically valid; every model card defines its own evidence and validity scope.
 
 The active implementation is the independently developed C++20 code in
-`core/`, `experiment/`, `models/`, `apps/`, and `benchmarks/`. The directories
+`core/`, `experiment/`, `models/`, `scenarios/`, `apps/`, and `benchmarks/`. The directories
 `mehlissa/` and `mehlissa2.0/` contain historical implementations and are
 references, not parts of the default Next build.
 
@@ -35,7 +35,8 @@ modifying one another's internal state.
 ```mermaid
 flowchart TB
     Manifest[Experiment and model profiles<br/>JSON + JSON Schema]
-    Runner[Application / future experiment orchestrator]
+    Runner[Application / experiment runtime]
+    Composer[M7.1 fingerprinting composer<br/>profile, artifacts, stage contract]
     Kernel[Core kernel<br/>clock, units, RNG, lifecycle, errors]
     Body[Body layer<br/>vascular graph and transport]
     Organ[Organ layer<br/>lung variants]
@@ -50,7 +51,8 @@ flowchart TB
     Resilience[M6.7 resilience profile<br/>failures and boundary misuse]
     Evidence[Logs, checkpoints, provenance,<br/>reports and validation results]
 
-    Manifest --> Runner
+    Manifest --> Composer
+    Composer --> Runner
     Runner --> Kernel
     Kernel --> Body
     Kernel --> Organ
@@ -83,8 +85,12 @@ actuator delivery. M6.6 adds the solid, metadata-only request/response boundary
 through which an optional external network simulator can supply BAN outcomes
 and communication costs. The dotted path from capillary tissue to a dedicated
 detector remains future composition. M6.7 exercises transport failures and
-boundary misuse against the solid M6 components and closes Gate M6. The general CLI does not yet compose all
-parts into one run.
+boundary misuse against the solid M6 components and closes Gate M6. M7.1 now
+adds a separate scenario-owned composer that schema-validates one selected
+artifact for every M2-M6 role, checks FP9/lung/timer identity, and fixes the
+complete causal stage order. It returns a typed plan; only the historical timer
+is executed at this increment. The general CLI and M7.1 composer do not yet
+advance all parts together in one run.
 
 ### 2.1 Governing principles
 
@@ -394,12 +400,16 @@ by [Data Licensing](../DATA_LICENSING.md).
 
 ### 7.1 Experiment manifest versus model profiles
 
-The experiment manifest currently selects duration, master seed, model-name
+The generic experiment manifest currently selects duration, master seed, model-name
 strings, and output directory. The CLI `run` command creates provenance, a
 checkpoint manifest, and a JSONL run log. It does **not** yet resolve the model
 strings, instantiate the four layers, or wire their couplers. Current
 multilayer scenarios are therefore executable developer APIs and dedicated
-reference/benchmark drivers, not one declarative general run.
+reference/benchmark drivers, not one declarative general run. M7.1 adds a
+separate strict fingerprinting scenario profile and `LevelAPlan`: it resolves
+and validates all selected artifacts plus the timer target/cohort, but it does
+not yet instantiate and advance the non-timer components. This explicit
+selection/execution boundary is the input to M7.2.
 
 This distinction is important for both extension and personalization: new
 models should use the existing loaders, factories, and coupling contracts so
@@ -422,6 +432,7 @@ headers add typed configurations, states, and verification functions.
 | `mehlissa::models::cell` | `models/cell/include/mehlissa/models/cell/*.hpp` | profile loaders, binding models, intracellular network, delivery, and apoptosis; cellular response |
 | `mehlissa::models::iot` | `models/iot/include/mehlissa/models/iot/*.hpp` | nanodevice runtime, detection/message translation, local and multihop transport, active gateway, replaceable BAN and external-simulator adapters, station policy, strict resilience-scenario profile, outcomes, and communication metrics |
 | `mehlissa::models::cosimulation` | `models/cosimulation/include/mehlissa/models/cosimulation/*.hpp` | explicit body/organ/capillary/cell/IoT adapters; synchronization and dependency-safe routing |
+| `mehlissa::scenarios::fingerprinting` | `scenarios/fingerprinting/include/mehlissa/scenarios/fingerprinting/*.hpp` | M7 scenario profile, artifact/stage roles, safe resolution, all-artifact schema validation, and typed Level-A composition plan |
 
 These are in-process C++ APIs. There is no stable C ABI, REST API, plugin ABI,
 or Python API yet. The roadmap reserves a Python experiment/analysis API for a
@@ -682,11 +693,14 @@ sequenceDiagram
     O->>R: reports, log, checkpoint, provenance
 ```
 
-Through M5, all individual lifecycle and exchange mechanisms exist, but the
-general declarative composition represented by the middle of this sequence is
-still incomplete. M6 adds communication components; M7 makes the complete
-multilayer fingerprinting workflow the first general vertical slice; M8 adds
-the canonical and governed personalization layer.
+Through M6, the individual lifecycle, exchange, and communication mechanisms
+exist. M7.1 implements the schema-loader and initial composition portion of
+this sequence for FP9: the complete candidate stack is selected and validated,
+and the historical timer is run deterministically. The general component
+initialization, synchronization loop, cross-layer event trace, and result
+report remain incomplete. M7.2 begins that runtime coordination; later M7
+increments replace timer-only stages with increasingly detailed models. M8
+adds the canonical and governed personalization layer.
 
 ## 12. Developer definition of done
 

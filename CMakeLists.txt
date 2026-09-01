@@ -22,6 +22,7 @@ option(MEHLISSA_BUILD_CAPILLARY_MODELS "Build the capillary-model layer" ON)
 option(MEHLISSA_BUILD_CELL_MODELS "Build the cell-model layer" ON)
 option(MEHLISSA_BUILD_IOT_MODELS "Build the Nano-IoT model layer" ON)
 option(MEHLISSA_BUILD_COSIMULATION "Build body-organ co-simulation adapters" ON)
+option(MEHLISSA_BUILD_FINGERPRINTING_SCENARIO "Build the M7 fingerprinting vertical-slice package" ON)
 option(MEHLISSA_BUILD_BENCHMARKS "Build the reproducible benchmark drivers" ON)
 option(MEHLISSA_ENABLE_CATCH2_TESTS "Build the full Catch2 unit-test suite" ON)
 option(MEHLISSA_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
@@ -69,6 +70,16 @@ if(MEHLISSA_BUILD_COSIMULATION)
         message(FATAL_ERROR "MEHLISSA co-simulation requires body models and coupling contracts")
     endif()
     add_subdirectory(models/cosimulation)
+endif()
+
+if(MEHLISSA_BUILD_FINGERPRINTING_SCENARIO)
+    if(NOT MEHLISSA_ENABLE_EXPERIMENT_IO OR NOT MEHLISSA_BUILD_BODY_MODELS OR
+       NOT MEHLISSA_BUILD_MODEL_COUPLING OR NOT MEHLISSA_BUILD_ORGAN_MODELS OR
+       NOT MEHLISSA_BUILD_CAPILLARY_MODELS OR NOT MEHLISSA_BUILD_CELL_MODELS OR
+       NOT MEHLISSA_BUILD_IOT_MODELS OR NOT MEHLISSA_BUILD_COSIMULATION)
+        message(FATAL_ERROR "The M7 fingerprinting scenario requires all M2-M6 model layers")
+    endif()
+    add_subdirectory(scenarios/fingerprinting)
 endif()
 
 if(MEHLISSA_BUILD_BENCHMARKS)

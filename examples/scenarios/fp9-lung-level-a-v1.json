@@ -1,0 +1,119 @@
+{
+  "schema_version": "1.0.0",
+  "scenario": {
+    "id": "fp9-lung-level-a-v1",
+    "version": "1.0.0",
+    "title": "FP9 lung historical-timer vertical-slice composition",
+    "acceptance_level": "A"
+  },
+  "run": {
+    "id": "fp9-lung-level-a-collectors-1000",
+    "master_seed": 20260901,
+    "collector_count": 1000
+  },
+  "target": {
+    "fingerprint_id": "FP9",
+    "tissue": "lung",
+    "region_id": "lung"
+  },
+  "artifacts": [
+    {
+      "role": "body_model",
+      "definition_path": "data/body-models/bvs95-dissertation-rest-v1.json",
+      "schema_path": "data/schemas/vascular-graph/1.0.0.schema.json"
+    },
+    {
+      "role": "body_state",
+      "definition_path": "data/body-states/bvs95-rest-supine-v1.json",
+      "schema_path": "data/schemas/body-state-profile/1.0.0.schema.json"
+    },
+    {
+      "role": "organ_model",
+      "definition_path": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json",
+      "schema_path": "data/schemas/lung-model-definition/1.6.0.schema.json"
+    },
+    {
+      "role": "capillary_model",
+      "definition_path": "examples/capillary-models/pulmonary-healthy-adult-rest-supine-v1.json",
+      "schema_path": "data/schemas/capillary-bed-definition/3.0.0.schema.json"
+    },
+    {
+      "role": "capillary_cell_signal",
+      "definition_path": "examples/cosimulation/synthetic-capillary-cell-signal-v1.json",
+      "schema_path": "data/schemas/capillary-cell-signal-profile/1.0.0.schema.json"
+    },
+    {
+      "role": "receptor_model",
+      "definition_path": "examples/cell-models/synthetic-receptor-ligand-v1.json",
+      "schema_path": "data/schemas/receptor-ligand-profile/1.0.0.schema.json"
+    },
+    {
+      "role": "locator_device",
+      "definition_path": "examples/iot-models/synthetic-locator-v1.json",
+      "schema_path": "data/schemas/nanodevice-profile/1.0.0.schema.json"
+    },
+    {
+      "role": "collector_device",
+      "definition_path": "examples/iot-models/synthetic-uplink-collector-v1.json",
+      "schema_path": "data/schemas/nanodevice-profile/1.0.0.schema.json"
+    },
+    {
+      "role": "communication_cluster",
+      "definition_path": "examples/scenarios/fp9-lung-level-a-cluster-v1.json",
+      "schema_path": "data/schemas/cluster-communication-profile/1.0.0.schema.json"
+    },
+    {
+      "role": "active_gateway",
+      "definition_path": "examples/iot-models/synthetic-active-gateway-v1.json",
+      "schema_path": "data/schemas/active-gateway-profile/1.0.0.schema.json"
+    },
+    {
+      "role": "ban_station",
+      "definition_path": "examples/iot-models/synthetic-ban-station-v1.json",
+      "schema_path": "data/schemas/ban-station-profile/1.0.0.schema.json"
+    },
+    {
+      "role": "timer_baseline",
+      "definition_path": "examples/scenarios/fp9-lung-historical-timer-v1.json",
+      "schema_path": "data/schemas/fingerprint-timer-baseline/1.0.0.schema.json"
+    }
+  ],
+  "acceptance": {
+    "required_stage_order": [
+      "injection",
+      "body_transport",
+      "organ_transfer",
+      "capillary_localization",
+      "molecular_recognition",
+      "fingerprint_assembly",
+      "local_collection",
+      "collector_return",
+      "gateway_measurement",
+      "external_report"
+    ],
+    "deterministic_replay_required": true,
+    "clinical_validation_claim": false
+  },
+  "sources": [
+    {
+      "id": "wendt-dissertation-2024",
+      "citation": "R. Wendt, MEHLISSA dissertation, Chapters 4-6.",
+      "location": "literature/Diss_WENDT_Simulationchapters.pdf",
+      "license": "source consulted; architecture and scenario paraphrased",
+      "role": "holistic simulator architecture and FP9 reference workflow"
+    },
+    {
+      "id": "mehlissa-adr-0004",
+      "citation": "MEHLISSA Next ADR-0004, Fingerprinting as the first vertical slice.",
+      "location": "docs/architecture/adr/0004-fingerprinting-first-vertical-slice.md",
+      "license": "CC-BY-4.0",
+      "role": "acceptance-level and vertical-slice decision"
+    }
+  ],
+  "limitations": [
+    "Level A uses the historical FP9 timer as the only executed behavior; the selected M2-M6 artifacts are schema-validated but not yet advanced together.",
+    "The cellular signal and receptor profiles remain synthetic interface surrogates and do not represent an FP9-specific proteomic mechanism.",
+    "The communication topology, gateway, and BAN parameters are synthetic software-contract values.",
+    "This composition is a reproducible software demonstrator and makes no clinical validation claim."
+  ]
+}

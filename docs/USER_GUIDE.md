@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M6
+**Covered software:** accepted M0 through M6 plus the M7.1 composition contract
 
-**Last updated:** 1 September 2026, after the formal Gate M6 review
+**Last updated:** 1 September 2026, after M7.1
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -63,6 +63,13 @@ energy through a versioned metadata-only boundary, without receiving biological,
 measurement, or command payload content. M6.7 adds reproducible failure and
 boundary-misuse experiments that distinguish accounted transport non-delivery
 from fail-closed rejection while making the synthetic security scope explicit.
+
+M7.1 begins the first complete scenario package. It does not yet simulate all
+layers together. Instead, it provides a versioned FP9/lung Level-A declaration
+that selects and schema-validates the complete M2–M6 candidate stack, fixes the
+master seed and collector cohort, checks the historical timer target, and
+defines the ten causal stages from injection to external report. M7.2 will turn
+that checked plan into the first coordinated multilayer execution.
 
 The software is intended to help formulate and test computational research
 hypotheses. It does not assume that one model resolution is always best. A
@@ -2165,6 +2172,47 @@ against an adaptive attacker. Read
 [the M6 Gate Review](m6/M6_GATE_REVIEW.md) before describing an M6 experiment
 as secure or safe.
 
+#### Inspect the M7.1 fingerprinting composition
+
+M7.1 is the first step toward the end-to-end FP9 lung demonstrator. Start with
+these files:
+
+```text
+examples/scenarios/fp9-lung-level-a-v1.json
+data/schemas/fingerprinting-scenario-profile/1.0.0.schema.json
+examples/scenarios/fp9-lung-level-a-cluster-v1.json
+```
+
+The main scenario file records a stable run ID, master seed, the 1,000-collector
+historical cohort, the FP9/lung target, and one definition/schema pair for each
+required body, organ, capillary, cell, device, communication, gateway, BAN, and
+timer role. It also fixes this order:
+
+```text
+injection -> body transport -> organ transfer -> capillary localization
+-> molecular recognition -> fingerprint assembly -> local collection
+-> collector return -> gateway measurement -> external report
+```
+
+After configuring and building the normal Debug preset, run:
+
+```powershell
+cmake --build --preset windows-msvc-debug `
+  --target mehlissa_fingerprinting_scenario_tests
+ctest --test-dir build/windows-msvc -C Debug `
+  --output-on-failure -R "M7.1"
+```
+
+The tests prove that the selected files exist, satisfy their individual
+schemas, use safe repository-relative paths, agree with the typed FP9 timer,
+preserve the causal order, and compose deterministically. They do **not** prove
+that the body, organ, capillary, cell, and communication models already run as
+one simulation. At M7.1 only the historical timer behavior executes; the other
+files are checked selections for the M7.2 coordinator. The cellular and
+communication values remain synthetic and no clinical claim is made. Read the
+[M7.1 Level-A Composition Contract](m7/LEVEL_A_COMPOSITION_CONTRACT.md) before
+interpreting this as an end-to-end experiment.
+
 ### Troubleshooting
 
 #### CMake selects the wrong Visual Studio version
@@ -2201,7 +2249,7 @@ minutes on the current Windows reference system.
 
 This edition implements the two-level guide planned in the Roadmap: the new
 non-expert Part I precedes the retained and updated technical Part II. It covers
-the accepted software through M6
+the accepted software through M6 and the implemented M7.1 composition boundary
 while preserving the difference between CLI, reference-workflow, and
 component/developer access.
 
