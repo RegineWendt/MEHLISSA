@@ -16,6 +16,8 @@ Start here:
   build and run the software, and interpret model evidence and limitations.
 - [Development Guide](docs/DEVELOPMENT.md) — compiler, CMake, vcpkg, CI, and
   contribution-oriented setup.
+- [Software Architecture and Developer Guide](docs/architecture/SOFTWARE_ARCHITECTURE.md)
+  — system structure, public APIs, module extensions, and personalization.
 - [Roadmap](docs/ROADMAP.md) — implementation strategy from the validated body
   layer to organ, capillary, cellular, and Nano-IoT models.
 - [Current-State Analysis](docs/IST_ANALYSE.md) — legacy inventory and the gap

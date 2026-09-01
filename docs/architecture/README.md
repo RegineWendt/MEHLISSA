@@ -5,6 +5,10 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Architecture Decisions
 
+For a developer-oriented overview of the implemented system, its public APIs,
+extension points, and personalization path, start with the
+[MEHLISSA Next Software Architecture and Developer Guide](SOFTWARE_ARCHITECTURE.md).
+
 Architecture Decision Records (ADRs) document decisions that shape the further
 development of MEHLISSA Next. They explain context, decision, consequences, and
 rejected alternatives. The English translations preserve the accepted

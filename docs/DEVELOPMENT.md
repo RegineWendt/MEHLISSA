@@ -9,6 +9,10 @@ This document describes the reproducible build of the new MEHLISSA generation.
 The historical implementations in `mehlissa/` and `mehlissa2.0/` are not
 changed by this build.
 
+For the repository structure, public C++ APIs, coupling contracts, instructions
+for adding modules, and the current personalization workflow, see the
+[Software Architecture and Developer Guide](architecture/SOFTWARE_ARCHITECTURE.md).
+
 ## Prerequisites
 
 - CMake 3.28 or newer
