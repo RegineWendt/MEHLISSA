@@ -5,6 +5,8 @@ find_package(jsoncons CONFIG REQUIRED)
 
 add_library(
     mehlissa_iot_model
+    src/active_gateway.cpp
+    src/active_gateway_profile.cpp
     src/cluster_communication_profile.cpp
     src/local_communication_profile.cpp
     src/local_message.cpp

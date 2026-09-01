@@ -719,7 +719,10 @@ See [M5 implementation evidence](m5/README.md),
    a strict directed-cluster profile, deterministic fewest-hop and
    lowest-latency selection, bounded immediate store-and-forward relays, and
    aggregated per-hop results and communication metrics.
-4. Active nano/micro gateway with measurement uplink and command downlink.
+4. ~~Active nano/micro gateway with measurement uplink and command downlink.~~
+   Complete in M6.4 with a resource-bounded local gateway endpoint, a versioned
+   network-neutral measurement boundary, and checked translation plus routed
+   delivery of a versioned command to a local actuator.
 5. BAN and external analysis/control-station adapters, including a closed
    command-to-device path.
 6. Optional external network-simulator adapter without physiological model

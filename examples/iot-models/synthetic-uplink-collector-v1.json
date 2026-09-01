@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-uplink-collector-v1",
+    "version": "1.0.0",
+    "title": "Synthetic collector with gateway uplink capability"
+  },
+  "device": {
+    "id": "collector.synthetic.uplink.1",
+    "type": "nanocollector-uplink.synthetic",
+    "initial_state": "active",
+    "target": {"kind": "gateway", "id": "gateway.synthetic.wrist"},
+    "capabilities": ["transmit", "receive", "collect"],
+    "payloads": [],
+    "resources": {
+      "initial_energy_j": 0.000004,
+      "transmit_energy_per_message_j": 0.00000035,
+      "receive_energy_per_message_j": 0.00000025,
+      "maximum_message_size_bytes": 512,
+      "message_storage_capacity_bytes": 1024,
+      "maximum_transmissions": 8,
+      "maximum_receptions": 8
+    }
+  },
+  "validity": {
+    "population": "synthetic software-test uplink collector",
+    "physiological_state": "abstract local communication without physical collection or propagation",
+    "evidence_class": "software_test_surrogate",
+    "description": "Provides a separate collector variant that can transmit a traceable measurement to the gateway."
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m6-4-gateway-contract",
+      "citation": "MEHLISSA Next M6.4 active gateway software contract",
+      "location": "docs/m6/ACTIVE_GATEWAY_UPLINK_AND_DOWNLINK.md",
+      "license": "CC-BY-4.0",
+      "role": "synthetic uplink endpoint design"
+    }
+  ],
+  "limitations": [
+    "Energy, storage, and count values are synthetic verification values.",
+    "The profile does not assemble fingerprint tiles or infer disease state.",
+    "Uplink transmission uses declared logical links without anatomical or physical reachability."
+  ]
+}

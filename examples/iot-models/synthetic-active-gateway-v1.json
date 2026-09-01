@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-active-gateway-v1",
+    "version": "1.0.0",
+    "title": "Synthetic active wrist gateway boundary"
+  },
+  "gateway": {
+    "id": "gateway.synthetic.wrist",
+    "endpoint_profile_id": "synthetic-gateway-endpoint-v1",
+    "measurement_id_prefix": "measurement.m6-4",
+    "command_message_id_prefix": "message.m6-4.control",
+    "accepted_uplink_kinds": ["detection", "measurement"],
+    "maximum_measurements": 4,
+    "maximum_commands": 4
+  },
+  "reference_case": {
+    "uplink_source_device_id": "collector.synthetic.uplink.1",
+    "downlink_target_device_id": "actuator.synthetic.1",
+    "command_id": "command.m6-4.activate.1"
+  },
+  "validity": {
+    "population": "synthetic software-contract gateway",
+    "physiological_state": "abstract local nano/micro boundary without BAN or external station",
+    "evidence_class": "software_test_surrogate",
+    "description": "Checks publication of one traceable local measurement and preparation of one bounded local control downlink."
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m6-3-cluster-contract",
+      "citation": "MEHLISSA Next M6.3 bounded cluster communication contract",
+      "location": "docs/m6/CLUSTER_RELAY_AND_MULTI_HOP.md",
+      "license": "CC-BY-4.0",
+      "role": "local routed transport below the gateway boundary"
+    },
+    {
+      "id": "mehlissa-m6-4-gateway-contract",
+      "citation": "MEHLISSA Next M6.4 active gateway software contract",
+      "location": "docs/m6/ACTIVE_GATEWAY_UPLINK_AND_DOWNLINK.md",
+      "license": "CC-BY-4.0",
+      "role": "measurement publication and command translation semantics"
+    }
+  ],
+  "limitations": [
+    "The gateway and all capacities are synthetic software-verification values.",
+    "Measurement publication ends at an implementation-neutral boundary and does not traverse a BAN.",
+    "Commands originate at the boundary; authentication, authorization, safety policy, and an external station are not modeled.",
+    "A delivered control message does not yet execute a physiological or payload actuation effect."
+  ]
+}

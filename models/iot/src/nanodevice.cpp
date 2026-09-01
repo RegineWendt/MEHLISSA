@@ -179,6 +179,10 @@ core::SimulationClock::Duration Nanodevice::state_changed_at() const noexcept {
     return state_changed_at_;
 }
 
+const std::vector<LocalMessage>& Nanodevice::received_messages() const noexcept {
+    return received_messages_;
+}
+
 void Nanodevice::activate(const core::SimulationClock::Duration time) {
     if (state_ != NanodeviceLifecycleState::dormant ||
         time < core::SimulationClock::Duration::zero()) {

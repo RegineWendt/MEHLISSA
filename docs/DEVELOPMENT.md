@@ -122,7 +122,10 @@ small neutral kernel:
   delivery/drop results and communication-only latency, loss/error, byte, and
   energy metrics; and
 - an M6.3 strict directed cluster with bounded fewest-hop/lowest-latency route
-  selection, checked store-and-forward relays, and aggregate per-hop metrics.
+  selection, checked store-and-forward relays, and aggregate per-hop metrics;
+  and
+- an M6.4 active gateway with a neutral measurement publication boundary and a
+  traceable command-to-local-control downlink.
 
 Medical scenarios and legacy state do not belong in the kernel. Biological and
 communication models depend on it as separate libraries.

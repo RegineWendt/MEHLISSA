@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-gateway-endpoint-v1",
+    "version": "1.0.0",
+    "title": "Synthetic active gateway local endpoint"
+  },
+  "device": {
+    "id": "gateway.synthetic.wrist",
+    "type": "nanomicrogateway.synthetic",
+    "initial_state": "active",
+    "target": {"kind": "external_boundary", "id": "ban.future"},
+    "capabilities": ["transmit", "receive", "collect"],
+    "payloads": [],
+    "resources": {
+      "initial_energy_j": 0.000010,
+      "transmit_energy_per_message_j": 0.0000008,
+      "receive_energy_per_message_j": 0.0000004,
+      "maximum_message_size_bytes": 512,
+      "message_storage_capacity_bytes": 1024,
+      "maximum_transmissions": 8,
+      "maximum_receptions": 8
+    }
+  },
+  "validity": {
+    "population": "synthetic software-test gateway endpoint",
+    "physiological_state": "abstract local communication boundary",
+    "evidence_class": "software_test_surrogate",
+    "description": "Exercises local collection, measurement publication, and routed command transmission."
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m6-4-gateway-contract",
+      "citation": "MEHLISSA Next M6.4 active gateway software contract",
+      "location": "docs/m6/ACTIVE_GATEWAY_UPLINK_AND_DOWNLINK.md",
+      "license": "CC-BY-4.0",
+      "role": "synthetic endpoint resource design"
+    }
+  ],
+  "limitations": [
+    "Energy, storage, and count values are synthetic verification values.",
+    "The endpoint does not model wearable hardware, antenna, skin coupling, or a BAN interface.",
+    "Collection and transmission have fixed per-message costs without processing-time or power-state dynamics."
+  ]
+}

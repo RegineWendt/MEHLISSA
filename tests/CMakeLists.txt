@@ -186,6 +186,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
     if(MEHLISSA_BUILD_IOT_MODELS)
         add_executable(
             mehlissa_iot_model_tests
+            active_gateway_tests.cpp
             multi_hop_network_tests.cpp
             nanodevice_tests.cpp
             one_hop_link_tests.cpp

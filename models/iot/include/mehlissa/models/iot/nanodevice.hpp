@@ -81,6 +81,7 @@ class Nanodevice final {
     [[nodiscard]] std::uint64_t transmission_count() const noexcept;
     [[nodiscard]] std::uint64_t reception_count() const noexcept;
     [[nodiscard]] core::SimulationClock::Duration state_changed_at() const noexcept;
+    [[nodiscard]] const std::vector<LocalMessage>& received_messages() const noexcept;
 
     void activate(core::SimulationClock::Duration time);
     void fail(core::SimulationClock::Duration time);

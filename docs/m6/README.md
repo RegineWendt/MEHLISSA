@@ -15,8 +15,10 @@ biological results.
 
 Gate M6 is **in progress**. M6.1 supplies the device and message foundation;
 M6.2 connects a checked M5 detection to a local collector over an explicit
-one-hop link. M6.3 adds bounded cluster routing and relay forwarding. No active
-gateway, end-to-end external measurement, or downlink exists yet.
+one-hop link. M6.3 adds bounded cluster routing and relay forwarding. M6.4 adds
+an active local gateway, a neutral measurement publication boundary, and a
+routed local command downlink. No BAN, external station, authenticated control,
+or command-driven actuation effect exists yet.
 
 ## Implemented increments
 
@@ -82,13 +84,32 @@ and [ADR-0043](../architecture/adr/0043-neutral-detection-event-and-replaceable-
 See [Cluster, Relay, and Bounded Multi-Hop Communication](CLUSTER_RELAY_AND_MULTI_HOP.md)
 and [ADR-0044](../architecture/adr/0044-bounded-cluster-routing-and-store-forward-relay.md).
 
+### M6.4 - active gateway, measurement uplink, and command downlink
+
+- `ActiveGateway` composed with a normal M6.1 resource-bounded endpoint;
+- strict endpoint-profile identity and receive/collect/transmit capabilities;
+- versioned network-neutral `GatewayMeasurement` preserving complete local and
+  biological trace identity;
+- configured accepted uplink kinds and bounded publication capacity;
+- versioned `GatewayCommand` with target, correlation, time, validity, hop,
+  size, content type, and content;
+- checked mapping to a local `control` message with duplicate, self-target, and
+  capacity rejection;
+- M6.3-routed collector-to-gateway measurement and gateway-to-relay-to-actuator
+  command references; and
+- exact latency, byte, endpoint/link energy, storage, and count verification.
+
+See [Active Gateway Measurement Uplink and Command Downlink](ACTIVE_GATEWAY_UPLINK_AND_DOWNLINK.md)
+and [ADR-0045](../architecture/adr/0045-active-gateway-measurement-and-command-boundary.md).
+
 ## Planned sequence
 
 1. ~~Device, resource, lifecycle, and local-message foundation.~~ M6.1 complete.
 2. ~~Molecular-detection-to-message adapter and interchangeable one-hop link
    with explicit delivery result and communication metrics.~~ M6.2 complete.
 3. ~~Cluster, relay, and bounded multi-hop routing.~~ M6.3 complete.
-4. Active nano/micro gateway with measurement uplink and command downlink.
+4. ~~Active nano/micro gateway with measurement uplink and command downlink.~~
+   M6.4 complete.
 5. BAN and external station adapters, including closed command-to-device path.
 6. Optional external network-simulator adapter without physiological
    dependencies.
@@ -99,8 +120,11 @@ and [ADR-0044](../architecture/adr/0044-bounded-cluster-routing-and-store-forwar
 
 All M6 profiles, device budgets, topology, link values, and outcome sequences
 remain synthetic software-test values. M6.3 represents deterministic routing,
-relay, latency, loss, corruption, expiry, and energy-accounting semantics, but
+relay, latency, loss, corruption, expiry, and energy-accounting semantics, and
+M6.4 adds a bidirectional gateway software boundary, but
 its scheduled links are not physical channels or calibrated probability
 models. It does not model anatomical placement, range, diffusion,
-interference, noise physics, capacity, queues, retransmission, security, an
-active gateway, a BAN, or an external station.
+interference, noise physics, capacity, queues, retransmission, security, a BAN,
+external station, authentication, authorization, encryption, clinical
+safety policy, or command-driven biological actuation. The active M6.4 gateway
+is an implementation-neutral software boundary, not validated hardware.

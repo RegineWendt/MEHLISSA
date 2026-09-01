@@ -60,6 +60,7 @@ decisions; a new decision supersedes an existing one through a new ADR.
 | [ADR-0042](adr/0042-versioned-nanodevice-and-local-message-contract.md) | Accepted | independent device capability/resource/lifecycle model and traceable local-message contract |
 | [ADR-0043](adr/0043-neutral-detection-event-and-replaceable-one-hop-link.md) | Accepted | neutral M5 detection adapter, replaceable one-hop link, explicit outcomes, and separate communication metrics |
 | [ADR-0044](adr/0044-bounded-cluster-routing-and-store-forward-relay.md) | Accepted | strict directed clusters, deterministic bounded route selection, and checked store-and-forward relay semantics |
+| [ADR-0045](adr/0045-active-gateway-measurement-and-command-boundary.md) | Accepted | active resource-bounded gateway, neutral measurement publication, and traceable local control downlink |
 
 ## Status model
 

@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-actuator-v1",
+    "version": "1.0.0",
+    "title": "Synthetic command-receiving nanoactuator"
+  },
+  "device": {
+    "id": "actuator.synthetic.1",
+    "type": "nanoactuator.synthetic",
+    "initial_state": "active",
+    "target": {"kind": "tissue", "id": "lung.tissue.synthetic"},
+    "capabilities": ["receive", "actuate"],
+    "payloads": [],
+    "resources": {
+      "initial_energy_j": 0.000002,
+      "transmit_energy_per_message_j": 0,
+      "receive_energy_per_message_j": 0.00000025,
+      "maximum_message_size_bytes": 512,
+      "message_storage_capacity_bytes": 512,
+      "maximum_transmissions": 0,
+      "maximum_receptions": 4
+    }
+  },
+  "validity": {
+    "population": "synthetic software-test actuator",
+    "physiological_state": "abstract command reception without an actuation effect",
+    "evidence_class": "software_test_surrogate",
+    "description": "Checks delivery and storage of a control message at a capable target endpoint."
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m6-4-gateway-contract",
+      "citation": "MEHLISSA Next M6.4 active gateway software contract",
+      "location": "docs/m6/ACTIVE_GATEWAY_UPLINK_AND_DOWNLINK.md",
+      "license": "CC-BY-4.0",
+      "role": "synthetic downlink target design"
+    }
+  ],
+  "limitations": [
+    "Energy, storage, and count values are synthetic verification values.",
+    "Receiving a control message does not release payload or alter a biological model.",
+    "Command safety, authentication, and authorization are outside this profile."
+  ]
+}

@@ -44,7 +44,8 @@ flowchart TB
     IoT[M6 device plane<br/>nanodevices and local messages]
     LocalLink[M6.2 local link<br/>delivery results and metrics]
     Cluster[M6.3 cluster plane<br/>bounded routes and relays]
-    External[Future M6 gateway, BAN,<br/>station and network adapter]
+    Gateway[M6.4 active gateway<br/>measurement and command boundary]
+    External[Future M6 BAN,<br/>station and network adapter]
     Evidence[Logs, checkpoints, provenance,<br/>reports and validation results]
 
     Manifest --> Runner
@@ -61,7 +62,8 @@ flowchart TB
     Cell -->|receptor detection adapter| IoT
     IoT <-->|one-hop message| LocalLink
     LocalLink <-->|bounded per-hop exchange| Cluster
-    Cluster -.-> External
+    Cluster <-->|measurement / control message| Gateway
+    Gateway -.->|future upper transport| External
     Runner --> Evidence
 ```
 
@@ -69,9 +71,9 @@ The solid biological paths are implemented as typed C++ APIs through M5. M6.1
 adds the independent device and local-message foundation. M6.2 adds the solid
 cell-detection adapter and replaceable local-link path with explicit outcomes
 and communication metrics. M6.3 composes those links into a solid bounded
-cluster/relay path. The dotted paths to a capillary detector and an external
-gateway/BAN/station remain future composition. The general CLI does not yet
-compose all parts into one run.
+cluster/relay path. M6.4 adds the solid active-gateway boundary. The dotted
+paths to a capillary detector and the external BAN/station remain future
+composition. The general CLI does not yet compose all parts into one run.
 
 ### 2.1 Governing principles
 
@@ -287,11 +289,19 @@ and message hop limits. Immediate store-and-forward relays preserve payload,
 correlation, source-event identity, and absolute expiry while exposing unique
 per-hop messages and aggregate metrics.
 
+M6.4 adds `ActiveGateway`, versioned `GatewayMeasurement` and
+`GatewayCommand` contracts, and a strict gateway profile. The gateway owns a
+normal M6.1 endpoint for local reception and transmission. It publishes one
+accepted buffered local message to an implementation-neutral upper boundary
+and maps one validated command back to a traceable local `control` request.
+M6.3 supplies the routed transport on both sides of this boundary.
+
 `MEHLISSA::iot_cosimulation` alone maps an M5 `ReceptorLigandResponse` to the
 neutral event. Body, organ, capillary, and cell libraries do not depend on the
 IoT library. Scheduled links and declared topology have no anatomical
-placement, physical channel, range, capacity, queue, retransmission, gateway,
-BAN, or external-station behavior.
+placement, physical channel, range, capacity, queue, retransmission, BAN, or
+external-station behavior. Gateway command receipt has no authentication,
+authorization, clinical policy, or actuation effect.
 
 ## 6. Cross-layer APIs and ownership
 

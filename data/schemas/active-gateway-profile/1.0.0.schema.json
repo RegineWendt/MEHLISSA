@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:active-gateway-profile:1.0.0",
+  "title": "MEHLISSA active gateway profile",
+  "description": "Versioned local measurement-uplink and command-downlink gateway boundary.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "gateway", "reference_case", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {"$ref": "#/$defs/profile"},
+    "gateway": {"$ref": "#/$defs/gateway"},
+    "reference_case": {"$ref": "#/$defs/reference_case"},
+    "validity": {"$ref": "#/$defs/validity"},
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "gateway": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "endpoint_profile_id", "measurement_id_prefix", "command_message_id_prefix", "accepted_uplink_kinds", "maximum_measurements", "maximum_commands"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "endpoint_profile_id": {"$ref": "#/$defs/id"},
+        "measurement_id_prefix": {"$ref": "#/$defs/id"},
+        "command_message_id_prefix": {"$ref": "#/$defs/id"},
+        "accepted_uplink_kinds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"enum": ["detection", "measurement"]}
+        },
+        "maximum_measurements": {"type": "integer", "minimum": 1, "maximum": 18446744073709551615},
+        "maximum_commands": {"type": "integer", "minimum": 1, "maximum": 18446744073709551615}
+      }
+    },
+    "reference_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uplink_source_device_id", "downlink_target_device_id", "command_id"],
+      "properties": {
+        "uplink_source_device_id": {"$ref": "#/$defs/id"},
+        "downlink_target_device_id": {"$ref": "#/$defs/id"},
+        "command_id": {"$ref": "#/$defs/id"}
+      }
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"enum": ["software_test_surrogate", "literature_parameterized", "externally_derived", "hypothesis"]},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "citation", "location", "license", "role"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "citation": {"type": "string", "minLength": 1},
+        "location": {"type": "string", "minLength": 1},
+        "license": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

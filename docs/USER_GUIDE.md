@@ -54,8 +54,9 @@ traceable local messages. M6.2 translates a checked M5 detection through a
 separate adapter and sends it over a replaceable local link with explicit
 delivery outcomes and communication-only metrics. M6.3 composes those links
 into bounded clusters with deterministic route selection and checked
-store-and-forward relays. Active gateways and external links follow in later
-M6 increments.
+store-and-forward relays. M6.4 adds an active gateway boundary for traceable
+measurement publication and routed local commands. BAN and external links
+follow in later M6 increments.
 
 The software is intended to help formulate and test computational research
 hypotheses. It does not assume that one model resolution is always best. A
@@ -1915,6 +1916,49 @@ contention, congestion, retransmission, capacity, mobility, or security. Read
 and [ADR-0044](architecture/adr/0044-bounded-cluster-routing-and-store-forward-relay.md)
 before adding topology or interpreting route comparisons.
 
+#### Active gateway measurement uplink and command downlink (M6.4)
+
+M6.4 places an active, resource-accounted gateway between the local M6.3
+cluster and a future body-area network. Its strict reference inputs are:
+
+```text
+examples/iot-models/synthetic-active-gateway-v1.json
+examples/iot-models/synthetic-gateway-endpoint-v1.json
+examples/iot-models/synthetic-uplink-collector-v1.json
+examples/iot-models/synthetic-actuator-v1.json
+examples/iot-models/synthetic-gateway-cluster-v1.json
+data/schemas/active-gateway-profile/1.0.0.schema.json
+```
+
+For an uplink experiment, an uplink-capable collector creates a local
+`measurement` message. M6.3 routes it to the gateway endpoint. The gateway then
+publishes a `GatewayMeasurement` containing its own identity, the source
+message and device, experiment correlation, biological source event,
+observation time, size, content type, and content. Publication releases the
+local receive storage but retains duplicate history at the endpoint.
+
+For a downlink experiment, a caller supplies a versioned `GatewayCommand` with
+target, experiment correlation, time, validity, hop limit, size, and typed
+content. The gateway rejects duplicates, self-targeting, malformed commands,
+or exhausted capacity and maps an accepted command to a local `control`
+message. The reference routes that message through the M6.3 relay to an
+actuator endpoint.
+
+The 256-byte measurement uplink takes `20 ms` and uses `0.35 µJ` collector
+transmitter, `0.4 µJ` gateway receiver, and `0.1 µJ` link energy. The 128-byte
+two-hop command takes `20 ms`, accounts for 256 hop-bytes, and uses `1.1 µJ`
+transmitter, `0.45 µJ` receiver, and `0.1 µJ` link energy.
+
+“Uplink” currently means publication at the gateway's implementation-neutral
+upper boundary; there is no BAN transmission or external recipient yet.
+Likewise, a successfully delivered `control` message is not authorization and
+does not execute payload release or change physiology. There is no hardware,
+skin/tissue coupling, authentication, encryption, clinical decision logic,
+safety policy, retry, or fail-safe behavior. Read
+[Active Gateway Measurement Uplink and Command Downlink](m6/ACTIVE_GATEWAY_UPLINK_AND_DOWNLINK.md)
+and [ADR-0045](architecture/adr/0045-active-gateway-measurement-and-command-boundary.md)
+before attaching an upper network or interpreting a command as treatment.
+
 ### Troubleshooting
 
 #### CMake selects the wrong Visual Studio version
@@ -1975,8 +2019,8 @@ every future gate checklist.
 
 Planned substantive extensions are:
 
-- M6.4 active-gateway measurement-uplink and local command-downlink semantics,
-  followed by BAN/external-link and full closed-loop increments;
+- M6.5 BAN and external-station adapters with a closed, explicitly governed
+  command-to-device path;
 - the M7 end-to-end fingerprinting workflow;
 - later medical scenarios, result analysis, and visualization workflows; and
 - participant-specific workflows only after their evidence and governance

@@ -39,10 +39,11 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 - [M5.8 population scale and validity](m5/POPULATION_SCALE_AND_VALIDITY.md) – cohort-compressed one-trillion-cell reference, bounded output, parameter sensitivities, and model-selection scopes.
 - [M5 evidence qualification](m5/M5_EVIDENCE_QUALIFICATION.md) – analytical software evidence, external comparison candidates, and retained biological gaps.
 - [M5 gate review](m5/M5_GATE_REVIEW.md) – passed technical review of signal-to-response coupling, higher-layer feedback, analytical references, population validity, and User Guide impact.
-- [M6 – Nano-IoT Communication](m6/README.md) – in-progress communication milestone; M6.1–M6.3 provide versioned devices, traceable detection messages, replaceable links, bounded cluster routing, and relay forwarding.
+- [M6 – Nano-IoT Communication](m6/README.md) – in-progress communication milestone; M6.1–M6.4 provide versioned devices, traceable messages, replaceable links, bounded cluster routing, relays, and an active gateway boundary.
 - [M6.1 nanodevice and local-message contract](m6/NANODEVICE_AND_LOCAL_MESSAGE_CONTRACT.md) – capability composition, payload and resource profiles, endpoint semantics, checked reference hand-off, and current non-claims.
 - [M6.2 detection to one-hop communication](m6/DETECTION_TO_ONE_HOP_COMMUNICATION.md) – neutral M5 detection adapter, scheduled local link, explicit delivery/drop results, exact metrics, and interpretation boundary.
 - [M6.3 cluster, relay, and bounded multi-hop communication](m6/CLUSTER_RELAY_AND_MULTI_HOP.md) – strict topology, deterministic route strategies, store-and-forward semantics, exact aggregate metrics, and non-claims.
+- [M6.4 active gateway uplink and downlink](m6/ACTIVE_GATEWAY_UPLINK_AND_DOWNLINK.md) – resource-bounded gateway endpoint, neutral measurement publication, local command translation/routing, exact reference, and safety boundary.
 - [Pulmonary 0D independent validation](m3/PULMONARY_0D_INDEPENDENT_VALIDATION.md) – source-disjoint healthy-cohort comparison, acceptance results, and the exercise RC limitation.
 - [Pulmonary 0D flow adaptation](m3/PULMONARY_0D_FLOW_ADAPTATION.md) – independently calibrated bounded rest-to-exercise PVR/compliance response and post-calibration stress test.
 - [Pulmonary 0D subject-level multipoint validation](m3/PULMONARY_0D_SUBJECT_MULTIPOINT_VALIDATION.md) – pseudonymous stage-data contract, immutable-model trajectory analysis, evidence safeguards, and data-access status.

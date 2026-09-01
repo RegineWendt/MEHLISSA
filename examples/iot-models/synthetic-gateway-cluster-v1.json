@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-gateway-cluster-v1",
+    "version": "1.0.0",
+    "title": "Synthetic collector, gateway, relay, and actuator cluster"
+  },
+  "cluster": {
+    "id": "cluster.synthetic.gateway.1",
+    "maximum_hops": 3,
+    "members": [
+      {"device_id": "collector.synthetic.uplink.1", "role": "collector"},
+      {"device_id": "gateway.synthetic.wrist", "role": "gateway"},
+      {"device_id": "relay.synthetic.1", "role": "relay"},
+      {"device_id": "actuator.synthetic.1", "role": "endpoint"}
+    ],
+    "links": [
+      {
+        "kind": "scheduled_one_hop_link",
+        "id": "link.synthetic.collector-gateway",
+        "source_device_id": "collector.synthetic.uplink.1",
+        "target_device_id": "gateway.synthetic.wrist",
+        "latency_seconds": 0.020,
+        "energy_per_attempt_j": 0.00000010,
+        "repeating_outcomes": ["delivered"]
+      },
+      {
+        "kind": "scheduled_one_hop_link",
+        "id": "link.synthetic.gateway-relay",
+        "source_device_id": "gateway.synthetic.wrist",
+        "target_device_id": "relay.synthetic.1",
+        "latency_seconds": 0.008,
+        "energy_per_attempt_j": 0.00000004,
+        "repeating_outcomes": ["delivered"]
+      },
+      {
+        "kind": "scheduled_one_hop_link",
+        "id": "link.synthetic.relay-actuator",
+        "source_device_id": "relay.synthetic.1",
+        "target_device_id": "actuator.synthetic.1",
+        "latency_seconds": 0.012,
+        "energy_per_attempt_j": 0.00000006,
+        "repeating_outcomes": ["delivered"]
+      },
+      {
+        "kind": "scheduled_one_hop_link",
+        "id": "link.synthetic.gateway-actuator",
+        "source_device_id": "gateway.synthetic.wrist",
+        "target_device_id": "actuator.synthetic.1",
+        "latency_seconds": 0.030,
+        "energy_per_attempt_j": 0.00000008,
+        "repeating_outcomes": ["delivered"]
+      }
+    ]
+  },
+  "reference_case": {
+    "source_device_id": "gateway.synthetic.wrist",
+    "target_device_id": "actuator.synthetic.1",
+    "strategy": "lowest_total_latency",
+    "expected_route_device_ids": ["gateway.synthetic.wrist", "relay.synthetic.1", "actuator.synthetic.1"],
+    "expected_total_latency_seconds": 0.020,
+    "expected_total_link_energy_j": 0.00000010
+  },
+  "validity": {
+    "population": "synthetic software-contract gateway cluster",
+    "physiological_state": "abstract local uplink and downlink without anatomical geometry",
+    "evidence_class": "software_test_surrogate",
+    "description": "Checks one collector-to-gateway measurement hop and one routed gateway-to-actuator control downlink."
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m6-3-cluster-contract",
+      "citation": "MEHLISSA Next M6.3 bounded cluster communication contract",
+      "location": "docs/m6/CLUSTER_RELAY_AND_MULTI_HOP.md",
+      "license": "CC-BY-4.0",
+      "role": "bounded routing and store-and-forward semantics"
+    },
+    {
+      "id": "mehlissa-m6-4-gateway-contract",
+      "citation": "MEHLISSA Next M6.4 active gateway software contract",
+      "location": "docs/m6/ACTIVE_GATEWAY_UPLINK_AND_DOWNLINK.md",
+      "license": "CC-BY-4.0",
+      "role": "synthetic gateway reference topology"
+    }
+  ],
+  "limitations": [
+    "All links, delays, energy costs, and outcomes are synthetic verification values.",
+    "The gateway boundary has no BAN, external station, wearable hardware, or physical channel.",
+    "The downlink demonstrates message delivery but not authorization or actuation effects.",
+    "The topology has no queues, contention, congestion, mobility, or retransmission."
+  ]
+}
