@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-ban-station-v1",
+    "version": "1.0.0",
+    "title": "Synthetic gateway, BAN, and analysis/control station closed loop"
+  },
+  "gateway_adapter": {
+    "id": "adapter.synthetic.gateway-ban",
+    "gateway_id": "gateway.synthetic.wrist",
+    "station_id": "station.synthetic.analysis-control",
+    "measurement_frame_id_prefix": "ban-frame.m6-5.measurement",
+    "maximum_uplink_frames": 4,
+    "maximum_downlink_frames": 4
+  },
+  "station": {
+    "id": "station.synthetic.analysis-control",
+    "decision_id_prefix": "decision.m6-5",
+    "command_frame_id_prefix": "ban-frame.m6-5.command",
+    "accepted_gateway_ids": ["gateway.synthetic.wrist"],
+    "allowed_target_device_ids": ["actuator.synthetic.1"],
+    "allowed_command_content_types": ["application/vnd.mehlissa.control+json;version=1.0.0"],
+    "maximum_measurements": 4,
+    "maximum_approved_commands": 4
+  },
+  "uplink_transport": {
+    "kind": "scheduled_ban_transport",
+    "id": "ban.synthetic.gateway-station",
+    "latency_seconds": 0.01,
+    "transmitter_energy_per_attempt_j": 0.000002,
+    "receiver_energy_per_delivery_j": 0.000001,
+    "link_energy_per_attempt_j": 0.0000005,
+    "repeating_outcomes": ["delivered"]
+  },
+  "downlink_transport": {
+    "kind": "scheduled_ban_transport",
+    "id": "ban.synthetic.station-gateway",
+    "latency_seconds": 0.015,
+    "transmitter_energy_per_attempt_j": 0.0000015,
+    "receiver_energy_per_delivery_j": 0.00000075,
+    "link_energy_per_attempt_j": 0.0000004,
+    "repeating_outcomes": ["delivered"]
+  },
+  "reference_case": {
+    "measurement_id": "measurement.m6-5.lung.1",
+    "command_id": "command.m6-5.activate.1",
+    "target_device_id": "actuator.synthetic.1",
+    "expected_uplink_latency_seconds": 0.01,
+    "expected_downlink_latency_seconds": 0.015
+  },
+  "validity": {
+    "population": "synthetic software-contract BAN and station",
+    "physiological_state": "abstract gateway-to-station communication without physical wearable or wide-area network",
+    "evidence_class": "software_test_surrogate",
+    "description": "Checks trace-preserving measurement uplink, explicit allow-list governance, BAN command return, and local delivery to an actuator endpoint."
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m6-4-gateway-contract",
+      "citation": "MEHLISSA Next M6.4 active gateway software contract",
+      "location": "docs/m6/ACTIVE_GATEWAY_UPLINK_AND_DOWNLINK.md",
+      "license": "CC-BY-4.0",
+      "role": "network-neutral gateway measurement and command boundary"
+    },
+    {
+      "id": "mehlissa-m6-5-ban-station-contract",
+      "citation": "MEHLISSA Next M6.5 BAN and external-station software contract",
+      "location": "docs/m6/BAN_AND_EXTERNAL_STATION.md",
+      "license": "CC-BY-4.0",
+      "role": "adapter, governance, traceability, and synthetic transport semantics"
+    }
+  ],
+  "limitations": [
+    "All latency, energy, capacity, and outcome values are synthetic software-verification values.",
+    "The scheduled BAN adapter is not a calibrated Bluetooth, IEEE 802.15.6, cellular, Internet, or anatomical propagation model.",
+    "Governance is a deterministic transport allow-list and causal-trace check, not identity authentication, cryptographic authorization, or clinical safety approval.",
+    "A delivered control message does not execute payload release or change a physiological model."
+  ]
+}

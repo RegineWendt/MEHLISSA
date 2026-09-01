@@ -723,8 +723,11 @@ See [M5 implementation evidence](m5/README.md),
    Complete in M6.4 with a resource-bounded local gateway endpoint, a versioned
    network-neutral measurement boundary, and checked translation plus routed
    delivery of a versioned command to a local actuator.
-5. BAN and external analysis/control-station adapters, including a closed
-   command-to-device path.
+5. ~~BAN and external analysis/control-station adapters, including a closed
+   command-to-device path.~~ Complete in M6.5 with versioned frames,
+   replaceable BAN transport, a stateful station with explicit allow/deny
+   policy, causal measurement-to-command return checks, and a routed reference
+   delivery to a local actuator.
 6. Optional external network-simulator adapter without physiological model
    dependencies.
 7. Failure/security experiments, User Guide impact review, and formal Gate M6

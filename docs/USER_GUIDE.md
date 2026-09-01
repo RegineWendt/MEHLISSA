@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M5 and the M6.1–M6.2 development increments
+**Covered software:** accepted M0 through M5 and the M6.1–M6.5 development increments
 
-**Last updated:** 1 September 2026, after the M6.2 implementation review
+**Last updated:** 1 September 2026, after the M6.5 implementation review
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -55,8 +55,9 @@ separate adapter and sends it over a replaceable local link with explicit
 delivery outcomes and communication-only metrics. M6.3 composes those links
 into bounded clusters with deterministic route selection and checked
 store-and-forward relays. M6.4 adds an active gateway boundary for traceable
-measurement publication and routed local commands. BAN and external links
-follow in later M6 increments.
+measurement publication and routed local commands. M6.5 adds replaceable BAN
+transport, an external analysis/control station, an explicit allow/deny policy,
+and a causally checked command return to a local actuator.
 
 The software is intended to help formulate and test computational research
 hypotheses. It does not assume that one model resolution is always best. A
@@ -202,7 +203,11 @@ The current software can:
   prescribed loss, corruption, or validity expiry; and
 - keep attempts, bytes, delivered latency, loss/error fractions, and
   transmitter/receiver/link energy in a communication-only metric snapshot;
-- run all accepted M0–M5 contracts plus the M6.1–M6.2 increments in a
+- route bounded local messages through checked relays and an active gateway;
+- publish a traceable measurement through a replaceable BAN adapter, evaluate
+  an explicit station policy, and return an approved command to a local
+  actuator with causal and replay checks; and
+- run all accepted M0–M5 contracts plus the M6.1–M6.5 increments in a
   reproducible cross-platform test suite.
 
 Not every capability has the same user-interface maturity:
@@ -211,7 +216,7 @@ Not every capability has the same user-interface maturity:
 |---|---|---|
 | command-line workflow | intended to be invoked directly with `mehlissa-cli` | manifest validation, minimal run, body-model validation, BVS regression, body-state application |
 | executable reference workflow | a checked scenario or evaluator with automated acceptance gates | pulmonary validation, coarse/five-lobe comparison, historical FP9 timer |
-| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, molecular channels, receptor binding, capillary-to-cell hand-off, intracellular ODE/SSA network, conservative device release/uptake, synthetic apoptosis feedback, nanodevices, local messages, and one-hop communication |
+| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, molecular channels, receptor binding, capillary-to-cell hand-off, intracellular ODE/SSA network, conservative device release/uptake, synthetic apoptosis feedback, nanodevices, local/multihop communication, active gateway, BAN, and external station |
 
 The access level says how an experiment is run, not how scientifically valid it
 is. A CLI model can still be synthetic; a developer workflow can still be a
@@ -223,10 +228,10 @@ trajectory, but M4 does not yet generate that trajectory dynamically. The
 software does not yet model tissue depletion, spatial drug diffusion or binding,
 biologically calibrated pharmacodynamics or mechanistic apoptosis, biological
 cell heterogeneity, a spatially or physically qualified communication channel,
-relay and multihop routing, an active gateway, BAN/external communication, the
-complete fingerprinting workflow, or a participant-specific virtual body.
-M6.2 provides only a synthetic scheduled local link, not a calibrated loss,
-error, energy, range, or capacity model.
+a calibrated BAN protocol, authenticated or clinically authorized control, the
+complete fingerprinting workflow, or a participant-specific virtual body. M6
+currently provides synthetic scheduled local and BAN links, not calibrated
+loss, error, energy, range, throughput, or capacity models.
 
 ### 5. Experiment families and guided examples
 
@@ -377,6 +382,20 @@ and [the capillary-to-cell hand-off](#capillary-to-cell-signal-hand-off-m52), or
 Use [the nanodevice and local-message foundation](#nanodevice-and-local-message-foundation-m61)
 and [detection-to-one-hop communication](#detection-to-one-hop-communication-m62).
 
+#### 5.11 Gateway, BAN, external station, and governed command return
+
+| Question element | Guided example |
+|---|---|
+| research question | Can a traceable gateway measurement reach an external station and can an explicitly permitted response return to the intended local actuator without losing its causal identity? |
+| inputs | active-gateway, gateway-cluster, BAN/station, gateway endpoint, relay, and actuator profiles; measurement; requested command; validity and scheduled transport outcomes |
+| workflow | publish the measurement, wrap it as a BAN frame, transfer it to the station, evaluate the command against configured causal and allow-list rules, return an approved frame, validate it at the gateway, and route the local control message |
+| outputs | measurement/decision/command trace, typed approval or denial, BAN and local delivery/drop results, counts, bytes, latency, and separate transmitter/receiver/link energy |
+| interpretation | the reference verifies software causality, policy visibility, replay rejection, replaceable transport, and exact accounting across the complete communication path |
+| limitations | values and outcomes are synthetic; policy is not authentication, cryptography, clinical decision support, treatment authorization, fail-safe control, or actuation; no calibrated BAN technology or hardware is represented |
+
+Use [active gateway communication](#active-gateway-measurement-uplink-and-command-downlink-m64)
+and [BAN and external-station communication](#ban-and-external-analysiscontrol-station-m65).
+
 ### 6. Choose your first experiment
 
 Use the smallest workflow that answers the intended question:
@@ -402,10 +421,13 @@ Use the smallest workflow that answers the intended question:
 | aggregate a prescribed response over very large homogeneous cohorts | M5.8 apoptosis-population profile | component/developer workflow |
 | inspect device capabilities, resource budgets, and a traceable local message | M6.1 locator/collector profiles | component/developer workflow |
 | send a checked receptor detection over a local link and inspect communication metrics | M6.2 local-communication profile | component/developer workflow |
+| compare bounded direct and relay routes | M6.3 cluster-communication profile | component/developer workflow |
+| publish a local measurement and route a gateway command | M6.4 active-gateway and gateway-cluster profiles | component/developer workflow |
+| inspect BAN outcomes and an explicitly governed measurement-to-command return path | M6.5 BAN/station profile | component/developer workflow |
 
 If the desired study needs a capillary-generated time-varying or consuming cell
 signal, spatial drug diffusion/binding, biologically qualified response, a
-physically qualified Nano-IoT link, relay/gateway path, or a complete fingerprinting chain, treat
+physically qualified Nano-IoT/BAN link, authenticated clinical control, or a complete fingerprinting chain, treat
 it as a future scenario design rather than silently approximating it with the
 current synthetic component models.
 
@@ -1949,15 +1971,56 @@ transmitter, `0.4 µJ` gateway receiver, and `0.1 µJ` link energy. The 128-byte
 two-hop command takes `20 ms`, accounts for 256 hop-bytes, and uses `1.1 µJ`
 transmitter, `0.45 µJ` receiver, and `0.1 µJ` link energy.
 
-“Uplink” currently means publication at the gateway's implementation-neutral
-upper boundary; there is no BAN transmission or external recipient yet.
-Likewise, a successfully delivered `control` message is not authorization and
-does not execute payload release or change physiology. There is no hardware,
-skin/tissue coupling, authentication, encryption, clinical decision logic,
-safety policy, retry, or fail-safe behavior. Read
+Within the M6.4 contract, “uplink” ends at the gateway's
+implementation-neutral upper boundary; M6.5 attaches the separate BAN/station
+path described below. A successfully delivered `control` message is still not
+an actuation and does not execute payload release or change physiology. There
+is no hardware, skin/tissue coupling, authentication, encryption, clinical
+decision logic, safety policy, retry, or fail-safe behavior. Read
 [Active Gateway Measurement Uplink and Command Downlink](m6/ACTIVE_GATEWAY_UPLINK_AND_DOWNLINK.md)
 and [ADR-0045](architecture/adr/0045-active-gateway-measurement-and-command-boundary.md)
 before attaching an upper network or interpreting a command as treatment.
+
+#### BAN and external analysis/control station (M6.5)
+
+M6.5 attaches an external communication path without changing the local
+gateway or biological contracts. Its strict reference inputs are:
+
+```text
+examples/iot-models/synthetic-ban-station-v1.json
+data/schemas/ban-station-profile/1.0.0.schema.json
+```
+
+`GatewayBanAdapter` wraps a published `GatewayMeasurement` in a versioned
+`BanFrame` and remembers the measurement/correlation pair. The replaceable
+`BanTransportAdapter` then carries the frame. The scheduled reference adapter
+reports delivery, loss, corruption, or expiry and separate counts, bytes,
+latency, transmitter energy, receiver energy, and link energy.
+
+`ExternalAnalysisControlStation` stores uniquely received measurements. A
+command request receives a typed approval or denial after checking that its
+request is unique, its source measurement was received before the command was
+created, its correlation
+matches exactly, its target and content type are allow-listed, and approval
+capacity remains. Only an approval can become a command frame. On return, the
+gateway adapter checks the configured station and gateway, validity, decision
+replay, and the original measurement/correlation before exposing the
+`GatewayCommand` to M6.4. The existing M6.3 route then delivers the local
+control message to the actuator.
+
+The checked reference uses a 256-byte measurement with 10 ms BAN uplink and a
+128-byte command with 15 ms BAN downlink, followed by the existing 20 ms
+two-hop local command route. Its energy values and delivery outcomes are
+synthetic and are useful only to verify accounting and replacement boundaries.
+
+The word “governed” is deliberately narrow: it means explicit, traceable
+simulation transport policy. It does not mean user authentication,
+cryptographic integrity, clinician authorization, safe dosing, treatment
+recommendation, medical-device risk control, or fail-safe behavior. Receipt at
+the actuator still does not cause a payload or physiological effect. Read
+[BAN and External Analysis/Control Station](m6/BAN_AND_EXTERNAL_STATION.md) and
+[ADR-0046](architecture/adr/0046-ban-adapter-and-governed-station-loop.md)
+before replacing the transport or interpreting the closed loop.
 
 ### Troubleshooting
 
@@ -1995,7 +2058,7 @@ minutes on the current Windows reference system.
 
 This edition implements the two-level guide planned in the Roadmap: the new
 non-expert Part I precedes the retained and updated technical Part II. It covers
-the accepted software through M5 and the M6.1–M6.2 development increments
+the accepted software through M5 and the M6.1–M6.5 development increments
 while preserving the difference between CLI, reference-workflow, and
 component/developer access.
 
@@ -2019,8 +2082,8 @@ every future gate checklist.
 
 Planned substantive extensions are:
 
-- M6.5 BAN and external-station adapters with a closed, explicitly governed
-  command-to-device path;
+- M6.6 optional external network-simulator adapter behind the M6.5 transport
+  boundary;
 - the M7 end-to-end fingerprinting workflow;
 - later medical scenarios, result analysis, and visualization workflows; and
 - participant-specific workflows only after their evidence and governance

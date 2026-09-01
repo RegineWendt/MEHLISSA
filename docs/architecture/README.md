@@ -61,6 +61,7 @@ decisions; a new decision supersedes an existing one through a new ADR.
 | [ADR-0043](adr/0043-neutral-detection-event-and-replaceable-one-hop-link.md) | Accepted | neutral M5 detection adapter, replaceable one-hop link, explicit outcomes, and separate communication metrics |
 | [ADR-0044](adr/0044-bounded-cluster-routing-and-store-forward-relay.md) | Accepted | strict directed clusters, deterministic bounded route selection, and checked store-and-forward relay semantics |
 | [ADR-0045](adr/0045-active-gateway-measurement-and-command-boundary.md) | Accepted | active resource-bounded gateway, neutral measurement publication, and traceable local control downlink |
+| [ADR-0046](adr/0046-ban-adapter-and-governed-station-loop.md) | Accepted | replaceable BAN transport, explicit station policy, and causal governed return path to a local actuator |
 
 ## Status model
 

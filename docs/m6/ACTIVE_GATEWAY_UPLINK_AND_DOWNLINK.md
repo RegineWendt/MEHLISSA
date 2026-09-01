@@ -8,8 +8,8 @@ SPDX-License-Identifier: CC-BY-4.0
 ## Purpose and boundary
 
 M6.4 introduces an active nano/micro gateway between the routed local cluster
-and future BAN/external-station adapters. It provides two bidirectional
-software contracts:
+and the subsequently added M6.5 BAN/external-station adapters. It provides two
+bidirectional software contracts:
 
 ```text
 local measurement message -> active gateway -> GatewayMeasurement boundary
@@ -18,9 +18,9 @@ GatewayCommand boundary -> active gateway -> routed local control message
 
 The first line is called the measurement uplink even though M6.4 ends at the
 gateway's implementation-neutral upper boundary. The second is a local command
-downlink from that boundary to a target nanodevice. BAN transport, an external
-station, decision logic, authentication, and authorization belong to later
-increments.
+downlink from that boundary to a target nanodevice. BAN transport and an
+external station are attached by M6.5; authentication, cryptographic
+authorization, and clinical decision logic remain later work.
 
 ## Active gateway contract
 
@@ -94,5 +94,5 @@ implant. There is no skin/tissue coupling, radio or molecular channel, BAN,
 external analysis station, human operator, command decision algorithm,
 authentication, authorization, encryption, clinical safety policy, retry, or
 fail-safe control. A delivered command does not release payload or change a
-biological model. M6.5 must introduce BAN and external-station adapters while
+biological model. M6.5 introduces BAN and external-station adapters while
 retaining these explicit boundaries and non-claims.

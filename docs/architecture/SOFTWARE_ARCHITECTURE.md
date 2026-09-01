@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 This document is the entry point for developers who want to understand,
 integrate, or extend MEHLISSA Next. It describes the implemented architecture
-through the accepted M5 gate and the M6.2 development increment, the public C++
+through the accepted M5 gate and the M6.5 development increment, the public C++
 and command-line interfaces, the data contracts, and the workflow for adding a
 module such as a new organ model. It also explains
 which forms of personalization are possible today and which remain roadmap
@@ -45,7 +45,8 @@ flowchart TB
     LocalLink[M6.2 local link<br/>delivery results and metrics]
     Cluster[M6.3 cluster plane<br/>bounded routes and relays]
     Gateway[M6.4 active gateway<br/>measurement and command boundary]
-    External[Future M6 BAN,<br/>station and network adapter]
+    External[M6.5 BAN and station<br/>adapters plus command policy]
+    NetworkSim[Future M6.6 external<br/>network-simulator adapter]
     Evidence[Logs, checkpoints, provenance,<br/>reports and validation results]
 
     Manifest --> Runner
@@ -63,7 +64,8 @@ flowchart TB
     IoT <-->|one-hop message| LocalLink
     LocalLink <-->|bounded per-hop exchange| Cluster
     Cluster <-->|measurement / control message| Gateway
-    Gateway -.->|future upper transport| External
+    Gateway <-->|BAN frames and metrics| External
+    External -.->|future simulator transport| NetworkSim
     Runner --> Evidence
 ```
 
@@ -71,9 +73,11 @@ The solid biological paths are implemented as typed C++ APIs through M5. M6.1
 adds the independent device and local-message foundation. M6.2 adds the solid
 cell-detection adapter and replaceable local-link path with explicit outcomes
 and communication metrics. M6.3 composes those links into a solid bounded
-cluster/relay path. M6.4 adds the solid active-gateway boundary. The dotted
-paths to a capillary detector and the external BAN/station remain future
-composition. The general CLI does not yet compose all parts into one run.
+cluster/relay path. M6.4 adds the solid active-gateway boundary. M6.5 closes the
+solid BAN/station round trip with explicit command governance and a local
+actuator delivery. The dotted paths to a capillary detector and an external
+network simulator remain future composition. The general CLI does not yet
+compose all parts into one run.
 
 ### 2.1 Governing principles
 
@@ -109,7 +113,7 @@ The binding decisions are recorded in the
 | `models/organ/` | replaceable lung models and pulmonary validation utilities | `MEHLISSA::organ_model` |
 | `models/capillary/` | capillary bed, exchange, recruitment, entity disposition, molecular channels | `MEHLISSA::capillary_model` |
 | `models/cell/` | receptor binding, intracellular networks, delivery, apoptosis, populations | `MEHLISSA::cell_model` |
-| `models/iot/` | nanodevice capabilities, messages, detection translation, one-hop links, and communication metrics | `MEHLISSA::iot_model` |
+| `models/iot/` | nanodevice capabilities, local/cluster communication, active gateway, BAN adapters, external station policy, and communication metrics | `MEHLISSA::iot_model` |
 | `models/cosimulation/` | body–organ, organ–capillary, capillary–cell, feedback, and cell-detection adapters | `MEHLISSA::cosimulation`, `MEHLISSA::cell_cosimulation`, `MEHLISSA::iot_cosimulation` |
 | `apps/` | `mehlissa` command-line executable | `mehlissa` |
 | `benchmarks/` | reproducible benchmark and campaign drivers | benchmark-specific targets |
@@ -296,12 +300,23 @@ accepted buffered local message to an implementation-neutral upper boundary
 and maps one validated command back to a traceable local `control` request.
 M6.3 supplies the routed transport on both sides of this boundary.
 
+M6.5 adds versioned `BanFrame` and `GovernedGatewayCommand` contracts,
+`GatewayBanAdapter`, `ExternalAnalysisControlStation`, the replaceable
+`BanTransportAdapter`, and `BanCommunicationSession`. The station stores
+received measurements and returns normal typed allow/deny decisions based on
+configured gateway, causal time order, target, content type, exact correlation,
+uniqueness, and capacity. The gateway adapter accepts a returned command only
+when its station, gateway, decision, validity, source measurement, and
+correlation match the previous uplink. The scheduled transport reference
+reports BAN outcomes and costs independently from the local cluster.
+
 `MEHLISSA::iot_cosimulation` alone maps an M5 `ReceptorLigandResponse` to the
 neutral event. Body, organ, capillary, and cell libraries do not depend on the
 IoT library. Scheduled links and declared topology have no anatomical
-placement, physical channel, range, capacity, queue, retransmission, BAN, or
-external-station behavior. Gateway command receipt has no authentication,
-authorization, clinical policy, or actuation effect.
+placement, physical channel, range, throughput capacity, queue,
+retransmission, or calibrated protocol behavior. M6.5 policy is a simulation
+transport allow-list and causal check; it is not authentication, cryptographic
+authorization, clinical policy, or an actuation effect.
 
 ## 6. Cross-layer APIs and ownership
 
@@ -379,7 +394,7 @@ headers add typed configurations, states, and verification functions.
 | `mehlissa::models::organ` | `models/organ/include/mehlissa/models/organ/*.hpp` | lung definition loader, `make_lung_model`, pulmonary variants, and state; organ simulation |
 | `mehlissa::models::capillary` | `models/capillary/include/mehlissa/models/capillary/*.hpp` | capillary definition/profile loaders, `CapillaryBed`, and `MolecularChannel` variants; microvascular and molecular transport |
 | `mehlissa::models::cell` | `models/cell/include/mehlissa/models/cell/*.hpp` | profile loaders, binding models, intracellular network, delivery, and apoptosis; cellular response |
-| `mehlissa::models::iot` | `models/iot/include/mehlissa/models/iot/*.hpp` | nanodevice runtime, detection/message translation, local-message envelope, replaceable one-hop link, outcomes, and communication metrics |
+| `mehlissa::models::iot` | `models/iot/include/mehlissa/models/iot/*.hpp` | nanodevice runtime, detection/message translation, local and multihop transport, active gateway, replaceable BAN adapter, station policy, outcomes, and communication metrics |
 | `mehlissa::models::cosimulation` | `models/cosimulation/include/mehlissa/models/cosimulation/*.hpp` | explicit body/organ/capillary/cell/IoT adapters; synchronization and dependency-safe routing |
 
 These are in-process C++ APIs. There is no stable C ABI, REST API, plugin ABI,
@@ -486,6 +501,29 @@ pulmonary assumptions:
    calibration/validation separation, and limitations; and
 10. prove that the caller and coupler need no kidney-specific branch beyond
     choosing the factory and declared route.
+
+### 9.6 Adding a BAN or network-simulator adapter
+
+A new upper-network implementation should derive from `BanTransportAdapter`
+and implement `kind`, `adapter_id`, and `transfer`. It must:
+
+1. accept only a validated `BanFrame` and preserve its identity and payload;
+2. return one internally consistent `BanTransferResult` with explicit delivery
+   or drop reason, timestamps, bytes, and nonnegative energy categories;
+3. represent modeled loss, corruption, or expiry as a result rather than a
+   software exception;
+4. keep protocol configuration and external-library types behind the adapter;
+5. avoid dependencies from core, physiology, cell, local-message, gateway, or
+   station-policy code back to that implementation;
+6. add conformance tests using `BanCommunicationSession`, including malformed
+   result rejection and deterministic replay where the external engine allows
+   it; and
+7. add a new profile/schema only for configuration that is not already covered
+   by the M6.5 contract.
+
+Do not bypass `ExternalAnalysisControlStation` or `GatewayBanAdapter` for the
+reference command path. Those objects own the visible policy and causal/replay
+checks; the transport owns delivery behavior only.
 
 ## 10. Personalization
 

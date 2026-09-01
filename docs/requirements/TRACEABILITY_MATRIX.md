@@ -136,10 +136,10 @@ statements.
 | ID | Source | Status 2026-09-01 | Target | Planned verification |
 |---|---|---|---|---|
 | IOT-001 | DISS pp. 113–115, 186–188 | DONE | M6 | M6.1 provides a schema-validated free device type, composable capabilities, typed/discrete payload inventory, target, internal energy/message state, bounded resources, checked lifecycle, and synthetic locator/collector profiles |
-| IOT-002 | DISS pp. 96–97 | PART | M6 | M6.4 now closes local collector-to-active-gateway measurement publication and gateway-to-relay-to-actuator command delivery; BAN and external station remain open |
-| IOT-003 | DISS pp. 117–118, 187–190 | PART | M2/M6 | passive segment measurement is joined by a resource-bounded active M6.4 gateway with traceable measurement publication and routed local control; physical range and hardware qualification remain open |
-| IOT-004 | RM M6 | PART | M6 | M6.4 retains exact route attempts, deliveries, bytes, latency, prescribed loss/corruption/expiry, and separate endpoint/link energy across uplink and downlink references; capacity and qualified channel statistics remain open |
-| IOT-005 | DISS pp. 96–100; MEH25 | SPEC | M6 | interchangeable network adapter without kernel dependency |
+| IOT-002 | DISS pp. 96–97 | DONE | M6 | M6.5 composes the in-body network, active gateway, replaceable BAN adapter, and external analysis/control station and returns one explicitly governed command to a routed local actuator |
+| IOT-003 | DISS pp. 117–118, 187–190 | PART | M2/M6 | passive segment measurement is joined by a resource-bounded active gateway and M6.5 BAN/station loop; physical placement, range, and hardware qualification remain open |
+| IOT-004 | RM M6 | PART | M6 | M6.5 retains exact local and BAN attempts, deliveries, bytes, latency, prescribed loss/corruption/expiry, and separate transmitter/receiver/link energy; capacity and qualified channel statistics remain open |
+| IOT-005 | DISS pp. 96–100; MEH25 | PART | M6 | `BanTransportAdapter` is interchangeable without kernel or physiological dependencies; an external network-simulator implementation remains M6.6 |
 | DATA-001 | RM 6.1 | PART | M1/M2 | versioned schemas and validators for experiment, provenance, log, and checkpoint; domain M2 data schemas follow |
 | DATA-002 | RM 6.4 | DONE | M1 | JSON Schema `1.0.0`, manifest and CLI negative tests |
 | DATA-003 | RM 2.4, 6.4 | PART | M1 | schema `1.0.0`, automatically generated `provenance.json`, SHA-256 and contract tests; data-version catalog follows with real models |

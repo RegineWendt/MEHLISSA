@@ -17,8 +17,10 @@ Gate M6 is **in progress**. M6.1 supplies the device and message foundation;
 M6.2 connects a checked M5 detection to a local collector over an explicit
 one-hop link. M6.3 adds bounded cluster routing and relay forwarding. M6.4 adds
 an active local gateway, a neutral measurement publication boundary, and a
-routed local command downlink. No BAN, external station, authenticated control,
-or command-driven actuation effect exists yet.
+routed local command downlink. M6.5 adds replaceable BAN transport, an external
+analysis/control station, explicit transport-policy governance, and a causal
+return path to a local actuator. Authenticated or clinical control and
+command-driven actuation effects do not exist yet.
 
 ## Implemented increments
 
@@ -102,6 +104,25 @@ and [ADR-0044](../architecture/adr/0044-bounded-cluster-routing-and-store-forwar
 See [Active Gateway Measurement Uplink and Command Downlink](ACTIVE_GATEWAY_UPLINK_AND_DOWNLINK.md)
 and [ADR-0045](../architecture/adr/0045-active-gateway-measurement-and-command-boundary.md).
 
+### M6.5 - BAN adapters and external analysis/control station
+
+- versioned `BanFrame` envelope for gateway measurements and governed commands;
+- stateful gateway adapter preserving previously published measurement and
+  correlation identities;
+- external station with explicit gateway, target, content-type, correlation,
+  duplication, and capacity policy;
+- normal typed denial outcomes and downlink creation only after approval;
+- replaceable `BanTransportAdapter` boundary with a deterministic scheduled
+  reference implementation;
+- separate BAN count, byte, latency, loss, corruption, expiry, and transmitter,
+  receiver, and link-energy metrics;
+- complete station-to-gateway-to-relay-to-actuator reference composition; and
+- strict `1.0.0` profile schema plus causality, policy, replay, loss,
+  corruption, and expiry tests.
+
+See [BAN and External Analysis/Control Station](BAN_AND_EXTERNAL_STATION.md) and
+[ADR-0046](../architecture/adr/0046-ban-adapter-and-governed-station-loop.md).
+
 ## Planned sequence
 
 1. ~~Device, resource, lifecycle, and local-message foundation.~~ M6.1 complete.
@@ -110,7 +131,8 @@ and [ADR-0045](../architecture/adr/0045-active-gateway-measurement-and-command-b
 3. ~~Cluster, relay, and bounded multi-hop routing.~~ M6.3 complete.
 4. ~~Active nano/micro gateway with measurement uplink and command downlink.~~
    M6.4 complete.
-5. BAN and external station adapters, including closed command-to-device path.
+5. ~~BAN and external station adapters, including closed command-to-device
+   path.~~ M6.5 complete.
 6. Optional external network-simulator adapter without physiological
    dependencies.
 7. Loss, latency, error, energy, capacity, failure/security scenarios, User
@@ -121,10 +143,11 @@ and [ADR-0045](../architecture/adr/0045-active-gateway-measurement-and-command-b
 All M6 profiles, device budgets, topology, link values, and outcome sequences
 remain synthetic software-test values. M6.3 represents deterministic routing,
 relay, latency, loss, corruption, expiry, and energy-accounting semantics, and
-M6.4 adds a bidirectional gateway software boundary, but
-its scheduled links are not physical channels or calibrated probability
-models. It does not model anatomical placement, range, diffusion,
-interference, noise physics, capacity, queues, retransmission, security, a BAN,
-external station, authentication, authorization, encryption, clinical
-safety policy, or command-driven biological actuation. The active M6.4 gateway
-is an implementation-neutral software boundary, not validated hardware.
+M6.5 adds a bidirectional BAN/station software path, but its scheduled links
+are not physical channels or calibrated probability models. It does not model
+anatomical placement, range, diffusion, interference, noise physics, capacity,
+queues, retransmission, a concrete BAN protocol, authentication, cryptographic
+authorization or integrity, encryption, clinical safety policy, or
+command-driven biological actuation. The gateway, station, policy, and BAN
+adapter are implementation-neutral software boundaries, not validated
+hardware or medical-device controls.

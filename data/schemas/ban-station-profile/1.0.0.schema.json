@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:ban-station-profile:1.0.0",
+  "title": "MEHLISSA BAN and external station profile",
+  "description": "Versioned gateway/BAN/station adapters and transport-governed command policy.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "gateway_adapter", "station", "uplink_transport", "downlink_transport", "reference_case", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {"$ref": "#/$defs/profile"},
+    "gateway_adapter": {"$ref": "#/$defs/gateway_adapter"},
+    "station": {"$ref": "#/$defs/station"},
+    "uplink_transport": {"$ref": "#/$defs/transport"},
+    "downlink_transport": {"$ref": "#/$defs/transport"},
+    "reference_case": {"$ref": "#/$defs/reference_case"},
+    "validity": {"$ref": "#/$defs/validity"},
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "positive_count": {"type": "integer", "minimum": 1, "maximum": 18446744073709551615},
+    "id_array": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+    "string_array": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "version": {"$ref": "#/$defs/version"}, "title": {"type": "string", "minLength": 1}}
+    },
+    "gateway_adapter": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "gateway_id", "station_id", "measurement_frame_id_prefix", "maximum_uplink_frames", "maximum_downlink_frames"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "gateway_id": {"$ref": "#/$defs/id"}, "station_id": {"$ref": "#/$defs/id"},
+        "measurement_frame_id_prefix": {"$ref": "#/$defs/id"},
+        "maximum_uplink_frames": {"$ref": "#/$defs/positive_count"}, "maximum_downlink_frames": {"$ref": "#/$defs/positive_count"}
+      }
+    },
+    "station": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "decision_id_prefix", "command_frame_id_prefix", "accepted_gateway_ids", "allowed_target_device_ids", "allowed_command_content_types", "maximum_measurements", "maximum_approved_commands"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "decision_id_prefix": {"$ref": "#/$defs/id"}, "command_frame_id_prefix": {"$ref": "#/$defs/id"},
+        "accepted_gateway_ids": {"$ref": "#/$defs/id_array"}, "allowed_target_device_ids": {"$ref": "#/$defs/id_array"},
+        "allowed_command_content_types": {"$ref": "#/$defs/string_array"},
+        "maximum_measurements": {"$ref": "#/$defs/positive_count"}, "maximum_approved_commands": {"$ref": "#/$defs/positive_count"}
+      }
+    },
+    "transport": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "latency_seconds", "transmitter_energy_per_attempt_j", "receiver_energy_per_delivery_j", "link_energy_per_attempt_j", "repeating_outcomes"],
+      "properties": {
+        "kind": {"const": "scheduled_ban_transport"}, "id": {"$ref": "#/$defs/id"},
+        "latency_seconds": {"type": "number", "minimum": 0}, "transmitter_energy_per_attempt_j": {"type": "number", "minimum": 0},
+        "receiver_energy_per_delivery_j": {"type": "number", "minimum": 0}, "link_energy_per_attempt_j": {"type": "number", "minimum": 0},
+        "repeating_outcomes": {"type": "array", "minItems": 1, "items": {"enum": ["delivered", "lost", "corrupted"]}}
+      }
+    },
+    "reference_case": {
+      "type": "object", "additionalProperties": false,
+      "required": ["measurement_id", "command_id", "target_device_id", "expected_uplink_latency_seconds", "expected_downlink_latency_seconds"],
+      "properties": {
+        "measurement_id": {"$ref": "#/$defs/id"}, "command_id": {"$ref": "#/$defs/id"}, "target_device_id": {"$ref": "#/$defs/id"},
+        "expected_uplink_latency_seconds": {"type": "number", "minimum": 0}, "expected_downlink_latency_seconds": {"type": "number", "minimum": 0}
+      }
+    },
+    "validity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1}, "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"enum": ["software_test_surrogate", "literature_parameterized", "externally_derived", "hypothesis"]},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "citation", "location", "license", "role"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "citation": {"type": "string", "minLength": 1}, "location": {"type": "string", "minLength": 1},
+        "license": {"type": "string", "minLength": 1}, "role": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
