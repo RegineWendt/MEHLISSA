@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-local-communication-v1",
+    "version": "1.0.0",
+    "title": "Synthetic receptor detection to one-hop collector communication"
+  },
+  "detection_adapter": {
+    "id": "adapter.synthetic.receptor-detection",
+    "source_device_id": "locator.synthetic.1",
+    "target_device_id": "collector.synthetic.1",
+    "message_id_prefix": "message.m6-2",
+    "correlation_id": "experiment.m6-2.receptor-to-collector",
+    "valid_for_seconds": 1.0,
+    "hop_limit": 1,
+    "size_bytes": 320,
+    "content_type": "application/vnd.mehlissa.detection+json;version=1.0.0"
+  },
+  "link": {
+    "kind": "scheduled_one_hop_link",
+    "id": "link.synthetic.locator-collector",
+    "latency_seconds": 0.025,
+    "energy_per_attempt_j": 0.0000001,
+    "repeating_outcomes": ["delivered", "lost", "corrupted"]
+  },
+  "reference_case": {
+    "source_profile_id": "synthetic-receptor-ligand-v1",
+    "event_id": "detection.m6-2.receptor-threshold.1",
+    "expected_outcome": "delivered",
+    "expected_latency_seconds": 0.025,
+    "expected_link_energy_j": 0.0000001
+  },
+  "validity": {
+    "population": "synthetic software-contract detection and communication",
+    "physiological_state": "abstract local communication without spatial propagation",
+    "evidence_class": "software_test_surrogate",
+    "description": "Checks causal M5 threshold-event translation, explicit one-hop delivery, and communication-only latency, loss, corruption, byte, and energy metrics."
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m5-binding-contract",
+      "citation": "MEHLISSA Next M5.1 analytical receptor-ligand software contract",
+      "location": "docs/m5/RECEPTOR_LIGAND_BASELINE.md",
+      "license": "CC-BY-4.0",
+      "role": "source detection response and checked threshold time"
+    },
+    {
+      "id": "mehlissa-m6-communication-contract",
+      "citation": "MEHLISSA Next M6.2 local communication software contract",
+      "location": "docs/m6/DETECTION_TO_ONE_HOP_COMMUNICATION.md",
+      "license": "CC-BY-4.0",
+      "role": "synthetic adapter, link, outcomes, metrics, and acceptance rules"
+    }
+  ],
+  "limitations": [
+    "The link latency, energy, and repeating outcomes are synthetic deterministic verification values.",
+    "The scheduled link is not a molecular, radio, optical, acoustic, or anatomical propagation model.",
+    "Loss and corruption are prescribed outcomes rather than calibrated probabilities.",
+    "The reference ends at a local collector and does not include a relay, gateway, BAN, or external station."
+  ]
+}

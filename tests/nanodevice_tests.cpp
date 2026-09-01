@@ -109,11 +109,12 @@ TEST_CASE("Nanodevice lifecycle rejects premature use and records depletion and 
 
 TEST_CASE("Local endpoints reject invalid routing expiry duplicates and resource overruns",
           "[m6][iot][nanodevice][budget]") {
-    Nanodevice locator{load_profile("synthetic-locator-v1.json").device};
+    const auto locator_profile = load_profile("synthetic-locator-v1.json");
+    Nanodevice locator{locator_profile.device};
     Nanodevice collector{load_profile("synthetic-collector-v1.json").device};
 
     auto oversized = detection_request();
-    oversized.size_bytes = 129;
+    oversized.size_bytes = locator_profile.device.resources.maximum_message_size_bytes + 1;
     CHECK_THROWS_AS(locator.emit_local_message(oversized), mehlissa::core::MehlissaError);
     CHECK(locator.transmission_count() == 0);
 

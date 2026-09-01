@@ -117,7 +117,10 @@ small neutral kernel:
 - validated vascular graphs, deterministic compartment transport, and schema-validated scientific reference reports;
 - bounded transport observation and flow-conserving body-state profiles; and
 - a versioned M6.1 nanodevice/profile contract with independently replaceable
-  local messages, lifecycle, energy, storage, and count accounting.
+  local messages, lifecycle, energy, storage, and count accounting; and
+- an M6.2 neutral detection adapter and replaceable one-hop link with explicit
+  delivery/drop results and communication-only latency, loss/error, byte, and
+  energy metrics.
 
 Medical scenarios and legacy state do not belong in the kernel. Biological and
 communication models depend on it as separate libraries.

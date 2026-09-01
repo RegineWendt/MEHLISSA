@@ -27,7 +27,7 @@ Status codes:
 
 ## 2. Foundation and architecture
 
-| ID | Source | Status 2026-08-31 | Target | Planned verification |
+| ID | Source | Status 2026-09-01 | Target | Planned verification |
 |---|---|---|---|---|
 | SYS-001 | RM M1 | DONE | M1 | `simulation_clock_tests`, cross-platform CTest |
 | SYS-002 | RM 2.4 | PART | M1/M7 | byte-identical M1 kernel reference run on MSVC/GCC/Clang; replicate planning and domain-model verification follow |
@@ -47,7 +47,7 @@ Status codes:
 
 ## 3. Body and organ layers
 
-| ID | Source | Status 2026-08-31 | Target | Planned verification |
+| ID | Source | Status 2026-09-01 | Target | Planned verification |
 |---|---|---|---|---|
 | BODY-001 | DISS p. 100; BVS18 | DONE | M2 | complete, strongly connected, schema-validated 95-segment graph; converter and graph-invariant tests |
 | BODY-002 | DISS pp. 100, 113–117 | DONE | M2 | SI schema and validator for ID, type, geometry, length, diameter, cross section, volume, flow, sources, and uncertainty; canonical M2.2 data set |
@@ -68,7 +68,7 @@ Status codes:
 
 ## 4. Capillary and cell layers
 
-| ID | Source | Status 2026-08-31 | Target | Planned verification |
+| ID | Source | Status 2026-09-01 | Target | Planned verification |
 |---|---|---|---|---|
 | CAP-001 | DISS pp. 126–129 | PART | M4 | strict v2/v3 schemas and executable arteriole–capillary–venule components derive volume, area, velocity, and transit from SI geometry and continuity flow, then preserve identity and conserved payloads through a complete organ-capillary-organ route; anatomical network refinement follows |
 | CAP-002 | DISS pp. 126–129 | PART | M4 | M4.7 pulmonary card separates functional perfused volume from morphometric capacity, records parameter-level evidence and uncertainty, and enforces equivalent-geometry volume-flow-transit closure; independent physiological validation, jointly measured cohorts, hematocrit, and further organs follow |
@@ -133,12 +133,12 @@ statements.
 
 ## 5. Nano-IoT and research data
 
-| ID | Source | Status 2026-08-31 | Target | Planned verification |
+| ID | Source | Status 2026-09-01 | Target | Planned verification |
 |---|---|---|---|---|
 | IOT-001 | DISS pp. 113–115, 186–188 | DONE | M6 | M6.1 provides a schema-validated free device type, composable capabilities, typed/discrete payload inventory, target, internal energy/message state, bounded resources, checked lifecycle, and synthetic locator/collector profiles |
-| IOT-002 | DISS pp. 96–97 | SPEC | M6 | nano in-body → gateway → BAN → station |
-| IOT-003 | DISS pp. 117–118, 187–190 | PART | M2/M6 | passive segment-bound gateway measurement site with exact total and bounded individual passages; range, detection errors, and communication follow in M6 |
-| IOT-004 | RM M6 | SPEC | M6 | communication report with latency/loss/energy |
+| IOT-002 | DISS pp. 96–97 | PART | M6 | M6.2 implements a replaceable locator-to-local-collector hop; relay, gateway, BAN, and station remain open |
+| IOT-003 | DISS pp. 117–118, 187–190 | PART | M2/M6 | passive segment-bound gateway measurement plus M6.2 causal receptor-detection-to-local-collector communication; range and active gateway follow |
+| IOT-004 | RM M6 | PART | M6 | M6.2 communication-only metrics report attempts, deliveries, bytes, latency, prescribed loss/corruption/expiry, and separate transmitter/receiver/link energy; capacity and qualified channel statistics remain open |
 | IOT-005 | DISS pp. 96–100; MEH25 | SPEC | M6 | interchangeable network adapter without kernel dependency |
 | DATA-001 | RM 6.1 | PART | M1/M2 | versioned schemas and validators for experiment, provenance, log, and checkpoint; domain M2 data schemas follow |
 | DATA-002 | RM 6.4 | DONE | M1 | JSON Schema `1.0.0`, manifest and CLI negative tests |
@@ -151,7 +151,7 @@ statements.
 
 ## 6. Operation, scenarios, and quality
 
-| ID | Source | Status 2026-08-31 | Target | Planned verification |
+| ID | Source | Status 2026-09-01 | Target | Planned verification |
 |---|---|---|---|---|
 | UX-001 | RM Phase 0/10 | PART | M1 | headless CLI run in CI |
 | UX-002 | VIS20 pp. 1–2 | LEGACY | M7 | standardized result format in new visualization |
@@ -167,7 +167,7 @@ statements.
 | QUA-002 | RM M1 | DONE | M1 | clang-tidy, ASan/UBSan, and warnings as errors in CI |
 | QUA-003 | MEH25 pp. 1–2 | SPEC | M2–M7 | versioned benchmark reports plus result comparison |
 | QUA-004 | MEH25 pp. 1–2 | SPEC | M4–M7 | scaling test: agents versus populations/surrogate |
-| QUA-005 | RM 6.6 | DONE | M1 ongoing | versioned API/schema/model/scenario documents plus a two-level English User Guide cover non-expert purpose, non-claims, mental model, guided experiment families, decision aid, glossary, and accepted M0–M5 workflows; the M5 gate-impact review is recorded and every future M-gate requires the same review |
+| QUA-005 | RM 6.6 | DONE | M1 ongoing | versioned API/schema/model/scenario documents plus a two-level English User Guide cover non-expert purpose, non-claims, mental model, guided experiment families, decision aid, glossary, accepted M0–M5 workflows, and M6.1–M6.2 development increments; the M5 gate-impact review is recorded and every future M-gate requires the same review |
 | QUA-006 | RM M8 | SPEC | M8 | data-protection and data-management review |
 
 ## 7. M0 coverage review

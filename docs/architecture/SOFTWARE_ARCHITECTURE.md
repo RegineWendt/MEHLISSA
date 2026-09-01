@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 This document is the entry point for developers who want to understand,
 integrate, or extend MEHLISSA Next. It describes the implemented architecture
-through the accepted M5 gate and the M6.1 development increment, the public C++
+through the accepted M5 gate and the M6.2 development increment, the public C++
 and command-line interfaces, the data contracts, and the workflow for adding a
 module such as a new organ model. It also explains
 which forms of personalization are possible today and which remain roadmap
@@ -41,7 +41,8 @@ flowchart TB
     Organ[Organ layer<br/>lung variants]
     Capillary[Capillary layer<br/>transit, exchange, molecular channels]
     Cell[Cell layer<br/>binding, signaling, delivery, response]
-    IoT[M6 communication plane<br/>nanodevices and local messages]
+    IoT[M6 device plane<br/>nanodevices and local messages]
+    LocalLink[M6.2 local link<br/>delivery results and metrics]
     External[Future M6 gateway, BAN,<br/>station and network adapter]
     Evidence[Logs, checkpoints, provenance,<br/>reports and validation results]
 
@@ -56,16 +57,18 @@ flowchart TB
     Capillary -->|extracellular signal sample| Cell
     Cell -->|cell-state event| Capillary
     Capillary -.-> IoT
-    Cell -.-> IoT
-    IoT -.-> External
+    Cell -->|receptor detection adapter| IoT
+    IoT <-->|one-hop message| LocalLink
+    LocalLink -.-> External
     Runner --> Evidence
 ```
 
-The solid paths are implemented as typed C++ APIs through M5. M6.1 adds the
-independent device and local-message foundation shown as the communication
-plane, but not yet the detection adapter, physical/logical link, gateway, BAN,
-or external station. The general CLI does not yet compose all parts into one
-run.
+The solid biological paths are implemented as typed C++ APIs through M5. M6.1
+adds the independent device and local-message foundation. M6.2 adds the solid
+cell-detection adapter and replaceable local-link path with explicit outcomes
+and communication metrics. The dotted paths to a capillary detector and an
+external gateway/BAN/station remain future composition. The general CLI does
+not yet compose all parts into one run.
 
 ### 2.1 Governing principles
 
@@ -101,8 +104,8 @@ The binding decisions are recorded in the
 | `models/organ/` | replaceable lung models and pulmonary validation utilities | `MEHLISSA::organ_model` |
 | `models/capillary/` | capillary bed, exchange, recruitment, entity disposition, molecular channels | `MEHLISSA::capillary_model` |
 | `models/cell/` | receptor binding, intracellular networks, delivery, apoptosis, populations | `MEHLISSA::cell_model` |
-| `models/iot/` | nanodevice capabilities, payloads, resources, lifecycle, and local messages | `MEHLISSA::iot_model` |
-| `models/cosimulation/` | body–organ, organ–capillary, capillary–cell, and feedback adapters | `MEHLISSA::cosimulation`, `MEHLISSA::cell_cosimulation` |
+| `models/iot/` | nanodevice capabilities, messages, detection translation, one-hop links, and communication metrics | `MEHLISSA::iot_model` |
+| `models/cosimulation/` | body–organ, organ–capillary, capillary–cell, feedback, and cell-detection adapters | `MEHLISSA::cosimulation`, `MEHLISSA::cell_cosimulation`, `MEHLISSA::iot_cosimulation` |
 | `apps/` | `mehlissa` command-line executable | `mehlissa` |
 | `benchmarks/` | reproducible benchmark and campaign drivers | benchmark-specific targets |
 | `data/schemas/` | authoritative versioned JSON contracts | data, no target |
@@ -267,10 +270,17 @@ checked dormant/active/depleted/failed lifecycle. `LocalMessage` preserves
 message, device, correlation, source-event, timing, hop, size, and content
 identity.
 
-Endpoint emission and reception are implemented. Delivery, loss, latency,
-noise, routing, relays, gateway, BAN, and external-station behavior are later
-M6 increments. Body, organ, capillary, and cell libraries do not depend on the
-IoT library.
+M6.2 adds a neutral `MolecularDetectionEvent`, a detection-message adapter, the
+replaceable `OneHopLinkModel`, and `OneHopCommunicationSession`. The scheduled
+reference implementation explicitly distinguishes delivery, prescribed loss,
+corruption, and validity expiry. `CommunicationMetrics` keeps message/byte
+counts, delivered latency, and transmitter/receiver/link energy separate from
+biological results.
+
+`MEHLISSA::iot_cosimulation` alone maps an M5 `ReceptorLigandResponse` to the
+neutral event. Body, organ, capillary, and cell libraries do not depend on the
+IoT library. The scheduled link has no physical channel, range, capacity,
+routing, relay, gateway, BAN, or external-station behavior.
 
 ## 6. Cross-layer APIs and ownership
 
@@ -348,8 +358,8 @@ headers add typed configurations, states, and verification functions.
 | `mehlissa::models::organ` | `models/organ/include/mehlissa/models/organ/*.hpp` | lung definition loader, `make_lung_model`, pulmonary variants, and state; organ simulation |
 | `mehlissa::models::capillary` | `models/capillary/include/mehlissa/models/capillary/*.hpp` | capillary definition/profile loaders, `CapillaryBed`, and `MolecularChannel` variants; microvascular and molecular transport |
 | `mehlissa::models::cell` | `models/cell/include/mehlissa/models/cell/*.hpp` | profile loaders, binding models, intracellular network, delivery, and apoptosis; cellular response |
-| `mehlissa::models::iot` | `models/iot/include/mehlissa/models/iot/*.hpp` | nanodevice profile/runtime and local-message envelope; communication foundation |
-| `mehlissa::models::cosimulation` | `models/cosimulation/include/mehlissa/models/cosimulation/*.hpp` | four explicit couplers/adapters; synchronization and routing |
+| `mehlissa::models::iot` | `models/iot/include/mehlissa/models/iot/*.hpp` | nanodevice runtime, detection/message translation, local-message envelope, replaceable one-hop link, outcomes, and communication metrics |
+| `mehlissa::models::cosimulation` | `models/cosimulation/include/mehlissa/models/cosimulation/*.hpp` | explicit body/organ/capillary/cell/IoT adapters; synchronization and dependency-safe routing |
 
 These are in-process C++ APIs. There is no stable C ABI, REST API, plugin ABI,
 or Python API yet. The roadmap reserves a Python experiment/analysis API for a

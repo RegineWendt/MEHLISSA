@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M5 and the M6.1 development increment
+**Covered software:** accepted M0 through M5 and the M6.1–M6.2 development increments
 
-**Last updated:** 1 September 2026, after the M6.1 implementation review
+**Last updated:** 1 September 2026, after the M6.2 implementation review
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -49,9 +49,11 @@ connects four independently replaceable layers:
    aggregate that deterministic response over very large weighted cohorts.
 
 M6 adds an independently replaceable **Nano-IoT communication plane** beside
-these biological layers. Its first increment defines configured device
-endpoints and traceable local messages; delivery channels, relay networks,
-gateways, and external links follow in later M6 increments.
+these biological layers. M6.1 defines configured device endpoints and
+traceable local messages. M6.2 translates a checked M5 detection through a
+separate adapter and sends it over a replaceable local link with explicit
+delivery outcomes and communication-only metrics. Relay networks, gateways,
+and external links follow in later M6 increments.
 
 The software is intended to help formulate and test computational research
 hypotheses. It does not assume that one model resolution is always best. A
@@ -187,11 +189,17 @@ The current software can:
 - convert a consistent intracellular response event into an addressed
   nanodevice activation and analytical, amount-conserving release/uptake chain;
 - map intracellular amount to a bounded synthetic response and return an
-  apoptosis-commitment event through a neutral higher-layer boundary; and
+  apoptosis-commitment event through a neutral higher-layer boundary;
 - load versioned synthetic locator and collector nanodevice profiles;
 - emit and receive a traceable local message while enforcing lifecycle, energy,
-  storage, size, validity, routing, duplicate, and transmission-count rules; and
-- run all accepted M0–M5 contracts plus the M6.1 development increment in a
+  storage, size, validity, routing, duplicate, and transmission-count rules;
+- translate a causal M5 receptor detection into a traceable M6 event and
+  message without coupling the cell and communication libraries;
+- run the message over a replaceable one-hop link that reports delivery,
+  prescribed loss, corruption, or validity expiry; and
+- keep attempts, bytes, delivered latency, loss/error fractions, and
+  transmitter/receiver/link energy in a communication-only metric snapshot;
+- run all accepted M0–M5 contracts plus the M6.1–M6.2 increments in a
   reproducible cross-platform test suite.
 
 Not every capability has the same user-interface maturity:
@@ -200,7 +208,7 @@ Not every capability has the same user-interface maturity:
 |---|---|---|
 | command-line workflow | intended to be invoked directly with `mehlissa-cli` | manifest validation, minimal run, body-model validation, BVS regression, body-state application |
 | executable reference workflow | a checked scenario or evaluator with automated acceptance gates | pulmonary validation, coarse/five-lobe comparison, historical FP9 timer |
-| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, molecular channels, receptor binding, capillary-to-cell hand-off, intracellular ODE/SSA network, conservative device release/uptake, synthetic apoptosis feedback, nanodevice and local-message contracts |
+| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, molecular channels, receptor binding, capillary-to-cell hand-off, intracellular ODE/SSA network, conservative device release/uptake, synthetic apoptosis feedback, nanodevices, local messages, and one-hop communication |
 
 The access level says how an experiment is run, not how scientifically valid it
 is. A CLI model can still be synthetic; a developer workflow can still be a
@@ -211,10 +219,11 @@ at an exact synchronization time. M5.3 can accept a prescribed time-varying
 trajectory, but M4 does not yet generate that trajectory dynamically. The
 software does not yet model tissue depletion, spatial drug diffusion or binding,
 biologically calibrated pharmacodynamics or mechanistic apoptosis, biological
-cell heterogeneity, a communication channel with latency or loss, relay and
-multihop routing, an active gateway, BAN/external communication, the complete
-fingerprinting workflow, or a participant-specific virtual body. M6.1 provides
-only the logical communication endpoints and message contract.
+cell heterogeneity, a spatially or physically qualified communication channel,
+relay and multihop routing, an active gateway, BAN/external communication, the
+complete fingerprinting workflow, or a participant-specific virtual body.
+M6.2 provides only a synthetic scheduled local link, not a calibrated loss,
+error, energy, range, or capacity model.
 
 ### 5. Experiment families and guided examples
 
@@ -351,18 +360,19 @@ and [the capillary-to-cell hand-off](#capillary-to-cell-signal-hand-off-m52), or
 [the apoptosis response](#apoptosis-and-higher-layer-feedback-m57), or
 [the compressed population](#cohort-compressed-apoptosis-population-m58).
 
-#### 5.10 Nanodevice capability, resources, and local message hand-off
+#### 5.10 Nanodevice, detection message, and local one-hop communication
 
 | Question element | Guided example |
 |---|---|
-| research question | Can a configured locator produce a traceable detection message that a configured collector accepts without violating either device's declared resources? |
-| inputs | strict locator and collector profiles, message identity and kind, target, source event, correlation ID, creation time, validity, hop limit, size, content type, and content |
-| workflow | load the M6.1 synthetic profiles, emit a local message at the locator, and deliver it directly to the collector through the component API |
-| outputs | immutable message metadata, remaining energy, transmission and reception counts, collector storage use, received-message queue, and lifecycle state |
-| interpretation | the reference hand-off verifies endpoint configuration, traceability, validation, and exact local resource accounting—not a propagation model |
-| limitations | all values are synthetic; direct API hand-off has no channel, distance, delay, interference, loss, relay, gateway, BAN, external network, encryption, or physiology coupling |
+| research question | Can a checked receptor-threshold detection become a traceable device message, traverse an explicit local link, and reach a configured collector with separately auditable communication costs? |
+| inputs | M5 receptor response; locator, collector, detection-adapter, and one-hop-link profiles; validity, size, fixed latency/energy, and scheduled outcomes |
+| workflow | convert the M5 response to a neutral event, create the local message, emit it at the locator, evaluate the replaceable link, and conditionally accept it at the collector |
+| outputs | event and message provenance, explicit delivery/drop reason, remaining device resources, counts and bytes, delivered latency, loss/corruption/expiry fractions, and separate transmitter/receiver/link energy |
+| interpretation | the reference verifies dependency-safe coupling, causal traceability, exact endpoint/link accounting, and non-delivery semantics—not physical reachability or channel accuracy |
+| limitations | all values and outcomes are synthetic; the scheduled link has no distance, propagation physics, capacity, interference, calibrated probability, relay, gateway, BAN, external network, or encryption |
 
-Use [the nanodevice and local-message foundation](#nanodevice-and-local-message-foundation-m61).
+Use [the nanodevice and local-message foundation](#nanodevice-and-local-message-foundation-m61)
+and [detection-to-one-hop communication](#detection-to-one-hop-communication-m62).
 
 ### 6. Choose your first experiment
 
@@ -388,10 +398,11 @@ Use the smallest workflow that answers the intended question:
 | inspect a synthetic apoptosis decision and higher-layer event | M5.7 apoptosis-response profile | component/developer workflow |
 | aggregate a prescribed response over very large homogeneous cohorts | M5.8 apoptosis-population profile | component/developer workflow |
 | inspect device capabilities, resource budgets, and a traceable local message | M6.1 locator/collector profiles | component/developer workflow |
+| send a checked receptor detection over a local link and inspect communication metrics | M6.2 local-communication profile | component/developer workflow |
 
 If the desired study needs a capillary-generated time-varying or consuming cell
 signal, spatial drug diffusion/binding, biologically qualified response, a
-physical or networked Nano-IoT link, or a complete fingerprinting chain, treat
+physically qualified Nano-IoT link, relay/gateway path, or a complete fingerprinting chain, treat
 it as a future scenario design rather than silently approximating it with the
 current synthetic component models.
 
@@ -423,7 +434,7 @@ current synthetic component models.
 ## Part II – Technical installation, execution, and model workflows
 
 Part II assumes that the reader has selected an experiment family. Begin with
-the command-line workflows for installation and body transport. M3 through M6.1
+the command-line workflows for installation and body transport. M3 through M6.2
 sections then explain executable reference and component/developer workflows.
 
 ### Repository orientation
@@ -1805,7 +1816,7 @@ ctest --test-dir build/windows-msvc -C Debug --output-on-failure `
 In the reference hand-off, the locator starts with `2 µJ`, spends `0.5 µJ` on
 one 64-byte transmission, and retains `1.5 µJ`. The collector starts with
 `1 µJ`, spends `0.25 µJ` on reception, retains `0.75 µJ`, and uses 64 bytes of
-its 256-byte storage. These are exact software-reference values chosen for
+its 1024-byte storage. These are exact software-reference values chosen for
 verification, not measured nanodevice characteristics.
 
 The test calls the receiving endpoint directly. M6.1 therefore provides no
@@ -1815,6 +1826,51 @@ gateway, BAN, external control, or security model. Read
 [M6 Status](m6/README.md), and
 [ADR-0042](architecture/adr/0042-versioned-nanodevice-and-local-message-contract.md)
 before extending device or message semantics.
+
+#### Detection-to-one-hop communication (M6.2)
+
+M6.2 replaces the M6.1 direct receiver call with an explicit link result and
+connects it to the checked M5.1 receptor detection. The composition profile is:
+
+```text
+examples/iot-models/synthetic-local-communication-v1.json
+data/schemas/local-communication-profile/1.0.0.schema.json
+```
+
+The cell model still knows nothing about communication. A dedicated adapter
+first converts a successful, causal `ReceptorLigandResponse` into a versioned
+`MolecularDetectionEvent`. The M6 adapter then creates the local message. The
+source M5 model, request, signal, compartment, detector, threshold time, event,
+and experiment correlation remain available across these objects.
+
+`OneHopLinkModel` is the replaceable link API. Its first implementation uses a
+declared repeating sequence of delivered, lost, and corrupted attempts, plus a
+fixed delay and link-energy cost. A modeled loss or corruption is a normal
+result and does not call or mutate the collector. A message that would arrive
+after its validity window is reported separately as expired.
+
+Run the focused checks after building:
+
+```powershell
+ctest --test-dir build/windows-msvc -C Debug --output-on-failure `
+  -R "local-communication|one-hop|One-hop|receptor detection|receptor adapter|M5 receptor"
+```
+
+The reference M5 detection occurs at `2.746530721 s`. The scheduled link adds
+`25 ms`, so the collector accepts the message at `2.771530721 s`. One attempt
+uses `0.5 µJ` at the locator, `0.25 µJ` at the collector, and `0.1 µJ` in the
+link model. These three energy owners remain separate in the metric report.
+
+A second checked sequence explicitly produces one delivery, one loss, and one
+corruption. The resulting delivery, total-drop, channel-loss, and corruption
+fractions are respectively `1/3`, `2/3`, `1/3`, and `1/3`. These values are
+prescribed verification outcomes, not estimated communication probabilities.
+
+The reference ends at the local collector and has no physical propagation,
+range, throughput, queue, interference, relay, gateway, BAN, external station,
+or encryption. Read [Detection to One-Hop Communication](m6/DETECTION_TO_ONE_HOP_COMMUNICATION.md)
+and [ADR-0043](architecture/adr/0043-neutral-detection-event-and-replaceable-one-hop-link.md)
+before adding a link implementation or interpreting its metrics.
 
 ### Troubleshooting
 
@@ -1852,7 +1908,7 @@ minutes on the current Windows reference system.
 
 This edition implements the two-level guide planned in the Roadmap: the new
 non-expert Part I precedes the retained and updated technical Part II. It covers
-the accepted software through M5 and the M6.1 development increment
+the accepted software through M5 and the M6.1–M6.2 development increments
 while preserving the difference between CLI, reference-workflow, and
 component/developer access.
 
@@ -1876,8 +1932,8 @@ every future gate checklist.
 
 Planned substantive extensions are:
 
-- M6.2 detection-to-message coupling and communication metrics, followed by
-  relay/multihop, active-gateway, BAN/external-link, and downlink increments;
+- M6.3 cluster, relay, and bounded multihop communication, followed by the
+  active-gateway, BAN/external-link, and downlink increments;
 - the M7 end-to-end fingerprinting workflow;
 - later medical scenarios, result analysis, and visualization workflows; and
 - participant-specific workflows only after their evidence and governance

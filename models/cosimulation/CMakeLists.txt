@@ -45,3 +45,23 @@ if(MEHLISSA_BUILD_CELL_MODELS)
     target_compile_definitions(mehlissa_cell_cosimulation PRIVATE JSONCONS_NO_DEPRECATED)
     mehlissa_configure_target(mehlissa_cell_cosimulation)
 endif()
+
+if(MEHLISSA_BUILD_CELL_MODELS AND MEHLISSA_BUILD_IOT_MODELS)
+    add_library(
+        mehlissa_iot_cosimulation
+        src/receptor_detection_adapter.cpp
+    )
+    add_library(MEHLISSA::iot_cosimulation ALIAS mehlissa_iot_cosimulation)
+    target_include_directories(
+        mehlissa_iot_cosimulation
+        PUBLIC
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    )
+    target_link_libraries(
+        mehlissa_iot_cosimulation
+        PUBLIC
+            MEHLISSA::cell_model
+            MEHLISSA::iot_model
+    )
+    mehlissa_configure_target(mehlissa_iot_cosimulation)
+endif()

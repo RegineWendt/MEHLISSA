@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:local-communication-profile:1.0.0",
+  "title": "MEHLISSA local communication profile",
+  "description": "Versioned molecular-detection message adapter and scheduled one-hop communication reference.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "detection_adapter", "link", "reference_case", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {"$ref": "#/$defs/profile"},
+    "detection_adapter": {"$ref": "#/$defs/detection_adapter"},
+    "link": {"$ref": "#/$defs/link"},
+    "reference_case": {"$ref": "#/$defs/reference_case"},
+    "validity": {"$ref": "#/$defs/validity"},
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "detection_adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "source_device_id", "target_device_id", "message_id_prefix", "correlation_id", "valid_for_seconds", "hop_limit", "size_bytes", "content_type"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "source_device_id": {"$ref": "#/$defs/id"},
+        "target_device_id": {"$ref": "#/$defs/id"},
+        "message_id_prefix": {"$ref": "#/$defs/id"},
+        "correlation_id": {"$ref": "#/$defs/id"},
+        "valid_for_seconds": {"type": "number", "exclusiveMinimum": 0},
+        "hop_limit": {"type": "integer", "minimum": 1, "maximum": 4294967295},
+        "size_bytes": {"type": "integer", "minimum": 1, "maximum": 18446744073709551615},
+        "content_type": {"type": "string", "minLength": 1}
+      }
+    },
+    "link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id", "latency_seconds", "energy_per_attempt_j", "repeating_outcomes"],
+      "properties": {
+        "kind": {"const": "scheduled_one_hop_link"},
+        "id": {"$ref": "#/$defs/id"},
+        "latency_seconds": {"type": "number", "minimum": 0},
+        "energy_per_attempt_j": {"type": "number", "minimum": 0},
+        "repeating_outcomes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"enum": ["delivered", "lost", "corrupted"]}
+        }
+      }
+    },
+    "reference_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_profile_id", "event_id", "expected_outcome", "expected_latency_seconds", "expected_link_energy_j"],
+      "properties": {
+        "source_profile_id": {"$ref": "#/$defs/id"},
+        "event_id": {"$ref": "#/$defs/id"},
+        "expected_outcome": {"enum": ["delivered", "lost", "corrupted"]},
+        "expected_latency_seconds": {"type": "number", "minimum": 0},
+        "expected_link_energy_j": {"type": "number", "minimum": 0}
+      }
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"enum": ["software_test_surrogate", "literature_parameterized", "externally_derived", "hypothesis"]},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "citation", "location", "license", "role"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "citation": {"type": "string", "minLength": 1},
+        "location": {"type": "string", "minLength": 1},
+        "license": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

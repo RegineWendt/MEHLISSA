@@ -711,8 +711,10 @@ See [M5 implementation evidence](m5/README.md),
    lifecycle, and local-message contracts.~~ Complete in M6.1 with an
    independent IoT library, strict profiles, and a checked locator-to-collector
    endpoint hand-off.
-2. Molecular-detection-to-message adapter and interchangeable one-hop link with
-   explicit delivery result and communication metrics.
+2. ~~Molecular-detection-to-message adapter and interchangeable one-hop link
+   with explicit delivery result and communication metrics.~~ Complete in M6.2
+   with a neutral M5 adapter, scheduled reference link, explicit delivery/drop
+   result, and separate count/byte/latency/loss/error/energy metrics.
 3. Cluster, relay, and bounded multi-hop strategies.
 4. Active nano/micro gateway with measurement uplink and command downlink.
 5. BAN and external analysis/control-station adapters, including a closed

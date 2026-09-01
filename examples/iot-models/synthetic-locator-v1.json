@@ -18,7 +18,7 @@
       "initial_energy_j": 0.000002,
       "transmit_energy_per_message_j": 0.0000005,
       "receive_energy_per_message_j": 0,
-      "maximum_message_size_bytes": 128,
+      "maximum_message_size_bytes": 512,
       "message_storage_capacity_bytes": 0,
       "maximum_transmissions": 4,
       "maximum_receptions": 0
