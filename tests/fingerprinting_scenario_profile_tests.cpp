@@ -166,8 +166,8 @@ TEST_CASE("M7.3 writes a strict manifest-complete reproducible result",
     const auto runtime = mehlissa::scenarios::fingerprinting::run_level_a_runtime(plan);
     const auto report =
         mehlissa::scenarios::fingerprinting::make_fingerprinting_result_report(plan, runtime);
-    const auto first = root() / "build" / "windows-msvc" / "m7-result-first.json";
-    const auto second = root() / "build" / "windows-msvc" / "m7-result-second.json";
+    const auto first = std::filesystem::temp_directory_path() / "mehlissa-m7-result-first.json";
+    const auto second = std::filesystem::temp_directory_path() / "mehlissa-m7-result-second.json";
     const auto schema = root() / "data" / "schemas" / "fingerprinting-result" / "1.0.0.schema.json";
 
     mehlissa::scenarios::fingerprinting::write_fingerprinting_result_report(report, first, schema);
@@ -323,8 +323,8 @@ TEST_CASE("M7 holistic runner serializes one deterministic Levels A-E result",
         mehlissa::scenarios::fingerprinting::compose_level_a_plan(load_profile(), root());
     const auto result = mehlissa::scenarios::fingerprinting::run_holistic_fingerprinting_scenario(
         plan, mehlissa::scenarios::fingerprinting::default_level_e_cases(plan));
-    const auto first = root() / "build" / "windows-msvc" / "m7-holistic-first.json";
-    const auto second = root() / "build" / "windows-msvc" / "m7-holistic-second.json";
+    const auto first = std::filesystem::temp_directory_path() / "mehlissa-m7-holistic-first.json";
+    const auto second = std::filesystem::temp_directory_path() / "mehlissa-m7-holistic-second.json";
     const auto schema = root() / "data" / "schemas" / "fingerprinting-result" / "2.0.0.schema.json";
 
     mehlissa::scenarios::fingerprinting::write_holistic_fingerprinting_result_report(result, first,
