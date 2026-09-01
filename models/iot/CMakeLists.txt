@@ -5,9 +5,11 @@ find_package(jsoncons CONFIG REQUIRED)
 
 add_library(
     mehlissa_iot_model
+    src/cluster_communication_profile.cpp
     src/local_communication_profile.cpp
     src/local_message.cpp
     src/molecular_detection.cpp
+    src/multi_hop_network.cpp
     src/nanodevice.cpp
     src/nanodevice_profile.cpp
     src/one_hop_link.cpp

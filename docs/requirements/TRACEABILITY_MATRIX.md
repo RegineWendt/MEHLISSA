@@ -136,9 +136,9 @@ statements.
 | ID | Source | Status 2026-09-01 | Target | Planned verification |
 |---|---|---|---|---|
 | IOT-001 | DISS pp. 113–115, 186–188 | DONE | M6 | M6.1 provides a schema-validated free device type, composable capabilities, typed/discrete payload inventory, target, internal energy/message state, bounded resources, checked lifecycle, and synthetic locator/collector profiles |
-| IOT-002 | DISS pp. 96–97 | PART | M6 | M6.2 implements a replaceable locator-to-local-collector hop; relay, gateway, BAN, and station remain open |
-| IOT-003 | DISS pp. 117–118, 187–190 | PART | M2/M6 | passive segment-bound gateway measurement plus M6.2 causal receptor-detection-to-local-collector communication; range and active gateway follow |
-| IOT-004 | RM M6 | PART | M6 | M6.2 communication-only metrics report attempts, deliveries, bytes, latency, prescribed loss/corruption/expiry, and separate transmitter/receiver/link energy; capacity and qualified channel statistics remain open |
+| IOT-002 | DISS pp. 96–97 | PART | M6 | M6.3 implements strict local clusters, checked store-and-forward relays, and bounded multi-hop routing; active gateway, BAN, and station remain open |
+| IOT-003 | DISS pp. 117–118, 187–190 | PART | M2/M6 | passive segment-bound gateway measurement plus causal receptor-detection-to-local-collector communication through a bounded M6.3 cluster; range and active gateway follow |
+| IOT-004 | RM M6 | PART | M6 | M6.3 aggregates exact per-hop attempts, deliveries, bytes, latency, prescribed loss/corruption/expiry, and separate transmitter/receiver/link energy across a selected route; capacity and qualified channel statistics remain open |
 | IOT-005 | DISS pp. 96–100; MEH25 | SPEC | M6 | interchangeable network adapter without kernel dependency |
 | DATA-001 | RM 6.1 | PART | M1/M2 | versioned schemas and validators for experiment, provenance, log, and checkpoint; domain M2 data schemas follow |
 | DATA-002 | RM 6.4 | DONE | M1 | JSON Schema `1.0.0`, manifest and CLI negative tests |

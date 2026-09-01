@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-relay-v1",
+    "version": "1.0.0",
+    "title": "Synthetic store-and-forward relay"
+  },
+  "device": {
+    "id": "relay.synthetic.1",
+    "type": "nanorelay.synthetic",
+    "initial_state": "active",
+    "target": {"kind": "cluster", "id": "cluster.synthetic.local.1"},
+    "capabilities": ["transmit", "receive", "relay"],
+    "payloads": [],
+    "resources": {
+      "initial_energy_j": 0.000004,
+      "transmit_energy_per_message_j": 0.0000003,
+      "receive_energy_per_message_j": 0.0000002,
+      "maximum_message_size_bytes": 512,
+      "message_storage_capacity_bytes": 512,
+      "maximum_transmissions": 8,
+      "maximum_receptions": 8
+    }
+  },
+  "validity": {
+    "population": "synthetic software-test relay",
+    "physiological_state": "abstract store-and-forward communication without spatial propagation",
+    "evidence_class": "software_test_surrogate",
+    "description": "Exercises bounded reception, immediate forwarding, hop accounting, and separate relay energy use."
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m6-3-contract",
+      "citation": "MEHLISSA Next M6.3 cluster and bounded multi-hop software contract",
+      "location": "docs/m6/CLUSTER_RELAY_AND_MULTI_HOP.md",
+      "license": "CC-BY-4.0",
+      "role": "synthetic relay software-verification design"
+    }
+  ],
+  "limitations": [
+    "Energy, size, storage, and count values are synthetic verification values.",
+    "The relay forwards one checked message immediately and does not model a queue or contention.",
+    "The profile does not assert anatomical placement, radio range, molecular propagation, or hardware feasibility."
+  ]
+}

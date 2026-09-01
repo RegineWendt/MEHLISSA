@@ -120,7 +120,9 @@ small neutral kernel:
   local messages, lifecycle, energy, storage, and count accounting; and
 - an M6.2 neutral detection adapter and replaceable one-hop link with explicit
   delivery/drop results and communication-only latency, loss/error, byte, and
-  energy metrics.
+  energy metrics; and
+- an M6.3 strict directed cluster with bounded fewest-hop/lowest-latency route
+  selection, checked store-and-forward relays, and aggregate per-hop metrics.
 
 Medical scenarios and legacy state do not belong in the kernel. Biological and
 communication models depend on it as separate libraries.

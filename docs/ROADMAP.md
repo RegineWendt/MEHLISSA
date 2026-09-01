@@ -715,7 +715,10 @@ See [M5 implementation evidence](m5/README.md),
    with explicit delivery result and communication metrics.~~ Complete in M6.2
    with a neutral M5 adapter, scheduled reference link, explicit delivery/drop
    result, and separate count/byte/latency/loss/error/energy metrics.
-3. Cluster, relay, and bounded multi-hop strategies.
+3. ~~Cluster, relay, and bounded multi-hop strategies.~~ Complete in M6.3 with
+   a strict directed-cluster profile, deterministic fewest-hop and
+   lowest-latency selection, bounded immediate store-and-forward relays, and
+   aggregated per-hop results and communication metrics.
 4. Active nano/micro gateway with measurement uplink and command downlink.
 5. BAN and external analysis/control-station adapters, including a closed
    command-to-device path.

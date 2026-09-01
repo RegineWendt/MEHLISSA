@@ -59,6 +59,7 @@ decisions; a new decision supersedes an existing one through a new ADR.
 | [ADR-0041](adr/0041-cohort-compressed-apoptosis-population.md) | Accepted | exact weighted apoptosis aggregates with work and retained output bounded by cohort count |
 | [ADR-0042](adr/0042-versioned-nanodevice-and-local-message-contract.md) | Accepted | independent device capability/resource/lifecycle model and traceable local-message contract |
 | [ADR-0043](adr/0043-neutral-detection-event-and-replaceable-one-hop-link.md) | Accepted | neutral M5 detection adapter, replaceable one-hop link, explicit outcomes, and separate communication metrics |
+| [ADR-0044](adr/0044-bounded-cluster-routing-and-store-forward-relay.md) | Accepted | strict directed clusters, deterministic bounded route selection, and checked store-and-forward relay semantics |
 
 ## Status model
 

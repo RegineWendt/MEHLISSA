@@ -43,6 +43,7 @@ flowchart TB
     Cell[Cell layer<br/>binding, signaling, delivery, response]
     IoT[M6 device plane<br/>nanodevices and local messages]
     LocalLink[M6.2 local link<br/>delivery results and metrics]
+    Cluster[M6.3 cluster plane<br/>bounded routes and relays]
     External[Future M6 gateway, BAN,<br/>station and network adapter]
     Evidence[Logs, checkpoints, provenance,<br/>reports and validation results]
 
@@ -59,16 +60,18 @@ flowchart TB
     Capillary -.-> IoT
     Cell -->|receptor detection adapter| IoT
     IoT <-->|one-hop message| LocalLink
-    LocalLink -.-> External
+    LocalLink <-->|bounded per-hop exchange| Cluster
+    Cluster -.-> External
     Runner --> Evidence
 ```
 
 The solid biological paths are implemented as typed C++ APIs through M5. M6.1
 adds the independent device and local-message foundation. M6.2 adds the solid
 cell-detection adapter and replaceable local-link path with explicit outcomes
-and communication metrics. The dotted paths to a capillary detector and an
-external gateway/BAN/station remain future composition. The general CLI does
-not yet compose all parts into one run.
+and communication metrics. M6.3 composes those links into a solid bounded
+cluster/relay path. The dotted paths to a capillary detector and an external
+gateway/BAN/station remain future composition. The general CLI does not yet
+compose all parts into one run.
 
 ### 2.1 Governing principles
 
@@ -277,10 +280,18 @@ corruption, and validity expiry. `CommunicationMetrics` keeps message/byte
 counts, delivered latency, and transmitter/receiver/link energy separate from
 biological results.
 
+M6.3 adds `NanodeviceCluster`, two deterministic `ClusterRouteStrategy`
+variants, and `BoundedMultiHopSession`. A strict directed topology binds each
+edge to an M6.2 link. Route selection is loop-free and bounded by both cluster
+and message hop limits. Immediate store-and-forward relays preserve payload,
+correlation, source-event identity, and absolute expiry while exposing unique
+per-hop messages and aggregate metrics.
+
 `MEHLISSA::iot_cosimulation` alone maps an M5 `ReceptorLigandResponse` to the
 neutral event. Body, organ, capillary, and cell libraries do not depend on the
-IoT library. The scheduled link has no physical channel, range, capacity,
-routing, relay, gateway, BAN, or external-station behavior.
+IoT library. Scheduled links and declared topology have no anatomical
+placement, physical channel, range, capacity, queue, retransmission, gateway,
+BAN, or external-station behavior.
 
 ## 6. Cross-layer APIs and ownership
 

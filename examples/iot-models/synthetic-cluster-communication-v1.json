@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-cluster-communication-v1",
+    "version": "1.0.0",
+    "title": "Synthetic locator, relay, and collector cluster"
+  },
+  "cluster": {
+    "id": "cluster.synthetic.local.1",
+    "maximum_hops": 3,
+    "members": [
+      {"device_id": "locator.synthetic.1", "role": "endpoint"},
+      {"device_id": "relay.synthetic.1", "role": "relay"},
+      {"device_id": "collector.synthetic.1", "role": "collector"}
+    ],
+    "links": [
+      {
+        "kind": "scheduled_one_hop_link",
+        "id": "link.synthetic.locator-relay",
+        "source_device_id": "locator.synthetic.1",
+        "target_device_id": "relay.synthetic.1",
+        "latency_seconds": 0.010,
+        "energy_per_attempt_j": 0.00000005,
+        "repeating_outcomes": ["delivered"]
+      },
+      {
+        "kind": "scheduled_one_hop_link",
+        "id": "link.synthetic.relay-collector",
+        "source_device_id": "relay.synthetic.1",
+        "target_device_id": "collector.synthetic.1",
+        "latency_seconds": 0.015,
+        "energy_per_attempt_j": 0.00000007,
+        "repeating_outcomes": ["delivered"]
+      },
+      {
+        "kind": "scheduled_one_hop_link",
+        "id": "link.synthetic.locator-collector",
+        "source_device_id": "locator.synthetic.1",
+        "target_device_id": "collector.synthetic.1",
+        "latency_seconds": 0.040,
+        "energy_per_attempt_j": 0.00000009,
+        "repeating_outcomes": ["delivered"]
+      }
+    ]
+  },
+  "reference_case": {
+    "source_device_id": "locator.synthetic.1",
+    "target_device_id": "collector.synthetic.1",
+    "strategy": "lowest_total_latency",
+    "expected_route_device_ids": ["locator.synthetic.1", "relay.synthetic.1", "collector.synthetic.1"],
+    "expected_total_latency_seconds": 0.025,
+    "expected_total_link_energy_j": 0.00000012
+  },
+  "validity": {
+    "population": "synthetic software-contract cluster",
+    "physiological_state": "abstract local topology without anatomical geometry or channel physics",
+    "evidence_class": "software_test_surrogate",
+    "description": "Checks deterministic route selection, bounded store-and-forward relay behavior, trace preservation, and aggregated communication metrics."
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m6-2-link-contract",
+      "citation": "MEHLISSA Next M6.2 replaceable one-hop communication contract",
+      "location": "docs/m6/DETECTION_TO_ONE_HOP_COMMUNICATION.md",
+      "license": "CC-BY-4.0",
+      "role": "per-hop delivery result and metric foundation"
+    },
+    {
+      "id": "mehlissa-m6-3-cluster-contract",
+      "citation": "MEHLISSA Next M6.3 bounded cluster communication contract",
+      "location": "docs/m6/CLUSTER_RELAY_AND_MULTI_HOP.md",
+      "license": "CC-BY-4.0",
+      "role": "synthetic topology, routing, relay, and acceptance rules"
+    }
+  ],
+  "limitations": [
+    "All topology, latency, energy, and outcome values are synthetic deterministic verification values.",
+    "Route selection uses declared directed links and does not infer anatomical proximity or physical reachability.",
+    "Relays forward immediately without queues, contention, congestion, interference, or security processing.",
+    "The cluster ends at a local collector and does not yet include an active gateway, BAN, or external station."
+  ]
+}

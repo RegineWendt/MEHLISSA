@@ -52,8 +52,10 @@ M6 adds an independently replaceable **Nano-IoT communication plane** beside
 these biological layers. M6.1 defines configured device endpoints and
 traceable local messages. M6.2 translates a checked M5 detection through a
 separate adapter and sends it over a replaceable local link with explicit
-delivery outcomes and communication-only metrics. Relay networks, gateways,
-and external links follow in later M6 increments.
+delivery outcomes and communication-only metrics. M6.3 composes those links
+into bounded clusters with deterministic route selection and checked
+store-and-forward relays. Active gateways and external links follow in later
+M6 increments.
 
 The software is intended to help formulate and test computational research
 hypotheses. It does not assume that one model resolution is always best. A
@@ -1872,6 +1874,47 @@ or encryption. Read [Detection to One-Hop Communication](m6/DETECTION_TO_ONE_HOP
 and [ADR-0043](architecture/adr/0043-neutral-detection-event-and-replaceable-one-hop-link.md)
 before adding a link implementation or interpreting its metrics.
 
+#### Cluster, relay, and bounded multi-hop communication (M6.3)
+
+M6.3 lets one logical message cross a declared local cluster instead of ending
+after one link. Its strict reference inputs are:
+
+```text
+examples/iot-models/synthetic-relay-v1.json
+examples/iot-models/synthetic-cluster-communication-v1.json
+data/schemas/cluster-communication-profile/1.0.0.schema.json
+```
+
+A cluster identifies endpoint, relay, collector, and future gateway roles plus
+directed links and a maximum route length. Two deterministic strategies are
+available. `fewest_hops` minimizes the number of transmissions;
+`lowest_total_latency` minimizes the sum of configured link delays. Both reject
+loops and use stable tie-breaking, so the same profile always yields the same
+route.
+
+The reference topology offers a direct locator-to-collector link at `40 ms`
+and a two-hop locator-to-relay-to-collector path at `10 ms + 15 ms`. The
+fewest-hop strategy selects the direct link. The lowest-latency strategy selects
+the relay and completes in `25 ms`.
+
+At a relay, the source payload, content type, experiment correlation, biological
+source event, and absolute expiry are preserved. Sender identity, per-hop
+message identity, creation time, target, and remaining hop budget change
+explicitly. A relay spends reception and transmission energy; the final report
+retains every hop and aggregates communication metrics.
+
+For the 320-byte two-hop reference, the exact totals are 2 attempts, 2
+deliveries, 640 hop-bytes, 25 ms summed latency, 0.8 µJ transmitter energy,
+0.45 µJ receiver energy, and 0.12 µJ link-model energy. A separate case loses
+the second hop and verifies that the collector remains unchanged.
+
+These route and resource values are synthetic. They do not establish physical
+reachability, anatomical placement, molecular or radio propagation, queues,
+contention, congestion, retransmission, capacity, mobility, or security. Read
+[Cluster, Relay, and Bounded Multi-Hop Communication](m6/CLUSTER_RELAY_AND_MULTI_HOP.md)
+and [ADR-0044](architecture/adr/0044-bounded-cluster-routing-and-store-forward-relay.md)
+before adding topology or interpreting route comparisons.
+
 ### Troubleshooting
 
 #### CMake selects the wrong Visual Studio version
@@ -1932,8 +1975,8 @@ every future gate checklist.
 
 Planned substantive extensions are:
 
-- M6.3 cluster, relay, and bounded multihop communication, followed by the
-  active-gateway, BAN/external-link, and downlink increments;
+- M6.4 active-gateway measurement-uplink and local command-downlink semantics,
+  followed by BAN/external-link and full closed-loop increments;
 - the M7 end-to-end fingerprinting workflow;
 - later medical scenarios, result analysis, and visualization workflows; and
 - participant-specific workflows only after their evidence and governance
