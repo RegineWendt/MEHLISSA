@@ -112,12 +112,6 @@ using namespace mehlissa::models::iot;
             mehlissa::core::joules(0.5e-6),  {ScheduledLinkOutcome::delivered}};
 }
 
-[[nodiscard]] ScheduledBanTransportConfig downlink_config() {
-    return {"ban.synthetic.station-gateway", 15ms,
-            mehlissa::core::joules(1.5e-6),  mehlissa::core::joules(0.75e-6),
-            mehlissa::core::joules(0.4e-6),  {ScheduledLinkOutcome::delivered}};
-}
-
 } // namespace
 
 TEST_CASE("Strict BAN and station profile composes both directions", "[m6][iot][ban][schema]") {
