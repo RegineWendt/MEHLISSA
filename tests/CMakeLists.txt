@@ -190,12 +190,14 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
             ban_station_tests.cpp
             multi_hop_network_tests.cpp
             nanodevice_tests.cpp
+            network_simulator_adapter_tests.cpp
             one_hop_link_tests.cpp
         )
         target_link_libraries(
             mehlissa_iot_model_tests
             PRIVATE
                 MEHLISSA::iot_model
+                jsoncons::jsoncons
                 Catch2::Catch2WithMain
         )
         target_compile_definitions(

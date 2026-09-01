@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 This document is the entry point for developers who want to understand,
 integrate, or extend MEHLISSA Next. It describes the implemented architecture
-through the accepted M5 gate and the M6.5 development increment, the public C++
+through the accepted M5 gate and the M6.6 development increment, the public C++
 and command-line interfaces, the data contracts, and the workflow for adding a
 module such as a new organ model. It also explains
 which forms of personalization are possible today and which remain roadmap
@@ -46,7 +46,7 @@ flowchart TB
     Cluster[M6.3 cluster plane<br/>bounded routes and relays]
     Gateway[M6.4 active gateway<br/>measurement and command boundary]
     External[M6.5 BAN and station<br/>adapters plus command policy]
-    NetworkSim[Future M6.6 external<br/>network-simulator adapter]
+    NetworkSim[M6.6 external network-simulator<br/>metadata boundary]
     Evidence[Logs, checkpoints, provenance,<br/>reports and validation results]
 
     Manifest --> Runner
@@ -65,7 +65,7 @@ flowchart TB
     LocalLink <-->|bounded per-hop exchange| Cluster
     Cluster <-->|measurement / control message| Gateway
     Gateway <-->|BAN frames and metrics| External
-    External -.->|future simulator transport| NetworkSim
+    External <-->|versioned request / response| NetworkSim
     Runner --> Evidence
 ```
 
@@ -75,9 +75,11 @@ cell-detection adapter and replaceable local-link path with explicit outcomes
 and communication metrics. M6.3 composes those links into a solid bounded
 cluster/relay path. M6.4 adds the solid active-gateway boundary. M6.5 closes the
 solid BAN/station round trip with explicit command governance and a local
-actuator delivery. The dotted paths to a capillary detector and an external
-network simulator remain future composition. The general CLI does not yet
-compose all parts into one run.
+actuator delivery. M6.6 adds the solid, metadata-only request/response boundary
+through which an optional external network simulator can supply BAN outcomes
+and communication costs. The dotted path from capillary tissue to a dedicated
+detector remains future composition. The general CLI does not yet compose all
+parts into one run.
 
 ### 2.1 Governing principles
 
@@ -310,11 +312,22 @@ when its station, gateway, decision, validity, source measurement, and
 correlation match the previous uplink. The scheduled transport reference
 reports BAN outcomes and costs independently from the local cluster.
 
+M6.6 adds `ExternalNetworkSimulatorAdapter`, a typed
+`NetworkSimulatorClient`, and `JsonNetworkSimulatorClient`. The adapter exports
+only frame identity, direction, endpoints, causal trace identifiers, time,
+deadline, and byte count. It validates a versioned simulator response and maps
+delivery, loss, corruption, completion time, and transmitter/receiver/link
+energy into the unchanged `BanTransferResult`. The JSON exchange is deliberately
+narrow so an in-process library, child process, or remote service can be
+attached without introducing simulator types into MEHLISSA.
+
 `MEHLISSA::iot_cosimulation` alone maps an M5 `ReceptorLigandResponse` to the
 neutral event. Body, organ, capillary, and cell libraries do not depend on the
 IoT library. Scheduled links and declared topology have no anatomical
 placement, physical channel, range, throughput capacity, queue,
-retransmission, or calibrated protocol behavior. M6.5 policy is a simulation
+retransmission, or calibrated protocol behavior. The checked M6.6 exchange
+uses a synthetic fixture and does not itself implement a radio, protocol, or
+network model. M6.5 policy is a simulation
 transport allow-list and causal check; it is not authentication, cryptographic
 authorization, clinical policy, or an actuation effect.
 
@@ -502,10 +515,11 @@ pulmonary assumptions:
 10. prove that the caller and coupler need no kidney-specific branch beyond
     choosing the factory and declared route.
 
-### 9.6 Adding a BAN or network-simulator adapter
+### 9.6 Adding a BAN transport or external network-simulator integration
 
-A new upper-network implementation should derive from `BanTransportAdapter`
-and implement `kind`, `adapter_id`, and `transfer`. It must:
+A wholly internal upper-network implementation can derive from
+`BanTransportAdapter` and implement `kind`, `adapter_id`, and `transfer`. It
+must:
 
 1. accept only a validated `BanFrame` and preserve its identity and payload;
 2. return one internally consistent `BanTransferResult` with explicit delivery
@@ -524,6 +538,27 @@ and implement `kind`, `adapter_id`, and `transfer`. It must:
 Do not bypass `ExternalAnalysisControlStation` or `GatewayBanAdapter` for the
 reference command path. Those objects own the visible policy and causal/replay
 checks; the transport owns delivery behavior only.
+
+For an external simulator, prefer the M6.6 boundary instead of creating a
+second direct BAN adapter:
+
+1. implement `NetworkSimulatorClient::simulate` for a typed in-process
+   integration, or `NetworkSimulatorJsonExchange::exchange` for a process or
+   service integration;
+2. configure the stable simulator, version, and scenario identity with the
+   strict external-adapter profile;
+3. accept the versioned metadata-only request and return the versioned response
+   without requiring or exposing measurement or command payload content;
+4. echo all request, adapter, simulator, scenario, and frame identities exactly;
+5. return modeled non-delivery as `lost`, `corrupted`, or `expired`, reserving
+   exceptions for malformed or unavailable integrations; and
+6. run the existing conformance tests plus deterministic replay and scientific
+   validation appropriate to the chosen external model.
+
+The request/response schemas and integration details are documented in
+[External Network-Simulator Adapter](../m6/EXTERNAL_NETWORK_SIMULATOR_ADAPTER.md).
+A concrete ns-3 or other engine remains a separately selected and validated
+integration; M6.6 standardizes its MEHLISSA-facing boundary.
 
 ## 10. Personalization
 

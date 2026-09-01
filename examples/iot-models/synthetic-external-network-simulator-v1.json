@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-external-network-simulator-v1",
+    "version": "1.0.0",
+    "title": "Synthetic external network-simulator adapter reference"
+  },
+  "adapter": {
+    "kind": "external_network_simulator",
+    "id": "adapter.synthetic.external-network-simulator",
+    "simulator_id": "simulator.synthetic.fixture",
+    "simulator_version": "1.0.0",
+    "scenario_id": "scenario.synthetic.ban-link-v1",
+    "request_id_prefix": "network-request.m6-6",
+    "maximum_attempts": 4
+  },
+  "reference_case": {
+    "frame_id": "ban-frame.m6-5.measurement.measurement.m6-5.lung.1",
+    "expected_outcome": "delivered",
+    "expected_latency_seconds": 0.012,
+    "expected_transmitter_energy_j": 0.0000025,
+    "expected_receiver_energy_j": 0.00000125,
+    "expected_link_energy_j": 0.0000006
+  },
+  "validity": {
+    "population": "synthetic software-contract network-simulator exchange",
+    "physiological_state": "abstract BAN metadata exchange without physiological payload content",
+    "evidence_class": "software_test_surrogate",
+    "description": "Checks versioned request/response translation, identity echo, validity, and communication-only metric mapping through an external client boundary."
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m6-5-ban-contract",
+      "citation": "MEHLISSA Next M6.5 BAN transport adapter contract",
+      "location": "docs/m6/BAN_AND_EXTERNAL_STATION.md",
+      "license": "CC-BY-4.0",
+      "role": "replaceable BAN frame transport and result semantics"
+    },
+    {
+      "id": "mehlissa-m6-6-network-simulator-contract",
+      "citation": "MEHLISSA Next M6.6 external network-simulator adapter contract",
+      "location": "docs/m6/EXTERNAL_NETWORK_SIMULATOR_ADAPTER.md",
+      "license": "CC-BY-4.0",
+      "role": "metadata-only JSON boundary and external result mapping"
+    }
+  ],
+  "limitations": [
+    "The checked exchange uses a synthetic in-process fixture rather than ns-3 or another network simulator.",
+    "The adapter transports topology and timing metadata but deliberately omits biological and command payload content.",
+    "The external simulator owns channel, protocol, queue, interference, mobility, and capacity assumptions; MEHLISSA validates identity and result consistency but does not validate those external models.",
+    "The reference values are software-verification values and do not characterize a real BAN."
+  ]
+}

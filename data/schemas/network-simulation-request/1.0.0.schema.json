@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:network-simulation-request:1.0.0",
+  "title": "MEHLISSA external network-simulation request",
+  "description": "Metadata-only BAN transfer request for an external network simulator.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "request_id", "adapter_id", "simulator_id", "simulator_version", "scenario_id", "frame_id", "frame_kind", "source_endpoint_id", "target_endpoint_id", "correlation_id", "source_event_id", "departed_at_ns", "valid_until_ns", "size_bytes"],
+  "properties": {
+    "contract_version": {"const": "1.0.0"},
+    "request_id": {"$ref": "#/$defs/id"},
+    "adapter_id": {"$ref": "#/$defs/id"},
+    "simulator_id": {"$ref": "#/$defs/id"},
+    "simulator_version": {"$ref": "#/$defs/version"},
+    "scenario_id": {"$ref": "#/$defs/id"},
+    "frame_id": {"$ref": "#/$defs/id"},
+    "frame_kind": {"enum": ["measurement_uplink", "governed_command_downlink"]},
+    "source_endpoint_id": {"$ref": "#/$defs/id"},
+    "target_endpoint_id": {"$ref": "#/$defs/id"},
+    "correlation_id": {"$ref": "#/$defs/id"},
+    "source_event_id": {"$ref": "#/$defs/id"},
+    "departed_at_ns": {"type": "integer", "minimum": 0, "maximum": 9223372036854775807},
+    "valid_until_ns": {"type": "integer", "minimum": 1, "maximum": 9223372036854775807},
+    "size_bytes": {"type": "integer", "minimum": 1, "maximum": 18446744073709551615}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,511}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+  }
+}

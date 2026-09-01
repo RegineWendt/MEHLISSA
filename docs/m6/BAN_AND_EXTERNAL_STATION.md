@@ -73,8 +73,11 @@ corrupted outcome sequence. Validity expiry takes precedence. A
 loss, corruption, expiry, delivered latency, and the three energy categories
 using the shared communication-metrics contract.
 
-An external network simulator can implement this interface in M6.6 without
-changing the gateway, station, local cluster, or biological models.
+M6.6 supplies an `ExternalNetworkSimulatorAdapter` behind this interface. Its
+versioned, metadata-only client contract lets an external network simulator
+provide outcomes, timing, and communication energy without changing the
+gateway, station, local cluster, or biological models. See
+[External Network-Simulator Adapter](EXTERNAL_NETWORK_SIMULATOR_ADAPTER.md).
 
 ## Reference profile and verification
 

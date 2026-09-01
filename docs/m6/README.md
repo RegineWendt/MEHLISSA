@@ -19,8 +19,9 @@ one-hop link. M6.3 adds bounded cluster routing and relay forwarding. M6.4 adds
 an active local gateway, a neutral measurement publication boundary, and a
 routed local command downlink. M6.5 adds replaceable BAN transport, an external
 analysis/control station, explicit transport-policy governance, and a causal
-return path to a local actuator. Authenticated or clinical control and
-command-driven actuation effects do not exist yet.
+return path to a local actuator. M6.6 adds a versioned metadata-only adapter
+for optional external network simulators. Authenticated or clinical control
+and command-driven actuation effects do not exist yet.
 
 ## Implemented increments
 
@@ -123,6 +124,25 @@ and [ADR-0045](../architecture/adr/0045-active-gateway-measurement-and-command-b
 See [BAN and External Analysis/Control Station](BAN_AND_EXTERNAL_STATION.md) and
 [ADR-0046](../architecture/adr/0046-ban-adapter-and-governed-station-loop.md).
 
+### M6.6 - optional external network-simulator adapter
+
+- `ExternalNetworkSimulatorAdapter` implementing the unchanged M6.5 BAN
+  transport interface;
+- typed `NetworkSimulatorClient` plus deployment-neutral JSON exchange client;
+- versioned request/response contracts carrying only endpoint, direction,
+  trace, time, deadline, size, outcome, and communication-energy metadata;
+- deliberate exclusion of measurement, command, biological, and patient
+  payload content from the external request;
+- strict request, response, and adapter-profile JSON Schemas;
+- simulator, version, scenario, request, adapter, and frame identity checks;
+- mapping of external delivery, loss, corruption, time, and energy into the
+  existing BAN result and metric contracts; and
+- conformance tests for payload exclusion, expiry, malformed/extra responses,
+  identity mismatch, and attempt capacity.
+
+See [External Network-Simulator Adapter](EXTERNAL_NETWORK_SIMULATOR_ADAPTER.md)
+and [ADR-0047](../architecture/adr/0047-versioned-external-network-simulator-boundary.md).
+
 ## Planned sequence
 
 1. ~~Device, resource, lifecycle, and local-message foundation.~~ M6.1 complete.
@@ -133,8 +153,8 @@ See [BAN and External Analysis/Control Station](BAN_AND_EXTERNAL_STATION.md) and
    M6.4 complete.
 5. ~~BAN and external station adapters, including closed command-to-device
    path.~~ M6.5 complete.
-6. Optional external network-simulator adapter without physiological
-   dependencies.
+6. ~~Optional external network-simulator adapter without physiological
+   dependencies.~~ M6.6 complete.
 7. Loss, latency, error, energy, capacity, failure/security scenarios, User
    Guide review, and formal Gate M6 review.
 
@@ -143,11 +163,11 @@ See [BAN and External Analysis/Control Station](BAN_AND_EXTERNAL_STATION.md) and
 All M6 profiles, device budgets, topology, link values, and outcome sequences
 remain synthetic software-test values. M6.3 represents deterministic routing,
 relay, latency, loss, corruption, expiry, and energy-accounting semantics, and
-M6.5 adds a bidirectional BAN/station software path, but its scheduled links
-are not physical channels or calibrated probability models. It does not model
+M6.6 adds an optional external-simulator exchange boundary, but the checked
+client remains a synthetic fixture and is not a network model. M6 itself does not model
 anatomical placement, range, diffusion, interference, noise physics, capacity,
 queues, retransmission, a concrete BAN protocol, authentication, cryptographic
 authorization or integrity, encryption, clinical safety policy, or
 command-driven biological actuation. The gateway, station, policy, and BAN
-adapter are implementation-neutral software boundaries, not validated
-hardware or medical-device controls.
+adapter and external-simulator client contract are implementation-neutral
+software boundaries, not validated hardware or medical-device controls.

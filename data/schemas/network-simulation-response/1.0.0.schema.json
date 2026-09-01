@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:network-simulation-response:1.0.0",
+  "title": "MEHLISSA external network-simulation response",
+  "description": "Identity-preserving external network-simulator result for one BAN transfer.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "request_id", "adapter_id", "simulator_id", "simulator_version", "scenario_id", "frame_id", "outcome", "completed_at_ns", "transmitter_energy_j", "receiver_energy_j", "link_energy_j"],
+  "properties": {
+    "contract_version": {"const": "1.0.0"},
+    "request_id": {"$ref": "#/$defs/id"},
+    "adapter_id": {"$ref": "#/$defs/id"},
+    "simulator_id": {"$ref": "#/$defs/id"},
+    "simulator_version": {"$ref": "#/$defs/version"},
+    "scenario_id": {"$ref": "#/$defs/id"},
+    "frame_id": {"$ref": "#/$defs/id"},
+    "outcome": {"enum": ["delivered", "lost", "corrupted"]},
+    "completed_at_ns": {"type": "integer", "minimum": 0, "maximum": 9223372036854775807},
+    "transmitter_energy_j": {"type": "number", "minimum": 0},
+    "receiver_energy_j": {"type": "number", "minimum": 0},
+    "link_energy_j": {"type": "number", "minimum": 0}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,511}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+  }
+}

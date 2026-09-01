@@ -728,8 +728,10 @@ See [M5 implementation evidence](m5/README.md),
    replaceable BAN transport, a stateful station with explicit allow/deny
    policy, causal measurement-to-command return checks, and a routed reference
    delivery to a local actuator.
-6. Optional external network-simulator adapter without physiological model
-   dependencies.
+6. ~~Optional external network-simulator adapter without physiological model
+   dependencies.~~ Complete in M6.6 with a versioned metadata-only
+   request/response contract, typed and JSON client boundaries, strict identity
+   and validity checks, and mapping into the unchanged BAN result/metric API.
 7. Failure/security experiments, User Guide impact review, and formal Gate M6
    review.
 

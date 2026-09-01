@@ -1,0 +1,14 @@
+{
+  "contract_version": "1.0.0",
+  "request_id": "network-request.m6-6.ban-frame.m6-5.measurement.measurement.m6-5.lung.1.1",
+  "adapter_id": "adapter.synthetic.external-network-simulator",
+  "simulator_id": "simulator.synthetic.fixture",
+  "simulator_version": "1.0.0",
+  "scenario_id": "scenario.synthetic.ban-link-v1",
+  "frame_id": "ban-frame.m6-5.measurement.measurement.m6-5.lung.1",
+  "outcome": "delivered",
+  "completed_at_ns": 132000000,
+  "transmitter_energy_j": 0.0000025,
+  "receiver_energy_j": 0.00000125,
+  "link_energy_j": 0.0000006
+}

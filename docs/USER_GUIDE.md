@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M5 and the M6.1–M6.5 development increments
+**Covered software:** accepted M0 through M5 and the M6.1–M6.6 development increments
 
-**Last updated:** 1 September 2026, after the M6.5 implementation review
+**Last updated:** 1 September 2026, after the M6.6 implementation review
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -57,7 +57,10 @@ into bounded clusters with deterministic route selection and checked
 store-and-forward relays. M6.4 adds an active gateway boundary for traceable
 measurement publication and routed local commands. M6.5 adds replaceable BAN
 transport, an external analysis/control station, an explicit allow/deny policy,
-and a causally checked command return to a local actuator.
+and a causally checked command return to a local actuator. M6.6 lets an optional
+external network simulator determine BAN delivery, timing, and communication
+energy through a versioned metadata-only boundary, without receiving biological,
+measurement, or command payload content.
 
 The software is intended to help formulate and test computational research
 hypotheses. It does not assume that one model resolution is always best. A
@@ -206,8 +209,11 @@ The current software can:
 - route bounded local messages through checked relays and an active gateway;
 - publish a traceable measurement through a replaceable BAN adapter, evaluate
   an explicit station policy, and return an approved command to a local
-  actuator with causal and replay checks; and
-- run all accepted M0–M5 contracts plus the M6.1–M6.5 increments in a
+  actuator with causal and replay checks;
+- delegate BAN delivery outcomes, completion time, and communication energy to
+  an optional external network simulator through a strict payload-free
+  request/response contract; and
+- run all accepted M0–M5 contracts plus the M6.1–M6.6 increments in a
   reproducible cross-platform test suite.
 
 Not every capability has the same user-interface maturity:
@@ -396,6 +402,20 @@ and [detection-to-one-hop communication](#detection-to-one-hop-communication-m62
 Use [active gateway communication](#active-gateway-measurement-uplink-and-command-downlink-m64)
 and [BAN and external-station communication](#ban-and-external-analysiscontrol-station-m65).
 
+#### 5.12 External network-simulator co-simulation
+
+| Question element | Guided example |
+|---|---|
+| research question | Can an independently implemented network model determine BAN delivery, timing, and energy while MEHLISSA retains frame identity, causality, policy, and physiology? |
+| inputs | external-adapter profile; BAN frame metadata; simulator/version/scenario identity; a conforming typed client or JSON exchange |
+| workflow | convert the BAN frame to a payload-free request, run the external model, validate the echoed identities and response values, and map its result into the unchanged M6.5 communication session |
+| outputs | delivered, lost, corrupted, or expired outcome; completion time; bytes; transmitter, receiver, and link energy; normal BAN metrics |
+| interpretation | the boundary separates network-model choice from gateway, station-policy, and biological code and makes simulator replacement testable |
+| limitations | the included response is a synthetic conformance fixture, not a calibrated network model; a real ns-3 or other integration needs its own assumptions, validation, reproducibility controls, and license review |
+
+Use [external network-simulator integration](#external-network-simulator-adapter-m66)
+and the [M6.6 adapter specification](m6/EXTERNAL_NETWORK_SIMULATOR_ADAPTER.md).
+
 ### 6. Choose your first experiment
 
 Use the smallest workflow that answers the intended question:
@@ -424,6 +444,7 @@ Use the smallest workflow that answers the intended question:
 | compare bounded direct and relay routes | M6.3 cluster-communication profile | component/developer workflow |
 | publish a local measurement and route a gateway command | M6.4 active-gateway and gateway-cluster profiles | component/developer workflow |
 | inspect BAN outcomes and an explicitly governed measurement-to-command return path | M6.5 BAN/station profile | component/developer workflow |
+| use an external model for BAN outcome, timing, and energy without exposing payloads | M6.6 external network-simulator profile | component/developer workflow |
 
 If the desired study needs a capillary-generated time-varying or consuming cell
 signal, spatial drug diffusion/binding, biologically qualified response, a
@@ -2022,6 +2043,41 @@ the actuator still does not cause a payload or physiological effect. Read
 [ADR-0046](architecture/adr/0046-ban-adapter-and-governed-station-loop.md)
 before replacing the transport or interpreting the closed loop.
 
+#### External network-simulator adapter (M6.6)
+
+M6.6 keeps the M6.5 gateway, station, policy, and `BanCommunicationSession`
+unchanged. Its strict reference inputs are:
+
+```text
+examples/iot-models/synthetic-external-network-simulator-v1.json
+examples/iot-models/synthetic-network-simulator-response-v1.json
+data/schemas/network-simulator-adapter-profile/1.0.0.schema.json
+data/schemas/network-simulation-request/1.0.0.schema.json
+data/schemas/network-simulation-response/1.0.0.schema.json
+```
+
+`ExternalNetworkSimulatorAdapter` converts each `BanFrame` into a versioned
+request containing only simulator and scenario identity, endpoints, direction,
+trace identities, departure/deadline timestamps, and frame size. It deliberately
+does not serialize the measurement or command content. A
+`NetworkSimulatorClient` returns outcome, completion time, and separate
+transmitter/receiver/link energy. The adapter validates all echoed identities,
+time order, validity, capacity, and nonnegative costs before producing the
+normal BAN transfer result and metrics.
+
+An in-process engine can implement the typed client. A process, service, or
+other language can instead implement the narrow JSON exchange used by
+`JsonNetworkSimulatorClient`. Thus ns-3 is one possible future integration, not
+a mandatory MEHLISSA dependency.
+
+The bundled response is only a deterministic contract fixture. It demonstrates
+serialization, payload exclusion, validation, mapping, and failure handling;
+it makes no claim about radio propagation, topology, interference, queues,
+retransmission, BAN protocol behavior, or physiological tissue effects. Read
+[External Network-Simulator Adapter](m6/EXTERNAL_NETWORK_SIMULATOR_ADAPTER.md)
+and [ADR-0047](architecture/adr/0047-versioned-external-network-simulator-boundary.md)
+before connecting or interpreting an external model.
+
 ### Troubleshooting
 
 #### CMake selects the wrong Visual Studio version
@@ -2058,7 +2114,7 @@ minutes on the current Windows reference system.
 
 This edition implements the two-level guide planned in the Roadmap: the new
 non-expert Part I precedes the retained and updated technical Part II. It covers
-the accepted software through M5 and the M6.1–M6.5 development increments
+the accepted software through M5 and the M6.1–M6.6 development increments
 while preserving the difference between CLI, reference-workflow, and
 component/developer access.
 
@@ -2082,8 +2138,7 @@ every future gate checklist.
 
 Planned substantive extensions are:
 
-- M6.6 optional external network-simulator adapter behind the M6.5 transport
-  boundary;
+- M6.7 failure/security experiments and the formal M6 gate review;
 - the M7 end-to-end fingerprinting workflow;
 - later medical scenarios, result analysis, and visualization workflows; and
 - participant-specific workflows only after their evidence and governance

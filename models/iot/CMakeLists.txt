@@ -14,6 +14,8 @@ add_library(
     src/local_message.cpp
     src/molecular_detection.cpp
     src/multi_hop_network.cpp
+    src/network_simulator_adapter.cpp
+    src/network_simulator_adapter_profile.cpp
     src/nanodevice.cpp
     src/nanodevice_profile.cpp
     src/one_hop_link.cpp

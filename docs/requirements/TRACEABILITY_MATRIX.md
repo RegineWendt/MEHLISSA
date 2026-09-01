@@ -139,7 +139,7 @@ statements.
 | IOT-002 | DISS pp. 96–97 | DONE | M6 | M6.5 composes the in-body network, active gateway, replaceable BAN adapter, and external analysis/control station and returns one explicitly governed command to a routed local actuator |
 | IOT-003 | DISS pp. 117–118, 187–190 | PART | M2/M6 | passive segment measurement is joined by a resource-bounded active gateway and M6.5 BAN/station loop; physical placement, range, and hardware qualification remain open |
 | IOT-004 | RM M6 | PART | M6 | M6.5 retains exact local and BAN attempts, deliveries, bytes, latency, prescribed loss/corruption/expiry, and separate transmitter/receiver/link energy; capacity and qualified channel statistics remain open |
-| IOT-005 | DISS pp. 96–100; MEH25 | PART | M6 | `BanTransportAdapter` is interchangeable without kernel or physiological dependencies; an external network-simulator implementation remains M6.6 |
+| IOT-005 | DISS pp. 96–100; MEH25 | DONE | M6 | M6.6 provides a versioned metadata-only external network-simulator request/response boundary, typed and JSON clients, strict identity/validity checks, and a `BanTransportAdapter` implementation without kernel or physiological dependencies; a concrete ns-3 model remains an optional integration |
 | DATA-001 | RM 6.1 | PART | M1/M2 | versioned schemas and validators for experiment, provenance, log, and checkpoint; domain M2 data schemas follow |
 | DATA-002 | RM 6.4 | DONE | M1 | JSON Schema `1.0.0`, manifest and CLI negative tests |
 | DATA-003 | RM 2.4, 6.4 | PART | M1 | schema `1.0.0`, automatically generated `provenance.json`, SHA-256 and contract tests; data-version catalog follows with real models |

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:network-simulator-adapter-profile:1.0.0",
+  "title": "MEHLISSA external network-simulator adapter profile",
+  "description": "Versioned binding from BAN frames to one external simulator scenario.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "adapter", "reference_case", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {"$ref": "#/$defs/profile"},
+    "adapter": {"$ref": "#/$defs/adapter"},
+    "reference_case": {"$ref": "#/$defs/reference_case"},
+    "validity": {"$ref": "#/$defs/validity"},
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,511}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "version": {"$ref": "#/$defs/version"}, "title": {"type": "string", "minLength": 1}}
+    },
+    "adapter": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "simulator_id", "simulator_version", "scenario_id", "request_id_prefix", "maximum_attempts"],
+      "properties": {
+        "kind": {"const": "external_network_simulator"},
+        "id": {"$ref": "#/$defs/id"},
+        "simulator_id": {"$ref": "#/$defs/id"},
+        "simulator_version": {"$ref": "#/$defs/version"},
+        "scenario_id": {"$ref": "#/$defs/id"},
+        "request_id_prefix": {"$ref": "#/$defs/id"},
+        "maximum_attempts": {"type": "integer", "minimum": 1, "maximum": 18446744073709551615}
+      }
+    },
+    "reference_case": {
+      "type": "object", "additionalProperties": false,
+      "required": ["frame_id", "expected_outcome", "expected_latency_seconds", "expected_transmitter_energy_j", "expected_receiver_energy_j", "expected_link_energy_j"],
+      "properties": {
+        "frame_id": {"$ref": "#/$defs/id"},
+        "expected_outcome": {"enum": ["delivered", "lost", "corrupted"]},
+        "expected_latency_seconds": {"type": "number", "minimum": 0},
+        "expected_transmitter_energy_j": {"type": "number", "minimum": 0},
+        "expected_receiver_energy_j": {"type": "number", "minimum": 0},
+        "expected_link_energy_j": {"type": "number", "minimum": 0}
+      }
+    },
+    "validity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"enum": ["software_test_surrogate", "literature_parameterized", "externally_derived", "hypothesis"]},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "citation", "location", "license", "role"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "citation": {"type": "string", "minLength": 1},
+        "location": {"type": "string", "minLength": 1}, "license": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
