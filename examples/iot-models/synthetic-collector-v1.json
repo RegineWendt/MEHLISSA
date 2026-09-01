@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-collector-v1",
+    "version": "1.0.0",
+    "title": "Synthetic receiving nanocollector"
+  },
+  "device": {
+    "id": "collector.synthetic.1",
+    "type": "nanocollector.synthetic",
+    "initial_state": "active",
+    "target": {"kind": "gateway", "id": "gateway.synthetic.wrist"},
+    "capabilities": ["receive", "collect"],
+    "payloads": [],
+    "resources": {
+      "initial_energy_j": 0.000001,
+      "transmit_energy_per_message_j": 0,
+      "receive_energy_per_message_j": 0.00000025,
+      "maximum_message_size_bytes": 128,
+      "message_storage_capacity_bytes": 256,
+      "maximum_transmissions": 0,
+      "maximum_receptions": 4
+    }
+  },
+  "validity": {
+    "population": "synthetic software-test nanodevice",
+    "physiological_state": "abstract local communication without a physical channel",
+    "evidence_class": "software_test_surrogate",
+    "description": "Exercises capability composition, bounded reception storage, duplicate rejection, and energy accounting."
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m6-contract",
+      "citation": "MEHLISSA Next M6.1 software contract",
+      "location": "docs/m6/NANODEVICE_AND_LOCAL_MESSAGE_CONTRACT.md",
+      "license": "CC-BY-4.0",
+      "role": "software verification design"
+    }
+  ],
+  "limitations": [
+    "Energy, size, storage, and count values are synthetic verification values.",
+    "Reception is an explicit API call rather than a physical or probabilistic communication process.",
+    "Collection does not yet create an uplink report or gateway measurement."
+  ]
+}

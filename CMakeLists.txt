@@ -20,6 +20,7 @@ option(MEHLISSA_BUILD_MODEL_COUPLING "Build the cross-model coupling contracts" 
 option(MEHLISSA_BUILD_ORGAN_MODELS "Build the organ-model layer" ON)
 option(MEHLISSA_BUILD_CAPILLARY_MODELS "Build the capillary-model layer" ON)
 option(MEHLISSA_BUILD_CELL_MODELS "Build the cell-model layer" ON)
+option(MEHLISSA_BUILD_IOT_MODELS "Build the Nano-IoT model layer" ON)
 option(MEHLISSA_BUILD_COSIMULATION "Build body-organ co-simulation adapters" ON)
 option(MEHLISSA_BUILD_BENCHMARKS "Build the reproducible benchmark drivers" ON)
 option(MEHLISSA_ENABLE_CATCH2_TESTS "Build the full Catch2 unit-test suite" ON)
@@ -57,6 +58,10 @@ endif()
 
 if(MEHLISSA_BUILD_CELL_MODELS)
     add_subdirectory(models/cell)
+endif()
+
+if(MEHLISSA_BUILD_IOT_MODELS)
+    add_subdirectory(models/iot)
 endif()
 
 if(MEHLISSA_BUILD_COSIMULATION)

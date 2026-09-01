@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M5
+**Covered software:** accepted M0 through M5 and the M6.1 development increment
 
-**Last updated:** 31 August 2026, after the M5 gate review
+**Last updated:** 1 September 2026, after the M6.1 implementation review
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -46,7 +46,12 @@ connects four independently replaceable layers:
    propagates receptor state into a synthetic intracellular response,
    conservatively transfers an activated device payload into a cellular
    inventory, can return a synthetic apoptosis-commitment event, and can
-   aggregate that deterministic response over very large weighted cohorts;
+   aggregate that deterministic response over very large weighted cohorts.
+
+M6 adds an independently replaceable **Nano-IoT communication plane** beside
+these biological layers. Its first increment defines configured device
+endpoints and traceable local messages; delivery channels, relay networks,
+gateways, and external links follow in later M6 increments.
 
 The software is intended to help formulate and test computational research
 hypotheses. It does not assume that one model resolution is always best. A
@@ -183,8 +188,11 @@ The current software can:
   nanodevice activation and analytical, amount-conserving release/uptake chain;
 - map intracellular amount to a bounded synthetic response and return an
   apoptosis-commitment event through a neutral higher-layer boundary; and
-- run all accepted M0–M5 contracts in a reproducible
-  cross-platform test suite.
+- load versioned synthetic locator and collector nanodevice profiles;
+- emit and receive a traceable local message while enforcing lifecycle, energy,
+  storage, size, validity, routing, duplicate, and transmission-count rules; and
+- run all accepted M0–M5 contracts plus the M6.1 development increment in a
+  reproducible cross-platform test suite.
 
 Not every capability has the same user-interface maturity:
 
@@ -192,7 +200,7 @@ Not every capability has the same user-interface maturity:
 |---|---|---|
 | command-line workflow | intended to be invoked directly with `mehlissa-cli` | manifest validation, minimal run, body-model validation, BVS regression, body-state application |
 | executable reference workflow | a checked scenario or evaluator with automated acceptance gates | pulmonary validation, coarse/five-lobe comparison, historical FP9 timer |
-| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, molecular channels, receptor binding, capillary-to-cell hand-off, intracellular ODE/SSA network, conservative device release/uptake, synthetic apoptosis feedback |
+| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, molecular channels, receptor binding, capillary-to-cell hand-off, intracellular ODE/SSA network, conservative device release/uptake, synthetic apoptosis feedback, nanodevice and local-message contracts |
 
 The access level says how an experiment is run, not how scientifically valid it
 is. A CLI model can still be synthetic; a developer workflow can still be a
@@ -202,10 +210,11 @@ The M4-to-M5 connection is currently a non-consuming, spatially uniform snapshot
 at an exact synchronization time. M5.3 can accept a prescribed time-varying
 trajectory, but M4 does not yet generate that trajectory dynamically. The
 software does not yet model tissue depletion, spatial drug diffusion or binding,
-biologically calibrated pharmacodynamics or mechanistic apoptosis, biological cell heterogeneity, active
-Nano-IoT communication, the complete
-fingerprinting workflow, or a participant-specific virtual body. Those remain
-M5 and later work.
+biologically calibrated pharmacodynamics or mechanistic apoptosis, biological
+cell heterogeneity, a communication channel with latency or loss, relay and
+multihop routing, an active gateway, BAN/external communication, the complete
+fingerprinting workflow, or a participant-specific virtual body. M6.1 provides
+only the logical communication endpoints and message contract.
 
 ### 5. Experiment families and guided examples
 
@@ -342,6 +351,19 @@ and [the capillary-to-cell hand-off](#capillary-to-cell-signal-hand-off-m52), or
 [the apoptosis response](#apoptosis-and-higher-layer-feedback-m57), or
 [the compressed population](#cohort-compressed-apoptosis-population-m58).
 
+#### 5.10 Nanodevice capability, resources, and local message hand-off
+
+| Question element | Guided example |
+|---|---|
+| research question | Can a configured locator produce a traceable detection message that a configured collector accepts without violating either device's declared resources? |
+| inputs | strict locator and collector profiles, message identity and kind, target, source event, correlation ID, creation time, validity, hop limit, size, content type, and content |
+| workflow | load the M6.1 synthetic profiles, emit a local message at the locator, and deliver it directly to the collector through the component API |
+| outputs | immutable message metadata, remaining energy, transmission and reception counts, collector storage use, received-message queue, and lifecycle state |
+| interpretation | the reference hand-off verifies endpoint configuration, traceability, validation, and exact local resource accounting—not a propagation model |
+| limitations | all values are synthetic; direct API hand-off has no channel, distance, delay, interference, loss, relay, gateway, BAN, external network, encryption, or physiology coupling |
+
+Use [the nanodevice and local-message foundation](#nanodevice-and-local-message-foundation-m61).
+
 ### 6. Choose your first experiment
 
 Use the smallest workflow that answers the intended question:
@@ -365,12 +387,13 @@ Use the smallest workflow that answers the intended question:
 | activate a device and audit release plus cellular uptake | M5.6 conservative drug-delivery profile | component/developer workflow |
 | inspect a synthetic apoptosis decision and higher-layer event | M5.7 apoptosis-response profile | component/developer workflow |
 | aggregate a prescribed response over very large homogeneous cohorts | M5.8 apoptosis-population profile | component/developer workflow |
+| inspect device capabilities, resource budgets, and a traceable local message | M6.1 locator/collector profiles | component/developer workflow |
 
 If the desired study needs a capillary-generated time-varying or consuming cell
-signal, spatial drug diffusion/binding, biologically qualified response, active
-Nano-IoT communication, or a complete fingerprinting chain, treat it as a
-future scenario design rather than silently approximating it with the
-M5.1–M5.8 synthetic models.
+signal, spatial drug diffusion/binding, biologically qualified response, a
+physical or networked Nano-IoT link, or a complete fingerprinting chain, treat
+it as a future scenario design rather than silently approximating it with the
+current synthetic component models.
 
 ### 7. Short glossary
 
@@ -400,7 +423,7 @@ M5.1–M5.8 synthetic models.
 ## Part II – Technical installation, execution, and model workflows
 
 Part II assumes that the reader has selected an experiment family. Begin with
-the command-line workflows for installation and body transport. M3 through M5.8
+the command-line workflows for installation and body transport. M3 through M6.1
 sections then explain executable reference and component/developer workflows.
 
 ### Repository orientation
@@ -1752,6 +1775,47 @@ interaction. Read [Population Scale and Validity](m5/POPULATION_SCALE_AND_VALIDI
 [ADR-0041](architecture/adr/0041-cohort-compressed-apoptosis-population.md)
 before selecting a population resolution or interpreting its output.
 
+#### Nanodevice and local-message foundation (M6.1)
+
+M6.1 introduces a communication-plane endpoint without yet claiming a physical
+or network link. Two strict, synthetic profiles configure a locator and a
+collector:
+
+```text
+examples/iot-models/synthetic-locator-v1.json
+examples/iot-models/synthetic-collector-v1.json
+data/schemas/nanodevice-profile/1.0.0.schema.json
+```
+
+The locator declares sensing, transmission, and payload-release capabilities;
+the collector declares reception and collection. The API records device type,
+target, lifecycle, payload inventory, remaining energy, message-size and count
+limits, storage, and received messages. Each message preserves its source and
+target device, source event, correlation ID, creation time, validity, hop limit,
+size, content type, and content. Invalid routing, expiry, duplicates, missing
+capabilities, and resource overruns are rejected before state is changed.
+
+Run the focused checks after building:
+
+```powershell
+ctest --test-dir build/windows-msvc -C Debug --output-on-failure `
+  -R "Nano-IoT|nanodevice|locator|Local endpoints|Strict profiles|Semantic validation"
+```
+
+In the reference hand-off, the locator starts with `2 µJ`, spends `0.5 µJ` on
+one 64-byte transmission, and retains `1.5 µJ`. The collector starts with
+`1 µJ`, spends `0.25 µJ` on reception, retains `0.75 µJ`, and uses 64 bytes of
+its 256-byte storage. These are exact software-reference values chosen for
+verification, not measured nanodevice characteristics.
+
+The test calls the receiving endpoint directly. M6.1 therefore provides no
+distance, propagation, delay, interference, loss, relay, routing algorithm,
+gateway, BAN, external control, or security model. Read
+[Nanodevice and Local-Message Contract](m6/NANODEVICE_AND_LOCAL_MESSAGE_CONTRACT.md),
+[M6 Status](m6/README.md), and
+[ADR-0042](architecture/adr/0042-versioned-nanodevice-and-local-message-contract.md)
+before extending device or message semantics.
+
 ### Troubleshooting
 
 #### CMake selects the wrong Visual Studio version
@@ -1788,7 +1852,7 @@ minutes on the current Windows reference system.
 
 This edition implements the two-level guide planned in the Roadmap: the new
 non-expert Part I precedes the retained and updated technical Part II. It covers
-the accepted software through M5
+the accepted software through M5 and the M6.1 development increment
 while preserving the difference between CLI, reference-workflow, and
 component/developer access.
 
@@ -1812,7 +1876,8 @@ every future gate checklist.
 
 Planned substantive extensions are:
 
-- M6 active gateway and Nano-IoT configuration;
+- M6.2 detection-to-message coupling and communication metrics, followed by
+  relay/multihop, active-gateway, BAN/external-link, and downlink increments;
 - the M7 end-to-end fingerprinting workflow;
 - later medical scenarios, result analysis, and visualization workflows; and
 - participant-specific workflows only after their evidence and governance

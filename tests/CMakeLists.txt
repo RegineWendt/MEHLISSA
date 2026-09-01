@@ -183,6 +183,25 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
         catch_discover_tests(mehlissa_cell_model_tests DISCOVERY_MODE PRE_TEST)
     endif()
 
+    if(MEHLISSA_BUILD_IOT_MODELS)
+        add_executable(
+            mehlissa_iot_model_tests
+            nanodevice_tests.cpp
+        )
+        target_link_libraries(
+            mehlissa_iot_model_tests
+            PRIVATE
+                MEHLISSA::iot_model
+                Catch2::Catch2WithMain
+        )
+        target_compile_definitions(
+            mehlissa_iot_model_tests
+            PRIVATE MEHLISSA_TEST_ROOT="${PROJECT_SOURCE_DIR}"
+        )
+        mehlissa_configure_target(mehlissa_iot_model_tests)
+        catch_discover_tests(mehlissa_iot_model_tests DISCOVERY_MODE PRE_TEST)
+    endif()
+
     if(MEHLISSA_BUILD_CAPILLARY_MODELS AND MEHLISSA_BUILD_CELL_MODELS AND
        MEHLISSA_BUILD_COSIMULATION)
         add_executable(

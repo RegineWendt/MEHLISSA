@@ -135,7 +135,7 @@ statements.
 
 | ID | Source | Status 2026-08-31 | Target | Planned verification |
 |---|---|---|---|---|
-| IOT-001 | DISS pp. 113–115, 186–188 | LEGACY | M2/M7 | generic device type plus locator/collector composition |
+| IOT-001 | DISS pp. 113–115, 186–188 | DONE | M6 | M6.1 provides a schema-validated free device type, composable capabilities, typed/discrete payload inventory, target, internal energy/message state, bounded resources, checked lifecycle, and synthetic locator/collector profiles |
 | IOT-002 | DISS pp. 96–97 | SPEC | M6 | nano in-body → gateway → BAN → station |
 | IOT-003 | DISS pp. 117–118, 187–190 | PART | M2/M6 | passive segment-bound gateway measurement site with exact total and bounded individual passages; range, detection errors, and communication follow in M6 |
 | IOT-004 | RM M6 | SPEC | M6 | communication report with latency/loss/energy |

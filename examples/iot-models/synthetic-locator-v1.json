@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "profile": {
+    "id": "synthetic-locator-v1",
+    "version": "1.0.0",
+    "title": "Synthetic sensing and transmitting nanolocator"
+  },
+  "device": {
+    "id": "locator.synthetic.1",
+    "type": "nanolocator.synthetic",
+    "initial_state": "active",
+    "target": {"kind": "tissue", "id": "lung.synthetic"},
+    "capabilities": ["sense", "transmit", "release_payload"],
+    "payloads": [
+      {"id": "fingerprint-tile.synthetic.lung", "type": "fingerprint_tile", "unit_count": 1}
+    ],
+    "resources": {
+      "initial_energy_j": 0.000002,
+      "transmit_energy_per_message_j": 0.0000005,
+      "receive_energy_per_message_j": 0,
+      "maximum_message_size_bytes": 128,
+      "message_storage_capacity_bytes": 0,
+      "maximum_transmissions": 4,
+      "maximum_receptions": 0
+    }
+  },
+  "validity": {
+    "population": "synthetic software-test nanodevice",
+    "physiological_state": "abstract local communication without a physical channel",
+    "evidence_class": "software_test_surrogate",
+    "description": "Exercises capability composition, a unit-count payload, resource accounting, and a traceable local detection message."
+  },
+  "sources": [
+    {
+      "id": "mehlissa-m6-contract",
+      "citation": "MEHLISSA Next M6.1 software contract",
+      "location": "docs/m6/NANODEVICE_AND_LOCAL_MESSAGE_CONTRACT.md",
+      "license": "CC-BY-4.0",
+      "role": "software verification design"
+    }
+  ],
+  "limitations": [
+    "Energy, size, payload, and count values are synthetic verification values.",
+    "No physical molecular channel, interference, loss, propagation delay, or biological detection is modeled in M6.1.",
+    "The target is an abstract label rather than patient anatomy."
+  ]
+}

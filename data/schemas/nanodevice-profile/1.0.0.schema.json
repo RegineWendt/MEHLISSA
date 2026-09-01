@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:nanodevice-profile:1.0.0",
+  "title": "MEHLISSA nanodevice profile",
+  "description": "Versioned type, capability, payload, target, resource, and initial-lifecycle contract for one research nanodevice.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "device", "validity", "sources", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "profile": {"$ref": "#/$defs/profile"},
+    "device": {"$ref": "#/$defs/device"},
+    "validity": {"$ref": "#/$defs/validity"},
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1}
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": {"$ref": "#/$defs/id"},
+        "id": {"$ref": "#/$defs/id"}
+      }
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "type": {"$ref": "#/$defs/id"},
+        "amount_mol": {"type": "number", "exclusiveMinimum": 0},
+        "unit_count": {"type": "integer", "minimum": 1, "maximum": 18446744073709551615}
+      },
+      "oneOf": [
+        {"required": ["amount_mol"]},
+        {"required": ["unit_count"]}
+      ]
+    },
+    "resources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["initial_energy_j", "transmit_energy_per_message_j", "receive_energy_per_message_j", "maximum_message_size_bytes", "message_storage_capacity_bytes", "maximum_transmissions", "maximum_receptions"],
+      "properties": {
+        "initial_energy_j": {"type": "number", "exclusiveMinimum": 0},
+        "transmit_energy_per_message_j": {"type": "number", "minimum": 0},
+        "receive_energy_per_message_j": {"type": "number", "minimum": 0},
+        "maximum_message_size_bytes": {"type": "integer", "minimum": 1, "maximum": 18446744073709551615},
+        "message_storage_capacity_bytes": {"type": "integer", "minimum": 0, "maximum": 18446744073709551615},
+        "maximum_transmissions": {"type": "integer", "minimum": 0, "maximum": 18446744073709551615},
+        "maximum_receptions": {"type": "integer", "minimum": 0, "maximum": 18446744073709551615}
+      }
+    },
+    "device": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "initial_state", "target", "capabilities", "payloads", "resources"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "type": {"$ref": "#/$defs/id"},
+        "initial_state": {"enum": ["dormant", "active"]},
+        "target": {"$ref": "#/$defs/target"},
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"enum": ["sense", "transmit", "receive", "relay", "collect", "actuate", "release_payload"]}
+        },
+        "payloads": {"type": "array", "items": {"$ref": "#/$defs/payload"}},
+        "resources": {"$ref": "#/$defs/resources"}
+      }
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["population", "physiological_state", "evidence_class", "description"],
+      "properties": {
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "evidence_class": {"enum": ["software_test_surrogate", "literature_parameterized", "externally_derived", "hypothesis"]},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "citation", "location", "license", "role"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "citation": {"type": "string", "minLength": 1},
+        "location": {"type": "string", "minLength": 1},
+        "license": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

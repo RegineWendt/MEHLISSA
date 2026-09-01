@@ -132,6 +132,7 @@ using SecondOrderAssociationRate = Quantity<Dimension<3, -1, -1>>;
 using Amount = Quantity<Dimension<0, 0, 1>>;
 using Concentration = Quantity<Dimension<-3, 0, 1>>;
 using Mass = Quantity<Dimension<0, 0, 0, 1>>;
+using Energy = Quantity<Dimension<2, -2, 0, 1>>;
 using Pressure = Quantity<Dimension<-1, -2, 0, 1>>;
 using InversePressure = Quantity<Dimension<1, 2, 0, -1>>;
 using VascularResistance = Quantity<Dimension<-4, -1, 0, 1>>;
@@ -210,6 +211,14 @@ cubic_meters_per_mole_second(const double value) noexcept {
 
 [[nodiscard]] constexpr Amount micromoles(const double value) noexcept {
     return moles(value * 1.0e-6);
+}
+
+[[nodiscard]] constexpr Energy joules(const double value) noexcept {
+    return Energy::from_si(value);
+}
+
+[[nodiscard]] constexpr Energy microjoules(const double value) noexcept {
+    return joules(value * 1.0e-6);
 }
 
 [[nodiscard]] constexpr Concentration moles_per_cubic_meter(const double value) noexcept {
@@ -292,6 +301,8 @@ in_cubic_meters_per_mole_second(const SecondOrderAssociationRate value) noexcept
 }
 
 [[nodiscard]] constexpr double in_moles(const Amount value) noexcept { return value.si_value(); }
+
+[[nodiscard]] constexpr double in_joules(const Energy value) noexcept { return value.si_value(); }
 
 [[nodiscard]] constexpr double in_moles_per_cubic_meter(const Concentration value) noexcept {
     return value.si_value();

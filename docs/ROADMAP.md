@@ -705,6 +705,23 @@ See [M5 implementation evidence](m5/README.md),
 - optionally reconnect communication models to ns-3 or another network simulator without making physiological models dependent on it;
 - prepare security, miscontrol, and failure scenarios.
 
+#### Working implementation sequence
+
+1. ~~Versioned nanodevice type, capability, payload, target, resource,
+   lifecycle, and local-message contracts.~~ Complete in M6.1 with an
+   independent IoT library, strict profiles, and a checked locator-to-collector
+   endpoint hand-off.
+2. Molecular-detection-to-message adapter and interchangeable one-hop link with
+   explicit delivery result and communication metrics.
+3. Cluster, relay, and bounded multi-hop strategies.
+4. Active nano/micro gateway with measurement uplink and command downlink.
+5. BAN and external analysis/control-station adapters, including a closed
+   command-to-device path.
+6. Optional external network-simulator adapter without physiological model
+   dependencies.
+7. Failure/security experiments, User Guide impact review, and formal Gate M6
+   review.
+
 #### Gate M6 – “End-to-End Nano-IoT”
 
 - A simulated molecular detection produces a traceable external measurement.

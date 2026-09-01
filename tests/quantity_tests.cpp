@@ -101,3 +101,10 @@ TEST_CASE("Association rate and concentration derive a first-order binding rate"
 
     REQUIRE(mehlissa::core::in_per_second(binding_rate) == Catch::Approx(0.3));
 }
+
+TEST_CASE("Nano-IoT energy conversions preserve the SI value", "[core][quantity][m6]") {
+    const auto energy = mehlissa::core::joules(1.0) + mehlissa::core::microjoules(250.0);
+
+    STATIC_REQUIRE(std::same_as<std::remove_cvref_t<decltype(energy)>, mehlissa::core::Energy>);
+    REQUIRE(mehlissa::core::in_joules(energy) == Catch::Approx(1.00025));
+}

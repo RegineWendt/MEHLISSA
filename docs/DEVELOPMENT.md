@@ -106,7 +106,8 @@ reproducible through the pinned vcpkg baseline.
 
 ## Current bootstrap
 
-The current kernel deliberately contains only verifiable technical foundations:
+The current system builds verifiable technical foundations around a deliberately
+small neutral kernel:
 
 - monotonic simulation time with nanosecond resolution and overflow protection;
 - dimension-safe SI quantities and three-dimensional Euclidean geometry;
@@ -114,6 +115,9 @@ The current kernel deliberately contains only verifiable technical foundations:
 - versioned experiment validation and automatic run provenance;
 - structured JSONL run logging and a versioned checkpoint manifest;
 - validated vascular graphs, deterministic compartment transport, and schema-validated scientific reference reports;
-- bounded transport observation and flow-conserving body-state profiles.
+- bounded transport observation and flow-conserving body-state profiles; and
+- a versioned M6.1 nanodevice/profile contract with independently replaceable
+  local messages, lifecycle, energy, storage, and count accounting.
 
-Medical scenarios and legacy state do not belong in this kernel.
+Medical scenarios and legacy state do not belong in the kernel. Biological and
+communication models depend on it as separate libraries.
