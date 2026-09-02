@@ -52,6 +52,8 @@ struct ArtifactReference final {
     ArtifactRole role{};
     std::filesystem::path definition_path;
     std::filesystem::path schema_path;
+
+    [[nodiscard]] bool operator==(const ArtifactReference&) const noexcept = default;
 };
 
 struct ScenarioIdentity final {
@@ -67,18 +69,24 @@ struct RunIdentity final {
     std::string id;
     std::uint64_t master_seed{};
     std::uint64_t collector_count{};
+
+    [[nodiscard]] bool operator==(const RunIdentity&) const noexcept = default;
 };
 
 struct FingerprintTarget final {
     std::string fingerprint_id;
     std::string tissue;
     std::string region_id;
+
+    [[nodiscard]] bool operator==(const FingerprintTarget&) const noexcept = default;
 };
 
 struct ScenarioAcceptance final {
     std::vector<StageKind> required_stage_order;
     bool deterministic_replay_required{};
     bool clinical_validation_claim{};
+
+    [[nodiscard]] bool operator==(const ScenarioAcceptance&) const noexcept = default;
 };
 
 struct ScenarioSource final {
@@ -87,6 +95,8 @@ struct ScenarioSource final {
     std::string location;
     std::string license;
     std::string role;
+
+    [[nodiscard]] bool operator==(const ScenarioSource&) const noexcept = default;
 };
 
 struct ScenarioProfile final {
@@ -98,6 +108,8 @@ struct ScenarioProfile final {
     ScenarioAcceptance acceptance;
     std::vector<ScenarioSource> sources;
     std::vector<std::string> limitations;
+
+    [[nodiscard]] bool operator==(const ScenarioProfile&) const noexcept = default;
 };
 
 struct ScenarioProfileLoadRequest final {
