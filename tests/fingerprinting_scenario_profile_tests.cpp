@@ -196,7 +196,7 @@ TEST_CASE("M7.4 replaces immediate recognition with concentration-driven recepto
     REQUIRE(detection.detected);
     CHECK(detection.final_bound_fraction == Catch::Approx(0.7362632708334493));
     REQUIRE(detection.absolute_detection_time.has_value());
-    CHECK(detection.absolute_detection_time.value() > 25s);
+    CHECK(detection.absolute_detection_time.value_or(0s) > 25s);
     CHECK(runtime.stages[4].basis ==
           mehlissa::scenarios::fingerprinting::ExecutionBasis::model_execution);
     CHECK(runtime.stages[4].output_identity == detection.event_id);
@@ -236,7 +236,10 @@ TEST_CASE("M7.5 releases explicit FP9 tiles and completes the all-tiles surrogat
     REQUIRE(assembly.releases.size() == 9);
     CHECK(assembly.releases.front().tile_id == "FP9:tile:1");
     CHECK(assembly.releases.back().tile_id == "FP9:tile:9");
-    CHECK(assembly.completed_at.value() == detection.absolute_detection_time.value() + 15'990ms);
+    REQUIRE(assembly.completed_at.has_value());
+    REQUIRE(detection.absolute_detection_time.has_value());
+    CHECK(assembly.completed_at.value_or(0s) ==
+          detection.absolute_detection_time.value_or(0s) + 15'990ms);
     CHECK(runtime.stages[5].output_identity == assembly.assembly_id);
     CHECK(runtime.stages[6].input_identity == assembly.assembly_id);
 }
@@ -300,10 +303,14 @@ TEST_CASE("M7.7 reports sensitivity specificity and both misclassification direc
     CHECK(analysis.summary.false_negative == 1);
     REQUIRE(analysis.summary.sensitivity.has_value());
     REQUIRE(analysis.summary.specificity.has_value());
-    CHECK(analysis.summary.sensitivity->estimate == Catch::Approx(0.5));
-    CHECK(analysis.summary.specificity->estimate == Catch::Approx(0.5));
-    CHECK(analysis.summary.sensitivity->lower_95 < 0.5);
-    CHECK(analysis.summary.sensitivity->upper_95 > 0.5);
+    const auto sensitivity = analysis.summary.sensitivity.value_or(
+        mehlissa::scenarios::fingerprinting::ProportionInterval{});
+    const auto specificity = analysis.summary.specificity.value_or(
+        mehlissa::scenarios::fingerprinting::ProportionInterval{});
+    CHECK(sensitivity.estimate == Catch::Approx(0.5));
+    CHECK(specificity.estimate == Catch::Approx(0.5));
+    CHECK(sensitivity.lower_95 < 0.5);
+    CHECK(sensitivity.upper_95 > 0.5);
     CHECK(analysis.limitations.size() == 4);
 }
 
