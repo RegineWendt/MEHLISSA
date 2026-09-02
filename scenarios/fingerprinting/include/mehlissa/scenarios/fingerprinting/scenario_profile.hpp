@@ -59,6 +59,8 @@ struct ScenarioIdentity final {
     std::string version;
     std::string title;
     std::string acceptance_level;
+
+    [[nodiscard]] bool operator==(const ScenarioIdentity&) const noexcept = default;
 };
 
 struct RunIdentity final {
