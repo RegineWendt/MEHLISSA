@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/model-catalog/1.0.0.schema.json",
+  "title": "MEHLISSA model and example catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "catalog", "models", "examples"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "description"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "models": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/model"}
+    },
+    "examples": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/example"}
+    }
+  },
+  "$defs": {
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:|[/\\\\]).+"
+    },
+    "parameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "meaning", "unit", "configured_in"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "meaning": {"type": "string", "minLength": 1},
+        "unit": {"type": "string", "minLength": 1},
+        "configured_in": {"$ref": "#/$defs/relative_path"}
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "layer",
+        "maturity",
+        "summary",
+        "validity_scope",
+        "evidence_summary",
+        "artifacts",
+        "documentation",
+        "parameters",
+        "limitations"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9.-]+$"},
+        "title": {"type": "string", "minLength": 1},
+        "layer": {
+          "enum": ["body", "organ", "capillary", "cell", "nano-iot"]
+        },
+        "maturity": {"type": "string", "minLength": 1},
+        "summary": {"type": "string", "minLength": 1},
+        "validity_scope": {"type": "string", "minLength": 1},
+        "evidence_summary": {"type": "string", "minLength": 1},
+        "artifacts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/relative_path"}
+        },
+        "documentation": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/relative_path"}
+        },
+        "parameters": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/parameter"}
+        },
+        "limitations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "example": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "model_ids", "path", "purpose"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9.-]+$"},
+        "title": {"type": "string", "minLength": 1},
+        "model_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "pattern": "^[a-z][a-z0-9.-]+$"}
+        },
+        "path": {"$ref": "#/$defs/relative_path"},
+        "purpose": {"type": "string", "minLength": 1},
+        "command": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

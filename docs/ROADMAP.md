@@ -863,7 +863,7 @@ validity.
 | Package | Plain-language objective | Principal deliverables | Status |
 |---|---|---|---|
 | **UX-1 - One-command M7 scenario execution** | Let a researcher validate and run the complete fingerprinting demonstrator without writing C++ or invoking a test binary. | `scenario list`, `scenario validate`, `scenario run`, and `result summarize`; reuse of the existing M7 composer and runtime; unique run directory; result, provenance, log, and concise summary; positive and negative CLI tests. | passed on 2 September 2026; all 280 local Windows/MSVC tests and GitHub Windows/MSVC, Linux/GCC, and Linux/Clang analysis/sanitizer jobs pass |
-| **UX-2 - Model and example discovery** | Make available models, examples, parameters, evidence, and limitations discoverable from the application. | `model list`, `model describe`, scenario/example listing, and copyable starter configurations. | planned - next |
+| **UX-2 - Model and example discovery** | Make available models, examples, parameters, evidence, and limitations discoverable from the application. | `model list`, `model describe`, filtered example listing, safe copying, and a strict versioned catalog with semantic integrity checks. | implemented and accepted locally on 2 September 2026; all 281 Windows/MSVC tests pass; cross-platform CI pending |
 | **UX-3 - Human-readable and HTML result report** | Allow results to be inspected and shared without manually reading JSON. | concise terminal report, stable tabular exports, self-contained HTML report, evidence and non-claim section, and links to complete machine-readable results. | planned |
 | **UX-4 - Derived experiments and campaigns** | Let researchers create controlled variants, replicates, and parameter studies without editing source code. | safe parameter overrides, immutable derived manifests, seed/replicate plans, sweeps, paired comparisons, aggregate campaign results, and sensitivity hooks. | planned |
 | **UX-5 - Python API and notebooks** | Make MEHLISSA accessible to common scientific-analysis workflows. | stable Python bindings or process API, result readers, example notebooks, plotting, and campaign analysis while retaining the C++ contracts as the implementation authority. | planned |
@@ -1238,9 +1238,18 @@ The following packages are derived directly from this roadmap:
     and re-summarization. All 280 local Windows/MSVC tests and GitHub CI run
     33620386319 pass across Windows/MSVC, Linux/GCC, and Linux/Clang with
     formatting, clang-tidy, AddressSanitizer, and UndefinedBehaviorSanitizer.
-14. **Implement UX-2, model and example discovery.** Define a stable catalog
-    and description contract for available models, profiles, parameters,
-    evidence, and limitations, with copyable starter configurations.
+14. ~~Implement UX-2, model and example discovery.~~ Implemented and accepted
+    locally: a schema-valid catalog describes five model families and ten
+    curated examples; `model list`, `model describe`, filtered `example list`,
+    and fail-safe `example copy` expose parameters, evidence, limitations, and
+    licensed starter files. Semantic checks reject duplicate IDs, unknown model
+    references, missing assets, and paths outside the repository. The full 281
+    Windows/MSVC tests pass; cross-platform CI remains the final acceptance
+    check.
+15. **Implement UX-3, human-readable and HTML result reporting.** Preserve the
+    complete machine-readable result while adding concise terminal, stable
+    tabular, and self-contained shareable HTML views with evidence and non-claim
+    sections.
 
 ## 12. Definition of long-term success
 

@@ -1,0 +1,321 @@
+{
+  "schema_version": "1.0.0",
+  "catalog": {
+    "id": "mehlissa-next-model-catalog",
+    "title": "MEHLISSA Next model and starter-example catalog",
+    "description": "Curated discovery metadata for the implemented model families and representative configurations. Catalog maturity is an evidence statement, not a clinical-readiness claim."
+  },
+  "models": [
+    {
+      "id": "body.systemic-vascular-transport",
+      "title": "Systemic vascular transport",
+      "layer": "body",
+      "maturity": "historical_regression_reference",
+      "summary": "A deterministic 95-segment vascular graph transports entities through the whole-body circulation and accepts versioned physiological-state overlays.",
+      "validity_scope": "The accepted reference preserves the dissertation-era BVS/MEHLISSA graph, branching, flow, and timing semantics for reproducible research comparisons.",
+      "evidence_summary": "Legacy inputs were migrated with author permission, schema-checked, and covered by invariant, transport, observation, and historical BVS regression tests.",
+      "artifacts": [
+        "data/body-models/bvs95-dissertation-rest-v1.json",
+        "data/body-states/bvs95-rest-supine-v1.json",
+        "data/body-states/bvs95-head-up-tilt-70deg-v1.json",
+        "data/body-states/bvs95-supine-cycle-exercise-1.9x-v1.json"
+      ],
+      "documentation": [
+        "docs/m2/PHYSIOLOGICAL_BASELINE.md",
+        "docs/m2/BVS_REFERENCE_REGRESSION.md",
+        "docs/m2/BODY_STATE_PROFILES.md"
+      ],
+      "parameters": [
+        {
+          "path": "segments[].hemodynamics.flow_rate_m3_s",
+          "meaning": "Mean volumetric flow assigned to each vascular segment.",
+          "unit": "m3/s",
+          "configured_in": "data/body-models/bvs95-dissertation-rest-v1.json"
+        },
+        {
+          "path": "segments[].transitions[].probability",
+          "meaning": "Probability of selecting a successor at a vascular branch.",
+          "unit": "1",
+          "configured_in": "data/body-models/bvs95-dissertation-rest-v1.json"
+        },
+        {
+          "path": "cardiac_output_multiplier",
+          "meaning": "Global flow multiplier applied by a compatible body-state overlay.",
+          "unit": "1",
+          "configured_in": "data/body-states/bvs95-supine-cycle-exercise-1.9x-v1.json"
+        }
+      ],
+      "limitations": [
+        "The vascular coordinates are a schematic historical geometry, not segmented anatomy.",
+        "The accepted reference does not model pulsatile pressure, autoregulation, disease, or patient-specific circulation.",
+        "Historical regression agreement does not establish physiological or clinical prediction validity."
+      ]
+    },
+    {
+      "id": "organ.pulmonary-zero-dimensional",
+      "title": "Pulmonary zero-dimensional circulation",
+      "layer": "organ",
+      "maturity": "literature_parameterized_with_independent_endpoint_checks",
+      "summary": "Replaceable lung models range from one equivalent pulmonary bed to five parallel lobar beds with bounded flow, age, resistance, compliance, and distensibility variants.",
+      "validity_scope": "Healthy-adult aggregate pulmonary hemodynamics at rest and bounded exercise; the current five-lobe reference preserves the qualified aggregate model while exposing regional routing.",
+      "evidence_summary": "Parameters cite pulmonary literature; multiple independent aggregate endpoints and a separate perfusion distribution are checked, while regional and joint validation gaps remain explicit.",
+      "artifacts": [
+        "data/lung-models/healthy-adult-rest-supine-0d-v1.json",
+        "data/lung-models/healthy-adult-rest-exercise-age-invasive-0d-v4.json",
+        "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json",
+        "data/validation/pulmonary-zero-dimensional/healthy-population-multipoint-v3.json"
+      ],
+      "documentation": [
+        "docs/m3/LUNG_MODEL_DEFINITIONS.md",
+        "docs/m3/PULMONARY_0D_POPULATION_MULTIPOINT_VALIDATION.md",
+        "docs/m3/PULMONARY_LOBAR_PARALLEL_BEDS.md"
+      ],
+      "parameters": [
+        {
+          "path": "hemodynamics.baseline_cardiac_output.value_si",
+          "meaning": "Reference pulmonary blood flow used by the model.",
+          "unit": "m3/s",
+          "configured_in": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json"
+        },
+        {
+          "path": "hemodynamics.pulmonary_vascular_resistance.value_si",
+          "meaning": "Aggregate pulmonary vascular resistance at the reference state.",
+          "unit": "Pa*s/m3",
+          "configured_in": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json"
+        },
+        {
+          "path": "hemodynamics.parallel_beds[].perfusion_fraction.value_si",
+          "meaning": "Fraction of aggregate pulmonary flow assigned to a named lobe.",
+          "unit": "1",
+          "configured_in": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json"
+        },
+        {
+          "path": "hemodynamics.age_conditioning.default_age_years.value_si",
+          "meaning": "Default adult age for age-conditioned resistance selection.",
+          "unit": "year",
+          "configured_in": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json"
+        }
+      ],
+      "limitations": [
+        "The models are zero-dimensional or equivalent-bed representations rather than anatomical flow fields.",
+        "Five-lobe proportions are fixed and do not adapt to gravity, posture, disease, exercise, or recruitment.",
+        "No current lung model is a diagnostic, treatment, or patient-specific model."
+      ]
+    },
+    {
+      "id": "capillary.molecular-transport",
+      "title": "Capillary transit, exchange, and molecular channels",
+      "layer": "capillary",
+      "maturity": "mixed_geometry_evidence_and_software_verification",
+      "summary": "A replaceable capillary layer supports conserved transit, recruitment, exchange, entity observation and disposition, plus analytical, Brownian, trajectory, radial-field, and axial molecular channels.",
+      "validity_scope": "The pulmonary card constrains equivalent geometry and transit; most molecular kinetics and tracer cases remain synthetic verification inputs.",
+      "evidence_summary": "Continuity, amount balance, deterministic replay, analytical comparisons, convergence, and bounded work are tested; the pulmonary equivalent geometry is literature-qualified separately.",
+      "artifacts": [
+        "examples/capillary-models/pulmonary-healthy-adult-rest-supine-v1.json",
+        "examples/capillary-models/pulmonary-shared-axial-transport-v1.json",
+        "examples/capillary-models/pulmonary-synthetic-tracer-radial-field-v1.json",
+        "examples/capillary-models/pulmonary-synthetic-tracer-trajectory-v1.json"
+      ],
+      "documentation": [
+        "docs/m4/PULMONARY_CAPILLARY_QUALIFICATION.md",
+        "docs/m4/MOLECULAR_CHANNEL_INTERFACE.md",
+        "docs/m4/SHARED_AXIAL_ADVECTION_REACTION_CASE.md"
+      ],
+      "parameters": [
+        {
+          "path": "geometry.domain_length_m",
+          "meaning": "Axial length of the one-dimensional transport domain.",
+          "unit": "m",
+          "configured_in": "examples/capillary-models/pulmonary-shared-axial-transport-v1.json"
+        },
+        {
+          "path": "geometry.lumen_radius_m",
+          "meaning": "Equivalent lumen radius used for cross-section-averaged transport.",
+          "unit": "m",
+          "configured_in": "examples/capillary-models/pulmonary-shared-axial-transport-v1.json"
+        },
+        {
+          "path": "propagation.diffusion_coefficient_m2_s",
+          "meaning": "Molecular diffusion coefficient in the axial reference case.",
+          "unit": "m2/s",
+          "configured_in": "examples/capillary-models/pulmonary-shared-axial-transport-v1.json"
+        }
+      ],
+      "limitations": [
+        "The equivalent pulmonary capillary is not an anatomical alveolar-sheet reconstruction.",
+        "Current molecular diffusivity, reaction, and wall-interaction fixtures are not qualified biomarker kinetics.",
+        "Blood rheology, hematocrit, cellular obstruction, and spatial tissue coupling remain outside the accepted model."
+      ]
+    },
+    {
+      "id": "cell.receptor-response",
+      "title": "Receptor binding and intracellular response",
+      "layer": "cell",
+      "maturity": "software_test_surrogate",
+      "summary": "Analytical, time-varying, and stochastic receptor binding feed a shared intracellular ODE/SSA network, conservative delivery, apoptosis commitment, feedback, and cohort-compressed populations.",
+      "validity_scope": "Generic software contracts for composing binding, signaling, delivery, and response without silently violating amount ownership.",
+      "evidence_summary": "Closed-form solutions, stochastic moments, ODE/SSA agreement, conservation, threshold events, scaling, and deterministic replay are verified with synthetic parameters.",
+      "artifacts": [
+        "examples/cell-models/synthetic-receptor-ligand-v1.json",
+        "examples/cell-models/synthetic-intracellular-response-v1.json",
+        "examples/cell-models/synthetic-conservative-drug-delivery-v1.json",
+        "examples/cell-models/synthetic-apoptosis-population-v1.json"
+      ],
+      "documentation": [
+        "docs/m5/RECEPTOR_LIGAND_BASELINE.md",
+        "docs/m5/INTRACELLULAR_RESPONSE_NETWORK.md",
+        "docs/m5/M5_EVIDENCE_QUALIFICATION.md"
+      ],
+      "parameters": [
+        {
+          "path": "implementation.association_rate_m3_mol_s",
+          "meaning": "Association-rate constant for one-to-one receptor-ligand binding.",
+          "unit": "m3/(mol*s)",
+          "configured_in": "examples/cell-models/synthetic-receptor-ligand-v1.json"
+        },
+        {
+          "path": "implementation.dissociation_rate_s_1",
+          "meaning": "Dissociation-rate constant for receptor-ligand complexes.",
+          "unit": "1/s",
+          "configured_in": "examples/cell-models/synthetic-receptor-ligand-v1.json"
+        },
+        {
+          "path": "implementation.detection_threshold_fraction",
+          "meaning": "Bound-receptor fraction that emits the synthetic detection event.",
+          "unit": "1",
+          "configured_in": "examples/cell-models/synthetic-receptor-ligand-v1.json"
+        }
+      ],
+      "limitations": [
+        "All current kinetic, concentration, threshold, delivery, and population values are synthetic software fixtures.",
+        "No named disease biomarker, cell type, drug, pharmacokinetics, toxicity, or treatment efficacy is validated.",
+        "The cell layer must not be used to infer biological or clinical sensitivity, specificity, or response."
+      ]
+    },
+    {
+      "id": "nano-iot.communication",
+      "title": "Nano-IoT communication and governed station loop",
+      "layer": "nano-iot",
+      "maturity": "software_test_surrogate",
+      "summary": "Typed nanodevices, local links, relays, an active gateway, body-area-network transport, an external station, and an optional network-simulator boundary preserve causal identity and separate communication metrics.",
+      "validity_scope": "Deterministic interface, routing, accounting, failure, and governance contracts for an end-to-end research demonstrator.",
+      "evidence_summary": "Positive workflows and twelve fail-closed loss, corruption, expiry, replay, policy, identity, and capacity cases verify the implemented software boundaries.",
+      "artifacts": [
+        "examples/iot-models/synthetic-local-communication-v1.json",
+        "examples/iot-models/synthetic-cluster-communication-v1.json",
+        "examples/iot-models/synthetic-active-gateway-v1.json",
+        "examples/iot-models/synthetic-ban-station-v1.json",
+        "examples/iot-models/synthetic-iot-resilience-scenarios-v1.json"
+      ],
+      "documentation": [
+        "docs/m6/DETECTION_TO_ONE_HOP_COMMUNICATION.md",
+        "docs/m6/BAN_AND_EXTERNAL_STATION.md",
+        "docs/m6/M6_RESILIENCE_AND_BOUNDARY_MISUSE.md"
+      ],
+      "parameters": [
+        {
+          "path": "link.latency_seconds",
+          "meaning": "Prescribed one-hop delivery latency for the synthetic link.",
+          "unit": "s",
+          "configured_in": "examples/iot-models/synthetic-local-communication-v1.json"
+        },
+        {
+          "path": "link.energy_per_attempt_j",
+          "meaning": "Communication energy charged for each attempted transmission.",
+          "unit": "J",
+          "configured_in": "examples/iot-models/synthetic-local-communication-v1.json"
+        },
+        {
+          "path": "cluster.maximum_hops",
+          "meaning": "Maximum number of links allowed in a selected local route.",
+          "unit": "count",
+          "configured_in": "examples/iot-models/synthetic-cluster-communication-v1.json"
+        }
+      ],
+      "limitations": [
+        "Latency, energy, delivery outcomes, capacities, and topologies are synthetic verification values.",
+        "No calibrated radio, molecular-communication, interference, queueing, or hardware behavior is claimed.",
+        "No authentication, encryption, clinical authorization, cybersecurity guarantee, or treatment-safety claim is implemented."
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "id": "body.rest-reference",
+      "title": "Historical 95-segment body reference",
+      "model_ids": ["body.systemic-vascular-transport"],
+      "path": "data/body-models/bvs95-dissertation-rest-v1.json",
+      "purpose": "Inspect or validate the accepted whole-body vascular graph."
+    },
+    {
+      "id": "body.exercise-overlay",
+      "title": "Supine cycle-exercise body-state overlay",
+      "model_ids": ["body.systemic-vascular-transport"],
+      "path": "data/body-states/bvs95-supine-cycle-exercise-1.9x-v1.json",
+      "purpose": "Create a controlled higher-cardiac-output variant without rebuilding the graph."
+    },
+    {
+      "id": "lung.five-lobe-reference",
+      "title": "Five-lobe pulmonary zero-dimensional reference",
+      "model_ids": ["organ.pulmonary-zero-dimensional"],
+      "path": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json",
+      "purpose": "Inspect the current literature-parameterized pulmonary reference and its explicit limitations."
+    },
+    {
+      "id": "capillary.pulmonary-reference",
+      "title": "Equivalent pulmonary capillary reference",
+      "model_ids": ["capillary.molecular-transport"],
+      "path": "examples/capillary-models/pulmonary-healthy-adult-rest-supine-v1.json",
+      "purpose": "Inspect the evidence-qualified equivalent pulmonary capillary geometry."
+    },
+    {
+      "id": "capillary.axial-verification",
+      "title": "Shared axial molecular-transport verification case",
+      "model_ids": ["capillary.molecular-transport"],
+      "path": "examples/capillary-models/pulmonary-shared-axial-transport-v1.json",
+      "purpose": "Compare analytical and finite-volume transport under one explicit synthetic case."
+    },
+    {
+      "id": "cell.receptor-binding",
+      "title": "Synthetic receptor-ligand starter",
+      "model_ids": ["cell.receptor-response"],
+      "path": "examples/cell-models/synthetic-receptor-ligand-v1.json",
+      "purpose": "Inspect an exactly solvable binding and detection-threshold contract."
+    },
+    {
+      "id": "cell.apoptosis-population",
+      "title": "Synthetic cohort-compressed apoptosis population",
+      "model_ids": ["cell.receptor-response"],
+      "path": "examples/cell-models/synthetic-apoptosis-population-v1.json",
+      "purpose": "Inspect bounded population scaling and sensitivity fixtures."
+    },
+    {
+      "id": "nano-iot.resilience",
+      "title": "Nano-IoT failure and boundary-misuse cases",
+      "model_ids": ["nano-iot.communication"],
+      "path": "examples/iot-models/synthetic-iot-resilience-scenarios-v1.json",
+      "purpose": "Inspect the twelve fail-closed communication and governance cases."
+    },
+    {
+      "id": "scenario.body-lung-resolution",
+      "title": "Coarse versus five-lobe lung comparison",
+      "model_ids": ["body.systemic-vascular-transport", "organ.pulmonary-zero-dimensional"],
+      "path": "examples/scenarios/body-lung-resolution-comparison-v1.json",
+      "purpose": "Compare two replaceable lung resolutions inside one body-organ-body experiment."
+    },
+    {
+      "id": "scenario.fp9-complete",
+      "title": "Complete FP9/lung fingerprinting demonstrator",
+      "model_ids": [
+        "body.systemic-vascular-transport",
+        "organ.pulmonary-zero-dimensional",
+        "capillary.molecular-transport",
+        "cell.receptor-response",
+        "nano-iot.communication"
+      ],
+      "path": "examples/scenarios/fp9-lung-level-a-v1.json",
+      "purpose": "Validate and execute the complete M7 Levels A-E software demonstrator.",
+      "command": "mehlissa scenario run --file examples/scenarios/fp9-lung-level-a-v1.json --output results/fp9-reference"
+    }
+  ]
+}

@@ -421,6 +421,37 @@ This distinction is important for both extension and personalization: new
 models should use the existing loaders, factories, and coupling contracts so
 that M7 can compose them without introducing a second architecture.
 
+### 7.2 Model and example discovery catalog
+
+UX-2 adds a presentation-layer catalog at
+`data/catalog/model-catalog-v1.json`, validated by
+`data/schemas/model-catalog/1.0.0.schema.json`. It does not replace model-owned
+schemas, typed loaders, factories, or scientific model cards. Instead, it gives
+the command-line application one stable index through which a user can discover
+implemented model families, their maturity and validity scope, evidence,
+limitations, configurable parameter paths, implementation artifacts,
+documentation, and representative examples.
+
+The application validates both the JSON structure and repository-level
+semantics before presenting catalog content. It rejects duplicate model or
+example identifiers, examples that reference unknown models, missing files,
+and paths that escape the repository. Copying an example preserves its license
+sidecar and fails rather than overwriting existing work.
+
+To make a new module discoverable:
+
+1. add the module through the model-owned public contract, schema, loader,
+   factory, tests, evidence, and documentation process in Section 9;
+2. add a catalog entry using a stable layer-qualified ID and factual maturity,
+   validity, evidence, parameter, limitation, artifact, and documentation data;
+3. add at least one versioned, licensed representative configuration and refer
+   to it from the catalog; and
+4. run the UX-2 discovery test as well as the module and full test suites.
+
+The `1.0.0` catalog schema is immutable. An incompatible catalog contract must
+use a new schema version; catalog data can be extended compatibly while its
+catalog `version` records the presentation dataset revision.
+
 ## 8. Public API map
 
 Public headers live below each library's `include/mehlissa/` tree. The table
@@ -458,6 +489,10 @@ The current executable supports:
 | `mehlissa migrate-legacy-95` | reproducibly convert approved historical BVS95 inputs |
 | `mehlissa reference-bvs` | execute the M2 BVS reference regression |
 | `mehlissa apply-body-state` | derive a vascular graph from a compatible body-state profile |
+| `mehlissa scenario list\|validate\|run` | discover, validate, or execute the complete M7 fingerprinting scenario |
+| `mehlissa result summarize` | reproduce the concise text view of an existing M7 result |
+| `mehlissa model list\|describe` | discover implemented model families and inspect their scope, evidence, parameters, and limits |
+| `mehlissa example list\|copy` | discover curated starter configurations and copy one with its license without overwriting work |
 
 Detailed commands are maintained in the [User Guide](../USER_GUIDE.md).
 

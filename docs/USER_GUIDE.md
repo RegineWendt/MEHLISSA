@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Covered software:** accepted M0 through M7
 
-**Last updated:** 2 September 2026, after cross-platform acceptance of UX-1 one-command execution
+**Last updated:** 2 September 2026, after local implementation of UX-2 model and example discovery
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -672,6 +672,70 @@ directory is allocated. Level A remains the historical-timing baseline;
 Levels B-E execute detection, assembly, communication, and the four-case
 software classification analysis. The generated `Clinical validation claim:
 no` line is an essential interpretation boundary, not a failed run.
+
+#### Discover models and copy starter examples (UX-2)
+
+`UX-2` makes the implemented model families discoverable before a researcher
+chooses or edits a configuration. The catalog distinguishes five layers:
+
+| Layer | Discoverable model family | Current evidence summary |
+|---|---|---|
+| body | systemic vascular transport | historical regression reference with strict graph and transport tests |
+| organ | pulmonary zero-dimensional circulation | literature-parameterized with selected independent endpoint checks |
+| capillary | transit, exchange, and molecular transport | mixed qualified equivalent geometry and synthetic kinetics |
+| cell | receptor binding and intracellular response | software-test surrogate with analytical and stochastic verification |
+| Nano-IoT | communication and governed station loop | software-test surrogate with positive and fail-closed boundary tests |
+
+List all families or restrict the output to one layer:
+
+```powershell
+build/windows-msvc/apps/Debug/mehlissa.exe model list
+build/windows-msvc/apps/Debug/mehlissa.exe model list --layer organ
+```
+
+Describe one model family to see its scope, maturity, evidence summary,
+implementation artifacts, documentation, important configurable parameter
+paths, limitations, and associated starter examples:
+
+```powershell
+build/windows-msvc/apps/Debug/mehlissa.exe model describe `
+  --id organ.pulmonary-zero-dimensional
+```
+
+The maturity string is a compact catalog classification. Read it together with
+the printed validity scope, evidence, and limitations. In particular,
+`software_test_surrogate` means that a mechanism is useful for checking
+software composition but is not biologically or clinically validated.
+
+List all curated starter configurations or those associated with one family:
+
+```powershell
+build/windows-msvc/apps/Debug/mehlissa.exe example list
+build/windows-msvc/apps/Debug/mehlissa.exe example list `
+  --model organ.pulmonary-zero-dimensional
+```
+
+Copy a starter before modifying it:
+
+```powershell
+build/windows-msvc/apps/Debug/mehlissa.exe example copy `
+  --id scenario.fp9-complete `
+  --output work/my-first-scenario
+```
+
+The command creates the output directory when needed and copies both the JSON
+configuration and its `.license` sidecar. It refuses to overwrite an existing
+destination. A copied full scenario still resolves its selected artifacts from
+the MEHLISSA source tree; pass `--repository-root <directory>` when invoking the
+application outside that tree.
+
+The machine-readable catalog is
+`data/catalog/model-catalog-v1.json`; its strict schema is
+`data/schemas/model-catalog/1.0.0.schema.json`. On every discovery command the
+application checks the schema and also rejects duplicate IDs, unknown model
+references, missing files, and catalog paths that leave the repository. A new
+module becomes discoverable by adding a versioned catalog entry and at least one
+representative example; the CLI itself does not need a model-specific branch.
 
 #### Validate an experiment manifest
 
@@ -2457,8 +2521,10 @@ The usability package status is:
 - **UX-1, one-command M7 execution:** passed across all supported CI paths; the
   application validates and runs the complete fingerprinting demonstrator,
   creates a unique four-file run directory, and summarizes an existing result;
-- **UX-2, model and example discovery:** list and describe available artifacts,
-  parameters, evidence, and limitations; this is the next planned package;
+- **UX-2, model and example discovery:** implemented locally; a strict catalog
+  exposes five model families, ten curated examples, configurable parameter
+  paths, evidence, limitations, filtering, and safe starter copying; all 281
+  local tests pass and cross-platform CI is pending;
 - **UX-3, readable result reporting:** add concise terminal, tabular, and HTML
   views over the complete machine-readable result;
 - **UX-4, derived experiments and campaigns:** create controlled variants,
