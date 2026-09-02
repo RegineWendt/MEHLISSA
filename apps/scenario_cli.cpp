@@ -79,6 +79,12 @@ struct RunPaths final {
     std::filesystem::path summary;
 };
 
+struct RunSchemas final {
+    std::filesystem::path result;
+    std::filesystem::path provenance;
+    std::filesystem::path log;
+};
+
 [[noreturn]] void invalid_command(const std::string& message) {
     throw core::MehlissaError{ErrorCode::command_line_invalid, message};
 }
@@ -184,7 +190,7 @@ void reject_disallowed_options(const UsabilityCommand& command) {
 [[nodiscard]] std::optional<std::filesystem::path>
 search_repository_ancestors(std::filesystem::path path) {
     std::error_code error;
-    path = std::filesystem::absolute(std::move(path), error);
+    path = std::filesystem::absolute(path, error);
     if (error) {
         return std::nullopt;
     }
@@ -235,7 +241,7 @@ search_repository_ancestors(std::filesystem::path path) {
         return value;
     }
     std::error_code error;
-    const auto from_working_directory = std::filesystem::absolute(value, error);
+    auto from_working_directory = std::filesystem::absolute(value, error);
     if (!error && std::filesystem::is_regular_file(from_working_directory, error) && !error) {
         return from_working_directory;
     }
@@ -288,7 +294,7 @@ search_repository_ancestors(std::filesystem::path path) {
 }
 
 void write_validated_json(const Json& document, const std::filesystem::path& output_path,
-                          const std::filesystem::path& schema_path, const std::string_view role) {
+                          const std::string_view role, const std::filesystem::path& schema_path) {
     const auto schema_document = read_json(schema_path, "schema for " + std::string{role});
     try {
         const auto schema = jsoncons::jsonschema::make_json_schema(schema_document);
@@ -469,13 +475,11 @@ void write_text(const std::filesystem::path& path, const std::string_view conten
     return output;
 }
 
-void validate_created_artifacts(const RunPaths& paths, const std::filesystem::path& result_schema,
-                                const std::filesystem::path& provenance_schema,
-                                const std::filesystem::path& log_schema) {
-    static_cast<void>(read_validated_json(paths.result, result_schema, "scenario result"));
+void validate_created_artifacts(const RunPaths& paths, const RunSchemas& schemas) {
+    static_cast<void>(read_validated_json(paths.result, schemas.result, "scenario result"));
     static_cast<void>(
-        read_validated_json(paths.provenance, provenance_schema, "scenario provenance"));
-    experiment::validate_run_log({paths.log, log_schema});
+        read_validated_json(paths.provenance, schemas.provenance, "scenario provenance"));
+    experiment::validate_run_log({paths.log, schemas.log});
     std::error_code error;
     if (!std::filesystem::is_regular_file(paths.summary, error) || error) {
         output_error("Scenario summary was not created: " + paths.summary.string());
@@ -533,12 +537,11 @@ int validate_scenario(const UsabilityCommand& command) {
 
 int run_scenario(const UsabilityCommand& command) {
     const auto prepared = prepare_scenario(command);
-    const auto result_schema =
-        option_or_default(command.result_schema, prepared.repository_root, result_schema_relative);
-    const auto provenance_schema = option_or_default(
-        command.provenance_schema, prepared.repository_root, provenance_schema_relative);
-    const auto log_schema =
-        option_or_default(command.log_schema, prepared.repository_root, log_schema_relative);
+    const RunSchemas schemas{
+        option_or_default(command.result_schema, prepared.repository_root, result_schema_relative),
+        option_or_default(command.provenance_schema, prepared.repository_root,
+                          provenance_schema_relative),
+        option_or_default(command.log_schema, prepared.repository_root, log_schema_relative)};
     const auto started_at = experiment::current_utc_timestamp();
     const auto paths =
         create_run_paths(absolute_output_root(command), prepared.profile, started_at);
@@ -554,18 +557,18 @@ int run_scenario(const UsabilityCommand& command) {
         const auto result = scenarios::fingerprinting::run_holistic_fingerprinting_scenario(
             prepared.plan, scenarios::fingerprinting::default_level_e_cases(prepared.plan));
         scenarios::fingerprinting::write_holistic_fingerprinting_result_report(
-            result, {paths.result, result_schema});
+            result, {paths.result, schemas.result});
         const auto result_document =
-            read_validated_json(paths.result, result_schema, "scenario result");
+            read_validated_json(paths.result, schemas.result, "scenario result");
         const auto summary = summarize_result(result_document);
         write_text(paths.summary, summary);
         const auto completed_at = experiment::current_utc_timestamp();
         write_validated_json(make_provenance(prepared, result, paths, started_at, completed_at),
-                             paths.provenance, provenance_schema, "scenario provenance");
+                             paths.provenance, "scenario provenance", schemas.provenance);
         const auto simulation_time = result.reproducibility.runtime.stages.back().time;
         log.write({completed_at, simulation_time, experiment::LogLevel::info, "scenario-runner",
                    "run_completed", "Fingerprinting scenario execution completed", std::nullopt});
-        validate_created_artifacts(paths, result_schema, provenance_schema, log_schema);
+        validate_created_artifacts(paths, schemas);
         std::fputs(summary.c_str(), stdout);
         print_run_paths(paths);
     } catch (const core::MehlissaError& error) {
