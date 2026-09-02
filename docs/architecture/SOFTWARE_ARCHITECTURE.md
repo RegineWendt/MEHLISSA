@@ -90,8 +90,9 @@ a scenario-owned composer that validates the selected stack and causal order.
 M7.2-M7.4 add a typed physiological component probe, identity-preserving stage
 trace, artifact-hashed result report, and concentration-driven receptor
 detection. M7.5-M7.7 add explicit tile assembly, the executed selected IoT path,
-misclassification analysis, and one holistic result 2.0.0. The general CLI does
-not yet expose this scenario-owned workflow.
+misclassification analysis, and one holistic result 2.0.0. UX-1 exposes this
+scenario-owned workflow through `mehlissa scenario list|validate|run` and
+`mehlissa result summarize` without duplicating its simulation logic.
 
 ### 2.1 Governing principles
 
@@ -406,13 +407,15 @@ The generic experiment manifest currently selects duration, master seed, model-n
 strings, and output directory. The CLI `run` command creates provenance, a
 checkpoint manifest, and a JSONL run log. It does **not** yet resolve the model
 strings, instantiate the four layers, or wire their couplers. Current
-multilayer scenarios are therefore executable developer APIs and dedicated
-reference/benchmark drivers, not one declarative general run. M7 adds a
+multilayer scenarios therefore retain scenario-owned composition rather than
+using one unrestricted declarative general run. M7 adds a
 separate strict fingerprinting scenario profile and `LevelAPlan`, then uses
 `run_level_a_runtime` for typed initialization and a qualified stage trace,
 `make_fingerprinting_result_report` for a reproducibility manifest, and
-`run_level_b_detection` for mechanistic receptor-threshold evaluation. These
-scenario APIs remain outside the generic CLI.
+`run_level_b_detection` for mechanistic receptor-threshold evaluation. The
+UX-1 application layer loads and validates that profile, invokes the existing
+holistic scenario API, allocates a unique run directory, and writes a strict
+result, scenario provenance, structured log, and derived text summary.
 
 This distinction is important for both extension and personalization: new
 models should use the existing loaders, factories, and coupling contracts so

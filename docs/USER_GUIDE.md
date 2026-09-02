@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Covered software:** accepted M0 through M7
 
-**Last updated:** 2 September 2026, after the M7 gate review and UX-program planning
+**Last updated:** 2 September 2026, after local acceptance of UX-1 one-command execution
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -256,7 +256,7 @@ Not every capability has the same user-interface maturity:
 
 | Access level | Meaning | Examples |
 |---|---|---|
-| command-line workflow | intended to be invoked directly with `mehlissa-cli` | manifest validation, minimal run, body-model validation, BVS regression, body-state application |
+| command-line workflow | intended to be invoked directly with the `mehlissa` executable | manifest validation, minimal run, body-model validation, BVS regression, body-state application, and the complete M7 fingerprinting demonstrator |
 | executable reference workflow | a checked scenario or evaluator with automated acceptance gates | pulmonary validation, coarse/five-lobe comparison, historical FP9 timer |
 | component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, molecular channels, receptor binding, capillary-to-cell hand-off, intracellular ODE/SSA network, conservative device release/uptake, synthetic apoptosis feedback, nanodevices, local/multihop communication, active gateway, BAN and external station, external network-simulator adapter, and resilience scenarios |
 
@@ -476,6 +476,7 @@ Use the smallest workflow that answers the intended question:
 | verify that the installation and reproducibility machinery work | minimal deterministic experiment | command line |
 | study whole-body injection and circulation | BVS reference or synthetic body transport | command line |
 | compare rest, exercise, or posture assumptions | body-state profiles | command line |
+| run the complete FP9 lung demonstrator from validated inputs through external reporting and classification analysis | M7 fingerprinting scenario | command line |
 | inspect passive sampling and bounded trajectories | transport observation report | command line/reference workflow |
 | compare two pulmonary resolutions without changing the scenario | body–lung resolution comparison | executable reference workflow |
 | evaluate a pulmonary model against independent evidence | pulmonary validation evaluators | executable reference workflow |
@@ -613,6 +614,64 @@ build/windows-msvc/apps/Debug/mehlissa.exe
 
 The non-zero exit is intentional because a command is required. Stable exit
 categories are documented in [Errors, Logs, and Checkpoints](m1/ERRORS_LOGS_CHECKPOINTS.md).
+
+#### Run the complete M7 fingerprinting scenario with one command (UX-1)
+
+`UX-1` is the first post-M7 user-experience package. It exposes the accepted
+fingerprinting demonstrator through the normal `mehlissa` application, so a
+researcher no longer needs to write C++ or invoke a test binary.
+
+First list the runnable scenario profiles known to the source tree:
+
+```powershell
+build/windows-msvc/apps/Debug/mehlissa.exe scenario list
+```
+
+Validate the selected scenario and every definition/schema pair it references:
+
+```powershell
+build/windows-msvc/apps/Debug/mehlissa.exe scenario validate `
+  --file examples/scenarios/fp9-lung-level-a-v1.json
+```
+
+Then execute the complete Levels A-E workflow:
+
+```powershell
+build/windows-msvc/apps/Debug/mehlissa.exe scenario run `
+  --file examples/scenarios/fp9-lung-level-a-v1.json `
+  --output results/fp9-reference
+```
+
+The `--output` value is a parent directory. Each invocation creates a unique
+child such as
+`results/fp9-reference/fp9-lung-level-a-v1-20260902T094451Z`; if two runs start
+in the same UTC second, a numeric suffix prevents overwriting. The command
+prints the exact directory and writes:
+
+| File | Purpose |
+|---|---|
+| `result.json` | complete schema-validated M7 result, including input hashes, stage trace, detection, nine-tile assembly, communication, and classification analysis |
+| `provenance.json` | profile hash, run timestamps and identity, result hash, source revision, dirty-state flag, compiler, build type, operating system, and architecture |
+| `run.log.jsonl` | schema-validated start/completion records or a stable failure record |
+| `summary.txt` | concise outcome and non-clinical validity summary derived from `result.json` |
+
+The same concise view can be reproduced later from any complete result:
+
+```powershell
+build/windows-msvc/apps/Debug/mehlissa.exe result summarize `
+  --file results/fp9-reference/<printed-run-directory>/result.json
+```
+
+Run `mehlissa.exe scenario run --help` for all path overrides. The application
+normally discovers the repository root from the current directory or selected
+file; use `--repository-root <directory>` when executing from elsewhere.
+
+This command reuses the M7 composer and holistic runner. It therefore does not
+introduce a simplified second simulator. Validation completes before a run
+directory is allocated. Level A remains the historical-timing baseline;
+Levels B-E execute detection, assembly, communication, and the four-case
+software classification analysis. The generated `Clinical validation claim:
+no` line is an essential interpretation boundary, not a failed run.
 
 #### Validate an experiment manifest
 
@@ -2273,9 +2332,11 @@ and schema hashes, component execution state, and the ten causal stages. Read
 for the distinction between model execution, the historical timer, and
 synthetic software-surrogate stages.
 
-#### Run the complete M7 Levels A-E workflow
+#### Run the complete M7 Levels A-E workflow as a developer
 
-The holistic developer API executes the accepted reference path in one call:
+The UX-1 command above is the normal user path. Developers extending the
+scenario can execute the same accepted reference path directly through its C++
+API:
 
 ```cpp
 const auto profile = load_scenario_profile({profile_path, profile_schema_path});
@@ -2343,6 +2404,17 @@ Read the stable error identifier and message. Common causes are:
 - flow, velocity, or geometry values that violate SI invariants;
 - an unknown data-source reference.
 
+For `scenario validate` and `scenario run`, rejection can also mean that one
+of the thirteen selected M2-M6 definition/schema pairs is missing, invalid,
+outside the repository, duplicated, or inconsistent with the FP9 target. No
+run directory is created until this complete validation succeeds.
+
+#### The scenario command cannot find the repository
+
+Run the command from the MEHLISSA repository or pass its absolute path with
+`--repository-root`. The source tree is needed because the scenario profile
+selects versioned model and schema files by repository-relative path.
+
 #### The full test suite takes longer than expected
 
 The M2.4 regression simulates both 6,359 and 63,590 particles and recreates its
@@ -2380,12 +2452,13 @@ decision instead of silently skipping the guide. This policy is binding in the
 [Roadmap documentation rules](ROADMAP.md#66-documentation) and repeated in
 every future gate checklist.
 
-The next planned usability packages are:
+The usability package status is:
 
-- **UX-1, one-command M7 execution:** validate and run the complete
-  fingerprinting demonstrator and summarize its result through the CLI;
+- **UX-1, one-command M7 execution:** implemented and accepted locally; the
+  application validates and runs the complete fingerprinting demonstrator,
+  creates a unique four-file run directory, and summarizes an existing result;
 - **UX-2, model and example discovery:** list and describe available artifacts,
-  parameters, evidence, and limitations;
+  parameters, evidence, and limitations; this is the next planned package;
 - **UX-3, readable result reporting:** add concise terminal, tabular, and HTML
   views over the complete machine-readable result;
 - **UX-4, derived experiments and campaigns:** create controlled variants,

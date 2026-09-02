@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mehlissa.org/schemas/scenario-run-provenance/1.0.0.schema.json",
+  "title": "MEHLISSA scenario-run provenance",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scenario", "run", "result", "software"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "profile_path", "profile_sha256"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "profile_path": {"type": "string", "minLength": 1},
+        "profile_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "directory", "started_at_utc", "completed_at_utc", "status"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "directory": {"type": "string", "minLength": 1},
+        "started_at_utc": {"$ref": "#/$defs/timestamp"},
+        "completed_at_utc": {"$ref": "#/$defs/timestamp"},
+        "status": {"const": "completed"}
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"const": "result.json"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "software": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "git_commit", "git_dirty", "build_type", "compiler_id", "compiler_version", "operating_system", "architecture"],
+      "properties": {
+        "name": {"const": "MEHLISSA"},
+        "version": {"type": "string", "minLength": 1},
+        "git_commit": {"type": "string"},
+        "git_dirty": {"type": "boolean"},
+        "build_type": {"type": "string", "minLength": 1},
+        "compiler_id": {"type": "string", "minLength": 1},
+        "compiler_version": {"type": "string", "minLength": 1},
+        "operating_system": {"type": "string", "minLength": 1},
+        "architecture": {"type": "string", "minLength": 1}
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "timestamp": {"type": "string", "format": "date-time"}
+  }
+}

@@ -13,6 +13,8 @@
 #include <mehlissa/models/body/legacy_95_migration.hpp>
 #include <mehlissa/models/body/vascular_graph.hpp>
 
+#include "scenario_cli.hpp"
+
 #include <cinttypes>
 #include <cstdint>
 #include <cstdio>
@@ -67,6 +69,7 @@ void print_usage() {
                "  mehlissa apply-body-state --model <file> --profile <file> --output <file> "
                "[--schema <file>] [--profile-schema <file>]\n",
                stderr);
+    mehlissa::apps::print_usability_usage();
 }
 
 [[nodiscard]] CommandLine parse_command_line(const int argc, const char* const argv[]) {
@@ -361,6 +364,14 @@ int execute(const CommandLine& command) {
 
 int main(const int argc, const char* const argv[]) noexcept {
     try {
+        if (argc >= 2 &&
+            (std::string_view{argv[1]} == "--help" || std::string_view{argv[1]} == "-h")) {
+            print_usage();
+            return 0;
+        }
+        if (mehlissa::apps::handles_usability_command(argc, argv)) {
+            return mehlissa::apps::execute_usability_command(argc, argv);
+        }
         return execute(parse_command_line(argc, argv));
     } catch (const mehlissa::core::MehlissaError& error) {
         const auto code_id = error.code_id();

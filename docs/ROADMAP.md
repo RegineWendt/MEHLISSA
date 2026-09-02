@@ -862,8 +862,8 @@ validity.
 
 | Package | Plain-language objective | Principal deliverables | Status |
 |---|---|---|---|
-| **UX-1 - One-command M7 scenario execution** | Let a researcher validate and run the complete fingerprinting demonstrator without writing C++ or invoking a test binary. | `scenario list`, `scenario validate`, `scenario run`, and `result summarize`; reuse of the existing M7 composer and runtime; unique run directory; result, provenance, log, and concise summary; positive and negative CLI tests. | planned - next |
-| **UX-2 - Model and example discovery** | Make available models, examples, parameters, evidence, and limitations discoverable from the application. | `model list`, `model describe`, scenario/example listing, and copyable starter configurations. | planned |
+| **UX-1 - One-command M7 scenario execution** | Let a researcher validate and run the complete fingerprinting demonstrator without writing C++ or invoking a test binary. | `scenario list`, `scenario validate`, `scenario run`, and `result summarize`; reuse of the existing M7 composer and runtime; unique run directory; result, provenance, log, and concise summary; positive and negative CLI tests. | implemented and accepted locally on 2 September 2026; all 280 Windows/MSVC tests pass; cross-platform CI pending |
+| **UX-2 - Model and example discovery** | Make available models, examples, parameters, evidence, and limitations discoverable from the application. | `model list`, `model describe`, scenario/example listing, and copyable starter configurations. | planned - next |
 | **UX-3 - Human-readable and HTML result report** | Allow results to be inspected and shared without manually reading JSON. | concise terminal report, stable tabular exports, self-contained HTML report, evidence and non-claim section, and links to complete machine-readable results. | planned |
 | **UX-4 - Derived experiments and campaigns** | Let researchers create controlled variants, replicates, and parameter studies without editing source code. | safe parameter overrides, immutable derived manifests, seed/replicate plans, sweeps, paired comparisons, aggregate campaign results, and sensitivity hooks. | planned |
 | **UX-5 - Python API and notebooks** | Make MEHLISSA accessible to common scientific-analysis workflows. | stable Python bindings or process API, result readers, example notebooks, plotting, and campaign analysis while retaining the C++ contracts as the implementation authority. | planned |
@@ -1230,10 +1230,16 @@ The following packages are derived directly from this roadmap:
     contract.~~ Complete across M7.1-M7.7: strict composition, typed runtime,
     artifact-hashed results, concentration-based detection, explicit tiles,
     executed communication, and sensitivity/misclassification analysis.
-13. **Implement UX-1, one-command M7 scenario execution.** Add discoverable
-    CLI validation, execution, and result-summary commands over the existing
-    M7 APIs, with a complete run directory, tests, and synchronized updates to
-    the User Guide, Roadmap, and shareable status report.
+13. ~~Implement UX-1, one-command M7 scenario execution.~~ Implemented and
+    accepted locally: discoverable CLI validation, execution, and
+    result-summary commands reuse the existing M7 APIs; each invocation writes
+    a unique result/provenance/log/summary directory; the automated workflow
+    covers help, listing, all-artifact validation, invalid input, execution,
+    and re-summarization. All 280 Windows/MSVC tests pass; cross-platform CI
+    remains the final acceptance check.
+14. **Implement UX-2, model and example discovery.** Define a stable catalog
+    and description contract for available models, profiles, parameters,
+    evidence, and limitations, with copyable starter configurations.
 
 ## 12. Definition of long-term success
 

@@ -10,9 +10,9 @@ SPDX-License-Identifier: CC-BY-4.0
 **Purpose:** Shareable overview for prospective contributors and research partners
 **Status date:** 2 September 2026
 **Development branch:** `mehlissa-next-generation`
-**Documented revision:** `7792c807c57a2f12aef8e517c3d66cd941a50c5b`
+**Base revision:** `1804b33cda985fcbe58d253ccb8b0f9ea277ac19`
 **Milestone status:** M0 through M7 passed
-**Current product focus:** Post-M7 usability program, beginning with UX-1 one-command scenario execution
+**Current product focus:** UX-1 cross-platform verification, followed by UX-2 model and example discovery
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -42,9 +42,10 @@ behind explicit contracts.
 - The implementation uses C++20, CMake, vcpkg, strict JSON Schemas, typed SI
   quantities, stable error contracts, deterministic random streams, and
   explicit provenance.
-- The current branch passes Windows/MSVC, Linux/GCC, and Linux/Clang CI. The
-  Clang path also runs formatting, clang-tidy, AddressSanitizer, and
-  UndefinedBehaviorSanitizer.
+- The base revision passes Windows/MSVC, Linux/GCC, and Linux/Clang CI. The
+  UX-1 candidate passes its local MSVC build and all 280 tests and awaits the
+  same cross-platform check. The Clang path also runs formatting, clang-tidy,
+  AddressSanitizer, and UndefinedBehaviorSanitizer.
 - The English User Guide, software architecture guide, model documentation,
   traceability matrix, and architecture decision records support international
   collaboration.
@@ -56,7 +57,7 @@ behind explicit contracts.
 | Software architecture | Strong modular foundation with explicit ownership, conservation, lifecycle, configuration, and evidence boundaries. |
 | End-to-end integration | Complete first software vertical slice through fingerprinting Levels A-E. |
 | Scientific validation | Mixed maturity: verified equations, literature-parameterized candidates, selected independent comparisons, and multiple synthetic mechanisms. |
-| User experience | Mature documentation and several CLI workflows; advanced M3-M7 scenarios still primarily use C++ APIs and test/reference drivers. |
+| User experience | Mature documentation and several CLI workflows; UX-1 exposes the complete M7 demonstrator, while many individual M3-M6 experiments still use C++ APIs and test/reference drivers. |
 | Clinical readiness | Not claimed. Patient prediction, diagnosis, and treatment recommendations are explicitly outside the present scope. |
 
 ## How to read project labels
@@ -170,9 +171,9 @@ review evidence at every future milestone and UX-package review.
 
 | Access route | Suitable uses | Current examples |
 |---|---|---|
-| Command line | Direct use without writing C++ | Validate manifests and vascular graphs; run the minimal reproducibility workflow; recreate the canonical vascular model; execute the BVS regression; apply a body-state overlay. |
+| Command line | Direct use without writing C++ | Validate manifests and vascular graphs; run the minimal workflow and BVS regression; apply body-state overlays; validate and execute the complete M7 demonstrator. |
 | Reference and benchmark drivers | Reproduce accepted scientific and numerical comparisons | Pulmonary validations; coarse-versus-five-lobe comparison; molecular-channel comparisons; historical FP9 timing; benchmark campaigns. |
-| C++ component APIs | Compose or extend advanced research workflows | Organ-capillary round trip; cell models; communication models; external simulator adapter; M7 fingerprinting runtime and report generation. |
+| C++ component APIs | Compose or extend advanced research workflows | Organ-capillary round trip; cell and communication models; external simulator adapter; direct access to the same M7 runtime used by the CLI. |
 | Automated test suite | Audit contracts and reproduce gate evidence | Focused M1-M7 CTest filters, negative controls, deterministic replay, conservation, and identity checks. |
 
 Representative research questions include:
@@ -181,12 +182,6 @@ Representative research questions include:
   and transit?
 - Which outputs change when a coarse lung surrogate is replaced by five
   parallel pulmonary lobe beds?
-- Can analytical, particle, trajectory, and field models reproduce the same
-  molecular receiver quantity?
-- How do recruitment, exchange, retention, adhesion, or extravasation
-  assumptions affect local outcomes?
-- How do deterministic and stochastic receptor models differ at finite
-  receptor counts?
 - How do binding, intracellular signaling, device release, uptake, and a
   synthetic cell response connect without violating amount ownership?
 - How do loss, corruption, expiry, replay, routing errors, or station-policy
@@ -194,16 +189,26 @@ Representative research questions include:
 - Can the complete FP9/lung workflow preserve causal identity, report
   incomplete fingerprints, and compute classification metrics reproducibly?
 
-The complete M7 evidence can currently be reproduced with:
+The complete M7 scenario can now be discovered, validated, executed, and
+summarized through the normal application:
 
 ```powershell
-cmake --build --preset windows-msvc-debug --target mehlissa_fingerprinting_scenario_tests
-ctest --test-dir build/windows-msvc -C Debug --output-on-failure -R "M7|holistic"
+build/windows-msvc/apps/Debug/mehlissa.exe scenario list
+build/windows-msvc/apps/Debug/mehlissa.exe scenario run --file examples/scenarios/fp9-lung-level-a-v1.json --output results/fp9-reference
 ```
 
-Advanced workflows remain developer-oriented. The general CLI does not yet
-resolve arbitrary model selections and wire a complete multilayer run. This is
-the highest-value usability gap and the target of UX-1.
+The separate `scenario validate` command checks the same inputs without
+executing them. The output argument is a parent directory; each run creates a unique
+UTC-labelled child containing `result.json`, `provenance.json`,
+`run.log.jsonl`, and `summary.txt`; the application prints the exact path. An
+existing result can be summarized with `mehlissa result summarize --file
+<result.json>`. The command reuses the accepted M7 composer and holistic
+runner, validates all thirteen selected definition/schema pairs before
+execution, and preserves the non-clinical interpretation boundary.
+
+Arbitrary model catalogs and guided starter configurations are not yet
+discoverable through the application. That is the target of UX-2. Many
+individual component experiments also remain developer-facing.
 
 ## 5. Current personalization capability
 
@@ -247,7 +252,7 @@ mechanism predicts a biological or clinical outcome.
 
 | Program | Principal work | Intended outcome |
 |---|---|---|
-| Usability and orchestration | Complete-scenario CLI, automatic run directories, model discovery, summaries, and stable result formats. | A researcher can run M7 without C++ knowledge or test binaries. |
+| Usability and orchestration | UX-1 now provides the complete-scenario CLI, automatic run directories, validated artifacts, provenance, logs, and summaries; model discovery, richer reports, campaigns, Python access, and a workbench remain. | A researcher can run M7 without C++ knowledge or test binaries and progressively gain better discovery and analysis tools. |
 | Scientific qualification | Replace historical or synthetic assumptions with measured parameters, calibration data, independent validation, uncertainty, and sensitivity campaigns. | Defensible scenario-specific conclusions within explicit scopes. |
 | Additional medical scenarios | Continuous monitoring, liquid biopsy, endocrine/adrenal venous sampling, CAR-T, and ultimately metastasis prevention. | Evidence that the architecture generalizes beyond fingerprinting. |
 | Additional organs | Begin with a kidney surrogate and progress toward regional filtration, clearance, and organ-specific capillary interfaces. | Evidence that organ factories and coupling contracts are not lung-specific. |
@@ -274,8 +279,8 @@ they do not by themselves increase physiological or clinical validity.
 
 | Package | Plain-language objective | Status |
 |---|---|---|
-| UX-1 - One-command M7 scenario execution | Validate and run the complete fingerprinting demonstrator and summarize its result through the normal application. | Planned - next |
-| UX-2 - Model and example discovery | List and describe available artifacts, parameters, evidence, and limitations. | Planned |
+| UX-1 - One-command M7 scenario execution | Validate and run the complete fingerprinting demonstrator and summarize its result through the normal application. | Implemented; all 280 local Windows/MSVC tests pass; cross-platform CI pending |
+| UX-2 - Model and example discovery | List and describe available artifacts, parameters, evidence, and limitations. | Planned - next |
 | UX-3 - Human-readable and HTML result reporting | Provide concise terminal, tabular, and shareable HTML views over the complete machine-readable result. | Planned |
 | UX-4 - Derived experiments and campaigns | Create controlled variants, replicates, parameter sweeps, paired comparisons, and aggregate analyses. | Planned |
 | UX-5 - Python API and notebooks | Support common scientific analysis and plotting workflows without replacing the C++ implementation authority. | Planned |
@@ -287,14 +292,17 @@ The intended first user experience is:
 mehlissa scenario list
 mehlissa scenario validate --file examples/scenarios/fp9-lung-level-a-v1.json
 mehlissa scenario run --file examples/scenarios/fp9-lung-level-a-v1.json --output results/fp9-reference
-mehlissa result summarize --file results/fp9-reference/result.json
+mehlissa result summarize --file results/fp9-reference/<printed-run-directory>/result.json
 ```
 
-UX-1 is complete only when the CLI reuses the existing M7 implementation,
-validates all artifacts before execution, creates a unique run directory,
-writes result/provenance/log/summary artifacts, reports stable actionable
-errors, passes positive and negative tests on all CI platforms, and updates the
-Roadmap, User Guide, this status source, and the visually verified PDF.
+UX-1 now reuses the existing M7 implementation, validates every selected
+artifact before execution, creates a unique run directory, writes validated
+result/provenance/log/summary artifacts, and reports stable actionable errors.
+Its automated end-to-end test covers help, listing, positive validation,
+negative validation, execution, artifact completeness, and re-summarization.
+The Windows MSVC build and all 280 local tests pass; the GitHub MSVC, GCC, and
+Clang jobs remain the final acceptance check before the status changes from
+locally accepted to fully passed.
 
 ## 9. Opportunities for collaborators
 

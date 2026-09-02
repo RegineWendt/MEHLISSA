@@ -1,13 +1,17 @@
 # SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 # SPDX-License-Identifier: MPL-2.0
 
-add_executable(mehlissa apps_main.cpp)
+find_package(jsoncons CONFIG REQUIRED)
+
+add_executable(mehlissa apps_main.cpp scenario_cli.cpp)
 target_link_libraries(
     mehlissa
     PRIVATE
         MEHLISSA::body_model
         MEHLISSA::core
         MEHLISSA::experiment
+        MEHLISSA::fingerprinting_scenario
+        jsoncons::jsoncons
 )
 mehlissa_configure_target(mehlissa)
 
@@ -88,3 +92,14 @@ set_tests_properties(
     mehlissa_cli_validates_body_model
     PROPERTIES PASS_REGULAR_EXPRESSION "synthetic-branching-circuit.*4 segments"
 )
+
+add_test(
+    NAME mehlissa_cli_ux1_workflow
+    COMMAND
+        ${CMAKE_COMMAND}
+        -DMEHLISSA_EXECUTABLE=$<TARGET_FILE:mehlissa>
+        -DMEHLISSA_ROOT=${PROJECT_SOURCE_DIR}
+        -DMEHLISSA_OUTPUT_ROOT=${CMAKE_CURRENT_BINARY_DIR}/ux1-runs
+        -P ${PROJECT_SOURCE_DIR}/tests/run_ux1_cli_test.cmake
+)
+set_tests_properties(mehlissa_cli_ux1_workflow PROPERTIES LABELS "UX-1;M7;cli")

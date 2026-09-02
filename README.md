@@ -23,5 +23,20 @@ Start here:
 - [Current-State Analysis](docs/IST_ANALYSE.md) — legacy inventory and the gap
   between existing software and the dissertation vision.
 
+After building the normal Debug preset, the complete M7 fingerprinting
+research demonstrator can be run without writing C++:
+
+```powershell
+build/windows-msvc/apps/Debug/mehlissa.exe scenario list
+build/windows-msvc/apps/Debug/mehlissa.exe scenario run `
+  --file examples/scenarios/fp9-lung-level-a-v1.json `
+  --output results/fp9-reference
+```
+
+Each execution validates all selected model artifacts and creates a unique
+run directory containing the full result, provenance, structured log, and a
+concise summary. See the User Guide for interpretation limits; this workflow
+is a reproducible software demonstrator, not a clinically validated assay.
+
 MEHLISSA Next is a research model. It is not a medical device and does not
 provide patient-specific clinical predictions.
