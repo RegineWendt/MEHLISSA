@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Covered software:** accepted M0 through M7
 
-**Last updated:** 2 September 2026, after local acceptance of UX-5 Python access
+**Last updated:** 2 September 2026, after cross-platform acceptance of UX-3 through UX-5
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -2712,20 +2712,23 @@ The usability package status is:
   exposes five model families, ten curated examples, configurable parameter
   paths, evidence, limitations, filtering, and safe starter copying; all 281
   local Windows/MSVC tests and all supported GitHub CI jobs pass;
-- **UX-3, readable result reporting:** accepted locally; `result report` creates
+- **UX-3, readable result reporting:** passed across all supported CI paths;
+  `result report` creates
   a fail-safe six-file bundle containing concise text, three stable CSV views,
   self-contained HTML with evidence and non-claim sections, and the complete
-  machine-readable result; all 282 local Windows/MSVC tests pass and the combined
-  cross-platform CI run is intentionally deferred until UX-5;
-- **UX-4, derived experiments and campaigns:** accepted locally; strict
+  machine-readable result;
+- **UX-4, derived experiments and campaigns:** passed across all supported CI
+  paths; strict
   manifests create retained variants, deterministic replicates, bounded
   collector-count sweeps, and same-seed paired comparisons with aggregate
-  JSON/CSV results; the six-run reference campaign and all 283 local
-  Windows/MSVC tests pass, with combined CI deferred until UX-5;
-- **UX-5, Python API and notebooks:** accepted locally; the standard-library
+  JSON/CSV results; the six-run reference campaign passes;
+- **UX-5, Python API and notebooks:** passed across all supported CI paths; the
+  standard-library
   process client, version-guarded result readers, campaign grouping and paired
-  differences, optional plotting, and two licensed notebooks pass all 284 local
-  Windows/MSVC tests; combined cross-platform CI follows the grouped push; and
+  differences, optional plotting, and two licensed notebooks pass all 284
+  current tests. The grouped UX-3 through UX-5 GitHub CI run 33668850496 passes
+  on Windows/MSVC, Linux/GCC, and Linux/Clang with static analysis and sanitizers;
+  and
 - **UX-6, graphical research workbench:** add guided scenario editing and
   interactive comparison after the underlying interfaces are stable.
 

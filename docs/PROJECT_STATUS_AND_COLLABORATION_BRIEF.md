@@ -10,9 +10,9 @@ SPDX-License-Identifier: CC-BY-4.0
 **Purpose:** Shareable overview for prospective contributors and research partners
 **Status date:** 2 September 2026
 **Development branch:** `mehlissa-next-generation`
-**Base revision:** `f49a7afa81213b832bd7ec9e69931bb8f893e2cf`
+**Base revision:** `43da0dee5a73d4515e0bd0b02cae464605daadc4`
 **Milestone status:** M0 through M7 passed
-**Current product focus:** grouped cross-platform acceptance of UX-3 through UX-5
+**Current product focus:** UX-6 graphical research workbench
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -42,24 +42,21 @@ behind explicit contracts.
 - The implementation uses C++20, CMake, vcpkg, strict JSON Schemas, typed SI
   quantities, stable error contracts, deterministic random streams, and
   explicit provenance.
-- The base revision passes all 281 local Windows/MSVC tests and GitHub
+- The base revision passes all 284 local Windows/MSVC tests and GitHub
   Windows/MSVC, Linux/GCC, and Linux/Clang CI. The Clang path also passes
   formatting, clang-tidy, AddressSanitizer, and UndefinedBehaviorSanitizer.
 - UX-2 adds a validated catalog of five model families and ten curated starter
   configurations with safe licensed copying and repository integrity checks.
-- UX-3 locally adds a non-overwriting six-file result bundle with concise text,
+- UX-3 adds a non-overwriting six-file result bundle with concise text,
   stable CSV exports, dependency-free HTML, evidence, limitations, the clinical
-  non-claim, and the complete machine-readable JSON. All 282 local tests pass;
-  combined cross-platform CI is intentionally deferred until UX-5.
-- UX-4 locally adds strict derived-experiment campaigns: retained scenario
+  non-claim, and the complete machine-readable JSON.
+- UX-4 adds strict derived-experiment campaigns: retained scenario
   manifests, deterministic replicate and same-seed pair plans, bounded
-  collector-count sweeps, hashed aggregate JSON, and analysis-ready CSV. The
-  six-run reference campaign and all 283 local tests pass; combined
-  cross-platform CI remains intentionally deferred until UX-5.
-- UX-5 locally adds a standard-library Python process client, version-guarded
+  collector-count sweeps, hashed aggregate JSON, and analysis-ready CSV.
+- UX-5 adds a standard-library Python process client, version-guarded
   result readers, campaign grouping and same-seed differences, optional plotting,
-  and two licensed starter notebooks. All 284 local tests pass; the grouped
-  cross-platform push and CI run is the remaining acceptance step.
+  and two licensed starter notebooks. The grouped UX-3 through UX-5 acceptance
+  passes all 284 tests on supported CI paths in GitHub run 33668850496.
 - The English User Guide, software architecture guide, model documentation,
   traceability matrix, and architecture decision records support international
   collaboration.
@@ -71,7 +68,7 @@ behind explicit contracts.
 | Software architecture | Strong modular foundation with explicit ownership, conservation, lifecycle, configuration, and evidence boundaries. |
 | End-to-end integration | Complete first software vertical slice through fingerprinting Levels A-E. |
 | Scientific validation | Mixed maturity: verified equations, literature-parameterized candidates, selected independent comparisons, and multiple synthetic mechanisms. |
-| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, UX-3 locally provides readable shareable result bundles, UX-4 locally provides controlled campaigns, and UX-5 locally provides Python and notebook access. A graphical workbench remains. |
+| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, UX-3 provides readable shareable result bundles, UX-4 provides controlled campaigns, and UX-5 provides Python and notebook access. A graphical workbench remains. |
 | Clinical readiness | Not claimed. Patient prediction, diagnosis, and treatment recommendations are explicitly outside the present scope. |
 
 ## How to read project labels
@@ -278,7 +275,7 @@ mechanism predicts a biological or clinical outcome.
 
 | Program | Principal work | Intended outcome |
 |---|---|---|
-| Usability and orchestration | UX-1 provides scenario execution, UX-2 provides discovery, UX-3 locally provides HTML/text/CSV result bundles, UX-4 locally provides controlled campaigns, and UX-5 locally provides Python readers, analysis, and notebooks; a workbench remains. | A researcher can find suitable models, run M7, inspect or share its result, execute reproducible parameter studies, and analyze them from Python without C++ knowledge or manual JSON copying. |
+| Usability and orchestration | UX-1 provides scenario execution, UX-2 provides discovery, UX-3 provides HTML/text/CSV result bundles, UX-4 provides controlled campaigns, and UX-5 provides Python readers, analysis, and notebooks; a workbench remains. | A researcher can find suitable models, run M7, inspect or share its result, execute reproducible parameter studies, and analyze them from Python without C++ knowledge or manual JSON copying. |
 | Scientific qualification | Replace historical or synthetic assumptions with measured parameters, calibration data, independent validation, uncertainty, and sensitivity campaigns. | Defensible scenario-specific conclusions within explicit scopes. |
 | Additional medical scenarios | Continuous monitoring, liquid biopsy, endocrine/adrenal venous sampling, CAR-T, and ultimately metastasis prevention. | Evidence that the architecture generalizes beyond fingerprinting. |
 | Additional organs | Begin with a kidney surrogate and progress toward regional filtration, clearance, and organ-specific capillary interfaces. | Evidence that organ factories and coupling contracts are not lung-specific. |
@@ -307,9 +304,9 @@ they do not by themselves increase physiological or clinical validity.
 |---|---|---|
 | UX-1 - One-command M7 scenario execution | Validate and run the complete fingerprinting demonstrator and summarize its result through the normal application. | Passed; all 280 local Windows/MSVC tests and all supported GitHub CI jobs pass |
 | UX-2 - Model and example discovery | List and describe available artifacts, parameters, evidence, and limitations. | Passed; five model families, ten examples, all 281 local Windows/MSVC tests, and all supported GitHub CI jobs pass |
-| UX-3 - Human-readable and HTML result reporting | Provide concise terminal, tabular, and shareable HTML views over the complete machine-readable result. | Accepted locally; six-file bundle and all 282 Windows/MSVC tests pass; combined cross-platform CI deferred until UX-5 |
-| UX-4 - Derived experiments and campaigns | Create controlled variants, replicates, parameter sweeps, paired comparisons, and aggregate analyses. | Accepted locally; six-run reference campaign and all 283 Windows/MSVC tests pass; combined cross-platform CI deferred until UX-5 |
-| UX-5 - Python API and notebooks | Support common scientific analysis and plotting workflows without replacing the C++ implementation authority. | Accepted locally; process API, readers, analysis, optional plots, two notebooks, and all 284 Windows/MSVC tests pass; grouped cross-platform CI pending |
+| UX-3 - Human-readable and HTML result reporting | Provide concise terminal, tabular, and shareable HTML views over the complete machine-readable result. | Passed; six-file bundle, all 284 current tests, and all supported GitHub CI jobs pass |
+| UX-4 - Derived experiments and campaigns | Create controlled variants, replicates, parameter sweeps, paired comparisons, and aggregate analyses. | Passed; six-run reference campaign, all 284 current tests, and all supported GitHub CI jobs pass |
+| UX-5 - Python API and notebooks | Support common scientific analysis and plotting workflows without replacing the C++ implementation authority. | Passed; process API, readers, analysis, optional plots, two notebooks, all 284 current tests, and all supported GitHub CI jobs pass |
 | UX-6 - Graphical research workbench | Add guided scenario editing, run control, comparison, provenance, and uncertainty visualization after the interfaces are stable. | Planned |
 
 The intended first user experience is:
@@ -334,18 +331,19 @@ and cross-platform GitHub CI run 33628859417 pass.
 
 UX-3 validates an existing result and creates a non-overwriting six-file HTML,
 text, CSV, and authoritative-JSON bundle. Evidence hashes, limitations, and the
-clinical non-claim remain visible. All 282 local tests pass.
+clinical non-claim remain visible.
 
 UX-4 expands a strict campaign into retained replicates, collector-count sweeps,
 and same-seed pairs. Hashed aggregate JSON and CSV bind all inputs and results;
-only the reviewed `run.collector_count` parameter is allow-listed. The six-run
-reference campaign and all 283 local tests pass.
+only the reviewed `run.collector_count` parameter is allow-listed.
 
 UX-5 adds the `mehlissa-research` process client and version-guarded readers for
 scenario and campaign analysis. Matplotlib remains optional; two licensed
 notebooks demonstrate complete workflows. Python cannot bypass the C++ schemas
-or convert failed runs into observations. All 284 local tests pass; grouped
-UX-3 through UX-5 cross-platform CI is pending.
+or convert failed runs into observations. All 284 local tests pass. Grouped
+UX-3 through UX-5 acceptance also passes on Windows/MSVC, Linux/GCC, and Linux/Clang
+with formatting, clang-tidy, AddressSanitizer, and UndefinedBehaviorSanitizer in
+GitHub CI run 33668850496.
 
 ## 9. Opportunities for collaborators
 
@@ -379,7 +377,7 @@ and limitations are documented; and all supported CI paths pass.
 | `docs/m0` through `docs/m6` | Gate reviews, model notes, validation evidence, and accepted limitations for preceding milestones. |
 
 - **Repository:** https://github.com/RegineWendt/MEHLISSA
-- **Verified CI run:** https://github.com/RegineWendt/MEHLISSA/actions/runs/33628859417
+- **Verified CI run:** https://github.com/RegineWendt/MEHLISSA/actions/runs/33668850496
 
 MEHLISSA Next now provides the architectural and executable backbone required
 by the dissertation vision. The next phase is to make this backbone easier to

@@ -864,9 +864,9 @@ validity.
 |---|---|---|---|
 | **UX-1 - One-command M7 scenario execution** | Let a researcher validate and run the complete fingerprinting demonstrator without writing C++ or invoking a test binary. | `scenario list`, `scenario validate`, `scenario run`, and `result summarize`; reuse of the existing M7 composer and runtime; unique run directory; result, provenance, log, and concise summary; positive and negative CLI tests. | passed on 2 September 2026; all 280 local Windows/MSVC tests and GitHub Windows/MSVC, Linux/GCC, and Linux/Clang analysis/sanitizer jobs pass |
 | **UX-2 - Model and example discovery** | Make available models, examples, parameters, evidence, and limitations discoverable from the application. | `model list`, `model describe`, filtered example listing, safe copying, and a strict versioned catalog with semantic integrity checks. | passed on 2 September 2026; all 281 local Windows/MSVC tests and GitHub Windows/MSVC, Linux/GCC, and Linux/Clang analysis/sanitizer jobs pass |
-| **UX-3 - Human-readable and HTML result report** | Allow results to be inspected and shared without manually reading JSON. | concise terminal report, stable tabular exports, self-contained HTML report, evidence and non-claim section, and links to complete machine-readable results. | implemented and accepted locally on 2 September 2026; all 282 Windows/MSVC tests pass; combined cross-platform CI intentionally deferred until UX-5 |
-| **UX-4 - Derived experiments and campaigns** | Let researchers create controlled variants, replicates, and parameter studies without editing source code. | safe parameter overrides, immutable derived manifests, seed/replicate plans, sweeps, paired comparisons, aggregate campaign results, and sensitivity hooks. | implemented and accepted locally on 2 September 2026; six-run reference campaign and all 283 Windows/MSVC tests pass; combined cross-platform CI intentionally deferred until UX-5 |
-| **UX-5 - Python API and notebooks** | Make MEHLISSA accessible to common scientific-analysis workflows. | stable Python bindings or process API, result readers, example notebooks, plotting, and campaign analysis while retaining the C++ contracts as the implementation authority. | implemented and accepted locally on 2 September 2026; standard-library process client, version-guarded readers, optional plotting, two notebooks, and all 284 Windows/MSVC tests pass; grouped UX-3 through UX-5 cross-platform CI pending |
+| **UX-3 - Human-readable and HTML result report** | Allow results to be inspected and shared without manually reading JSON. | concise terminal report, stable tabular exports, self-contained HTML report, evidence and non-claim section, and links to complete machine-readable results. | passed on 2 September 2026; all 284 current tests and GitHub Windows/MSVC, Linux/GCC, and Linux/Clang analysis/sanitizer jobs pass in grouped CI run 33668850496 |
+| **UX-4 - Derived experiments and campaigns** | Let researchers create controlled variants, replicates, and parameter studies without editing source code. | safe parameter overrides, immutable derived manifests, seed/replicate plans, sweeps, paired comparisons, aggregate campaign results, and sensitivity hooks. | passed on 2 September 2026; six-run reference campaign, all 284 current tests, and all supported jobs pass in grouped CI run 33668850496 |
+| **UX-5 - Python API and notebooks** | Make MEHLISSA accessible to common scientific-analysis workflows. | stable Python bindings or process API, result readers, example notebooks, plotting, and campaign analysis while retaining the C++ contracts as the implementation authority. | passed on 2 September 2026; process client, version-guarded readers, optional plotting, two notebooks, all 284 current tests, and all supported jobs pass in grouped CI run 33668850496 |
 | **UX-6 - Graphical research workbench** | Provide guided scenario editing and interactive result exploration on top of stable interfaces. | schema-driven editor, validation feedback, run control, comparison views, provenance display, and uncertainty-aware visualization. | planned |
 
 The packages are implemented in order unless a later package can be developed
@@ -1231,7 +1231,7 @@ The following packages are derived directly from this roadmap:
     artifact-hashed results, concentration-based detection, explicit tiles,
     executed communication, and sensitivity/misclassification analysis.
 13. ~~Implement UX-1, one-command M7 scenario execution.~~ Implemented and
-    accepted locally: discoverable CLI validation, execution, and
+    accepted: discoverable CLI validation, execution, and
     result-summary commands reuse the existing M7 APIs; each invocation writes
     a unique result/provenance/log/summary directory; the automated workflow
     covers help, listing, all-artifact validation, invalid input, execution,
@@ -1248,28 +1248,28 @@ The following packages are derived directly from this roadmap:
     Windows/MSVC, Linux/GCC, and Linux/Clang with formatting, clang-tidy,
     AddressSanitizer, and UndefinedBehaviorSanitizer.
 15. ~~Implement UX-3, human-readable and HTML result reporting.~~ Implemented
-    and accepted locally: `result report` validates the complete result and
+    and accepted: `result report` validates the complete result and
     writes a non-overwriting six-file bundle with plain text, three stable CSV
     tables, dependency-free HTML, evidence hashes, limitations, an explicit
-    clinical non-claim, and the bundled authoritative JSON. All 282 local
-    Windows/MSVC tests pass; combined cross-platform CI is deferred until UX-5.
+    clinical non-claim, and the bundled authoritative JSON.
 16. ~~Implement UX-4, derived experiments and campaigns.~~ Implemented and
-    accepted locally: strict campaign and result schemas, an allow-listed
+    accepted: strict campaign and result schemas, an allow-listed
     `run.collector_count` override, retained derived manifests, deterministic
     replicate plans, same-seed paired comparisons, one-dimensional sweeps,
     aggregate JSON/CSV output with hashes, and explicit descriptive sensitivity
-    hooks. The six-run reference campaign and all 283 local Windows/MSVC tests
-    pass; combined cross-platform CI is deferred until UX-5.
-17. ~~Implement UX-5, Python API and notebooks.~~ Implemented and accepted
-    locally: a standard-library process client delegates to the C++ application;
+    hooks. The six-run reference campaign passes.
+17. ~~Implement UX-5, Python API and notebooks.~~ Implemented and accepted: a
+    standard-library process client delegates to the C++ application;
     version-guarded readers expose scenario and campaign analysis; Matplotlib is
     optional; and two licensed notebooks cover a first run and campaign analysis.
     All 284 local Windows/MSVC tests pass.
-18. **Complete grouped cross-platform acceptance for UX-3 through UX-5, then
-    prepare UX-6.** Push the three separately reviewable feature commits, require
-    Windows/MSVC, Linux/GCC, Linux/Clang formatting and analysis, and sanitizer
-    jobs to pass, update the three living documents and PDF, then scope the
-    graphical research workbench on the now-stable command and Python APIs.
+18. ~~Complete grouped cross-platform acceptance for UX-3 through UX-5.~~ All
+    284 tests pass on Windows/MSVC and Linux/GCC; Linux/Clang also passes
+    formatting, clang-tidy, AddressSanitizer, and UndefinedBehaviorSanitizer in
+    GitHub CI run 33668850496.
+19. **Scope and implement UX-6, the graphical research workbench.** Build guided
+    scenario editing, validation feedback, run control, comparison, provenance,
+    and uncertainty-aware visualization on the accepted command and Python APIs.
 
 ## 12. Definition of long-term success
 
