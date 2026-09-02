@@ -174,7 +174,7 @@ struct RunSpec final {
         return value;
     }
     std::error_code error;
-    const auto local = std::filesystem::absolute(value, error);
+    auto local = std::filesystem::absolute(value, error);
     if (!error && std::filesystem::is_regular_file(local, error) && !error) {
         return local;
     }
@@ -212,15 +212,15 @@ void validate_document(const Json& document, const std::filesystem::path& schema
 }
 
 [[nodiscard]] Json read_validated_json(const std::filesystem::path& document_path,
-                                       const std::filesystem::path& schema_path,
-                                       const std::string_view role) {
+                                       const std::string_view role,
+                                       const std::filesystem::path& schema_path) {
     auto document = read_json(document_path, role);
     validate_document(document, schema_path, role);
     return document;
 }
 
 void write_json(const Json& document, const std::filesystem::path& path,
-                const std::filesystem::path& schema, const std::string_view role) {
+                const std::string_view role, const std::filesystem::path& schema) {
     validate_document(document, schema, role);
     std::ofstream stream{path, std::ios::binary | std::ios::trunc};
     if (!stream) {
@@ -411,12 +411,12 @@ struct PreparedCampaign final {
     const auto root = locate_repository_root(command);
     const auto campaign_path = resolve_input(command.file, root);
     const auto campaign_schema = option_or_default(command.schema, root, campaign_schema_relative);
-    auto campaign = read_validated_json(campaign_path, campaign_schema, "campaign manifest");
+    auto campaign = read_validated_json(campaign_path, "campaign manifest", campaign_schema);
     const auto scenario_path = resolve_input(campaign.at("base_scenario").as<std::string>(), root);
     const auto scenario_schema =
         option_or_default(command.scenario_schema, root, scenario_schema_relative);
     auto base_scenario =
-        read_validated_json(scenario_path, scenario_schema, "base scenario profile");
+        read_validated_json(scenario_path, "base scenario profile", scenario_schema);
     auto specs =
         make_specs(campaign, base_scenario.at("run").at("collector_count").as<std::uint64_t>());
     ensure_unique_ids(specs);
@@ -450,7 +450,7 @@ int run_campaign(const Command& command) {
         derived.at("run")["master_seed"] = spec.seed;
         derived.at("run")["collector_count"] = spec.collector_count;
         const auto manifest = output / "manifests" / (spec.id + ".json");
-        write_json(derived, manifest, prepared.scenario_schema, "derived scenario manifest");
+        write_json(derived, manifest, "derived scenario manifest", prepared.scenario_schema);
         const auto scenario_output =
             run_scenario_workflow({manifest,
                                    output / "runs",
@@ -488,7 +488,7 @@ int run_campaign(const Command& command) {
     const auto aggregate_path = output / "campaign-result.json";
     const auto aggregate_schema = option_or_default(command.campaign_result_schema, prepared.root,
                                                     campaign_result_schema_relative);
-    write_json(aggregate, aggregate_path, aggregate_schema, "campaign result");
+    write_json(aggregate, aggregate_path, "campaign result", aggregate_schema);
     write_csv(run_records, output / "campaign-results.csv");
     std::printf("campaign_status=completed\n");
     std::printf("campaign_directory=%s\n", output.string().c_str());
