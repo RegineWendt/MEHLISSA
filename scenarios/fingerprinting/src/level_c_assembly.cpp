@@ -46,9 +46,11 @@ LevelCAssemblyResult run_level_c_assembly(const LevelAPlan& plan,
     const auto& locator_file = artifact(plan, ArtifactRole::locator_device);
     const auto locator = models::iot::load_nanodevice_profile(
         {locator_file.definition_path, locator_file.schema_path});
-    if (locator.device.payloads.size() != 1 ||
-        !locator.device.payloads.front().unit_count.has_value() ||
-        locator.device.payloads.front().unit_count.value() == 0) {
+    if (locator.device.payloads.size() != 1) {
+        invalid("M7.5 selected locator must carry exactly one fingerprint-tile payload");
+    }
+    const auto& tile_payload = locator.device.payloads.front();
+    if (tile_payload.unit_count.value_or(0) == 0) {
         invalid("M7.5 selected locator must carry one unit-count fingerprint-tile payload");
     }
 
@@ -59,8 +61,7 @@ LevelCAssemblyResult run_level_c_assembly(const LevelAPlan& plan,
     const auto started_at = detection.absolute_detection_time.value();
     for (std::uint64_t index = 0; index < released_count; ++index) {
         const auto ordinal = std::to_string(index + 1);
-        releases.push_back({plan.profile.run.id + ":release:" + ordinal,
-                            locator.device.payloads.front().payload_id,
+        releases.push_back({plan.profile.run.id + ":release:" + ordinal, tile_payload.payload_id,
                             plan.profile.target.fingerprint_id + ":tile:" + ordinal,
                             detection.event_id, started_at});
     }
