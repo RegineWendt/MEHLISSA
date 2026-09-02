@@ -10,9 +10,9 @@ SPDX-License-Identifier: CC-BY-4.0
 **Purpose:** Shareable overview for prospective contributors and research partners
 **Status date:** 2 September 2026
 **Development branch:** `mehlissa-next-generation`
-**Base revision:** `1804b33cda985fcbe58d253ccb8b0f9ea277ac19`
+**Base revision:** `0b6402b7a0eaab21c6da74e201e5c6a6cf6833bf`
 **Milestone status:** M0 through M7 passed
-**Current product focus:** UX-1 cross-platform verification, followed by UX-2 model and example discovery
+**Current product focus:** UX-2 model and example discovery
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -42,10 +42,9 @@ behind explicit contracts.
 - The implementation uses C++20, CMake, vcpkg, strict JSON Schemas, typed SI
   quantities, stable error contracts, deterministic random streams, and
   explicit provenance.
-- The base revision passes Windows/MSVC, Linux/GCC, and Linux/Clang CI. The
-  UX-1 candidate passes its local MSVC build and all 280 tests and awaits the
-  same cross-platform check. The Clang path also runs formatting, clang-tidy,
-  AddressSanitizer, and UndefinedBehaviorSanitizer.
+- The base revision passes all 280 local Windows/MSVC tests and GitHub
+  Windows/MSVC, Linux/GCC, and Linux/Clang CI. The Clang path also passes
+  formatting, clang-tidy, AddressSanitizer, and UndefinedBehaviorSanitizer.
 - The English User Guide, software architecture guide, model documentation,
   traceability matrix, and architecture decision records support international
   collaboration.
@@ -279,7 +278,7 @@ they do not by themselves increase physiological or clinical validity.
 
 | Package | Plain-language objective | Status |
 |---|---|---|
-| UX-1 - One-command M7 scenario execution | Validate and run the complete fingerprinting demonstrator and summarize its result through the normal application. | Implemented; all 280 local Windows/MSVC tests pass; cross-platform CI pending |
+| UX-1 - One-command M7 scenario execution | Validate and run the complete fingerprinting demonstrator and summarize its result through the normal application. | Passed; all 280 local Windows/MSVC tests and all supported GitHub CI jobs pass |
 | UX-2 - Model and example discovery | List and describe available artifacts, parameters, evidence, and limitations. | Planned - next |
 | UX-3 - Human-readable and HTML result reporting | Provide concise terminal, tabular, and shareable HTML views over the complete machine-readable result. | Planned |
 | UX-4 - Derived experiments and campaigns | Create controlled variants, replicates, parameter sweeps, paired comparisons, and aggregate analyses. | Planned |
@@ -300,9 +299,9 @@ artifact before execution, creates a unique run directory, writes validated
 result/provenance/log/summary artifacts, and reports stable actionable errors.
 Its automated end-to-end test covers help, listing, positive validation,
 negative validation, execution, artifact completeness, and re-summarization.
-The Windows MSVC build and all 280 local tests pass; the GitHub MSVC, GCC, and
-Clang jobs remain the final acceptance check before the status changes from
-locally accepted to fully passed.
+The Windows MSVC build and all 280 local tests pass. GitHub CI run 33620386319
+also passes Windows/MSVC, Linux/GCC, and Linux/Clang analysis and sanitizer
+jobs. UX-1 is therefore fully accepted and UX-2 is the active package.
 
 ## 9. Opportunities for collaborators
 
@@ -336,7 +335,7 @@ and limitations are documented; and all supported CI paths pass.
 | `docs/m0` through `docs/m6` | Gate reviews, model notes, validation evidence, and accepted limitations for preceding milestones. |
 
 - **Repository:** https://github.com/RegineWendt/MEHLISSA
-- **Verified CI run:** https://github.com/RegineWendt/MEHLISSA/actions/runs/33600889164
+- **Verified CI run:** https://github.com/RegineWendt/MEHLISSA/actions/runs/33620386319
 
 MEHLISSA Next now provides the architectural and executable backbone required
 by the dissertation vision. The next phase is to make this backbone easier to

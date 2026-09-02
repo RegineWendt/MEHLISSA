@@ -862,7 +862,7 @@ validity.
 
 | Package | Plain-language objective | Principal deliverables | Status |
 |---|---|---|---|
-| **UX-1 - One-command M7 scenario execution** | Let a researcher validate and run the complete fingerprinting demonstrator without writing C++ or invoking a test binary. | `scenario list`, `scenario validate`, `scenario run`, and `result summarize`; reuse of the existing M7 composer and runtime; unique run directory; result, provenance, log, and concise summary; positive and negative CLI tests. | implemented and accepted locally on 2 September 2026; all 280 Windows/MSVC tests pass; cross-platform CI pending |
+| **UX-1 - One-command M7 scenario execution** | Let a researcher validate and run the complete fingerprinting demonstrator without writing C++ or invoking a test binary. | `scenario list`, `scenario validate`, `scenario run`, and `result summarize`; reuse of the existing M7 composer and runtime; unique run directory; result, provenance, log, and concise summary; positive and negative CLI tests. | passed on 2 September 2026; all 280 local Windows/MSVC tests and GitHub Windows/MSVC, Linux/GCC, and Linux/Clang analysis/sanitizer jobs pass |
 | **UX-2 - Model and example discovery** | Make available models, examples, parameters, evidence, and limitations discoverable from the application. | `model list`, `model describe`, scenario/example listing, and copyable starter configurations. | planned - next |
 | **UX-3 - Human-readable and HTML result report** | Allow results to be inspected and shared without manually reading JSON. | concise terminal report, stable tabular exports, self-contained HTML report, evidence and non-claim section, and links to complete machine-readable results. | planned |
 | **UX-4 - Derived experiments and campaigns** | Let researchers create controlled variants, replicates, and parameter studies without editing source code. | safe parameter overrides, immutable derived manifests, seed/replicate plans, sweeps, paired comparisons, aggregate campaign results, and sensitivity hooks. | planned |
@@ -1235,8 +1235,9 @@ The following packages are derived directly from this roadmap:
     result-summary commands reuse the existing M7 APIs; each invocation writes
     a unique result/provenance/log/summary directory; the automated workflow
     covers help, listing, all-artifact validation, invalid input, execution,
-    and re-summarization. All 280 Windows/MSVC tests pass; cross-platform CI
-    remains the final acceptance check.
+    and re-summarization. All 280 local Windows/MSVC tests and GitHub CI run
+    33620386319 pass across Windows/MSVC, Linux/GCC, and Linux/Clang with
+    formatting, clang-tidy, AddressSanitizer, and UndefinedBehaviorSanitizer.
 14. **Implement UX-2, model and example discovery.** Define a stable catalog
     and description contract for available models, profiles, parameters,
     evidence, and limitations, with copyable starter configurations.

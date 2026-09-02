@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Covered software:** accepted M0 through M7
 
-**Last updated:** 2 September 2026, after local acceptance of UX-1 one-command execution
+**Last updated:** 2 September 2026, after cross-platform acceptance of UX-1 one-command execution
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -2454,7 +2454,7 @@ every future gate checklist.
 
 The usability package status is:
 
-- **UX-1, one-command M7 execution:** implemented and accepted locally; the
+- **UX-1, one-command M7 execution:** passed across all supported CI paths; the
   application validates and runs the complete fingerprinting demonstrator,
   creates a unique four-file run directory, and summarizes an existing result;
 - **UX-2, model and example discovery:** list and describe available artifacts,
