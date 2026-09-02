@@ -438,8 +438,7 @@ int copy_example(const DiscoveryCommand& command, const CatalogContext& context)
     const auto license_source = catalog_asset(context, relative_source + ".license");
     const std::filesystem::path license_destination{destination.string() + ".license"};
     if (std::filesystem::exists(license_destination, error) || error) {
-        output_error("Example license destination already exists: " +
-                     license_destination.string());
+        output_error("Example license destination already exists: " + license_destination.string());
     }
     if (!std::filesystem::copy_file(license_source, license_destination, error) || error) {
         std::error_code cleanup_error;
