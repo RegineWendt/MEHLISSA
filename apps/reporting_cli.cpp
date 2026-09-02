@@ -87,8 +87,8 @@ struct ReportCommand final {
 
 [[nodiscard]] std::filesystem::path locate_repository_root(const ReportCommand& command) {
     std::error_code error;
-    auto current = command.repository_root.empty() ? std::filesystem::current_path()
-                                                   : command.repository_root;
+    auto current =
+        command.repository_root.empty() ? std::filesystem::current_path() : command.repository_root;
     current = std::filesystem::absolute(current, error);
     if (error) {
         input_error("Cannot resolve the repository root");
@@ -139,8 +139,7 @@ struct ReportCommand final {
     }
 }
 
-[[nodiscard]] Json load_result(const ReportCommand& command,
-                               const std::filesystem::path& root) {
+[[nodiscard]] Json load_result(const ReportCommand& command, const std::filesystem::path& root) {
     const auto result_path = resolve_input(command.file, root);
     const auto schema_path = command.result_schema.empty()
                                  ? root / result_schema_relative
@@ -232,12 +231,12 @@ struct ReportCommand final {
            << ",\nrun_id," << csv_field(document.at("run").at("id").as<std::string>())
            << ",\nmaster_seed," << document.at("run").at("master_seed").as<std::uint64_t>()
            << ",count\ncollector_count,"
-           << document.at("run").at("collector_count").as<std::uint64_t>()
-           << ",count\ndetected,"
+           << document.at("run").at("collector_count").as<std::uint64_t>() << ",count\ndetected,"
            << (document.at("level_b_detection").at("detected").as<bool>() ? "true" : "false")
            << ",boolean\nassembled,"
            << (document.at("level_c_assembly").at("complete").as<bool>() ? "true" : "false")
-           << ",boolean\nsensitivity," << decimal(analysis.at("sensitivity").at("estimate").as<double>())
+           << ",boolean\nsensitivity,"
+           << decimal(analysis.at("sensitivity").at("estimate").as<double>())
            << ",fraction\nspecificity,"
            << decimal(analysis.at("specificity").at("estimate").as<double>())
            << ",fraction\nclinical_validation_claim,false,boolean\n";
@@ -246,7 +245,8 @@ struct ReportCommand final {
 
 [[nodiscard]] std::string make_stages_csv(const Json& document) {
     std::ostringstream output;
-    output << "ordinal,stage,time_ns,basis,component_id,input_identity,output_identity,qualification\n";
+    output << "ordinal,stage,time_ns,basis,component_id,input_identity,output_identity,"
+              "qualification\n";
     for (const auto& stage : document.at("runtime").at("stages").array_range()) {
         output << stage.at("ordinal").as<std::uint64_t>() << ','
                << csv_field(stage.at("stage").as<std::string>()) << ','
@@ -280,30 +280,38 @@ struct ReportCommand final {
     const auto& scenario = document.at("scenario");
     const auto& analysis = document.at("level_e_analysis").at("summary");
     std::ostringstream output;
-    output << "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\">"
-              "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">"
-              "<title>MEHLISSA result report</title><style>"
-              "body{font:16px/1.5 system-ui,sans-serif;color:#183247;max-width:1100px;margin:auto;padding:2rem}"
-              "h1,h2{color:#123b56}.notice{background:#fff3cd;border-left:5px solid #d39e00;padding:1rem}"
-              ".cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}"
-              ".card{border:1px solid #b9cbd6;border-radius:8px;padding:1rem}table{border-collapse:collapse;width:100%}"
-              "th,td{border:1px solid #b9cbd6;padding:.5rem;text-align:left}th{background:#123b56;color:white}"
-              "code{overflow-wrap:anywhere}footer{margin-top:2rem;color:#526b7a}</style></head><body>"
-           << "<h1>" << html_escape(scenario.at("title").as<std::string>()) << "</h1>"
-           << "<p>Scenario <code>" << html_escape(scenario.at("id").as<std::string>())
-           << "</code>, run <code>" << html_escape(document.at("run").at("id").as<std::string>())
-           << "</code></p><div class=\"notice\"><strong>Research software only.</strong> "
-              "This result makes no clinical validation claim and must not be used for diagnosis or treatment.</div>"
-           << "<h2>Outcome</h2><div class=\"cards\"><div class=\"card\"><strong>Detection</strong><br>"
-           << (document.at("level_b_detection").at("detected").as<bool>() ? "Detected" : "Not detected")
-           << "</div><div class=\"card\"><strong>Assembly</strong><br>"
-           << (document.at("level_c_assembly").at("complete").as<bool>() ? "Complete" : "Incomplete")
-           << "</div><div class=\"card\"><strong>Sensitivity</strong><br>"
-           << percent(analysis.at("sensitivity"))
-           << "</div><div class=\"card\"><strong>Specificity</strong><br>"
-           << percent(analysis.at("specificity")) << "</div></div>"
-              "<h2>Runtime stages</h2><table><thead><tr><th>#</th><th>Stage</th><th>Time (ns)</th>"
-              "<th>Basis</th><th>Qualification</th></tr></thead><tbody>";
+    output
+        << "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\">"
+           "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">"
+           "<title>MEHLISSA result report</title><style>"
+           "body{font:16px/1.5 "
+           "system-ui,sans-serif;color:#183247;max-width:1100px;margin:auto;padding:2rem}"
+           "h1,h2{color:#123b56}.notice{background:#fff3cd;border-left:5px solid "
+           "#d39e00;padding:1rem}"
+           ".cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}"
+           ".card{border:1px solid "
+           "#b9cbd6;border-radius:8px;padding:1rem}table{border-collapse:collapse;width:100%}"
+           "th,td{border:1px solid "
+           "#b9cbd6;padding:.5rem;text-align:left}th{background:#123b56;color:white}"
+           "code{overflow-wrap:anywhere}footer{margin-top:2rem;color:#526b7a}</style></head><body>"
+        << "<h1>" << html_escape(scenario.at("title").as<std::string>()) << "</h1>"
+        << "<p>Scenario <code>" << html_escape(scenario.at("id").as<std::string>())
+        << "</code>, run <code>" << html_escape(document.at("run").at("id").as<std::string>())
+        << "</code></p><div class=\"notice\"><strong>Research software only.</strong> "
+           "This result makes no clinical validation claim and must not be used for diagnosis or "
+           "treatment.</div>"
+        << "<h2>Outcome</h2><div class=\"cards\"><div class=\"card\"><strong>Detection</strong><br>"
+        << (document.at("level_b_detection").at("detected").as<bool>() ? "Detected"
+                                                                       : "Not detected")
+        << "</div><div class=\"card\"><strong>Assembly</strong><br>"
+        << (document.at("level_c_assembly").at("complete").as<bool>() ? "Complete" : "Incomplete")
+        << "</div><div class=\"card\"><strong>Sensitivity</strong><br>"
+        << percent(analysis.at("sensitivity"))
+        << "</div><div class=\"card\"><strong>Specificity</strong><br>"
+        << percent(analysis.at("specificity"))
+        << "</div></div>"
+           "<h2>Runtime stages</h2><table><thead><tr><th>#</th><th>Stage</th><th>Time (ns)</th>"
+           "<th>Basis</th><th>Qualification</th></tr></thead><tbody>";
     for (const auto& stage : document.at("runtime").at("stages").array_range()) {
         output << "<tr><td>" << stage.at("ordinal").as<std::uint64_t>() << "</td><td>"
                << html_escape(stage.at("stage").as<std::string>()) << "</td><td>"
@@ -311,11 +319,14 @@ struct ReportCommand final {
                << html_escape(stage.at("basis").as<std::string>()) << "</td><td>"
                << html_escape(stage.at("qualification").as<std::string>()) << "</td></tr>";
     }
-    output << "</tbody></table><h2>Evidence and reproducibility</h2><p>The complete machine-readable "
-              "result is included as <a href=\"result.json\">result.json</a>. Selected artifacts:</p><ul>";
+    output
+        << "</tbody></table><h2>Evidence and reproducibility</h2><p>The complete machine-readable "
+           "result is included as <a href=\"result.json\">result.json</a>. Selected "
+           "artifacts:</p><ul>";
     for (const auto& artifact : document.at("reproducibility").at("artifacts").array_range()) {
         output << "<li><strong>" << html_escape(artifact.at("role").as<std::string>())
-               << ":</strong> <code>" << html_escape(artifact.at("definition_path").as<std::string>())
+               << ":</strong> <code>"
+               << html_escape(artifact.at("definition_path").as<std::string>())
                << "</code> - SHA-256 <code>"
                << html_escape(artifact.at("definition_sha256").as<std::string>()) << "</code></li>";
     }

@@ -10,9 +10,9 @@ SPDX-License-Identifier: CC-BY-4.0
 **Purpose:** Shareable overview for prospective contributors and research partners
 **Status date:** 2 September 2026
 **Development branch:** `mehlissa-next-generation`
-**Base revision:** `f3739e48c256d95033ba74724e78750dfa8033c5`
+**Base revision:** `f49a7afa81213b832bd7ec9e69931bb8f893e2cf`
 **Milestone status:** M0 through M7 passed
-**Current product focus:** UX-5 Python API and notebooks
+**Current product focus:** grouped cross-platform acceptance of UX-3 through UX-5
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -56,6 +56,10 @@ behind explicit contracts.
   collector-count sweeps, hashed aggregate JSON, and analysis-ready CSV. The
   six-run reference campaign and all 283 local tests pass; combined
   cross-platform CI remains intentionally deferred until UX-5.
+- UX-5 locally adds a standard-library Python process client, version-guarded
+  result readers, campaign grouping and same-seed differences, optional plotting,
+  and two licensed starter notebooks. All 284 local tests pass; the grouped
+  cross-platform push and CI run is the remaining acceptance step.
 - The English User Guide, software architecture guide, model documentation,
   traceability matrix, and architecture decision records support international
   collaboration.
@@ -67,7 +71,7 @@ behind explicit contracts.
 | Software architecture | Strong modular foundation with explicit ownership, conservation, lifecycle, configuration, and evidence boundaries. |
 | End-to-end integration | Complete first software vertical slice through fingerprinting Levels A-E. |
 | Scientific validation | Mixed maturity: verified equations, literature-parameterized candidates, selected independent comparisons, and multiple synthetic mechanisms. |
-| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, UX-3 locally provides readable shareable result bundles, and UX-4 locally provides controlled campaigns. Python access and a workbench remain. |
+| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, UX-3 locally provides readable shareable result bundles, UX-4 locally provides controlled campaigns, and UX-5 locally provides Python and notebook access. A graphical workbench remains. |
 | Clinical readiness | Not claimed. Patient prediction, diagnosis, and treatment recommendations are explicitly outside the present scope. |
 
 ## How to read project labels
@@ -274,7 +278,7 @@ mechanism predicts a biological or clinical outcome.
 
 | Program | Principal work | Intended outcome |
 |---|---|---|
-| Usability and orchestration | UX-1 provides scenario execution, UX-2 provides discovery, UX-3 locally provides HTML/text/CSV result bundles, and UX-4 locally provides controlled campaigns; Python access and a workbench remain. | A researcher can find suitable models, run M7, inspect or share its result, and execute reproducible parameter studies without C++ knowledge or manual JSON copying. |
+| Usability and orchestration | UX-1 provides scenario execution, UX-2 provides discovery, UX-3 locally provides HTML/text/CSV result bundles, UX-4 locally provides controlled campaigns, and UX-5 locally provides Python readers, analysis, and notebooks; a workbench remains. | A researcher can find suitable models, run M7, inspect or share its result, execute reproducible parameter studies, and analyze them from Python without C++ knowledge or manual JSON copying. |
 | Scientific qualification | Replace historical or synthetic assumptions with measured parameters, calibration data, independent validation, uncertainty, and sensitivity campaigns. | Defensible scenario-specific conclusions within explicit scopes. |
 | Additional medical scenarios | Continuous monitoring, liquid biopsy, endocrine/adrenal venous sampling, CAR-T, and ultimately metastasis prevention. | Evidence that the architecture generalizes beyond fingerprinting. |
 | Additional organs | Begin with a kidney surrogate and progress toward regional filtration, clearance, and organ-specific capillary interfaces. | Evidence that organ factories and coupling contracts are not lung-specific. |
@@ -305,7 +309,7 @@ they do not by themselves increase physiological or clinical validity.
 | UX-2 - Model and example discovery | List and describe available artifacts, parameters, evidence, and limitations. | Passed; five model families, ten examples, all 281 local Windows/MSVC tests, and all supported GitHub CI jobs pass |
 | UX-3 - Human-readable and HTML result reporting | Provide concise terminal, tabular, and shareable HTML views over the complete machine-readable result. | Accepted locally; six-file bundle and all 282 Windows/MSVC tests pass; combined cross-platform CI deferred until UX-5 |
 | UX-4 - Derived experiments and campaigns | Create controlled variants, replicates, parameter sweeps, paired comparisons, and aggregate analyses. | Accepted locally; six-run reference campaign and all 283 Windows/MSVC tests pass; combined cross-platform CI deferred until UX-5 |
-| UX-5 - Python API and notebooks | Support common scientific analysis and plotting workflows without replacing the C++ implementation authority. | Planned |
+| UX-5 - Python API and notebooks | Support common scientific analysis and plotting workflows without replacing the C++ implementation authority. | Accepted locally; process API, readers, analysis, optional plots, two notebooks, and all 284 Windows/MSVC tests pass; grouped cross-platform CI pending |
 | UX-6 - Graphical research workbench | Add guided scenario editing, run control, comparison, provenance, and uncertainty visualization after the interfaces are stable. | Planned |
 
 The intended first user experience is:
@@ -315,38 +319,33 @@ mehlissa scenario list
 mehlissa scenario validate --file examples/scenarios/fp9-lung-level-a-v1.json
 mehlissa scenario run --file examples/scenarios/fp9-lung-level-a-v1.json --output results/fp9-reference
 mehlissa result summarize --file results/fp9-reference/<printed-run-directory>/result.json
+mehlissa result report --file results/fp9-reference/<printed-run-directory>/result.json --output reports/fp9-reference
+mehlissa campaign run --file examples/campaigns/fp9-collector-count-v1.json --output results/fp9-campaign
 ```
 
-UX-1 now reuses the existing M7 implementation, validates every selected
-artifact before execution, creates a unique run directory, writes validated
-result/provenance/log/summary artifacts, and reports stable actionable errors.
-Its automated end-to-end test covers help, listing, positive validation,
-negative validation, execution, artifact completeness, and re-summarization.
-The Windows MSVC build and all 280 local tests pass. GitHub CI run 33620386319
-also passes Windows/MSVC, Linux/GCC, and Linux/Clang analysis and sanitizer
-jobs. UX-1 is therefore fully accepted.
+UX-1 validates and runs the complete M7 composition, creates a unique directory
+with result, provenance, log, and summary, and reports actionable errors. Its
+end-to-end test covers positive and negative workflows. All 280 local tests and
+GitHub CI run 33620386319 pass across Windows/MSVC, Linux/GCC, and Linux/Clang.
 
-UX-2 adds `model list`, `model describe`, filtered `example
-list`, and fail-safe `example copy`. The application validates the strict
-catalog and its repository references before displaying or copying anything.
-All 281 local Windows/MSVC tests and GitHub CI run 33628859417 pass across
-Windows/MSVC, Linux/GCC, and Linux/Clang analysis and sanitizer jobs. UX-2 is
-therefore fully accepted.
+UX-2 adds model and example discovery plus fail-safe starter copying. The strict
+catalog and repository references are validated before use. All 281 local tests
+and cross-platform GitHub CI run 33628859417 pass.
 
-UX-3 adds `result report`, which validates an existing complete result and
-creates a new report directory rather than overwriting prior work. The bundle
-contains dependency-free HTML, concise text, overview, stage and analysis-case
-CSV tables, plus the authoritative JSON. Evidence hashes, limitations, and the
-clinical non-claim remain visible. All 282 local Windows/MSVC tests pass; UX-4
-was completed next and the combined cross-platform push and CI run follows UX-5.
+UX-3 validates an existing result and creates a non-overwriting six-file HTML,
+text, CSV, and authoritative-JSON bundle. Evidence hashes, limitations, and the
+clinical non-claim remain visible. All 282 local tests pass.
 
-UX-4 adds `campaign validate` and `campaign run`. A strict manifest expands a
-base scenario into explicit replicates, collector-count sweep members, and
-same-seed paired comparisons. Every derived scenario is retained and validated;
-the aggregate JSON and CSV bind inputs and results with paths and SHA-256 hashes.
-Only `run.collector_count` is currently allow-listed, so new scientific
-parameters cannot bypass domain-specific review. The six-run reference campaign
-and all 283 local Windows/MSVC tests pass; UX-5 is now active.
+UX-4 expands a strict campaign into retained replicates, collector-count sweeps,
+and same-seed pairs. Hashed aggregate JSON and CSV bind all inputs and results;
+only the reviewed `run.collector_count` parameter is allow-listed. The six-run
+reference campaign and all 283 local tests pass.
+
+UX-5 adds the `mehlissa-research` process client and version-guarded readers for
+scenario and campaign analysis. Matplotlib remains optional; two licensed
+notebooks demonstrate complete workflows. Python cannot bypass the C++ schemas
+or convert failed runs into observations. All 284 local tests pass; grouped
+UX-3 through UX-5 cross-platform CI is pending.
 
 ## 9. Opportunities for collaborators
 

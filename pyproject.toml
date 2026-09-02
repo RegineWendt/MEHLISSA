@@ -1,0 +1,25 @@
+# SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+# SPDX-License-Identifier: MPL-2.0
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mehlissa-research"
+version = "0.1.0"
+description = "Process API and result-analysis helpers for MEHLISSA Next"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MPL-2.0"}
+authors = [{name = "MEHLISSA contributors"}]
+dependencies = []
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.8"]
+
+[tool.setuptools]
+package-dir = {"" = "python"}
+
+[tool.setuptools.packages.find]
+where = ["python"]

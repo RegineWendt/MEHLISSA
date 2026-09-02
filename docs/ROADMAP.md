@@ -866,7 +866,7 @@ validity.
 | **UX-2 - Model and example discovery** | Make available models, examples, parameters, evidence, and limitations discoverable from the application. | `model list`, `model describe`, filtered example listing, safe copying, and a strict versioned catalog with semantic integrity checks. | passed on 2 September 2026; all 281 local Windows/MSVC tests and GitHub Windows/MSVC, Linux/GCC, and Linux/Clang analysis/sanitizer jobs pass |
 | **UX-3 - Human-readable and HTML result report** | Allow results to be inspected and shared without manually reading JSON. | concise terminal report, stable tabular exports, self-contained HTML report, evidence and non-claim section, and links to complete machine-readable results. | implemented and accepted locally on 2 September 2026; all 282 Windows/MSVC tests pass; combined cross-platform CI intentionally deferred until UX-5 |
 | **UX-4 - Derived experiments and campaigns** | Let researchers create controlled variants, replicates, and parameter studies without editing source code. | safe parameter overrides, immutable derived manifests, seed/replicate plans, sweeps, paired comparisons, aggregate campaign results, and sensitivity hooks. | implemented and accepted locally on 2 September 2026; six-run reference campaign and all 283 Windows/MSVC tests pass; combined cross-platform CI intentionally deferred until UX-5 |
-| **UX-5 - Python API and notebooks** | Make MEHLISSA accessible to common scientific-analysis workflows. | stable Python bindings or process API, result readers, example notebooks, plotting, and campaign analysis while retaining the C++ contracts as the implementation authority. | planned |
+| **UX-5 - Python API and notebooks** | Make MEHLISSA accessible to common scientific-analysis workflows. | stable Python bindings or process API, result readers, example notebooks, plotting, and campaign analysis while retaining the C++ contracts as the implementation authority. | implemented and accepted locally on 2 September 2026; standard-library process client, version-guarded readers, optional plotting, two notebooks, and all 284 Windows/MSVC tests pass; grouped UX-3 through UX-5 cross-platform CI pending |
 | **UX-6 - Graphical research workbench** | Provide guided scenario editing and interactive result exploration on top of stable interfaces. | schema-driven editor, validation feedback, run control, comparison views, provenance display, and uncertainty-aware visualization. | planned |
 
 The packages are implemented in order unless a later package can be developed
@@ -1260,9 +1260,16 @@ The following packages are derived directly from this roadmap:
     aggregate JSON/CSV output with hashes, and explicit descriptive sensitivity
     hooks. The six-run reference campaign and all 283 local Windows/MSVC tests
     pass; combined cross-platform CI is deferred until UX-5.
-17. **Implement UX-5, Python API and notebooks.** Add a standard-library process
-    client and typed result readers, optional plotting, campaign analysis, and a
-    reproducible introductory notebook while keeping C++ schemas authoritative.
+17. ~~Implement UX-5, Python API and notebooks.~~ Implemented and accepted
+    locally: a standard-library process client delegates to the C++ application;
+    version-guarded readers expose scenario and campaign analysis; Matplotlib is
+    optional; and two licensed notebooks cover a first run and campaign analysis.
+    All 284 local Windows/MSVC tests pass.
+18. **Complete grouped cross-platform acceptance for UX-3 through UX-5, then
+    prepare UX-6.** Push the three separately reviewable feature commits, require
+    Windows/MSVC, Linux/GCC, Linux/Clang formatting and analysis, and sanitizer
+    jobs to pass, update the three living documents and PDF, then scope the
+    graphical research workbench on the now-stable command and Python APIs.
 
 ## 12. Definition of long-term success
 

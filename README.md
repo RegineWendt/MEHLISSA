@@ -61,5 +61,23 @@ Use `campaign validate --file <campaign.json>` before `campaign run --file
 collector-count sweeps, and paired comparisons. The campaign bundle preserves
 every derived scenario and result and adds aggregate JSON and CSV indexes.
 
+Python users can install the lightweight UX-5 helpers from the repository or
+use them directly through `PYTHONPATH=python`. The Python layer invokes the same
+C++ executable and reads its versioned JSON results; it does not implement a
+second simulator:
+
+```python
+from mehlissa import MehlissaClient, load_result
+
+client = MehlissaClient("build/windows-msvc/apps/Debug/mehlissa.exe", ".")
+execution = client.run_scenario(
+    "examples/scenarios/fp9-lung-level-a-v1.json", "results/python-run"
+)
+print(load_result(execution.result).summary)
+```
+
+See `examples/notebooks/01-first-scenario.ipynb` and
+`examples/notebooks/02-campaign-analysis.ipynb` for complete workflows.
+
 MEHLISSA Next is a research model. It is not a medical device and does not
 provide patient-specific clinical predictions.

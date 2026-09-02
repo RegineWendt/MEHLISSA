@@ -491,6 +491,30 @@ selected response metrics. `campaign-results.csv` is a stable flat projection.
 The declared sensitivity hook is metadata for downstream analysis, not a claim
 that a formal global sensitivity analysis has been performed.
 
+### 7.5 Python process and analysis API
+
+UX-5 places `python/mehlissa` above the command-line boundary. `MehlissaClient`
+uses `subprocess` with an argument vector, captures structured failures, and
+parses only the stable `key=value` artifact paths emitted by successful
+commands. Returned frozen data classes identify scenario, report, and campaign
+artifacts. This design avoids an early binary ABI and guarantees that Python
+uses the same validation, composition, and runtime as every CLI user.
+
+`ScenarioResult` and `CampaignResult` are version-aware readers, not alternative
+schemas. They preserve the complete decoded JSON while providing summaries,
+runtime stages, analysis cases, grouped campaign runs, metric series, and
+same-seed paired differences. Unsupported schema versions and structurally
+unrelated files fail explicitly. The C++ writers and repository JSON Schemas
+remain authoritative; any incompatible result change requires a new schema and
+an explicit Python compatibility update.
+
+The package has no mandatory third-party runtime dependency. Matplotlib is
+loaded lazily by `plot_runtime` and `plot_metric` and is published as the
+optional `plot` install extra. Notebooks use the public process/result APIs only
+and contain no privileged path into model internals. This keeps notebooks
+reproducible and prevents exploratory analysis from becoming a second,
+unvalidated implementation of MEHLISSA.
+
 ## 8. Public API map
 
 Public headers live below each library's `include/mehlissa/` tree. The table
@@ -510,11 +534,12 @@ headers add typed configurations, states, and verification functions.
 | `mehlissa::models::cosimulation` | `models/cosimulation/include/mehlissa/models/cosimulation/*.hpp` | explicit body/organ/capillary/cell/IoT adapters; synchronization and dependency-safe routing |
 | `mehlissa::scenarios::fingerprinting` | `scenarios/fingerprinting/include/mehlissa/scenarios/fingerprinting/*.hpp` | M7 profile/composer, runtime trace, Levels B-E detection/assembly/communication/analysis APIs, holistic runner, and versioned result writers |
 
-These are in-process C++ APIs. There is no stable C ABI, REST API, plugin ABI,
-or Python API yet. The roadmap reserves a Python experiment/analysis API for a
-later phase. Until a public release policy says otherwise, semantic changes to
-headers still require tests, schema review where applicable, and an ADR if they
-alter an architectural contract.
+These are in-process C++ APIs. There is no stable C ABI, REST API, or plugin ABI.
+The stable Python-facing boundary is the UX-5 process API in
+`python/mehlissa`; it deliberately delegates to the executable rather than
+binding C++ objects. Until a public release policy says otherwise, semantic
+changes to headers, commands, or result schemas still require tests,
+compatibility review, and an ADR if they alter an architectural contract.
 
 ### 8.1 Command-line API
 
@@ -534,6 +559,16 @@ The current executable supports:
 | `mehlissa example list\|copy` | discover curated starter configurations and copy one with its license without overwriting work |
 | `mehlissa result report` | create a non-overwriting HTML/text/CSV bundle from a validated complete result |
 | `mehlissa campaign validate\|run` | validate or execute bounded derived experiments with retained manifests and aggregate JSON/CSV results |
+
+### 8.2 Python API
+
+| Entry point | Purpose |
+|---|---|
+| `MehlissaClient` | discovery, scenario execution, result reporting, and campaign execution through the authoritative application |
+| `ScenarioExecution`, `ReportBundle`, `CampaignExecution` | immutable paths and captured successful command output |
+| `load_result`, `ScenarioResult` | version-guarded fingerprinting-result reader, summary, stages, cases, and optional runtime plot |
+| `load_campaign_result`, `CampaignResult` | version-guarded aggregate reader, groups, metric series, paired differences, and optional response plot |
+| `MehlissaCommandError` | command vector, exit status, stdout, and structured stderr for explicit failure handling |
 
 Detailed commands are maintained in the [User Guide](../USER_GUIDE.md).
 

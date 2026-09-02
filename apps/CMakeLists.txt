@@ -143,3 +143,19 @@ add_test(
         -P ${PROJECT_SOURCE_DIR}/tests/run_ux4_cli_test.cmake
 )
 set_tests_properties(mehlissa_cli_ux4_campaigns PROPERTIES LABELS "UX-4;cli")
+
+find_package(Python3 COMPONENTS Interpreter QUIET)
+if(Python3_Interpreter_FOUND)
+    add_test(
+        NAME mehlissa_python_ux5_api
+        COMMAND
+            ${CMAKE_COMMAND} -E env "PYTHONPATH=${PROJECT_SOURCE_DIR}/python"
+            ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/tests/test_python_api.py
+            --executable $<TARGET_FILE:mehlissa>
+            --root ${PROJECT_SOURCE_DIR}
+            --output ${CMAKE_CURRENT_BINARY_DIR}/ux5-python
+    )
+    set_tests_properties(mehlissa_python_ux5_api PROPERTIES LABELS "UX-5;python;cli")
+else()
+    message(WARNING "Python 3 was not found; the UX-5 process-API test is disabled")
+endif()

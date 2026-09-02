@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Covered software:** accepted M0 through M7
 
-**Last updated:** 2 September 2026, after local acceptance of UX-4 experiment campaigns
+**Last updated:** 2 September 2026, after local acceptance of UX-5 Python access
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -827,6 +827,102 @@ available response columns. They make later statistical tooling possible but do
 not themselves constitute a global sensitivity analysis. Repetition also does
 not cure synthetic inputs or establish clinical validity: interpret every run
 within the base scenario's evidence and limitations.
+
+#### Use MEHLISSA from Python (UX-5)
+
+UX-5 provides a stable **process API**: Python starts the normal MEHLISSA
+executable, checks its exit status, reads the paths printed by the command, and
+loads versioned JSON results. The C++ implementation, JSON Schemas, and command
+semantics remain the single authority; Python does not reproduce simulation
+logic or silently relax validation.
+
+Python 3.10 or newer is required. From the repository root, either install the
+package in a virtual environment:
+
+```powershell
+py -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install -e .
+```
+
+or use the source tree directly for a quick local session:
+
+```powershell
+$env:PYTHONPATH = "$PWD/python"
+python
+```
+
+Create a client with the executable and repository root, then run and read a
+scenario:
+
+```python
+from mehlissa import MehlissaClient, load_result
+
+client = MehlissaClient(
+    "build/windows-msvc/apps/Debug/mehlissa.exe",
+    ".",
+)
+execution = client.run_scenario(
+    "examples/scenarios/fp9-lung-level-a-v1.json",
+    "results/python-fp9",
+)
+result = load_result(execution.result)
+print(result.summary)
+```
+
+`ScenarioExecution` exposes the exact run directory and result, provenance,
+log, and summary paths. `ScenarioResult` provides `summary`, `runtime_stages`,
+and `analysis_cases` while retaining the complete source document. The loader
+accepts fingerprinting result schema `2.0.0` and fails explicitly on unknown
+versions instead of guessing their meaning.
+
+The client also exposes discovery, validation, readable reporting, and UX-4
+campaign commands. A complete campaign workflow is:
+
+```python
+from mehlissa import load_campaign_result
+
+campaign_execution = client.run_campaign(
+    "examples/campaigns/fp9-collector-count-v1.json",
+    "results/python-campaign",
+)
+campaign = load_campaign_result(campaign_execution.result)
+print(campaign.groups())
+print(campaign.paired_differences("sensitivity"))
+```
+
+`CampaignResult.metric_series()` returns analysis-ready value/response pairs;
+`groups()` preserves experimental groups; and `paired_differences()` matches
+baseline and comparison by group, replicate number, and shared seed. It rejects
+incomplete pairs and unsupported metrics. These helpers are descriptive: they
+do not add statistical power, uncertainty propagation, or clinical validity.
+
+Plotting is optional so headless execution and the core API have no third-party
+runtime dependency. Install it with:
+
+```powershell
+python -m pip install -e ".[plot]"
+```
+
+Then call `result.plot_runtime()` or
+`campaign.plot_metric("sensitivity")`; both return a Matplotlib axes object for
+further customization. The two licensed starter notebooks are:
+
+- `examples/notebooks/01-first-scenario.ipynb` for discovery, validation,
+  execution, result reading, reporting, and a stage-time plot; and
+- `examples/notebooks/02-campaign-analysis.ipynb` for campaign execution,
+  grouping, paired differences, and a response plot.
+
+Run Jupyter from the repository root so the examples find both `python/` and
+the build directories. Change the candidate executable list in the setup cell
+if your build is elsewhere. Re-running a fixed campaign output is intentionally
+rejected; the campaign notebook therefore uses a timestamped directory.
+
+When a command fails, `MehlissaCommandError` retains the argument vector, exit
+status, stdout, and structured stderr such as `MEHLISSA-E2005`. Catch it only
+when an analysis can handle the failure explicitly; never convert failed runs
+into apparent observations. Identifiable patient data still must not be placed
+in notebooks, repository examples, or shared result bundles.
 
 #### Validate an experiment manifest
 
@@ -2626,8 +2722,10 @@ The usability package status is:
   collector-count sweeps, and same-seed paired comparisons with aggregate
   JSON/CSV results; the six-run reference campaign and all 283 local
   Windows/MSVC tests pass, with combined CI deferred until UX-5;
-- **UX-5, Python API and notebooks:** support scientific analysis and plotting
-  without making Python the implementation authority; and
+- **UX-5, Python API and notebooks:** accepted locally; the standard-library
+  process client, version-guarded result readers, campaign grouping and paired
+  differences, optional plotting, and two licensed notebooks pass all 284 local
+  Windows/MSVC tests; combined cross-platform CI follows the grouped push; and
 - **UX-6, graphical research workbench:** add guided scenario editing and
   interactive comparison after the underlying interfaces are stable.
 
