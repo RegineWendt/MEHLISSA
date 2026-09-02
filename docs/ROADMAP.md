@@ -869,6 +869,24 @@ validity.
 | **UX-5 - Python API and notebooks** | Make MEHLISSA accessible to common scientific-analysis workflows. | stable Python bindings or process API, result readers, example notebooks, plotting, and campaign analysis while retaining the C++ contracts as the implementation authority. | passed on 2 September 2026; process client, version-guarded readers, optional plotting, two notebooks, all 284 current tests, and all supported jobs pass in grouped CI run 33668850496 |
 | **UX-6 - Graphical research workbench** | Provide guided scenario editing and interactive result exploration on top of stable interfaces. | schema-driven editor, validation feedback, run control, comparison views, provenance display, and uncertainty-aware visualization. | planned |
 
+##### UX-6 delivery sequence
+
+UX-6 is divided into independently reviewable increments. The graphical
+workbench remains a client of the accepted command and Python process APIs; it
+must not create a second simulation implementation, bypass schema validation,
+or weaken reproducibility and interpretation boundaries.
+
+| Increment | Plain-language objective | Principal deliverables | Acceptance evidence | Status |
+|---|---|---|---|---|
+| **UX-6.1 - Product scope, workflows, and technical foundation** | Decide what the first workbench must support and select a maintainable implementation approach before building screens. | named user roles; prioritized end-to-end workflows; low-fidelity screen designs; desktop/local-web technology evaluation; architecture decision record; threat, privacy, and accessibility baseline; thin executable prototype calling a read-only discovery command. | reviewed scope and architecture decision; prototype lists catalog content through an existing MEHLISSA interface; no simulation logic is duplicated. | planned |
+| **UX-6.2 - Guided scenario workspace** | Let a researcher create, open, inspect, and save a scenario without editing raw JSON. | model and example selection; schema-derived fields; units, descriptions, defaults, evidence, and limitations beside each parameter; explicit unsaved-change handling; source JSON view; non-overwriting save-as workflow. | a curated scenario can be opened, changed, saved, reopened, and shown to retain the intended schema-valid values; unknown or unsupported fields cannot be silently discarded. | planned |
+| **UX-6.3 - Validation and corrective feedback** | Explain configuration problems at the field and document level before a run starts. | live structural and semantic validation; field-level messages linked to stable error codes; cross-file dependency checks; actionable repair guidance; warning/error distinction; validation summary suitable for sharing. | positive and negative fixtures produce the same validity decision as the accepted CLI; every rejected field is locatable and the workbench cannot start an invalid run. | planned |
+| **UX-6.4 - Run and campaign control** | Start and monitor individual scenarios and controlled campaigns from one workspace. | explicit run plan and confirmation; output-location selection; progress and stage display; cancellation with preserved evidence; campaign, replicate, sweep, and paired-comparison controls; bounded log view; links to retained manifests and outputs. | a reference scenario and the six-run UX-4 campaign complete through existing APIs; seeds, manifests, logs, outputs, failures, and cancellation states remain traceable and reproducible. | planned |
+| **UX-6.5 - Result dashboard and comparison** | Make completed results understandable without manually opening JSON or CSV files. | concise outcome dashboard; stage timing and case tables; side-by-side run comparison; campaign grouping and paired differences; drill-through to authoritative JSON and UX-3 reports; clear missing/failed-run treatment. | dashboard values are checked against accepted result readers and fixtures; comparisons never treat missing or failed runs as observations. | planned |
+| **UX-6.6 - Provenance, evidence, and interpretation boundaries** | Keep the origin and valid interpretation of every displayed result visible. | provenance panel for versions, seeds, hashes, manifests, models, and input files; evidence and licence links; limitations and maturity labels; persistent non-clinical notice; exportable audit summary. | all provenance fields round-trip from accepted artifacts; altered hashes and incomplete evidence are visibly flagged; the interface cannot imply patient-specific or clinical validity. | planned |
+| **UX-6.7 - Sensitivity, uncertainty, visualization, and export** | Support defensible visual exploration of parameter effects and uncertainty. | distributions and intervals for replicates; sweep and paired-difference plots; sensitivity views using declared campaign hooks; units and sample counts on every chart; accessible palettes; reproducible figure, table, and analysis-data export. | plotted and exported values match the Python/result-reader calculations; uncertainty is distinguished from deterministic variation and unsupported inference is not fabricated. | planned |
+| **UX-6.8 - Usability, accessibility, packaging, and release acceptance** | Turn the integrated workbench into a dependable entry point for researchers and contributors. | task-based usability review; keyboard and screen-reader checks; responsive error recovery; installation and launch packaging for supported platforms; example workspace; developer extension notes; updated User Guide, Roadmap, architecture guide, status brief, and PDF. | representative novice and expert workflows pass documented acceptance tests; supported CI, packaging smoke tests, documentation review, and a clean-install exercise pass. | planned |
+
 The packages are implemented in order unless a later package can be developed
 without destabilizing an earlier interface. UX-1 through UX-3 precede new GUI
 work. Every package must preserve deterministic execution and existing result
@@ -1267,9 +1285,32 @@ The following packages are derived directly from this roadmap:
     284 tests pass on Windows/MSVC and Linux/GCC; Linux/Clang also passes
     formatting, clang-tidy, AddressSanitizer, and UndefinedBehaviorSanitizer in
     GitHub CI run 33668850496.
-19. **Scope and implement UX-6, the graphical research workbench.** Build guided
-    scenario editing, validation feedback, run control, comparison, provenance,
-    and uncertainty-aware visualization on the accepted command and Python APIs.
+19. **UX-6.1 - Define product scope, workflows, and technical foundation.**
+    Review user roles and first workflows, compare suitable desktop/local-web
+    approaches, record the architecture decision, and prove read-only catalog
+    discovery through an existing interface.
+20. **UX-6.2 - Build the guided scenario workspace.** Provide schema-derived
+    editing, contextual units/evidence/limitations, safe open and save-as, and a
+    source view without introducing a second configuration contract.
+21. **UX-6.3 - Add validation and corrective feedback.** Match CLI validity
+    decisions, attach stable actionable errors to fields and dependencies, and
+    prohibit execution of invalid configurations.
+22. **UX-6.4 - Add run and campaign control.** Execute scenarios and UX-4
+    campaigns through accepted APIs with bounded progress, logs, cancellation,
+    and complete retained manifests and output identity.
+23. **UX-6.5 - Add result dashboards and comparisons.** Present outcomes,
+    timings, cases, groups, and paired differences while linking back to the
+    authoritative result and never converting missing or failed runs into data.
+24. **UX-6.6 - Expose provenance, evidence, and interpretation boundaries.**
+    Display versions, seeds, hashes, licences, maturity, limitations, and the
+    non-clinical scope in the normal analysis and export workflows.
+25. **UX-6.7 - Add sensitivity, uncertainty, visualization, and export.** Build
+    unit-labelled accessible plots and reproducible exports whose numbers match
+    the accepted Python readers and declared campaign analyses.
+26. **UX-6.8 - Complete usability, accessibility, packaging, and release
+    acceptance.** Test representative novice and expert workflows, clean
+    installation, supported CI, error recovery, and all required living
+    documentation before marking UX-6 complete.
 
 ## 12. Definition of long-term success
 
