@@ -13,11 +13,15 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Associated requirement:** `SCN-001`
 
-**Implementation status (1 September 2026):** M3.19 executes the historical
-Level-A timer. M7.1 now selects and validates the complete M2–M6 candidate stack
-and fixes the causal stage/identity contract in a separate scenario package;
-it does not yet advance those components together. See
-[the M7.1 composition contract](../m7/LEVEL_A_COMPOSITION_CONTRACT.md).
+**Implementation status (2 September 2026):** Gate M7 has passed for the
+complete reproducible research-software demonstrator. Level A reproduces the
+historical timing baseline; Level B executes concentration- and
+receptor-binding-based detection; Level C represents the nine explicit tiles
+and complete/incomplete assembly; Level D executes local, gateway, body area
+network, and external-station communication; and Level E performs labelled
+sensitivity and misclassification analysis. These are functional realism
+levels within one fingerprinting workflow, not separate “A runs” or “B runs”.
+See the [M7 gate review](../m7/M7_GATE_REVIEW.md).
 
 ## 1. Purpose and research question
 

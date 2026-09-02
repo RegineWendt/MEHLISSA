@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Covered software:** accepted M0 through M7
 
-**Last updated:** 2 September 2026, after the M7 gate review
+**Last updated:** 2 September 2026, after the M7 gate review and UX-program planning
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -24,6 +24,31 @@ Quick navigation:
 - [choose a first experiment](#6-choose-your-first-experiment);
 - [install and run the software](#part-ii--technical-installation-execution-and-model-workflows); and
 - [check the maintenance policy](#guide-maintenance-and-next-milestones).
+
+### How to read project labels
+
+Short labels connect documentation to requirements, code, tests, and data, but
+they are not assumed knowledge:
+
+| Label | Plain-language meaning |
+|---|---|
+| `M0` through `M8` | Milestone gates. `M7`, for example, is the accepted complete fingerprinting research-software demonstrator; the future `M8` gate concerns a governed research digital twin. |
+| `M7.4` | A numbered implementation increment inside a milestone. M7.4 specifically adds concentration- and receptor-binding-based fingerprint detection. |
+| `Level A` | The fingerprinting historical-timing baseline used to reproduce the dissertation's published event semantics. It is not a separate “A run”. |
+| `Level B` | Mechanistic fingerprint detection based on concentration, receptor binding, and a detection threshold. |
+| `Level C` | Explicit release and complete/incomplete assembly of the nine fingerprint tiles. |
+| `Level D` | Executed local, gateway, body-area-network, and external-station communication. |
+| `Level E` | Sensitivity, specificity, false-positive/false-negative, robustness, and misclassification analysis. |
+| `P0` through `P3` | Roadmap priority tiers: indispensable foundation, dissertation core, platform expansion, and long-term vision. They do not indicate whether work has passed a gate. |
+| `UX-1` through `UX-6` | Ordered usability packages: one-command execution, discovery, readable reports, experiment campaigns, Python access, and finally a graphical workbench. |
+| run | One reproducible execution of an experiment or scenario. Any qualified label such as “baseline run” must say what makes that execution different. |
+
+The same rule applies to domain abbreviations. `FP9` is the nine-part molecular
+fingerprint used by the first complete scenario; `BVS` is the historical
+BloodVoyagerS whole-body distribution reference; `BAN` is the body area
+network between gateway and external station; `ODE` is an ordinary
+differential-equation model; and `SSA` is a stochastic simulation algorithm.
+Later sections use the short forms only after these meanings have been stated.
 
 ## Part I – Understanding MEHLISSA and choosing an experiment
 
@@ -454,10 +479,10 @@ Use the smallest workflow that answers the intended question:
 | inspect passive sampling and bounded trajectories | transport observation report | command line/reference workflow |
 | compare two pulmonary resolutions without changing the scenario | body–lung resolution comparison | executable reference workflow |
 | evaluate a pulmonary model against independent evidence | pulmonary validation evaluators | executable reference workflow |
-| study capillary recruitment or exchange | M4 recruitment/exchange profiles | component/developer workflow |
+| study capillary recruitment or exchange | M4 capillary recruitment and balanced substance-exchange profiles | component/developer workflow |
 | study nanodevice residence or terminal fate | M4 observation/disposition profiles | component/developer workflow |
 | compare analytical, particle, trajectory, and field transport | M4 molecular-channel profiles | component/developer workflow |
-| study reversible receptor occupancy and a detection threshold | M5.1 receptor-ligand profile | component/developer workflow |
+| study reversible receptor occupancy and a detection threshold | M5.1 analytical receptor-ligand binding profile | component/developer workflow |
 | trigger that receptor response from retained capillary tissue | M5.2 capillary-cell signal profile | component/developer workflow |
 | study a prescribed ligand pulse, withdrawal, and dissociation | M5.3 time-varying receptor-ligand profile | component/developer workflow |
 | explore finite-receptor noise, population occupancy, and synthetic detection errors | M5.4 stochastic receptor-ligand profile | component/developer workflow |
@@ -465,7 +490,7 @@ Use the smallest workflow that answers the intended question:
 | activate a device and audit release plus cellular uptake | M5.6 conservative drug-delivery profile | component/developer workflow |
 | inspect a synthetic apoptosis decision and higher-layer event | M5.7 apoptosis-response profile | component/developer workflow |
 | aggregate a prescribed response over very large homogeneous cohorts | M5.8 apoptosis-population profile | component/developer workflow |
-| inspect device capabilities, resource budgets, and a traceable local message | M6.1 locator/collector profiles | component/developer workflow |
+| inspect device capabilities, resource budgets, and a traceable local message | M6.1 versioned locator/collector nanodevice profiles | component/developer workflow |
 | send a checked receptor detection over a local link and inspect communication metrics | M6.2 local-communication profile | component/developer workflow |
 | compare bounded direct and relay routes | M6.3 cluster-communication profile | component/developer workflow |
 | publish a local measurement and route a gateway command | M6.4 active-gateway and gateway-cluster profiles | component/developer workflow |
@@ -475,7 +500,8 @@ Use the smallest workflow that answers the intended question:
 
 If the desired study needs a capillary-generated time-varying or consuming cell
 signal, spatial drug diffusion/binding, biologically qualified response, a
-physically qualified Nano-IoT/BAN link, authenticated clinical control, or a complete fingerprinting chain, treat
+physically qualified Nano-IoT/BAN link, authenticated clinical control, or a
+clinically validated fingerprinting chain, treat
 it as a future scenario design rather than silently approximating it with the
 current synthetic component models.
 
@@ -492,6 +518,7 @@ current synthetic component models.
 | evidence class | metadata describing whether a value is synthetic, literature-derived, calibrated, or independently evaluated |
 | experiment manifest | versioned description of a reproducible run, including time and random seed |
 | gate | the explicit acceptance criteria that close a roadmap milestone |
+| milestone label | `M` plus a number identifies a sequential delivery gate; a decimal suffix identifies one increment within it |
 | model card/profile | schema-validated data selecting parameters, evidence scope, validity, and limitations without recompilation |
 | named random stream | deterministic random sequence isolated by purpose so unrelated stochastic mechanisms do not perturb one another |
 | observation | reported state or event that does not necessarily change routing or ownership |
@@ -499,6 +526,8 @@ current synthetic component models.
 | population model | aggregate representation that tracks counts or amounts instead of every individual |
 | receptor occupancy | fraction of the declared receptor population bound to its ligand at a specified time |
 | reference case | fixed inputs and expected comparison rules shared by implementations |
+| realism level | `Level A` through `Level E` identify increasingly mechanistic fingerprinting capabilities, from historical timing to classification analysis; they are not separate run names |
+| roadmap priority | `P0` through `P3` classify importance from indispensable foundation to long-term vision; they are not progress percentages |
 | trajectory knot | time offset at which a prescribed piecewise-constant input changes value |
 | surrogate | deliberately simplified model preserving selected input/output behavior within a declared scope |
 | validation | comparison with evidence not used to calibrate the evaluated model; always limited to the measured population and endpoints |
@@ -507,7 +536,7 @@ current synthetic component models.
 ## Part II – Technical installation, execution, and model workflows
 
 Part II assumes that the reader has selected an experiment family. Begin with
-the command-line workflows for installation and body transport. M3 through M6.7
+the command-line workflows for installation and body transport. M3 through M7.7
 sections then explain executable reference and component/developer workflows.
 
 ### Repository orientation
@@ -2328,8 +2357,9 @@ the accepted software through M7
 while preserving the difference between CLI, reference-workflow, and
 component/developer access.
 
-The User Guide is mandatory gate-maintenance evidence. At M5 and every later
-M-gate, the gate review must check and, where applicable, update:
+The User Guide is mandatory gate- and UX-package-maintenance evidence. At M5
+and every later M-gate, and after each post-M7 UX package, the review must check
+and, where applicable, update:
 
 - the covered-software and last-updated metadata;
 - the current capability and explicit non-claim lists;
@@ -2341,12 +2371,31 @@ M-gate, the gate review must check and, where applicable, update:
 - links to the gate review, model cards, schemas, validation reports, and
   reference results.
 
+The same review must update the Roadmap and the English Project Status and
+Collaboration Brief, regenerate and visually verify its PDF, and explain any
+new milestone, priority, level, workflow, or artifact label at first use.
+
 If a gate has no user-visible effect, its review must record that no-impact
 decision instead of silently skipping the guide. This policy is binding in the
 [Roadmap documentation rules](ROADMAP.md#66-documentation) and repeated in
 every future gate checklist.
 
-Planned substantive extensions are:
+The next planned usability packages are:
+
+- **UX-1, one-command M7 execution:** validate and run the complete
+  fingerprinting demonstrator and summarize its result through the CLI;
+- **UX-2, model and example discovery:** list and describe available artifacts,
+  parameters, evidence, and limitations;
+- **UX-3, readable result reporting:** add concise terminal, tabular, and HTML
+  views over the complete machine-readable result;
+- **UX-4, derived experiments and campaigns:** create controlled variants,
+  replicates, sweeps, and aggregate comparisons;
+- **UX-5, Python API and notebooks:** support scientific analysis and plotting
+  without making Python the implementation authority; and
+- **UX-6, graphical research workbench:** add guided scenario editing and
+  interactive comparison after the underlying interfaces are stable.
+
+Planned substantive scientific extensions are:
 
 - later medical scenarios, expanded result analysis, and visualization workflows;
 - participant-specific workflows only after their evidence and governance

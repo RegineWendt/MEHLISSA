@@ -11,6 +11,7 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 ## Project status and further development
 
 - [Current-state analysis](IST_ANALYSE.md) – comparison of the literature, MEHLISSA 1.x, MEHLISSA 2.0, data sets, and application scenarios.
+- [Project Status and Collaboration Brief](PROJECT_STATUS_AND_COLLABORATION_BRIEF.md) – maintainable English source for the achieved M0–M7 platform, present uses, scientific limits, UX program, and contributor opportunities; the [rendered PDF](../output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf) is the shareable edition.
 - [Roadmap for a new MEHLISSA generation](ROADMAP.md) – dissertation-aligned target architecture, development phases, quality gates, scenarios, and the long-term digital-twin path.
 - [English User Guide](USER_GUIDE.md) – non-expert introduction, experiment decision aid, guided research workflows, installation, commands, models, and interpretation limits.
 - [System requirements](requirements/SYSTEM_REQUIREMENTS.md) – 72 numbered functional, architectural, and quality requirements with origin, priority, and verification method.
@@ -65,5 +66,7 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 The historical analysis refers to legacy revision `4f4fc5a` (tag
 `legacy-baseline-2026-08-26`). The development documents describe branch
 `mehlissa-next-generation`. Material changes to the architecture, data sets,
-or scenarios must update the requirements, traceability matrix, and roadmap
-together.
+scenarios, or user experience must update the requirements, traceability
+matrix, Roadmap, User Guide, and Project Status and Collaboration Brief as
+applicable. Contributor-facing documents must expand milestone, priority,
+realism-level, workflow, and domain abbreviations at first use.

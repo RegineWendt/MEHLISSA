@@ -18,6 +18,12 @@ M7.1-M7.7 cover composition, typed runtime initialization, deterministic
 identity flow, artifact-hashed results, receptor binding, explicit tiles,
 executed communication, and misclassification analysis.
 
+In the names below, an `M7.x` label identifies one implementation increment.
+The `Level A` through `Level E` labels identify increasing functional realism
+inside the same fingerprinting workflow: historical timing, mechanistic
+detection, tile assembly, executed communication, and classification analysis.
+They are not names for separate runs.
+
 ## Implemented increment
 
 ### M7.1 - versioned Level-A composition

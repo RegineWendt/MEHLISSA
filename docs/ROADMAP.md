@@ -5,7 +5,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Roadmap for a New MEHLISSA Generation
 
-**As of:** 27 August 2026
+**As of:** 2 September 2026
 
 **Strategic objective:** Implement the MEHLISSA vision described in the
 dissertation as a reproducible, modularly coupled, and scientifically
@@ -32,6 +32,28 @@ the vision is implemented through hybrid multiscale models.
 The roadmap is deliberately divided into dependent milestones and quality
 gates. Time estimates are indicative for a small research team and should be
 re-estimated after the foundation phase using measured development velocity.
+
+### 1.1 How to read roadmap and artifact labels
+
+MEHLISSA keeps short identifiers because they make requirements, code, tests,
+and evidence traceable. A reader must not need prior project knowledge to
+understand them. User-facing reports and guides therefore expand a label at its
+first relevant occurrence and state what the associated artifact or workflow
+does.
+
+| Label | Meaning |
+|---|---|
+| `M0` through `M8` | Sequential milestone gates. For example, `M7` is the first complete fingerprinting software demonstrator, while the future `M8` gate concerns a governed research digital twin. |
+| `M7.4` | An implementation increment within a milestone. Here it means the fourth M7 increment: concentration- and receptor-binding-based fingerprint detection. |
+| `Level A` through `Level E` | Functional realism levels inside the fingerprinting scenario, not separate simulation runs: historical timing baseline; mechanistic detection; explicit tile assembly; executed communication; and sensitivity/misclassification analysis. |
+| `P0` through `P3` | Roadmap priority tiers, not completion states: indispensable foundation; dissertation core; research-platform expansion; and long-term vision. |
+| `UX-1` through `UX-6` | The post-M7 usability work packages defined below, ordered from one-command execution to a graphical workbench. |
+| run | One reproducible execution of an experiment or scenario. Labels such as “A run” or “B run” must not be used unless that document defines the distinction in plain language. |
+
+This expansion rule also applies to domain abbreviations such as FP9, BVS,
+BAN, ODE, and SSA. Specialist documents may use the short form after defining
+it once; overview documents must additionally explain why the concept matters
+to the workflow.
 
 ## 2. Guiding principles
 
@@ -830,6 +852,42 @@ See [M5 implementation evidence](m5/README.md),
 demonstrator; no clinical or physiological-validation claim. See the
 [formal M7 gate review](m7/M7_GATE_REVIEW.md).
 
+#### Post-M7 usability program
+
+The following UX packages convert the accepted developer-facing demonstrator
+into a progressively more accessible research tool. `UX` means user
+experience. These packages improve access, discoverability, reporting, and
+analysis; completing one does not by itself increase physiological or clinical
+validity.
+
+| Package | Plain-language objective | Principal deliverables | Status |
+|---|---|---|---|
+| **UX-1 - One-command M7 scenario execution** | Let a researcher validate and run the complete fingerprinting demonstrator without writing C++ or invoking a test binary. | `scenario list`, `scenario validate`, `scenario run`, and `result summarize`; reuse of the existing M7 composer and runtime; unique run directory; result, provenance, log, and concise summary; positive and negative CLI tests. | planned - next |
+| **UX-2 - Model and example discovery** | Make available models, examples, parameters, evidence, and limitations discoverable from the application. | `model list`, `model describe`, scenario/example listing, and copyable starter configurations. | planned |
+| **UX-3 - Human-readable and HTML result report** | Allow results to be inspected and shared without manually reading JSON. | concise terminal report, stable tabular exports, self-contained HTML report, evidence and non-claim section, and links to complete machine-readable results. | planned |
+| **UX-4 - Derived experiments and campaigns** | Let researchers create controlled variants, replicates, and parameter studies without editing source code. | safe parameter overrides, immutable derived manifests, seed/replicate plans, sweeps, paired comparisons, aggregate campaign results, and sensitivity hooks. | planned |
+| **UX-5 - Python API and notebooks** | Make MEHLISSA accessible to common scientific-analysis workflows. | stable Python bindings or process API, result readers, example notebooks, plotting, and campaign analysis while retaining the C++ contracts as the implementation authority. | planned |
+| **UX-6 - Graphical research workbench** | Provide guided scenario editing and interactive result exploration on top of stable interfaces. | schema-driven editor, validation feedback, run control, comparison views, provenance display, and uncertainty-aware visualization. | planned |
+
+The packages are implemented in order unless a later package can be developed
+without destabilizing an earlier interface. UX-1 through UX-3 precede new GUI
+work. Every package must preserve deterministic execution and existing result
+contracts, pass all supported CI jobs, and include an explicit documentation
+impact review.
+
+For every completed UX package, the following three living documents must be
+updated together:
+
+1. this Roadmap, including package status and the next work item;
+2. the English [User Guide](USER_GUIDE.md), including commands, expected
+   outputs, terminology, troubleshooting, and interpretation limits; and
+3. the English [Project Status and Collaboration Brief](PROJECT_STATUS_AND_COLLABORATION_BRIEF.md),
+   followed by regeneration and visual verification of its shareable PDF.
+
+The review must also expand any newly introduced shorthand or artifact name in
+plain language at first use. A package is not documentation-complete while one
+of these updates is missing.
+
 ### Phase 8 – Further medical scenarios
 
 **Indicative period:** from 15 months, depending on the respective gates
@@ -1047,14 +1105,21 @@ Required document types:
 - publication and citation guidance;
 - changelog and release notes.
 
-The English User Guide is mandatory gate-maintenance evidence. Beginning with
-M5, every formal M-gate review must inspect and, where applicable, update its
+The English User Guide, Roadmap, and Project Status and Collaboration Brief are
+mandatory maintenance evidence. Beginning with M5, every formal M-gate review
+and every post-M7 UX-package review must inspect and, where applicable, update their
 covered-software metadata, capability and non-claim lists, conceptual model,
 experiment catalog, decision aid, guided examples, runnable paths, expected
 outputs, interpretation limits, glossary, troubleshooting, and links to gate
-and validation evidence. If a milestone has no user-visible effect, the gate
-review must record an explicit no-impact decision. A gate is not
-documentation-complete until this review is recorded.
+and validation evidence. The shareable PDF must be regenerated and visually
+checked after its Markdown source changes. If a milestone or UX package has no
+user-visible effect, its review must record an explicit no-impact decision. A
+gate or package is not documentation-complete until this review is recorded.
+
+All overview documents must define milestone, priority, realism-level,
+workflow, and domain abbreviations at first use. Internal identifiers may be
+retained for traceability, but unexplained labels such as “A run”, “B run”, or
+`P2` are not acceptable in contributor-facing prose.
 
 ## 7. Prioritization
 
@@ -1162,9 +1227,13 @@ The following packages are derived directly from this roadmap:
     The updated M0–M4 installation and model workflows remain as Part II, and
     the gate-maintenance rule above requires review after every future M-gate.
 12. ~~Define the complete M7 fingerprinting artifact-selection and stage-order
-    contract.~~ Complete in M7.1: strict schema, reference profile, typed
-    scenario-owned composer, deterministic tests, and explicit execution
-    boundary. Runtime coordination follows in M7.2.
+    contract.~~ Complete across M7.1-M7.7: strict composition, typed runtime,
+    artifact-hashed results, concentration-based detection, explicit tiles,
+    executed communication, and sensitivity/misclassification analysis.
+13. **Implement UX-1, one-command M7 scenario execution.** Add discoverable
+    CLI validation, execution, and result-summary commands over the existing
+    M7 APIs, with a complete run directory, tests, and synchronized updates to
+    the User Guide, Roadmap, and shareable status report.
 
 ## 12. Definition of long-term success
 
