@@ -36,6 +36,9 @@ build/windows-msvc/apps/Debug/mehlissa.exe scenario list
 build/windows-msvc/apps/Debug/mehlissa.exe scenario run `
   --file examples/scenarios/fp9-lung-level-a-v1.json `
   --output results/fp9-reference
+build/windows-msvc/apps/Debug/mehlissa.exe result report `
+  --file results/fp9-reference/<run-directory>/result.json `
+  --output reports/fp9-reference
 ```
 
 Each execution validates all selected model artifacts and creates a unique
@@ -45,6 +48,9 @@ is a reproducible software demonstrator, not a clinically validated assay.
 
 Use `example copy --id <example-id> --output <directory>` to create a safe,
 licensed starter configuration without editing the checked-in reference.
+Use `result report --file <result.json> --output <directory>` to create a
+shareable HTML report, stable CSV tables, a concise text summary, and a bundled
+copy of the complete machine-readable result.
 
 MEHLISSA Next is a research model. It is not a medical device and does not
 provide patient-specific clinical predictions.

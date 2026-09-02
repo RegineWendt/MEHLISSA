@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Covered software:** accepted M0 through M7
 
-**Last updated:** 2 September 2026, after cross-platform acceptance of UX-2 model and example discovery
+**Last updated:** 2 September 2026, after local acceptance of UX-3 result reporting
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -736,6 +736,43 @@ application checks the schema and also rejects duplicate IDs, unknown model
 references, missing files, and catalog paths that leave the repository. A new
 module becomes discoverable by adding a versioned catalog entry and at least one
 representative example; the CLI itself does not need a model-specific branch.
+
+#### Create a readable result bundle (UX-3)
+
+The schema-valid `result.json` remains the complete and authoritative result.
+UX-3 derives views from that file so that a result can be inspected or shared
+without requiring a collaborator to navigate the JSON structure manually:
+
+```powershell
+build/windows-msvc/apps/Debug/mehlissa.exe result report `
+  --file results/fp9-reference/<printed-run-directory>/result.json `
+  --output reports/fp9-reference
+```
+
+The output directory must not already exist. This fail-safe rule prevents a new
+report from silently replacing a previously reviewed bundle. Six files are
+created:
+
+| File | Purpose |
+|---|---|
+| `report.html` | self-contained styled overview for a browser, including outcome, workflow stages, evidence, and limitations |
+| `summary.txt` | concise plain-text outcome and non-clinical status |
+| `overview.csv` | stable key/value table for the principal run and classification metrics |
+| `runtime-stages.csv` | ordered causal stages with time, basis, identity, and qualification |
+| `analysis-cases.csv` | labelled Level-E software-analysis cases and their classifications |
+| `result.json` | bundled copy of the complete schema-valid machine-readable result linked from the HTML page |
+
+The HTML file contains no remote scripts, fonts, stylesheets, or images. It can
+therefore be opened locally and shared together with the other five files. Its
+evidence section lists the selected model artifacts and their SHA-256 hashes;
+its limitation section is copied from the result. CSV columns are intended as a
+stable analysis interface, while the JSON file retains details that deliberately
+do not fit into a flat table.
+
+The prominent `Research software only` notice and `Clinical validation claim:
+no` entry are part of the result semantics. A visually clear positive detection
+or complete fingerprint assembly is still an outcome of the configured software
+demonstrator, not evidence of diagnostic performance in people.
 
 #### Validate an experiment manifest
 
@@ -2525,8 +2562,11 @@ The usability package status is:
   exposes five model families, ten curated examples, configurable parameter
   paths, evidence, limitations, filtering, and safe starter copying; all 281
   local Windows/MSVC tests and all supported GitHub CI jobs pass;
-- **UX-3, readable result reporting:** add concise terminal, tabular, and HTML
-  views over the complete machine-readable result;
+- **UX-3, readable result reporting:** accepted locally; `result report` creates
+  a fail-safe six-file bundle containing concise text, three stable CSV views,
+  self-contained HTML with evidence and non-claim sections, and the complete
+  machine-readable result; all 282 local Windows/MSVC tests pass and the combined
+  cross-platform CI run is intentionally deferred until UX-5;
 - **UX-4, derived experiments and campaigns:** create controlled variants,
   replicates, sweeps, and aggregate comparisons;
 - **UX-5, Python API and notebooks:** support scientific analysis and plotting

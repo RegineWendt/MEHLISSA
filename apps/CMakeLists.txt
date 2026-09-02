@@ -3,7 +3,7 @@
 
 find_package(jsoncons CONFIG REQUIRED)
 
-add_executable(mehlissa apps_main.cpp discovery_cli.cpp scenario_cli.cpp)
+add_executable(mehlissa apps_main.cpp discovery_cli.cpp reporting_cli.cpp scenario_cli.cpp)
 target_link_libraries(
     mehlissa
     PRIVATE
@@ -114,3 +114,14 @@ add_test(
         -P ${PROJECT_SOURCE_DIR}/tests/run_ux2_cli_test.cmake
 )
 set_tests_properties(mehlissa_cli_ux2_discovery PROPERTIES LABELS "UX-2;cli")
+
+add_test(
+    NAME mehlissa_cli_ux3_reporting
+    COMMAND
+        ${CMAKE_COMMAND}
+        -DMEHLISSA_EXECUTABLE=$<TARGET_FILE:mehlissa>
+        -DMEHLISSA_ROOT=${PROJECT_SOURCE_DIR}
+        -DMEHLISSA_OUTPUT_ROOT=${CMAKE_CURRENT_BINARY_DIR}/ux3-reporting
+        -P ${PROJECT_SOURCE_DIR}/tests/run_ux3_cli_test.cmake
+)
+set_tests_properties(mehlissa_cli_ux3_reporting PROPERTIES LABELS "UX-3;cli")

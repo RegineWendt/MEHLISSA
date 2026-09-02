@@ -452,6 +452,23 @@ The `1.0.0` catalog schema is immutable. An incompatible catalog contract must
 use a new schema version; catalog data can be extended compatibly while its
 catalog `version` records the presentation dataset revision.
 
+### 7.3 Derived result views
+
+UX-3 treats `fingerprinting-result/2.0.0` JSON as the authoritative result
+contract. `result report` validates that source before creating any view and
+then writes a new, non-overwriting report directory. The HTML, text, and CSV
+files are projections; they do not introduce independent simulation values.
+The bundle also contains the complete source as `result.json`, so every visible
+claim can be traced back to the machine-readable record.
+
+The HTML renderer has no remote runtime dependencies and escapes all
+result-controlled text before insertion. It includes the non-clinical boundary,
+limitations, model-artifact paths and hashes, causal runtime stages, and links
+to the bundled JSON and CSV files. The CSV contracts separate overview metrics,
+runtime stages, and labelled analysis cases rather than flattening nested data
+into an unstable single table. New result schema versions require an explicit
+reporting compatibility decision and regression fixtures.
+
 ## 8. Public API map
 
 Public headers live below each library's `include/mehlissa/` tree. The table
@@ -493,6 +510,7 @@ The current executable supports:
 | `mehlissa result summarize` | reproduce the concise text view of an existing M7 result |
 | `mehlissa model list\|describe` | discover implemented model families and inspect their scope, evidence, parameters, and limits |
 | `mehlissa example list\|copy` | discover curated starter configurations and copy one with its license without overwriting work |
+| `mehlissa result report` | create a non-overwriting HTML/text/CSV bundle from a validated complete result |
 
 Detailed commands are maintained in the [User Guide](../USER_GUIDE.md).
 

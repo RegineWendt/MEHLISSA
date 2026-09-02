@@ -10,9 +10,9 @@ SPDX-License-Identifier: CC-BY-4.0
 **Purpose:** Shareable overview for prospective contributors and research partners
 **Status date:** 2 September 2026
 **Development branch:** `mehlissa-next-generation`
-**Base revision:** `c7ef0a47f73915fe2caf63281b2900d11d0b7a9d`
+**Base revision:** `01a9e4f75b1f3304c5dc8ed5271e766ef64296c1`
 **Milestone status:** M0 through M7 passed
-**Current product focus:** UX-3 human-readable and HTML result reporting
+**Current product focus:** UX-4 derived experiments and campaigns
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -47,6 +47,10 @@ behind explicit contracts.
   formatting, clang-tidy, AddressSanitizer, and UndefinedBehaviorSanitizer.
 - UX-2 adds a validated catalog of five model families and ten curated starter
   configurations with safe licensed copying and repository integrity checks.
+- UX-3 locally adds a non-overwriting six-file result bundle with concise text,
+  stable CSV exports, dependency-free HTML, evidence, limitations, the clinical
+  non-claim, and the complete machine-readable JSON. All 282 local tests pass;
+  combined cross-platform CI is intentionally deferred until UX-5.
 - The English User Guide, software architecture guide, model documentation,
   traceability matrix, and architecture decision records support international
   collaboration.
@@ -58,7 +62,7 @@ behind explicit contracts.
 | Software architecture | Strong modular foundation with explicit ownership, conservation, lifecycle, configuration, and evidence boundaries. |
 | End-to-end integration | Complete first software vertical slice through fingerprinting Levels A-E. |
 | Scientific validation | Mixed maturity: verified equations, literature-parameterized candidates, selected independent comparisons, and multiple synthetic mechanisms. |
-| User experience | UX-1 exposes the complete M7 demonstrator; UX-2 adds accepted model/example discovery and safe starter copying. Rich result reports, campaigns, Python access, and a workbench remain. |
+| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, and UX-3 locally provides readable shareable result bundles. Campaigns, Python access, and a workbench remain. |
 | Clinical readiness | Not claimed. Patient prediction, diagnosis, and treatment recommendations are explicitly outside the present scope. |
 
 ## How to read project labels
@@ -265,7 +269,7 @@ mechanism predicts a biological or clinical outcome.
 
 | Program | Principal work | Intended outcome |
 |---|---|---|
-| Usability and orchestration | UX-1 provides the complete-scenario CLI and UX-2 provides accepted model/example discovery and safe starter copying; richer reports, campaigns, Python access, and a workbench remain. | A researcher can find suitable models and starters and run M7 without C++ knowledge or test binaries, then progressively gain better analysis tools. |
+| Usability and orchestration | UX-1 provides scenario execution, UX-2 provides discovery, and UX-3 locally provides HTML/text/CSV result bundles; campaigns, Python access, and a workbench remain. | A researcher can find suitable models, run M7, and inspect or share its result without C++ knowledge or manual JSON navigation. |
 | Scientific qualification | Replace historical or synthetic assumptions with measured parameters, calibration data, independent validation, uncertainty, and sensitivity campaigns. | Defensible scenario-specific conclusions within explicit scopes. |
 | Additional medical scenarios | Continuous monitoring, liquid biopsy, endocrine/adrenal venous sampling, CAR-T, and ultimately metastasis prevention. | Evidence that the architecture generalizes beyond fingerprinting. |
 | Additional organs | Begin with a kidney surrogate and progress toward regional filtration, clearance, and organ-specific capillary interfaces. | Evidence that organ factories and coupling contracts are not lung-specific. |
@@ -294,7 +298,7 @@ they do not by themselves increase physiological or clinical validity.
 |---|---|---|
 | UX-1 - One-command M7 scenario execution | Validate and run the complete fingerprinting demonstrator and summarize its result through the normal application. | Passed; all 280 local Windows/MSVC tests and all supported GitHub CI jobs pass |
 | UX-2 - Model and example discovery | List and describe available artifacts, parameters, evidence, and limitations. | Passed; five model families, ten examples, all 281 local Windows/MSVC tests, and all supported GitHub CI jobs pass |
-| UX-3 - Human-readable and HTML result reporting | Provide concise terminal, tabular, and shareable HTML views over the complete machine-readable result. | Planned |
+| UX-3 - Human-readable and HTML result reporting | Provide concise terminal, tabular, and shareable HTML views over the complete machine-readable result. | Accepted locally; six-file bundle and all 282 Windows/MSVC tests pass; combined cross-platform CI deferred until UX-5 |
 | UX-4 - Derived experiments and campaigns | Create controlled variants, replicates, parameter sweeps, paired comparisons, and aggregate analyses. | Planned |
 | UX-5 - Python API and notebooks | Support common scientific analysis and plotting workflows without replacing the C++ implementation authority. | Planned |
 | UX-6 - Graphical research workbench | Add guided scenario editing, run control, comparison, provenance, and uncertainty visualization after the interfaces are stable. | Planned |
@@ -322,7 +326,14 @@ list`, and fail-safe `example copy`. The application validates the strict
 catalog and its repository references before displaying or copying anything.
 All 281 local Windows/MSVC tests and GitHub CI run 33628859417 pass across
 Windows/MSVC, Linux/GCC, and Linux/Clang analysis and sanitizer jobs. UX-2 is
-therefore fully accepted and UX-3 is the active package.
+therefore fully accepted.
+
+UX-3 adds `result report`, which validates an existing complete result and
+creates a new report directory rather than overwriting prior work. The bundle
+contains dependency-free HTML, concise text, overview, stage and analysis-case
+CSV tables, plus the authoritative JSON. Evidence hashes, limitations, and the
+clinical non-claim remain visible. All 282 local Windows/MSVC tests pass; UX-4
+is now active and the combined cross-platform push and CI run follows UX-5.
 
 ## 9. Opportunities for collaborators
 

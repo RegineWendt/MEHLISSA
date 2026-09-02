@@ -14,6 +14,7 @@
 #include <mehlissa/models/body/vascular_graph.hpp>
 
 #include "discovery_cli.hpp"
+#include "reporting_cli.hpp"
 #include "scenario_cli.hpp"
 
 #include <cinttypes>
@@ -72,6 +73,7 @@ void print_usage() {
                stderr);
     mehlissa::apps::print_usability_usage();
     mehlissa::apps::print_discovery_usage();
+    mehlissa::apps::print_reporting_usage();
 }
 
 [[nodiscard]] CommandLine parse_command_line(const int argc, const char* const argv[]) {
@@ -370,6 +372,9 @@ int main(const int argc, const char* const argv[]) noexcept {
             (std::string_view{argv[1]} == "--help" || std::string_view{argv[1]} == "-h")) {
             print_usage();
             return 0;
+        }
+        if (mehlissa::apps::handles_reporting_command(argc, argv)) {
+            return mehlissa::apps::execute_reporting_command(argc, argv);
         }
         if (mehlissa::apps::handles_usability_command(argc, argv)) {
             return mehlissa::apps::execute_usability_command(argc, argv);
