@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Covered software:** accepted M0 through M7
 
-**Last updated:** 2 September 2026, after local implementation of UX-2 model and example discovery
+**Last updated:** 2 September 2026, after cross-platform acceptance of UX-2 model and example discovery
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -2521,10 +2521,10 @@ The usability package status is:
 - **UX-1, one-command M7 execution:** passed across all supported CI paths; the
   application validates and runs the complete fingerprinting demonstrator,
   creates a unique four-file run directory, and summarizes an existing result;
-- **UX-2, model and example discovery:** implemented locally; a strict catalog
+- **UX-2, model and example discovery:** passed across all supported CI paths; a strict catalog
   exposes five model families, ten curated examples, configurable parameter
   paths, evidence, limitations, filtering, and safe starter copying; all 281
-  local tests pass and cross-platform CI is pending;
+  local Windows/MSVC tests and all supported GitHub CI jobs pass;
 - **UX-3, readable result reporting:** add concise terminal, tabular, and HTML
   views over the complete machine-readable result;
 - **UX-4, derived experiments and campaigns:** create controlled variants,

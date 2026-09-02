@@ -10,9 +10,9 @@ SPDX-License-Identifier: CC-BY-4.0
 **Purpose:** Shareable overview for prospective contributors and research partners
 **Status date:** 2 September 2026
 **Development branch:** `mehlissa-next-generation`
-**Base revision:** `a96b4ce4f986f726530b866ce05b84cf99ae4c1e`
+**Base revision:** `c7ef0a47f73915fe2caf63281b2900d11d0b7a9d`
 **Milestone status:** M0 through M7 passed
-**Current product focus:** UX-2 cross-platform verification, then UX-3 result reporting
+**Current product focus:** UX-3 human-readable and HTML result reporting
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -42,12 +42,11 @@ behind explicit contracts.
 - The implementation uses C++20, CMake, vcpkg, strict JSON Schemas, typed SI
   quantities, stable error contracts, deterministic random streams, and
   explicit provenance.
-- The base revision passes all 280 local Windows/MSVC tests and GitHub
+- The base revision passes all 281 local Windows/MSVC tests and GitHub
   Windows/MSVC, Linux/GCC, and Linux/Clang CI. The Clang path also passes
   formatting, clang-tidy, AddressSanitizer, and UndefinedBehaviorSanitizer.
-- The UX-2 candidate adds a validated catalog of five model families and ten
-  curated starter configurations. All 281 local Windows/MSVC tests pass;
-  cross-platform CI is the remaining acceptance check.
+- UX-2 adds a validated catalog of five model families and ten curated starter
+  configurations with safe licensed copying and repository integrity checks.
 - The English User Guide, software architecture guide, model documentation,
   traceability matrix, and architecture decision records support international
   collaboration.
@@ -59,7 +58,7 @@ behind explicit contracts.
 | Software architecture | Strong modular foundation with explicit ownership, conservation, lifecycle, configuration, and evidence boundaries. |
 | End-to-end integration | Complete first software vertical slice through fingerprinting Levels A-E. |
 | Scientific validation | Mixed maturity: verified equations, literature-parameterized candidates, selected independent comparisons, and multiple synthetic mechanisms. |
-| User experience | UX-1 exposes the complete M7 demonstrator; UX-2 locally adds model/example discovery and safe starter copying. Rich result reports, campaigns, Python access, and a workbench remain. |
+| User experience | UX-1 exposes the complete M7 demonstrator; UX-2 adds accepted model/example discovery and safe starter copying. Rich result reports, campaigns, Python access, and a workbench remain. |
 | Clinical readiness | Not claimed. Patient prediction, diagnosis, and treatment recommendations are explicitly outside the present scope. |
 
 ## How to read project labels
@@ -221,8 +220,8 @@ The strict versioned catalog describes five model families and ten licensed
 starters, including maturity, validity, evidence, limitations, key parameter
 paths, artifacts, and documentation. Checks reject duplicate IDs, unknown model
 references, missing assets, and paths outside the repository. Copying preserves
-the license and refuses to overwrite work. All 281 local Windows/MSVC tests
-pass; cross-platform CI is the final acceptance step.
+the license and refuses to overwrite work. All 281 local Windows/MSVC tests and
+all supported GitHub CI jobs pass.
 
 ## 5. Current personalization capability
 
@@ -266,7 +265,7 @@ mechanism predicts a biological or clinical outcome.
 
 | Program | Principal work | Intended outcome |
 |---|---|---|
-| Usability and orchestration | UX-1 provides the complete-scenario CLI and UX-2 locally provides model/example discovery and safe starter copying; richer reports, campaigns, Python access, and a workbench remain. | A researcher can find suitable models and starters and run M7 without C++ knowledge or test binaries, then progressively gain better analysis tools. |
+| Usability and orchestration | UX-1 provides the complete-scenario CLI and UX-2 provides accepted model/example discovery and safe starter copying; richer reports, campaigns, Python access, and a workbench remain. | A researcher can find suitable models and starters and run M7 without C++ knowledge or test binaries, then progressively gain better analysis tools. |
 | Scientific qualification | Replace historical or synthetic assumptions with measured parameters, calibration data, independent validation, uncertainty, and sensitivity campaigns. | Defensible scenario-specific conclusions within explicit scopes. |
 | Additional medical scenarios | Continuous monitoring, liquid biopsy, endocrine/adrenal venous sampling, CAR-T, and ultimately metastasis prevention. | Evidence that the architecture generalizes beyond fingerprinting. |
 | Additional organs | Begin with a kidney surrogate and progress toward regional filtration, clearance, and organ-specific capillary interfaces. | Evidence that organ factories and coupling contracts are not lung-specific. |
@@ -294,7 +293,7 @@ they do not by themselves increase physiological or clinical validity.
 | Package | Plain-language objective | Status |
 |---|---|---|
 | UX-1 - One-command M7 scenario execution | Validate and run the complete fingerprinting demonstrator and summarize its result through the normal application. | Passed; all 280 local Windows/MSVC tests and all supported GitHub CI jobs pass |
-| UX-2 - Model and example discovery | List and describe available artifacts, parameters, evidence, and limitations. | Implemented locally; five model families, ten examples, and all 281 Windows/MSVC tests pass; cross-platform CI pending |
+| UX-2 - Model and example discovery | List and describe available artifacts, parameters, evidence, and limitations. | Passed; five model families, ten examples, all 281 local Windows/MSVC tests, and all supported GitHub CI jobs pass |
 | UX-3 - Human-readable and HTML result reporting | Provide concise terminal, tabular, and shareable HTML views over the complete machine-readable result. | Planned |
 | UX-4 - Derived experiments and campaigns | Create controlled variants, replicates, parameter sweeps, paired comparisons, and aggregate analyses. | Planned |
 | UX-5 - Python API and notebooks | Support common scientific analysis and plotting workflows without replacing the C++ implementation authority. | Planned |
@@ -316,13 +315,14 @@ Its automated end-to-end test covers help, listing, positive validation,
 negative validation, execution, artifact completeness, and re-summarization.
 The Windows MSVC build and all 280 local tests pass. GitHub CI run 33620386319
 also passes Windows/MSVC, Linux/GCC, and Linux/Clang analysis and sanitizer
-jobs. UX-1 is therefore fully accepted and UX-2 is the active package.
+jobs. UX-1 is therefore fully accepted.
 
-The UX-2 candidate adds `model list`, `model describe`, filtered `example
+UX-2 adds `model list`, `model describe`, filtered `example
 list`, and fail-safe `example copy`. The application validates the strict
 catalog and its repository references before displaying or copying anything.
-All 281 local Windows/MSVC tests pass; successful supported GitHub CI remains
-the final gate before UX-2 is marked accepted and UX-3 becomes active.
+All 281 local Windows/MSVC tests and GitHub CI run 33628859417 pass across
+Windows/MSVC, Linux/GCC, and Linux/Clang analysis and sanitizer jobs. UX-2 is
+therefore fully accepted and UX-3 is the active package.
 
 ## 9. Opportunities for collaborators
 
@@ -356,7 +356,7 @@ and limitations are documented; and all supported CI paths pass.
 | `docs/m0` through `docs/m6` | Gate reviews, model notes, validation evidence, and accepted limitations for preceding milestones. |
 
 - **Repository:** https://github.com/RegineWendt/MEHLISSA
-- **Verified CI run:** https://github.com/RegineWendt/MEHLISSA/actions/runs/33620386319
+- **Verified CI run:** https://github.com/RegineWendt/MEHLISSA/actions/runs/33628859417
 
 MEHLISSA Next now provides the architectural and executable backbone required
 by the dissertation vision. The next phase is to make this backbone easier to
