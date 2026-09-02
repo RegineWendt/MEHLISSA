@@ -469,6 +469,28 @@ runtime stages, and labelled analysis cases rather than flattening nested data
 into an unstable single table. New result schema versions require an explicit
 reporting compatibility decision and regression fixtures.
 
+### 7.4 Derived-experiment campaigns
+
+UX-4 adds a schema-first orchestration layer above the existing scenario
+workflow. A campaign references one immutable base scenario and declares a
+replicate plan, one-dimensional sweeps, and paired comparisons. The campaign
+runner creates a complete derived scenario for every run, validates it through
+the normal scenario schema and composer, and invokes the same in-process
+scenario workflow used by `scenario run`. It does not duplicate model logic.
+
+The first allow-list contains only `run.collector_count`. This is intentional:
+an override becomes public only after its units, bounds, supported model domain,
+and mapping have been reviewed. Seeds are assigned by the orchestration layer;
+both members of a paired comparison receive the same seed. Unrestricted JSON
+patching is not part of the contract.
+
+Each campaign is written to a new directory. `manifests/` preserves the derived
+inputs, `runs/` contains ordinary per-run artifacts, and the schema-valid
+`campaign-result.json` indexes design roles, values, seeds, paths, hashes, and
+selected response metrics. `campaign-results.csv` is a stable flat projection.
+The declared sensitivity hook is metadata for downstream analysis, not a claim
+that a formal global sensitivity analysis has been performed.
+
 ## 8. Public API map
 
 Public headers live below each library's `include/mehlissa/` tree. The table
@@ -511,6 +533,7 @@ The current executable supports:
 | `mehlissa model list\|describe` | discover implemented model families and inspect their scope, evidence, parameters, and limits |
 | `mehlissa example list\|copy` | discover curated starter configurations and copy one with its license without overwriting work |
 | `mehlissa result report` | create a non-overwriting HTML/text/CSV bundle from a validated complete result |
+| `mehlissa campaign validate\|run` | validate or execute bounded derived experiments with retained manifests and aggregate JSON/CSV results |
 
 Detailed commands are maintained in the [User Guide](../USER_GUIDE.md).
 

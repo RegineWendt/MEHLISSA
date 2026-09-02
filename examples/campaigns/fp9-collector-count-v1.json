@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "campaign": {
+    "id": "fp9-collector-count-v1",
+    "title": "FP9 collector-count reproducibility and comparison campaign"
+  },
+  "base_scenario": "examples/scenarios/fp9-lung-level-a-v1.json",
+  "design": {
+    "replicates": {
+      "count": 2,
+      "first_seed": 20260910
+    },
+    "sweeps": [
+      {
+        "id": "collector-count-sweep",
+        "parameter": "run.collector_count",
+        "values": [1000, 10000],
+        "replicates": 1,
+        "first_seed": 20260920
+      }
+    ],
+    "paired_comparisons": [
+      {
+        "id": "collector-count-pair",
+        "parameter": "run.collector_count",
+        "baseline": 1000,
+        "comparison": 10000,
+        "replicates": 1,
+        "first_seed": 20260930
+      }
+    ]
+  },
+  "limitations": [
+    "This campaign demonstrates controlled software experiments; it does not establish clinical performance.",
+    "UX-4 intentionally permits only the scenario run.collector_count parameter until further parameters have explicit bounds and semantic validation.",
+    "The current fingerprinting outcomes include historical and synthetic assumptions documented by the base scenario."
+  ]
+}

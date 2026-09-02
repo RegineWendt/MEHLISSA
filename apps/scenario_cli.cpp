@@ -535,7 +535,7 @@ int validate_scenario(const UsabilityCommand& command) {
     return 0;
 }
 
-int run_scenario(const UsabilityCommand& command) {
+[[nodiscard]] RunPaths run_scenario_impl(const UsabilityCommand& command, const bool emit_output) {
     const auto prepared = prepare_scenario(command);
     const RunSchemas schemas{
         option_or_default(command.result_schema, prepared.repository_root, result_schema_relative),
@@ -569,8 +569,10 @@ int run_scenario(const UsabilityCommand& command) {
         log.write({completed_at, simulation_time, experiment::LogLevel::info, "scenario-runner",
                    "run_completed", "Fingerprinting scenario execution completed", std::nullopt});
         validate_created_artifacts(paths, schemas);
-        std::fputs(summary.c_str(), stdout);
-        print_run_paths(paths);
+        if (emit_output) {
+            std::fputs(summary.c_str(), stdout);
+            print_run_paths(paths);
+        }
     } catch (const core::MehlissaError& error) {
         log.write({experiment::current_utc_timestamp(),
                    {},
@@ -590,6 +592,11 @@ int run_scenario(const UsabilityCommand& command) {
                    ErrorCode::internal_failure});
         throw;
     }
+    return paths;
+}
+
+int run_scenario(const UsabilityCommand& command) {
+    static_cast<void>(run_scenario_impl(command, true));
     return 0;
 }
 
@@ -632,6 +639,24 @@ int execute_usability_command(const int argc, const char* const argv[]) {
         return summarize_result_file(command);
     }
     throw core::MehlissaError{ErrorCode::internal_failure, "Unhandled scenario or result command"};
+}
+
+ScenarioRunOutput run_scenario_workflow(const ScenarioRunRequest& request,
+                                        const bool print_output) {
+    UsabilityCommand command;
+    command.operation = UsabilityOperation::scenario_run;
+    command.file = request.file;
+    command.output = request.output;
+    command.repository_root = request.repository_root;
+    command.schema = request.schema;
+    command.result_schema = request.result_schema;
+    command.provenance_schema = request.provenance_schema;
+    command.log_schema = request.log_schema;
+    if (command.file.empty()) {
+        invalid_command("Scenario workflow requires a profile file");
+    }
+    const auto paths = run_scenario_impl(command, print_output);
+    return {paths.directory, paths.result, paths.provenance, paths.log, paths.summary};
 }
 
 void print_usability_usage() {

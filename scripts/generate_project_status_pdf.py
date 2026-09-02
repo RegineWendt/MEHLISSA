@@ -283,7 +283,7 @@ def cover_story() -> list:
     status = Table(
         [
             [paragraph("M0-M7", "TableHead"), paragraph("PASSED", "TableHead"), paragraph("CURRENT FOCUS", "TableHead")],
-            [Paragraph("Architecture and implementation", STYLES["CoverMeta"]), Paragraph("All milestone gates", STYLES["CoverMeta"]), Paragraph("UX-4 derived experiments and campaigns", STYLES["CoverMeta"])],
+            [Paragraph("Architecture and implementation", STYLES["CoverMeta"]), Paragraph("All milestone gates", STYLES["CoverMeta"]), Paragraph("UX-5 Python API and notebooks", STYLES["CoverMeta"])],
         ],
         colWidths=[51 * mm, 37 * mm, 76 * mm],
         style=TableStyle(
@@ -309,7 +309,7 @@ def cover_story() -> list:
         Spacer(1, 17 * mm),
         Paragraph("Prepared for prospective contributors and research partners", STYLES["CoverMeta"]),
         Paragraph("Status date: 2 September 2026", STYLES["CoverMeta"]),
-        Paragraph("Branch: mehlissa-next-generation | Base revision: 01a9e4f", STYLES["CoverMeta"]),
+        Paragraph("Branch: mehlissa-next-generation | Base revision: f3739e4", STYLES["CoverMeta"]),
         Paragraph("Repository: github.com/RegineWendt/MEHLISSA", STYLES["CoverMeta"]),
         PageBreak(),
     ]

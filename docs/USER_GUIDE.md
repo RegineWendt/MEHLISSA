@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Covered software:** accepted M0 through M7
 
-**Last updated:** 2 September 2026, after local acceptance of UX-3 result reporting
+**Last updated:** 2 September 2026, after local acceptance of UX-4 experiment campaigns
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -773,6 +773,60 @@ The prominent `Research software only` notice and `Clinical validation claim:
 no` entry are part of the result semantics. A visually clear positive detection
 or complete fingerprint assembly is still an outcome of the configured software
 demonstrator, not evidence of diagnostic performance in people.
+
+#### Run controlled derived experiments (UX-4)
+
+UX-4 turns one validated scenario into an auditable group of related runs. The
+checked-in starter campaign demonstrates three useful designs without editing
+C++ or manually copying scenario files:
+
+- **replicates** repeat the base configuration with an explicit sequence of
+  seeds;
+- a **parameter sweep** evaluates listed collector counts and can repeat every
+  value; and
+- a **paired comparison** gives the baseline and comparison run the same seed,
+  reducing avoidable random differences between the pair.
+
+Validate the complete design first:
+
+```powershell
+build/windows-msvc/apps/Debug/mehlissa.exe campaign validate `
+  --file examples/campaigns/fp9-collector-count-v1.json
+```
+
+The command reports the number of derived runs. Execute into a new directory:
+
+```powershell
+build/windows-msvc/apps/Debug/mehlissa.exe campaign run `
+  --file examples/campaigns/fp9-collector-count-v1.json `
+  --output results/fp9-collector-campaign
+```
+
+The output directory must not exist. It contains:
+
+| Path | Purpose |
+|---|---|
+| `manifests/*.json` | complete, schema-valid derived scenarios with explicit run ID, seed, and collector count |
+| `runs/<run-directory>/` | normal scenario result, provenance, structured log, and text summary for each derived run |
+| `campaign-result.json` | schema-valid index with design role, seed, override, artifact hashes, result paths, and principal outcomes |
+| `campaign-results.csv` | flat analysis table for spreadsheets, Python, or R |
+
+The source campaign remains unchanged, every derived manifest is retained, and
+SHA-256 hashes bind the aggregate record to both manifests and results. A failed
+run stops the campaign without manufacturing an aggregate success record; the
+already written run material remains available for diagnosis.
+
+For this first safe contract, `run.collector_count` is the only overrideable
+parameter. The historical FP9 timer baseline currently provides cohorts for
+1,000 and 10,000 collectors, so the example uses those values. Adding another
+parameter requires explicit units, bounds, semantic validation, and a reviewed
+mapping into the scenario contract; arbitrary JSON paths are rejected.
+
+The `sensitivity_hooks` in the aggregate identify the varied parameter and
+available response columns. They make later statistical tooling possible but do
+not themselves constitute a global sensitivity analysis. Repetition also does
+not cure synthetic inputs or establish clinical validity: interpret every run
+within the base scenario's evidence and limitations.
 
 #### Validate an experiment manifest
 
@@ -2567,8 +2621,11 @@ The usability package status is:
   self-contained HTML with evidence and non-claim sections, and the complete
   machine-readable result; all 282 local Windows/MSVC tests pass and the combined
   cross-platform CI run is intentionally deferred until UX-5;
-- **UX-4, derived experiments and campaigns:** create controlled variants,
-  replicates, sweeps, and aggregate comparisons;
+- **UX-4, derived experiments and campaigns:** accepted locally; strict
+  manifests create retained variants, deterministic replicates, bounded
+  collector-count sweeps, and same-seed paired comparisons with aggregate
+  JSON/CSV results; the six-run reference campaign and all 283 local
+  Windows/MSVC tests pass, with combined CI deferred until UX-5;
 - **UX-5, Python API and notebooks:** support scientific analysis and plotting
   without making Python the implementation authority; and
 - **UX-6, graphical research workbench:** add guided scenario editing and

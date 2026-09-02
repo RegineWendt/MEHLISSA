@@ -865,7 +865,7 @@ validity.
 | **UX-1 - One-command M7 scenario execution** | Let a researcher validate and run the complete fingerprinting demonstrator without writing C++ or invoking a test binary. | `scenario list`, `scenario validate`, `scenario run`, and `result summarize`; reuse of the existing M7 composer and runtime; unique run directory; result, provenance, log, and concise summary; positive and negative CLI tests. | passed on 2 September 2026; all 280 local Windows/MSVC tests and GitHub Windows/MSVC, Linux/GCC, and Linux/Clang analysis/sanitizer jobs pass |
 | **UX-2 - Model and example discovery** | Make available models, examples, parameters, evidence, and limitations discoverable from the application. | `model list`, `model describe`, filtered example listing, safe copying, and a strict versioned catalog with semantic integrity checks. | passed on 2 September 2026; all 281 local Windows/MSVC tests and GitHub Windows/MSVC, Linux/GCC, and Linux/Clang analysis/sanitizer jobs pass |
 | **UX-3 - Human-readable and HTML result report** | Allow results to be inspected and shared without manually reading JSON. | concise terminal report, stable tabular exports, self-contained HTML report, evidence and non-claim section, and links to complete machine-readable results. | implemented and accepted locally on 2 September 2026; all 282 Windows/MSVC tests pass; combined cross-platform CI intentionally deferred until UX-5 |
-| **UX-4 - Derived experiments and campaigns** | Let researchers create controlled variants, replicates, and parameter studies without editing source code. | safe parameter overrides, immutable derived manifests, seed/replicate plans, sweeps, paired comparisons, aggregate campaign results, and sensitivity hooks. | planned |
+| **UX-4 - Derived experiments and campaigns** | Let researchers create controlled variants, replicates, and parameter studies without editing source code. | safe parameter overrides, immutable derived manifests, seed/replicate plans, sweeps, paired comparisons, aggregate campaign results, and sensitivity hooks. | implemented and accepted locally on 2 September 2026; six-run reference campaign and all 283 Windows/MSVC tests pass; combined cross-platform CI intentionally deferred until UX-5 |
 | **UX-5 - Python API and notebooks** | Make MEHLISSA accessible to common scientific-analysis workflows. | stable Python bindings or process API, result readers, example notebooks, plotting, and campaign analysis while retaining the C++ contracts as the implementation authority. | planned |
 | **UX-6 - Graphical research workbench** | Provide guided scenario editing and interactive result exploration on top of stable interfaces. | schema-driven editor, validation feedback, run control, comparison views, provenance display, and uncertainty-aware visualization. | planned |
 
@@ -1253,10 +1253,16 @@ The following packages are derived directly from this roadmap:
     tables, dependency-free HTML, evidence hashes, limitations, an explicit
     clinical non-claim, and the bundled authoritative JSON. All 282 local
     Windows/MSVC tests pass; combined cross-platform CI is deferred until UX-5.
-16. **Implement UX-4, derived experiments and campaigns.** Add bounded safe
-    overrides, immutable derived manifests, seed and replicate planning,
-    one-dimensional sweeps, paired comparisons, aggregate outputs, and explicit
-    sensitivity-analysis hooks.
+16. ~~Implement UX-4, derived experiments and campaigns.~~ Implemented and
+    accepted locally: strict campaign and result schemas, an allow-listed
+    `run.collector_count` override, retained derived manifests, deterministic
+    replicate plans, same-seed paired comparisons, one-dimensional sweeps,
+    aggregate JSON/CSV output with hashes, and explicit descriptive sensitivity
+    hooks. The six-run reference campaign and all 283 local Windows/MSVC tests
+    pass; combined cross-platform CI is deferred until UX-5.
+17. **Implement UX-5, Python API and notebooks.** Add a standard-library process
+    client and typed result readers, optional plotting, campaign analysis, and a
+    reproducible introductory notebook while keeping C++ schemas authoritative.
 
 ## 12. Definition of long-term success
 
