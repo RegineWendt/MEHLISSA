@@ -13,6 +13,11 @@ namespace {
 
 constexpr double z_95 = 1.959963984540054;
 
+struct ProportionCounts final {
+    std::uint64_t successes{};
+    std::uint64_t total{};
+};
+
 [[noreturn]] void invalid(const std::string& message) {
     throw ScenarioProfileError{core::ErrorCode::data_invalid, message};
 }
@@ -27,10 +32,9 @@ constexpr double z_95 = 1.959963984540054;
     return present ? ClassificationKind::false_negative : ClassificationKind::false_positive;
 }
 
-[[nodiscard]] ProportionInterval wilson_interval(const std::uint64_t successes,
-                                                 const std::uint64_t total) {
-    const auto count = static_cast<double>(total);
-    const auto estimate = static_cast<double>(successes) / count;
+[[nodiscard]] ProportionInterval wilson_interval(const ProportionCounts counts) {
+    const auto count = static_cast<double>(counts.total);
+    const auto estimate = static_cast<double>(counts.successes) / count;
     const auto z_squared = z_95 * z_95;
     const auto denominator = 1.0 + z_squared / count;
     const auto center = (estimate + z_squared / (2.0 * count)) / denominator;
@@ -41,10 +45,9 @@ constexpr double z_95 = 1.959963984540054;
     return {estimate, std::max(0.0, center - margin), std::min(1.0, center + margin)};
 }
 
-[[nodiscard]] std::optional<ProportionInterval> proportion(const std::uint64_t successes,
-                                                           const std::uint64_t total) {
-    return total == 0 ? std::nullopt
-                      : std::optional<ProportionInterval>{wilson_interval(successes, total)};
+[[nodiscard]] std::optional<ProportionInterval> proportion(const ProportionCounts counts) {
+    return counts.total == 0 ? std::nullopt
+                             : std::optional<ProportionInterval>{wilson_interval(counts)};
 }
 
 } // namespace
@@ -117,14 +120,14 @@ LevelEAnalysisResult run_level_e_analysis(const LevelAPlan& plan,
 
     const auto positive_total = summary.true_positive + summary.false_negative;
     const auto negative_total = summary.true_negative + summary.false_positive;
-    summary.sensitivity = proportion(summary.true_positive, positive_total);
-    summary.specificity = proportion(summary.true_negative, negative_total);
-    summary.false_positive_rate = proportion(summary.false_positive, negative_total);
-    summary.false_negative_rate = proportion(summary.false_negative, positive_total);
+    summary.sensitivity = proportion({summary.true_positive, positive_total});
+    summary.specificity = proportion({summary.true_negative, negative_total});
+    summary.false_positive_rate = proportion({summary.false_positive, negative_total});
+    summary.false_negative_rate = proportion({summary.false_negative, positive_total});
 
     return {plan.profile.run.id + ":level-e-analysis",
             std::move(results),
-            std::move(summary),
+            summary,
             {"ligand_concentration", "exposure_duration", "analyst_supplied_target_label"},
             {"Truth labels are analyst-supplied scenario inputs, not clinical diagnoses.",
              "The default four-case matrix is a software demonstration and is far too small "

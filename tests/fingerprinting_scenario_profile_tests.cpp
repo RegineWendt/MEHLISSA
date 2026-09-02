@@ -170,8 +170,10 @@ TEST_CASE("M7.3 writes a strict manifest-complete reproducible result",
     const auto second = std::filesystem::temp_directory_path() / "mehlissa-m7-result-second.json";
     const auto schema = root() / "data" / "schemas" / "fingerprinting-result" / "1.0.0.schema.json";
 
-    mehlissa::scenarios::fingerprinting::write_fingerprinting_result_report(report, first, schema);
-    mehlissa::scenarios::fingerprinting::write_fingerprinting_result_report(report, second, schema);
+    mehlissa::scenarios::fingerprinting::write_fingerprinting_result_report(report,
+                                                                            {first, schema});
+    mehlissa::scenarios::fingerprinting::write_fingerprinting_result_report(report,
+                                                                            {second, schema});
 
     REQUIRE(report.artifacts.size() == 13);
     CHECK(report.runtime.stages.size() == 10);
@@ -327,10 +329,10 @@ TEST_CASE("M7 holistic runner serializes one deterministic Levels A-E result",
     const auto second = std::filesystem::temp_directory_path() / "mehlissa-m7-holistic-second.json";
     const auto schema = root() / "data" / "schemas" / "fingerprinting-result" / "2.0.0.schema.json";
 
-    mehlissa::scenarios::fingerprinting::write_holistic_fingerprinting_result_report(result, first,
-                                                                                     schema);
-    mehlissa::scenarios::fingerprinting::write_holistic_fingerprinting_result_report(result, second,
-                                                                                     schema);
+    mehlissa::scenarios::fingerprinting::write_holistic_fingerprinting_result_report(
+        result, {first, schema});
+    mehlissa::scenarios::fingerprinting::write_holistic_fingerprinting_result_report(
+        result, {second, schema});
 
     CHECK(result.reproducibility.schema_version == "2.0.0");
     CHECK(result.reproducibility.artifacts.size() == 13);

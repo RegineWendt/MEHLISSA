@@ -261,11 +261,10 @@ FingerprintingResultReport make_fingerprinting_result_report(const LevelAPlan& p
 }
 
 void write_fingerprinting_result_report(const FingerprintingResultReport& report,
-                                        const std::filesystem::path& output_path,
-                                        const std::filesystem::path& schema_path) {
+                                        const ResultReportPaths& paths) {
     auto document = encode(report);
     try {
-        const auto schema = jsoncons::jsonschema::make_json_schema(read_json(schema_path));
+        const auto schema = jsoncons::jsonschema::make_json_schema(read_json(paths.schema));
         schema.validate(document);
     } catch (const ScenarioProfileError&) {
         throw;
@@ -274,16 +273,16 @@ void write_fingerprinting_result_report(const FingerprintingResultReport& report
                 "M7.3 result does not satisfy the selected schema: " + std::string{error.what()});
     }
 
-    std::ofstream stream{output_path, std::ios::binary | std::ios::trunc};
+    std::ofstream stream{paths.output, std::ios::binary | std::ios::trunc};
     if (!stream) {
         invalid(core::ErrorCode::output_unwritable,
-                "Cannot write M7.3 result report: " + output_path.string());
+                "Cannot write M7.3 result report: " + paths.output.string());
     }
     document.dump_pretty(stream);
     stream << '\n';
     if (!stream) {
         invalid(core::ErrorCode::output_unwritable,
-                "Failed while writing M7.3 result report: " + output_path.string());
+                "Failed while writing M7.3 result report: " + paths.output.string());
     }
 }
 
@@ -307,11 +306,10 @@ run_holistic_fingerprinting_scenario(const LevelAPlan& plan,
 }
 
 void write_holistic_fingerprinting_result_report(const HolisticFingerprintingResultReport& report,
-                                                 const std::filesystem::path& output_path,
-                                                 const std::filesystem::path& schema_path) {
+                                                 const ResultReportPaths& paths) {
     auto document = encode_holistic(report);
     try {
-        const auto schema = jsoncons::jsonschema::make_json_schema(read_json(schema_path));
+        const auto schema = jsoncons::jsonschema::make_json_schema(read_json(paths.schema));
         schema.validate(document);
     } catch (const ScenarioProfileError&) {
         throw;
@@ -321,16 +319,16 @@ void write_holistic_fingerprinting_result_report(const HolisticFingerprintingRes
                     std::string{error.what()});
     }
 
-    std::ofstream stream{output_path, std::ios::binary | std::ios::trunc};
+    std::ofstream stream{paths.output, std::ios::binary | std::ios::trunc};
     if (!stream) {
         invalid(core::ErrorCode::output_unwritable,
-                "Cannot write M7 holistic result report: " + output_path.string());
+                "Cannot write M7 holistic result report: " + paths.output.string());
     }
     document.dump_pretty(stream);
     stream << '\n';
     if (!stream) {
         invalid(core::ErrorCode::output_unwritable,
-                "Failed while writing M7 holistic result report: " + output_path.string());
+                "Failed while writing M7 holistic result report: " + paths.output.string());
     }
 }
 

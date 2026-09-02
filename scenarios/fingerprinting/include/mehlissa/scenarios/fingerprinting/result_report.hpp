@@ -45,9 +45,13 @@ struct FingerprintingResultReport final {
 [[nodiscard]] FingerprintingResultReport
 make_fingerprinting_result_report(const LevelAPlan& plan, const LevelARuntimeResult& runtime);
 
+struct ResultReportPaths final {
+    std::filesystem::path output;
+    std::filesystem::path schema;
+};
+
 void write_fingerprinting_result_report(const FingerprintingResultReport& report,
-                                        const std::filesystem::path& output_path,
-                                        const std::filesystem::path& schema_path);
+                                        const ResultReportPaths& paths);
 
 struct HolisticFingerprintingResultReport final {
     FingerprintingResultReport reproducibility;
@@ -65,8 +69,7 @@ run_holistic_fingerprinting_scenario(const LevelAPlan& plan,
                                      const std::vector<LevelECase>& analysis_cases);
 
 void write_holistic_fingerprinting_result_report(const HolisticFingerprintingResultReport& report,
-                                                 const std::filesystem::path& output_path,
-                                                 const std::filesystem::path& schema_path);
+                                                 const ResultReportPaths& paths);
 
 } // namespace mehlissa::scenarios::fingerprinting
 
