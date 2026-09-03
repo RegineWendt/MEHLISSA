@@ -35,3 +35,7 @@ models, schemas, or simulation behavior.
   defines accepted-reader campaign analysis, descriptive replicate ranges,
   sweep and paired-difference plots, interpretation boundaries, and
   reproducible JSON, CSV, and SVG exports.
+- [UX-6.8 usability, accessibility, packaging, and release acceptance](UX6_8_RELEASE_ACCEPTANCE.md)
+  closes Workbench 1.0 with task-based novice and expert review, semantic and
+  responsive accessibility checks, isolated-wheel installation, an example
+  workspace, extension guidance, and explicit local-versus-published gates.

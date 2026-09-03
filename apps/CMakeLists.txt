@@ -167,8 +167,20 @@ if(Python3_Interpreter_FOUND)
     )
     set_tests_properties(
         mehlissa_python_ux6_workbench
-        PROPERTIES LABELS "UX-6.1;UX-6.2;UX-6.3;UX-6.4;UX-6.5;UX-6.6;UX-6.7;python;workbench"
+        PROPERTIES LABELS "UX-6.1;UX-6.2;UX-6.3;UX-6.4;UX-6.5;UX-6.6;UX-6.7;UX-6.8;python;workbench"
+    )
+
+    add_test(
+        NAME mehlissa_python_ux6_release_package
+        COMMAND
+            ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/tests/test_workbench_release.py
+            --executable $<TARGET_FILE:mehlissa>
+            --root ${PROJECT_SOURCE_DIR}
+    )
+    set_tests_properties(
+        mehlissa_python_ux6_release_package
+        PROPERTIES LABELS "UX-6.8;python;workbench;packaging;accessibility"
     )
 else()
-    message(WARNING "Python 3 was not found; the UX-5 and UX-6 Python tests are disabled")
+    message(WARNING "Python 3 was not found; the UX-5 and UX-6 Python and packaging tests are disabled")
 endif()

@@ -78,6 +78,15 @@ result hash, metric, unit, included sample count, and analysis contract version.
 Replicate variation, deterministic sweep contrasts, and inferential uncertainty
 remain explicitly different concepts.
 
+UX-6.8 packages these boundaries as Workbench 1.0.0. A standard Python wheel
+contains the process API, result readers, local host, browser assets, console
+entry point, and software licence. It intentionally does not copy the C++
+executable or the repository's versioned schemas, models, evidence, examples,
+and campaign definitions into an independent bundle. A clean-install acceptance
+test installs that wheel in an isolated environment and connects it to the
+matching built executable and checkout. Automated semantic checks and
+task-based desktop/mobile review provide the release accessibility baseline.
+
 The browser interface targets WCAG 2.2 level AA. No telemetry, cloud service,
 remote asset, patient-data workflow, or clinical claim is part of the decision.
 
@@ -87,13 +96,15 @@ remote asset, patient-data workflow, or clinical claim is part of the decision.
   scenario behavior cannot diverge silently from command-line use.
 - HTML provides a cross-platform, semantic, responsive presentation layer and a
   broad accessibility-testing ecosystem.
-- UX-6.1 through UX-6.7 add no mandatory third-party runtime dependency to the
+- UX-6.1 through UX-6.8 add no mandatory third-party runtime dependency to the
   Python package.
 - Local HTTP introduces a security boundary. Loopback restriction, host-header
   validation, session capability, restrictive response headers, safe text
   insertion, and bounded file serving are requirements, not optional polish.
-- Later packaging must locate Python and the MEHLISSA executable reliably or
-  embed them without changing the workbench API boundary.
+- The accepted source distribution locates the separately built MEHLISSA
+  executable and matching repository artifacts explicitly or by bounded
+  discovery. A future self-contained installer may embed them only without
+  changing the workbench API and scientific-authority boundary.
 - The private prototype catalog response is not a general public REST API.
   Machine-readable editing and execution endpoints must be designed from the
   existing versioned schemas and commands rather than expanding it casually.

@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 This document is the entry point for developers who want to understand,
 integrate, or extend MEHLISSA Next. It describes the implemented architecture
-through the accepted M7 gate and locally accepted UX-6.7 workbench, the public
+through the accepted M7 gate and locally accepted UX-6 / Workbench 1.0, the public
 C++, command-line, Python, and local-workbench interfaces, the data contracts,
 and the workflow for adding a
 module such as a new organ model. It also explains
@@ -613,6 +613,18 @@ JSON, CSV, and SVG exports retain metric, unit, included sample count, analysis
 contract version, and source identity. Scenario and non-completed jobs yield
 zero observations rather than a misleading analysis.
 
+UX-6.8 turns this integrated client into Workbench 1.0.0. `pyproject.toml`
+defines a PEP 517 wheel and the `mehlissa-workbench` console entry point. The
+wheel packages `python/mehlissa`, `python/mehlissa_workbench`, the three static
+browser assets, and the MPL-2.0 licence. It deliberately does not package the
+C++ application or duplicate repository-owned schemas, model definitions,
+evidence, examples, and campaign manifests. At launch the host therefore joins
+three explicit versioned inputs: installed Python software, a selected
+MEHLISSA executable, and a matching repository root. `--version` identifies the
+client without those inputs; `--check` verifies their usable integration before
+opening a browser. The release CTest builds and installs the wheel in a new
+isolated environment and exercises both operations.
+
 Curated examples are immutable. Derived files use safe basename-only `.json`
 names and exclusive creation inside `workbench-scenarios/` or an explicitly
 selected repository-internal workspace. Unsupported fields are displayed in
@@ -637,7 +649,8 @@ concepts are maintained in the
 [UX-6.4 run-control contract](../ux/UX6_4_RUN_AND_CAMPAIGN_CONTROL.md), the
 [UX-6.5 dashboard contract](../ux/UX6_5_RESULT_DASHBOARD_AND_COMPARISON.md), the
 [UX-6.6 audit contract](../ux/UX6_6_PROVENANCE_EVIDENCE_AND_INTERPRETATION.md),
-[UX-6.7 analysis and export contract](../ux/UX6_7_SENSITIVITY_UNCERTAINTY_VISUALIZATION_AND_EXPORT.md), and the
+[UX-6.7 analysis and export contract](../ux/UX6_7_SENSITIVITY_UNCERTAINTY_VISUALIZATION_AND_EXPORT.md),
+[UX-6.8 release acceptance](../ux/UX6_8_RELEASE_ACCEPTANCE.md), and the
 technology choice in [ADR-0050](adr/0050-local-browser-research-workbench.md).
 
 ## 8. Public API map

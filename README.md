@@ -79,14 +79,18 @@ print(load_result(execution.result).summary)
 See `examples/notebooks/01-first-scenario.ipynb` and
 `examples/notebooks/02-campaign-analysis.ipynb` for complete workflows.
 
-The UX-6.1 through UX-6.7 graphical workbench can browse the same validated model and
-example catalog and create a schema-guided derivative of the complete FP9/lung
-scenario in a protected local page:
+The completed UX-6 graphical workbench is released as **MEHLISSA Research
+Workbench 1.0.0**. It browses the same validated model and example catalog and
+creates a schema-guided derivative of the complete FP9/lung scenario in a
+protected local page. A virtual-environment installation provides the stable
+console entry point:
 
 ```powershell
-$env:PYTHONPATH = "$PWD/python"
-python -m mehlissa_workbench --repository-root . --check
-python -m mehlissa_workbench --repository-root .
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install .
+mehlissa-workbench --repository-root . --check
+mehlissa-workbench --repository-root .
 ```
 
 The launcher locates a normal build automatically or accepts `--executable`.
@@ -112,6 +116,11 @@ sample-counted accessible figures and exact-value tables. Source-bound JSON,
 CSV, and SVG downloads reproduce the displayed values. Observed ranges are
 descriptive only and are explicitly not confidence intervals or clinical
 uncertainty estimates.
+The versioned Python wheel contains the process API, readers, local host, and
+browser assets. The matching built C++ executable and repository-held models,
+schemas, evidence, and examples remain explicit prerequisites rather than being
+silently duplicated. See the [example workspace](examples/workbench/README.md)
+and [UX-6.8 release acceptance](docs/ux/UX6_8_RELEASE_ACCEPTANCE.md).
 
 MEHLISSA Next is a research model. It is not a medical device and does not
 provide patient-specific clinical predictions.

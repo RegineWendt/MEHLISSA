@@ -867,7 +867,7 @@ validity.
 | **UX-3 - Human-readable and HTML result report** | Allow results to be inspected and shared without manually reading JSON. | concise terminal report, stable tabular exports, self-contained HTML report, evidence and non-claim section, and links to complete machine-readable results. | passed on 2 September 2026; all 284 current tests and GitHub Windows/MSVC, Linux/GCC, and Linux/Clang analysis/sanitizer jobs pass in grouped CI run 33668850496 |
 | **UX-4 - Derived experiments and campaigns** | Let researchers create controlled variants, replicates, and parameter studies without editing source code. | safe parameter overrides, immutable derived manifests, seed/replicate plans, sweeps, paired comparisons, aggregate campaign results, and sensitivity hooks. | passed on 2 September 2026; six-run reference campaign, all 284 current tests, and all supported jobs pass in grouped CI run 33668850496 |
 | **UX-5 - Python API and notebooks** | Make MEHLISSA accessible to common scientific-analysis workflows. | stable Python bindings or process API, result readers, example notebooks, plotting, and campaign analysis while retaining the C++ contracts as the implementation authority. | passed on 2 September 2026; process client, version-guarded readers, optional plotting, two notebooks, all 284 current tests, and all supported jobs pass in grouped CI run 33668850496 |
-| **UX-6 - Graphical research workbench** | Provide guided scenario editing and interactive result exploration on top of stable interfaces. | schema-driven editor, validation feedback, run control, comparison views, provenance display, and uncertainty-aware visualization. | in progress; UX-6.1 through UX-6.7 locally accepted on 3 September 2026, publication and supported CI pending |
+| **UX-6 - Graphical research workbench** | Provide guided scenario editing and interactive result exploration on top of stable interfaces. | schema-driven editor, validation feedback, run control, comparison views, provenance display, and uncertainty-aware visualization. | complete as the Workbench 1.0.0 release candidate on 3 September 2026; local acceptance covers UX-6.1 through UX-6.8 and publication acceptance requires green checks on the exact published commit |
 
 ##### UX-6 delivery sequence
 
@@ -875,6 +875,12 @@ UX-6 is divided into independently reviewable increments. The graphical
 workbench remains a client of the accepted command and Python process APIs; it
 must not create a second simulation implementation, bypass schema validation,
 or weaken reproducibility and interpretation boundaries.
+
+The UX-6.1 through UX-6.7 row endings preserve the local acceptance evidence
+recorded when each increment was completed. Their contemporaneous
+publication-pending note is superseded by the combined Workbench 1.0 status in
+the UX-6 and UX-6.8 rows; the published gate is decided only by CI for the exact
+release commit.
 
 | Increment | Plain-language objective | Principal deliverables | Acceptance evidence | Status |
 |---|---|---|---|---|
@@ -885,7 +891,7 @@ or weaken reproducibility and interpretation boundaries.
 | **UX-6.5 - Result dashboard and comparison** | Make completed results understandable without manually opening JSON or CSV files. | concise outcome dashboard; stage timing and case tables; side-by-side run comparison; campaign grouping and paired differences; drill-through to authoritative JSON and UX-3 reports; clear missing/failed-run treatment. | dashboard values are checked against accepted result readers and fixtures; comparisons never treat missing or failed runs as observations. | locally passed on 3 September 2026: [dashboard contract](ux/UX6_5_RESULT_DASHBOARD_AND_COMPARISON.md), accepted-reader scenario and campaign projections, outcome/stage/case/group/pair tables, 1,000-versus-10,000 comparison, authoritative JSON/CSV and sandboxed UX-3 report drill-through, explicit zero-observation exclusion, 285/285 Windows/MSVC tests, and desktop/mobile browser review; publication and supported CI pending explicit push |
 | **UX-6.6 - Provenance, evidence, and interpretation boundaries** | Keep the origin and valid interpretation of every displayed result visible. | provenance panel for versions, seeds, hashes, manifests, models, and input files; evidence and licence links; limitations and maturity labels; persistent non-clinical notice; exportable audit summary. | all provenance fields round-trip from accepted artifacts; altered hashes and incomplete evidence are visibly flagged; the interface cannot imply patient-specific or clinical validity. | locally passed on 3 September 2026: [audit contract](ux/UX6_6_PROVENANCE_EVIDENCE_AND_INTERPRETATION.md), complete retained provenance, server-side input/result/manifest/model/schema hash verification, six-run campaign audit, source/licence/maturity/limitation panels, explicit altered and incomplete states, permanent non-clinical/non-patient-specific boundary, JSON export, 285/285 Windows/MSVC tests, and desktop/mobile browser review; publication and supported CI pending explicit push |
 | **UX-6.7 - Sensitivity, uncertainty, visualization, and export** | Support defensible visual exploration of parameter effects and uncertainty. | distributions and intervals for replicates; sweep and paired-difference plots; sensitivity views using declared campaign hooks; units and sample counts on every chart; accessible palettes; reproducible figure, table, and analysis-data export. | plotted and exported values match the Python/result-reader calculations; uncertainty is distinguished from deterministic variation and unsupported inference is not fabricated. | locally passed on 3 September 2026: [analysis and export contract](ux/UX6_7_SENSITIVITY_UNCERTAINTY_VISUALIZATION_AND_EXPORT.md), accepted-reader observations, descriptive replicate summaries, parameter-sweep and paired-difference views, units and sample counts, accessible inline SVG, exact-value table, source-bound JSON/CSV/SVG exports, explicit no-inference boundary, 285/285 Windows/MSVC tests, and desktop/mobile browser review; publication and supported CI pending explicit push |
-| **UX-6.8 - Usability, accessibility, packaging, and release acceptance** | Turn the integrated workbench into a dependable entry point for researchers and contributors. | task-based usability review; keyboard and screen-reader checks; responsive error recovery; installation and launch packaging for supported platforms; example workspace; developer extension notes; updated User Guide, Roadmap, architecture guide, status brief, and PDF. | representative novice and expert workflows pass documented acceptance tests; supported CI, packaging smoke tests, documentation review, and a clean-install exercise pass. | planned |
+| **UX-6.8 - Usability, accessibility, packaging, and release acceptance** | Turn the integrated workbench into a dependable entry point for researchers and contributors. | task-based usability review; keyboard and screen-reader checks; responsive error recovery; installation and launch packaging for supported platforms; example workspace; developer extension notes; updated User Guide, Roadmap, architecture guide, status brief, and PDF. | representative novice and expert workflows pass documented acceptance tests; supported CI, packaging smoke tests, documentation review, and a clean-install exercise pass. | locally passed on 3 September 2026: [release-acceptance contract](ux/UX6_8_RELEASE_ACCEPTANCE.md), Workbench 1.0.0 wheel and console entry point, explicit package/executable/repository boundary, isolated clean install, example novice/expert workspace, semantic keyboard/screen-reader and responsive/error-recovery gates, 286/286 Windows/MSVC tests, desktop/mobile browser review, and synchronized English documentation/PDF; published acceptance is conditional on green CI for the exact commit |
 
 The packages are implemented in order unless a later package can be developed
 without destabilizing an earlier interface. UX-1 through UX-3 precede new GUI
@@ -1291,8 +1297,8 @@ The following packages are derived directly from this roadmap:
     threat/privacy/accessibility baseline, and selects a local browser client
     through [ADR-0050](architecture/adr/0050-local-browser-research-workbench.md).
     The protected loopback prototype lists five model families and ten examples
-    through `MehlissaClient`; all 285 Windows/MSVC tests and browser checks pass. Publication and
-    supported GitHub CI wait for an explicit push request.
+    through `MehlissaClient`; all 285 Windows/MSVC tests and browser checks pass.
+    This increment is included in the combined Workbench 1.0 release candidate.
 20. ~~UX-6.2 - Build the guided scenario workspace.~~ Locally complete: the
     [workspace contract](ux/UX6_2_GUIDED_SCENARIO_WORKSPACE.md) defines 13
     schema-derived displayed fields with units, defaults, evidence, and limits;
@@ -1300,16 +1306,16 @@ The following packages are derived directly from this roadmap:
     open; authoritative validation; and exclusive save-as. The accepted
     10,000-collector scenario survives save and reopen with all 13 artifacts and
     evidence retained. All 285 Windows/MSVC tests and desktop/mobile browser
-    checks pass. Publication and supported GitHub CI wait for an explicit push
-    request.
+    checks pass. This increment is included in the combined Workbench 1.0
+    release candidate.
 21. ~~UX-6.3 - Add validation and corrective feedback.~~ Locally complete: the
     [validation contract](ux/UX6_3_VALIDATION_AND_CORRECTIVE_FEEDBACK.md)
     records authoritative live CLI decisions, schema-derived hints, stable
     field/document locations and repair guidance, warnings, candidate SHA-256,
     a copyable summary, and the fail-closed save/future-run gate. Positive,
     structural, semantic, cross-file, and warning fixtures pass in all 285
-    Windows/MSVC tests; desktop/mobile browser review also passes. Publication
-    and supported GitHub CI wait for an explicit push request.
+    Windows/MSVC tests; desktop/mobile browser review also passes. This
+    increment is included in the combined Workbench 1.0 release candidate.
 22. ~~UX-6.4 - Add run and campaign control.~~ Locally complete: the
     [run-control contract](ux/UX6_4_RUN_AND_CAMPAIGN_CONTROL.md) and workbench
     execute an exact validated scenario or the curated UX-4 six-run campaign
@@ -1317,16 +1323,16 @@ The following packages are derived directly from this roadmap:
     output, staged progress, an actual cancellable child process, 200-line
     bounded logs, atomic run records, seeds, inputs, results, provenance, and
     protected artifact views remain traceable. All 285 Windows/MSVC tests and
-    desktop/mobile browser checks pass. Publication and supported GitHub CI
-    wait for an explicit push request.
+    desktop/mobile browser checks pass. This increment is included in the
+    combined Workbench 1.0 release candidate.
 23. ~~UX-6.5 - Add result dashboards and comparisons.~~ Locally complete: the
     [dashboard contract](ux/UX6_5_RESULT_DASHBOARD_AND_COMPARISON.md) and
     workbench present accepted-reader outcomes, timing and case tables,
     campaign groups, four paired metrics, and a guarded two-scenario comparison.
     Authoritative JSON/CSV and the sandboxed UX-3 report remain reachable;
     incomplete, failed, and cancelled jobs contribute zero observations. All
-    285 Windows/MSVC tests and desktop/mobile browser checks pass. Publication
-    and supported GitHub CI wait for an explicit push request.
+    285 Windows/MSVC tests and desktop/mobile browser checks pass. This
+    increment is included in the combined Workbench 1.0 release candidate.
 24. ~~UX-6.6 - Expose provenance, evidence, and interpretation boundaries.~~
     Locally complete: the [audit contract](ux/UX6_6_PROVENANCE_EVIDENCE_AND_INTERPRETATION.md)
     and workbench round-trip retained provenance, verify scenario and campaign
@@ -1335,8 +1341,8 @@ The following packages are derived directly from this roadmap:
     mismatches become `Attention`; the historical timer's undeclared source
     licences remain visibly `Incomplete`. The permanent non-clinical and
     non-patient-specific boundary cannot be confused with integrity. All 285
-    Windows/MSVC tests and desktop/mobile browser checks pass. Publication and
-    supported GitHub CI wait for an explicit push request.
+    Windows/MSVC tests and desktop/mobile browser checks pass. This increment
+    is included in the combined Workbench 1.0 release candidate.
 25. ~~UX-6.7 - Add sensitivity, uncertainty, visualization, and export.~~
     Locally complete: the [analysis and export contract](ux/UX6_7_SENSITIVITY_UNCERTAINTY_VISUALIZATION_AND_EXPORT.md)
     and workbench project accepted-reader observations into replicate,
@@ -1345,12 +1351,17 @@ The following packages are derived directly from this roadmap:
     and source-bound JSON, CSV, and SVG exports reproduce the plotted values.
     Observed ranges are explicitly not confidence intervals, and the small
     curated campaign supports descriptive software exploration only. All 285
-    Windows/MSVC tests and desktop/mobile browser checks pass. Publication and
-    supported GitHub CI wait for an explicit push request.
-26. **UX-6.8 - Complete usability, accessibility, packaging, and release
-    acceptance.** Test representative novice and expert workflows, clean
-    installation, supported CI, error recovery, and all required living
-    documentation before marking UX-6 complete.
+    Windows/MSVC tests and desktop/mobile browser checks pass. This increment
+    is included in the combined Workbench 1.0 release candidate.
+26. ~~UX-6.8 - Complete usability, accessibility, packaging, and release
+    acceptance.~~ Locally complete as Workbench 1.0.0: the
+    [release-acceptance contract](ux/UX6_8_RELEASE_ACCEPTANCE.md) records the
+    representative novice and expert tasks, explicit packaging boundary,
+    isolated-wheel install, keyboard/screen-reader semantic gate, responsive
+    error recovery, example workspace, full regression, and synchronized User
+    Guide, Roadmap, architecture, status brief, and PDF. A published revision
+    closes the release gate only after that exact commit passes all supported
+    GitHub CI jobs.
 
 ## 12. Definition of long-term success
 

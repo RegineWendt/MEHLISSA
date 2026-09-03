@@ -10,10 +10,10 @@ SPDX-License-Identifier: CC-BY-4.0
 **Purpose:** Shareable overview for prospective contributors and research partners
 **Status date:** 3 September 2026
 **Development branch:** `mehlissa-next-generation`
-**Published base revision:** `7b92c4ef930b188918a886041603e8de27e2891c`
-**Local candidate:** UX-6.1 through UX-6.7 accepted locally; not yet pushed
+**Previously verified published base:** `7b92c4ef930b188918a886041603e8de27e2891c`
+**Release candidate:** Workbench 1.0.0; UX-6.1 through UX-6.8 accepted locally
 **Milestone status:** M0 through M7 passed
-**Current product focus:** UX-6.8 usability, accessibility, packaging, and release acceptance after local UX-6.7 acceptance
+**Current product focus:** post-UX-6 scientific expansion and external user feedback; published Workbench acceptance remains conditional on green CI for its exact commit
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -54,45 +54,50 @@ behind explicit contracts.
 - UX-6.1 defines the graphical product roles and workflows, chooses a local
   browser client through an architecture decision, establishes threat, privacy,
   and WCAG 2.2 accessibility baselines, and implements a protected read-only
-  catalog browser through the accepted Python process API. All 285 Windows/MSVC
-  tests and desktop/mobile browser checks pass; publication and supported CI are
-  pending.
+  catalog browser through the accepted Python process API. This increment is
+  included in the Workbench 1.0 release candidate.
 - UX-6.2 adds a schema-derived FP9/lung editor with contextual units, defaults,
   evidence, and limitations; complete source retention; explicit unsaved-change
   handling; authoritative validation; and bounded, non-overwriting save-as and
-  reopen. All 285 Windows/MSVC tests and the desktop/mobile browser round trip
-  pass; publication and supported CI are pending.
+  reopen. This increment is included in the Workbench 1.0 release candidate.
 - UX-6.3 adds debounced complete-candidate checks through the accepted CLI,
   located stable errors with repair guidance, non-blocking scientific warnings,
   cross-file diagnostics, a candidate-hashed copyable summary, and a closed
-  save/future-run gate for invalid configurations. All 285 Windows/MSVC tests
-  and desktop/mobile browser checks pass; publication and supported CI are pending.
+  save/future-run gate for invalid configurations. This increment is included
+  in the Workbench 1.0 release candidate.
 - UX-6.4 adds explicitly confirmed starts for the exact validated scenario and
   the curated UX-4 six-run replicate/sweep/paired-comparison campaign through
   the accepted Python process API. Unique bounded outputs, visible stages,
   actual cancellation, atomic run records, bounded logs, seeds, inputs, and
-  protected artifact views remain traceable. All 285 Windows/MSVC tests and
-  desktop/mobile browser checks pass; publication and supported CI are pending.
+  protected artifact views remain traceable. This increment is included in the
+  Workbench 1.0 release candidate.
 - UX-6.5 adds accepted-reader scenario and campaign dashboards, cumulative
   stage and Level-E case tables, declared campaign groups, four paired
   differences, and two-completed-scenario comparison. Authoritative JSON/CSV
   and the UX-3 report remain reachable. Missing, incomplete, failed, and
-  cancelled jobs contribute zero observations. All 285 Windows/MSVC tests and
-  desktop/mobile browser checks pass; publication and supported CI are pending.
+  cancelled jobs contribute zero observations. This increment is included in
+  the Workbench 1.0 release candidate.
 - UX-6.6 adds an artifact-backed provenance audit beside every completed
   dashboard. It round-trips original provenance, verifies scenario/campaign
   inputs, results, manifests, model definitions, and schemas, exposes seeds,
   software/build identity, sources, licences, maturity, and limitations, and
   exports the complete audit JSON. Altered hashes are conspicuous and absent
-  licence metadata remains incomplete. All 285 Windows/MSVC tests and
-  desktop/mobile browser checks pass; publication and supported CI are pending.
+  licence metadata remains incomplete. This increment is included in the
+  Workbench 1.0 release candidate.
 - UX-6.7 adds accepted-reader campaign analysis with separate replicate,
   collector-count sweep, and same-seed paired-difference views. Every figure
   states its unit and included sample count; exact-value tables and source-bound
   JSON, CSV, and accessible SVG exports reproduce the displayed observations.
   Observed ranges remain descriptive and no unsupported confidence, population,
-  patient, or clinical inference is fabricated. All 285 Windows/MSVC tests and
-  desktop/mobile browser checks pass; publication and supported CI are pending.
+  patient, or clinical inference is fabricated. This increment is included in
+  the Workbench 1.0 release candidate.
+- UX-6.8 closes the workbench program as version 1.0.0. It adds a versioned
+  wheel and console entry point, an explicit package/executable/repository
+  boundary, an isolated clean-install check, a novice/expert example workspace,
+  semantic keyboard and screen-reader checks, responsive error-recovery review,
+  and synchronized English release documentation. The complete local suite now
+  contains 286 tests; publication acceptance requires all supported CI jobs on
+  the exact release-candidate commit.
 - English user, architecture, model, traceability, and decision documentation
   supports international collaboration.
 - The result is a reproducible research-software demonstrator. It is not a
@@ -103,7 +108,7 @@ behind explicit contracts.
 | Software architecture | Strong modular foundation with explicit ownership, conservation, lifecycle, configuration, and evidence boundaries. |
 | End-to-end integration | Complete first software vertical slice through fingerprinting Levels A-E. |
 | Scientific validation | Mixed maturity: verified equations, literature-parameterized candidates, selected independent comparisons, and multiple synthetic mechanisms. |
-| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, UX-3 provides readable shareable result bundles, UX-4 provides controlled campaigns, UX-5 provides Python and notebook access, and UX-6.1 through UX-6.7 add graphical discovery, scenario round trips, corrective validation, guarded execution, dashboards, comparison, provenance/evidence audit, and reproducible descriptive campaign visualization/export. Packaging and final usability/accessibility acceptance remain. |
+| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, UX-3 provides readable shareable result bundles, UX-4 provides controlled campaigns, UX-5 provides Python and notebook access, and the completed UX-6 / Workbench 1.0 adds graphical discovery, scenario round trips, corrective validation, guarded execution, dashboards, comparison, provenance/evidence audit, descriptive campaign visualization/export, isolated installation, and a tested accessible release baseline. |
 | Clinical readiness | Not claimed. Patient prediction, diagnosis, and treatment recommendations are explicitly outside the present scope. |
 
 ## How to read project labels
@@ -310,7 +315,7 @@ mechanism predicts a biological or clinical outcome.
 
 | Program | Principal work | Intended outcome |
 |---|---|---|
-| Usability and orchestration | UX-1 provides scenario execution, UX-2 provides discovery, UX-3 provides HTML/text/CSV result bundles, UX-4 provides controlled campaigns, and UX-5 provides Python readers, analysis, and notebooks; a workbench remains. | A researcher can find suitable models, run M7, inspect or share its result, execute reproducible parameter studies, and analyze them from Python without C++ knowledge or manual JSON copying. |
+| Usability and orchestration | UX-1 through UX-5 provide commands, discovery, reports, campaigns, and Python analysis; the completed UX-6 adds Workbench 1.0 configuration, execution, dashboards, audit, analysis, packaging, and accessibility gates. | A researcher can find suitable models, run M7, inspect or share its result, execute reproducible parameter studies, and analyse them without C++ knowledge or manual JSON copying. Diverse-user evaluation remains continuous work. |
 | Scientific qualification | Replace historical or synthetic assumptions with measured parameters, calibration data, independent validation, uncertainty, and sensitivity campaigns. | Defensible scenario-specific conclusions within explicit scopes. |
 | Additional medical scenarios | Continuous monitoring, liquid biopsy, endocrine/adrenal venous sampling, CAR-T, and ultimately metastasis prevention. | Evidence that the architecture generalizes beyond fingerprinting. |
 | Additional organs | Begin with a kidney surrogate and progress toward regional filtration, clearance, and organ-specific capillary interfaces. | Evidence that organ factories and coupling contracts are not lung-specific. |
@@ -342,14 +347,14 @@ they do not by themselves increase physiological or clinical validity.
 | UX-3 - Human-readable and HTML result reporting | Provide concise terminal, tabular, and shareable HTML views over the complete machine-readable result. | Passed; six-file bundle, all 284 current tests, and all supported GitHub CI jobs pass |
 | UX-4 - Derived experiments and campaigns | Create controlled variants, replicates, parameter sweeps, paired comparisons, and aggregate analyses. | Passed; six-run reference campaign, all 284 current tests, and all supported GitHub CI jobs pass |
 | UX-5 - Python API and notebooks | Support common scientific analysis and plotting workflows without replacing the C++ implementation authority. | Passed; process API, readers, analysis, optional plots, two notebooks, all 284 current tests, and all supported GitHub CI jobs pass |
-| UX-6.1 - Workbench product and technical foundation | Define users and workflows, select the interface architecture, establish safety/accessibility baselines, and prove read-only graphical discovery without duplicating scientific logic. | Locally passed; five model families and ten examples load through the accepted process API; all 285 Windows/MSVC tests and desktop/mobile browser checks pass; push and supported CI pending |
-| UX-6.2 - Guided scenario workspace | Open the complete FP9/lung starter, edit schema-derived scalar fields with their units/evidence/limits, retain the complete source, and validate/save/reopen without overwriting. | Locally passed; a 10,000-collector derivative round-trips with all 13 artifacts and evidence retained; unknown-field, path, session, and overwrite cases fail visibly; all 285 Windows/MSVC tests and desktop/mobile browser checks pass; push and supported CI pending |
-| UX-6.3 - Validation and corrective feedback | Explain structural, semantic, and cross-file problems before save/run and make the decision shareable. | Locally passed; accepted-CLI parity, stable field/document codes, repair guidance, warnings, candidate SHA-256, invalid-save/run gate, all 285 Windows/MSVC tests, and desktop/mobile browser checks pass; push and supported CI pending |
-| UX-6.4 - Run and campaign control | Confirm, start, monitor, cancel, and inspect an exact validated scenario or the curated six-run campaign without bypassing accepted APIs. | Locally passed; unique bounded evidence directories, exact inputs, seeds, atomic state, 200-line logs, real cancellation, and protected result/provenance/table links; all 285 Windows/MSVC tests and desktop/mobile browser checks pass; push and supported CI pending |
-| UX-6.5 - Result dashboard and comparison | Explain completed outcomes, cases, stages, campaign groups, and paired differences while retaining authoritative artifacts and excluding non-results. | Locally passed; accepted-reader parity, 1,000-versus-10,000 scenario comparison, sandboxed UX-3 report, zero-observation failure policy, all 285 Windows/MSVC tests, and desktop/mobile browser checks pass; push and supported CI pending |
-| UX-6.6 - Provenance, evidence, and interpretation boundaries | Keep software/build identity, seeds, hashes, models, sources, licences, maturity, limitations, and the non-clinical scope attached to every displayed result. | Locally passed; complete provenance round trip, scenario and six-run campaign integrity verification, explicit altered/incomplete states, JSON audit export, all 285 Windows/MSVC tests, and desktop/mobile browser checks pass; push and supported CI pending |
-| UX-6.7 - Sensitivity, uncertainty, visualization, and export | Explain replicate variation, parameter effects, and same-seed differences without overstating the small curated campaign, then export the exact analysis. | Locally passed; accepted-reader observations and sensitivity hooks, descriptive summaries, unit/sample-labelled accessible plots, exact-value table, source-bound JSON/CSV/SVG exports, all 285 Windows/MSVC tests, and desktop/mobile browser checks pass; push and supported CI pending |
-| UX-6.8 - Usability, accessibility, packaging, and release acceptance | Package and test the workbench as a dependable entry point for novice and expert researchers and contributors. | Planned |
+| UX-6.1 - Workbench product and technical foundation | Define users and workflows, select the interface architecture, establish safety/accessibility baselines, and prove read-only graphical discovery without duplicating scientific logic. | Passed and included in Workbench 1.0; five model families and ten examples load through the accepted process API |
+| UX-6.2 - Guided scenario workspace | Open the complete FP9/lung starter, edit schema-derived scalar fields with their units/evidence/limits, retain the complete source, and validate/save/reopen without overwriting. | Passed and included in Workbench 1.0; a derivative round-trips with all 13 artifacts/evidence retained and unsafe writes fail closed |
+| UX-6.3 - Validation and corrective feedback | Explain structural, semantic, and cross-file problems before save/run and make the decision shareable. | Passed and included in Workbench 1.0; accepted-CLI parity, stable located diagnostics, candidate identity, and closed invalid save/run gates |
+| UX-6.4 - Run and campaign control | Confirm, start, monitor, cancel, and inspect an exact validated scenario or the curated six-run campaign without bypassing accepted APIs. | Passed and included in Workbench 1.0; bounded evidence, exact inputs/seeds, lifecycle, real cancellation, and protected artifacts |
+| UX-6.5 - Result dashboard and comparison | Explain completed outcomes, cases, stages, campaign groups, and paired differences while retaining authoritative artifacts and excluding non-results. | Passed and included in Workbench 1.0; accepted-reader parity, guarded comparison/reporting, and explicit zero-observation failure policy |
+| UX-6.6 - Provenance, evidence, and interpretation boundaries | Keep software/build identity, seeds, hashes, models, sources, licences, maturity, limitations, and the non-clinical scope attached to every displayed result. | Passed and included in Workbench 1.0; round-trip provenance, integrity/evidence states, and exact JSON audit export |
+| UX-6.7 - Sensitivity, uncertainty, visualization, and export | Explain replicate variation, parameter effects, and same-seed differences without overstating the small curated campaign, then export the exact analysis. | Passed and included in Workbench 1.0; accepted-reader observations, descriptive views, exact-value table, and source-bound JSON/CSV/SVG exports |
+| UX-6.8 - Usability, accessibility, packaging, and release acceptance | Package and test the workbench as a dependable entry point for novice and expert researchers and contributors. | Locally passed; version 1.0 wheel/command, isolated install, example workspace, semantic accessibility and responsive recovery gates, 286-test regression, and synchronized documentation; published acceptance is conditional on green supported CI for the exact commit |
 
 The intended first user experience is:
 
@@ -469,8 +474,25 @@ and one paired difference are sufficient to test software workflows, not to
 estimate population or clinical uncertainty. Consequently the current flat
 0.5 sensitivity/specificity views and zero paired difference are displayed
 honestly, and no confidence interval is invented. All 285 Windows/MSVC tests
-and desktop/mobile browser review pass. UX-6.8 packaging and final
-usability/accessibility acceptance is next.
+and desktop/mobile browser review pass.
+
+UX-6.8 now packages the integrated client as MEHLISSA Research Workbench
+1.0.0. Its PEP 517 wheel installs the Python process API, result readers, local
+host, browser assets, MPL-2.0 licence, and `mehlissa-workbench` command into a
+clean virtual environment. The C++ simulator plus the matching repository's
+schemas, models, evidence, examples, and campaign definitions remain explicit
+versioned prerequisites rather than being copied into a second scientific
+bundle. A new automated gate builds and inspects the wheel, performs an
+isolated no-index installation, imports all browser resources, identifies the
+release version, and exercises repository/executable `--check`. A documented
+example workspace covers a novice scenario and expert campaign. Static
+semantics plus desktop/mobile task review cover labelled controls, keyboard and
+dialog focus, live status/alerts, screen-reader structure, accessible figures,
+narrow reflow, contained tables, error recovery, and console cleanliness. The
+complete local Windows/MSVC suite contains 286 tests. The User Guide, Roadmap,
+architecture, requirements, traceability, status source, and shareable PDF are
+synchronized; publication acceptance still belongs to the green CI result for
+the exact published commit.
 
 ## 9. Opportunities for collaborators
 
@@ -482,7 +504,7 @@ usability/accessibility acceptance is next.
 | Molecular communication | Calibrate local channels, implement assembly physics, and connect an external network simulator through the existing adapter. |
 | Cell biology and pharmacology | Replace synthetic receptor, signaling, apoptosis, and delivery assumptions with evidence-qualified models. |
 | Statistics and uncertainty quantification | Design independent validation, global sensitivity, uncertainty propagation, identifiability, and ensemble analysis. |
-| Research UX and visualization | Review the local editor, validation, run control, dashboards, provenance audit, and accessible campaign analysis, then complete packaging and usability/accessibility acceptance. |
+| Research UX and visualization | Evaluate Workbench 1.0 with diverse researchers and assistive technologies, then turn observed friction into bounded follow-up packages without weakening scientific authority. |
 | Research data and governance | Model-card provenance, licensing, FAIR data, patient-data controls, and digital-twin governance. |
 
 A new module is reviewable when its public contract and units are explicit;
@@ -501,20 +523,18 @@ and limitations are documented; and all supported CI paths pass.
 | `docs/requirements/SYSTEM_REQUIREMENTS.md` | Numbered requirements derived from the dissertation and project decisions. |
 | `docs/requirements/TRACEABILITY_MATRIX.md` | Implementation and verification status for every tracked requirement. |
 | `docs/m7/M7_GATE_REVIEW.md` | Formal decision and scientific limitations of the holistic fingerprinting demonstrator. |
-| `docs/ux/UX6_1_PRODUCT_AND_TECHNICAL_FOUNDATION.md` | Workbench roles, workflows, screen concepts, architecture trade-offs, security/privacy/accessibility baseline, and local acceptance. |
-| `docs/ux/UX6_2_GUIDED_SCENARIO_WORKSPACE.md` | Guided-field contract, complete-source round trip, bounded file access, non-overwriting save-as, and local acceptance. |
-| `docs/ux/UX6_3_VALIDATION_AND_CORRECTIVE_FEEDBACK.md` | Authoritative validity, coded field/document issues, repair guidance, warnings, candidate hashes, and the pre-run gate. |
-| `docs/ux/UX6_4_RUN_AND_CAMPAIGN_CONTROL.md` | Confirmed scenario/campaign execution, lifecycle, cancellation, and retained evidence. |
-| `docs/ux/UX6_5_RESULT_DASHBOARD_AND_COMPARISON.md` | Reader-backed outcome views, campaign grouping, guarded comparison, report drill-through, and missing/failed-run treatment. |
-| `docs/ux/UX6_6_PROVENANCE_EVIDENCE_AND_INTERPRETATION.md` | Artifact-backed provenance, hash verification, evidence/licence completeness, maturity, interpretation boundaries, audit export, and local acceptance. |
-| `docs/ux/UX6_7_SENSITIVITY_UNCERTAINTY_VISUALIZATION_AND_EXPORT.md` | Reader-backed campaign analysis, descriptive uncertainty limits, accessible plots, exact exports, and local acceptance. |
+| `docs/ux/README.md` | Index of all eight Workbench increments and their detailed product, validation, execution, reporting, audit, analysis, accessibility, and release contracts. |
+| `docs/ux/UX6_8_RELEASE_ACCEPTANCE.md` | Workbench 1.0 packaging boundary, representative tasks, accessibility/error-recovery checks, isolated installation, and publication gate. |
+| `examples/workbench/README.md` | Concise novice scenario and expert campaign workspace route plus extension boundary. |
 | `docs/m0` through `docs/m6` | Gate reviews, model notes, validation evidence, and accepted limitations for preceding milestones. |
 
 - **Repository:** https://github.com/RegineWendt/MEHLISSA
-- **Verified CI run:** https://github.com/RegineWendt/MEHLISSA/actions/runs/33668850496
+- **Previous verified CI run:** https://github.com/RegineWendt/MEHLISSA/actions/runs/33668850496
 
 MEHLISSA Next now provides the dissertation-aligned executable backbone plus a
 graphical client for discovery, configuration, execution, results, provenance,
-and descriptive campaign analysis. UX-6.8 next packages the workbench and
-completes usability/accessibility acceptance; scientific expansion still needs
-more scenarios, organs, and independently validated models.
+and descriptive campaign analysis. Workbench 1.0 adds a cleanly installable,
+task-reviewed, accessibility-gated entry point while retaining the C++ and
+repository artifacts as authority. Scientific expansion still needs more
+scenarios, organs, qualified parameters, larger study designs, diverse-user
+evaluation, and independently validated models before any clinical claim.

@@ -21,7 +21,8 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 - [UX-6.5 result dashboard and comparison](ux/UX6_5_RESULT_DASHBOARD_AND_COMPARISON.md) – reader-backed completed-result views, guarded comparisons, authoritative drill-through, and explicit zero-observation handling.
 - [UX-6.6 provenance, evidence, and interpretation boundaries](ux/UX6_6_PROVENANCE_EVIDENCE_AND_INTERPRETATION.md) – artifact-backed identity verification, evidence/licence completeness, maturity, boundaries, and audit export.
 - [UX-6.7 sensitivity, uncertainty, visualization, and export](ux/UX6_7_SENSITIVITY_UNCERTAINTY_VISUALIZATION_AND_EXPORT.md) – accepted-reader campaign analysis, descriptive variation, parameter contrasts, accessible figures, and reproducible exact exports.
-- [System requirements](requirements/SYSTEM_REQUIREMENTS.md) – 81 numbered functional, architectural, user-experience, and quality requirements with origin, priority, and verification method.
+- [UX-6.8 usability, accessibility, packaging, and release acceptance](ux/UX6_8_RELEASE_ACCEPTANCE.md) – Workbench 1.0 tasks, semantic and responsive accessibility, error recovery, isolated installation, packaging boundary, and release gates.
+- [System requirements](requirements/SYSTEM_REQUIREMENTS.md) – 82 numbered functional, architectural, user-experience, and quality requirements with origin, priority, and verification method.
 - [Traceability matrix](requirements/TRACEABILITY_MATRIX.md) – mapping of all requirements to the literature, current status, roadmap gate, and planned verification.
 - [Fingerprinting reference scenario](requirements/FINGERPRINTING_SCENARIO.md) – domain baseline, reference values, acceptance levels, and tests for the first vertical demonstrator.
 - [Architecture decisions](architecture/README.md) – new kernel, four-layer co-simulation, technology, scenario priority, and evidence rules.

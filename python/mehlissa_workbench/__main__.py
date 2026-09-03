@@ -16,6 +16,7 @@ from .server import (
     LOOPBACK_HOSTS,
     RunWorkspace,
     ScenarioWorkspace,
+    WORKBENCH_VERSION,
     create_server,
     discover_catalog,
 )
@@ -43,6 +44,7 @@ def _parser() -> argparse.ArgumentParser:
         prog="mehlissa-workbench",
         description="Start the loopback-only MEHLISSA research workbench.",
     )
+    parser.add_argument("--version", action="version", version=f"%(prog)s {WORKBENCH_VERSION}")
     parser.add_argument("--repository-root", type=Path, default=Path.cwd())
     parser.add_argument("--executable", type=Path)
     parser.add_argument("--host", default="127.0.0.1", choices=sorted(LOOPBACK_HOSTS))
@@ -84,6 +86,7 @@ def main() -> int:
         source_id = str(workspace["sources"][0]["id"])
         validation = scenario_workspace.validate(source_id, {})
         print("workbench_status=ready")
+        print(f"workbench_version={WORKBENCH_VERSION}")
         print("scenario_editing=true")
         print(f"model_count={len(catalog['models'])}")
         print(f"example_count={len(catalog['examples'])}")
@@ -97,7 +100,7 @@ def main() -> int:
         client, arguments.host, arguments.port,
         workspace_root=arguments.workspace, runs_root=arguments.runs,
     )
-    print("MEHLISSA Next Research Workbench — UX-6.7 sensitivity and reproducible visualization")
+    print(f"MEHLISSA Next Research Workbench {WORKBENCH_VERSION} — integrated UX-6 release")
     print("Validated scenarios and the curated six-run campaign start after explicit confirmation.")
     print(f"workbench_url={server.url}")
     print("Press Ctrl+C to stop.")

@@ -19,6 +19,7 @@ for adding modules, and the current personalization workflow, see the
 - a C++20 compiler
 - vcpkg with `VCPKG_ROOT` set
 - Ninja on Linux
+- Python 3.10 or newer for the process API, Workbench, and release-package test
 
 On Windows, Visual Studio Community 2026 with the “Desktop development with
 C++” workload is the reference environment. Visual Studio Developer PowerShell
@@ -38,6 +39,30 @@ $ctest = Join-Path $env:VSINSTALLDIR 'Common7\IDE\CommonExtensions\Microsoft\CMa
 ```
 
 The release build uses the `windows-msvc-release` presets accordingly.
+
+## Workbench package and clean-install check
+
+The Workbench 1.0 Python wheel contains the process API, versioned result
+readers, local web host, browser assets, console entry point, and licence. The
+C++ executable and repository-held schemas, models, evidence, examples, and
+campaign definitions remain separate versioned inputs.
+
+Install the local source into an isolated environment and verify that it can
+find the accepted interfaces:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install .
+mehlissa-workbench --version
+mehlissa-workbench --repository-root . --check
+```
+
+The CTest named `mehlissa_python_ux6_release_package` independently builds the
+wheel without dependency downloads, inspects its resources and licence,
+installs it into a new temporary virtual environment, and runs the same check.
+CI installs only the packaging tools before configuration; the package itself
+has no mandatory third-party runtime dependency.
 
 If vcpkg or the package registry is temporarily unavailable, a fully offline
 smoke test is available:

@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M7 and locally accepted UX-1 through UX-6.7
+**Covered software:** accepted M0 through M7 and complete UX-1 through UX-6 / MEHLISSA Research Workbench 1.0.0
 
-**Last updated:** 3 September 2026, after local acceptance of UX-6.7 sensitivity, uncertainty, visualization, and export
+**Last updated:** 3 September 2026, after local UX-6.8 release acceptance
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -924,7 +924,7 @@ when an analysis can handle the failure explicitly; never convert failed runs
 into apparent observations. Identifiable patient data still must not be placed
 in notebooks, repository examples, or shared result bundles.
 
-#### Configure, validate, run, analyse, and audit results in the graphical workbench (UX-6.1 through UX-6.7)
+#### Configure, validate, run, analyse, and audit results in MEHLISSA Research Workbench 1.0 (UX-6.1 through UX-6.8)
 
 The local browser workbench lets you search the five implemented model families
 and ten curated starter examples. UX-6.2 provides a guided editor for the
@@ -937,13 +937,21 @@ UX-6.6 keeps provenance, evidence, licences, maturity, limitations, and the
 non-clinical interpretation boundary beside those results.
 UX-6.7 adds descriptive campaign analysis, accessible plots, exact-value
 tables, and reproducible analysis-data and figure exports.
+UX-6.8 packages the integrated client as Workbench 1.0.0, supplies a stable
+console command and example workspace, and verifies clean installation,
+novice/expert tasks, keyboard and screen-reader semantics, responsive recovery,
+and supported-platform release gates.
 
-From the repository root, make the source packages visible and check that the
-workbench can locate the application and read its validated catalog:
+From the repository root, create an isolated Python environment, install the
+local package, and check that the workbench can locate the application and read
+its validated catalog:
 
 ```powershell
-$env:PYTHONPATH = "$PWD/python"
-python -m mehlissa_workbench --repository-root . --check
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install .
+mehlissa-workbench --version
+mehlissa-workbench --repository-root . --check
 ```
 
 The check prints `workbench_status=ready`, `scenario_editing=true`, the model
@@ -953,7 +961,7 @@ validator. It also prints `run_plan_count=1` for the one curated graphical
 campaign. Then start the interface:
 
 ```powershell
-python -m mehlissa_workbench --repository-root .
+mehlissa-workbench --repository-root .
 ```
 
 The launcher searches the normal Windows Debug/Release and Linux GCC/Clang
@@ -961,15 +969,32 @@ build locations, prints a unique local URL, and normally opens the default
 browser. If your executable is elsewhere, specify it explicitly:
 
 ```powershell
-python -m mehlissa_workbench `
+mehlissa-workbench `
   --repository-root . `
   --executable build/windows-msvc/apps/Debug/mehlissa.exe
 ```
+
+On Linux, use `python3 -m venv .venv`, activate `.venv/bin/activate`, install
+with `python -m pip install .`, and invoke the same `mehlissa-workbench`
+commands. The Python package contains the process API, readers, host, browser
+assets, and licence. It does not embed the C++ executable or duplicate the
+matching repository's schemas, model/evidence records, examples, and campaign
+definitions; build the application first and retain the checkout as an
+explicit scientific input.
 
 Use `--no-browser` when you want only the printed URL. Press `Ctrl+C` in the
 launching terminal to stop the host. Do not bookmark or share the URL: it
 contains a short-lived capability that authorizes this one local process and is
 removed from browser history after startup.
+
+For keyboard use, press `Tab` and `Shift+Tab` in logical document order,
+`Enter` or `Space` to activate a control, and `Escape` to dismiss a dialog.
+The first focusable skip link moves directly to the main workspace. Opening
+Save places focus on the new filename; opening Run places it on the explicit
+confirmation. Screen readers receive named navigation, main, section, form,
+dialog, table, figure, status, and alert structures. At narrow widths or high
+browser zoom, cards reflow into one column and wide scientific tables scroll
+inside their own containers rather than widening the entire page.
 
 In **Configure an experiment**, keep the implemented complete FP9/lung model
 selected and choose either the curated starter or a previously saved local
@@ -1007,7 +1032,7 @@ By default, new files are written to the Git-ignored
 repository, start the host with:
 
 ```powershell
-python -m mehlissa_workbench `
+mehlissa-workbench `
   --repository-root . `
   --workspace results/scenario-drafts
 ```
@@ -1039,7 +1064,7 @@ Every start creates a unique Git-ignored directory such as
 `run-record.json`. To select another bounded repository-local root, use:
 
 ```powershell
-python -m mehlissa_workbench `
+mehlissa-workbench `
   --repository-root . `
   --runs results/workbench-runs
 ```
@@ -1182,6 +1207,12 @@ licence display, and audit export are specified in the
 Campaign statistics, chart semantics, exact exports, and interpretation limits
 are specified in the
 [UX-6.7 analysis and export contract](ux/UX6_7_SENSITIVITY_UNCERTAINTY_VISUALIZATION_AND_EXPORT.md).
+Clean installation, representative novice/expert tasks, accessibility and
+error-recovery checks, the packaging boundary, and the local-versus-published
+release gates are specified in the
+[UX-6.8 release acceptance](ux/UX6_8_RELEASE_ACCEPTANCE.md). The concise starter
+route is also available in the
+[Workbench example workspace](../examples/workbench/README.md).
 
 If the page says that the catalog or scenario workspace could not be loaded,
 stop the process, run the `--check` command, and confirm that the selected
@@ -1206,6 +1237,11 @@ do not use or rename the artifact to conceal the mismatch. If it reports
 `Evidence: Incomplete`, expand the component entries to identify the exact
 missing source or licence declaration. Neither state means that a missing
 scientific outcome should be replaced with zero.
+If `mehlissa-workbench` is not found after installation, activate the virtual
+environment again and verify `python -m pip show mehlissa-research`. If
+`--version` works but `--check` fails, the Python installation is healthy and
+the reported executable, checkout, schema, or example diagnostic identifies
+the remaining integration problem.
 
 #### Validate an experiment manifest
 
@@ -3011,58 +3047,18 @@ The usability package status is:
   differences, optional plotting, and two licensed notebooks pass all 284
   current tests. The grouped UX-3 through UX-5 GitHub CI run 33668850496 passes
   on Windows/MSVC, Linux/GCC, and Linux/Clang with static analysis and sanitizers;
-- **UX-6.1, workbench product and technical foundation:** locally passed; named
-  roles and workflows, screen concepts, a local-browser architecture decision,
-  security/privacy/accessibility baselines, and a protected read-only catalog
-  browser reuse the Python process API. All 285 Windows/MSVC tests and the
-  desktop/mobile browser review pass; publication and supported GitHub CI are
-  pending an explicit push;
-- **UX-6.2, guided scenario workspace:** locally passed; 13 displayed fields are
-  projected from the scenario schema with units, defaults, evidence, and
-  limitations. The complete source remains visible, unsaved changes are
-  explicit, and bounded save-as validates and reopens a derivative without
-  overwriting. All 285 Windows/MSVC tests and the desktop/mobile browser round
-  trip pass; publication and supported GitHub CI are pending an explicit push;
-- **UX-6.3, validation and corrective feedback:** locally passed; every complete
-  candidate is checked through the accepted CLI, structural and semantic errors
-  carry stable codes, locations, and repair guidance, cross-file failures are
-  explicit, warnings remain non-blocking, and a candidate-hashed summary can be
-  copied. Invalid candidates cannot be saved or admitted by the run
-  gate. All 285 Windows/MSVC tests and desktop/mobile browser checks pass;
-  publication and supported GitHub CI are pending an explicit push;
-- **UX-6.4, run and campaign control:** locally passed; an exact validated
-  scenario and the curated UX-4 six-run replicate/sweep/paired campaign run
-  through accepted process APIs after explicit plan confirmation. Unique
-  bounded outputs, staged monitoring, real cancellation, 200-line logs, atomic
-  records, seeds, manifests, and protected result/provenance links remain
-  traceable. All 285 Windows/MSVC tests and desktop/mobile browser checks pass;
-  publication and supported GitHub CI are pending an explicit push;
-- **UX-6.5, result dashboard and comparison:** locally passed; completed
-  scenario outcomes, stage timing, Level-E cases, campaign groups, and paired
-  differences come from the accepted versioned readers. Two completed scenarios
-  can be compared side by side, while authoritative JSON/CSV and the UX-3 HTML
-  report remain inspectable. Missing, incomplete, failed, and cancelled jobs
-  contribute zero observations. All 285 Windows/MSVC tests and desktop/mobile
-  browser checks pass; publication and supported GitHub CI are pending an
-  explicit push;
-- **UX-6.6, provenance, evidence, and interpretation boundaries:** locally
-  passed; every completed scenario/campaign dashboard includes exact retained
-  provenance, seeds, software/build identity, verified input/model/schema/result
-  hashes, source and licence declarations, maturity and limitations, a permanent
-  non-clinical boundary, and complete JSON export. Altered files are flagged;
-  the legacy timer's absent licence fields remain visibly incomplete. All 285
-  Windows/MSVC tests and desktop/mobile browser checks pass; publication and
-  supported GitHub CI are pending an explicit push;
-- **UX-6.7, sensitivity, uncertainty, visualization, and export:** locally
-  passed; completed campaigns expose reader-backed replicate, parameter-sweep,
-  and same-seed paired-difference views with outcome units, included sample
-  counts, descriptive statistics, exact-value tables, and source-bound JSON,
-  CSV, and accessible SVG exports. Observed ranges are explicitly not
-  inferential intervals, and no patient or clinical inference is made. All 285
-  Windows/MSVC tests and desktop/mobile browser checks pass; publication and
-  supported GitHub CI are pending an explicit push; and
-- **UX-6.8, workbench release acceptance:** next completes packaging, clean
-  installation, and final usability/accessibility acceptance.
+- **UX-6.1 through UX-6.8, graphical research workbench:** complete as the
+  Workbench 1.0.0 release candidate. The numbered increments respectively add
+  the product/technical foundation, guided scenario workspace, corrective
+  validation, guarded run/campaign control, result dashboard/comparison,
+  provenance/evidence audit, descriptive campaign visualization/export, and
+  final usability/accessibility/packaging acceptance. The isolated wheel,
+  console command, matching executable/repository check, example workspace,
+  semantic accessibility gate, desktop/mobile task review, complete regression,
+  and English documentation are release criteria. Local acceptance is recorded
+  in the [UX-6.8 contract](ux/UX6_8_RELEASE_ACCEPTANCE.md); a published revision
+  is accepted only when that exact commit passes Windows/MSVC, Linux/GCC, and
+  Linux/Clang-analysis CI.
 
 Planned substantive scientific extensions are:
 

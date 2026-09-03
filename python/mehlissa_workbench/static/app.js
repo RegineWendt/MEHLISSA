@@ -669,7 +669,7 @@ byId("run-form").addEventListener("submit", (event) => {
   event.preventDefault();
   if (byId("run-kind").value === "scenario" && !state.validation?.run_allowed) return;
   state.pendingRun = { kind: byId("run-kind").value, outputLabel: byId("output-label").value };
-  byId("confirm-run-summary").textContent = runSummary(); byId("run-confirmed").checked = false; byId("run-error").textContent = ""; runDialog.showModal();
+  byId("confirm-run-summary").textContent = runSummary(); byId("run-confirmed").checked = false; byId("run-error").textContent = ""; runDialog.showModal(); byId("run-confirmed").focus();
 });
 byId("confirm-run-form").addEventListener("submit", async (event) => {
   if (event.submitter?.value === "cancel") return;

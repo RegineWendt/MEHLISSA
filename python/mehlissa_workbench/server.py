@@ -40,7 +40,7 @@ RUN_API_VERSION = "1.0.0"
 RESULT_API_VERSION = "1.0.0"
 AUDIT_API_VERSION = "1.0.0"
 ANALYSIS_API_VERSION = "1.0.0"
-WORKBENCH_VERSION = "0.7.0"
+WORKBENCH_VERSION = "1.0.0"
 LOOPBACK_HOSTS = frozenset({"127.0.0.1", "localhost"})
 SCENARIO_SCHEMA_PATH = Path(
     "data/schemas/fingerprinting-scenario-profile/1.0.0.schema.json"
@@ -184,7 +184,7 @@ def discover_catalog(client: MehlissaClient) -> dict[str, object]:
         "api_version": CATALOG_API_VERSION,
         "application": "MEHLISSA Next Research Workbench",
         "workbench_version": WORKBENCH_VERSION,
-        "workbench_increment": "UX-6.7",
+        "workbench_increment": "UX-6.8",
         "read_only": True,
         "scenario_editing": True,
         "clinical_use": False,

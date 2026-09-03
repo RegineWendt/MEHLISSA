@@ -19,7 +19,7 @@ SPDX-License-Identifier: MPL-2.0
       <span class="brand-mark" aria-hidden="true">M</span>
       <span><strong>MEHLISSA</strong><small>Next Research Workbench</small></span>
     </a>
-    <span class="prototype-badge">UX-6.7 · research use only · not clinical</span>
+    <span class="prototype-badge">Workbench 1.0 · research use only · not clinical</span>
   </header>
   <main id="main-content" tabindex="-1">
     <section class="hero" aria-labelledby="page-title">
@@ -31,7 +31,7 @@ SPDX-License-Identifier: MPL-2.0
       <aside class="boundary" aria-labelledby="boundary-title">
         <p class="boundary-label">Current boundary</p>
         <h2 id="boundary-title">Every result carries its boundary</h2>
-        <p>UX-6.7 adds accessible campaign plots and reproducible JSON, CSV, and SVG exports while keeping provenance and the non-clinical scope beside every completed result.</p>
+        <p>The integrated UX-6 release combines guided configuration, guarded execution, analysis, reproducible exports, and provenance while keeping the non-clinical scope beside every completed result.</p>
       </aside>
     </section>
     <section class="metrics" aria-label="Workbench overview">
@@ -176,7 +176,7 @@ SPDX-License-Identifier: MPL-2.0
       <p>A new JSON file will be created in the local workbench workspace. Existing files are never replaced.</p>
       <label><span>Filename</span><input id="save-filename" required pattern="[A-Za-z0-9][A-Za-z0-9._-]{0,119}\.json" placeholder="fp9-lung-derived-v1.json"></label>
       <p id="save-error" class="dialog-error" role="alert"></p>
-      <div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button id="confirm-save" value="default">Save validated candidate</button></div>
+      <div class="dialog-actions"><button type="submit" value="cancel" class="secondary">Cancel</button><button id="confirm-save" type="submit" value="default">Save validated candidate</button></div>
     </form>
   </dialog>
   <dialog id="run-dialog" aria-labelledby="confirm-run-title">
@@ -187,7 +187,7 @@ SPDX-License-Identifier: MPL-2.0
       <label class="confirmation"><input id="run-confirmed" type="checkbox" required><span>I confirm this exact research run plan and output destination.</span></label>
       <p class="notice"><strong>Research use only.</strong> This software is not validated for clinical decisions.</p>
       <p id="run-error" class="dialog-error" role="alert"></p>
-      <div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button id="confirm-run" value="default">Start confirmed run</button></div>
+      <div class="dialog-actions"><button type="submit" value="cancel" class="secondary">Cancel</button><button id="confirm-run" type="submit" value="default">Start confirmed run</button></div>
     </form>
   </dialog>
   <dialog id="artifact-dialog" aria-labelledby="artifact-title">
@@ -195,7 +195,7 @@ SPDX-License-Identifier: MPL-2.0
       <p class="eyebrow">Retained evidence</p><h2 id="artifact-title">Artifact</h2>
       <pre id="artifact-content" tabindex="0"></pre>
       <iframe id="report-frame" title="UX-3 result report" sandbox hidden></iframe>
-      <div class="dialog-actions"><button value="cancel">Close</button></div>
+      <div class="dialog-actions"><button type="submit" value="cancel">Close</button></div>
     </form>
   </dialog>
   <footer>
