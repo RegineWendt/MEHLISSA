@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 This document is the entry point for developers who want to understand,
 integrate, or extend MEHLISSA Next. It describes the implemented architecture
-through the accepted M7 gate and locally accepted UX-6.2 workbench, the public
+through the accepted M7 gate and locally accepted UX-6.3 workbench, the public
 C++, command-line, Python, and local-workbench interfaces, the data contracts,
 and the workflow for adding a
 module such as a new organ model. It also explains
@@ -531,12 +531,25 @@ browser presentation -> Python workbench host -> MehlissaClient
 ```
 
 The foundation endpoint is `GET /api/catalog`. UX-6.2 adds `GET /api/scenarios`,
-`GET /api/scenario`, and `POST /api/scenario/save`. They are private to the
+`GET /api/scenario`, and `POST /api/scenario/save`; UX-6.3 adds
+`POST /api/scenario/validate`. They are private to the
 local application, require an ephemeral session capability, and are not a
 stable remote REST API. The server derives scalar field descriptions and
 constraints from the authoritative fingerprinting-scenario JSON Schema. It
 reloads the complete source for every save, applies only server-declared scalar
 changes, and delegates complete candidate validation to `MehlissaClient`.
+
+For UX-6.3, `ScenarioWorkspace.validate()` creates a short-lived complete
+candidate and obtains `valid` solely from the accepted
+`mehlissa scenario validate` command. Schema annotations add precise
+field-level hints; native command diagnostics retain their `MEHLISSA-E####`
+codes and are conservatively located at a dotted field, a document section, or
+the whole-document `$` location. The returned SHA-256 binds the shareable
+summary and future execution gate to exact candidate bytes. Save repeats the
+check and returns HTTP 422 without creating a destination when invalid.
+Debounced browser requests are generation-guarded so stale results cannot
+replace the newest state. Warnings describe non-blocking interpretation risks
+and never change the authoritative validity decision.
 
 Curated examples are immutable. Derived files use safe basename-only `.json`
 names and exclusive creation inside `workbench-scenarios/` or an explicitly
@@ -556,7 +569,8 @@ UX-6 increments.
 Product roles, workflows, threat/privacy/accessibility baselines, and screen
 concepts are maintained in the
 [UX-6.1 foundation](../ux/UX6_1_PRODUCT_AND_TECHNICAL_FOUNDATION.md), the
-[UX-6.2 workspace contract](../ux/UX6_2_GUIDED_SCENARIO_WORKSPACE.md), and the
+[UX-6.2 workspace contract](../ux/UX6_2_GUIDED_SCENARIO_WORKSPACE.md), the
+[UX-6.3 validation contract](../ux/UX6_3_VALIDATION_AND_CORRECTIVE_FEEDBACK.md), and the
 technology choice in [ADR-0050](adr/0050-local-browser-research-workbench.md).
 
 ## 8. Public API map
@@ -627,8 +641,10 @@ The current executable supports:
 | `ScenarioWorkspace.overview()` | list the curated FP9/lung starter and safe basename-only saved scenarios |
 | `ScenarioWorkspace.load(source_id)` | load a permitted complete object and project scalar controls, evidence, limitations, and unknown paths from its authoritative schema |
 | `ScenarioWorkspace.save_as(source_id, filename, changes)` | apply only allow-listed scalar changes, validate through `MehlissaClient`, and exclusively create a new JSON file |
+| `ScenarioWorkspace.validate(source_id, changes)` | reconstruct the complete candidate, delegate validity to the accepted CLI, and return candidate hash, located coded issues, warnings, and a shareable summary |
 | `GET /api/scenarios` / `GET /api/scenario` | capability-protected private projections for source selection and guided editing |
 | `POST /api/scenario/save` | bounded JSON-only, capability-protected, non-overwriting save-as operation; not generic filesystem access |
+| `POST /api/scenario/validate` | side-effect-free complete-candidate validation; returns authoritative validity and future-run gate state; not a public remote API |
 
 Detailed commands are maintained in the [User Guide](../USER_GUIDE.md).
 

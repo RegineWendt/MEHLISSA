@@ -39,6 +39,13 @@ delegates candidate validation to the existing application, and creates only a
 new file inside a repository-local workspace. Existing files are never
 overwritten.
 
+UX-6.3 adds a private validation operation. It rebuilds the complete candidate
+from an approved source and allow-listed changes, delegates the validity
+decision to `mehlissa scenario validate`, and returns located issues plus a
+candidate SHA-256. Schema-derived browser feedback may improve correction but
+does not replace that decision. Save repeats validation and future execution
+must require an accepted candidate state.
+
 The browser interface targets WCAG 2.2 level AA. No telemetry, cloud service,
 remote asset, patient-data workflow, or clinical claim is part of the decision.
 
@@ -48,7 +55,7 @@ remote asset, patient-data workflow, or clinical claim is part of the decision.
   scenario behavior cannot diverge silently from command-line use.
 - HTML provides a cross-platform, semantic, responsive presentation layer and a
   broad accessibility-testing ecosystem.
-- UX-6.1 and UX-6.2 add no mandatory third-party runtime dependency to the
+- UX-6.1 through UX-6.3 add no mandatory third-party runtime dependency to the
   Python package.
 - Local HTTP introduces a security boundary. Loopback restriction, host-header
   validation, session capability, restrictive response headers, safe text
@@ -76,6 +83,6 @@ remote asset, patient-data workflow, or clinical claim is part of the decision.
 
 ## Affected requirements and packages
 
-- `UX-002` through `UX-008`
+- `UX-002` through `UX-009`
 - `UX-6.1` through `UX-6.8`
 - `QUA-005`, `QUA-006`

@@ -6,11 +6,13 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+import hashlib
 import hmac
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from importlib.resources import files
 import json
+import math
 from pathlib import Path
 import re
 from secrets import token_urlsafe
@@ -23,6 +25,7 @@ from mehlissa import MehlissaClient, MehlissaCommandError
 
 CATALOG_API_VERSION = "1.0.0"
 WORKSPACE_API_VERSION = "1.0.0"
+VALIDATION_API_VERSION = "1.0.0"
 LOOPBACK_HOSTS = frozenset({"127.0.0.1", "localhost"})
 SCENARIO_SCHEMA_PATH = Path(
     "data/schemas/fingerprinting-scenario-profile/1.0.0.schema.json"
@@ -47,6 +50,14 @@ class ScenarioWorkspaceError(RuntimeError):
 
 class ScenarioConflictError(ScenarioWorkspaceError):
     """A non-overwriting save target already exists."""
+
+
+class ScenarioValidationError(ScenarioWorkspaceError):
+    """A complete candidate was rejected by authoritative validation."""
+
+    def __init__(self, report: dict[str, object]):
+        self.report = report
+        super().__init__("The scenario is invalid; correct the reported issues before saving")
 
 
 @dataclass(frozen=True)
@@ -145,7 +156,7 @@ def discover_catalog(client: MehlissaClient) -> dict[str, object]:
     return {
         "api_version": CATALOG_API_VERSION,
         "application": "MEHLISSA Next Research Workbench",
-        "workbench_increment": "UX-6.2",
+        "workbench_increment": "UX-6.3",
         "read_only": True,
         "scenario_editing": True,
         "clinical_use": False,
@@ -231,6 +242,7 @@ def scenario_fields(
                 "minimum": resolved.get("minimum"),
                 "maximum": resolved.get("maximum"),
                 "pattern": resolved.get("pattern"),
+                "min_length": resolved.get("minLength"),
             }
         )
 
@@ -373,16 +385,12 @@ class ScenarioWorkspace:
             "sources": document.get("sources", []),
         }
 
-    def save_as(
-        self, identifier: str, filename: str, changes: Mapping[str, object]
-    ) -> dict[str, object]:
-        if not SAFE_FILENAME.fullmatch(filename):
-            raise ScenarioWorkspaceError(
-                "Filename must use letters, numbers, dots, underscores, or hyphens "
-                "and end in .json"
-            )
+    def _candidate(
+        self, identifier: str, changes: Mapping[str, object]
+    ) -> tuple[dict[str, object], list[dict[str, object]]]:
         loaded = self.load(identifier)
         document = cast(dict[str, object], loaded["document"])
+        fields = cast(list[dict[str, object]], loaded["fields"])
         editable = set(cast(list[str], loaded["editable_paths"]))
         unsupported = sorted(set(changes) - editable)
         if unsupported:
@@ -391,34 +399,279 @@ class ScenarioWorkspace:
             )
         for path, value in changes.items():
             _set_path(document, path, value)
+        return document, fields
+
+    @staticmethod
+    def _field_issue(field: Mapping[str, object], value: object) -> dict[str, object] | None:
+        path = str(field["path"])
+        expected = field.get("type")
+        type_matches = {
+            "string": isinstance(value, str),
+            "integer": isinstance(value, int) and not isinstance(value, bool),
+            "number": isinstance(value, (int, float)) and not isinstance(value, bool),
+            "boolean": isinstance(value, bool),
+        }.get(expected, True)
+        if not type_matches:
+            return {
+                "severity": "error",
+                "code": "WBV-1001",
+                "path": path,
+                "message": f"{field['label']} must be a {expected} value.",
+                "guidance": "Enter a value using the type shown by this field.",
+            }
+        if isinstance(value, float) and not math.isfinite(value):
+            return {
+                "severity": "error",
+                "code": "WBV-1002",
+                "path": path,
+                "message": f"{field['label']} must be a finite number.",
+                "guidance": "Replace infinity or NaN with a finite numeric value.",
+            }
+        minimum = field.get("minimum")
+        maximum = field.get("maximum")
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
+            if isinstance(minimum, (int, float)) and value < minimum:
+                return {
+                    "severity": "error",
+                    "code": "WBV-1003",
+                    "path": path,
+                    "message": f"{field['label']} must be at least {minimum}.",
+                    "guidance": f"Enter {minimum} or a larger value.",
+                }
+            if isinstance(maximum, (int, float)) and value > maximum:
+                return {
+                    "severity": "error",
+                    "code": "WBV-1004",
+                    "path": path,
+                    "message": f"{field['label']} must not exceed {maximum}.",
+                    "guidance": f"Enter {maximum} or a smaller value.",
+                }
+        if isinstance(value, str):
+            min_length = field.get("min_length")
+            if isinstance(min_length, int) and len(value) < min_length:
+                return {
+                    "severity": "error",
+                    "code": "WBV-1005",
+                    "path": path,
+                    "message": f"{field['label']} must not be empty.",
+                    "guidance": "Enter a descriptive value.",
+                }
+            pattern = field.get("pattern")
+            if isinstance(pattern, str) and re.search(pattern, value) is None:
+                return {
+                    "severity": "error",
+                    "code": "WBV-1006",
+                    "path": path,
+                    "message": f"{field['label']} has an unsupported format.",
+                    "guidance": f"Use a value matching the contract pattern: {pattern}",
+                }
+        return None
+
+    @staticmethod
+    def _diagnostic_path(message: str) -> str:
+        pointer = re.search(r"#/(?:[^\s'\"]+)", message)
+        if pointer:
+            return pointer.group(0).removeprefix("#/").replace("/", ".")
+        instance_path = re.search(r"(?:^|\s)/([A-Za-z0-9_]+(?:/[A-Za-z0-9_]+)+):", message)
+        if instance_path:
+            return instance_path.group(1).replace("/", ".")
+        lowered = message.lower()
+        mappings = (
+            (("master_seed", "master seed"), "run.master_seed"),
+            (("collector_count", "collector count", "collector population"), "run.collector_count"),
+            (("fingerprint_id", "fingerprint identifier"), "target.fingerprint_id"),
+            (("region_id", "target region"), "target.region_id"),
+            (("target identity", "target tissue"), "target"),
+            (("artifact", "definition path", "schema path"), "artifacts"),
+            (("stage order",), "acceptance.required_stage_order"),
+            (("source",), "sources"),
+            (("limitation",), "limitations"),
+            (("scenario identity", "scenario profile"), "scenario"),
+        )
+        for needles, path in mappings:
+            if any(needle in lowered for needle in needles):
+                return path
+        return "$"
+
+    @staticmethod
+    def _guidance(path: str) -> str:
+        if path == "artifacts" or path.startswith("artifacts."):
+            return (
+                "Restore the curated artifact roles and repository-relative definition/schema "
+                "paths, then validate again."
+            )
+        if path == "target" or path.startswith("target."):
+            return (
+                "Use the FP9/lung target expected by the selected timer baseline, or select a "
+                "complete compatible artifact set."
+            )
+        if path.startswith("acceptance."):
+            return "Restore the canonical ten-stage order required by the Level A workflow."
+        if path == "sources" or path.startswith("sources."):
+            return "Provide complete, uniquely identified evidence-source entries."
+        if path == "limitations" or path.startswith("limitations."):
+            return "Keep at least one non-empty interpretation limitation."
+        if path == "$":
+            return "Review the complete source JSON and the diagnostic, then restore the curated template if necessary."
+        return "Correct the highlighted field according to its schema description and try again."
+
+    @classmethod
+    def _native_issue(
+        cls,
+        error: MehlissaCommandError,
+        temporary_path: Path,
+        changes: Mapping[str, object],
+    ) -> dict[str, object]:
+        diagnostic = error.stderr.strip() or error.stdout.strip() or "No diagnostic output"
+        diagnostic = diagnostic.replace(str(temporary_path), "<scenario candidate>")
+        match = re.search(r"\[(MEHLISSA-E\d{4})\]\s*(.*)", diagnostic, re.DOTALL)
+        code = match.group(1) if match else "WBV-1900"
+        message = match.group(2).strip() if match else diagnostic
+        message = re.sub(r"^MEHLISSA failed:\s*", "", message)
+        path = cls._diagnostic_path(message)
+        narrowed = [changed for changed in changes if changed.startswith(f"{path}.")]
+        if len(narrowed) == 1:
+            path = narrowed[0]
+        return {
+            "severity": "error",
+            "code": code,
+            "path": path,
+            "message": message,
+            "guidance": cls._guidance(path),
+        }
+
+    @staticmethod
+    def _warnings(document: Mapping[str, object], changes: Mapping[str, object]) -> list[dict[str, object]]:
+        warnings: list[dict[str, object]] = []
+        collector_count = cast(dict[str, object], document.get("run", {})).get("collector_count")
+        if collector_count not in {1000, 10000}:
+            warnings.append(
+                {
+                    "severity": "warning",
+                    "code": "WBV-2001",
+                    "path": "run.collector_count",
+                    "message": "This collector population is outside the two published baseline cohorts.",
+                    "guidance": "Treat it as an exploratory software run; no predictive interpolation law is claimed.",
+                }
+            )
+        if "run.master_seed" in changes:
+            warnings.append(
+                {
+                    "severity": "warning",
+                    "code": "WBV-2002",
+                    "path": "run.master_seed",
+                    "message": "A changed seed selects a different stochastic realization.",
+                    "guidance": "Use a declared replicate campaign to quantify stochastic uncertainty.",
+                }
+            )
+        return warnings
+
+    def _validate_candidate(
+        self,
+        document: dict[str, object],
+        fields: list[dict[str, object]],
+        changes: Mapping[str, object],
+    ) -> dict[str, object]:
+        field_by_path = {str(field["path"]): field for field in fields}
+        structural = [
+            issue
+            for path, value in changes.items()
+            if (field := field_by_path.get(path)) is not None
+            if (issue := self._field_issue(field, value)) is not None
+        ]
+        encoded = (json.dumps(document, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
+        digest = hashlib.sha256(encoded).hexdigest()
+        self.workspace_root.mkdir(parents=True, exist_ok=True)
+        temporary_path: Path | None = None
+        authoritative_valid = False
+        native_issue: dict[str, object] | None = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                mode="wb", prefix=".mehlissa-validation-", suffix=".json",
+                dir=self.workspace_root, delete=False
+            ) as temporary:
+                temporary.write(encoded)
+                temporary_path = Path(temporary.name)
+            try:
+                self.client.validate_scenario(temporary_path)
+                authoritative_valid = True
+            except MehlissaCommandError as error:
+                native_issue = self._native_issue(error, temporary_path, changes)
+        finally:
+            if temporary_path is not None:
+                temporary_path.unlink(missing_ok=True)
+
+        issues = structural
+        if native_issue is not None:
+            issues.append(native_issue)
+        if authoritative_valid and structural:
+            raise ScenarioWorkspaceError(
+                "Workbench structural checks disagreed with the accepted validator"
+            )
+        issues.extend(self._warnings(document, changes) if authoritative_valid else [])
+        error_count = sum(issue["severity"] == "error" for issue in issues)
+        warning_count = sum(issue["severity"] == "warning" for issue in issues)
+        scenario_value = document.get("scenario", {})
+        scenario = scenario_value if isinstance(scenario_value, dict) else {}
+        status = "VALID" if authoritative_valid else "INVALID"
+        lines = [
+            "MEHLISSA WORKBENCH VALIDATION SUMMARY",
+            f"Status: {status}",
+            "Validator: accepted `mehlissa scenario validate` command",
+            f"Scenario: {scenario.get('title', 'Untitled')} ({scenario.get('id', 'unknown')})",
+            f"Candidate SHA-256: {digest}",
+            f"Errors: {error_count}; warnings: {warning_count}",
+        ]
+        for issue in issues:
+            lines.append(
+                f"- {str(issue['severity']).upper()} {issue['code']} [{issue['path']}]: "
+                f"{issue['message']} Repair: {issue['guidance']}"
+            )
+        lines.append("Boundary: research software; not validated for clinical decisions.")
+        return {
+            "api_version": VALIDATION_API_VERSION,
+            "valid": authoritative_valid,
+            "run_allowed": authoritative_valid,
+            "authoritative": True,
+            "validator": "mehlissa scenario validate",
+            "candidate_sha256": digest,
+            "error_count": error_count,
+            "warning_count": warning_count,
+            "issues": issues,
+            "summary_text": "\n".join(lines) + "\n",
+        }
+
+    def validate(self, identifier: str, changes: Mapping[str, object]) -> dict[str, object]:
+        """Validate a complete in-memory candidate through the accepted CLI."""
+
+        document, fields = self._candidate(identifier, changes)
+        return self._validate_candidate(document, fields, changes)
+
+    def save_as(
+        self, identifier: str, filename: str, changes: Mapping[str, object]
+    ) -> dict[str, object]:
+        if not SAFE_FILENAME.fullmatch(filename):
+            raise ScenarioWorkspaceError(
+                "Filename must use letters, numbers, dots, underscores, or hyphens "
+                "and end in .json"
+            )
+        document, fields = self._candidate(identifier, changes)
 
         self.workspace_root.mkdir(parents=True, exist_ok=True)
         destination = (self.workspace_root / filename).resolve()
         if destination.parent != self.workspace_root:
             raise ScenarioWorkspaceError("Save target escapes the scenario workspace")
         encoded = (json.dumps(document, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
-        temporary_path: Path | None = None
+        report = self._validate_candidate(document, fields, changes)
+        if not report["valid"]:
+            raise ScenarioValidationError(report)
         try:
-            with tempfile.NamedTemporaryFile(
-                mode="wb",
-                prefix=".mehlissa-",
-                suffix=".json",
-                dir=self.workspace_root,
-                delete=False,
-            ) as temporary:
-                temporary.write(encoded)
-                temporary_path = Path(temporary.name)
-            self.client.validate_scenario(temporary_path)
-            try:
-                with destination.open("xb") as output:
-                    output.write(encoded)
-            except FileExistsError as error:
-                raise ScenarioConflictError(
-                    f"{filename} already exists; choose a new filename"
-                ) from error
-        finally:
-            if temporary_path is not None:
-                temporary_path.unlink(missing_ok=True)
+            with destination.open("xb") as output:
+                output.write(encoded)
+        except FileExistsError as error:
+            raise ScenarioConflictError(
+                f"{filename} already exists; choose a new filename"
+            ) from error
         return self.load(f"saved:{filename}")
 
 
@@ -593,7 +846,8 @@ class WorkbenchRequestHandler(BaseHTTPRequestHandler):
         if not self._host_is_allowed():
             self._send_json(HTTPStatus.BAD_REQUEST, {"error": "invalid_host"})
             return
-        if urlsplit(self.path).path != "/api/scenario/save":
+        path = urlsplit(self.path).path
+        if path not in {"/api/scenario/validate", "/api/scenario/save"}:
             self._send_json(HTTPStatus.NOT_FOUND, {"error": "not_found"})
             return
         if not self._require_session():
@@ -601,19 +855,31 @@ class WorkbenchRequestHandler(BaseHTTPRequestHandler):
         try:
             request = self._read_json_request()
             identifier = request.get("source_id")
-            filename = request.get("filename")
             changes = request.get("changes")
-            if (
-                not isinstance(identifier, str)
-                or not isinstance(filename, str)
-                or not isinstance(changes, dict)
-            ):
+            if not isinstance(identifier, str) or not isinstance(changes, dict):
                 raise ScenarioWorkspaceError(
-                    "Save request requires source_id, filename, and changes"
+                    "Scenario request requires source_id and changes"
                 )
+            if path == "/api/scenario/validate":
+                result = self.workbench.scenarios.validate(identifier, changes)
+                self._send_json(HTTPStatus.OK, result)
+                return
+            filename = request.get("filename")
+            if not isinstance(filename, str):
+                raise ScenarioWorkspaceError("Save request requires a filename")
             result = self.workbench.scenarios.save_as(identifier, filename, changes)
         except ScenarioConflictError as error:
             self._send_json(HTTPStatus.CONFLICT, {"error": "file_exists", "detail": str(error)})
+            return
+        except ScenarioValidationError as error:
+            self._send_json(
+                HTTPStatus.UNPROCESSABLE_ENTITY,
+                {
+                    "error": "scenario_invalid",
+                    "detail": str(error),
+                    "validation": error.report,
+                },
+            )
             return
         except (ScenarioWorkspaceError, MehlissaCommandError, OSError) as error:
             self._send_json(

@@ -14,7 +14,7 @@ import unittest
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
-from mehlissa import MehlissaClient
+from mehlissa import MehlissaClient, MehlissaCommandError
 from mehlissa_workbench import (
     CatalogFormatError,
     ScenarioWorkspace,
@@ -41,7 +41,7 @@ class WorkbenchDiscoveryTest(unittest.TestCase):
         self.assertEqual(catalog["api_version"], "1.0.0")
         self.assertTrue(catalog["read_only"])
         self.assertTrue(catalog["scenario_editing"])
-        self.assertEqual(catalog["workbench_increment"], "UX-6.2")
+        self.assertEqual(catalog["workbench_increment"], "UX-6.3")
         self.assertFalse(catalog["clinical_use"])
         self.assertEqual(len(catalog["models"]), 5)
         self.assertEqual(len(catalog["examples"]), 10)
@@ -67,10 +67,11 @@ class WorkbenchServerTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         client = MehlissaClient(ARGS.executable, Path(ARGS.root).resolve())
+        cls.client = client
         temporary_parent = Path(ARGS.root).resolve() / "tmp"
         temporary_parent.mkdir(exist_ok=True)
         cls.temporary_directory = tempfile.TemporaryDirectory(
-            prefix="ux6-2-workspace-", dir=temporary_parent
+            prefix="ux6-3-workspace-", dir=temporary_parent
         )
         cls.workspace = Path(cls.temporary_directory.name)
         cls.server = create_server(
@@ -96,7 +97,8 @@ class WorkbenchServerTest(unittest.TestCase):
             body = response.read().decode("utf-8")
             self.assertEqual(response.status, HTTPStatus.OK)
             self.assertIn("MEHLISSA Next Research Workbench", body)
-            self.assertIn("Guided editing, not execution", body)
+            self.assertIn("Correct before execution", body)
+            self.assertIn("Scenario validation", body)
             self.assertIn("frame-ancestors 'none'", response.headers["Content-Security-Policy"])
             self.assertEqual(response.headers["Referrer-Policy"], "no-referrer")
             self.assertEqual(response.headers["Cache-Control"], "no-store")
@@ -107,6 +109,7 @@ class WorkbenchServerTest(unittest.TestCase):
             self.assertNotIn("innerHTML", script)
             self.assertIn("X-MEHLISSA-Session", script)
             self.assertIn("beforeunload", script)
+            self.assertIn("/api/scenario/validate", script)
 
     def test_catalog_api_requires_session(self) -> None:
         with self.assertRaises(HTTPError) as denied:
@@ -188,6 +191,119 @@ class WorkbenchServerTest(unittest.TestCase):
                 {"source_id": source_id, "filename": filename, "changes": {}},
             )
         self.assertEqual(conflict.exception.code, HTTPStatus.CONFLICT)
+
+    def test_validation_matches_cli_and_reports_field_repairs(self) -> None:
+        source_id = "template:scenario.fp9-complete"
+        status, positive = self.request_json(
+            "/api/scenario/validate", "POST", {"source_id": source_id, "changes": {}}
+        )
+        self.assertEqual(status, HTTPStatus.OK)
+        self.assertTrue(positive["valid"])
+        self.assertTrue(positive["run_allowed"])
+        self.assertEqual(positive["validator"], "mehlissa scenario validate")
+        self.assertEqual(positive["error_count"], 0)
+        self.assertIn("Status: VALID", positive["summary_text"])
+
+        changes = {"run.collector_count": 0}
+        _, negative = self.request_json(
+            "/api/scenario/validate", "POST", {"source_id": source_id, "changes": changes}
+        )
+        self.assertFalse(negative["valid"])
+        self.assertFalse(negative["run_allowed"])
+        field_issues = [
+            issue for issue in negative["issues"]
+            if issue["path"] == "run.collector_count"
+        ]
+        self.assertTrue(any(issue["code"] == "WBV-1003" for issue in field_issues))
+        self.assertTrue(any(issue["code"] == "MEHLISSA-E2005" for issue in field_issues))
+        self.assertTrue(all(issue["guidance"] for issue in field_issues))
+        self.assertNotIn(".mehlissa-validation-", negative["summary_text"])
+
+        candidate = json.loads(
+            (Path(ARGS.root) / "examples/scenarios/fp9-lung-level-a-v1.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        candidate["run"]["collector_count"] = 0
+        candidate_path = self.workspace / "cli-parity-invalid.json"
+        candidate_path.write_text(json.dumps(candidate), encoding="utf-8")
+        with self.assertRaises(MehlissaCommandError):
+            self.client.validate_scenario(candidate_path)
+
+    def test_validation_distinguishes_warnings_from_errors(self) -> None:
+        _, report = self.request_json(
+            "/api/scenario/validate",
+            "POST",
+            {
+                "source_id": "template:scenario.fp9-complete",
+                "changes": {"run.master_seed": 77},
+            },
+        )
+        self.assertTrue(report["valid"])
+        self.assertTrue(report["run_allowed"])
+        self.assertEqual(report["error_count"], 0)
+        self.assertEqual(report["warning_count"], 1)
+        self.assertEqual(
+            {issue["code"] for issue in report["issues"]}, {"WBV-2002"}
+        )
+
+    def test_semantic_and_cross_file_failures_have_locations(self) -> None:
+        _, target = self.request_json(
+            "/api/scenario/validate",
+            "POST",
+            {
+                "source_id": "template:scenario.fp9-complete",
+                "changes": {"target.tissue": "kidney"},
+            },
+        )
+        self.assertFalse(target["valid"])
+        self.assertEqual(target["issues"][-1]["path"], "target.tissue")
+
+        template = Path(ARGS.root) / "examples/scenarios/fp9-lung-level-a-v1.json"
+        document = json.loads(template.read_text(encoding="utf-8"))
+        document["artifacts"][0]["definition_path"] = "data/body-models/missing.json"
+        broken = self.workspace / "broken-artifact.json"
+        broken.write_text(json.dumps(document), encoding="utf-8")
+        _, cross_file = self.request_json(
+            "/api/scenario/validate",
+            "POST",
+            {"source_id": "saved:broken-artifact.json", "changes": {}},
+        )
+        self.assertFalse(cross_file["valid"])
+        self.assertFalse(cross_file["run_allowed"])
+        self.assertEqual(cross_file["issues"][-1]["path"], "artifacts")
+        self.assertEqual(cross_file["issues"][-1]["code"], "MEHLISSA-E2001")
+
+    def test_invalid_candidate_cannot_be_saved_or_started(self) -> None:
+        request = Request(
+            f"{self.base_url}/api/scenario/save",
+            headers={
+                "X-MEHLISSA-Session": "test-session-token",
+                "Content-Type": "application/json",
+            },
+            data=json.dumps(
+                {
+                    "source_id": "template:scenario.fp9-complete",
+                    "filename": "invalid-must-not-save.json",
+                    "changes": {"run.collector_count": 0},
+                }
+            ).encode("utf-8"),
+            method="POST",
+        )
+        with self.assertRaises(HTTPError) as rejected:
+            urlopen(request, timeout=20)
+        self.assertEqual(rejected.exception.code, HTTPStatus.UNPROCESSABLE_ENTITY)
+        payload = json.load(rejected.exception)
+        self.assertEqual(payload["error"], "scenario_invalid")
+        self.assertFalse(payload["validation"]["run_allowed"])
+        self.assertFalse((self.workspace / "invalid-must-not-save.json").exists())
+
+        with self.assertRaises(HTTPError) as absent:
+            self.request_json(
+                "/api/scenario/run", "POST",
+                {"source_id": "template:scenario.fp9-complete", "changes": {}},
+            )
+        self.assertEqual(absent.exception.code, HTTPStatus.NOT_FOUND)
 
     def test_unsupported_fields_are_visible_and_never_silently_discarded(self) -> None:
         template = Path(ARGS.root).resolve() / "examples/scenarios/fp9-lung-level-a-v1.json"

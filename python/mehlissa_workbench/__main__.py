@@ -55,7 +55,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--check",
         action="store_true",
-        help="verify discovery and scenario-workspace loading, then exit",
+        help="verify discovery, workspace loading, and starter validation, then exit",
     )
     return parser
 
@@ -73,19 +73,23 @@ def main() -> int:
     client = MehlissaClient(executable, repository_root)
     if arguments.check:
         catalog = discover_catalog(client)
-        workspace = ScenarioWorkspace(client, arguments.workspace).overview()
+        scenario_workspace = ScenarioWorkspace(client, arguments.workspace)
+        workspace = scenario_workspace.overview()
+        source_id = str(workspace["sources"][0]["id"])
+        validation = scenario_workspace.validate(source_id, {})
         print("workbench_status=ready")
         print("scenario_editing=true")
         print(f"model_count={len(catalog['models'])}")
         print(f"example_count={len(catalog['examples'])}")
         print(f"scenario_source_count={len(workspace['sources'])}")
+        print(f"scenario_validation={'valid' if validation['valid'] else 'invalid'}")
         return 0
 
     server = create_server(
         client, arguments.host, arguments.port, workspace_root=arguments.workspace
     )
-    print("MEHLISSA Next Research Workbench — UX-6.2 guided scenario workspace")
-    print("Scenario editing uses non-overwriting save-as; simulations are not started yet.")
+    print("MEHLISSA Next Research Workbench — UX-6.3 corrective validation")
+    print("Scenario editing validates live and saves without overwrite; runs start in UX-6.4.")
     print(f"workbench_url={server.url}")
     print("Press Ctrl+C to stop.")
     if not arguments.no_browser:

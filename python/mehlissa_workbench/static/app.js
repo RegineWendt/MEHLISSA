@@ -3,7 +3,7 @@
 
 "use strict";
 
-const state = { models: [], examples: [], session: "", workspace: null, scenario: null, original: null, changes: {}, dirty: false };
+const state = { models: [], examples: [], session: "", workspace: null, scenario: null, original: null, changes: {}, dirty: false, validation: null, validationTimer: null, validationRequest: 0, fieldCards: new Map() };
 const byId = (id) => document.querySelector(`#${id}`);
 const search = byId("search");
 const layer = byId("layer");
@@ -28,7 +28,7 @@ async function api(path, options = {}) {
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) {
     const error = new Error(payload.detail || "The local workbench request failed.");
-    error.status = response.status;
+    error.status = response.status; error.payload = payload;
     throw error;
   }
   return payload;
@@ -94,6 +94,65 @@ function updateDirtyState() {
 
 function updateSourceView() { byId("source-json").textContent = JSON.stringify(state.scenario.document, null, 2); }
 
+function setValidationPending() {
+  state.validation = null;
+  byId("validation-state").textContent = "Checking…";
+  byId("validation-state").className = "validation-state pending";
+  byId("validation-counts").textContent = "Authoritative validation is running.";
+  byId("validation-issues").replaceChildren();
+  byId("validation-summary").textContent = "Validation summary will appear here.";
+  byId("copy-validation").disabled = true;
+  byId("save-button").disabled = true;
+  byId("execution-gate").textContent = "Closed while validation is pending";
+}
+
+function renderValidation(report) {
+  state.validation = report;
+  for (const card of state.fieldCards.values()) {
+    card.article.classList.remove("field-error", "field-warning");
+    card.message.replaceChildren();
+  }
+  const issuesNode = byId("validation-issues"); issuesNode.replaceChildren();
+  for (const issue of report.issues) {
+    const item = document.createElement("li"); item.className = `validation-issue ${issue.severity}`;
+    appendText(item, "strong", `${issue.code} · ${issue.path}`);
+    appendText(item, "span", issue.message);
+    appendText(item, "span", `How to repair: ${issue.guidance}`, "repair");
+    issuesNode.append(item);
+    const field = state.fieldCards.get(issue.path);
+    if (field) {
+      field.article.classList.add(issue.severity === "error" ? "field-error" : "field-warning");
+      appendText(field.message, "span", `${issue.code}: ${issue.message} ${issue.guidance}`);
+    }
+  }
+  if (!report.issues.length) appendText(issuesNode, "li", "No errors or warnings were found.", "validation-empty");
+  const status = byId("validation-state");
+  status.textContent = report.valid ? "Valid" : "Invalid";
+  status.className = `validation-state ${report.valid ? "valid" : "invalid"}`;
+  byId("validation-counts").textContent = `${report.error_count} errors · ${report.warning_count} warnings · accepted CLI decision`;
+  byId("validation-summary").textContent = report.summary_text;
+  byId("copy-validation").disabled = false;
+  byId("save-button").disabled = !report.valid;
+  byId("execution-gate").textContent = report.run_allowed ? "Open for a future run" : "Closed — invalid scenarios cannot run";
+}
+
+async function validateScenario(requestNumber = ++state.validationRequest) {
+  setValidationPending();
+  try {
+    const report = await api("/api/scenario/validate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ source_id: state.scenario.source.id, changes: state.changes }) });
+    if (requestNumber === state.validationRequest) renderValidation(report);
+  } catch (error) {
+    if (requestNumber !== state.validationRequest) return;
+    byId("validation-state").textContent = "Unavailable"; byId("validation-state").className = "validation-state invalid";
+    byId("validation-counts").textContent = error.message; byId("execution-gate").textContent = "Closed — validation unavailable";
+  }
+}
+
+function scheduleValidation() {
+  window.clearTimeout(state.validationTimer); const requestNumber = ++state.validationRequest; setValidationPending();
+  state.validationTimer = window.setTimeout(() => validateScenario(requestNumber), 350);
+}
+
 function renderField(field) {
   const article = document.createElement("article"); article.className = `field-card${field.editable ? "" : " field-readonly"}`;
   const heading = document.createElement("div"); heading.className = "field-heading";
@@ -110,13 +169,15 @@ function renderField(field) {
     if (field.maximum !== null && field.maximum !== undefined) control.max = String(field.maximum); if (field.pattern) control.pattern = field.pattern;
   }
   control.id = `field-${field.path.replaceAll(".", "-")}`; control.disabled = !field.editable; control.required = field.required;
-  control.dataset.path = field.path; control.dataset.type = field.type; article.append(control);
+  control.dataset.path = field.path; control.dataset.type = field.type; article.dataset.fieldPath = field.path; article.append(control);
   appendText(article, "p", field.description, "field-description");
+  const validation = appendText(article, "p", "", "field-validation"); validation.id = `${control.id}-validation`; validation.setAttribute("role", "status");
+  control.setAttribute("aria-describedby", validation.id);
   const facts = document.createElement("dl"); facts.className = "field-facts";
   for (const [name, value] of [["Unit", field.unit], ["Default", field.default ?? "No automatic default"], ["Evidence", field.evidence], ["Limitation", field.limitation]]) {
     const row = document.createElement("div"); appendText(row, "dt", name); appendText(row, "dd", String(value)); facts.append(row);
   }
-  article.append(facts); return article;
+  article.append(facts); state.fieldCards.set(field.path, { article, message: validation }); return article;
 }
 
 function renderEvidenceList(node, values, formatter) {
@@ -124,14 +185,14 @@ function renderEvidenceList(node, values, formatter) {
 }
 
 function renderScenario() {
-  const scenario = state.scenario; state.original = structuredClone(scenario.document); state.changes = {}; updateDirtyState();
+  const scenario = state.scenario; state.original = structuredClone(scenario.document); state.changes = {}; state.fieldCards.clear(); updateDirtyState();
   byId("editor-shell").hidden = false; byId("source-kind").textContent = scenario.source.id.startsWith("template:") ? "Curated, read-only template" : "Saved workbench scenario";
   byId("source-file").textContent = scenario.source.filename; byId("field-count").textContent = String(scenario.fields.length);
   const list = byId("field-list"); list.replaceChildren(); for (const field of scenario.fields) list.append(renderField(field));
   byId("source-only-count").textContent = `(${scenario.document.artifacts?.length || 0} artifacts; ${scenario.unknown_paths.length} unknown fields)`;
   renderEvidenceList(byId("scenario-sources"), scenario.sources, (source) => `${source.citation} — ${source.role}`);
   renderEvidenceList(byId("scenario-limitations"), scenario.limitations, String); updateSourceView();
-  workspaceStatus.textContent = "Scenario loaded. Guided changes remain local until you use Save as.";
+  workspaceStatus.textContent = "Scenario loaded. Validation now checks the complete candidate."; validateScenario();
 }
 
 async function loadScenario(identifier) {
@@ -167,6 +228,7 @@ byId("scenario-form").addEventListener("input", (event) => {
   const original = valueAtPath(state.original, control.dataset.path);
   if (Object.is(value, original)) delete state.changes[control.dataset.path]; else state.changes[control.dataset.path] = value;
   updateDirtyState(); updateSourceView();
+  scheduleValidation();
 });
 
 sourceSelect.addEventListener("change", async (event) => {
@@ -179,13 +241,21 @@ byId("reset-button").addEventListener("click", () => {
   if (!state.dirty || window.confirm("Discard all unsaved changes to this scenario?")) { state.scenario.document = structuredClone(state.original); renderScenario(); }
 });
 byId("save-button").addEventListener("click", () => { byId("save-error").textContent = ""; saveDialog.showModal(); byId("save-filename").focus(); });
+byId("copy-validation").addEventListener("click", async () => {
+  if (!state.validation) return;
+  try { await navigator.clipboard.writeText(state.validation.summary_text); workspaceStatus.textContent = "Validation summary copied to the clipboard."; }
+  catch { workspaceStatus.textContent = "Clipboard access was denied. Select the summary text and copy it manually."; }
+});
 byId("save-form").addEventListener("submit", async (event) => {
   if (event.submitter?.value === "cancel") return;
   event.preventDefault(); const filename = byId("save-filename").value; const button = byId("confirm-save"); button.disabled = true; byId("save-error").textContent = "";
   try {
     const saved = await api("/api/scenario/save", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ source_id: state.scenario.source.id, filename, changes: state.changes }) });
     state.workspace = await api("/api/scenarios"); populateSources(saved.source.id); state.scenario = saved; renderScenario(); saveDialog.close(); workspaceStatus.textContent = `Saved ${filename}. The source file was not overwritten.`; byId("save-filename").value = "";
-  } catch (error) { byId("save-error").textContent = error.message; } finally { button.disabled = false; }
+  } catch (error) {
+    byId("save-error").textContent = error.message;
+    if (error.payload?.validation) renderValidation(error.payload.validation);
+  } finally { button.disabled = false; }
 });
 
 search.addEventListener("input", applyFilters); layer.addEventListener("change", applyFilters);

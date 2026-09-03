@@ -176,6 +176,7 @@ implementation is correct or sufficiently validated.
 | UX-006 | The local workbench shall default to loopback-only, no-telemetry operation and protect its interfaces, files, and untrusted content according to a documented threat and privacy baseline. | N | P1 | T/I | RM UX-6.1; ADR-0050 |
 | UX-007 | The graphical workbench shall target WCAG 2.2 level AA and support semantic, keyboard-operable, reflow-capable workflows with visible non-color feedback. | N | P1 | T/I | RM UX-6.1; WCAG 2.2 |
 | UX-008 | Guided scenario editing shall derive field semantics from versioned schemas, retain unsupported source content visibly, validate complete candidates through accepted interfaces, and save only to new bounded local files. | N | P1 | T/I | RM UX-6.2; ADR-0050 |
+| UX-009 | Before save or execution, the workbench shall obtain the complete candidate's validity from the accepted validator, locate errors at fields or document sections with stable codes and repair guidance, distinguish non-blocking warnings, and expose a shareable candidate-bound summary. | N | P1 | T/I | RM UX-6.3; ADR-0050 |
 
 ## 12. Medical scenarios
 

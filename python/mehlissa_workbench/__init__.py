@@ -8,6 +8,7 @@ from .server import (
     ExampleSummary,
     ModelSummary,
     ScenarioConflictError,
+    ScenarioValidationError,
     ScenarioWorkspace,
     ScenarioWorkspaceError,
     WorkbenchServer,
@@ -21,6 +22,7 @@ __all__ = [
     "ExampleSummary",
     "ModelSummary",
     "ScenarioConflictError",
+    "ScenarioValidationError",
     "ScenarioWorkspace",
     "ScenarioWorkspaceError",
     "WorkbenchServer",
@@ -29,4 +31,4 @@ __all__ = [
     "scenario_fields",
 ]
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"

@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M7 and locally accepted UX-1 through UX-6.2
+**Covered software:** accepted M0 through M7 and locally accepted UX-1 through UX-6.3
 
-**Last updated:** 3 September 2026, after local acceptance of the UX-6.2 guided scenario workspace
+**Last updated:** 3 September 2026, after local acceptance of UX-6.3 corrective validation
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -924,12 +924,13 @@ when an analysis can handle the failure explicitly; never convert failed runs
 into apparent observations. Identifiable patient data still must not be placed
 in notebooks, repository examples, or shared result bundles.
 
-#### Create a scenario in the graphical workbench (UX-6.1 and UX-6.2)
+#### Create and validate a scenario in the graphical workbench (UX-6.1 through UX-6.3)
 
 The local browser workbench lets you search the five implemented model families
-and ten curated starter examples. UX-6.2 also provides a guided editor for the
-complete FP9/lung fingerprinting scenario. It does not start a simulation yet;
-run control is planned for UX-6.4.
+and ten curated starter examples. UX-6.2 provides a guided editor for the
+complete FP9/lung fingerprinting scenario, and UX-6.3 explains structural,
+semantic, and cross-file problems before save. It does not start a simulation
+yet; run control is planned for UX-6.4.
 
 From the repository root, make the source packages visible and check that the
 workbench can locate the application and read its validated catalog:
@@ -940,8 +941,9 @@ python -m mehlissa_workbench --repository-root . --check
 ```
 
 The check prints `workbench_status=ready`, `scenario_editing=true`, the model
-and example counts, and the number of available scenario sources. Then start
-the interface:
+and example counts, the number of available scenario sources, and
+`scenario_validation=valid` after checking the starter through the accepted
+validator. Then start the interface:
 
 ```powershell
 python -m mehlissa_workbench --repository-root .
@@ -970,13 +972,28 @@ fields remain visible but disabled. Expand **Complete source JSON** to inspect
 the live full document, including all 13 artifact bindings, evidence sources,
 limitations, acceptance rules, and any fields not represented by a control.
 
-When you change a field, the page marks the scenario as unsaved and updates the
-source view. Resetting, opening a different source, or leaving the page asks
-before discarding changes. Choose **Save as…** and a new basename ending in
-`.json`. The workbench reconstructs the candidate from the complete source,
-applies only supported changes, and asks the normal MEHLISSA executable to
-validate it. A successful file immediately appears as a saved scenario and can
-be reopened. Existing files are never overwritten.
+When you change a field, the page marks the scenario as unsaved, updates the
+source view, and briefly shows **Checking**. The host reconstructs the complete
+candidate and asks the normal `mehlissa scenario validate` command for the
+authoritative decision. A red **Invalid** state blocks save and the future run
+gate. Each issue keeps a stable `WBV-*` workbench or `MEHLISSA-E####` command
+code, a dotted field/document location, and concrete repair guidance. Red
+errors block the workflow; amber warnings permit save but state a scientific
+interpretation risk—for example, changing a seed produces another stochastic
+realization rather than an uncertainty estimate.
+
+Expand **Shareable validation summary** to see the decision, scenario identity,
+candidate SHA-256 digest, error/warning counts, located issues, correction
+guidance, and non-clinical boundary. **Copy summary** puts the plain text on the
+clipboard for an issue or review record. The digest identifies the exact
+candidate that was checked; changing any retained field changes the digest.
+
+When the status is **Valid**, choose **Save as…** and a new basename ending in
+`.json`. Save repeats complete authoritative validation, so a stale page or
+direct request cannot bypass the gate. A successful file immediately appears
+as a saved scenario and can be reopened. Existing files are never overwritten.
+Resetting, opening another source, or leaving the page still asks before
+discarding changes.
 
 By default, new files are written to the Git-ignored
 `workbench-scenarios/` directory. To use another directory inside this
@@ -1000,14 +1017,20 @@ patient-specific or clinically valid. Product roles, technology trade-offs,
 wireframes, and the baseline are in the
 [UX-6.1 foundation](ux/UX6_1_PRODUCT_AND_TECHNICAL_FOUNDATION.md); the editor,
 round-trip, and security contracts are in the
-[UX-6.2 workspace description](ux/UX6_2_GUIDED_SCENARIO_WORKSPACE.md).
+[UX-6.2 workspace description](ux/UX6_2_GUIDED_SCENARIO_WORKSPACE.md). Error
+codes, locations, repair rules, validation responses, and the execution gate
+are specified in the
+[UX-6.3 validation contract](ux/UX6_3_VALIDATION_AND_CORRECTIVE_FEEDBACK.md).
 
 If the page says that the catalog or scenario workspace could not be loaded,
 stop the process, run the `--check` command, and confirm that the selected
 executable belongs to this repository build. A missing session message usually
 means an old or bookmarked URL was used; restart the launcher and use its newly
-printed URL. If save is rejected, first check the filename and the message;
-UX-6.3 will add detailed field-linked correction guidance.
+printed URL. If validation is unavailable, confirm that the executable belongs to this
+checkout and inspect the launching terminal. If a field is red, use its code
+and repair text; if only the document issue list is red, inspect the named
+section in **Complete source JSON**. A `$` location means the validator could
+not safely narrow the failure to one section. A rejected save creates no file.
 
 #### Validate an experiment manifest
 
@@ -2825,9 +2848,15 @@ The usability package status is:
   explicit, and bounded save-as validates and reopens a derivative without
   overwriting. All 285 Windows/MSVC tests and the desktop/mobile browser round
   trip pass; publication and supported GitHub CI are pending an explicit push;
-  and
-- **UX-6.3 through UX-6.8, integrated graphical workbench:** next add corrective
-  validation, execution, results, provenance, uncertainty visualization,
+- **UX-6.3, validation and corrective feedback:** locally passed; every complete
+  candidate is checked through the accepted CLI, structural and semantic errors
+  carry stable codes, locations, and repair guidance, cross-file failures are
+  explicit, warnings remain non-blocking, and a candidate-hashed summary can be
+  copied. Invalid candidates cannot be saved or admitted by the future run
+  gate. All 285 Windows/MSVC tests and desktop/mobile browser checks pass;
+  publication and supported GitHub CI are pending an explicit push; and
+- **UX-6.4 through UX-6.8, integrated graphical workbench:** next add execution,
+  results, provenance, uncertainty visualization,
   packaging, and final usability/accessibility acceptance.
 
 Planned substantive scientific extensions are:

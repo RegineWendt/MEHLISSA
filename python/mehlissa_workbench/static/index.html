@@ -19,19 +19,19 @@ SPDX-License-Identifier: MPL-2.0
       <span class="brand-mark" aria-hidden="true">M</span>
       <span><strong>MEHLISSA</strong><small>Next Research Workbench</small></span>
     </a>
-    <span class="prototype-badge">UX-6.2 local workbench</span>
+    <span class="prototype-badge">UX-6.3 local workbench</span>
   </header>
   <main id="main-content" tabindex="-1">
     <section class="hero" aria-labelledby="page-title">
       <div>
         <p class="eyebrow">Compose before you simulate</p>
         <h1 id="page-title">Build a reproducible scenario without editing raw JSON.</h1>
-        <p class="hero-copy">Start from the accepted FP9 lung demonstrator, change schema-governed research parameters, inspect every retained source field, and save a new local scenario.</p>
+        <p class="hero-copy">Start from the accepted FP9 lung demonstrator, change schema-governed research parameters, and correct field or cross-file problems before saving a new local scenario.</p>
       </div>
       <aside class="boundary" aria-labelledby="boundary-title">
         <p class="boundary-label">Current boundary</p>
-        <h2 id="boundary-title">Guided editing, not execution</h2>
-        <p>UX-6.2 validates every saved scenario with the MEHLISSA executable. Starting simulations and corrective validation feedback arrive in later increments.</p>
+        <h2 id="boundary-title">Correct before execution</h2>
+        <p>UX-6.3 checks the complete candidate with the accepted MEHLISSA validator, identifies errors and warnings, and keeps the execution gate closed for invalid scenarios. Run control arrives in UX-6.4.</p>
       </aside>
     </section>
     <section class="metrics" aria-label="Workbench overview">
@@ -65,10 +65,25 @@ SPDX-License-Identifier: MPL-2.0
           <form id="scenario-form">
             <div class="editor-heading">
               <div><p class="eyebrow">Schema-derived controls</p><h3>Guided parameters</h3></div>
-              <div class="editor-actions"><button id="reset-button" type="button" class="secondary">Reset edits</button><button id="save-button" type="button">Save as…</button></div>
+              <div class="editor-actions"><button id="reset-button" type="button" class="secondary">Reset edits</button><button id="save-button" type="button" disabled>Save as…</button></div>
             </div>
             <div id="field-list" class="field-list"></div>
           </form>
+          <section class="validation-panel" aria-labelledby="validation-title">
+            <div class="validation-heading">
+              <div><p class="eyebrow">Pre-run gate</p><h3 id="validation-title">Scenario validation</h3></div>
+              <span id="validation-state" class="validation-state pending">Checking…</span>
+            </div>
+            <p id="validation-counts" class="validation-counts" aria-live="polite">Authoritative validation is running.</p>
+            <p><strong>Execution gate:</strong> <span id="execution-gate">Closed while validation is pending</span></p>
+            <ul id="validation-issues" class="validation-issues"></ul>
+            <details class="validation-report">
+              <summary>Shareable validation summary</summary>
+              <p>This text includes the validity decision, candidate hash, stable error codes, locations, and repair guidance.</p>
+              <pre id="validation-summary" tabindex="0">Validation summary will appear here.</pre>
+              <button id="copy-validation" type="button" class="secondary" disabled>Copy summary</button>
+            </details>
+          </section>
           <details class="source-view">
             <summary>Complete source JSON <span id="source-only-count"></span></summary>
             <p>The complete document is read-only here. Arrays, evidence, limitations, and any unsupported fields remain intact when guided values change.</p>
@@ -109,7 +124,7 @@ SPDX-License-Identifier: MPL-2.0
       <p>A new JSON file will be created in the local workbench workspace. Existing files are never replaced.</p>
       <label><span>Filename</span><input id="save-filename" required pattern="[A-Za-z0-9][A-Za-z0-9._-]{0,119}\.json" placeholder="fp9-lung-derived-v1.json"></label>
       <p id="save-error" class="dialog-error" role="alert"></p>
-      <div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button id="confirm-save" value="default">Validate and save</button></div>
+      <div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button id="confirm-save" value="default">Save validated candidate</button></div>
     </form>
   </dialog>
   <footer>

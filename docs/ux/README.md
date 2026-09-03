@@ -17,3 +17,7 @@ models, schemas, or simulation behavior.
   defines schema-derived fields, explicit unsaved-change handling, complete
   source retention, bounded scenario access, and validated non-overwriting
   save-as behavior.
+- [UX-6.3 validation and corrective feedback](UX6_3_VALIDATION_AND_CORRECTIVE_FEEDBACK.md)
+  defines authoritative live decisions, stable field/document locations,
+  actionable repair guidance, warning/error separation, candidate hashes, and
+  the pre-run gate.
