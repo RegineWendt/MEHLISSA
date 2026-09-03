@@ -515,6 +515,36 @@ and contain no privileged path into model internals. This keeps notebooks
 reproducible and prevents exploratory analysis from becoming a second,
 unvalidated implementation of MEHLISSA.
 
+### 7.6 Local graphical workbench
+
+UX-6.1 adds `python/mehlissa_workbench` as a presentation client above the UX-5
+process API. Its local HTTP host calls only `MehlissaClient` methods; browser
+code receives a structured read-only projection and never reads catalog files,
+validates models, or executes scientific logic independently. The resulting
+dependency direction is:
+
+```text
+browser presentation -> Python workbench host -> MehlissaClient
+                     -> MEHLISSA executable -> versioned authoritative artifacts
+```
+
+The foundation endpoint is `GET /api/catalog`. It is private to the local
+prototype, requires an ephemeral session capability, and returns
+`api_version=1.0.0`, model summaries, example summaries, `read_only=true`, and
+`clinical_use=false`. It is not a stable remote REST API. Future scenario
+round trips, validation, execution, and result exploration must add bounded
+application commands or adapters based on the existing schemas and APIs.
+
+The host binds only to loopback, validates the HTTP host header, serves four
+allow-listed embedded assets, rejects state-changing HTTP methods, suppresses
+request logging, and applies restrictive browser security headers. Catalog text
+is inserted with DOM `textContent`; there are no remote assets or telemetry.
+These properties are architectural constraints for later UX-6 increments.
+Product roles, workflows, threat/privacy/accessibility baselines, and screen
+concepts are maintained in the
+[UX-6.1 foundation](../ux/UX6_1_PRODUCT_AND_TECHNICAL_FOUNDATION.md) and the
+technology choice in [ADR-0050](adr/0050-local-browser-research-workbench.md).
+
 ## 8. Public API map
 
 Public headers live below each library's `include/mehlissa/` tree. The table
@@ -569,6 +599,16 @@ The current executable supports:
 | `load_result`, `ScenarioResult` | version-guarded fingerprinting-result reader, summary, stages, cases, and optional runtime plot |
 | `load_campaign_result`, `CampaignResult` | version-guarded aggregate reader, groups, metric series, paired differences, and optional response plot |
 | `MehlissaCommandError` | command vector, exit status, stdout, and structured stderr for explicit failure handling |
+
+### 8.3 Local workbench API
+
+| Entry point | Purpose |
+|---|---|
+| `python -m mehlissa_workbench` / `mehlissa-workbench` | locate or accept the MEHLISSA executable, start the protected loopback host, and open the local interface |
+| `--check` | verify that the accepted discovery interface can provide a supported read-only catalog without starting a server |
+| `discover_catalog(MehlissaClient)` | fail-closed adapter from accepted discovery command output to the private UX-6.1 response |
+| `create_server(...)` | testable loopback-only server factory with an ephemeral session capability |
+| `GET /api/catalog` | capability-protected, read-only model/example projection; private to the workbench and not a remote public API |
 
 Detailed commands are maintained in the [User Guide](../USER_GUIDE.md).
 

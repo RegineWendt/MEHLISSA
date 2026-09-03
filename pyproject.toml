@@ -8,12 +8,15 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "mehlissa-research"
 version = "0.1.0"
-description = "Process API and result-analysis helpers for MEHLISSA Next"
+description = "Process API, result-analysis helpers, and local workbench for MEHLISSA Next"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MPL-2.0"}
 authors = [{name = "MEHLISSA contributors"}]
 dependencies = []
+
+[project.scripts]
+mehlissa-workbench = "mehlissa_workbench.__main__:main"
 
 [project.optional-dependencies]
 plot = ["matplotlib>=3.8"]
@@ -23,3 +26,6 @@ package-dir = {"" = "python"}
 
 [tool.setuptools.packages.find]
 where = ["python"]
+
+[tool.setuptools.package-data]
+mehlissa_workbench = ["static/*.html", "static/*.css", "static/*.js"]

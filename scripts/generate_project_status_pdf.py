@@ -82,14 +82,15 @@ class StatusDocument(BaseDocTemplate):
         cover_frame = Frame(0, 0, A4[0], A4[1], 0, 0, 0, 0, id="cover")
         self.addPageTemplates(
             [
-                PageTemplate(id="cover", frames=[cover_frame], onPage=self.draw_cover),
-                PageTemplate(id="body", frames=[body_frame], onPage=self.draw_body),
+                PageTemplate(
+                    id="cover",
+                    frames=[cover_frame],
+                    onPage=self.draw_cover,
+                    autoNextPageTemplate="body",
+                ),
+                PageTemplate(id="body", frames=[body_frame], onPageEnd=self.draw_body),
             ]
         )
-
-    def afterPage(self):
-        if self.page == 1:
-            self.handle_nextPageTemplate("body")
 
     def draw_cover(self, canvas, _doc):
         width, height = A4
@@ -283,7 +284,7 @@ def cover_story() -> list:
     status = Table(
         [
             [paragraph("M0-M7", "TableHead"), paragraph("PASSED", "TableHead"), paragraph("CURRENT FOCUS", "TableHead")],
-            [Paragraph("Architecture and implementation", STYLES["CoverMeta"]), Paragraph("All milestone gates", STYLES["CoverMeta"]), Paragraph("UX-6 graphical research workbench", STYLES["CoverMeta"])],
+            [Paragraph("Architecture and implementation", STYLES["CoverMeta"]), Paragraph("All milestone gates", STYLES["CoverMeta"]), Paragraph("UX-6.2 guided scenario workspace", STYLES["CoverMeta"])],
         ],
         colWidths=[51 * mm, 37 * mm, 76 * mm],
         style=TableStyle(
@@ -308,8 +309,8 @@ def cover_story() -> list:
         status,
         Spacer(1, 17 * mm),
         Paragraph("Prepared for prospective contributors and research partners", STYLES["CoverMeta"]),
-        Paragraph("Status date: 2 September 2026", STYLES["CoverMeta"]),
-        Paragraph("Branch: mehlissa-next-generation | Base revision: 43da0de", STYLES["CoverMeta"]),
+        Paragraph("Status date: 3 September 2026", STYLES["CoverMeta"]),
+        Paragraph("Branch: mehlissa-next-generation | Published base: 7b92c4e | UX-6.1 local", STYLES["CoverMeta"]),
         Paragraph("Repository: github.com/RegineWendt/MEHLISSA", STYLES["CoverMeta"]),
         PageBreak(),
     ]

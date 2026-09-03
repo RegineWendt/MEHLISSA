@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Status:** Phase 0 baseline
 
-**As of:** 26 August 2026
+**As of:** 3 September 2026
 
 **Purpose:** Translate the MEHLISSA vision described in the dissertation into
 verifiable requirements for a new, scientifically robust simulation platform.
@@ -172,6 +172,9 @@ implementation is correct or sufficiently validated.
 | UX-002 | A decoupled visualization shall read the body model, entities/populations, time series, and density/heatmap data. | B/A | P2 | T/I | VIS20 pp. 1–2; DISS pp. 109–113 |
 | UX-003 | Users shall navigate time, rotate/pan/zoom views, and compare layers or runs. | B/A | P2 | I | VIS20 pp. 1–2; RM 6.5 |
 | UX-004 | Visualizations and reports shall be reproducibly generated from stored results and shall not modify simulation state. | A/N | P1 | T/I | RM 6.5 |
+| UX-005 | A graphical workbench shall delegate discovery, validation, execution, and analysis to accepted MEHLISSA interfaces and shall not duplicate simulation or schema semantics in its presentation layer. | A/N | P1 | T/I | RM UX-6.1; ADR-0050 |
+| UX-006 | The local workbench shall default to loopback-only, no-telemetry operation and protect its interfaces, files, and untrusted content according to a documented threat and privacy baseline. | N | P1 | T/I | RM UX-6.1; ADR-0050 |
+| UX-007 | The graphical workbench shall target WCAG 2.2 level AA and support semantic, keyboard-operable, reflow-capable workflows with visible non-color feedback. | N | P1 | T/I | RM UX-6.1; WCAG 2.2 |
 
 ## 12. Medical scenarios
 

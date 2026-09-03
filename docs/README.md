@@ -14,7 +14,8 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 - [Project Status and Collaboration Brief](PROJECT_STATUS_AND_COLLABORATION_BRIEF.md) – maintainable English source for the achieved M0–M7 platform, present uses, scientific limits, UX program, and contributor opportunities; the [rendered PDF](../output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf) is the shareable edition.
 - [Roadmap for a new MEHLISSA generation](ROADMAP.md) – dissertation-aligned target architecture, development phases, quality gates, scenarios, and the long-term digital-twin path.
 - [English User Guide](USER_GUIDE.md) – non-expert introduction, experiment decision aid, guided research workflows, installation, commands, models, and interpretation limits.
-- [System requirements](requirements/SYSTEM_REQUIREMENTS.md) – 72 numbered functional, architectural, and quality requirements with origin, priority, and verification method.
+- [UX-6.1 product and technical foundation](ux/UX6_1_PRODUCT_AND_TECHNICAL_FOUNDATION.md) – workbench roles, prioritized workflows, wireframes, technology decision, threat/privacy/accessibility baseline, and local prototype acceptance.
+- [System requirements](requirements/SYSTEM_REQUIREMENTS.md) – 75 numbered functional, architectural, user-experience, and quality requirements with origin, priority, and verification method.
 - [Traceability matrix](requirements/TRACEABILITY_MATRIX.md) – mapping of all requirements to the literature, current status, roadmap gate, and planned verification.
 - [Fingerprinting reference scenario](requirements/FINGERPRINTING_SCENARIO.md) – domain baseline, reference values, acceptance levels, and tests for the first vertical demonstrator.
 - [Architecture decisions](architecture/README.md) – new kernel, four-layer co-simulation, technology, scenario priority, and evidence rules.

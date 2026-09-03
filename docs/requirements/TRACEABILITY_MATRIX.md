@@ -5,7 +5,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Traceability Matrix – MEHLISSA Next
 
-**As of:** 31 August 2026
+**As of:** 3 September 2026
 
 **Reference document:** [system requirements](SYSTEM_REQUIREMENTS.md)
 
@@ -27,7 +27,7 @@ Status codes:
 
 ## 2. Foundation and architecture
 
-| ID | Source | Status 2026-09-01 | Target | Planned verification |
+| ID | Source | Status 2026-09-03 | Target | Planned verification |
 |---|---|---|---|---|
 | SYS-001 | RM M1 | DONE | M1 | `simulation_clock_tests`, cross-platform CTest |
 | SYS-002 | RM 2.4 | PART | M1/M7 | byte-identical M1 kernel reference run on MSVC/GCC/Clang; replicate planning and domain-model verification follow |
@@ -47,7 +47,7 @@ Status codes:
 
 ## 3. Body and organ layers
 
-| ID | Source | Status 2026-09-01 | Target | Planned verification |
+| ID | Source | Status 2026-09-03 | Target | Planned verification |
 |---|---|---|---|---|
 | BODY-001 | DISS p. 100; BVS18 | DONE | M2 | complete, strongly connected, schema-validated 95-segment graph; converter and graph-invariant tests |
 | BODY-002 | DISS pp. 100, 113–117 | DONE | M2 | SI schema and validator for ID, type, geometry, length, diameter, cross section, volume, flow, sources, and uncertainty; canonical M2.2 data set |
@@ -68,7 +68,7 @@ Status codes:
 
 ## 4. Capillary and cell layers
 
-| ID | Source | Status 2026-09-01 | Target | Planned verification |
+| ID | Source | Status 2026-09-03 | Target | Planned verification |
 |---|---|---|---|---|
 | CAP-001 | DISS pp. 126–129 | PART | M4 | strict v2/v3 schemas and executable arteriole–capillary–venule components derive volume, area, velocity, and transit from SI geometry and continuity flow, then preserve identity and conserved payloads through a complete organ-capillary-organ route; anatomical network refinement follows |
 | CAP-002 | DISS pp. 126–129 | PART | M4 | M4.7 pulmonary card separates functional perfused volume from morphometric capacity, records parameter-level evidence and uncertainty, and enforces equivalent-geometry volume-flow-transit closure; independent physiological validation, jointly measured cohorts, hematocrit, and further organs follow |
@@ -133,7 +133,7 @@ statements.
 
 ## 5. Nano-IoT and research data
 
-| ID | Source | Status 2026-09-01 | Target | Planned verification |
+| ID | Source | Status 2026-09-03 | Target | Planned verification |
 |---|---|---|---|---|
 | IOT-001 | DISS pp. 113–115, 186–188 | DONE | M6 | M6.1 provides a schema-validated free device type, composable capabilities, typed/discrete payload inventory, target, internal energy/message state, bounded resources, checked lifecycle, and synthetic locator/collector profiles |
 | IOT-002 | DISS pp. 96–97 | DONE | M6 | M6.5 composes the in-body network, active gateway, replaceable BAN adapter, and external analysis/control station and returns one explicitly governed command to a routed local actuator |
@@ -151,12 +151,15 @@ statements.
 
 ## 6. Operation, scenarios, and quality
 
-| ID | Source | Status 2026-09-01 | Target | Planned verification |
+| ID | Source | Status 2026-09-03 | Target | Planned verification |
 |---|---|---|---|---|
 | UX-001 | RM Phase 0/10 | PART | M1 | headless CLI run in CI |
 | UX-002 | VIS20 pp. 1–2 | LEGACY | M7 | standardized result format in new visualization |
 | UX-003 | VIS20 pp. 1–2 | LEGACY | M7 | visual acceptance test and run comparison |
 | UX-004 | RM 6.5 | SPEC | M7 | identical rendering from archived run |
+| UX-005 | RM UX-6.1; ADR-0050 | PART | UX-6 | UX-6.1 browser calls the accepted `MehlissaClient` discovery methods and has no simulation logic; later editor/run/result workflows must retain the boundary |
+| UX-006 | RM UX-6.1; ADR-0050 | PART | UX-6 | loopback allow-list, ephemeral header capability, host validation, explicit static-file allow-list, read-only methods, safe text insertion, security headers, no remote assets/telemetry, and negative server tests; release security review follows |
+| UX-007 | RM UX-6.1; WCAG 2.2 | PART | UX-6 | semantic HTML, skip link, labels, native controls, visible focus, responsive single-column reflow, non-color status, mobile overflow check, and browser review; manual assistive-technology acceptance follows in UX-6.8 |
 | SCN-001 | DISS pp. 185–190; FP23 | PART | M3/M7 | M3.19 executes the published FP9 Level-A timer cohorts; M7.1-M7.7 add strict M2-M6 selection, typed physiological initialization, causal identity trace, concentration binding, explicit tiles, executed locator-to-station communication, misclassification analysis, and holistic result. Exact FP9 biology and physical channels remain post-gate research work |
 | SCN-002 | DISS pp. 143–152 | LEGACY | Phase 8 | monitoring reference experiment and alert metrics |
 | SCN-003 | DISS pp. 155–160 | LEGACY | Phase 8 | reproduction of published detection rates |

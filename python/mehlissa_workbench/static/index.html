@@ -1,0 +1,96 @@
+<!--
+SPDX-FileCopyrightText: 2026 MEHLISSA contributors
+SPDX-License-Identifier: MPL-2.0
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>MEHLISSA Next Research Workbench</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to catalog</a>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="MEHLISSA Next home">
+      <span class="brand-mark" aria-hidden="true">M</span>
+      <span><strong>MEHLISSA</strong><small>Next Research Workbench</small></span>
+    </a>
+    <span class="prototype-badge">UX-6.1 prototype</span>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Explore before you simulate</p>
+        <h1 id="page-title">A clear view of the models already inside MEHLISSA.</h1>
+        <p class="hero-copy">Browse implemented model families and licensed starter examples through the same validated discovery interface used by the command line.</p>
+      </div>
+      <aside class="boundary" aria-labelledby="boundary-title">
+        <p class="boundary-label">Current boundary</p>
+        <h2 id="boundary-title">Read-only foundation</h2>
+        <p>This first workbench increment cannot edit files or start simulations. It proves the interface and product direction without duplicating scientific logic.</p>
+      </aside>
+    </section>
+
+    <section class="metrics" aria-label="Catalog overview">
+      <div><span id="model-count" class="metric-value">—</span><span class="metric-label">model families</span></div>
+      <div><span id="example-count" class="metric-value">—</span><span class="metric-label">starter examples</span></div>
+      <div><span class="metric-value metric-word">Local</span><span class="metric-label">data access</span></div>
+      <div><span class="metric-value metric-word">Read-only</span><span class="metric-label">prototype mode</span></div>
+    </section>
+
+    <section class="catalog" aria-labelledby="catalog-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Validated catalog</p>
+          <h2 id="catalog-title">Find a starting point</h2>
+        </div>
+        <p id="catalog-status" class="status" role="status" aria-live="polite">Loading the local catalog…</p>
+      </div>
+
+      <div class="filters" aria-label="Catalog filters">
+        <label>
+          <span>Search</span>
+          <input id="search" type="search" placeholder="Model, layer, example…" autocomplete="off">
+        </label>
+        <label>
+          <span>Model layer</span>
+          <select id="layer">
+            <option value="">All layers</option>
+          </select>
+        </label>
+      </div>
+
+      <section aria-labelledby="models-title">
+        <div class="subheading">
+          <h3 id="models-title">Model families</h3>
+          <span id="visible-model-count" class="result-count"></span>
+        </div>
+        <div id="models" class="model-grid" aria-busy="true"></div>
+      </section>
+
+      <section class="examples-section" aria-labelledby="examples-title">
+        <div class="subheading">
+          <h3 id="examples-title">Starter examples</h3>
+          <span id="visible-example-count" class="result-count"></span>
+        </div>
+        <div class="table-frame" tabindex="0" aria-label="Scrollable starter example table">
+          <table>
+            <thead><tr><th scope="col">Example</th><th scope="col">Repository path</th><th scope="col">Related models</th></tr></thead>
+            <tbody id="examples"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Research software demonstrator.</strong> Not a medical device and not validated for clinical decisions.</p>
+    <p>All content is loaded from the local MEHLISSA repository. No remote service is contacted.</p>
+  </footer>
+</body>
+</html>
