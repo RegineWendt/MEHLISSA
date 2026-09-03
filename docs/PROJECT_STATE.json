@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "status_date": "2026-09-03",
+  "status_date_display": "3 September 2026",
+  "development_branch": "mehlissa-next-generation",
+  "milestones_passed_through": "M7",
+  "current_focus": "scientific qualification and external user feedback on the integrated platform",
+  "research_use": {
+    "delivery_range": "UX-1 through UX-6",
+    "workbench_version": "1.0.0",
+    "release_commit": "5821c7358f490c1c92e9ec79eaed783f80851297",
+    "verified_ci_run": "33745263319",
+    "verified_ci_url": "https://github.com/RegineWendt/MEHLISSA/actions/runs/33745263319",
+    "windows_msvc_ctest_count": 286
+  },
+  "roadmap_sections": {
+    "scientific_qualification": "6.4",
+    "experiment_and_result_format": "6.5",
+    "visualization_and_user_tools": "6.6",
+    "documentation": "6.7"
+  },
+  "next_scientific_packages": [
+    "Evidence and validity baseline",
+    "Pulmonary and capillary qualification",
+    "Biological cell-model qualification",
+    "Dynamic capillary-tissue-cell coupling",
+    "Externally validated medical reference scenario"
+  ],
+  "traceability_expectations": {
+    "UX-001": "PART",
+    "UX-002": "PART",
+    "UX-003": "PART",
+    "UX-004": "DONE",
+    "UX-005": "DONE",
+    "UX-006": "DONE",
+    "UX-007": "DONE",
+    "UX-008": "DONE",
+    "UX-009": "DONE",
+    "UX-010": "DONE",
+    "UX-011": "DONE",
+    "UX-012": "DONE",
+    "UX-013": "DONE",
+    "UX-014": "DONE",
+    "QUA-003": "PART",
+    "QUA-004": "PART",
+    "DATA-008": "PART"
+  }
+}

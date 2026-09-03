@@ -222,10 +222,14 @@ planned:
 
 External simulators can be connected through the same mechanism.
 
-## 4. Planned repository structure
+## 4. Target repository structure and current mapping
 
-The exact language and build technology are decided in Phase 0. The domain
-structure should be approximately:
+Phase 0 selected C++20, CMake, and vcpkg. The active repository already
+contains the kernel, model families, scenarios, applications, benchmarks,
+versioned data, and documentation shown below. Some target responsibilities,
+especially general external adapters, validation studies, and reusable tools,
+currently remain inside model-, scenario-, benchmark-, or documentation-specific
+directories and may be separated as they grow. The logical target structure is:
 
 ```text
 apps/                   command line, services, and optional user interfaces

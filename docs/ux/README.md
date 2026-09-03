@@ -3,12 +3,16 @@ SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# User-experience work packages
+# Research-use layer delivery record
 
 This directory records product, interaction, accessibility, privacy, and
-acceptance decisions for the post-M7 user-experience program. These documents
-supplement the [User Guide](../USER_GUIDE.md); they do not redefine scientific
-models, schemas, or simulation behavior.
+acceptance decisions for the UX-6 delivery increments that produced MEHLISSA
+Research Workbench 1.0. The Workbench, command line, reports, campaigns, Python
+interfaces, and notebooks form the integrated research-use layer of MEHLISSA;
+they are not a separate product or optional post-M7 program. These documents
+supplement the [User Guide](../USER_GUIDE.md) and retain the implementation
+history. They do not redefine scientific models, schemas, or simulation
+behavior.
 
 - [UX-6.1 product and technical foundation](UX6_1_PRODUCT_AND_TECHNICAL_FOUNDATION.md)
   defines workbench roles, workflows, screen concepts, technology selection,

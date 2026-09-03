@@ -640,6 +640,29 @@ The debug CLI is then available at:
 build/windows-msvc/apps/Debug/mehlissa.exe
 ```
 
+### Configure, build, and test on Linux
+
+Install a C++20 compiler, CMake 3.28 or newer, Ninja, and vcpkg, export
+`VCPKG_ROOT`, and run from the repository root:
+
+```bash
+cmake --preset linux-gcc
+cmake --build --preset linux-gcc-debug
+ctest --preset linux-gcc-debug --output-on-failure
+```
+
+The debug CLI is then available at:
+
+```text
+build/linux-gcc/apps/mehlissa
+```
+
+The `linux-clang-analysis` configure, build, and test preset additionally runs
+Clang-Tidy, AddressSanitizer, and UndefinedBehaviorSanitizer. The remainder of
+this guide shows PowerShell command continuation with a trailing backtick. On
+Linux, use the executable above and either place the arguments on one line or
+replace the backtick with the shell continuation character `\`.
+
 All paths in the following examples are relative to the repository root.
 
 ### Command overview
@@ -877,11 +900,19 @@ semantics remain the single authority; Python does not reproduce simulation
 logic or silently relax validation.
 
 Python 3.10 or newer is required. From the repository root, either install the
-package in a virtual environment:
+package in a virtual environment. On Windows PowerShell:
 
 ```powershell
 py -m venv .venv
 .venv\Scripts\Activate.ps1
+python -m pip install -e .
+```
+
+On Linux:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
 python -m pip install -e .
 ```
 
@@ -1015,11 +1046,20 @@ mehlissa-workbench `
   --executable build/windows-msvc/apps/Debug/mehlissa.exe
 ```
 
-On Linux, use `python3 -m venv .venv`, activate `.venv/bin/activate`, install
-with `python -m pip install .`, and invoke the same `mehlissa-workbench`
-commands. The Python package contains the process API, readers, host, browser
-assets, and licence. It does not embed the C++ executable or duplicate the
-matching repository's schemas, model/evidence records, examples, and campaign
+On Linux, the equivalent complete setup is:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install .
+mehlissa-workbench --version
+mehlissa-workbench --repository-root . --check
+mehlissa-workbench --repository-root .
+```
+
+The Python package contains the process API, readers, host, browser assets, and
+licence. It does not embed the C++ executable or duplicate the matching
+repository's schemas, model/evidence records, examples, and campaign
 definitions; build the application first and retain the checkout as an
 explicit scientific input.
 
@@ -3104,10 +3144,19 @@ The research-use delivery record is:
 
 Planned substantive scientific extensions are:
 
-- qualification of historical and synthetic assumptions with calibration,
-  independent validation, sensitivity, and uncertainty evidence;
+- an evidence and validity baseline mapping each executable parameter,
+  assumption, output, and claim to its source, licence, maturity, uncertainty,
+  and validation state;
+- pulmonary and capillary qualification using source-disjoint calibration and
+  validation evidence, predeclared metrics, and quantified uncertainty;
+- at least one biological cell-model variant tied to a named ligand, receptor,
+  cell type, and reusable public model or data set;
+- dynamic capillary-tissue-cell coupling with time-dependent transport,
+  interaction or consumption, feedback, and conservation checks;
+- one frozen medical reference scenario evaluated end to end against
+  independent physiological or experimental observations;
 - additional medical scenarios and organ families, beginning with a kidney
-  surrogate;
+  surrogate after the shared qualification baseline is in place;
 - larger ensembles, scaling, and advanced scientific visualization beyond the
   bounded Workbench 1.0 demonstrations; and
 - participant-specific workflows only after their evidence, identifiability,
@@ -3120,3 +3169,5 @@ organ-model implementation, use the
 especially its [module extension workflow](architecture/SOFTWARE_ARCHITECTURE.md#9-how-to-add-a-module)
 and [worked kidney outline](architecture/SOFTWARE_ARCHITECTURE.md#95-worked-outline-adding-a-kidney-model).
 For scientific scope and milestone gates, use the [Roadmap](ROADMAP.md).
+Shared release facts and the ordered qualification package names are maintained
+in [`PROJECT_STATE.json`](PROJECT_STATE.json) and checked in CI.

@@ -48,7 +48,7 @@ The release build uses the `windows-msvc-release` presets accordingly.
 
 ## Integrated Python and Workbench layer
 
-The Workbench 1.0 Python wheel contains the process API, versioned result
+The Workbench 1.0.0 Python wheel contains the process API, versioned result
 readers, local web host, browser assets, console entry point, and licence. The
 C++ executable and repository-held schemas, models, evidence, examples, and
 campaign definitions remain separate versioned inputs. This packaging boundary
@@ -56,7 +56,7 @@ prevents duplication of scientific authority; it does not make the Workbench an
 optional or external product layer.
 
 Install the local source into an isolated environment and verify that it can
-find the accepted interfaces:
+find the accepted interfaces. On Windows PowerShell:
 
 ```powershell
 py -m venv .venv
@@ -65,6 +65,21 @@ python -m pip install .
 mehlissa-workbench --version
 mehlissa-workbench --repository-root . --check
 ```
+
+On Linux:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install .
+mehlissa-workbench --version
+mehlissa-workbench --repository-root . --check
+```
+
+After a successful check, `mehlissa-workbench --repository-root .` starts the
+same local interface on either platform. The launcher searches the documented
+Windows MSVC and Linux GCC/Clang build locations; use `--executable` only for a
+non-standard build path.
 
 The CTest named `mehlissa_python_ux6_release_package` independently builds the
 wheel without dependency downloads, inspects its resources and licence,
@@ -166,3 +181,23 @@ accepted Python process boundary to the C++ executable and repository artifacts.
 For API selection and extension work, continue with the
 [public API map](architecture/SOFTWARE_ARCHITECTURE.md#8-public-api-map) and
 [module extension workflow](architecture/SOFTWARE_ARCHITECTURE.md#9-how-to-add-a-module).
+
+## Documentation consistency
+
+Shared release facts, the current focus, Roadmap section mappings, selected
+traceability expectations, and the ordered scientific qualification packages
+are recorded in [`PROJECT_STATE.json`](PROJECT_STATE.json). It is a small
+machine-readable consistency source, not a replacement for the explanatory
+Roadmap or status report.
+
+Run the documentation check before committing changes to project status,
+requirements, navigation, or release evidence:
+
+```powershell
+python scripts/check_documentation_consistency.py
+```
+
+The check verifies shared facts in the canonical entry documents, one-to-one
+requirement coverage in the Traceability Matrix, selected status and Roadmap
+section mappings, local links from the main guides, and obsolete terminology.
+CI runs the same command.

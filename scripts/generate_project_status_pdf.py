@@ -11,6 +11,7 @@ Run from the repository root with a Python environment that provides ReportLab:
 from __future__ import annotations
 
 import html
+import json
 import re
 from pathlib import Path
 
@@ -35,6 +36,7 @@ from reportlab.platypus import (
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "docs" / "PROJECT_STATUS_AND_COLLABORATION_BRIEF.md"
+STATE = ROOT / "docs" / "PROJECT_STATE.json"
 OUTPUT = ROOT / "output" / "pdf" / "MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf"
 
 NAVY = colors.HexColor("#163B57")
@@ -281,11 +283,20 @@ def parse_body(markdown: str) -> list:
     return story
 
 
-def cover_story() -> list:
+def cover_story(project_state: dict) -> list:
+    research_use = project_state["research_use"]
     status = Table(
         [
             [paragraph("PLATFORM", "TableHead"), paragraph("ACCEPTED DELIVERY", "TableHead"), paragraph("CURRENT FOCUS", "TableHead")],
-            [Paragraph("Integrated research system", STYLES["CoverMeta"]), Paragraph("M0-M7 and UX-1-UX-6", STYLES["CoverMeta"]), Paragraph("Scientific expansion", STYLES["CoverMeta"])],
+            [
+                Paragraph("Integrated research system", STYLES["CoverMeta"]),
+                Paragraph(
+                    f"M0-{project_state['milestones_passed_through'][1:]} and "
+                    f"{research_use['delivery_range'].replace(' through ', '-')}",
+                    STYLES["CoverMeta"],
+                ),
+                Paragraph("Scientific qualification", STYLES["CoverMeta"]),
+            ],
         ],
         colWidths=[51 * mm, 37 * mm, 76 * mm],
         style=TableStyle(
@@ -310,8 +321,15 @@ def cover_story() -> list:
         status,
         Spacer(1, 17 * mm),
         Paragraph("Prepared for prospective contributors and research partners", STYLES["CoverMeta"]),
-        Paragraph("Status date: 3 September 2026", STYLES["CoverMeta"]),
-        Paragraph("Branch: mehlissa-next-generation | Workbench 1.0.0 | Published CI verified", STYLES["CoverMeta"]),
+        Paragraph(
+            f"Status date: {project_state['status_date_display']}",
+            STYLES["CoverMeta"],
+        ),
+        Paragraph(
+            f"Branch: {project_state['development_branch']} | Workbench "
+            f"{research_use['workbench_version']} | Published CI verified",
+            STYLES["CoverMeta"],
+        ),
         Paragraph("Repository: github.com/RegineWendt/MEHLISSA", STYLES["CoverMeta"]),
         PageBreak(),
     ]
@@ -320,7 +338,8 @@ def cover_story() -> list:
 def main():
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     markdown = SOURCE.read_text(encoding="utf-8")
-    story = cover_story() + parse_body(markdown)
+    project_state = json.loads(STATE.read_text(encoding="utf-8"))
+    story = cover_story(project_state) + parse_body(markdown)
     document = StatusDocument(
         str(OUTPUT),
         pagesize=A4,

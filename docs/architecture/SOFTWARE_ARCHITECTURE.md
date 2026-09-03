@@ -50,7 +50,10 @@ flowchart TB
     NetworkSim[M6.6 external network-simulator<br/>metadata boundary]
     Resilience[M6.7 resilience profile<br/>failures and boundary misuse]
     Evidence[Logs, checkpoints, provenance,<br/>reports and validation results]
+    ResearchUse[Integrated research-use layer<br/>Workbench, CLI, Python, notebooks]
+    Assurance[Assurance layer<br/>schemas, evidence rules, verification, CI]
 
+    ResearchUse --> Manifest
     Manifest --> Composer
     Composer --> Runner
     Runner --> Kernel
@@ -73,6 +76,10 @@ flowchart TB
     Resilience -.->|prescribed injections| External
     Resilience --> Evidence
     Runner --> Evidence
+    Evidence --> ResearchUse
+    Assurance -.-> Manifest
+    Assurance -.-> Runner
+    Assurance -.-> Evidence
 ```
 
 The solid biological paths are implemented as typed C++ APIs through M5. M6.1
@@ -927,8 +934,8 @@ general model-composition command, so this remains a C++ developer/test path.
 
 ### 10.3 What is not implemented yet
 
-The following are planned for the M7/M8 path and must not be implied by current
-profiles:
+The following remain on the post-Workbench scientific qualification and M8
+path and must not be implied by current profiles:
 
 - one canonical patient manifest connecting anatomy, physiology, biochemistry,
   observations, uncertainty, and consent/provenance;
@@ -1006,4 +1013,5 @@ A module is ready for review only when:
 - [System requirements](../requirements/SYSTEM_REQUIREMENTS.md)
 - [Traceability matrix](../requirements/TRACEABILITY_MATRIX.md)
 - [Architecture decisions](README.md)
-- [M5 technical gate review](../m5/M5_GATE_REVIEW.md)
+- [M7 gate review](../m7/M7_GATE_REVIEW.md)
+- [Workbench 1.0 release acceptance](../ux/UX6_8_RELEASE_ACCEPTANCE.md)

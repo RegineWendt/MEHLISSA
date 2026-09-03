@@ -156,8 +156,8 @@ implementation is correct or sufficiently validated.
 | ID | Requirement | Origin | Priority | Verification | Source |
 |---|---|---:|---:|---:|---|
 | DATA-001 | All input data shall have a versioned schema, units, coordinate system, source, license, and checksum. | A/N | P0 | T/I | RM 6.1 |
-| DATA-002 | An experiment manifest shall completely describe model variants, parameters, seeds, duration, injections, observations, and termination conditions. | A/N | P0 | T/I | RM 6.4 |
-| DATA-003 | Every run shall produce a provenance manifest containing software/data versions, build, platform, and runtime. | A/N | P0 | T/I | RM 2.4, 6.4 |
+| DATA-002 | An experiment manifest shall completely describe model variants, parameters, seeds, duration, injections, observations, and termination conditions. | A/N | P0 | T/I | RM 6.5 |
+| DATA-003 | Every run shall produce a provenance manifest containing software/data versions, build, platform, and runtime. | A/N | P0 | T/I | RM 2.4, 6.5 |
 | DATA-004 | Output shall distinguish events, aggregates, samples, and optional trajectories and support volume limits. | B/A | P1 | T/R | VIS20 pp. 1–2; MEH25 pp. 1–2; RM M2 |
 | DATA-005 | Model assumptions shall be classified as published/observed, calibrated, validated, derived, or hypothetical. | A/N | P0 | I | RM 2.5, 6.2 |
 | DATA-006 | Calibration and validation data shall be separated; fitting to target values shall not simultaneously count as independent validation. | A/N | P0 | I/E | RM 6.2 |
@@ -170,8 +170,8 @@ implementation is correct or sufficiently validated.
 |---|---|---:|---:|---:|---|
 | UX-001 | The simulation shall run without visualization in local batch mode and later in HPC operation. | A/N | P1 | T | RM Phase 0/10 |
 | UX-002 | A decoupled visualization shall read the body model, entities/populations, time series, and density/heatmap data. | B/A | P2 | T/I | VIS20 pp. 1–2; DISS pp. 109–113 |
-| UX-003 | Users shall navigate time, rotate/pan/zoom views, and compare layers or runs. | B/A | P2 | I | VIS20 pp. 1–2; RM 6.5 |
-| UX-004 | Visualizations and reports shall be reproducibly generated from stored results and shall not modify simulation state. | A/N | P1 | T/I | RM 6.5 |
+| UX-003 | Users shall navigate time, rotate/pan/zoom views, and compare layers or runs. | B/A | P2 | I | VIS20 pp. 1–2; RM 6.6 |
+| UX-004 | Visualizations and reports shall be reproducibly generated from stored results and shall not modify simulation state. | A/N | P1 | T/I | RM 6.6 |
 | UX-005 | A graphical workbench shall delegate discovery, validation, execution, and analysis to accepted MEHLISSA interfaces and shall not duplicate simulation or schema semantics in its presentation layer. | A/N | P1 | T/I | RM UX-6.1; ADR-0050 |
 | UX-006 | The local workbench shall default to loopback-only, no-telemetry operation and protect its interfaces, files, and untrusted content according to a documented threat and privacy baseline. | N | P1 | T/I | RM UX-6.1; ADR-0050 |
 | UX-007 | The graphical workbench shall target WCAG 2.2 level AA and support semantic, keyboard-operable, reflow-capable workflows with visible non-color feedback. | N | P1 | T/I | RM UX-6.1; WCAG 2.2 |
@@ -202,7 +202,7 @@ implementation is correct or sufficiently validated.
 | QUA-002 | Critical kernel code shall be checked with warnings as errors, static analysis, and appropriate sanitizers. | N | P0 | T | RM M1 |
 | QUA-003 | Performance shall be assessed with versioned benchmarks; optimizations shall change reference results only within specified tolerances. | A/N | P1 | T/R | MEH25 pp. 1–2; RM Phase 10 |
 | QUA-004 | Realistic scales shall become scalable through agent, population, compartment, field, and surrogate models. | A | P1 | T/R | MEH25 pp. 1–2; RM 2.3 |
-| QUA-005 | Public interfaces, models, data schemas, and scenarios shall be versioned and documented for researchers. | A/N | P1 | I | RM 6.6 |
+| QUA-005 | Public interfaces, models, data schemas, and scenarios shall be versioned and documented for researchers. | A/N | P1 | I | RM 6.7 |
 | QUA-006 | Patient data shall be processed only after a documented data-protection, consent, and pseudonymization concept exists. | N | P3 | I | RM M8 |
 
 ## 14. Acceptance rules

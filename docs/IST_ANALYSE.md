@@ -13,6 +13,13 @@ SPDX-License-Identifier: CC-BY-4.0
 the standalone implementation in `mehlissa2.0/`, and the body and scenario data
 sets in the repository
 
+> **Historical baseline, not current project status.** This document is a
+> frozen analysis of legacy commit `4f4fc5a` from 26 August 2026. It explains
+> the starting point for MEHLISSA Next. For the implemented M0-M7 platform,
+> Workbench 1.0, present scientific limitations, and current development focus,
+> use the [Project Status and Collaboration Brief](PROJECT_STATUS_AND_COLLABORATION_BRIEF.md)
+> and the [Roadmap](ROADMAP.md).
+
 ## 1. Executive assessment
 
 MEHLISSA is currently a scientifically well-founded overall concept with a

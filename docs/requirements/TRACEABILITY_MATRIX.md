@@ -37,9 +37,9 @@ Status codes:
 | SYS-006 | RM M0 | PART | M1 | CI rule and review: `core/` does not import `scenarios/` |
 | SYS-007 | RM M1 | DONE | M1 | stable error codes/CLI statuses and negative tests for configuration, overflow, lifecycle, log, and checkpoint invariants |
 | SYS-008 | DISS pp. 95–97, 133 | DONE | M3 | M3.18 runs one schema-validated body–lung–body scenario unchanged with the effective compartment and five-lobe v7 implementation; identity, route, ownership, population, substance, and flow meaning agree while model-specific timing remains observable |
-| ARC-001 | DISS pp. 94–96 | PART | M3–M5 | generic `ModelComponent` boundary, independent organ and capillary implementations, and an explicit organ-capillary coupler exist; a body adapter and cell implementation follow |
+| ARC-001 | DISS pp. 94–96 | PART | M3–M5 | generic `ModelComponent` lifecycle boundary plus independent body, organ, capillary, cell, and communication implementations and explicit couplers exist; a completely uniform interchangeable component/factory surface across every layer remains open |
 | ARC-002 | DISS p. 95 | PART | M3–M5 | schema-validated lung and capillary definitions bind scale and scientific evidence to execution; M4.3 derives capillary area, velocity, and transit from typed SI inputs, while physiological capillary uncertainty and qualification follow |
-| ARC-003 | DISS pp. 95–97 | PART | M3/M4 | versioned entity, population, substance-amount, and volume-flow contracts cross body-organ and organ-capillary boundaries; physiological-state and event contracts follow |
+| ARC-003 | DISS pp. 95–97 | PART | M3–M7 | versioned entity, population, substance-amount, volume-flow, body-state, detection, response, and communication-event contracts cross implemented boundaries; broader transforming exchanges and generic scenario composition remain open |
 | ARC-004 | RM 3.3 | PART | M3/M4 | entity round trips and lossless population, substance, and flow transit pass across both lung variants and the synthetic organ-capillary route; transforming exchange and body aggregate endpoints follow |
 | ARC-005 | DISS pp. 99–100 | DONE | M3–M5 | M5.7 returns a versioned neutral apoptosis-commitment event with stable source, target, measurement, and time identity; viable responses remain silent |
 | ARC-006 | RM 3.3 | PART | M3 | externally selected coarse/regional results agree at 0.5 s and 1 s, the 6.4 s pulmonary 0D route agrees at 0.1 s and 0.2 s, and M3.18 executes one 0.1 s scenario across coarse and five-lobe candidates; asynchronous multirate synchronization follows |
@@ -140,23 +140,23 @@ statements.
 | IOT-003 | DISS pp. 117–118, 187–190 | PART | M2/M6 | passive segment measurement is joined by a resource-bounded active gateway and M6.5 BAN/station loop; physical placement, range, and hardware qualification remain open |
 | IOT-004 | RM M6 | PART | M6 | M6.7 consolidates exact local/BAN attempts, deliveries, bytes, latency, prescribed loss/corruption/expiry, transmitter/receiver/link energy, and bounded station/simulator/device capacities in a strict resilience profile; calibrated noise, interference, throughput, queueing, and channel statistics remain open |
 | IOT-005 | DISS pp. 96–100; MEH25 | DONE | M6 | M6.6 provides a versioned metadata-only external network-simulator request/response boundary, typed and JSON clients, strict identity/validity checks, and a `BanTransportAdapter` implementation without kernel or physiological dependencies; a concrete ns-3 model remains an optional integration |
-| DATA-001 | RM 6.1 | PART | M1/M2 | versioned schemas and validators for experiment, provenance, log, and checkpoint; domain M2 data schemas follow |
-| DATA-002 | RM 6.4 | DONE | M1 | JSON Schema `1.0.0`, manifest and CLI negative tests |
-| DATA-003 | RM 2.4, 6.4 | PART | M1 | schema `1.0.0`, automatically generated `provenance.json`, SHA-256 and contract tests; data-version catalog follows with real models |
+| DATA-001 | RM 6.1 | PART | M1–M7 | versioned schemas and validators cover experiment, provenance, log, checkpoint, body, organ, capillary, cell, communication, scenario, result, report, and campaign artifacts; release-wide enforcement of source, licence, checksum, units, and coordinates remains incomplete |
+| DATA-002 | RM 6.5 | DONE | M1 | JSON Schema `1.0.0`, manifest and CLI negative tests |
+| DATA-003 | RM 2.4, 6.5 | PART | M1–M7 | schema-validated provenance, SHA-256 identities, model/example catalog, unique CLI run directories, M7 results, reports, campaigns, and Workbench audits exist; uniform provenance for every component and standalone benchmark path remains open |
 | DATA-004 | VIS20; MEH25 | DONE | M2 | separate extraction events, measurement-site counters, bounded individual observations, time aggregates, and optional complete/first-N trajectories with explicit truncation indicators and JSON Schema |
 | DATA-005 | RM 2.5 | PART | M0/M1 | lung model cards carry evidence class, population, state, sources, uncertainty, and limitations; equivalent enforcement for every future model follows |
 | DATA-006 | RM 6.2 | PART | M0 | M3.7 stores calibration/validation/derived roles separately; M3.8–M3.13 enforce source separation, overlap accounting, exact aggregate-statistic semantics, and frozen comparisons; M3.14–M3.15 preserve negative structural results; M3.17 adds an executable calibration-source-reuse guard and explicit normalization of published rounded lobe fractions; participant-level data and release-wide enforcement follow |
 | DATA-007 | RM 6.3 | DONE | M7 | result 2.0.0 combines all artifact/schema hashes, qualified stages, Levels B-D outcomes, Level-E cases, sensitivity/specificity and false-positive/false-negative Wilson intervals, plus explicit limitations |
-| DATA-008 | RM 6.2 | SPEC | M2 | statistical regression tests with justified tolerance |
+| DATA-008 | RM 6.2 | PART | M5/M7 | stochastic receptor population moments, Wilson classification intervals, particle-channel comparisons, and campaign replicate summaries use declared statistical semantics; release-wide stochastic regression tolerances and power/design rules remain open |
 
 ## 6. Operation, scenarios, and quality
 
 | ID | Source | Status 2026-09-03 | Target | Planned verification |
 |---|---|---|---|---|
-| UX-001 | RM Phase 0/10 | PART | M1 | headless CLI run in CI |
-| UX-002 | VIS20 pp. 1–2 | LEGACY | M7 | standardized result format in new visualization |
-| UX-003 | VIS20 pp. 1–2 | LEGACY | M7 | visual acceptance test and run comparison |
-| UX-004 | RM 6.5 | SPEC | M7 | identical rendering from archived run |
+| UX-001 | RM Phase 0/10 | PART | M1/Phase 10 | headless local CLI scenario and campaign execution passes in CI and does not require visualization; scheduler integration and validated HPC operation remain open |
+| UX-002 | VIS20 pp. 1–2 | PART | UX-6/Phase 10 | Workbench 1.0 reads decoupled versioned scenario/campaign results and exposes stages, cases, comparisons, provenance, and descriptive plots; body geometry, entity/population time series, density, and heatmaps remain open |
+| UX-003 | VIS20 pp. 1–2 | PART | UX-6/Phase 10 | Workbench 1.0 provides scenario/campaign comparison and accessible interactive result navigation; temporal navigation, 3D rotate/pan/zoom, and cross-layer spatial views remain open |
+| UX-004 | RM 6.6 | DONE | UX-3/UX-6 | non-overwriting UX-3 text/CSV/HTML reports and Workbench dashboards/JSON/CSV/SVG exports are generated from retained versioned results through accepted readers without modifying simulation state; parity and source-hash tests pass |
 | UX-005 | RM UX-6.1; ADR-0050 | DONE | UX-6 | the complete UX-6.1–UX-6.8 browser workflow delegates discovery, editing, validation, execution, result reading, comparison, audit, and analysis to accepted host/process interfaces; browser code owns presentation only |
 | UX-006 | RM UX-6.1; ADR-0050 | DONE | UX-6 | loopback allow-list, ephemeral header capability, host validation, explicit static-file and artifact allow-lists, safe text insertion, security headers, no remote assets/telemetry, bounded execution/files, negative tests, and UX-6.8 release review |
 | UX-007 | RM UX-6.1; WCAG 2.2 | DONE | UX-6 | English semantic structure, skip link, programmatic labels, native controls/dialogs, logical keyboard order and focus placement, live status/alert regions, accessible SVG titles/descriptions and table fallback, visible non-color focus/status, narrow reflow, overflow containment, static assertions, and desktop/mobile accessibility-tree review; diverse-user evaluation remains continuous product research |
@@ -175,9 +175,9 @@ statements.
 | SCN-006 | DISS pp. 140–143 | SPEC | M8 | incrementally personalized research twin |
 | QUA-001 | RM M1 | DONE | M1 | green MSVC/GCC/Clang CI matrix |
 | QUA-002 | RM M1 | DONE | M1 | clang-tidy, ASan/UBSan, and warnings as errors in CI |
-| QUA-003 | MEH25 pp. 1–2 | SPEC | M2–M7 | versioned benchmark reports plus result comparison |
-| QUA-004 | MEH25 pp. 1–2 | SPEC | M4–M7 | scaling test: agents versus populations/surrogate |
-| QUA-005 | RM 6.6 | DONE | M1 ongoing | versioned API/schema/model/scenario documents plus a two-level English User Guide cover non-expert purpose, non-claims, mental model, guided experiment families, decision aid, glossary, and accepted M0–M7 workflows; the M5-M7 gate-impact reviews are recorded and every future M-gate requires the same review |
+| QUA-003 | MEH25 pp. 1–2 | PART | continuous | a versioned body-transport benchmark/report contract, bounded observation policies, deterministic final-state equality checks, resource limits, randomized repeated campaign runner, and smoke test exist; the frozen full RQ4 campaign and optimization-regression history remain to be executed and published |
+| QUA-004 | MEH25 pp. 1–2 | PART | M5/Phase 10 | explicit entities, stochastic populations, cohort-compressed one-trillion-cell aggregation, compartment transport, finite-volume fields, and analytical/surrogate comparisons exist; representative end-to-end scale envelopes, profiling, parallel execution, and HPC evidence remain open |
+| QUA-005 | RM 6.7 | DONE | continuous | versioned API/schema/model/scenario documents plus a two-level English User Guide cover non-expert purpose, non-claims, mental model, guided experiment families, decision aid, glossary, and accepted M0–M7 and Workbench 1.0 workflows; formal gate and user-visible delivery reviews require synchronized Roadmap, status brief/PDF, architecture, traceability, and User Guide impact checks |
 | QUA-006 | RM M8 | SPEC | M8 | data-protection and data-management review |
 
 ## 7. M0 coverage review

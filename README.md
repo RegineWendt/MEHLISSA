@@ -12,16 +12,21 @@ and technical references.
 
 Start here:
 
+- [Project Status and Collaboration Brief](docs/PROJECT_STATUS_AND_COLLABORATION_BRIEF.md)
+  — current capabilities, evidence maturity, limitations, and high-value next
+  contributions; a shareable PDF is linked from the document.
 - [User Guide](docs/USER_GUIDE.md) — understand MEHLISSA, choose an experiment,
   build and run the software, and interpret model evidence and limitations.
 - [Development Guide](docs/DEVELOPMENT.md) — compiler, CMake, vcpkg, CI, and
   contribution-oriented setup.
 - [Software Architecture and Developer Guide](docs/architecture/SOFTWARE_ARCHITECTURE.md)
   — system structure, public APIs, module extensions, and personalization.
-- [Roadmap](docs/ROADMAP.md) — implementation strategy from the validated body
-  layer to organ, capillary, cellular, and Nano-IoT models.
-- [Current-State Analysis](docs/IST_ANALYSE.md) — legacy inventory and the gap
-  between existing software and the dissertation vision.
+- [Roadmap](docs/ROADMAP.md) — achieved M0-M7 and research-use delivery record,
+  scientific qualification program, further scenarios, additional organs,
+  scaling, and the governed digital-twin path.
+- [Legacy-baseline analysis](docs/IST_ANALYSE.md) — dated inventory of the
+  historical implementations at commit `4f4fc5a`; it is not the current Next
+  status.
 
 After building the normal Debug preset, the complete M7 fingerprinting
 research demonstrator can be run without writing C++:
