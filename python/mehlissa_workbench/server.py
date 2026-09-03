@@ -5,6 +5,7 @@
 
 from __future__ import annotations
 
+import csv
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 import hashlib
@@ -12,6 +13,7 @@ import hmac
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from importlib.resources import files
+import io
 import json
 import math
 from pathlib import Path
@@ -37,7 +39,8 @@ VALIDATION_API_VERSION = "1.0.0"
 RUN_API_VERSION = "1.0.0"
 RESULT_API_VERSION = "1.0.0"
 AUDIT_API_VERSION = "1.0.0"
-WORKBENCH_VERSION = "0.6.0"
+ANALYSIS_API_VERSION = "1.0.0"
+WORKBENCH_VERSION = "0.7.0"
 LOOPBACK_HOSTS = frozenset({"127.0.0.1", "localhost"})
 SCENARIO_SCHEMA_PATH = Path(
     "data/schemas/fingerprinting-scenario-profile/1.0.0.schema.json"
@@ -181,7 +184,7 @@ def discover_catalog(client: MehlissaClient) -> dict[str, object]:
         "api_version": CATALOG_API_VERSION,
         "application": "MEHLISSA Next Research Workbench",
         "workbench_version": WORKBENCH_VERSION,
-        "workbench_increment": "UX-6.6",
+        "workbench_increment": "UX-6.7",
         "read_only": True,
         "scenario_editing": True,
         "clinical_use": False,
@@ -1565,6 +1568,238 @@ class RunWorkspace:
             "table_artifact": "csv",
         }
 
+    @staticmethod
+    def _numeric_metric(value: object) -> float | None:
+        if value is None:
+            return None
+        if isinstance(value, bool):
+            return 1.0 if value else 0.0
+        if isinstance(value, (int, float)) and math.isfinite(float(value)):
+            return float(value)
+        return None
+
+    @staticmethod
+    def _describe_metric(values: Sequence[float], total_count: int) -> dict[str, object]:
+        count = len(values)
+        if not count:
+            return {
+                "sample_count": 0,
+                "missing_count": total_count,
+                "mean": None,
+                "sample_standard_deviation": None,
+                "observed_range": None,
+                "inferential_interval": None,
+            }
+        mean = sum(values) / count
+        standard_deviation = (
+            math.sqrt(sum((value - mean) ** 2 for value in values) / (count - 1))
+            if count > 1
+            else None
+        )
+        return {
+            "sample_count": count,
+            "missing_count": total_count - count,
+            "mean": mean,
+            "sample_standard_deviation": standard_deviation,
+            "observed_range": {
+                "kind": "observed_range_not_confidence_interval",
+                "lower": min(values),
+                "upper": max(values),
+            },
+            "inferential_interval": None,
+        }
+
+    @staticmethod
+    def _analysis_csv(
+        metrics: Sequence[Mapping[str, object]], source_sha256: str
+    ) -> str:
+        columns = (
+            "record_type", "metric", "unit", "group", "design", "run_id",
+            "role", "replicate_index", "seed", "parameter", "parameter_value",
+            "response", "baseline", "comparison", "difference", "included",
+            "source_result_sha256",
+        )
+        stream = io.StringIO(newline="")
+        writer = csv.DictWriter(stream, fieldnames=columns, lineterminator="\n")
+        writer.writeheader()
+        for metric in metrics:
+            for series in cast(list[dict[str, object]], metric["series"]):
+                for point in cast(list[dict[str, object]], series["points"]):
+                    writer.writerow(
+                        {
+                            "record_type": "observation",
+                            "metric": metric["id"],
+                            "unit": metric["unit"],
+                            "group": series["group"],
+                            "design": series["design"],
+                            "run_id": point["run_id"],
+                            "role": point["role"],
+                            "replicate_index": point["replicate_index"],
+                            "seed": point["seed"],
+                            "parameter": point["parameter"],
+                            "parameter_value": point["parameter_value"],
+                            "response": point["response"],
+                            "included": point["included"],
+                            "source_result_sha256": source_sha256,
+                        }
+                    )
+            for point in cast(list[dict[str, object]], metric["paired_differences"]):
+                writer.writerow(
+                    {
+                        "record_type": "paired_difference",
+                        "metric": metric["id"],
+                        "unit": metric["unit"],
+                        "group": point["group"],
+                        "design": "paired_comparison",
+                        "role": "comparison_minus_baseline",
+                        "replicate_index": point["replicate_index"],
+                        "seed": point["seed"],
+                        "baseline": point["baseline"],
+                        "comparison": point["comparison"],
+                        "difference": point["difference"],
+                        "included": point["included"],
+                        "source_result_sha256": source_sha256,
+                    }
+                )
+        return stream.getvalue()
+
+    def analysis(self, job_id: str) -> dict[str, object]:
+        """Project descriptive UX-6.7 campaign analysis from the accepted reader."""
+
+        job = self.get(job_id)
+        boundary = {
+            "clinical_use": False,
+            "patient_specific": False,
+            "inferential_uncertainty": False,
+            "statement": (
+                "Charts describe the six retained software runs only. Observed ranges "
+                "are not confidence or credible intervals and support no clinical or "
+                "patient-specific inference."
+            ),
+        }
+        if job["status"] != "completed":
+            unavailable = self._unavailable_dashboard(job)
+            unavailable["api_version"] = ANALYSIS_API_VERSION
+            unavailable["boundary"] = boundary
+            return unavailable
+        if job["kind"] != "campaign":
+            return {
+                "api_version": ANALYSIS_API_VERSION,
+                "available": False,
+                "job_id": job_id,
+                "kind": job["kind"],
+                "status": job["status"],
+                "observation_count": 0,
+                "reason": (
+                    "Sensitivity and observed-variation views require a completed "
+                    "campaign; one scenario is not an uncertainty sample."
+                ),
+                "boundary": boundary,
+            }
+
+        path = self._result_path(job)
+        result = load_campaign_result(path)
+        source_sha256 = self._sha256(path)
+        definitions = (
+            ("sensitivity", "Sensitivity", "proportion", "numeric_proportion"),
+            ("specificity", "Specificity", "proportion", "numeric_proportion"),
+            ("detected", "Detected", "binary outcome (0 or 1)", "binary"),
+            ("assembled", "Assembled", "binary outcome (0 or 1)", "binary"),
+        )
+        grouped_runs = result.groups()
+        metric_payloads: list[dict[str, object]] = []
+        for metric_id, label, unit, value_type in definitions:
+            series_payloads: list[dict[str, object]] = []
+            for group_name, runs in grouped_runs.items():
+                points: list[dict[str, object]] = []
+                values: list[float] = []
+                for run in runs:
+                    numeric = self._numeric_metric(run.get(metric_id))
+                    if numeric is not None:
+                        values.append(numeric)
+                    points.append(
+                        {
+                            "run_id": run.get("id"),
+                            "role": run.get("role"),
+                            "replicate_index": run.get("replicate_index"),
+                            "seed": run.get("seed"),
+                            "parameter": run.get("parameter"),
+                            "parameter_value": run.get("value"),
+                            "response": numeric,
+                            "included": numeric is not None,
+                        }
+                    )
+                series_payloads.append(
+                    {
+                        "group": group_name,
+                        "design": runs[0].get("design") if runs else None,
+                        "sample_count": len(values),
+                        "points": points,
+                        "summary": self._describe_metric(values, len(runs)),
+                    }
+                )
+            differences = []
+            for difference in result.paired_differences(metric_id):
+                numeric_difference = self._numeric_metric(difference["difference"])
+                differences.append(
+                    {
+                        **difference,
+                        "baseline": self._numeric_metric(difference["baseline"]),
+                        "comparison": self._numeric_metric(difference["comparison"]),
+                        "difference": numeric_difference,
+                        "included": numeric_difference is not None,
+                    }
+                )
+            included_differences = [
+                cast(float, difference["difference"])
+                for difference in differences
+                if difference["included"]
+            ]
+            metric_payloads.append(
+                {
+                    "id": metric_id,
+                    "label": label,
+                    "unit": unit,
+                    "value_type": value_type,
+                    "series": series_payloads,
+                    "paired_differences": differences,
+                    "paired_summary": self._describe_metric(
+                        included_differences, len(differences)
+                    ),
+                }
+            )
+        csv_text = self._analysis_csv(metric_payloads, source_sha256)
+        return {
+            "api_version": ANALYSIS_API_VERSION,
+            "available": True,
+            "job_id": job_id,
+            "kind": "campaign",
+            "status": "completed",
+            "reader": "mehlissa.load_campaign_result",
+            "source": {
+                "artifact": "result",
+                "path": self._relative(path),
+                "sha256": source_sha256,
+                "schema_version": result.document["schema_version"],
+            },
+            "observation_count": len(result.runs),
+            "metrics": metric_payloads,
+            "sensitivity_hooks": result.document["sensitivity_hooks"],
+            "uncertainty": {
+                "replicates": "Seed-to-seed observed variation under one fixed configuration.",
+                "sweeps": "Deterministic parameter contrasts; not uncertainty samples.",
+                "paired_differences": "Within-seed descriptive contrasts; no population inference.",
+                "interval": "Observed minimum-to-maximum range only; never a confidence or credible interval.",
+            },
+            "boundary": boundary,
+            "exports": {
+                "analysis_json_filename": f"mehlissa-analysis-{job_id}.json",
+                "analysis_csv_filename": f"mehlissa-analysis-{job_id}.csv",
+                "figure_filename_pattern": f"mehlissa-analysis-{job_id}-<metric>-<view>.svg",
+                "csv": csv_text,
+            },
+        }
+
     def compare(self, left_id: str, right_id: str) -> dict[str, object]:
         """Compare two completed scenario results without inventing missing values."""
         if not left_id or not right_id or left_id == right_id:
@@ -1789,6 +2024,17 @@ class WorkbenchRequestHandler(BaseHTTPRequestHandler):
                 self._send_json(HTTPStatus.NOT_FOUND, {"error": "run_not_found", "detail": str(error)})
             except (RunControlError, ScenarioWorkspaceError, ValueError, OSError) as error:
                 self._send_json(HTTPStatus.CONFLICT, {"error": "audit_unavailable", "detail": str(error)})
+            return
+        if path == "/api/run/analysis":
+            if not self._require_session():
+                return
+            identifier = parse_qs(urlsplit(self.path).query).get("id", [""])[0]
+            try:
+                self._send_json(HTTPStatus.OK, self.workbench.runs.analysis(identifier))
+            except RunNotFoundError as error:
+                self._send_json(HTTPStatus.NOT_FOUND, {"error": "run_not_found", "detail": str(error)})
+            except (RunControlError, ValueError, OSError) as error:
+                self._send_json(HTTPStatus.CONFLICT, {"error": "analysis_unavailable", "detail": str(error)})
             return
         if path == "/api/run/artifact":
             if not self._require_session():

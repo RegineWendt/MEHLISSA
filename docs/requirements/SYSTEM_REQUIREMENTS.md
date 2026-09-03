@@ -180,6 +180,7 @@ implementation is correct or sufficiently validated.
 | UX-010 | The workbench shall start only explicitly confirmed validated scenarios or allowlisted versioned campaigns through accepted APIs, use unique bounded output directories, expose traceable stages and bounded logs, and preserve inputs, outputs, failures, and cancellation evidence. | N | P1 | T/I | RM UX-6.4; ADR-0050 |
 | UX-011 | Result dashboards and comparisons shall derive values through accepted versioned readers, link to authoritative retained artifacts, and exclude missing, incomplete, failed, or cancelled runs from observations and comparisons. | N | P1 | T/I | RM UX-6.5; ADR-0050 |
 | UX-012 | Every graphical result view shall expose an exportable, artifact-backed audit containing software/build identity, seeds, inputs, model and schema hashes, evidence sources and licences, maturity, limitations, and an explicit non-clinical/non-patient-specific boundary; missing evidence and hash mismatches shall be conspicuous. | N | P1 | T/I | RM UX-6.6; ADR-0050 |
+| UX-013 | Graphical campaign analysis shall derive observations and summaries through accepted versioned readers, distinguish descriptive replicate variation from deterministic parameter contrasts and inferential uncertainty, state units and included sample counts, and export source-bound exact analysis data, tables, and accessible figures without fabricating unsupported inference. | A/N | P1 | T/I | RM UX-6.7; ADR-0050 |
 
 ## 12. Medical scenarios
 

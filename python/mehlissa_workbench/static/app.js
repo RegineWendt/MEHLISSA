@@ -341,11 +341,110 @@ function renderSources(parent, sources) {
   parent.append(list);
 }
 
-function exportAudit(audit) {
-  const blob = new Blob([`${JSON.stringify(audit, null, 2)}\n`], { type: "application/json" });
+function downloadText(filename, mediaType, text) {
+  const blob = new Blob([text], { type: mediaType });
   const url = URL.createObjectURL(blob); const link = document.createElement("a");
-  link.href = url; link.download = `mehlissa-audit-${audit.job_id}.json`; link.hidden = true; document.body.append(link); link.click(); link.remove();
+  link.href = url; link.download = filename; link.hidden = true; document.body.append(link); link.click(); link.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function exportAudit(audit) { downloadText(`mehlissa-audit-${audit.job_id}.json`, "application/json", `${JSON.stringify(audit, null, 2)}\n`); }
+
+const SVG_NS = "http://www.w3.org/2000/svg";
+function svgElement(parent, name, attributes = {}, text = null) {
+  const element = document.createElementNS(SVG_NS, name);
+  for (const [key, value] of Object.entries(attributes)) element.setAttribute(key, String(value));
+  if (text !== null) element.textContent = text;
+  parent.append(element); return element;
+}
+
+function analysisFigure(analysis, metric, view, title, points, xLabel, description) {
+  const figure = document.createElement("figure"); figure.className = "analysis-figure";
+  const svg = document.createElementNS(SVG_NS, "svg"); svg.setAttribute("viewBox", "0 0 680 350"); svg.setAttribute("role", "img");
+  const titleId = `chart-${analysis.job_id}-${metric.id}-${view}-title`; const descriptionId = `${titleId}-description`;
+  svg.setAttribute("aria-labelledby", `${titleId} ${descriptionId}`); svgElement(svg, "title", { id: titleId }, title); svgElement(svg, "desc", { id: descriptionId }, description);
+  svgElement(svg, "metadata", {}, JSON.stringify({ api_version: analysis.api_version, source_sha256: analysis.source.sha256, metric: metric.id, unit: metric.unit, view, sample_count: points.filter((point) => point.y !== null).length }));
+  const left = 72; const right = 24; const top = 34; const bottom = 68; const width = 680 - left - right; const height = 350 - top - bottom;
+  const included = points.filter((point) => point.y !== null); const pairView = view === "paired-difference";
+  const maximumMagnitude = Math.max(0.1, ...included.map((point) => Math.abs(point.y)));
+  const yMinimum = pairView ? -maximumMagnitude : 0; const yMaximum = pairView ? maximumMagnitude : 1;
+  const xValues = included.map((point) => point.x); const logX = view === "sweep" && xValues.every((value) => value > 0);
+  const projectedX = (value) => logX ? Math.log10(value) : value;
+  const xMinimum = xValues.length ? Math.min(...xValues.map(projectedX)) : 0; const xMaximum = xValues.length ? Math.max(...xValues.map(projectedX)) : 1;
+  const xPosition = (value, index) => xMinimum === xMaximum ? left + width / 2 : left + ((projectedX(value) - xMinimum) / (xMaximum - xMinimum)) * width;
+  const yPosition = (value) => top + (1 - (value - yMinimum) / (yMaximum - yMinimum)) * height;
+  svgElement(svg, "line", { x1: left, y1: top, x2: left, y2: top + height, class: "chart-axis" });
+  svgElement(svg, "line", { x1: left, y1: top + height, x2: left + width, y2: top + height, class: "chart-axis" });
+  for (let index = 0; index <= 4; index += 1) {
+    const value = yMinimum + ((yMaximum - yMinimum) * index) / 4; const y = yPosition(value);
+    svgElement(svg, "line", { x1: left, y1: y, x2: left + width, y2: y, class: Math.abs(value) < 1e-12 ? "chart-zero" : "chart-grid" });
+    svgElement(svg, "text", { x: left - 10, y: y + 4, "text-anchor": "end", class: "chart-tick" }, displayValue(value));
+  }
+  included.forEach((point, index) => {
+    const x = xPosition(point.x, index); const y = yPosition(point.y);
+    svgElement(svg, "line", { x1: x, y1: top + height, x2: x, y2: y, class: "chart-stem" });
+    svgElement(svg, "circle", { cx: x, cy: y, r: 7, class: `chart-point chart-${view}` });
+    svgElement(svg, "text", { x, y: Math.max(top + 12, y - 12), "text-anchor": "middle", class: "chart-value" }, displayValue(point.y));
+    svgElement(svg, "text", { x, y: top + height + 22 + (index % 2) * 13, "text-anchor": "middle", class: "chart-tick" }, point.label);
+  });
+  svgElement(svg, "text", { x: left + width / 2, y: 343, "text-anchor": "middle", class: "chart-label" }, xLabel);
+  const yLabel = svgElement(svg, "text", { x: 17, y: top + height / 2, "text-anchor": "middle", class: "chart-label", transform: `rotate(-90 17 ${top + height / 2})` }, metric.unit); yLabel.setAttribute("aria-hidden", "true");
+  figure.append(svg);
+  const sampleCount = included.length; appendText(figure, "figcaption", `${title}. n=${sampleCount}; response unit: ${metric.unit}. ${description}`);
+  const exportButton = document.createElement("button"); exportButton.type = "button"; exportButton.className = "secondary figure-export"; exportButton.textContent = "Download this figure SVG";
+  exportButton.addEventListener("click", () => {
+    const clone = svg.cloneNode(true); clone.setAttribute("xmlns", SVG_NS);
+    const serialized = `<?xml version="1.0" encoding="UTF-8"?>\n${new XMLSerializer().serializeToString(clone)}\n`;
+    downloadText(analysis.exports.figure_filename_pattern.replace("<metric>", metric.id).replace("<view>", view), "image/svg+xml", serialized);
+  });
+  figure.append(exportButton); return figure;
+}
+
+function renderAnalysisViews(section, analysis, metricId) {
+  const previous = section.querySelector(".analysis-views"); if (previous) previous.remove();
+  const metric = analysis.metrics.find((candidate) => candidate.id === metricId); const views = document.createElement("div"); views.className = "analysis-views";
+  const replicate = metric.series.find((series) => series.design === "replicate");
+  const sweep = metric.series.find((series) => series.design === "sweep");
+  appendText(views, "h5", "Descriptive summaries");
+  const summaries = metric.series.map((series) => {
+    const summary = series.summary; const range = summary.observed_range;
+    const standardDeviation = summary.sample_standard_deviation === null && summary.sample_count === 1 ? "Not defined for n<2" : summary.sample_standard_deviation;
+    return [readableName(series.design), series.group, summary.sample_count, summary.missing_count, summary.mean, standardDeviation, range ? `${displayValue(range.lower)} to ${displayValue(range.upper)}` : null, "None — descriptive only"];
+  });
+  const pairedRange = metric.paired_summary.observed_range;
+  const pairedStandardDeviation = metric.paired_summary.sample_standard_deviation === null && metric.paired_summary.sample_count === 1 ? "Not defined for n<2" : metric.paired_summary.sample_standard_deviation;
+  summaries.push(["Paired difference", "comparison minus baseline", metric.paired_summary.sample_count, metric.paired_summary.missing_count, metric.paired_summary.mean, pairedStandardDeviation, pairedRange ? `${displayValue(pairedRange.lower)} to ${displayValue(pairedRange.upper)}` : null, "None — descriptive only"]);
+  views.append(makeTable(["View", "Group", "n", "Missing", "Mean", "Sample SD", "Observed range (not a confidence interval)", "Inferential interval"], summaries, `${metric.label} descriptive summaries`));
+  const replicatePoints = (replicate?.points || []).map((point) => ({ x: point.replicate_index, y: point.included ? point.response : null, label: `R${point.replicate_index}` }));
+  const sweepPoints = (sweep?.points || []).map((point) => ({ x: point.parameter_value, y: point.included ? point.response : null, label: displayValue(point.parameter_value) }));
+  const pairedPoints = metric.paired_differences.map((point, index) => ({ x: index + 1, y: point.included ? point.difference : null, label: `Seed ${point.seed}` }));
+  views.append(analysisFigure(analysis, metric, "replicates", `${metric.label}: replicate observations`, replicatePoints, "Replicate", "Points show seed-to-seed observations at one fixed configuration; the reported minimum-to-maximum range is not an inferential interval."));
+  views.append(analysisFigure(analysis, metric, "sweep", `${metric.label}: collector-count sweep`, sweepPoints, "Collector count (log-positioned)", "Points are deterministic parameter contrasts from the declared sweep, not uncertainty samples."));
+  views.append(analysisFigure(analysis, metric, "paired-difference", `${metric.label}: paired difference`, pairedPoints, "Paired seed", "Values are comparison minus baseline within a shared seed; no population inference is made."));
+  appendText(views, "h5", "Exact plotted and exported values");
+  const rows = [];
+  for (const series of metric.series) for (const point of series.points) rows.push([readableName(series.design), series.group, point.seed, point.parameter_value, point.response, point.included]);
+  for (const point of metric.paired_differences) rows.push(["Paired difference", point.group, point.seed, "comparison - baseline", point.difference, point.included]);
+  views.append(makeTable(["View", "Group", "Seed", "Parameter value", `Response (${metric.unit})`, "Included"], rows, `${metric.label} analysis values`));
+  section.append(views);
+}
+
+function renderCampaignAnalysis(analysis) {
+  const root = byId("dashboard-content"); const section = document.createElement("section"); section.className = "analysis-panel"; section.setAttribute("aria-labelledby", "analysis-heading");
+  appendText(section, "p", "Sensitivity, observed variation, and reproducible export", "eyebrow"); const heading = appendText(section, "h4", "Campaign analysis"); heading.id = "analysis-heading";
+  const boundary = appendText(section, "p", analysis.boundary.statement, "analysis-boundary"); boundary.setAttribute("role", "note");
+  appendFacts(section, [["Accepted reader", analysis.reader], ["Retained observations", analysis.observation_count], ["Source SHA-256", analysis.source.sha256], ["Result schema", analysis.source.schema_version]]);
+  const control = document.createElement("label"); control.className = "analysis-metric-control"; appendText(control, "span", "Response metric"); const select = document.createElement("select"); select.id = "analysis-metric";
+  for (const metric of analysis.metrics) { const option = document.createElement("option"); option.value = metric.id; option.textContent = `${metric.label} (${metric.unit})`; select.append(option); } control.append(select); section.append(control);
+  appendText(section, "h5", "Declared sensitivity hook");
+  for (const hook of analysis.sensitivity_hooks) {
+    const card = document.createElement("article"); card.className = "sensitivity-hook"; appendText(card, "strong", hook.parameter); appendText(card, "span", `Responses: ${hook.response_metrics.join(", ")}`); appendText(card, "p", hook.qualification); section.append(card);
+  }
+  const interpretation = document.createElement("ul"); interpretation.className = "analysis-interpretation"; for (const [label, value] of Object.entries(analysis.uncertainty)) appendText(interpretation, "li", `${readableName(label)}: ${value}`); section.append(interpretation);
+  const exports = document.createElement("div"); exports.className = "artifact-actions analysis-exports";
+  const jsonButton = document.createElement("button"); jsonButton.type = "button"; jsonButton.className = "secondary"; jsonButton.textContent = "Download analysis data JSON"; jsonButton.addEventListener("click", () => downloadText(analysis.exports.analysis_json_filename, "application/json", `${JSON.stringify(analysis, null, 2)}\n`)); exports.append(jsonButton);
+  const csvButton = document.createElement("button"); csvButton.type = "button"; csvButton.className = "secondary"; csvButton.textContent = "Download analysis table CSV"; csvButton.addEventListener("click", () => downloadText(analysis.exports.analysis_csv_filename, "text/csv", analysis.exports.csv)); exports.append(csvButton); section.append(exports);
+  root.append(section); renderAnalysisViews(section, analysis, select.value); select.addEventListener("change", () => renderAnalysisViews(section, analysis, select.value));
 }
 
 function renderAudit(audit) {
@@ -406,6 +505,7 @@ function renderScenarioDashboard(data) {
   const actions = document.createElement("div"); actions.className = "artifact-actions";
   for (const action of [artifactAction(data.job_id, data.authoritative_artifact, "Open authoritative result JSON"), artifactAction(data.job_id, data.ux3_report_artifact, "Open UX-3 HTML report")]) if (action) actions.append(action);
   root.append(actions);
+  appendText(root, "p", "Sensitivity and uncertainty views require a completed campaign. One scenario is not treated as an uncertainty sample.", "excluded-result");
 }
 
 function renderCampaignDashboard(data) {
@@ -434,9 +534,16 @@ async function openDashboard(jobId = byId("dashboard-run").value) {
       byId("results-status").textContent = "No result values are available for this job."; return;
     }
     if (data.kind === "scenario") renderScenarioDashboard(data); else renderCampaignDashboard(data);
+    if (data.kind === "campaign") {
+      try {
+        const analysis = await api(`/api/run/analysis?id=${encodeURIComponent(jobId)}`); renderCampaignAnalysis(analysis);
+      } catch (error) {
+        appendText(root, "p", `The retained result is visible, but campaign analysis could not be completed: ${error.message}`, "excluded-result");
+      }
+    }
     try {
       const audit = await api(`/api/run/audit?id=${encodeURIComponent(jobId)}`); renderAudit(audit);
-      byId("results-status").textContent = `${readableName(data.kind)} dashboard and provenance audit loaded.`;
+      byId("results-status").textContent = `${readableName(data.kind)} dashboard${data.kind === "campaign" ? ", descriptive analysis," : ""} and provenance audit loaded.`;
     } catch (error) {
       appendText(root, "p", `The result is visible, but its audit could not be completed: ${error.message}`, "excluded-result");
       byId("results-status").textContent = "Result loaded; provenance audit needs attention.";

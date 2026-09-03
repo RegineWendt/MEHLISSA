@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M7 and locally accepted UX-1 through UX-6.6
+**Covered software:** accepted M0 through M7 and locally accepted UX-1 through UX-6.7
 
-**Last updated:** 3 September 2026, after local acceptance of UX-6.6 provenance, evidence, and interpretation boundaries
+**Last updated:** 3 September 2026, after local acceptance of UX-6.7 sensitivity, uncertainty, visualization, and export
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -924,7 +924,7 @@ when an analysis can handle the failure explicitly; never convert failed runs
 into apparent observations. Identifiable patient data still must not be placed
 in notebooks, repository examples, or shared result bundles.
 
-#### Configure, validate, run, and audit results in the graphical workbench (UX-6.1 through UX-6.6)
+#### Configure, validate, run, analyse, and audit results in the graphical workbench (UX-6.1 through UX-6.7)
 
 The local browser workbench lets you search the five implemented model families
 and ten curated starter examples. UX-6.2 provides a guided editor for the
@@ -935,6 +935,8 @@ UX-6.5 turns completed artifacts into readable dashboards and guarded
 comparisons without moving scientific interpretation into the browser.
 UX-6.6 keeps provenance, evidence, licences, maturity, limitations, and the
 non-clinical interpretation boundary beside those results.
+UX-6.7 adds descriptive campaign analysis, accessible plots, exact-value
+tables, and reproducible analysis-data and figure exports.
 
 From the repository root, make the source packages visible and check that the
 workbench can locate the application and read its validated catalog:
@@ -1070,6 +1072,43 @@ sensitivity, and specificity. Paired differences are comparison minus baseline
 for all four supported outcomes and come from the accepted campaign reader.
 The aggregate JSON and CSV remain available for audit and downstream analysis.
 
+Below a completed campaign dashboard, **Campaign analysis** provides four
+selectable outcomes: sensitivity and specificity as proportions, plus detected
+and nine-tile assembled as binary values. For the selected outcome it shows:
+
+- **Replicate observations:** repeated baseline runs with different declared
+  seeds, together with the arithmetic mean, sample standard deviation when at
+  least two observations exist, and observed minimum-to-maximum range;
+- **Collector-count sweep:** the outcome at each declared
+  `run.collector_count` value, which is a deterministic parameter contrast and
+  not an uncertainty distribution; and
+- **Same-seed paired difference:** comparison minus baseline for each declared
+  pair, controlling the seed within the pair without creating population-level
+  evidence.
+
+Each figure names the outcome, unit, and included sample count and is followed
+by an exact-value table. Colour is never the only carrier of meaning. The
+current six-run reference campaign is intentionally small: it has two baseline
+replicates, one observation at each sweep value, and one paired difference.
+Its present Level-E sensitivity and specificity values are both 0.5 for all
+runs, so flat lines and a paired difference of zero are the honest expected
+result, not a rendering defect.
+
+The **observed range** is a descriptive minimum and maximum of the executed
+runs. It is not a confidence interval, prediction interval, population
+distribution, clinical uncertainty estimate, or patient-specific statement.
+No inferential interval is calculated at this sample size. Increase and
+scientifically justify the campaign design before making broader claims.
+
+Use **Download analysis data JSON** for the complete structured analysis,
+including the accepted reader, declared sensitivity hooks, source result hash,
+summaries, plotted points, and interpretation boundary. **Download analysis
+table CSV** contains the exact observations and paired differences used by the
+views. Each **Download this figure SVG** button saves a self-contained vector
+figure whose metadata and accessible description record the metric, unit,
+sample count, analysis API version, and source result SHA-256. These exports
+are produced locally and never uploaded.
+
 After at least two individual scenarios have completed, select a **Left run**
 and **Right run** under **Compare two completed scenarios**. Numeric differences
 are right minus left. Boolean outcomes are not turned into artificial numbers,
@@ -1140,6 +1179,9 @@ the missing/failed-run policy are specified in the
 Provenance fields, hash states, evidence completeness, maturity labels,
 licence display, and audit export are specified in the
 [UX-6.6 audit contract](ux/UX6_6_PROVENANCE_EVIDENCE_AND_INTERPRETATION.md).
+Campaign statistics, chart semantics, exact exports, and interpretation limits
+are specified in the
+[UX-6.7 analysis and export contract](ux/UX6_7_SENSITIVITY_UNCERTAINTY_VISUALIZATION_AND_EXPORT.md).
 
 If the page says that the catalog or scenario workspace could not be loaded,
 stop the process, run the `--check` command, and confirm that the selected
@@ -3010,10 +3052,17 @@ The usability package status is:
   non-clinical boundary, and complete JSON export. Altered files are flagged;
   the legacy timer's absent licence fields remain visibly incomplete. All 285
   Windows/MSVC tests and desktop/mobile browser checks pass; publication and
+  supported GitHub CI are pending an explicit push;
+- **UX-6.7, sensitivity, uncertainty, visualization, and export:** locally
+  passed; completed campaigns expose reader-backed replicate, parameter-sweep,
+  and same-seed paired-difference views with outcome units, included sample
+  counts, descriptive statistics, exact-value tables, and source-bound JSON,
+  CSV, and accessible SVG exports. Observed ranges are explicitly not
+  inferential intervals, and no patient or clinical inference is made. All 285
+  Windows/MSVC tests and desktop/mobile browser checks pass; publication and
   supported GitHub CI are pending an explicit push; and
-- **UX-6.7 through UX-6.8, integrated graphical workbench:** next add
-  uncertainty visualization, packaging, and final
-  usability/accessibility acceptance.
+- **UX-6.8, workbench release acceptance:** next completes packaging, clean
+  installation, and final usability/accessibility acceptance.
 
 Planned substantive scientific extensions are:
 

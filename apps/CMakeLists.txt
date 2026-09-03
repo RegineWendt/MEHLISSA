@@ -167,7 +167,7 @@ if(Python3_Interpreter_FOUND)
     )
     set_tests_properties(
         mehlissa_python_ux6_workbench
-        PROPERTIES LABELS "UX-6.1;UX-6.2;UX-6.3;UX-6.4;UX-6.5;UX-6.6;python;workbench"
+        PROPERTIES LABELS "UX-6.1;UX-6.2;UX-6.3;UX-6.4;UX-6.5;UX-6.6;UX-6.7;python;workbench"
     )
 else()
     message(WARNING "Python 3 was not found; the UX-5 and UX-6 Python tests are disabled")

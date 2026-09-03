@@ -202,6 +202,30 @@ button.danger { margin-top: .8rem; color: #7f2818; background: white; border-col
 .outcome-cards dd { margin: .35rem 0 0; overflow-wrap: anywhere; font-size: 1rem; font-weight: 800; }
 .dashboard-content table, .comparison-content table { min-width: 620px; font-size: .74rem; }
 .dashboard-limitations { margin: 0; padding-left: 1.2rem; color: var(--muted); font-size: .78rem; line-height: 1.5; }
+.analysis-panel { display: grid; gap: 1rem; margin-top: 1.4rem; padding-top: 1.4rem; border-top: 4px solid var(--teal); }
+.analysis-panel > h4 { margin: 0; font-size: 1.35rem; }
+.analysis-panel h5 { margin: .8rem 0 0; font-size: 1rem; }
+.analysis-boundary { margin: 0; padding: 1rem; color: #123f50; background: #e7f4f7; border-left: 4px solid var(--teal); font-weight: 750; line-height: 1.5; }
+.analysis-metric-control { max-width: 420px; }
+.sensitivity-hook { display: grid; gap: .35rem; padding: .9rem; background: #edf5f3; border-left: 3px solid var(--teal); font-size: .78rem; }
+.sensitivity-hook p { margin: 0; color: var(--muted); line-height: 1.5; }
+.analysis-interpretation { margin: 0; padding: 1rem 1rem 1rem 2rem; color: #5c301c; background: #fff7f0; font-size: .78rem; line-height: 1.55; }
+.analysis-views { display: grid; gap: 1rem; }
+.analysis-figure { margin: 0; padding: .8rem; overflow: hidden; background: white; border: 1px solid var(--line); }
+.analysis-figure svg { display: block; width: 100%; height: auto; background: #fbfcfc; }
+.analysis-figure figcaption { margin: .5rem 0; color: var(--muted); font-size: .74rem; line-height: 1.5; }
+.analysis-figure .figure-export { width: auto; min-height: 34px; padding: .4rem .6rem; font-size: .72rem; }
+.chart-axis { stroke: #17394a; stroke-width: 2; }
+.chart-grid { stroke: #cfdadd; stroke-width: 1; }
+.chart-zero { stroke: #809398; stroke-width: 1.5; }
+.chart-stem { stroke: #809398; stroke-width: 1.5; stroke-dasharray: 4 3; }
+.chart-point { fill: #087f8c; stroke: white; stroke-width: 2.5; }
+.chart-point.chart-sweep { fill: #c55a20; }
+.chart-point.chart-paired-difference { fill: #17394a; }
+.chart-tick { fill: #425d68; font: 11px ui-sans-serif, system-ui, sans-serif; }
+.chart-value { fill: #102b3a; font: 700 12px ui-sans-serif, system-ui, sans-serif; }
+.chart-label { fill: #17394a; font: 700 12px ui-sans-serif, system-ui, sans-serif; }
+.analysis-exports { margin: 0; }
 .audit-panel { display: grid; gap: 1rem; margin-top: 1.4rem; padding-top: 1.4rem; border-top: 4px solid var(--navy); }
 .audit-panel > h4 { margin: 0; font-size: 1.35rem; }
 .audit-panel h5 { margin: .8rem 0 0; font-size: 1rem; }

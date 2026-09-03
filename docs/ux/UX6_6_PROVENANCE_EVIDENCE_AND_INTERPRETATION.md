@@ -139,6 +139,7 @@ UX-6.6 is locally accepted when:
    component detail, persistent boundary, export, keyboard focus, console
    state, and horizontal overflow.
 
-UX-6.7 next adds sensitivity and uncertainty visualization plus reproducible
-figure, table, and analysis-data export. It must preserve this audit boundary
-beside every plot.
+The subsequently accepted UX-6.7 analysis and export increment preserves this
+audit boundary beside every plot while adding sensitivity and descriptive
+uncertainty visualization plus reproducible figure, table, and analysis-data
+export.

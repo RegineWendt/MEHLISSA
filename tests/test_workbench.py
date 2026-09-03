@@ -4,7 +4,10 @@
 from __future__ import annotations
 
 import argparse
+import csv
+import hashlib
 from http import HTTPStatus
+import io
 import json
 from pathlib import Path
 import sys
@@ -42,8 +45,8 @@ class WorkbenchDiscoveryTest(unittest.TestCase):
         self.assertEqual(catalog["api_version"], "1.0.0")
         self.assertTrue(catalog["read_only"])
         self.assertTrue(catalog["scenario_editing"])
-        self.assertEqual(catalog["workbench_increment"], "UX-6.6")
-        self.assertEqual(catalog["workbench_version"], "0.6.0")
+        self.assertEqual(catalog["workbench_increment"], "UX-6.7")
+        self.assertEqual(catalog["workbench_version"], "0.7.0")
         self.assertFalse(catalog["clinical_use"])
         self.assertEqual(len(catalog["models"]), 5)
         self.assertEqual(len(catalog["examples"]), 10)
@@ -120,7 +123,11 @@ class WorkbenchServerTest(unittest.TestCase):
             self.assertIn("/api/run/dashboard", script)
             self.assertIn("/api/run/compare", script)
             self.assertIn("/api/run/audit", script)
+            self.assertIn("/api/run/analysis", script)
             self.assertIn("Download complete audit JSON", script)
+            self.assertIn("Download analysis table CSV", script)
+            self.assertIn("Download this figure SVG", script)
+            self.assertIn("Observed range (not a confidence interval)", script)
 
     def test_catalog_api_requires_session(self) -> None:
         with self.assertRaises(HTTPError) as denied:
@@ -383,7 +390,7 @@ class WorkbenchServerTest(unittest.TestCase):
 
         _, audit = self.request_json(f"/api/run/audit?id={job['id']}")
         self.assertTrue(audit["available"])
-        self.assertEqual(audit["workbench"]["version"], "0.6.0")
+        self.assertEqual(audit["workbench"]["version"], "0.7.0")
         self.assertEqual(audit["workbench"]["audit_api_version"], "1.0.0")
         self.assertFalse(audit["boundary"]["clinical_use"])
         self.assertFalse(audit["boundary"]["patient_specific"])
@@ -399,6 +406,10 @@ class WorkbenchServerTest(unittest.TestCase):
         timer = next(component for component in audit["evidence"]["components"] if component["role"] == "timer_baseline")
         self.assertFalse(timer["evidence_complete"])
         self.assertTrue(all("license" not in source for source in timer["sources"]))
+        _, analysis = self.request_json(f"/api/run/analysis?id={job['id']}")
+        self.assertFalse(analysis["available"])
+        self.assertEqual(analysis["observation_count"], 0)
+        self.assertFalse(analysis["boundary"]["inferential_uncertainty"])
 
         retained_input = Path(ARGS.root) / next(
             artifact["path"] for artifact in job["artifacts"] if artifact["name"] == "input"
@@ -463,7 +474,7 @@ class WorkbenchServerTest(unittest.TestCase):
         _, audit = self.request_json(f"/api/run/audit?id={job['id']}")
         self.assertTrue(audit["available"])
         self.assertEqual(audit["kind"], "campaign")
-        self.assertEqual(audit["workbench"]["version"], "0.6.0")
+        self.assertEqual(audit["workbench"]["version"], "0.7.0")
         self.assertTrue(audit["software"])
         self.assertEqual(len(audit["derived_runs"]), 6)
         self.assertEqual(audit["integrity"]["status"], "verified")
@@ -472,6 +483,38 @@ class WorkbenchServerTest(unittest.TestCase):
             [run["seed"] for run in audit["derived_runs"]],
             [run["seed"] for run in accepted.runs],
         )
+        _, analysis = self.request_json(f"/api/run/analysis?id={job['id']}")
+        self.assertTrue(analysis["available"])
+        self.assertEqual(analysis["reader"], "mehlissa.load_campaign_result")
+        self.assertEqual(analysis["observation_count"], 6)
+        self.assertEqual(analysis["sensitivity_hooks"], accepted.document["sensitivity_hooks"])
+        self.assertEqual(
+            analysis["source"]["sha256"],
+            hashlib.sha256((Path(ARGS.root) / artifact["path"]).read_bytes()).hexdigest(),
+        )
+        metrics = {metric["id"]: metric for metric in analysis["metrics"]}
+        self.assertEqual(set(metrics), {"sensitivity", "specificity", "detected", "assembled"})
+        sensitivity_metric = metrics["sensitivity"]
+        replicate = next(series for series in sensitivity_metric["series"] if series["design"] == "replicate")
+        self.assertEqual(replicate["sample_count"], 2)
+        self.assertEqual(replicate["summary"]["mean"], 0.5)
+        self.assertEqual(replicate["summary"]["sample_standard_deviation"], 0.0)
+        self.assertEqual(replicate["summary"]["observed_range"]["lower"], 0.5)
+        self.assertIsNone(replicate["summary"]["inferential_interval"])
+        sweep = next(series for series in sensitivity_metric["series"] if series["design"] == "sweep")
+        self.assertEqual(
+            [(point["parameter_value"], point["response"]) for point in sweep["points"]],
+            [(run["value"], run["sensitivity"]) for run in accepted.groups()["collector-count-sweep"]],
+        )
+        self.assertEqual(
+            sensitivity_metric["paired_differences"],
+            [{**accepted.paired_differences("sensitivity")[0], "included": True}],
+        )
+        self.assertFalse(analysis["boundary"]["inferential_uncertainty"])
+        rows = list(csv.DictReader(io.StringIO(analysis["exports"]["csv"])))
+        self.assertEqual(len(rows), 28)
+        self.assertEqual({row["source_result_sha256"] for row in rows}, {analysis["source"]["sha256"]})
+        self.assertIn("<metric>-<view>.svg", analysis["exports"]["figure_filename_pattern"])
 
     def test_campaign_cancellation_preserves_auditable_state(self) -> None:
         _, started = self.request_json(
@@ -492,6 +535,9 @@ class WorkbenchServerTest(unittest.TestCase):
         _, audit = self.request_json(f"/api/run/audit?id={job['id']}")
         self.assertFalse(audit["available"])
         self.assertFalse(audit["boundary"]["clinical_use"])
+        _, analysis = self.request_json(f"/api/run/analysis?id={job['id']}")
+        self.assertFalse(analysis["available"])
+        self.assertEqual(analysis["observation_count"], 0)
 
         failed, _, _ = self.server.runs._new_job(
             "scenario", "failed-result-fixture", "Failed result fixture",
@@ -506,7 +552,10 @@ class WorkbenchServerTest(unittest.TestCase):
         self.assertEqual(rejected.exception.code, HTTPStatus.BAD_REQUEST)
 
     def test_unknown_run_and_artifact_are_not_exposed(self) -> None:
-        for path in ("/api/run?id=missing", "/api/run/artifact?id=missing&name=../input"):
+        for path in (
+            "/api/run?id=missing", "/api/run/analysis?id=missing",
+            "/api/run/artifact?id=missing&name=../input",
+        ):
             with self.subTest(path=path), self.assertRaises(HTTPError) as missing:
                 self.request_json(path)
             self.assertEqual(missing.exception.code, HTTPStatus.NOT_FOUND)

@@ -68,6 +68,16 @@ zero observations and cannot enter comparisons. The authoritative JSON/CSV and
 the generated UX-3 HTML report remain retained artifacts; HTML report preview
 uses an authenticated fetch followed by a script-disabled sandboxed frame.
 
+UX-6.7 adds a server-owned campaign-analysis projection. The host loads only a
+completed aggregate with the accepted versioned campaign reader, exposes its
+declared groups, observations, paired differences, and sensitivity hooks, and
+calculates only transparent descriptive summaries. The browser renders and
+exports those exact values; it does not estimate intervals or introduce an
+independent statistical model. JSON, CSV, and SVG exports record the accepted
+result hash, metric, unit, included sample count, and analysis contract version.
+Replicate variation, deterministic sweep contrasts, and inferential uncertainty
+remain explicitly different concepts.
+
 The browser interface targets WCAG 2.2 level AA. No telemetry, cloud service,
 remote asset, patient-data workflow, or clinical claim is part of the decision.
 
@@ -77,7 +87,7 @@ remote asset, patient-data workflow, or clinical claim is part of the decision.
   scenario behavior cannot diverge silently from command-line use.
 - HTML provides a cross-platform, semantic, responsive presentation layer and a
   broad accessibility-testing ecosystem.
-- UX-6.1 through UX-6.6 add no mandatory third-party runtime dependency to the
+- UX-6.1 through UX-6.7 add no mandatory third-party runtime dependency to the
   Python package.
 - Local HTTP introduces a security boundary. Loopback restriction, host-header
   validation, session capability, restrictive response headers, safe text
@@ -105,6 +115,6 @@ remote asset, patient-data workflow, or clinical claim is part of the decision.
 
 ## Affected requirements and packages
 
-- `UX-002` through `UX-012`
+- `UX-002` through `UX-013`
 - `UX-6.1` through `UX-6.8`
 - `QUA-005`, `QUA-006`

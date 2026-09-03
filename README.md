@@ -79,7 +79,7 @@ print(load_result(execution.result).summary)
 See `examples/notebooks/01-first-scenario.ipynb` and
 `examples/notebooks/02-campaign-analysis.ipynb` for complete workflows.
 
-The UX-6.1 through UX-6.6 graphical workbench can browse the same validated model and
+The UX-6.1 through UX-6.7 graphical workbench can browse the same validated model and
 example catalog and create a schema-guided derivative of the complete FP9/lung
 scenario in a protected local page:
 
@@ -106,6 +106,12 @@ software/build identity, seeds, input/model/schema/result hashes, evidence and
 licence declarations, maturity labels, limitations, and a persistent
 non-clinical boundary. The complete audit can be downloaded as JSON; altered
 hashes and incomplete metadata are flagged rather than repaired or inferred.
+Completed campaigns additionally expose accepted-reader replicate observations,
+collector-count sweeps, and same-seed paired differences as unit-labelled,
+sample-counted accessible figures and exact-value tables. Source-bound JSON,
+CSV, and SVG downloads reproduce the displayed values. Observed ranges are
+descriptive only and are explicitly not confidence intervals or clinical
+uncertainty estimates.
 
 MEHLISSA Next is a research model. It is not a medical device and does not
 provide patient-specific clinical predictions.

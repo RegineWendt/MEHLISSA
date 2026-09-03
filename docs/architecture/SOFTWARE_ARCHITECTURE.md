@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 This document is the entry point for developers who want to understand,
 integrate, or extend MEHLISSA Next. It describes the implemented architecture
-through the accepted M7 gate and locally accepted UX-6.6 workbench, the public
+through the accepted M7 gate and locally accepted UX-6.7 workbench, the public
 C++, command-line, Python, and local-workbench interfaces, the data contracts,
 and the workflow for adding a
 module such as a new organ model. It also explains
@@ -535,7 +535,8 @@ The foundation endpoint is `GET /api/catalog`. UX-6.2 adds `GET /api/scenarios`,
 `POST /api/scenario/validate`. UX-6.4 adds run-plan, job, start, cancellation,
 and retained-artifact endpoints. UX-6.5 adds reader-backed dashboard and
 two-scenario comparison endpoints. UX-6.6 adds the read-only
-`GET /api/run/audit?id=<job-id>` endpoint. They are private to the
+`GET /api/run/audit?id=<job-id>` endpoint. UX-6.7 adds the read-only
+`GET /api/run/analysis?id=<job-id>` endpoint. They are private to the
 local application, require an ephemeral session capability, and are not a
 stable remote REST API. The server derives scalar field descriptions and
 constraints from the authoritative fingerprinting-scenario JSON Schema. It
@@ -600,6 +601,18 @@ The complete response can be downloaded as JSON, so the displayed summary and
 export share one source. Hash verification establishes artifact integrity only,
 never biological, patient-specific, or clinical validity.
 
+UX-6.7 keeps campaign-analysis authority on the host. `RunWorkspace.analysis()`
+admits only completed campaign jobs, loads the authoritative aggregate through
+`load_campaign_result()`, and projects the accepted group observations,
+same-seed paired differences, and declared sensitivity hooks. It computes only
+descriptive arithmetic means, sample standard deviations, and observed ranges;
+it explicitly emits no inferential interval. Every response records the result
+schema and SHA-256 source identity. The browser renders semantic inline SVG and
+an exact-value table from that response without calculating scientific values.
+JSON, CSV, and SVG exports retain metric, unit, included sample count, analysis
+contract version, and source identity. Scenario and non-completed jobs yield
+zero observations rather than a misleading analysis.
+
 Curated examples are immutable. Derived files use safe basename-only `.json`
 names and exclusive creation inside `workbench-scenarios/` or an explicitly
 selected repository-internal workspace. Unsupported fields are displayed in
@@ -623,7 +636,8 @@ concepts are maintained in the
 [UX-6.3 validation contract](../ux/UX6_3_VALIDATION_AND_CORRECTIVE_FEEDBACK.md),
 [UX-6.4 run-control contract](../ux/UX6_4_RUN_AND_CAMPAIGN_CONTROL.md), the
 [UX-6.5 dashboard contract](../ux/UX6_5_RESULT_DASHBOARD_AND_COMPARISON.md), the
-[UX-6.6 audit contract](../ux/UX6_6_PROVENANCE_EVIDENCE_AND_INTERPRETATION.md), and the
+[UX-6.6 audit contract](../ux/UX6_6_PROVENANCE_EVIDENCE_AND_INTERPRETATION.md),
+[UX-6.7 analysis and export contract](../ux/UX6_7_SENSITIVITY_UNCERTAINTY_VISUALIZATION_AND_EXPORT.md), and the
 technology choice in [ADR-0050](adr/0050-local-browser-research-workbench.md).
 
 ## 8. Public API map
