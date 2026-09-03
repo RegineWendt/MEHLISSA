@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 This document is the entry point for developers who want to understand,
 integrate, or extend MEHLISSA Next. It describes the implemented architecture
-through the accepted M7 gate and locally accepted UX-6.5 workbench, the public
+through the accepted M7 gate and locally accepted UX-6.6 workbench, the public
 C++, command-line, Python, and local-workbench interfaces, the data contracts,
 and the workflow for adding a
 module such as a new organ model. It also explains
@@ -534,7 +534,8 @@ The foundation endpoint is `GET /api/catalog`. UX-6.2 adds `GET /api/scenarios`,
 `GET /api/scenario`, and `POST /api/scenario/save`; UX-6.3 adds
 `POST /api/scenario/validate`. UX-6.4 adds run-plan, job, start, cancellation,
 and retained-artifact endpoints. UX-6.5 adds reader-backed dashboard and
-two-scenario comparison endpoints. They are private to the
+two-scenario comparison endpoints. UX-6.6 adds the read-only
+`GET /api/run/audit?id=<job-id>` endpoint. They are private to the
 local application, require an ephemeral session capability, and are not a
 stable remote REST API. The server derives scalar field descriptions and
 constraints from the authoritative fingerprinting-scenario JSON Schema. It
@@ -583,6 +584,22 @@ right minus left, and never imputes missing values. Completed scenario jobs also
 retain a UX-3 HTML report; the browser fetches it with the session capability
 and previews it in a script-disabled sandbox.
 
+UX-6.6 keeps provenance judgment on the same server side.
+`RunWorkspace.audit()` accepts only a server-owned job identifier, resolves only
+allowlisted retained artifacts and repository-bounded paths, and returns audit
+contract version `1.0.0` together with the producing workbench version. For a
+scenario it round-trips the original provenance document and verifies the
+validated candidate, retained profile, result, and
+every declared model-definition/schema digest. For a campaign it verifies the
+retained campaign manifest and all derived manifests/results, and retains each
+derived run's software provenance. Evidence, licences, validity metadata,
+maturity labels, and limitations are read from the exact declared component
+definitions. A missing licence or source is `incomplete`; a missing or changed
+file is `attention`. Neither state is repaired or inferred in browser code.
+The complete response can be downloaded as JSON, so the displayed summary and
+export share one source. Hash verification establishes artifact integrity only,
+never biological, patient-specific, or clinical validity.
+
 Curated examples are immutable. Derived files use safe basename-only `.json`
 names and exclusive creation inside `workbench-scenarios/` or an explicitly
 selected repository-internal workspace. Unsupported fields are displayed in
@@ -605,7 +622,8 @@ concepts are maintained in the
 [UX-6.2 workspace contract](../ux/UX6_2_GUIDED_SCENARIO_WORKSPACE.md), the
 [UX-6.3 validation contract](../ux/UX6_3_VALIDATION_AND_CORRECTIVE_FEEDBACK.md),
 [UX-6.4 run-control contract](../ux/UX6_4_RUN_AND_CAMPAIGN_CONTROL.md), the
-[UX-6.5 dashboard contract](../ux/UX6_5_RESULT_DASHBOARD_AND_COMPARISON.md), and the
+[UX-6.5 dashboard contract](../ux/UX6_5_RESULT_DASHBOARD_AND_COMPARISON.md), the
+[UX-6.6 audit contract](../ux/UX6_6_PROVENANCE_EVIDENCE_AND_INTERPRETATION.md), and the
 technology choice in [ADR-0050](adr/0050-local-browser-research-workbench.md).
 
 ## 8. Public API map

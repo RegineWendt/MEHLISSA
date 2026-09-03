@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M7 and locally accepted UX-1 through UX-6.5
+**Covered software:** accepted M0 through M7 and locally accepted UX-1 through UX-6.6
 
-**Last updated:** 3 September 2026, after local acceptance of UX-6.5 result dashboards and comparison
+**Last updated:** 3 September 2026, after local acceptance of UX-6.6 provenance, evidence, and interpretation boundaries
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -924,7 +924,7 @@ when an analysis can handle the failure explicitly; never convert failed runs
 into apparent observations. Identifiable patient data still must not be placed
 in notebooks, repository examples, or shared result bundles.
 
-#### Configure, validate, run, and inspect results in the graphical workbench (UX-6.1 through UX-6.5)
+#### Configure, validate, run, and audit results in the graphical workbench (UX-6.1 through UX-6.6)
 
 The local browser workbench lets you search the five implemented model families
 and ten curated starter examples. UX-6.2 provides a guided editor for the
@@ -933,6 +933,8 @@ semantic, and cross-file problems before save. UX-6.4 starts and monitors either
 that exact validated scenario or the curated six-run collector-count campaign.
 UX-6.5 turns completed artifacts into readable dashboards and guarded
 comparisons without moving scientific interpretation into the browser.
+UX-6.6 keeps provenance, evidence, licences, maturity, limitations, and the
+non-clinical interpretation boundary beside those results.
 
 From the repository root, make the source packages visible and check that the
 workbench can locate the application and read its validated catalog:
@@ -1079,6 +1081,45 @@ and returns no scientific rows. They never appear in the two-run comparison
 selectors. Execution failure therefore cannot look like a negative biological
 result.
 
+Every completed dashboard continues with **Audit summary**. The green or amber
+status labels answer two different questions: **Integrity** states whether the
+currently retained bytes match their declared hashes; **Evidence** states
+whether every selected input has complete source and licence metadata. A green
+integrity result is not a statement that the biology is correct.
+
+The audit lists the complete seed plan, completion time, software version, Git
+revision and dirty state, compiler, operating system, and architecture recorded
+at execution. Its integrity table compares expected and observed SHA-256 values
+for the validated candidate, physically retained scenario profile, result,
+every model definition, and every schema. A campaign additionally checks the
+retained campaign manifest and all six derived manifests and results, and shows
+each derived run's provenance and seed. `Verified` means matching bytes;
+`Altered` means a mismatch; `Missing` means the declared artifact is unavailable
+inside the permitted repository/job boundary. Either of the last two produces
+the aggregate `Attention` state.
+
+Under **Scenario evidence and licences**, citations retain their role, declared
+licence/status, and DOI/URL or repository location. **Model and input maturity**
+has one expandable entry per selected component. `software_test_surrogate`,
+`literature_parameterized`, `externally_derived`, and `hypothesis` are rendered
+as plain-language research maturity labels. They are never converted into a
+clinical grade; every component remains marked **Not clinically validated**.
+Level A means the accepted integrated historical-timing vertical slice, not an
+“A run”, a patient grade, or high clinical evidence.
+
+The current FP9 audit legitimately shows **Evidence: Incomplete** while all
+hashes verify. The historical timer profile contains traceable citations and
+repository locations but predates the common source schema and has no
+per-source licence fields. This is a metadata gap to resolve explicitly; the
+workbench will not guess or silently inherit a licence.
+
+Use **Download complete audit JSON** to save the exact audit response shown by
+the interface. The file includes the original provenance object without
+discarding fields and is suitable for review or attachment to a research
+record. **Complete machine-readable audit and original provenance** provides an
+in-page read-only view. The download is generated on this computer; nothing is
+uploaded.
+
 The host listens only on the local computer, serves no remote assets, records
 no telemetry, and is not a patient-data workflow. The page's research-software
 notice is binding: displayed maturity and evidence do not make a model
@@ -1096,6 +1137,9 @@ access are specified in the
 Reader ownership, displayed fields, comparison arithmetic, report preview, and
 the missing/failed-run policy are specified in the
 [UX-6.5 dashboard contract](ux/UX6_5_RESULT_DASHBOARD_AND_COMPARISON.md).
+Provenance fields, hash states, evidence completeness, maturity labels,
+licence display, and audit export are specified in the
+[UX-6.6 audit contract](ux/UX6_6_PROVENANCE_EVIDENCE_AND_INTERPRETATION.md).
 
 If the page says that the catalog or scenario workspace could not be loaded,
 stop the process, run the `--check` command, and confirm that the selected
@@ -1115,6 +1159,11 @@ If a completed dashboard cannot be read, open its retained result JSON and
 confirm that its schema version is supported by the installed Python package.
 If comparison controls remain disabled, complete two individual scenarios;
 campaigns and non-completed jobs are intentionally ineligible.
+If an audit reports `Attention`, inspect the named expected and actual hashes;
+do not use or rename the artifact to conceal the mismatch. If it reports
+`Evidence: Incomplete`, expand the component entries to identify the exact
+missing source or licence declaration. Neither state means that a missing
+scientific outcome should be replaced with zero.
 
 #### Validate an experiment manifest
 
@@ -2953,9 +3002,17 @@ The usability package status is:
   report remain inspectable. Missing, incomplete, failed, and cancelled jobs
   contribute zero observations. All 285 Windows/MSVC tests and desktop/mobile
   browser checks pass; publication and supported GitHub CI are pending an
-  explicit push; and
-- **UX-6.6 through UX-6.8, integrated graphical workbench:** next add
-  provenance/evidence views, uncertainty visualization, packaging, and final
+  explicit push;
+- **UX-6.6, provenance, evidence, and interpretation boundaries:** locally
+  passed; every completed scenario/campaign dashboard includes exact retained
+  provenance, seeds, software/build identity, verified input/model/schema/result
+  hashes, source and licence declarations, maturity and limitations, a permanent
+  non-clinical boundary, and complete JSON export. Altered files are flagged;
+  the legacy timer's absent licence fields remain visibly incomplete. All 285
+  Windows/MSVC tests and desktop/mobile browser checks pass; publication and
+  supported GitHub CI are pending an explicit push; and
+- **UX-6.7 through UX-6.8, integrated graphical workbench:** next add
+  uncertainty visualization, packaging, and final
   usability/accessibility acceptance.
 
 Planned substantive scientific extensions are:

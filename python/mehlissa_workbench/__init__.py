@@ -14,6 +14,7 @@ from .server import (
     ScenarioValidationError,
     ScenarioWorkspace,
     ScenarioWorkspaceError,
+    WORKBENCH_VERSION,
     WorkbenchServer,
     create_server,
     discover_catalog,
@@ -31,10 +32,11 @@ __all__ = [
     "ScenarioValidationError",
     "ScenarioWorkspace",
     "ScenarioWorkspaceError",
+    "WORKBENCH_VERSION",
     "WorkbenchServer",
     "create_server",
     "discover_catalog",
     "scenario_fields",
 ]
 
-__version__ = "0.5.0"
+__version__ = WORKBENCH_VERSION

@@ -56,6 +56,11 @@ retained. Artifact access is by a server-created name allowlist, never by a
 browser-supplied path.
 
 UX-6.5 adds result projection without adding analysis semantics to JavaScript.
+UX-6.6 adds a server-owned audit projection: the host reads retained provenance
+and versioned model artifacts, verifies declared SHA-256 identities, and returns
+the complete source metadata plus explicit integrity/evidence states. The
+browser presents and exports that projection but does not decide whether a hash,
+licence declaration, evidence class, or clinical boundary is acceptable.
 `RunWorkspace` loads completed scenario and campaign artifacts through the
 accepted version-guarded Python result readers. It exposes private dashboard and
 two-scenario comparison responses, while jobs outside `completed` state yield
@@ -72,7 +77,7 @@ remote asset, patient-data workflow, or clinical claim is part of the decision.
   scenario behavior cannot diverge silently from command-line use.
 - HTML provides a cross-platform, semantic, responsive presentation layer and a
   broad accessibility-testing ecosystem.
-- UX-6.1 through UX-6.5 add no mandatory third-party runtime dependency to the
+- UX-6.1 through UX-6.6 add no mandatory third-party runtime dependency to the
   Python package.
 - Local HTTP introduces a security boundary. Loopback restriction, host-header
   validation, session capability, restrictive response headers, safe text
@@ -100,6 +105,6 @@ remote asset, patient-data workflow, or clinical claim is part of the decision.
 
 ## Affected requirements and packages
 
-- `UX-002` through `UX-011`
+- `UX-002` through `UX-012`
 - `UX-6.1` through `UX-6.8`
 - `QUA-005`, `QUA-006`

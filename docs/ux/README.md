@@ -25,6 +25,7 @@ models, schemas, or simulation behavior.
   defines confirmed scenario and six-run campaign starts, bounded output and
   logs, cancellable execution, retained evidence, and protected artifact access.
 - [UX-6.5 result dashboard and comparison](UX6_5_RESULT_DASHBOARD_AND_COMPARISON.md)
+- [UX-6.6 provenance, evidence, and interpretation boundaries](UX6_6_PROVENANCE_EVIDENCE_AND_INTERPRETATION.md)
   defines reader-backed scenario and campaign views, side-by-side comparison,
   UX-3 report drill-through, and the zero-observation policy for incomplete,
   failed, or cancelled jobs.

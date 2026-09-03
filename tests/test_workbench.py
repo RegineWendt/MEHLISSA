@@ -42,7 +42,8 @@ class WorkbenchDiscoveryTest(unittest.TestCase):
         self.assertEqual(catalog["api_version"], "1.0.0")
         self.assertTrue(catalog["read_only"])
         self.assertTrue(catalog["scenario_editing"])
-        self.assertEqual(catalog["workbench_increment"], "UX-6.5")
+        self.assertEqual(catalog["workbench_increment"], "UX-6.6")
+        self.assertEqual(catalog["workbench_version"], "0.6.0")
         self.assertFalse(catalog["clinical_use"])
         self.assertEqual(len(catalog["models"]), 5)
         self.assertEqual(len(catalog["examples"]), 10)
@@ -72,7 +73,7 @@ class WorkbenchServerTest(unittest.TestCase):
         temporary_parent = Path(ARGS.root).resolve() / "tmp"
         temporary_parent.mkdir(exist_ok=True)
         cls.temporary_directory = tempfile.TemporaryDirectory(
-            prefix="ux6-5-workspace-", dir=temporary_parent
+            prefix="ux6-6-workspace-", dir=temporary_parent
         )
         cls.workspace = Path(cls.temporary_directory.name)
         cls.server = create_server(
@@ -99,9 +100,11 @@ class WorkbenchServerTest(unittest.TestCase):
             body = response.read().decode("utf-8")
             self.assertEqual(response.status, HTTPStatus.OK)
             self.assertIn("MEHLISSA Next Research Workbench", body)
-            self.assertIn("Results are descriptive", body)
+            self.assertIn("Every result carries its boundary", body)
             self.assertIn("Scenario validation", body)
             self.assertIn("Understand completed outcomes", body)
+            self.assertIn("Every result carries its boundary", body)
+            self.assertIn("not a medical device", body)
             self.assertIn("frame-ancestors 'none'", response.headers["Content-Security-Policy"])
             self.assertEqual(response.headers["Referrer-Policy"], "no-referrer")
             self.assertEqual(response.headers["Cache-Control"], "no-store")
@@ -116,6 +119,8 @@ class WorkbenchServerTest(unittest.TestCase):
             self.assertIn("/api/run/campaign", script)
             self.assertIn("/api/run/dashboard", script)
             self.assertIn("/api/run/compare", script)
+            self.assertIn("/api/run/audit", script)
+            self.assertIn("Download complete audit JSON", script)
 
     def test_catalog_api_requires_session(self) -> None:
         with self.assertRaises(HTTPError) as denied:
@@ -376,6 +381,42 @@ class WorkbenchServerTest(unittest.TestCase):
         self.assertEqual(len(dashboard["runtime_stages"]), len(accepted.runtime_stages))
         self.assertEqual(dashboard["analysis_cases"], accepted.analysis_cases)
 
+        _, audit = self.request_json(f"/api/run/audit?id={job['id']}")
+        self.assertTrue(audit["available"])
+        self.assertEqual(audit["workbench"]["version"], "0.6.0")
+        self.assertEqual(audit["workbench"]["audit_api_version"], "1.0.0")
+        self.assertFalse(audit["boundary"]["clinical_use"])
+        self.assertFalse(audit["boundary"]["patient_specific"])
+        self.assertEqual(audit["integrity"]["status"], "verified", audit["integrity"])
+        self.assertEqual(audit["integrity"]["verified_count"], audit["integrity"]["checked_count"])
+        self.assertEqual(audit["evidence"]["status"], "incomplete", audit["evidence"])
+        self.assertEqual(audit["provenance"], provenance)
+        organ = next(component for component in audit["evidence"]["components"] if component["role"] == "organ_model")
+        self.assertEqual(organ["maturity"]["evidence_class"], "literature_parameterized")
+        self.assertEqual(organ["maturity"]["clinical_maturity"], "Not clinically validated")
+        self.assertTrue(organ["sources"])
+        self.assertTrue(all(source["license"] for source in organ["sources"]))
+        timer = next(component for component in audit["evidence"]["components"] if component["role"] == "timer_baseline")
+        self.assertFalse(timer["evidence_complete"])
+        self.assertTrue(all("license" not in source for source in timer["sources"]))
+
+        retained_input = Path(ARGS.root) / next(
+            artifact["path"] for artifact in job["artifacts"] if artifact["name"] == "input"
+        )
+        original_input = retained_input.read_bytes()
+        try:
+            altered = json.loads(original_input)
+            altered["sources"] = []
+            retained_input.write_text(
+                json.dumps(altered, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+            )
+            _, flagged = self.request_json(f"/api/run/audit?id={job['id']}")
+            self.assertEqual(flagged["integrity"]["status"], "attention")
+            self.assertGreaterEqual(flagged["integrity"]["altered_count"], 1)
+            self.assertEqual(flagged["evidence"]["status"], "incomplete")
+        finally:
+            retained_input.write_bytes(original_input)
+
         _, second_started = self.request_json(
             "/api/run/scenario", "POST",
             {
@@ -419,6 +460,18 @@ class WorkbenchServerTest(unittest.TestCase):
         self.assertEqual({group["name"] for group in dashboard["groups"]}, set(accepted.groups()))
         sensitivity = [row for row in dashboard["paired_differences"] if row["metric"] == "sensitivity"]
         self.assertEqual(sensitivity, [{**accepted.paired_differences("sensitivity")[0], "included": True}])
+        _, audit = self.request_json(f"/api/run/audit?id={job['id']}")
+        self.assertTrue(audit["available"])
+        self.assertEqual(audit["kind"], "campaign")
+        self.assertEqual(audit["workbench"]["version"], "0.6.0")
+        self.assertTrue(audit["software"])
+        self.assertEqual(len(audit["derived_runs"]), 6)
+        self.assertEqual(audit["integrity"]["status"], "verified")
+        self.assertEqual(audit["evidence"]["status"], "incomplete")
+        self.assertEqual(
+            [run["seed"] for run in audit["derived_runs"]],
+            [run["seed"] for run in accepted.runs],
+        )
 
     def test_campaign_cancellation_preserves_auditable_state(self) -> None:
         _, started = self.request_json(
@@ -436,6 +489,9 @@ class WorkbenchServerTest(unittest.TestCase):
         self.assertFalse(dashboard["available"])
         self.assertEqual(dashboard["observation_count"], 0)
         self.assertNotIn("summary", dashboard)
+        _, audit = self.request_json(f"/api/run/audit?id={job['id']}")
+        self.assertFalse(audit["available"])
+        self.assertFalse(audit["boundary"]["clinical_use"])
 
         failed, _, _ = self.server.runs._new_job(
             "scenario", "failed-result-fixture", "Failed result fixture",

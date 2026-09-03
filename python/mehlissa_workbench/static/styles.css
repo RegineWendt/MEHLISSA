@@ -40,6 +40,8 @@ body { margin: 0; min-width: 320px; background: #f3f6f7; }
 .brand strong { display: block; letter-spacing: .08em; font-size: .96rem; }
 .brand small { display: block; margin-top: .1rem; color: #b9cbd4; font-size: .72rem; }
 .prototype-badge { padding: .38rem .65rem; border: 1px solid #6b8796; font-size: .78rem; }
+.persistent-boundary { display: grid; gap: .35rem; margin: 1.5rem 0; padding: 1rem 1.2rem; color: #5c301c; background: #fff0e7; border: 1px solid #efc7b3; border-left: 5px solid var(--orange); }
+.persistent-boundary span { font-size: .84rem; line-height: 1.5; }
 
 main { width: min(1180px, 90vw); margin: 0 auto; }
 .hero { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(260px, .8fr); gap: 5vw; padding: 5rem 0 3.5rem; }
@@ -200,6 +202,32 @@ button.danger { margin-top: .8rem; color: #7f2818; background: white; border-col
 .outcome-cards dd { margin: .35rem 0 0; overflow-wrap: anywhere; font-size: 1rem; font-weight: 800; }
 .dashboard-content table, .comparison-content table { min-width: 620px; font-size: .74rem; }
 .dashboard-limitations { margin: 0; padding-left: 1.2rem; color: var(--muted); font-size: .78rem; line-height: 1.5; }
+.audit-panel { display: grid; gap: 1rem; margin-top: 1.4rem; padding-top: 1.4rem; border-top: 4px solid var(--navy); }
+.audit-panel > h4 { margin: 0; font-size: 1.35rem; }
+.audit-panel h5 { margin: .8rem 0 0; font-size: 1rem; }
+.audit-panel h6 { margin: .8rem 0 .3rem; }
+.audit-boundary { margin: 0; padding: 1rem; color: #5c301c; background: #fff0e7; border-left: 4px solid var(--orange); font-weight: 750; line-height: 1.5; }
+.audit-status-row { display: flex; flex-wrap: wrap; gap: .5rem; }
+.audit-state { padding: .38rem .6rem; border: 1px solid currentColor; font-size: .72rem; font-weight: 850; letter-spacing: .04em; text-transform: uppercase; }
+.audit-state.verified, .audit-state.complete { color: #126643; background: #e6f6ed; }
+.audit-state.attention, .audit-state.incomplete { color: #8a3b1e; background: #fff0e7; }
+.audit-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin: 0; background: var(--line); border: 1px solid var(--line); }
+.audit-facts div { min-width: 0; padding: .7rem; background: white; }
+.audit-facts dt { color: var(--teal-dark); font-size: .67rem; font-weight: 800; text-transform: uppercase; }
+.audit-facts dd { margin: .3rem 0 0; overflow-wrap: anywhere; font-size: .78rem; line-height: 1.45; }
+.audit-sources { display: grid; gap: .7rem; margin: 0; padding: 0; list-style: none; }
+.audit-sources li { display: grid; gap: .3rem; padding: .8rem; background: #f3f6f7; border-left: 3px solid var(--teal); font-size: .78rem; line-height: 1.45; }
+.audit-sources span, .audit-sources code { overflow-wrap: anywhere; color: var(--muted); }
+.audit-sources a { overflow-wrap: anywhere; color: var(--teal-dark); }
+.audit-sources .audit-warning { border-left-color: var(--orange); color: #7f2818; }
+.component-audits { display: grid; gap: .5rem; }
+.component-audit { border: 1px solid var(--line); }
+.component-audit > summary { padding: .8rem; background: #edf5f3; cursor: pointer; font-size: .78rem; font-weight: 800; line-height: 1.45; }
+.component-audit > :not(summary) { margin: .8rem; }
+.component-audit.audit-attention > summary { background: #fff0e7; }
+.raw-audit { flex: 1 1 100%; border-top: 1px solid var(--line); }
+.raw-audit summary { padding: .7rem 0; cursor: pointer; font-size: .78rem; font-weight: 800; }
+.raw-audit pre { max-height: 420px; padding: .8rem; overflow: auto; white-space: pre-wrap; color: #cce6df; background: #102b3a; font: .7rem/1.5 ui-monospace, "Cascadia Code", Consolas, monospace; }
 .excluded-result { margin: 0; padding: 1rem; color: #6f430d; background: #fff4dc; border-left: 4px solid #b87518; font-weight: 700; line-height: 1.5; }
 .comparison-card h3 { margin: 0; }
 .comparison-card > p:not(.eyebrow) { color: var(--muted); line-height: 1.5; }
@@ -226,6 +254,7 @@ footer p { max-width: 560px; margin: 0; }
   .filters, .model-grid { grid-template-columns: 1fr; }
   .selection-bar, .editor-shell, .field-list, .evidence-grid, .run-layout, .results-layout { grid-template-columns: 1fr; }
   .outcome-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .audit-facts { grid-template-columns: 1fr; }
   .editor-aside { border-right: 0; border-bottom: 1px solid var(--line); }
   .section-heading { align-items: start; flex-direction: column; }
   .status { text-align: left; }

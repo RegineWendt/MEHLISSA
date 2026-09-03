@@ -36,6 +36,8 @@ WORKSPACE_API_VERSION = "1.0.0"
 VALIDATION_API_VERSION = "1.0.0"
 RUN_API_VERSION = "1.0.0"
 RESULT_API_VERSION = "1.0.0"
+AUDIT_API_VERSION = "1.0.0"
+WORKBENCH_VERSION = "0.6.0"
 LOOPBACK_HOSTS = frozenset({"127.0.0.1", "localhost"})
 SCENARIO_SCHEMA_PATH = Path(
     "data/schemas/fingerprinting-scenario-profile/1.0.0.schema.json"
@@ -178,7 +180,8 @@ def discover_catalog(client: MehlissaClient) -> dict[str, object]:
     return {
         "api_version": CATALOG_API_VERSION,
         "application": "MEHLISSA Next Research Workbench",
-        "workbench_increment": "UX-6.5",
+        "workbench_version": WORKBENCH_VERSION,
+        "workbench_increment": "UX-6.6",
         "read_only": True,
         "scenario_editing": True,
         "clinical_use": False,
@@ -1079,6 +1082,404 @@ class RunWorkspace:
         return path
 
     @staticmethod
+    def _sha256(path: Path) -> str:
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+
+    def _job_file(self, job: Mapping[str, object], path: Path) -> Path | None:
+        """Resolve a declared path only when it remains inside this job."""
+
+        resolved = path.expanduser().resolve()
+        directory = (self.repository_root / str(job["directory"])).resolve()
+        return resolved if resolved == directory or directory in resolved.parents else None
+
+    def _integrity_check(
+        self, label: str, path: Path | None, expected: object
+    ) -> dict[str, object]:
+        expected_hash = str(expected) if isinstance(expected, str) else None
+        if path is None or not path.is_file():
+            return {
+                "label": label,
+                "path": None,
+                "expected_sha256": expected_hash,
+                "actual_sha256": None,
+                "status": "missing",
+            }
+        actual = self._sha256(path)
+        return {
+            "label": label,
+            "path": self._relative(path),
+            "expected_sha256": expected_hash,
+            "actual_sha256": actual,
+            "status": "verified" if expected_hash == actual else "altered",
+        }
+
+    @staticmethod
+    def _maturity(validity: object) -> dict[str, str]:
+        details = validity if isinstance(validity, dict) else {}
+        evidence_class = details.get("evidence_class")
+        labels = {
+            "software_test_surrogate": "Software-test surrogate",
+            "literature_parameterized": "Literature-parameterized research model",
+            "externally_derived": "Externally derived research model",
+            "hypothesis": "Research hypothesis",
+        }
+        key = str(evidence_class) if evidence_class else "undeclared"
+        return {
+            "evidence_class": key,
+            "label": labels.get(key, "Undeclared — attention required"),
+            "clinical_maturity": "Not clinically validated",
+        }
+
+    @staticmethod
+    def _model_identity(document: Mapping[str, object]) -> dict[str, object]:
+        for key in ("definition", "model", "profile", "component"):
+            value = document.get(key)
+            if isinstance(value, dict):
+                return {
+                    "id": value.get("id") or value.get("model_id") or value.get("name"),
+                    "version": value.get("version") or document.get("schema_version"),
+                    "title": value.get("title") or value.get("description") or value.get("name"),
+                }
+        return {"id": None, "version": document.get("schema_version"), "title": None}
+
+    @staticmethod
+    def _source_complete(source: object) -> bool:
+        return (
+            isinstance(source, dict)
+            and bool(source.get("id"))
+            and bool(source.get("citation"))
+            and bool(source.get("license"))
+        )
+
+    def _component_audit(
+        self,
+        artifact: Mapping[str, object],
+        checks: list[dict[str, object]],
+    ) -> dict[str, object]:
+        role = str(artifact.get("role", "unknown"))
+        definition_text = str(artifact.get("definition_path", ""))
+        schema_text = str(artifact.get("schema_path", ""))
+        definition = (self.repository_root / definition_text).resolve()
+        schema = (self.repository_root / schema_text).resolve()
+        if self.repository_root not in definition.parents or self.repository_root not in schema.parents:
+            raise RunControlError("A declared reproducibility artifact escaped the repository")
+        definition_check = self._integrity_check(
+            f"{role} definition", definition, artifact.get("definition_sha256")
+        )
+        schema_check = self._integrity_check(
+            f"{role} schema", schema, artifact.get("schema_sha256")
+        )
+        checks.extend((definition_check, schema_check))
+        document: dict[str, object] = {}
+        if definition.is_file():
+            try:
+                document = _load_json_object(definition)
+            except ScenarioWorkspaceError:
+                document = {}
+        sources = document.get("sources", [])
+        limitations = document.get("limitations", [])
+        validity = document.get("validity", {})
+        return {
+            "role": role,
+            "definition_path": definition_text,
+            "schema_path": schema_text,
+            **self._model_identity(document),
+            "maturity": self._maturity(validity),
+            "validity": validity if isinstance(validity, dict) else {},
+            "sources": sources if isinstance(sources, list) else [],
+            "limitations": limitations if isinstance(limitations, list) else [],
+            "evidence_complete": (
+                isinstance(sources, list)
+                and bool(sources)
+                and all(self._source_complete(source) for source in sources)
+            ),
+            "integrity": {
+                "definition": definition_check["status"],
+                "schema": schema_check["status"],
+            },
+        }
+
+    @staticmethod
+    def _summarize_integrity(checks: Sequence[Mapping[str, object]]) -> dict[str, object]:
+        counts = {
+            status: sum(check.get("status") == status for check in checks)
+            for status in ("verified", "altered", "missing")
+        }
+        return {
+            "status": "verified"
+            if counts["altered"] == 0 and counts["missing"] == 0
+            else "attention",
+            "checked_count": len(checks),
+            **{f"{key}_count": value for key, value in counts.items()},
+            "checks": list(checks),
+        }
+
+    def _scenario_audit(
+        self, job: Mapping[str, object], result_path: Path
+    ) -> dict[str, object]:
+        result = _load_json_object(result_path)
+        input_path, _ = self.artifact(str(job["id"]), "input")
+        provenance_path, _ = self.artifact(str(job["id"]), "provenance")
+        scenario_input = _load_json_object(input_path)
+        provenance = _load_json_object(provenance_path)
+        checks: list[dict[str, object]] = []
+        plan = cast(dict[str, object], job.get("plan", {}))
+        scenario_provenance = cast(dict[str, object], provenance.get("scenario", {}))
+        result_provenance = cast(dict[str, object], provenance.get("result", {}))
+        candidate_bytes = (
+            json.dumps(scenario_input, indent=2, ensure_ascii=False) + "\n"
+        ).encode("utf-8")
+        candidate_actual = hashlib.sha256(candidate_bytes).hexdigest()
+        candidate_expected = plan.get("candidate_sha256")
+        checks.append(
+            {
+                "label": "validated scenario candidate",
+                "path": self._relative(input_path),
+                "expected_sha256": candidate_expected,
+                "actual_sha256": candidate_actual,
+                "status": "verified"
+                if candidate_expected == candidate_actual
+                else "altered",
+            }
+        )
+        checks.append(
+            self._integrity_check(
+                "provenance scenario profile",
+                input_path,
+                scenario_provenance.get("profile_sha256"),
+            )
+        )
+        checks.append(
+            self._integrity_check(
+                "authoritative result", result_path, result_provenance.get("sha256")
+            )
+        )
+        reproducibility = cast(dict[str, object], result.get("reproducibility", {}))
+        artifacts = reproducibility.get("artifacts", [])
+        components = (
+            [
+                self._component_audit(cast(dict[str, object], artifact), checks)
+                for artifact in artifacts
+                if isinstance(artifact, dict)
+            ]
+            if isinstance(artifacts, list)
+            else []
+        )
+        scenario_sources = scenario_input.get("sources", [])
+        scenario_limitations = scenario_input.get("limitations", [])
+        result_validity = result.get("validity", {})
+        evidence_complete = (
+            isinstance(scenario_sources, list)
+            and bool(scenario_sources)
+            and all(self._source_complete(source) for source in scenario_sources)
+            and bool(components)
+            and all(component["evidence_complete"] for component in components)
+        )
+        return {
+            "api_version": AUDIT_API_VERSION,
+            "available": True,
+            "job_id": job["id"],
+            "kind": "scenario",
+            "generated_at": self._now(),
+            "workbench": {
+                "name": "MEHLISSA Next Research Workbench",
+                "version": WORKBENCH_VERSION,
+                "audit_api_version": AUDIT_API_VERSION,
+            },
+            "boundary": {
+                "clinical_use": False,
+                "patient_specific": False,
+                "statement": "Research software demonstrator; not a medical device and not validated for clinical or patient-specific decisions.",
+            },
+            "run": {
+                "title": job["title"],
+                "status": job["status"],
+                "completed_at": job.get("completed_at"),
+                "master_seeds": plan.get("master_seeds", []),
+            },
+            "scenario": scenario_input.get("scenario", {}),
+            "software": provenance.get("software", {}),
+            "provenance": provenance,
+            "integrity": self._summarize_integrity(checks),
+            "evidence": {
+                "status": "complete" if evidence_complete else "incomplete",
+                "scenario_sources": scenario_sources if isinstance(scenario_sources, list) else [],
+                "components": components,
+            },
+            "limitations": {
+                "scenario": scenario_limitations if isinstance(scenario_limitations, list) else [],
+                "result": cast(dict[str, object], result_validity).get("limitations", [])
+                if isinstance(result_validity, dict)
+                else [],
+            },
+            "interpretation": {
+                "acceptance_level": cast(
+                    dict[str, object], scenario_input.get("scenario", {})
+                ).get("acceptance_level"),
+                "maturity": "Integrated vertical-slice research demonstrator",
+                "claim": "Software execution and reproducibility evidence only; no empirical clinical-performance claim.",
+            },
+        }
+
+    def _campaign_audit(
+        self, job: Mapping[str, object], result_path: Path
+    ) -> dict[str, object]:
+        document = _load_json_object(result_path)
+        input_path, _ = self.artifact(str(job["id"]), "input")
+        campaign_input = _load_json_object(input_path)
+        plan = cast(dict[str, object], job.get("plan", {}))
+        campaign = cast(dict[str, object], document.get("campaign", {}))
+        checks: list[dict[str, object]] = [
+            self._integrity_check(
+                "retained campaign manifest", input_path, plan.get("manifest_sha256")
+            ),
+            self._integrity_check(
+                "campaign source manifest", input_path, campaign.get("source_sha256")
+            ),
+        ]
+        run_audits: list[dict[str, object]] = []
+        scenario_sources: list[object] = []
+        scenario_limitations: list[object] = []
+        components: list[dict[str, object]] = []
+        runs = document.get("runs", [])
+        if not isinstance(runs, list):
+            raise RunControlError("Campaign result has no valid derived-run list")
+        for entry in runs:
+            if not isinstance(entry, dict):
+                continue
+            run = cast(dict[str, object], entry)
+            manifest = self._job_file(
+                job, result_path.parent / str(run.get("manifest_path", ""))
+            )
+            derived_result = self._job_file(
+                job, result_path.parent / str(run.get("result_path", ""))
+            )
+            manifest_check = self._integrity_check(
+                f"{run.get('id')} manifest", manifest, run.get("manifest_sha256")
+            )
+            result_check = self._integrity_check(
+                f"{run.get('id')} result", derived_result, run.get("result_sha256")
+            )
+            checks.extend((manifest_check, result_check))
+            provenance: dict[str, object] = {}
+            if manifest is not None and manifest.is_file() and not scenario_sources:
+                derived_manifest = _load_json_object(manifest)
+                declared_sources = derived_manifest.get("sources", [])
+                declared_limitations = derived_manifest.get("limitations", [])
+                if isinstance(declared_sources, list):
+                    scenario_sources = declared_sources
+                if isinstance(declared_limitations, list):
+                    scenario_limitations = declared_limitations
+            if derived_result is not None:
+                if not components:
+                    derived_document = _load_json_object(derived_result)
+                    reproducibility = cast(
+                        dict[str, object], derived_document.get("reproducibility", {})
+                    )
+                    artifacts = reproducibility.get("artifacts", [])
+                    if isinstance(artifacts, list):
+                        components = [
+                            self._component_audit(
+                                cast(dict[str, object], artifact), checks
+                            )
+                            for artifact in artifacts
+                            if isinstance(artifact, dict)
+                        ]
+                provenance_path = derived_result.parent / "provenance.json"
+                if provenance_path.is_file():
+                    provenance = _load_json_object(provenance_path)
+                    checks.append(
+                        self._integrity_check(
+                            f"{run.get('id')} provenance result",
+                            derived_result,
+                            cast(dict[str, object], provenance.get("result", {})).get(
+                                "sha256"
+                            ),
+                        )
+                    )
+            run_audits.append(
+                {
+                    "id": run.get("id"),
+                    "seed": run.get("seed"),
+                    "manifest": manifest_check,
+                    "result": result_check,
+                    "software": provenance.get("software", {}),
+                    "provenance": provenance,
+                }
+            )
+        evidence_complete = (
+            bool(scenario_sources)
+            and all(self._source_complete(source) for source in scenario_sources)
+            and bool(components)
+            and all(component["evidence_complete"] for component in components)
+        )
+        return {
+            "api_version": AUDIT_API_VERSION,
+            "available": True,
+            "job_id": job["id"],
+            "kind": "campaign",
+            "generated_at": self._now(),
+            "workbench": {
+                "name": "MEHLISSA Next Research Workbench",
+                "version": WORKBENCH_VERSION,
+                "audit_api_version": AUDIT_API_VERSION,
+            },
+            "boundary": {
+                "clinical_use": False,
+                "patient_specific": False,
+                "statement": "Controlled research campaign; not a clinical study and not validated for patient-specific decisions.",
+            },
+            "run": {
+                "title": job["title"],
+                "status": job["status"],
+                "completed_at": job.get("completed_at"),
+                "master_seeds": plan.get("master_seeds", []),
+            },
+            "campaign": campaign,
+            "software": run_audits[0]["software"] if run_audits else {},
+            "integrity": self._summarize_integrity(checks),
+            "evidence": {
+                "status": "complete" if evidence_complete else "incomplete",
+                "scenario_sources": scenario_sources,
+                "components": components,
+            },
+            "derived_runs": run_audits,
+            "limitations": {
+                "scenario": scenario_limitations,
+                "campaign": campaign_input.get("limitations", []),
+                "result": document.get("limitations", []),
+            },
+            "interpretation": {
+                "acceptance_level": None,
+                "maturity": "Controlled software-experiment campaign",
+                "claim": "Descriptive reproducibility and comparison evidence only; no clinical-performance inference.",
+            },
+        }
+
+    def audit(self, job_id: str) -> dict[str, object]:
+        """Return an exportable, integrity-checked UX-6.6 audit summary."""
+
+        job = self.get(job_id)
+        if job["status"] != "completed":
+            unavailable = self._unavailable_dashboard(job)
+            unavailable["api_version"] = AUDIT_API_VERSION
+            unavailable["workbench"] = {
+                "name": "MEHLISSA Next Research Workbench",
+                "version": WORKBENCH_VERSION,
+                "audit_api_version": AUDIT_API_VERSION,
+            }
+            unavailable["boundary"] = {
+                "clinical_use": False,
+                "patient_specific": False,
+                "statement": "No scientific interpretation is available for an incomplete job.",
+            }
+            return unavailable
+        result_path = self._result_path(job)
+        if job["kind"] == "scenario":
+            return self._scenario_audit(job, result_path)
+        return self._campaign_audit(job, result_path)
+
+    @staticmethod
     def _unavailable_dashboard(job: Mapping[str, object]) -> dict[str, object]:
         status = str(job["status"])
         return {
@@ -1245,7 +1646,7 @@ class WorkbenchServer(ThreadingHTTPServer):
 class WorkbenchRequestHandler(BaseHTTPRequestHandler):
     """Serve embedded assets and capability-protected local APIs."""
 
-    server_version = "MEHLISSAWorkbench/0.5"
+    server_version = f"MEHLISSAWorkbench/{WORKBENCH_VERSION}"
     sys_version = ""
 
     @property
@@ -1377,6 +1778,17 @@ class WorkbenchRequestHandler(BaseHTTPRequestHandler):
                 self._send_json(HTTPStatus.NOT_FOUND, {"error": "run_not_found", "detail": str(error)})
             except (RunControlError, ValueError, OSError) as error:
                 self._send_json(HTTPStatus.CONFLICT, {"error": "result_unavailable", "detail": str(error)})
+            return
+        if path == "/api/run/audit":
+            if not self._require_session():
+                return
+            identifier = parse_qs(urlsplit(self.path).query).get("id", [""])[0]
+            try:
+                self._send_json(HTTPStatus.OK, self.workbench.runs.audit(identifier))
+            except RunNotFoundError as error:
+                self._send_json(HTTPStatus.NOT_FOUND, {"error": "run_not_found", "detail": str(error)})
+            except (RunControlError, ScenarioWorkspaceError, ValueError, OSError) as error:
+                self._send_json(HTTPStatus.CONFLICT, {"error": "audit_unavailable", "detail": str(error)})
             return
         if path == "/api/run/artifact":
             if not self._require_session():

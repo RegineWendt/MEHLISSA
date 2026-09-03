@@ -311,6 +311,90 @@ function artifactAction(jobId, name, label) {
   return artifact ? artifactButton(job, { ...artifact, label }) : null;
 }
 
+function appendFacts(parent, entries) {
+  const facts = document.createElement("dl"); facts.className = "audit-facts";
+  for (const [label, value] of entries) {
+    const row = document.createElement("div"); appendText(row, "dt", label);
+    appendText(row, "dd", displayValue(value)); facts.append(row);
+  }
+  parent.append(facts);
+}
+
+function renderSources(parent, sources) {
+  const list = document.createElement("ul"); list.className = "audit-sources";
+  if (!sources.length) appendText(list, "li", "No complete source declaration is available — attention required.", "audit-warning");
+  for (const source of sources) {
+    const item = document.createElement("li"); appendText(item, "strong", source.citation || source.id || "Unnamed source");
+    if (source.role) appendText(item, "span", `Role: ${source.role}`);
+    appendText(item, "span", `Licence/status: ${source.license || "Missing — attention required"}`);
+    const target = source.url || source.location;
+    if (target) {
+      try {
+        const url = new URL(target);
+        if (/^https?:\/\//i.test(target) && ["http:", "https:"].includes(url.protocol)) {
+          const link = appendText(item, "a", target); link.href = url.href; link.target = "_blank"; link.rel = "noopener noreferrer";
+        } else appendText(item, "code", target);
+      } catch { appendText(item, "code", target); }
+    }
+    list.append(item);
+  }
+  parent.append(list);
+}
+
+function exportAudit(audit) {
+  const blob = new Blob([`${JSON.stringify(audit, null, 2)}\n`], { type: "application/json" });
+  const url = URL.createObjectURL(blob); const link = document.createElement("a");
+  link.href = url; link.download = `mehlissa-audit-${audit.job_id}.json`; link.hidden = true; document.body.append(link); link.click(); link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function renderAudit(audit) {
+  const root = byId("dashboard-content"); const section = document.createElement("section"); section.className = "audit-panel"; section.setAttribute("aria-labelledby", "audit-heading");
+  appendText(section, "p", "Provenance, evidence, and interpretation", "eyebrow"); const heading = appendText(section, "h4", "Audit summary"); heading.id = "audit-heading";
+  const boundary = appendText(section, "p", audit.boundary.statement, "audit-boundary"); boundary.setAttribute("role", "note");
+  const statusRow = document.createElement("div"); statusRow.className = "audit-status-row";
+  appendText(statusRow, "span", `Integrity: ${readableName(audit.integrity.status)}`, `audit-state ${audit.integrity.status}`);
+  appendText(statusRow, "span", `Evidence: ${readableName(audit.evidence.status)}`, `audit-state ${audit.evidence.status}`); section.append(statusRow);
+  appendFacts(section, [
+    ["Run", audit.run.title], ["Completed", audit.run.completed_at], ["Seeds", audit.run.master_seeds.join(", ")],
+    ["Maturity", audit.interpretation.maturity], ["Acceptance level", audit.interpretation.acceptance_level || "Not applicable"],
+    ["Interpretation", audit.interpretation.claim],
+  ]);
+  if (audit.workbench && Object.keys(audit.workbench).length) {
+    appendText(section, "h5", "Workbench audit producer");
+    appendFacts(section, [["Application", audit.workbench.name], ["Workbench version", audit.workbench.version], ["Audit contract", audit.workbench.audit_api_version]]);
+  }
+  if (audit.software && Object.keys(audit.software).length) {
+    appendText(section, "h5", "Software and build");
+    appendFacts(section, [["MEHLISSA", audit.software.version], ["Git commit", audit.software.git_commit], ["Git state", audit.software.git_dirty ? "Dirty working tree recorded" : "Clean working tree recorded"], ["Compiler", `${audit.software.compiler_id || "Unknown"} ${audit.software.compiler_version || ""}`.trim()], ["Platform", `${audit.software.operating_system || "Unknown"} / ${audit.software.architecture || "Unknown"}`]]);
+  }
+  appendText(section, "h5", `Integrity checks (${audit.integrity.verified_count}/${audit.integrity.checked_count} verified)`);
+  section.append(makeTable(["Status", "Item", "Expected SHA-256", "Actual SHA-256", "Retained path"], audit.integrity.checks.map((check) => [readableName(check.status), check.label, check.expected_sha256, check.actual_sha256, check.path]), "Provenance integrity checks"));
+  if (audit.derived_runs?.length) {
+    appendText(section, "h5", "Derived-run provenance");
+    section.append(makeTable(["Run", "Seed", "Manifest", "Result", "MEHLISSA", "Git commit"], audit.derived_runs.map((run) => [run.id, run.seed, run.manifest.status, run.result.status, run.software.version, run.software.git_commit]), "Campaign derived-run provenance"));
+  }
+  appendText(section, "h5", "Scenario evidence and licences"); renderSources(section, audit.evidence.scenario_sources);
+  if (audit.evidence.components.length) {
+    appendText(section, "h5", "Model and input maturity"); const components = document.createElement("div"); components.className = "component-audits";
+    for (const component of audit.evidence.components) {
+      const details = document.createElement("details"); details.className = component.evidence_complete ? "component-audit" : "component-audit audit-attention";
+      const title = component.title || component.id || component.definition_path;
+      appendText(details, "summary", `${readableName(component.role)} — ${title} — ${component.maturity.label}`);
+      appendFacts(details, [["Model/profile", component.id], ["Version", component.version], ["Evidence class", component.maturity.evidence_class], ["Clinical maturity", component.maturity.clinical_maturity], ["Definition integrity", component.integrity.definition], ["Schema integrity", component.integrity.schema], ["Definition", component.definition_path], ["Schema", component.schema_path]]);
+      renderSources(details, component.sources);
+      if (component.limitations.length) { appendText(details, "h6", "Limitations"); const list = document.createElement("ul"); for (const item of component.limitations) appendText(list, "li", item); details.append(list); }
+      components.append(details);
+    }
+    section.append(components);
+  }
+  appendText(section, "h5", "Interpretation limitations"); const limitations = document.createElement("ul"); limitations.className = "dashboard-limitations";
+  const uniqueLimitations = new Set(); for (const group of Object.values(audit.limitations)) if (Array.isArray(group)) for (const item of group) uniqueLimitations.add(item);
+  for (const item of uniqueLimitations) appendText(limitations, "li", item); section.append(limitations);
+  const actions = document.createElement("div"); actions.className = "artifact-actions"; const download = document.createElement("button"); download.type = "button"; download.className = "secondary"; download.textContent = "Download complete audit JSON"; download.addEventListener("click", () => exportAudit(audit)); actions.append(download);
+  const raw = document.createElement("details"); raw.className = "raw-audit"; appendText(raw, "summary", "Complete machine-readable audit and original provenance"); const pre = appendText(raw, "pre", JSON.stringify(audit, null, 2)); pre.tabIndex = 0; actions.append(raw); section.append(actions); root.append(section);
+}
+
 function renderScenarioDashboard(data) {
   const root = byId("dashboard-content"); const summary = data.summary;
   appendText(root, "p", `Accepted by ${data.reader}; one completed run is included.`, "reader-note");
@@ -350,7 +434,13 @@ async function openDashboard(jobId = byId("dashboard-run").value) {
       byId("results-status").textContent = "No result values are available for this job."; return;
     }
     if (data.kind === "scenario") renderScenarioDashboard(data); else renderCampaignDashboard(data);
-    byId("results-status").textContent = `${readableName(data.kind)} dashboard loaded from accepted results.`;
+    try {
+      const audit = await api(`/api/run/audit?id=${encodeURIComponent(jobId)}`); renderAudit(audit);
+      byId("results-status").textContent = `${readableName(data.kind)} dashboard and provenance audit loaded.`;
+    } catch (error) {
+      appendText(root, "p", `The result is visible, but its audit could not be completed: ${error.message}`, "excluded-result");
+      byId("results-status").textContent = "Result loaded; provenance audit needs attention.";
+    }
   } catch (error) { appendText(root, "p", error.message, "excluded-result"); byId("results-status").textContent = "The retained result could not be read."; }
 }
 

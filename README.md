@@ -79,7 +79,7 @@ print(load_result(execution.result).summary)
 See `examples/notebooks/01-first-scenario.ipynb` and
 `examples/notebooks/02-campaign-analysis.ipynb` for complete workflows.
 
-The UX-6.1 through UX-6.5 graphical workbench can browse the same validated model and
+The UX-6.1 through UX-6.6 graphical workbench can browse the same validated model and
 example catalog and create a schema-guided derivative of the complete FP9/lung
 scenario in a protected local page:
 
@@ -101,6 +101,11 @@ complete workflow and diagnostics. Completed scenarios and campaigns can then
 be read as outcome, stage, case, group, and paired-difference dashboards through
 the accepted result readers. Two completed scenarios can be compared; failed,
 cancelled, partial, and missing results are explicitly excluded.
+Every completed view also carries an artifact-backed provenance audit with
+software/build identity, seeds, input/model/schema/result hashes, evidence and
+licence declarations, maturity labels, limitations, and a persistent
+non-clinical boundary. The complete audit can be downloaded as JSON; altered
+hashes and incomplete metadata are flagged rather than repaired or inferred.
 
 MEHLISSA Next is a research model. It is not a medical device and does not
 provide patient-specific clinical predictions.

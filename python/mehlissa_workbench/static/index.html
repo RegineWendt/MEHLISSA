@@ -19,19 +19,19 @@ SPDX-License-Identifier: MPL-2.0
       <span class="brand-mark" aria-hidden="true">M</span>
       <span><strong>MEHLISSA</strong><small>Next Research Workbench</small></span>
     </a>
-    <span class="prototype-badge">UX-6.5 local workbench</span>
+    <span class="prototype-badge">UX-6.6 · research use only · not clinical</span>
   </header>
   <main id="main-content" tabindex="-1">
     <section class="hero" aria-labelledby="page-title">
       <div>
         <p class="eyebrow">Compose, confirm, simulate, understand</p>
         <h1 id="page-title">Run and interpret reproducible experiments in one guarded workspace.</h1>
-        <p class="hero-copy">Configure and validate the FP9 lung demonstrator, run one scenario or the curated six-run campaign, then inspect outcomes through accepted result readers.</p>
+        <p class="hero-copy">Configure and validate the FP9 lung demonstrator, run one scenario or the curated six-run campaign, then inspect outcomes together with their evidence, integrity, and interpretation limits.</p>
       </div>
       <aside class="boundary" aria-labelledby="boundary-title">
         <p class="boundary-label">Current boundary</p>
-        <h2 id="boundary-title">Results are descriptive</h2>
-        <p>UX-6.5 shows only accepted completed results. Missing, failed, cancelled, or still-running jobs never become observations, and every view links back to retained evidence.</p>
+        <h2 id="boundary-title">Every result carries its boundary</h2>
+        <p>UX-6.6 verifies retained hashes and keeps software, model maturity, sources, licences, limitations, and the non-clinical scope beside each completed result.</p>
       </aside>
     </section>
     <section class="metrics" aria-label="Workbench overview">
@@ -121,6 +121,10 @@ SPDX-License-Identifier: MPL-2.0
         <div><p class="eyebrow">Result workspace</p><h2 id="results-title">Understand completed outcomes</h2></div>
         <p id="results-status" class="status" role="status" aria-live="polite">Start or select a run to inspect its results.</p>
       </div>
+      <aside class="persistent-boundary" role="note" aria-label="Persistent interpretation boundary">
+        <strong>Research software demonstrator — not a medical device.</strong>
+        <span>No displayed value is validated for clinical or patient-specific decisions. Integrity verifies retained files; it does not establish biological or clinical validity.</span>
+      </aside>
       <div class="results-layout">
         <section class="dashboard-card" aria-labelledby="dashboard-title">
           <div class="dashboard-controls">
@@ -128,7 +132,7 @@ SPDX-License-Identifier: MPL-2.0
             <button id="open-dashboard" type="button" class="secondary" disabled>Open result dashboard</button>
           </div>
           <div id="dashboard-content" class="dashboard-content" aria-live="polite">
-            <p class="empty">Completed individual runs show outcomes, stage timing, and analysis cases. Campaigns show experimental groups and paired differences.</p>
+            <p class="empty">Completed runs show outcomes, provenance, integrity checks, evidence, licences, maturity, limitations, and an exportable audit summary.</p>
           </div>
         </section>
         <section class="comparison-card" aria-labelledby="comparison-title">
@@ -142,7 +146,7 @@ SPDX-License-Identifier: MPL-2.0
           <div id="comparison-content" class="comparison-content" aria-live="polite"><p class="empty">Run at least two individual scenarios to compare them.</p></div>
         </section>
       </div>
-      <p class="notice"><strong>Interpretation boundary.</strong> Dashboard values describe software outputs from synthetic and historical assumptions. They do not establish clinical or patient-specific performance.</p>
+      <p class="notice"><strong>Interpretation boundary.</strong> Dashboard values describe software outputs from synthetic, historical, and literature-parameterized assumptions. Verified hashes establish file integrity only; they do not establish clinical or patient-specific performance.</p>
     </section>
     <section class="catalog compact-catalog" aria-labelledby="catalog-title">
       <div class="section-heading">

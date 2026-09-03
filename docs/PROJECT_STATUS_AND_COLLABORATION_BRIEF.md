@@ -11,9 +11,9 @@ SPDX-License-Identifier: CC-BY-4.0
 **Status date:** 3 September 2026
 **Development branch:** `mehlissa-next-generation`
 **Published base revision:** `7b92c4ef930b188918a886041603e8de27e2891c`
-**Local candidate:** UX-6.1 through UX-6.5 accepted locally; not yet pushed
+**Local candidate:** UX-6.1 through UX-6.6 accepted locally; not yet pushed
 **Milestone status:** M0 through M7 passed
-**Current product focus:** UX-6.6 provenance, evidence, and interpretation boundaries after local UX-6.5 acceptance
+**Current product focus:** UX-6.7 sensitivity, uncertainty, visualization, and reproducible export after local UX-6.6 acceptance
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -79,6 +79,13 @@ behind explicit contracts.
   and the UX-3 report remain reachable. Missing, incomplete, failed, and
   cancelled jobs contribute zero observations. All 285 Windows/MSVC tests and
   desktop/mobile browser checks pass; publication and supported CI are pending.
+- UX-6.6 adds an artifact-backed provenance audit beside every completed
+  dashboard. It round-trips original provenance, verifies scenario/campaign
+  inputs, results, manifests, model definitions, and schemas, exposes seeds,
+  software/build identity, sources, licences, maturity, and limitations, and
+  exports the complete audit JSON. Altered hashes are conspicuous and absent
+  licence metadata remains incomplete. All 285 Windows/MSVC tests and
+  desktop/mobile browser checks pass; publication and supported CI are pending.
 - English user, architecture, model, traceability, and decision documentation
   supports international collaboration.
 - The result is a reproducible research-software demonstrator. It is not a
@@ -89,7 +96,7 @@ behind explicit contracts.
 | Software architecture | Strong modular foundation with explicit ownership, conservation, lifecycle, configuration, and evidence boundaries. |
 | End-to-end integration | Complete first software vertical slice through fingerprinting Levels A-E. |
 | Scientific validation | Mixed maturity: verified equations, literature-parameterized candidates, selected independent comparisons, and multiple synthetic mechanisms. |
-| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, UX-3 provides readable shareable result bundles, UX-4 provides controlled campaigns, UX-5 provides Python and notebook access, and UX-6.1 through UX-6.5 add graphical discovery, scenario round trips, corrective validation, guarded execution, dashboards, and comparison. Provenance, visualization/export, and release acceptance remain. |
+| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, UX-3 provides readable shareable result bundles, UX-4 provides controlled campaigns, UX-5 provides Python and notebook access, and UX-6.1 through UX-6.6 add graphical discovery, scenario round trips, corrective validation, guarded execution, dashboards, comparison, and provenance/evidence audit. Visualization/export and release acceptance remain. |
 | Clinical readiness | Not claimed. Patient prediction, diagnosis, and treatment recommendations are explicitly outside the present scope. |
 
 ## How to read project labels
@@ -333,7 +340,8 @@ they do not by themselves increase physiological or clinical validity.
 | UX-6.3 - Validation and corrective feedback | Explain structural, semantic, and cross-file problems before save/run and make the decision shareable. | Locally passed; accepted-CLI parity, stable field/document codes, repair guidance, warnings, candidate SHA-256, invalid-save/run gate, all 285 Windows/MSVC tests, and desktop/mobile browser checks pass; push and supported CI pending |
 | UX-6.4 - Run and campaign control | Confirm, start, monitor, cancel, and inspect an exact validated scenario or the curated six-run campaign without bypassing accepted APIs. | Locally passed; unique bounded evidence directories, exact inputs, seeds, atomic state, 200-line logs, real cancellation, and protected result/provenance/table links; all 285 Windows/MSVC tests and desktop/mobile browser checks pass; push and supported CI pending |
 | UX-6.5 - Result dashboard and comparison | Explain completed outcomes, cases, stages, campaign groups, and paired differences while retaining authoritative artifacts and excluding non-results. | Locally passed; accepted-reader parity, 1,000-versus-10,000 scenario comparison, sandboxed UX-3 report, zero-observation failure policy, all 285 Windows/MSVC tests, and desktop/mobile browser checks pass; push and supported CI pending |
-| UX-6.6 through UX-6.8 - Integrated graphical workbench | Add provenance/evidence, uncertainty visualization/export, packaging, and final usability/accessibility acceptance. | Planned |
+| UX-6.6 - Provenance, evidence, and interpretation boundaries | Keep software/build identity, seeds, hashes, models, sources, licences, maturity, limitations, and the non-clinical scope attached to every displayed result. | Locally passed; complete provenance round trip, scenario and six-run campaign integrity verification, explicit altered/incomplete states, JSON audit export, all 285 Windows/MSVC tests, and desktop/mobile browser checks pass; push and supported CI pending |
+| UX-6.7 through UX-6.8 - Integrated graphical workbench | Add uncertainty visualization/export, packaging, and final usability/accessibility acceptance. | Planned |
 
 The intended first user experience is:
 
@@ -422,8 +430,24 @@ differences are right minus left. Authoritative JSON/CSV and a sandboxed UX-3
 HTML report remain directly inspectable. Running, incomplete, failed, and
 cancelled jobs provide an explicit zero-observation response and cannot enter a
 comparison. Reader-parity tests, the complete 285-test Windows/MSVC suite, and
-desktop/mobile browser review pass. UX-6.6 provenance and evidence display is
-next.
+desktop/mobile browser review pass.
+
+UX-6.6 now adds a server-owned audit projection to each completed dashboard.
+For a scenario, the original provenance object is returned without dropping
+fields, and the validated candidate, retained profile, authoritative result,
+13 component definitions, and their schemas are checked against declared
+SHA-256 identities. For a campaign, the retained source manifest, six derived
+manifests, six results, their provenance-linked result identities, and complete
+seed plan are checked. Build version, Git revision and dirty state, compiler,
+platform, source citations, declared licences, evidence classes, validity
+descriptions, and limitations remain visible. A deliberate retained-input
+change produces `Attention`. The current unmodified FP9 composition correctly
+reports verified integrity but incomplete evidence because the historical timer
+contract has citations without per-source licence fields; the workbench neither
+guesses nor inherits them. The exact displayed audit is downloadable as JSON,
+and every view repeats that file integrity is not biological or clinical
+validity. All 285 Windows/MSVC tests and desktop/mobile browser review pass.
+UX-6.7 uncertainty visualization and reproducible export is next.
 
 ## 9. Opportunities for collaborators
 
@@ -435,7 +459,7 @@ next.
 | Molecular communication | Calibrate local channels, implement assembly physics, and connect an external network simulator through the existing adapter. |
 | Cell biology and pharmacology | Replace synthetic receptor, signaling, apoptosis, and delivery assumptions with evidence-qualified models. |
 | Statistics and uncertainty quantification | Design independent validation, global sensitivity, uncertainty propagation, identifiability, and ensemble analysis. |
-| Research UX and visualization | Review the local editor, validation, and run control, then add result comparison, provenance, and accessible uncertainty views. |
+| Research UX and visualization | Review the local editor, validation, run control, dashboards, and provenance audit, then add accessible uncertainty views and reproducible exports. |
 | Research data and governance | Model-card provenance, licensing, FAIR data, patient-data controls, and digital-twin governance. |
 
 A new module is reviewable when its public contract and units are explicit;
@@ -459,6 +483,7 @@ and limitations are documented; and all supported CI paths pass.
 | `docs/ux/UX6_3_VALIDATION_AND_CORRECTIVE_FEEDBACK.md` | Authoritative validity, coded field/document issues, repair guidance, warnings, candidate hashes, and the pre-run gate. |
 | `docs/ux/UX6_4_RUN_AND_CAMPAIGN_CONTROL.md` | Confirmed scenario/campaign execution, lifecycle, cancellation, and retained evidence. |
 | `docs/ux/UX6_5_RESULT_DASHBOARD_AND_COMPARISON.md` | Reader-backed outcome views, campaign grouping, guarded comparison, report drill-through, and missing/failed-run treatment. |
+| `docs/ux/UX6_6_PROVENANCE_EVIDENCE_AND_INTERPRETATION.md` | Artifact-backed provenance, hash verification, evidence/licence completeness, maturity, interpretation boundaries, audit export, and local acceptance. |
 | `docs/m0` through `docs/m6` | Gate reviews, model notes, validation evidence, and accepted limitations for preceding milestones. |
 
 - **Repository:** https://github.com/RegineWendt/MEHLISSA
@@ -467,7 +492,8 @@ and limitations are documented; and all supported CI paths pass.
 MEHLISSA Next now provides the architectural and executable backbone required
 by the dissertation vision and a graphical discovery, scenario, validation,
 execution, monitoring, and result-comparison client over that backbone. The
-next workbench step exposes provenance, evidence, licences, maturity, hashes,
-and interpretation limits in the normal workflow; scientific expansion still
+client now exposes provenance, evidence, licences, maturity, hashes, and
+interpretation limits beside every completed result. The next workbench step
+adds uncertainty visualization and reproducible figure/data export; scientific expansion still
 requires further scenarios and organs and progressive replacement of synthetic
 assumptions with independently validated models.
