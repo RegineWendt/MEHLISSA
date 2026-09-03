@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/paper1-technical-protocol/2.0.0.schema.json",
+  "title": "MEHLISSA Paper 1 Technical Experiment Protocol v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "protocol", "amendment", "evaluation_questions", "conditions", "experiments", "handling_rules", "archive_layout"],
+  "properties": {
+    "schema_version": {"const": "2.0.0"},
+    "protocol": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "status", "locked_date", "scope", "manuscript_text"],
+      "properties": {
+        "id": {"const": "mehlissa-paper1-technical-protocol"},
+        "version": {"const": "2.0.0"},
+        "status": {"const": "locked-before-measurement"},
+        "locked_date": {"type": "string", "format": "date"},
+        "scope": {"type": "string", "minLength": 1},
+        "manuscript_text": {"const": false}
+      }
+    },
+    "amendment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["predecessor", "predecessor_location", "predecessor_modified", "reason", "change_history"],
+      "properties": {
+        "predecessor": {"const": "Paper 1 protocol v1.1"},
+        "predecessor_location": {"type": "string", "minLength": 1},
+        "predecessor_modified": {"const": false},
+        "reason": {"type": "string", "minLength": 1},
+        "change_history": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "evaluation_questions": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "question", "claim_boundary"],
+        "properties": {
+          "id": {"enum": ["RQ-T1", "RQ-T2", "RQ-T3", "RQ-T4"]},
+          "question": {"type": "string", "minLength": 1},
+          "claim_boundary": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "conditions": {"$ref": "#/$defs/nonempty_object"},
+    "experiments": {
+      "type": "array", "minItems": 3,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "purpose", "models", "inputs", "seeds", "repetitions", "order", "metrics", "tolerances", "positive_controls", "negative_controls", "commands"],
+        "properties": {
+          "id": {"enum": ["P1-E1-BODY-OBSERVATION", "P1-E2-M7-RESOURCE", "P1-E3-ACCESS-PARITY"]},
+          "purpose": {"type": "string", "minLength": 1},
+          "models": {"$ref": "#/$defs/nonempty_strings"},
+          "inputs": {"$ref": "#/$defs/nonempty_strings"},
+          "seeds": {"$ref": "#/$defs/nonempty_object"},
+          "repetitions": {"$ref": "#/$defs/nonempty_object"},
+          "order": {"type": "string", "minLength": 1},
+          "metrics": {"$ref": "#/$defs/nonempty_strings"},
+          "tolerances": {"$ref": "#/$defs/nonempty_object"},
+          "positive_controls": {"$ref": "#/$defs/nonempty_strings"},
+          "negative_controls": {"$ref": "#/$defs/nonempty_strings"},
+          "commands": {"$ref": "#/$defs/nonempty_strings"}
+        }
+      }
+    },
+    "handling_rules": {"$ref": "#/$defs/nonempty_object"},
+    "archive_layout": {"$ref": "#/$defs/nonempty_object"}
+  },
+  "$defs": {
+    "nonempty_strings": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "nonempty_object": {"type": "object", "minProperties": 1}
+  }
+}

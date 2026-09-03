@@ -1,0 +1,121 @@
+{
+  "schema_version": "2.0.0",
+  "protocol": {
+    "id": "mehlissa-paper1-technical-protocol",
+    "version": "2.0.0",
+    "status": "locked-before-measurement",
+    "locked_date": "2026-09-03",
+    "scope": "Technical evaluation of the complete M2-M7 platform and its CLI, Python and Workbench research access paths for a platform-and-methods paper.",
+    "manuscript_text": false
+  },
+  "amendment": {
+    "predecessor": "Paper 1 protocol v1.1",
+    "predecessor_location": "External frozen Paper 1 material; absent from and not modified by this software-repository amendment.",
+    "predecessor_modified": false,
+    "reason": "Paper 1 is repositioned from an M1/M2-focused study to a platform-and-methods paper covering the implemented M2-M7 multiscale stack and all three research access paths.",
+    "change_history": [
+      "Scope extended from body/kernel emphasis to the integrated M2-M7 platform.",
+      "FP9 explicitly classified as software and integration evidence, not biological or clinical feasibility evidence.",
+      "Evidence/provenance continuity, multiscale composition, bounded observation, M7 resources and access-path integrity added as technical evaluation axes.",
+      "The frozen RQ4 body-transport campaign is retained unchanged and incorporated as experiment P1-E1."
+    ]
+  },
+  "evaluation_questions": [
+    {
+      "id": "RQ-T1",
+      "question": "Can identical versioned inputs and named random streams be executed reproducibly on supported platforms and through supported access paths?",
+      "claim_boundary": "Technical reproducibility only; no platform-independent wall-time equivalence or scientific validity follows."
+    },
+    {
+      "id": "RQ-T2",
+      "question": "Does composition of replaceable body, lung, capillary, cell and communication models preserve declared conservation and causal identities?",
+      "claim_boundary": "Implemented contracts and reference scenarios only; arbitrary third-party model compatibility is not claimed."
+    },
+    {
+      "id": "RQ-T3",
+      "question": "Can every reported result be traced to versioned inputs, evidence roles, validity limits, hashes and separated calibration/validation sources?",
+      "claim_boundary": "Traceability completeness does not upgrade weak evidence into biological or clinical validity."
+    },
+    {
+      "id": "RQ-T4",
+      "question": "How do bounded observation and the CLI, Python and Workbench access paths affect runtime, memory, retained volume and result integrity?",
+      "claim_boundary": "Descriptive measurements on recorded hardware; not a universal scalability or usability claim."
+    }
+  ],
+  "conditions": {
+    "revision": "The clean Git commit containing this locked protocol, recorded verbatim in run metadata.",
+    "supported_measurement_platforms": ["Windows x86-64 with MSVC Release", "Linux x86-64 with GCC Release when independently executed"],
+    "primary_machine": "One frozen local machine label recorded before execution; no pooling across machines.",
+    "build": {"type": "Release", "warnings_as_errors": true, "dependency_lock": "vcpkg commit from .github/workflows/ci.yml"},
+    "metadata_required": ["UTC timestamps", "OS and version", "architecture", "CPU", "logical CPU count", "physical RAM", "compiler and version", "CMake version", "Python version", "build type", "Git commit", "branch", "remote", "worktree status"],
+    "environment": "Close discretionary heavy applications where practical; do not suppress OS services; record rather than conceal deviations.",
+    "units": {"wall_time": "seconds", "peak_memory": "bytes", "artifact_volume": "bytes", "counts": "integer"},
+    "precision": "Retain raw tool precision; do not round raw observations. Rounding is permitted only in derived human-readable summaries."
+  },
+  "experiments": [
+    {
+      "id": "P1-E1-BODY-OBSERVATION",
+      "purpose": "Execute the pre-existing frozen Paper 1 RQ4 campaign and test whether O0-O3 bounded observation changes authoritative transport state.",
+      "models": ["body.systemic-transport.bvs95 version 1.0.0", "rest-supine-identity body-state version 1.0.0"],
+      "inputs": ["examples/benchmarks/rq4-primary-campaign.json", "benchmarks/pilots/o3-record-limit-pilot-2026-08-27.json", "data/body-models/bvs95-dissertation-rest-v1.json", "data/body-states/bvs95-rest-supine-v1.json"],
+      "seeds": {"transport_master_seed": 2018, "block_order_seed": 20260827, "random_stream_mapping": "CompartmentTransport uses its declared named stream; observation consumes no model RNG draws."},
+      "repetitions": {"warmups_per_condition": 1, "measured_blocks": 7, "long_duration_anchor_per_block": 1, "conditional_population": 1000000},
+      "order": "Within each block independently randomize ten mandatory policy/population conditions plus the long-duration anchor using the frozen ordering seed; preserve the generated execution plan.",
+      "metrics": ["simulation and wall seconds", "peak RSS", "transition throughput", "report bytes", "transition counts", "final-state populations and hash", "RNG draw count", "measurement and aggregate counts", "truncation", "errors and resource termination"],
+      "tolerances": {"state_identity_across_policies": "exact", "rng_draw_identity": "exact", "population_conservation": "exact", "common_aggregate_identity": "exact", "timing_and_memory": "descriptive; median, inclusive quartiles, IQR and range", "conditional_population_gate": "run only if frozen O0 100000 medians satisfy both plan thresholds"},
+      "positive_controls": ["Frozen O3 pilot limits have headroom and match the plan.", "O0 6,359-entity two-hour anchor reproduces without retained detail."],
+      "negative_controls": ["Campaign runner rejects a dirty tree, non-Release driver, placeholder machine label, altered pilot limits and schema-invalid inputs."],
+      "commands": ["cmake --build --preset windows-msvc-release --target mehlissa_body_transport_benchmark", "ctest --preset windows-msvc-release -R body_transport", "python benchmarks/run_rq4_campaign.py --plan <measurement-copy-with-frozen-machine-label> --driver build/windows-msvc/benchmarks/Release/mehlissa_body_transport_benchmark.exe --output-directory <archive>/P1-E1-BODY-OBSERVATION"]
+    },
+    {
+      "id": "P1-E2-M7-RESOURCE",
+      "purpose": "Characterize a deliberately small complete M7 execution for resources, deterministic replay, artifact identity, causal identity and one controlled collector-count variation.",
+      "models": ["scenario.fp9-lung.m7 version 1.0.0", "all thirteen artifact references in fp9-lung-level-a-v1"],
+      "inputs": ["examples/scenarios/fp9-lung-level-a-v1.json", "data/schemas/fingerprinting-scenario-profile/1.0.0.schema.json", "data/schemas/fingerprinting-result/2.0.0.schema.json"],
+      "seeds": {"baseline_master_seed": 20260901, "variation_master_seed": 20260901, "random_stream_mapping": "Scenario-owned names recorded by result provenance; identical seeds are used to isolate collector-count variation."},
+      "repetitions": {"baseline_collector_1000": 3, "variation_collector_10000": 3, "fresh_process_each": true},
+      "order": "Alternate baseline and variation after one unreported warm-up of each: baseline-1, variation-1, baseline-2, variation-2, baseline-3, variation-3.",
+      "metrics": ["wall time", "peak working set/RSS", "recursive run-directory bytes and file count", "result SHA-256", "input artifact/hash set", "stage and causal trace", "reproducibility section", "classification and communication outputs"],
+      "tolerances": {"within_condition_result_hash": "exact across all three repetitions", "within_condition_causal_trace": "exact", "input_hash_set": "exact", "population_and_conservation_invariants": "exact", "runtime_memory_and_volume": "descriptive; report every replicate and median/range", "between_condition": "differences allowed only where collector count causally affects declared results"},
+      "positive_controls": ["Baseline scenario validates before execution.", "Every completed result validates through the authoritative result reader."],
+      "negative_controls": ["Schema-invalid scenario is rejected before run.", "A tampered result copy is rejected by provenance/hash integrity inspection and is never counted as a measured run."],
+      "commands": ["python publication/paper1/run_m7_resource_study.py --executable <release-mehlissa> --output-directory <archive>/P1-E2-M7-RESOURCE", "python publication/paper1/check_paper1_measurements.py --archive <archive>"]
+    },
+    {
+      "id": "P1-E3-ACCESS-PARITY",
+      "purpose": "Verify that CLI, Python and Workbench delegate to the same authoritative validators/readers and do not transform scientific result values.",
+      "models": ["scenario.fp9-lung.m7 version 1.0.0", "MEHLISSA Python process/result API 1.0.0", "MEHLISSA Research Workbench 1.0.0"],
+      "inputs": ["One accepted P1-E2 baseline result", "examples/scenarios/fp9-lung-level-a-v1.json", "tests/test_python_api.py", "tests/test_workbench.py"],
+      "seeds": {"master_seed": 20260901, "mapping": "Access paths receive the same versioned scenario; no access layer owns a scientific RNG."},
+      "repetitions": {"authoritative_result": 1, "reader_repetitions_per_access": 2},
+      "order": "Create the authoritative result through the CLI, then inspect through CLI summary, Python load_result and Workbench audit/dashboard projections; repeat readers without rerunning physics.",
+      "metrics": ["accepted schema version", "source result SHA-256", "scenario/run identifiers", "seed", "stage count/order", "detection", "assembly", "communication and classification values", "limitations", "reader identity", "mutation check"],
+      "tolerances": {"scientific_value_parity": "exact", "source_sha256_parity": "exact", "input_mutation": "forbidden", "presentation_only_fields": "may differ and must be listed"},
+      "positive_controls": ["Python load_result accepts and projects the authoritative result.", "Workbench audit reports mehlissa.load_result and the identical source hash."],
+      "negative_controls": ["Python rejects a campaign document as a scenario result.", "Workbench and Python reject missing, malformed or hash-tampered authoritative artifacts."],
+      "commands": ["<release-mehlissa> result summarize --file <accepted-result>", "python -m unittest tests/test_python_api.py", "python -m unittest tests/test_workbench.py", "python publication/paper1/check_access_parity.py --executable <release-mehlissa> --result <accepted-result> --output <archive>/P1-E3-ACCESS-PARITY"]
+    }
+  ],
+  "handling_rules": {
+    "partial_run": "Retain its ledger entry, stdout, stderr, timestamps and any created files; exclude it from completed-run summaries but report it in attempt counts.",
+    "failed_run": "Never replace or silently rerun in place. Retain the failure and diagnostic; a retry receives a new attempt ID and declared reason.",
+    "resource_limited_run": "Record timeout or memory limit, last observed resource values and retained artifacts. Do not extrapolate missing measurements.",
+    "missing_run": "Represent explicitly as missing with reason; do not impute.",
+    "exclusion_rules": ["Wrong commit", "dirty worktree", "non-Release executable", "schema-invalid input", "unrecorded environment", "operator interruption", "failed integrity check"],
+    "unexpected_results": "Retain and report without changing thresholds or silently redefining the question.",
+    "test_counts": "Useful verification metadata but never a scientific result by themselves.",
+    "platform_pooling": "Forbidden. Report each OS/compiler/machine independently.",
+    "clinical_interpretation": "Forbidden. FP9 is a software/integration demonstrator."
+  },
+  "archive_layout": {
+    "root": "publication/paper1/release-candidates/<candidate-id>/",
+    "metadata": "metadata/environment.json and metadata/software.json",
+    "protocol": "protocol/ with this JSON, schema, human guide and SHA-256 manifest",
+    "raw": "measurements/<experiment-id>/raw/<attempt-id>/ with immutable stdout, stderr and generated artifacts",
+    "ledger": "measurements/<experiment-id>/attempts.jsonl persisted after every attempt",
+    "analysis": "measurements/<experiment-id>/analysis/ with machine-readable summaries and the exact analysis scripts",
+    "hashes": "SHA256SUMS.json containing normalized repository-relative paths, byte counts and SHA-256",
+    "logs": "tests/ and ci/ for commands, exit status, timestamps and URLs",
+    "policy": "No tmp/, local build tree or uncurated benchmark scratch directory is committed."
+  }
+}
