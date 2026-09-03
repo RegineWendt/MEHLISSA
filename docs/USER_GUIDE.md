@@ -3060,7 +3060,7 @@ new milestone, priority, level, workflow, or artifact label at first use.
 
 If a gate has no user-visible effect, its review must record that no-impact
 decision instead of silently skipping the guide. This policy is binding in the
-[Roadmap documentation rules](ROADMAP.md#66-documentation) and repeated in
+[Roadmap documentation rules](ROADMAP.md#67-documentation) and repeated in
 every future gate checklist.
 
 The research-use delivery record is:
