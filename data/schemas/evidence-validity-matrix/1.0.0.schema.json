@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/evidence-validity-matrix/1.0.0.schema.json",
+  "title": "MEHLISSA Evidence and Validity Matrix",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matrix", "sources", "source_audit", "model_families"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "title", "scope", "review_date", "clinical_validity_claim"],
+      "properties": {
+        "id": {"const": "mehlissa-evidence-validity-baseline"},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "title": {"type": "string", "minLength": 1},
+        "scope": {"type": "string", "minLength": 1},
+        "review_date": {"type": "string", "format": "date"},
+        "clinical_validity_claim": {"const": false}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/source"}
+    },
+    "source_audit": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/source_audit"}
+    },
+    "model_families": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"$ref": "#/$defs/model_family"}
+    }
+  },
+  "$defs": {
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:|[/\\\\]).+"
+    },
+    "nonempty_strings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "evidence_role": {
+      "enum": [
+        "measured", "literature-derived", "calibrated", "independently validated",
+        "analytically verified", "numerically verified", "historical regression",
+        "assumed", "synthetic fixture", "sensitivity-only"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "full_citation", "locator", "license_status"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$"},
+        "kind": {"enum": ["publication", "dataset", "internal-artifact"]},
+        "full_citation": {"type": "string", "minLength": 1},
+        "locator": {"type": "string", "minLength": 1},
+        "license_status": {"type": "string", "minLength": 1},
+        "notes": {"type": "string", "minLength": 1}
+      }
+    },
+    "source_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "artifact_source_id", "artifact", "concrete_role", "separation_role"],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1},
+        "artifact_source_id": {"type": "string", "minLength": 1},
+        "artifact": {"$ref": "#/$defs/relative_path"},
+        "concrete_role": {"type": "string", "minLength": 1},
+        "separation_role": {
+          "enum": ["model structure", "parameterization", "calibration", "independent validation", "verification", "historical regression"]
+        }
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "description", "unit", "source_artifacts"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1},
+        "unit": {"type": "string", "minLength": 1},
+        "source_artifacts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/relative_path"}}
+      }
+    },
+    "evidence_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "description", "evidence_role", "source_ids", "unit", "uncertainty", "value_range", "artifacts"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1},
+        "evidence_role": {"$ref": "#/$defs/evidence_role"},
+        "source_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "unit": {"type": "string", "minLength": 1},
+        "uncertainty": {"type": "string", "minLength": 1},
+        "value_range": {"type": ["string", "null"]},
+        "artifacts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/relative_path"}}
+      }
+    },
+    "parameter_group": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "description", "evidence_role", "source_ids", "unit", "uncertainty",
+        "value_range", "artifacts", "model_role", "calibration_source_ids",
+        "validation_source_ids", "source_overlap_assessment"
+      ],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1},
+        "evidence_role": {"$ref": "#/$defs/evidence_role"},
+        "source_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "unit": {"type": "string", "minLength": 1},
+        "uncertainty": {"type": "string", "minLength": 1},
+        "value_range": {"type": ["string", "null"]},
+        "artifacts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/relative_path"}},
+        "model_role": {"enum": ["model structure", "parameterization", "calibration", "verification", "regression target", "assumption"]},
+        "calibration_source_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "validation_source_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "source_overlap_assessment": {"type": "string", "minLength": 1}
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "statement", "support", "evidence_roles", "source_ids", "scope", "exclusions"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "statement": {"type": "string", "minLength": 1},
+        "support": {"enum": ["supported", "partial", "not-supported"]},
+        "evidence_roles": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence_role"}},
+        "source_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "scope": {"type": "string", "minLength": 1},
+        "exclusions": {"$ref": "#/$defs/nonempty_strings"}
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["models", "schemas", "tests", "reference_results", "gate_reviews"],
+      "properties": {
+        "models": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/relative_path"}},
+        "schemas": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/relative_path"}},
+        "tests": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/relative_path"}},
+        "reference_results": {"type": "array", "items": {"$ref": "#/$defs/relative_path"}},
+        "gate_reviews": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/relative_path"}}
+      }
+    },
+    "model_family": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "version", "title", "family", "intended_use", "population",
+        "physiological_state", "spatial_resolution", "temporal_resolution",
+        "inputs", "outputs", "parameter_groups", "claims", "validity_domain",
+        "exclusions", "limitations", "open_scientific_blockers", "artifacts"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9.-]+$"},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "title": {"type": "string", "minLength": 1},
+        "family": {"enum": ["body", "organ-lung", "capillary-molecular", "cell-intracellular", "nano-iot", "m7-fp9-lung"]},
+        "intended_use": {"type": "string", "minLength": 1},
+        "population": {"type": "string", "minLength": 1},
+        "physiological_state": {"type": "string", "minLength": 1},
+        "spatial_resolution": {"type": "string", "minLength": 1},
+        "temporal_resolution": {"type": "string", "minLength": 1},
+        "inputs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/input"}},
+        "outputs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence_item"}},
+        "parameter_groups": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/parameter_group"}},
+        "claims": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/claim"}},
+        "validity_domain": {"type": "string", "minLength": 1},
+        "exclusions": {"$ref": "#/$defs/nonempty_strings"},
+        "limitations": {"$ref": "#/$defs/nonempty_strings"},
+        "open_scientific_blockers": {"$ref": "#/$defs/nonempty_strings"},
+        "artifacts": {"$ref": "#/$defs/artifacts"}
+      }
+    }
+  }
+}

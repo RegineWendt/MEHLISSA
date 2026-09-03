@@ -21,6 +21,7 @@ rules are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 | build or contribute to the software | [Development Guide](DEVELOPMENT.md) | compilers, CMake, vcpkg, quality commands, CI, and documentation checks |
 | understand APIs or add a model such as kidney | [Software Architecture and Developer Guide](architecture/SOFTWARE_ARCHITECTURE.md) | implemented structure, public APIs, coupling contracts, extension workflow, kidney outline, and personalization |
 | understand what comes next | [Roadmap](ROADMAP.md) | integrated platform history, scientific qualification program, further scenarios and organs, scaling, and the digital-twin path |
+| assess evidence for Paper 1 | [Evidence and Validity Baseline](publication/EVIDENCE_AND_VALIDITY_BASELINE.md) | schema-validated evidence roles, calibration/validation separation, source audit, claim boundaries, and bibliography export |
 | assess requirement coverage | [System Requirements](requirements/SYSTEM_REQUIREMENTS.md) and [Traceability Matrix](requirements/TRACEABILITY_MATRIX.md) | 82 numbered requirements, sources, implementation status, and verification evidence |
 | understand the historical starting point | [Legacy-baseline analysis](IST_ANALYSE.md) | frozen analysis of legacy commit `4f4fc5a`; not the current Next status |
 
@@ -34,6 +35,9 @@ rules are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 - `python scripts/check_documentation_consistency.py` checks shared facts,
   requirement coverage, selected statuses and references, canonical local
   links, and obsolete terminology. CI runs the same check.
+- `python scripts/check_evidence_validity_matrix.py` validates the Paper 1
+  evidence baseline, its six-family coverage, cited-source roles and referenced
+  artifacts. The associated negative tests run in CI.
 - [Data licensing](DATA_LICENSING.md), the
   [licence and data inventory](m0/LICENSE_AND_DATA_INVENTORY.md), and
   [ADR-0007](architecture/adr/0007-repository-license.md) define release and

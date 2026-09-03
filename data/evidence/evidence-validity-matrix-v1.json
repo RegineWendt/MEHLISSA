@@ -1,0 +1,360 @@
+{
+  "schema_version": "1.0.0",
+  "matrix": {
+    "id": "mehlissa-evidence-validity-baseline",
+    "version": "1.0.0",
+    "title": "MEHLISSA Next Evidence and Validity Baseline",
+    "scope": "Executable M2-M7 model families and the complete FP9/lung vertical slice; technical verification, historical reproduction, calibration, independent validation, and clinical validity remain separate.",
+    "review_date": "2026-09-03",
+    "clinical_validity_claim": false
+  },
+  "sources": [
+    {
+      "id": "bvs95-release-2026",
+      "kind": "dataset",
+      "full_citation": "MEHLISSA/BloodVoyagerS 95-segment source data, originally developed by Regine Wendt; project-rights-holder release, 27 August 2026.",
+      "locator": "data/legacy/bvs95/release-v1.json",
+      "license_status": "CC-BY-4.0; release and file hashes are retained in the repository."
+    },
+    {
+      "id": "wendt-dissertation-2024",
+      "kind": "publication",
+      "full_citation": "Wendt R. Einsatz von Nanotechnologien in der Praezisionsmedizin. Dissertation, Universitaet zu Luebeck; 2024.",
+      "locator": "literature/Diss_WENDT_Simulationchapters.pdf",
+      "license_status": "Included with author permission; cited and paraphrased, not relicensed as platform data."
+    },
+    {
+      "id": "stoquart-elsankari-2009",
+      "kind": "publication",
+      "full_citation": "Stoquart-ElSankari S, et al. A phase-contrast MRI study of physiologic cerebral venous flow. J Cereb Blood Flow Metab. 2009;29. doi:10.1038/jcbfm.2009.29.",
+      "locator": "https://doi.org/10.1038/jcbfm.2009.29",
+      "license_status": "Citation and numerical facts only; source not redistributed."
+    },
+    {
+      "id": "esc-ers-2022",
+      "kind": "publication",
+      "full_citation": "Humbert M, Kovacs G, Hoeper MM, et al. 2022 ESC/ERS Guidelines for pulmonary hypertension. Eur Heart J. 2022;43:3618-3731. doi:10.1093/eurheartj/ehac237.",
+      "locator": "https://doi.org/10.1093/eurheartj/ehac237",
+      "license_status": "Numerical facts cited; source not redistributed."
+    },
+    {
+      "id": "swift-2012",
+      "kind": "publication",
+      "full_citation": "Swift AJ, et al. MR imaging-derived first-pass bolus kinetic parameters. Radiology. 2012;263:678-687. doi:10.1148/radiol.12111049.",
+      "locator": "https://doi.org/10.1148/radiol.12111049",
+      "license_status": "Numerical facts cited; source not redistributed."
+    },
+    {
+      "id": "claessen-2015",
+      "kind": "publication",
+      "full_citation": "Claessen G, et al. Pulmonary vascular and right ventricular reserve in patients with heart failure with preserved ejection fraction. J Am Heart Assoc. 2015;4:e001602. doi:10.1161/JAHA.114.001602.",
+      "locator": "https://doi.org/10.1161/JAHA.114.001602",
+      "license_status": "CC-BY-NC-4.0 article; numerical facts cited, source not redistributed."
+    },
+    {
+      "id": "kane-2016",
+      "kind": "publication",
+      "full_citation": "Kane GC, et al. Impact of age on pulmonary artery systolic pressures at rest and with exercise. Echo Res Pract. 2016;3:53-61. doi:10.1530/ERP-16-0006.",
+      "locator": "https://doi.org/10.1530/ERP-16-0006",
+      "license_status": "CC-BY-NC-4.0 article; numerical facts cited, source not redistributed."
+    },
+    {
+      "id": "kovacs-2012",
+      "kind": "publication",
+      "full_citation": "Kovacs G, et al. Pulmonary vascular resistances during exercise in normal subjects: a systematic review. Eur Respir J. 2012;39:319-328. doi:10.1183/09031936.00008611.",
+      "locator": "https://doi.org/10.1183/09031936.00008611",
+      "license_status": "Numerical facts cited; source not redistributed."
+    },
+    {
+      "id": "lee-2022",
+      "kind": "publication",
+      "full_citation": "Lee HJ, et al. Lobar pulmonary perfusion quantification with dual-energy CT angiography. Eur J Radiol Open. 2022;9:100428. doi:10.1016/j.ejro.2022.100428.",
+      "locator": "https://doi.org/10.1016/j.ejro.2022.100428",
+      "license_status": "CC-BY-NC-ND-4.0 article; derived aggregate numerical proxy cited, source not redistributed."
+    },
+    {
+      "id": "forton-2016",
+      "kind": "publication",
+      "full_citation": "Forton K, Motoji Y, Deboeck G, Faoro V, Naeije R. Effects of body position on exercise capacity and pulmonary vascular pressure-flow relationships. J Appl Physiol. 2016;121:1145-1150. doi:10.1152/japplphysiol.00372.2016.",
+      "locator": "https://doi.org/10.1152/japplphysiol.00372.2016",
+      "license_status": "Publisher terms; only reported aggregate facts are transcribed."
+    },
+    {
+      "id": "bentley-2020",
+      "kind": "publication",
+      "full_citation": "Bentley RF, Barker M, Esfandiari S, et al. Normal and Abnormal Relationships of Pulmonary Artery to Wedge Pressure During Exercise. J Am Heart Assoc. 2020;9:e016339. doi:10.1161/JAHA.120.016339.",
+      "locator": "https://doi.org/10.1161/JAHA.120.016339",
+      "license_status": "CC-BY-NC-ND-4.0; only reported aggregate facts are transcribed."
+    },
+    {
+      "id": "wolsk-2017",
+      "kind": "publication",
+      "full_citation": "Wolsk E, et al. Rest and Exercise Hemodynamics in Relation to Age: A Prospective Study of Normal Human Physiology. JACC Heart Fail. 2017;5(5):337-346. doi:10.1016/j.jchf.2016.10.012.",
+      "locator": "https://doi.org/10.1016/j.jchf.2016.10.012",
+      "license_status": "Copyright 2017 American College of Cardiology Foundation; attributed aggregate numerical facts transcribed, source not redistributed."
+    },
+    {
+      "id": "bourhis-2020",
+      "kind": "publication",
+      "full_citation": "Bourhis D, Robin P, Essalah A, Abgral R. V/Q SPECT for the Assessment of Regional Lung Function: Generation of Normal Mean and Standard Deviation 3-D Maps. Front Med. 2020;7:143. doi:10.3389/fmed.2020.00143.",
+      "locator": "https://doi.org/10.3389/fmed.2020.00143",
+      "license_status": "CC-BY-4.0."
+    },
+    {
+      "id": "lewis-1958",
+      "kind": "publication",
+      "full_citation": "Lewis BM, Lin TH, Noe FE, Komisaruk R. The measurement of pulmonary capillary blood volume and pulmonary membrane diffusing capacity in normal subjects; the effects of exercise and position. J Clin Invest. 1958;37(7):1061-1070. doi:10.1172/JCI103687.",
+      "locator": "https://doi.org/10.1172/JCI103687",
+      "license_status": "Copyright American Society for Clinical Investigation; numerical facts cited, source not redistributed."
+    },
+    {
+      "id": "muehlfeld-2010",
+      "kind": "publication",
+      "full_citation": "Muehlfeld C, Weibel ER, Hahn U, Kummer W, Nyengaard JR, Ochs M. Is length an appropriate estimator to characterize pulmonary alveolar capillaries? Anat Rec (Hoboken). 2010;293(7):1270-1275. doi:10.1002/ar.21158.",
+      "locator": "https://doi.org/10.1002/ar.21158",
+      "license_status": "Copyright Wiley; numerical facts cited, source not redistributed."
+    },
+    {
+      "id": "crank-1975",
+      "kind": "publication",
+      "full_citation": "Crank J. The Mathematics of Diffusion. 2nd ed. Oxford University Press; 1975.",
+      "locator": "https://archive.org/details/mathematics-of-diffusion-2nd-edition-j.-crank",
+      "license_status": "Copyright Oxford University Press; equations cited, source not redistributed."
+    },
+    {
+      "id": "patankar-1980",
+      "kind": "publication",
+      "full_citation": "Patankar SV. Numerical Heat Transfer and Fluid Flow. Hemisphere Publishing; 1980.",
+      "locator": "https://www.worldcat.org/oclc/4493649",
+      "license_status": "Copyright Hemisphere Publishing; numerical method cited, source not redistributed."
+    },
+    {
+      "id": "wendt-nanocom-2023",
+      "kind": "publication",
+      "full_citation": "Wendt R, et al. Proteome Fingerprinting as a Localization Scheme for Nanobots. NANOCOM 2023.",
+      "locator": "literature/wendt_fingerprinting.pdf",
+      "license_status": "Repository copy consulted; concept cited, not used as measured biological evidence."
+    }
+  ],
+  "source_audit": [
+    {"source_id": "bvs95-release-2026", "artifact_source_id": "legacy-95-release", "artifact": "data/body-models/bvs95-dissertation-rest-v1.json", "concrete_role": "Source topology, schematic geometry, and branch ratios migrated into the executable 95-segment graph.", "separation_role": "historical regression"},
+    {"source_id": "stoquart-elsankari-2009", "artifact_source_id": "jugular-flow-mri-2009", "artifact": "data/body-models/bvs95-dissertation-rest-v1.json", "concrete_role": "Cohort mean used only for the otherwise missing vessel-9 jugular split.", "separation_role": "parameterization"},
+    {"source_id": "wendt-dissertation-2024", "artifact_source_id": "wendt-dissertation-2024", "artifact": "data/body-models/bvs95-dissertation-rest-v1.json", "concrete_role": "Historical body-model structure and reference context.", "separation_role": "model structure"},
+    {"source_id": "esc-ers-2022", "artifact_source_id": "esc-ers-2022", "artifact": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json", "concrete_role": "Aggregate resting flow, pressure, resistance, and compliance calibration bounds.", "separation_role": "calibration"},
+    {"source_id": "swift-2012", "artifact_source_id": "swift-2012", "artifact": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json", "concrete_role": "Aggregate pulmonary transit calibration.", "separation_role": "calibration"},
+    {"source_id": "claessen-2015", "artifact_source_id": "claessen-2015", "artifact": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json", "concrete_role": "Rest-to-exercise flow adaptation calibration.", "separation_role": "calibration"},
+    {"source_id": "kane-2016", "artifact_source_id": "kane-2016", "artifact": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json", "concrete_role": "Age-band calibration and conditioning.", "separation_role": "calibration"},
+    {"source_id": "kovacs-2012", "artifact_source_id": "kovacs-2012-pvr", "artifact": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json", "concrete_role": "Young-adult resistance calibration.", "separation_role": "calibration"},
+    {"source_id": "lee-2022", "artifact_source_id": "lee-2022", "artifact": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json", "concrete_role": "Five-lobe perfusion proxy used in parameterization.", "separation_role": "parameterization"},
+    {"source_id": "forton-2016", "artifact_source_id": "forton-2016", "artifact": "data/validation/pulmonary-zero-dimensional/healthy-adult-independent-v2.json", "concrete_role": "Locked-model independent aggregate rest comparison.", "separation_role": "independent validation"},
+    {"source_id": "bentley-2020", "artifact_source_id": "bentley-2020", "artifact": "data/validation/pulmonary-zero-dimensional/healthy-adult-independent-v2.json", "concrete_role": "Calibration-disjoint invasive aggregate rest/exercise comparison.", "separation_role": "independent validation"},
+    {"source_id": "wolsk-2017", "artifact_source_id": "wolsk-2017-age-hemodynamics", "artifact": "data/validation/pulmonary-zero-dimensional/healthy-population-multipoint-v3.json", "concrete_role": "No-refit age-stratified multipoint population comparison.", "separation_role": "independent validation"},
+    {"source_id": "bourhis-2020", "artifact_source_id": "bourhis-2020-normal-vq-spect", "artifact": "data/validation/pulmonary-lobar-perfusion/healthy-normal-spect-v1.json", "concrete_role": "Independent lobar perfusion distribution comparison.", "separation_role": "independent validation"},
+    {"source_id": "lewis-1958", "artifact_source_id": "lewis-1958", "artifact": "examples/capillary-models/pulmonary-healthy-adult-rest-supine-v1.json", "concrete_role": "Functional pulmonary capillary blood-volume anchor.", "separation_role": "parameterization"},
+    {"source_id": "muehlfeld-2010", "artifact_source_id": "muehlfeld-2010", "artifact": "examples/capillary-models/pulmonary-healthy-adult-rest-supine-v1.json", "concrete_role": "Morphometric lumen volume, surface, and equivalent diameter.", "separation_role": "parameterization"},
+    {"source_id": "crank-1975", "artifact_source_id": "crank-1975-diffusion", "artifact": "examples/capillary-models/pulmonary-shared-axial-transport-v1.json", "concrete_role": "Analytical advection-diffusion reference equations.", "separation_role": "verification"},
+    {"source_id": "patankar-1980", "artifact_source_id": "patankar-1980-finite-volume", "artifact": "examples/capillary-models/pulmonary-shared-axial-transport-v1.json", "concrete_role": "Conservative finite-volume method reference.", "separation_role": "verification"},
+    {"source_id": "wendt-nanocom-2023", "artifact_source_id": "wendt-et-al-nanocom-2023", "artifact": "examples/scenarios/fp9-lung-historical-timer-v1.json", "concrete_role": "FP9 concept only; not biological parameterization or validation.", "separation_role": "model structure"}
+  ],
+  "model_families": [
+    {
+      "id": "body.systemic-transport.bvs95",
+      "version": "1.0.0",
+      "title": "Body and systemic transport",
+      "family": "body",
+      "intended_use": "Reproduce and extend the dissertation-era 95-segment systemic transport abstraction, compare bounded observation policies, and serve as a deterministic whole-body coupling substrate.",
+      "population": "Historical BVS/MEHLISSA reference woman, 1.72 m and 69 kg; not a representative population.",
+      "physiological_state": "Rest with posture absent; optional versioned head-up-tilt and supine-exercise overlays are controlled scenarios, not independently validated physiological predictions.",
+      "spatial_resolution": "Ninety-five schematic lumped vascular segments on two depth planes; no anatomical segmentation.",
+      "temporal_resolution": "Discrete event transitions in integer nanoseconds; mean-flow travel-time abstraction.",
+      "inputs": [
+        {"id": "vascular-graph", "description": "Segment geometry, flow and transition probabilities.", "unit": "mixed SI", "source_artifacts": ["data/body-models/bvs95-dissertation-rest-v1.json"]},
+        {"id": "body-state-overlay", "description": "Versioned flow and transition modifiers.", "unit": "1", "source_artifacts": ["data/body-states/bvs95-rest-supine-v1.json"]},
+        {"id": "entity-injection", "description": "Entity population, injection segment, simulation duration and seed.", "unit": "count, ns", "source_artifacts": ["examples/benchmarks/rq4-primary-campaign.json"]}
+      ],
+      "outputs": [
+        {"id": "transition-and-final-state", "description": "Transition counts, final segment populations, RNG draw count and deterministic population hash.", "evidence_role": "historical regression", "source_ids": ["bvs95-release-2026", "wendt-dissertation-2024"], "unit": "count", "uncertainty": "Stochastic Monte Carlo variation is seed-controlled; no physiological uncertainty propagated.", "value_range": "Non-negative counts with total population conserved.", "artifacts": ["data/reference-results/bvs95-dissertation-rest-m2.4.json", "tests/bvs_reference_tests.cpp"]},
+        {"id": "bounded-observation-report", "description": "Trajectories, site measurements and interval aggregates under O0-O3 retention policies.", "evidence_role": "numerically verified", "source_ids": [], "unit": "count, ns, bytes", "uncertainty": "Exact software accounting for a fixed seed and build; benchmark timing remains machine-dependent.", "value_range": null, "artifacts": ["benchmarks/body_transport_benchmark.cpp", "tests/compartment_transport_tests.cpp"]}
+      ],
+      "parameter_groups": [
+        {"id": "topology-and-branching", "description": "Ninety-five segment identities, successors and historical branch ratios.", "evidence_role": "historical regression", "source_ids": ["bvs95-release-2026", "wendt-dissertation-2024"], "unit": "1", "uncertainty": "No uncertainty supplied by the historical source release.", "value_range": "Transition probabilities [0,1] summing to one per branch.", "artifacts": ["data/body-models/bvs95-dissertation-rest-v1.json"], "model_role": "regression target", "calibration_source_ids": [], "validation_source_ids": [], "source_overlap_assessment": "Historical reproduction only; no independent validation data are claimed."},
+        {"id": "jugular-split", "description": "Replacement for the missing vessel-9 legacy default using a published healthy-young-adult supine cohort mean.", "evidence_role": "literature-derived", "source_ids": ["stoquart-elsankari-2009"], "unit": "1", "uncertainty": "High inter-individual variability is documented but not propagated.", "value_range": "0.2875 left and 0.7125 right", "artifacts": ["data/body-models/bvs95-dissertation-rest-v1.json"], "model_role": "parameterization", "calibration_source_ids": ["stoquart-elsankari-2009"], "validation_source_ids": [], "source_overlap_assessment": "Used for parameterization; no independent validation of this split is present."},
+        {"id": "absolute-flow-and-derived-diameters", "description": "Six-litre-per-minute normalization and equivalent areas/diameters derived from historical class velocities.", "evidence_role": "assumed", "source_ids": ["bvs95-release-2026"], "unit": "m3/s, m/s, m2, m", "uncertainty": "Not quantified.", "value_range": "Reference cardiac output 0.0001 m3/s.", "artifacts": ["data/body-models/bvs95-dissertation-rest-v1.json", "docs/m2/PHYSIOLOGICAL_BASELINE.md"], "model_role": "assumption", "calibration_source_ids": [], "validation_source_ids": [], "source_overlap_assessment": "Normalization assumption, explicitly not measured or independently validated."}
+      ],
+      "claims": [
+        {"id": "body-reproduces-legacy-reference", "statement": "The accepted implementation reproduces the released dissertation-era topology and reference behavior.", "support": "supported", "evidence_roles": ["historical regression"], "source_ids": ["bvs95-release-2026", "wendt-dissertation-2024"], "scope": "Historical regression for the frozen reference inputs.", "exclusions": ["Physiological accuracy", "patient prediction", "anatomical fidelity"]},
+        {"id": "body-observation-is-state-neutral", "statement": "Changing bounded observation policy does not change transitions, end states, RNG counts, populations or common aggregates for identical conditions.", "support": "supported", "evidence_roles": ["numerically verified"], "source_ids": [], "scope": "Implemented O0-O3 policies and benchmark equality checks.", "exclusions": ["Machine-independent performance", "scientific validity of the body model"]}
+      ],
+      "validity_domain": "Deterministic, seed-controlled research comparisons using the frozen schematic BVS95 abstraction and declared overlays.",
+      "exclusions": ["Patient-specific anatomy", "pulsatile hemodynamics", "autoregulation", "disease", "clinical decisions"],
+      "limitations": ["Geometry is schematic.", "Most absolute parameters are derived or assumed.", "Historical agreement is not physiological validation."],
+      "open_scientific_blockers": ["Independent modern systemic transport data.", "Jointly compatible flow, geometry and posture evidence.", "Population and subject-level uncertainty."],
+      "artifacts": {"models": ["data/body-models/bvs95-dissertation-rest-v1.json", "data/body-states/bvs95-rest-supine-v1.json"], "schemas": ["data/schemas/vascular-graph/1.0.0.schema.json", "data/schemas/body-state-profile/1.0.0.schema.json"], "tests": ["tests/bvs_reference_tests.cpp", "tests/compartment_transport_tests.cpp", "benchmarks/test_rq4_campaign.py"], "reference_results": ["data/reference-results/bvs95-dissertation-rest-m2.4.json"], "gate_reviews": ["docs/m2/M2_GATE_REVIEW.md"]}
+    },
+    {
+      "id": "organ.lung.pulmonary-0d",
+      "version": "7.0.0",
+      "title": "Organ and lung circulation",
+      "family": "organ-lung",
+      "intended_use": "Compare replaceable aggregate pulmonary 0D variants and five parallel lobar beds across declared healthy-adult rest, bounded exercise and age conditions.",
+      "population": "Healthy adults aged 24-85 for aggregate hemodynamics; separate source populations and referred-but-normal cohorts are retained explicitly.",
+      "physiological_state": "Supine mean-flow rest through bounded exercise, with fixed lobar fractions; source-specific posture differences remain visible.",
+      "spatial_resolution": "Zero-dimensional aggregate resistance-compliance bed or five named parallel lobar beds.",
+      "temporal_resolution": "Mean-flow algebraic/compartment response with declared transit in seconds; no pulsatility.",
+      "inputs": [
+        {"id": "pulmonary-boundaries", "description": "Cardiac flow, wedge/left-atrial pressure, age and model variant.", "unit": "m3/s, Pa, year", "source_artifacts": ["data/lung-models/healthy-adult-lobar-parallel-0d-v7.json"]},
+        {"id": "validation-series", "description": "Locked aggregate and population pressure-flow observations used without refitting.", "unit": "L/min/m2, mmHg, Pa", "source_artifacts": ["data/validation/pulmonary-zero-dimensional/healthy-population-multipoint-v3.json"]}
+      ],
+      "outputs": [
+        {"id": "aggregate-hemodynamics", "description": "Mean pulmonary arterial pressure, resistance, compliance and RC time.", "evidence_role": "independently validated", "source_ids": ["forton-2016", "bentley-2020", "wolsk-2017"], "unit": "Pa, Pa*s/m3, m3/Pa, s", "uncertainty": "Published SD or 95% CI retained by comparison; parameter uncertainty is not propagated jointly.", "value_range": "Healthy-adult declared range only.", "artifacts": ["data/validation/pulmonary-zero-dimensional/healthy-adult-independent-v2.json", "data/validation/pulmonary-zero-dimensional/healthy-population-multipoint-v3.json"]},
+        {"id": "lobar-perfusion", "description": "Five flow fractions and deterministic lobe selection.", "evidence_role": "independently validated", "source_ids": ["lee-2022", "bourhis-2020"], "unit": "1", "uncertainty": "Aggregate source means; no subject-level joint distribution.", "value_range": "Each fraction [0,1], sum one.", "artifacts": ["data/validation/pulmonary-lobar-perfusion/healthy-normal-spect-v1.json", "tests/pulmonary_lobar_perfusion_validation_tests.cpp"]}
+      ],
+      "parameter_groups": [
+        {"id": "resting-aggregate-hemodynamics", "description": "Baseline flow, pressure sink, PVR and compliance.", "evidence_role": "calibrated", "source_ids": ["esc-ers-2022"], "unit": "m3/s, Pa, Pa*s/m3, m3/Pa", "uncertainty": "Reference intervals/limits recorded; not jointly propagated.", "value_range": "As recorded in the v7 model card.", "artifacts": ["data/lung-models/healthy-adult-lobar-parallel-0d-v7.json"], "model_role": "calibration", "calibration_source_ids": ["esc-ers-2022"], "validation_source_ids": ["forton-2016", "bentley-2020"], "source_overlap_assessment": "Calibration and validation sources are author/cohort disjoint; validation applies aggregate boundaries without parameter refitting."},
+        {"id": "flow-and-age-adaptation", "description": "Exercise exponents, flow cap and age-conditioned resistance bands.", "evidence_role": "calibrated", "source_ids": ["claessen-2015", "kane-2016", "kovacs-2012"], "unit": "1, year", "uncertainty": "Point-derived exponents and band boundaries; uncertainty not propagated.", "value_range": "Ages 24-85 and flow ratio up to 2.6129.", "artifacts": ["data/lung-models/healthy-adult-lobar-parallel-0d-v7.json"], "model_role": "calibration", "calibration_source_ids": ["claessen-2015", "kane-2016", "kovacs-2012"], "validation_source_ids": ["wolsk-2017"], "source_overlap_assessment": "Wolsk is deliberately retained as no-refit validation and is not used to calibrate the age bands."},
+        {"id": "lobar-fractions", "description": "Fixed five-lobe perfusion fractions derived from DE-CTA aggregate proxies.", "evidence_role": "literature-derived", "source_ids": ["lee-2022"], "unit": "1", "uncertainty": "Separate cohort medians combined; no subject-level uncertainty propagation.", "value_range": "Five positive fractions summing to one.", "artifacts": ["data/lung-models/healthy-adult-lobar-parallel-0d-v7.json"], "model_role": "parameterization", "calibration_source_ids": ["lee-2022"], "validation_source_ids": ["bourhis-2020"], "source_overlap_assessment": "Independent authors, cohort and V/Q SPECT/CT modality are used for validation; the two Bourhis reconstructions share one cohort and are not counted as independent cohorts."},
+        {"id": "pulmonary-transit", "description": "Common aggregate pulmonary first-pass transit applied to every lobe.", "evidence_role": "calibrated", "source_ids": ["swift-2012"], "unit": "s", "uncertainty": "Interquartile range 5.7-7.1 s retained.", "value_range": "6.4 s reference", "artifacts": ["data/lung-models/healthy-adult-lobar-parallel-0d-v7.json"], "model_role": "calibration", "calibration_source_ids": ["swift-2012"], "validation_source_ids": [], "source_overlap_assessment": "No qualified lobe-specific independent transit series is present."}
+      ],
+      "claims": [
+        {"id": "lung-aggregate-qualified", "statement": "The locked pulmonary 0D family has partial independent aggregate and population comparison evidence within its declared healthy-adult scope.", "support": "partial", "evidence_roles": ["calibrated", "independently validated"], "source_ids": ["forton-2016", "bentley-2020", "wolsk-2017"], "scope": "Published aggregate and age-stratified pressure-flow endpoints.", "exclusions": ["Statistical equivalence", "subject-level prediction", "disease", "clinical validity"]},
+        {"id": "lung-lobar-qualified", "statement": "The fixed lobar fractions satisfy the predeclared comparison limits against an independent aggregate V/Q SPECT/CT distribution.", "support": "supported", "evidence_roles": ["literature-derived", "independently validated"], "source_ids": ["lee-2022", "bourhis-2020"], "scope": "Aggregate supine five-lobe fractions.", "exclusions": ["Individual anatomy", "dynamic perfusion", "posture adaptation"]}
+      ],
+      "validity_domain": "Aggregate healthy-adult pulmonary hemodynamics under the explicitly documented posture, age and bounded-flow assumptions.",
+      "exclusions": ["Anatomical flow fields", "gas exchange", "pulsatility", "disease", "patient-specific or clinical decisions"],
+      "limitations": ["Zero-dimensional representation.", "Fixed lobar proportions.", "Partial rather than universal independent endpoint agreement."],
+      "open_scientific_blockers": ["Participant-level independent trajectories.", "Lobe-specific transit and dynamic perfusion.", "Joint uncertainty and protocol harmonization."],
+      "artifacts": {"models": ["data/lung-models/healthy-adult-lobar-parallel-0d-v7.json"], "schemas": ["data/schemas/lung-model-definition/1.6.0.schema.json", "data/schemas/pulmonary-zero-dimensional-population-multipoint-validation/1.1.0.schema.json"], "tests": ["tests/pulmonary_zero_dimensional_tests.cpp", "tests/pulmonary_zero_dimensional_validation_tests.cpp", "tests/pulmonary_lobar_perfusion_validation_tests.cpp"], "reference_results": ["data/validation/pulmonary-zero-dimensional/healthy-population-multipoint-v3.json", "data/validation/pulmonary-lobar-perfusion/healthy-normal-spect-v1.json"], "gate_reviews": ["docs/m3/M3_GATE_REVIEW.md"]}
+    },
+    {
+      "id": "capillary.molecular-transport",
+      "version": "1.0.0",
+      "title": "Capillary and molecular transport",
+      "family": "capillary-molecular",
+      "intended_use": "Verify conservative capillary transit, exchange and interchangeable analytical, particle, trajectory and finite-volume molecular-channel implementations.",
+      "population": "The pulmonary geometry card uses small historical healthy-human cohorts; molecular channel kinetics are synthetic fixtures.",
+      "physiological_state": "Resting recumbent pulmonary reference context for geometry; synthetic local tracer transport and reaction conditions.",
+      "spatial_resolution": "Equivalent parallel tubes, one-dimensional axial channels, radial finite volumes or explicit endpoint/trajectory particles depending on variant.",
+      "temporal_resolution": "Continuous analytical endpoints or bounded fixed/adaptive numerical steps in seconds.",
+      "inputs": [
+        {"id": "capillary-definition", "description": "Equivalent geometry, path counts, flow and evidence quantities.", "unit": "mixed SI", "source_artifacts": ["examples/capillary-models/pulmonary-healthy-adult-rest-supine-v1.json"]},
+        {"id": "molecular-profile", "description": "Diffusion, advection, reaction, wall interaction, resolution and seed.", "unit": "m2/s, m/s, 1/s, count", "source_artifacts": ["examples/capillary-models/pulmonary-shared-axial-transport-v1.json"]}
+      ],
+      "outputs": [
+        {"id": "conserved-transit-and-exchange", "description": "Entity disposition, amount balance, residence and observation records.", "evidence_role": "numerically verified", "source_ids": [], "unit": "mol, count, s", "uncertainty": "Numerical tolerances and exact accounting; biological uncertainty absent.", "value_range": null, "artifacts": ["tests/capillary_bed_tests.cpp", "tests/capillary_exchange_tests.cpp"]},
+        {"id": "cross-method-receiver-response", "description": "Analytical, particle and finite-volume receiver responses and conservation residuals.", "evidence_role": "analytically verified", "source_ids": ["crank-1975", "patankar-1980"], "unit": "fraction, mol", "uncertainty": "Monte Carlo standardized error and grid-refinement tolerances are explicit.", "value_range": "Fractions [0,1] and bounded residuals.", "artifacts": ["examples/capillary-models/pulmonary-shared-axial-transport-v1.json", "tests/axial_advection_reaction_tests.cpp"]}
+      ],
+      "parameter_groups": [
+        {"id": "pulmonary-equivalent-geometry", "description": "Functional volume, morphometric capacity, surface, equivalent diameter and numerical path closure.", "evidence_role": "literature-derived", "source_ids": ["lewis-1958", "muehlfeld-2010"], "unit": "m3, m2, m, count", "uncertainty": "Published or derived SD retained for measured quantities; numerical closure choices marked separately.", "value_range": "Resting recumbent reference card only.", "artifacts": ["examples/capillary-models/pulmonary-healthy-adult-rest-supine-v1.json"], "model_role": "parameterization", "calibration_source_ids": ["lewis-1958", "muehlfeld-2010"], "validation_source_ids": [], "source_overlap_assessment": "Different cohorts constrain functional and morphometric quantities; their combination is a closure, not independent validation."},
+        {"id": "molecular-kinetics", "description": "Diffusivity, bulk reaction and wall-interaction rates.", "evidence_role": "synthetic fixture", "source_ids": [], "unit": "m2/s, 1/s, m/s", "uncertainty": "Not physiological and not quantified.", "value_range": "Only checked-in verification cases.", "artifacts": ["examples/capillary-models/pulmonary-shared-axial-transport-v1.json"], "model_role": "verification", "calibration_source_ids": [], "validation_source_ids": [], "source_overlap_assessment": "No biological calibration or independent molecular validation is present."},
+        {"id": "numerical-resolution", "description": "Particle count, grid cells, CFL factor and bounded work limits.", "evidence_role": "sensitivity-only", "source_ids": ["patankar-1980"], "unit": "count, 1", "uncertainty": "Refinement differences and stochastic error are measured in verification tests.", "value_range": "Case-specific finite resolutions.", "artifacts": ["examples/capillary-models/pulmonary-shared-axial-transport-v1.json"], "model_role": "verification", "calibration_source_ids": [], "validation_source_ids": [], "source_overlap_assessment": "Numerical sensitivity evidence only; not a physiological parameter set."}
+      ],
+      "claims": [
+        {"id": "capillary-conservative-composition", "statement": "The implemented capillary and molecular variants conserve declared amount/entity ownership within predeclared numerical tolerances.", "support": "supported", "evidence_roles": ["analytically verified", "numerically verified"], "source_ids": ["crank-1975", "patankar-1980"], "scope": "Checked-in analytical and synthetic verification cases.", "exclusions": ["Biomarker kinetics", "blood rheology", "tissue uptake validity"]},
+        {"id": "capillary-physiological-transport", "statement": "The molecular channel predicts physiological pulmonary biomarker transport.", "support": "not-supported", "evidence_roles": ["synthetic fixture"], "source_ids": [], "scope": "No such claim is permitted.", "exclusions": ["All biological and clinical interpretation"]}
+      ],
+      "validity_domain": "Software-method verification and equivalent resting pulmonary geometry sensitivity studies.",
+      "exclusions": ["Anatomical alveolar sheet", "qualified biomarker kinetics", "rheology", "dynamic tissue coupling", "clinical prediction"],
+      "limitations": ["Equivalent geometry mixes non-joint cohorts.", "Kinetics are synthetic.", "Most evidence is analytical or numerical verification."],
+      "open_scientific_blockers": ["Named molecule and tissue evidence.", "Joint flow-volume-barrier data.", "External biological transport validation."],
+      "artifacts": {"models": ["examples/capillary-models/pulmonary-healthy-adult-rest-supine-v1.json", "examples/capillary-models/pulmonary-shared-axial-transport-v1.json"], "schemas": ["data/schemas/capillary-bed-definition/3.0.0.schema.json", "data/schemas/axial-advection-reaction-profile/1.0.0.schema.json"], "tests": ["tests/capillary_bed_tests.cpp", "tests/axial_advection_reaction_tests.cpp", "tests/molecular_channel_tests.cpp"], "reference_results": [], "gate_reviews": ["docs/m4/M4_GATE_REVIEW.md"]}
+    },
+    {
+      "id": "cell.intracellular-response",
+      "version": "1.0.0",
+      "title": "Cell and intracellular response",
+      "family": "cell-intracellular",
+      "intended_use": "Verify replaceable receptor binding, intracellular ODE/SSA, conservative delivery, apoptosis-event and compressed-population software contracts.",
+      "population": "Synthetic homogeneous cells and synthetic compressed cohorts only.",
+      "physiological_state": "Not applicable; no named cell line, disease, biomarker or treatment state is qualified.",
+      "spatial_resolution": "Well-mixed receptor surface and intracellular pools; no cell geometry or spatial pathway.",
+      "temporal_resolution": "Closed-form, fixed-step ODE and event-driven SSA in seconds with bounded records.",
+      "inputs": [
+        {"id": "receptor-profile", "description": "Receptor/ligand concentrations, rates and threshold.", "unit": "mol/m3, m3/(mol*s), 1/s, 1", "source_artifacts": ["examples/cell-models/synthetic-receptor-ligand-v1.json"]},
+        {"id": "intracellular-profile", "description": "Reaction topology, solver, molecule counts, seed and response threshold.", "unit": "1/s, count, s", "source_artifacts": ["examples/cell-models/synthetic-intracellular-response-v1.json"]}
+      ],
+      "outputs": [
+        {"id": "binding-and-threshold", "description": "Bound fraction, threshold-crossing time and stochastic population moments.", "evidence_role": "analytically verified", "source_ids": [], "unit": "1, s", "uncertainty": "Analytical tolerance or finite-receptor stochastic moments; no biological uncertainty.", "value_range": "Fractions [0,1].", "artifacts": ["tests/receptor_ligand_tests.cpp", "tests/stochastic_receptor_ligand_tests.cpp"]},
+        {"id": "intracellular-and-apoptosis-response", "description": "Messenger/effector state, response event, conservative delivery and cohort classification.", "evidence_role": "numerically verified", "source_ids": [], "unit": "1, count, mol, s", "uncertainty": "ODE/SSA and count-scaling comparisons only.", "value_range": null, "artifacts": ["tests/intracellular_response_network_tests.cpp", "tests/apoptosis_population_tests.cpp"]}
+      ],
+      "parameter_groups": [
+        {"id": "binding-kinetics", "description": "Association, dissociation, concentration, receptor and threshold values.", "evidence_role": "synthetic fixture", "source_ids": [], "unit": "mixed SI", "uncertainty": "Not quantified; deliberately synthetic.", "value_range": "Checked-in reference cases only.", "artifacts": ["examples/cell-models/synthetic-receptor-ligand-v1.json"], "model_role": "verification", "calibration_source_ids": [], "validation_source_ids": [], "source_overlap_assessment": "No biological calibration or validation source exists."},
+        {"id": "intracellular-network-rates", "description": "Synthetic two-stage activation/deactivation topology, molecule counts and response threshold.", "evidence_role": "synthetic fixture", "source_ids": [], "unit": "1/s, count, 1", "uncertainty": "Reaction noise represented; biological variability absent.", "value_range": "Checked-in reference case only.", "artifacts": ["examples/cell-models/synthetic-intracellular-response-v1.json"], "model_role": "verification", "calibration_source_ids": [], "validation_source_ids": [], "source_overlap_assessment": "ODE/SSA agreement verifies implementations of the same synthetic topology; it is not independent validation."},
+        {"id": "population-and-apoptosis", "description": "Synthetic delivery, Hill response, commitment and cohort weights.", "evidence_role": "sensitivity-only", "source_ids": [], "unit": "mol, 1, count", "uncertainty": "Parameter sensitivities and scale invariance only.", "value_range": "Synthetic bounded cohort profiles.", "artifacts": ["examples/cell-models/synthetic-apoptosis-population-v1.json"], "model_role": "verification", "calibration_source_ids": [], "validation_source_ids": [], "source_overlap_assessment": "No named biological population evidence exists."}
+      ],
+      "claims": [
+        {"id": "cell-software-contracts-verified", "statement": "The generic binding, signaling, delivery and population contracts reproduce their analytical or numerical synthetic references.", "support": "supported", "evidence_roles": ["analytically verified", "numerically verified", "synthetic fixture"], "source_ids": [], "scope": "Checked-in software fixtures and solvers.", "exclusions": ["Biological mechanism validity", "drug efficacy", "toxicity", "clinical response"]},
+        {"id": "cell-biological-response", "statement": "The current cell layer predicts a named biological or therapeutic response.", "support": "not-supported", "evidence_roles": ["synthetic fixture"], "source_ids": [], "scope": "No such claim is permitted.", "exclusions": ["All biological, pharmacological and clinical conclusions"]}
+      ],
+      "validity_domain": "Generic deterministic and stochastic software-method comparison using transparent synthetic fixtures.",
+      "exclusions": ["Named ligand/receptor", "cell line", "disease", "PK/PD", "toxicity", "clinical outcome"],
+      "limitations": ["All parameters are synthetic.", "Models are well mixed.", "ODE/SSA agreement is not independent biological validation."],
+      "open_scientific_blockers": ["Frozen external SBML/CellML model and license review.", "Independent trajectory reproduction.", "Named biomarker/cell/disease data and heterogeneity."],
+      "artifacts": {"models": ["examples/cell-models/synthetic-receptor-ligand-v1.json", "examples/cell-models/synthetic-intracellular-response-v1.json", "examples/cell-models/synthetic-apoptosis-population-v1.json"], "schemas": ["data/schemas/receptor-ligand-profile/1.0.0.schema.json", "data/schemas/intracellular-response-profile/1.0.0.schema.json", "data/schemas/apoptosis-population-profile/1.0.0.schema.json"], "tests": ["tests/receptor_ligand_tests.cpp", "tests/intracellular_response_network_tests.cpp", "tests/apoptosis_population_tests.cpp"], "reference_results": [], "gate_reviews": ["docs/m5/M5_GATE_REVIEW.md"]}
+    },
+    {
+      "id": "nano-iot.communication-stack",
+      "version": "1.0.0",
+      "title": "Nano-IoT, gateway, BAN and external station",
+      "family": "nano-iot",
+      "intended_use": "Verify typed causal identity, bounded routing, accounting, failure handling and governed station-loop composition across replaceable communication adapters.",
+      "population": "Synthetic devices, messages, clusters, gateway and station only.",
+      "physiological_state": "Abstract in-body and body-area communication; no physical tissue, wearable or radio environment is represented.",
+      "spatial_resolution": "Logical graph endpoints and routes; no calibrated propagation geometry.",
+      "temporal_resolution": "Scheduled deterministic or scripted outcomes in seconds.",
+      "inputs": [
+        {"id": "device-and-link-profiles", "description": "Typed device roles, capacities, route hops, latency, energy and outcome schedules.", "unit": "count, s, J", "source_artifacts": ["examples/iot-models/synthetic-cluster-communication-v1.json", "examples/iot-models/synthetic-ban-station-v1.json"]},
+        {"id": "detection-event", "description": "Causally identified molecular-detection event handed to communication.", "unit": "event", "source_artifacts": ["examples/iot-models/synthetic-local-communication-v1.json"]}
+      ],
+      "outputs": [
+        {"id": "delivery-and-causal-trace", "description": "Delivery state, route, latency, energy, identifiers and station decision/command trace.", "evidence_role": "numerically verified", "source_ids": [], "unit": "count, s, J", "uncertainty": "Exact for deterministic fixtures; no physical-channel uncertainty.", "value_range": null, "artifacts": ["tests/multi_hop_network_tests.cpp", "tests/ban_station_tests.cpp"]},
+        {"id": "resilience-outcomes", "description": "Twelve fail-closed loss, corruption, expiry, replay, policy, identity and capacity cases.", "evidence_role": "synthetic fixture", "source_ids": [], "unit": "categorical", "uncertainty": "Scripted software cases only.", "value_range": "Declared outcome enumeration.", "artifacts": ["examples/iot-models/synthetic-iot-resilience-scenarios-v1.json", "tests/iot_resilience_scenario_tests.cpp"]}
+      ],
+      "parameter_groups": [
+        {"id": "link-and-routing", "description": "Latency, per-attempt energy, outcomes, hop bounds and capacity.", "evidence_role": "synthetic fixture", "source_ids": [], "unit": "s, J, count", "uncertainty": "Not physically calibrated.", "value_range": "Checked-in fixtures only.", "artifacts": ["examples/iot-models/synthetic-cluster-communication-v1.json"], "model_role": "verification", "calibration_source_ids": [], "validation_source_ids": [], "source_overlap_assessment": "No physical channel calibration or validation source exists."},
+        {"id": "gateway-ban-governance", "description": "Allow lists, frame limits, target identity and scheduled uplink/downlink.", "evidence_role": "synthetic fixture", "source_ids": [], "unit": "count, s, J", "uncertainty": "Not quantified; deterministic contract fixtures.", "value_range": "Checked-in fixture only.", "artifacts": ["examples/iot-models/synthetic-ban-station-v1.json"], "model_role": "verification", "calibration_source_ids": [], "validation_source_ids": [], "source_overlap_assessment": "Governance checks are software invariants, not security or clinical validation."}
+      ],
+      "claims": [
+        {"id": "iot-causal-integrity", "statement": "The implemented software stack preserves causal identifiers and separates communication metrics across its positive and fail-closed fixtures.", "support": "supported", "evidence_roles": ["numerically verified", "synthetic fixture"], "source_ids": [], "scope": "Implemented logical adapters and checked-in fixtures.", "exclusions": ["Radio performance", "molecular communication performance", "security guarantee", "hardware feasibility"]},
+        {"id": "iot-physical-feasibility", "statement": "The current parameters establish physical Nano-IoT or BAN feasibility.", "support": "not-supported", "evidence_roles": ["synthetic fixture"], "source_ids": [], "scope": "No such claim is permitted.", "exclusions": ["All physical, security, safety and clinical claims"]}
+      ],
+      "validity_domain": "Deterministic software-interface, routing, accounting and failure-semantics verification.",
+      "exclusions": ["Calibrated physical channels", "hardware", "interference", "cryptography", "clinical authorization"],
+      "limitations": ["All operational parameters are synthetic.", "No physical propagation model.", "Allow-list behavior is not cybersecurity."],
+      "open_scientific_blockers": ["External network-simulator calibration.", "Measured device/link characteristics.", "Hardware and security qualification."],
+      "artifacts": {"models": ["examples/iot-models/synthetic-cluster-communication-v1.json", "examples/iot-models/synthetic-ban-station-v1.json", "examples/iot-models/synthetic-iot-resilience-scenarios-v1.json"], "schemas": ["data/schemas/cluster-communication-profile/1.0.0.schema.json", "data/schemas/ban-station-profile/1.0.0.schema.json"], "tests": ["tests/multi_hop_network_tests.cpp", "tests/ban_station_tests.cpp", "tests/iot_resilience_scenario_tests.cpp"], "reference_results": [], "gate_reviews": ["docs/m6/M6_GATE_REVIEW.md"]}
+    },
+    {
+      "id": "scenario.fp9-lung.m7",
+      "version": "1.0.0",
+      "title": "M7 FP9/lung end-to-end scenario",
+      "family": "m7-fp9-lung",
+      "intended_use": "Demonstrate reproducible integration of the M2-M6 contracts from injection through external report, with explicit provenance, causal identity and validity boundaries.",
+      "population": "Synthetic 1,000-collector reference cohort with historical FP9 timer targets; not a biological or patient population.",
+      "physiological_state": "Nominal historical body/lung reference context combined with synthetic cell and communication fixtures.",
+      "spatial_resolution": "Composed 95-segment body, five-lobe 0D lung, equivalent capillary, well-mixed cell and logical communication graph.",
+      "temporal_resolution": "Component execution in seconds plus historical millisecond timer replay; the historical times are not generated by resolved cross-layer physics.",
+      "inputs": [
+        {"id": "scenario-profile", "description": "Thirteen versioned artifact references, run identity, seed, collector count and acceptance order.", "unit": "mixed", "source_artifacts": ["examples/scenarios/fp9-lung-level-a-v1.json"]},
+        {"id": "historical-timer", "description": "Published localization, assembly and report time regression targets.", "unit": "ms", "source_artifacts": ["examples/scenarios/fp9-lung-historical-timer-v1.json"]}
+      ],
+      "outputs": [
+        {"id": "m7-result-and-causal-trace", "description": "Artifact hashes, component states, ordered stages, Levels B-E outcomes, communication metrics and limitations.", "evidence_role": "numerically verified", "source_ids": [], "unit": "mixed", "uncertainty": "Wilson intervals describe only the synthetic four-case classification campaign.", "value_range": null, "artifacts": ["data/schemas/fingerprinting-result/2.0.0.schema.json", "tests/fingerprinting_scenario_profile_tests.cpp"]},
+        {"id": "historical-fp9-times", "description": "First localization, assembly and external-report times reproduced as fixed historical regression targets.", "evidence_role": "historical regression", "source_ids": ["wendt-dissertation-2024"], "unit": "ms", "uncertainty": "Published timer resolution retained; no predictive distribution.", "value_range": "Only the two published collector-count cases.", "artifacts": ["examples/scenarios/fp9-lung-historical-timer-v1.json", "tests/fingerprint_timer_baseline_tests.cpp"]}
+      ],
+      "parameter_groups": [
+        {"id": "composition-and-random-streams", "description": "Artifact identities, stage order, master seed and named component streams.", "evidence_role": "numerically verified", "source_ids": [], "unit": "identity, count", "uncertainty": "Exact deterministic replay for fixed software/build/input identity.", "value_range": "Versioned M7 profile.", "artifacts": ["examples/scenarios/fp9-lung-level-a-v1.json"], "model_role": "verification", "calibration_source_ids": [], "validation_source_ids": [], "source_overlap_assessment": "Technical integration evidence only."},
+        {"id": "fp9-timeline", "description": "Historical localization, tile assembly and collector-report times.", "evidence_role": "historical regression", "source_ids": ["wendt-dissertation-2024"], "unit": "ms", "uncertainty": "Timer resolution only; no physiological uncertainty.", "value_range": "Published FP9 cases only.", "artifacts": ["examples/scenarios/fp9-lung-historical-timer-v1.json"], "model_role": "regression target", "calibration_source_ids": ["wendt-dissertation-2024"], "validation_source_ids": [], "source_overlap_assessment": "The same historical publication defines and checks the target; this is reproduction, never independent validation."},
+        {"id": "cell-and-communication-composition", "description": "Signal, receptor, tile and network values used to exercise the integrated path.", "evidence_role": "synthetic fixture", "source_ids": ["wendt-nanocom-2023"], "unit": "mixed", "uncertainty": "Not biologically or physically quantified.", "value_range": "Checked-in M7 fixtures only.", "artifacts": ["examples/scenarios/fp9-lung-level-a-v1.json"], "model_role": "model structure", "calibration_source_ids": [], "validation_source_ids": [], "source_overlap_assessment": "The publication contributes concept structure only; current executable values are synthetic."}
+      ],
+      "claims": [
+        {"id": "m7-reproducible-integration", "statement": "MEHLISSA composes the implemented layers into a deterministic, provenance-carrying FP9/lung research-software workflow without scenario logic in the reusable kernel.", "support": "supported", "evidence_roles": ["numerically verified", "historical regression", "synthetic fixture"], "source_ids": ["wendt-dissertation-2024", "wendt-nanocom-2023"], "scope": "Software architecture and integration for the versioned M7 scenario.", "exclusions": ["Biological feasibility", "clinical feasibility", "patient prediction", "hardware feasibility"]},
+        {"id": "m7-biological-feasibility", "statement": "The M7 FP9 workflow establishes biological or clinical feasibility.", "support": "not-supported", "evidence_roles": ["historical regression", "synthetic fixture"], "source_ids": ["wendt-dissertation-2024"], "scope": "Explicit non-claim.", "exclusions": ["Biomarker validity", "diagnostic accuracy", "treatment utility", "clinical safety"]}
+      ],
+      "validity_domain": "Reproducible software integration, artifact/provenance integrity and historical-timer regression for the frozen M7 profile.",
+      "exclusions": ["Biological or clinical feasibility", "resolved cross-layer transport prediction", "device feasibility", "diagnosis or treatment"],
+      "limitations": ["Historical times are replayed.", "Cell and communication parameters are synthetic.", "The Level-E campaign verifies metric semantics only."],
+      "open_scientific_blockers": ["Dynamic capillary-tissue-cell coupling.", "FP9-specific biological evidence.", "Calibrated communication physics.", "Externally validated medical reference scenario."],
+      "artifacts": {"models": ["examples/scenarios/fp9-lung-level-a-v1.json", "examples/scenarios/fp9-lung-historical-timer-v1.json"], "schemas": ["data/schemas/fingerprinting-scenario-profile/1.0.0.schema.json", "data/schemas/fingerprinting-result/2.0.0.schema.json"], "tests": ["tests/fingerprinting_scenario_profile_tests.cpp", "tests/fingerprint_timer_baseline_tests.cpp"], "reference_results": [], "gate_reviews": ["docs/m7/M7_GATE_REVIEW.md"]}
+    }
+  ]
+}

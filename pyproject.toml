@@ -21,6 +21,7 @@ mehlissa-workbench = "mehlissa_workbench.__main__:main"
 
 [project.optional-dependencies]
 plot = ["matplotlib>=3.8"]
+publication = ["jsonschema==4.25.1"]
 
 [tool.setuptools]
 package-dir = {"" = "python"}
