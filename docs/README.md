@@ -17,7 +17,8 @@ for data are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 - [UX-6.1 product and technical foundation](ux/UX6_1_PRODUCT_AND_TECHNICAL_FOUNDATION.md) – workbench roles, prioritized workflows, wireframes, technology decision, threat/privacy/accessibility baseline, and local prototype acceptance.
 - [UX-6.2 guided scenario workspace](ux/UX6_2_GUIDED_SCENARIO_WORKSPACE.md) – schema-derived guided fields, complete-source retention, bounded file access, non-overwriting save-as, and local acceptance.
 - [UX-6.3 validation and corrective feedback](ux/UX6_3_VALIDATION_AND_CORRECTIVE_FEEDBACK.md) – authoritative live validation, stable located issues, repair guidance, warning/error separation, execution gating, and shareable summaries.
-- [System requirements](requirements/SYSTEM_REQUIREMENTS.md) – 77 numbered functional, architectural, user-experience, and quality requirements with origin, priority, and verification method.
+- [UX-6.4 run and campaign control](ux/UX6_4_RUN_AND_CAMPAIGN_CONTROL.md) – explicit run-plan confirmation, individual and six-run campaign execution, cancellation, bounded logs, and retained artifacts.
+- [System requirements](requirements/SYSTEM_REQUIREMENTS.md) – 78 numbered functional, architectural, user-experience, and quality requirements with origin, priority, and verification method.
 - [Traceability matrix](requirements/TRACEABILITY_MATRIX.md) – mapping of all requirements to the literature, current status, roadmap gate, and planned verification.
 - [Fingerprinting reference scenario](requirements/FINGERPRINTING_SCENARIO.md) – domain baseline, reference values, acceptance levels, and tests for the first vertical demonstrator.
 - [Architecture decisions](architecture/README.md) – new kernel, four-layer co-simulation, technology, scenario priority, and evidence rules.

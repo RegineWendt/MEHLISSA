@@ -7,6 +7,9 @@ from .server import (
     CatalogFormatError,
     ExampleSummary,
     ModelSummary,
+    RunControlError,
+    RunNotFoundError,
+    RunWorkspace,
     ScenarioConflictError,
     ScenarioValidationError,
     ScenarioWorkspace,
@@ -21,6 +24,9 @@ __all__ = [
     "CatalogFormatError",
     "ExampleSummary",
     "ModelSummary",
+    "RunControlError",
+    "RunNotFoundError",
+    "RunWorkspace",
     "ScenarioConflictError",
     "ScenarioValidationError",
     "ScenarioWorkspace",
@@ -31,4 +37,4 @@ __all__ = [
     "scenario_fields",
 ]
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"

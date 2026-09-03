@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+from datetime import datetime, timezone
 import hashlib
 import hmac
 from http import HTTPStatus
@@ -17,21 +18,27 @@ from pathlib import Path
 import re
 from secrets import token_urlsafe
 import tempfile
+import threading
 from typing import Callable, Mapping, Sequence, cast
 from urllib.parse import parse_qs, urlsplit
 
-from mehlissa import MehlissaClient, MehlissaCommandError
+from mehlissa import MehlissaCancelledError, MehlissaClient, MehlissaCommandError
 
 
 CATALOG_API_VERSION = "1.0.0"
 WORKSPACE_API_VERSION = "1.0.0"
 VALIDATION_API_VERSION = "1.0.0"
+RUN_API_VERSION = "1.0.0"
 LOOPBACK_HOSTS = frozenset({"127.0.0.1", "localhost"})
 SCENARIO_SCHEMA_PATH = Path(
     "data/schemas/fingerprinting-scenario-profile/1.0.0.schema.json"
 )
 MAX_REQUEST_BYTES = 1_000_000
 SAFE_FILENAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,119}\.json$")
+SAFE_RUN_LABEL = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$")
+CAMPAIGN_PATH = Path("examples/campaigns/fp9-collector-count-v1.json")
+MAX_LOG_LINES = 200
+MAX_LOG_CHARS = 64_000
 STATIC_FILES = {
     "/": ("index.html", "text/html; charset=utf-8"),
     "/index.html": ("index.html", "text/html; charset=utf-8"),
@@ -58,6 +65,14 @@ class ScenarioValidationError(ScenarioWorkspaceError):
     def __init__(self, report: dict[str, object]):
         self.report = report
         super().__init__("The scenario is invalid; correct the reported issues before saving")
+
+
+class RunControlError(RuntimeError):
+    """A run-control request is malformed, unsafe, or refers to unknown state."""
+
+
+class RunNotFoundError(RunControlError):
+    """A run identifier or retained artifact is unknown."""
 
 
 @dataclass(frozen=True)
@@ -156,7 +171,7 @@ def discover_catalog(client: MehlissaClient) -> dict[str, object]:
     return {
         "api_version": CATALOG_API_VERSION,
         "application": "MEHLISSA Next Research Workbench",
-        "workbench_increment": "UX-6.3",
+        "workbench_increment": "UX-6.4",
         "read_only": True,
         "scenario_editing": True,
         "clinical_use": False,
@@ -675,6 +690,364 @@ class ScenarioWorkspace:
         return self.load(f"saved:{filename}")
 
 
+class RunWorkspace:
+    """Execute validated scenarios and one curated campaign with retained evidence."""
+
+    def __init__(
+        self,
+        client: MehlissaClient,
+        scenarios: ScenarioWorkspace,
+        runs_root: Path | None = None,
+    ):
+        self.client = client
+        self.scenarios = scenarios
+        self.repository_root = _repository_root(client)
+        configured = runs_root or Path("workbench-runs")
+        if not configured.is_absolute():
+            configured = self.repository_root / configured
+        self.root = configured.expanduser().resolve()
+        if self.repository_root not in self.root.parents:
+            raise RunControlError(
+                "The run workspace must be a dedicated directory inside the repository"
+            )
+        self._jobs: dict[str, dict[str, object]] = {}
+        self._cancellations: dict[str, threading.Event] = {}
+        self._lock = threading.RLock()
+
+    @staticmethod
+    def _now() -> str:
+        return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+    def _relative(self, path: Path) -> str:
+        resolved = path.expanduser().resolve()
+        if resolved != self.repository_root and self.repository_root not in resolved.parents:
+            raise RunControlError("A retained run artifact escaped the repository")
+        return resolved.relative_to(self.repository_root).as_posix()
+
+    @staticmethod
+    def _bounded_output(stdout: str, stderr: str = "") -> tuple[str, list[str]]:
+        combined = stdout
+        if stderr:
+            combined += ("\n" if combined else "") + stderr
+        combined = combined[-MAX_LOG_CHARS:]
+        lines = combined.splitlines()[-MAX_LOG_LINES:]
+        return "\n".join(lines) + ("\n" if lines else ""), lines
+
+    def _snapshot(self, job: Mapping[str, object]) -> dict[str, object]:
+        return cast(dict[str, object], json.loads(json.dumps(job)))
+
+    def _write_record(self, job: dict[str, object]) -> None:
+        directory = self.repository_root / str(job["directory"])
+        record = directory / "run-record.json"
+        temporary = directory / ".run-record.json.tmp"
+        temporary.write_text(
+            json.dumps(job, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+        )
+        temporary.replace(record)
+
+    def _update(self, job_id: str, **changes: object) -> None:
+        with self._lock:
+            job = self._jobs[job_id]
+            job.update(changes)
+            job["updated_at"] = self._now()
+            self._write_record(job)
+
+    def _artifact(self, job_id: str, name: str, label: str, path: Path) -> None:
+        if not path.is_file():
+            return
+        with self._lock:
+            job = self._jobs[job_id]
+            artifacts = cast(list[dict[str, str]], job["artifacts"])
+            if any(artifact["name"] == name for artifact in artifacts):
+                return
+            artifacts.append(
+                {"name": name, "label": label, "path": self._relative(path)}
+            )
+            self._write_record(job)
+
+    def _new_job(
+        self, kind: str, label: str, title: str, plan: dict[str, object]
+    ) -> tuple[dict[str, object], Path, threading.Event]:
+        if not SAFE_RUN_LABEL.fullmatch(label):
+            raise RunControlError(
+                "Output label must use 1-80 letters, numbers, dots, underscores, or hyphens"
+            )
+        self.root.mkdir(parents=True, exist_ok=True)
+        for _ in range(10):
+            job_id = token_urlsafe(9)
+            directory = self.root / f"{label}-{job_id}"
+            try:
+                directory.mkdir()
+                break
+            except FileExistsError:
+                continue
+        else:
+            raise RunControlError("Could not allocate a unique run workspace")
+        now = self._now()
+        job: dict[str, object] = {
+            "api_version": RUN_API_VERSION,
+            "id": job_id,
+            "kind": kind,
+            "title": title,
+            "status": "queued",
+            "stage": "Preparing retained inputs",
+            "progress_percent": 5,
+            "cancel_requested": False,
+            "created_at": now,
+            "updated_at": now,
+            "completed_at": None,
+            "directory": self._relative(directory),
+            "plan": plan,
+            "logs": ["Run accepted after explicit confirmation."],
+            "artifacts": [],
+            "error": None,
+        }
+        cancellation = threading.Event()
+        with self._lock:
+            self._jobs[job_id] = job
+            self._cancellations[job_id] = cancellation
+            self._write_record(job)
+        self._artifact(job_id, "run-record", "Workbench run record", directory / "run-record.json")
+        return job, directory, cancellation
+
+    def overview(self) -> dict[str, object]:
+        manifest = _load_json_object(self.repository_root / CAMPAIGN_PATH)
+        design = cast(dict[str, object], manifest.get("design", {}))
+        replicates = cast(dict[str, object], design.get("replicates", {}))
+        sweeps = cast(list[dict[str, object]], design.get("sweeps", []))
+        pairs = cast(list[dict[str, object]], design.get("paired_comparisons", []))
+        run_count = int(replicates.get("count", 0))
+        run_count += sum(
+            int(sweep.get("replicates", 0))
+            * len(cast(list[object], sweep.get("values", [])))
+            for sweep in sweeps
+        )
+        run_count += sum(2 * int(pair.get("replicates", 0)) for pair in pairs)
+        return {
+            "api_version": RUN_API_VERSION,
+            "output_root": self._relative(self.root),
+            "retention": "Each start creates a unique directory; existing outputs are never overwritten.",
+            "campaigns": [{
+                "id": "campaign.fp9-collector-count",
+                "title": cast(dict[str, object], manifest.get("campaign", {})).get("title"),
+                "manifest": CAMPAIGN_PATH.as_posix(),
+                "manifest_sha256": hashlib.sha256(
+                    (self.repository_root / CAMPAIGN_PATH).read_bytes()
+                ).hexdigest(),
+                "run_count": run_count,
+                "replicates": replicates,
+                "sweeps": sweeps,
+                "paired_comparisons": pairs,
+                "limitations": manifest.get("limitations", []),
+            }],
+        }
+
+    def start_scenario(
+        self,
+        identifier: str,
+        changes: Mapping[str, object],
+        label: str,
+        confirmed: object,
+    ) -> dict[str, object]:
+        if confirmed is not True:
+            raise RunControlError("Explicit run-plan confirmation is required")
+        document, fields = self.scenarios._candidate(identifier, changes)
+        validation = self.scenarios._validate_candidate(document, fields, changes)
+        if not validation["valid"]:
+            raise ScenarioValidationError(validation)
+        scenario = cast(dict[str, object], document.get("scenario", {}))
+        plan = {
+            "source_id": identifier,
+            "candidate_sha256": validation["candidate_sha256"],
+            "run_count": 1,
+            "master_seeds": [cast(dict[str, object], document.get("run", {})).get("master_seed")],
+            "confirmation": "User confirmed the exact validated candidate before start.",
+        }
+        job, directory, cancellation = self._new_job(
+            "scenario", label, str(scenario.get("title", "MEHLISSA scenario")), plan
+        )
+        input_path = directory / "scenario-input.json"
+        try:
+            input_path.write_text(
+                json.dumps(document, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+            )
+        except OSError as error:
+            self._update(
+                str(job["id"]), status="failed", stage="Input retention failed",
+                progress_percent=100, completed_at=self._now(), error=str(error),
+            )
+            raise RunControlError("Could not retain the scenario input") from error
+        self._artifact(str(job["id"]), "input", "Retained scenario input", input_path)
+        thread = threading.Thread(
+            target=self._run_scenario,
+            args=(str(job["id"]), input_path, directory / "outputs", cancellation),
+            daemon=True,
+        )
+        thread.start()
+        return self.get(str(job["id"]))
+
+    def start_campaign(
+        self, identifier: str, label: str, confirmed: object
+    ) -> dict[str, object]:
+        if confirmed is not True:
+            raise RunControlError("Explicit run-plan confirmation is required")
+        if identifier != "campaign.fp9-collector-count":
+            raise RunControlError("Unknown campaign")
+        source = (self.repository_root / CAMPAIGN_PATH).resolve()
+        self.client.validate_campaign(source)
+        campaign = cast(dict[str, object], self.overview()["campaigns"][0])
+        manifest = _load_json_object(source)
+        seeds: list[object] = []
+        design = cast(dict[str, object], manifest["design"])
+        replicate_plan = cast(dict[str, object], design.get("replicates", {}))
+        first_replicate_seed = int(replicate_plan.get("first_seed", 0))
+        replicate_count = int(replicate_plan.get("count", 0))
+        seeds.extend(range(first_replicate_seed, first_replicate_seed + replicate_count))
+        for collection in ("sweeps", "paired_comparisons"):
+            for entry in cast(list[dict[str, object]], design.get(collection, [])):
+                first = int(entry.get("first_seed", 0)); repetitions = int(entry.get("replicates", 0))
+                if collection == "sweeps":
+                    value_count = len(cast(list[object], entry.get("values", [])))
+                    seeds.extend(range(first, first + repetitions * value_count))
+                else:
+                    for replicate in range(repetitions):
+                        seeds.extend((first + replicate, first + replicate))
+        plan = {
+            "campaign_id": identifier,
+            "manifest": CAMPAIGN_PATH.as_posix(),
+            "manifest_sha256": campaign["manifest_sha256"],
+            "run_count": campaign["run_count"],
+            "master_seeds": seeds,
+            "replicates": campaign["replicates"],
+            "sweeps": campaign["sweeps"],
+            "paired_comparisons": campaign["paired_comparisons"],
+            "confirmation": "User confirmed the curated six-run plan before start.",
+        }
+        job, directory, cancellation = self._new_job(
+            "campaign", label, str(campaign["title"]), plan
+        )
+        input_path = directory / "campaign-manifest.json"
+        try:
+            input_path.write_bytes(source.read_bytes())
+        except OSError as error:
+            self._update(
+                str(job["id"]), status="failed", stage="Input retention failed",
+                progress_percent=100, completed_at=self._now(), error=str(error),
+            )
+            raise RunControlError("Could not retain the campaign manifest") from error
+        self._artifact(str(job["id"]), "input", "Retained campaign manifest", input_path)
+        thread = threading.Thread(
+            target=self._run_campaign,
+            args=(str(job["id"]), input_path, directory / "outputs", cancellation),
+            daemon=True,
+        )
+        thread.start()
+        return self.get(str(job["id"]))
+
+    def _finish_output(self, job_id: str, directory: Path, stdout: str, stderr: str = "") -> None:
+        bounded, lines = self._bounded_output(stdout, stderr)
+        log_path = directory / "command-output.log"
+        log_path.write_text(bounded, encoding="utf-8")
+        self._artifact(job_id, "command-log", "Bounded command output", log_path)
+        self._update(job_id, logs=lines or ["The command produced no terminal output."])
+
+    def _run_scenario(
+        self, job_id: str, input_path: Path, output: Path, cancellation: threading.Event
+    ) -> None:
+        directory = input_path.parent
+        try:
+            self._update(job_id, status="running", stage="Executing one validated scenario", progress_percent=35)
+            execution = self.client.run_scenario(input_path, output, cancel_event=cancellation)
+            self._update(
+                job_id, status="collecting", stage="Collecting retained outputs",
+                progress_percent=85,
+            )
+            self._finish_output(job_id, directory, execution.stdout)
+            for name, label, path in (
+                ("result", "Scenario result", execution.result),
+                ("provenance", "Scenario provenance", execution.provenance),
+                ("simulation-log", "Simulation log", execution.log),
+                ("summary", "Scenario summary", execution.summary),
+            ):
+                self._artifact(job_id, name, label, path)
+            self._update(job_id, status="completed", stage="Completed", progress_percent=100, completed_at=self._now())
+        except MehlissaCancelledError as error:
+            self._finish_output(job_id, directory, error.stdout, error.stderr)
+            self._update(job_id, status="cancelled", stage="Cancelled; retained evidence preserved", progress_percent=100, completed_at=self._now())
+        except Exception as error:  # preserve failures as inspectable run evidence
+            stdout = error.stdout if isinstance(error, MehlissaCommandError) else ""
+            stderr = error.stderr if isinstance(error, MehlissaCommandError) else str(error)
+            self._finish_output(job_id, directory, stdout, stderr)
+            self._update(job_id, status="failed", stage="Failed; retained evidence preserved", progress_percent=100, completed_at=self._now(), error=str(error))
+
+    def _run_campaign(
+        self, job_id: str, input_path: Path, output: Path, cancellation: threading.Event
+    ) -> None:
+        directory = self.repository_root / str(self._jobs[job_id]["directory"])
+        try:
+            self._update(job_id, status="running", stage="Executing six controlled derived runs", progress_percent=30)
+            execution = self.client.run_campaign(input_path, output, cancel_event=cancellation)
+            self._update(
+                job_id, status="collecting", stage="Collecting campaign outputs",
+                progress_percent=85,
+            )
+            self._finish_output(job_id, directory, execution.stdout)
+            self._artifact(job_id, "result", "Campaign result", execution.result)
+            self._artifact(job_id, "csv", "Campaign table", execution.csv)
+            for index, path in enumerate(sorted((execution.directory / "manifests").glob("*.json"))):
+                self._artifact(job_id, f"derived-manifest-{index + 1}", f"Derived run manifest {index + 1}", path)
+            self._update(job_id, status="completed", stage=f"Completed {execution.derived_runs} derived runs", progress_percent=100, completed_at=self._now())
+        except MehlissaCancelledError as error:
+            self._finish_output(job_id, directory, error.stdout, error.stderr)
+            self._update(job_id, status="cancelled", stage="Cancelled; retained campaign evidence preserved", progress_percent=100, completed_at=self._now())
+        except Exception as error:  # preserve failures as inspectable run evidence
+            stdout = error.stdout if isinstance(error, MehlissaCommandError) else ""
+            stderr = error.stderr if isinstance(error, MehlissaCommandError) else str(error)
+            self._finish_output(job_id, directory, stdout, stderr)
+            self._update(job_id, status="failed", stage="Failed; retained campaign evidence preserved", progress_percent=100, completed_at=self._now(), error=str(error))
+
+    def get(self, job_id: str) -> dict[str, object]:
+        with self._lock:
+            job = self._jobs.get(job_id)
+            if job is None:
+                raise RunNotFoundError("Unknown workbench run")
+            return self._snapshot(job)
+
+    def list(self) -> dict[str, object]:
+        with self._lock:
+            jobs = sorted(self._jobs.values(), key=lambda job: str(job["created_at"]), reverse=True)
+            return {"api_version": RUN_API_VERSION, "jobs": [self._snapshot(job) for job in jobs]}
+
+    def cancel(self, job_id: str) -> dict[str, object]:
+        with self._lock:
+            job = self._jobs.get(job_id)
+            if job is None:
+                raise RunNotFoundError("Unknown workbench run")
+            if job["status"] not in {"queued", "running"}:
+                raise RunControlError("Only a queued or running job can be cancelled")
+            job["cancel_requested"] = True
+            job["stage"] = "Cancellation requested"
+            job["updated_at"] = self._now()
+            self._cancellations[job_id].set()
+            self._write_record(job)
+            return self._snapshot(job)
+
+    def artifact(self, job_id: str, name: str) -> tuple[Path, str]:
+        job = self.get(job_id)
+        artifact = next(
+            (entry for entry in cast(list[dict[str, str]], job["artifacts"]) if entry["name"] == name),
+            None,
+        )
+        if artifact is None:
+            raise RunNotFoundError("Unknown retained artifact")
+        path = (self.repository_root / artifact["path"]).resolve()
+        directory = (self.repository_root / str(job["directory"])).resolve()
+        if directory not in path.parents or not path.is_file():
+            raise RunNotFoundError("Retained artifact is unavailable")
+        content_type = "application/json; charset=utf-8" if path.suffix == ".json" else "text/plain; charset=utf-8"
+        return path, content_type
+
+
 class WorkbenchServer(ThreadingHTTPServer):
     """HTTP server carrying the bounded workbench session state."""
 
@@ -687,6 +1060,7 @@ class WorkbenchServer(ThreadingHTTPServer):
         session_token: str | None = None,
         catalog_loader: Callable[[MehlissaClient], dict[str, object]] = discover_catalog,
         workspace_root: Path | None = None,
+        runs_root: Path | None = None,
     ):
         host, _ = server_address
         if host not in LOOPBACK_HOSTS:
@@ -695,6 +1069,7 @@ class WorkbenchServer(ThreadingHTTPServer):
         self.session_token = session_token or token_urlsafe(32)
         self.catalog_loader = catalog_loader
         self.scenarios = ScenarioWorkspace(client, workspace_root)
+        self.runs = RunWorkspace(client, self.scenarios, runs_root)
         super().__init__(server_address, WorkbenchRequestHandler)
 
     @property
@@ -708,7 +1083,7 @@ class WorkbenchServer(ThreadingHTTPServer):
 class WorkbenchRequestHandler(BaseHTTPRequestHandler):
     """Serve embedded assets and capability-protected local APIs."""
 
-    server_version = "MEHLISSAWorkbench/0.1"
+    server_version = "MEHLISSAWorkbench/0.4"
     sys_version = ""
 
     @property
@@ -808,6 +1183,40 @@ class WorkbenchRequestHandler(BaseHTTPRequestHandler):
                     HTTPStatus.BAD_REQUEST, {"error": "scenario_unavailable", "detail": str(error)}
                 )
             return
+        if path == "/api/run-plans":
+            if not self._require_session():
+                return
+            try:
+                self._send_json(HTTPStatus.OK, self.workbench.runs.overview())
+            except (RunControlError, ScenarioWorkspaceError, MehlissaCommandError, OSError) as error:
+                self._send_json(HTTPStatus.BAD_GATEWAY, {"error": "run_plans_unavailable", "detail": str(error)})
+            return
+        if path == "/api/runs":
+            if not self._require_session():
+                return
+            self._send_json(HTTPStatus.OK, self.workbench.runs.list())
+            return
+        if path == "/api/run":
+            if not self._require_session():
+                return
+            identifier = parse_qs(urlsplit(self.path).query).get("id", [""])[0]
+            try:
+                self._send_json(HTTPStatus.OK, self.workbench.runs.get(identifier))
+            except RunNotFoundError as error:
+                self._send_json(HTTPStatus.NOT_FOUND, {"error": "run_not_found", "detail": str(error)})
+            return
+        if path == "/api/run/artifact":
+            if not self._require_session():
+                return
+            parameters = parse_qs(urlsplit(self.path).query)
+            identifier = parameters.get("id", [""])[0]
+            name = parameters.get("name", [""])[0]
+            try:
+                artifact, content_type = self.workbench.runs.artifact(identifier, name)
+                self._send_bytes(HTTPStatus.OK, content_type, artifact.read_bytes())
+            except (RunNotFoundError, OSError) as error:
+                self._send_json(HTTPStatus.NOT_FOUND, {"error": "artifact_not_found", "detail": str(error)})
+            return
 
         static = STATIC_FILES.get(path)
         if static is None:
@@ -847,19 +1256,45 @@ class WorkbenchRequestHandler(BaseHTTPRequestHandler):
             self._send_json(HTTPStatus.BAD_REQUEST, {"error": "invalid_host"})
             return
         path = urlsplit(self.path).path
-        if path not in {"/api/scenario/validate", "/api/scenario/save"}:
+        if path not in {
+            "/api/scenario/validate", "/api/scenario/save",
+            "/api/run/scenario", "/api/run/campaign", "/api/run/cancel",
+        }:
             self._send_json(HTTPStatus.NOT_FOUND, {"error": "not_found"})
             return
         if not self._require_session():
             return
         try:
             request = self._read_json_request()
+            if path == "/api/run/cancel":
+                job_id = request.get("id")
+                if not isinstance(job_id, str):
+                    raise RunControlError("Cancellation requires a run id")
+                self._send_json(HTTPStatus.ACCEPTED, self.workbench.runs.cancel(job_id))
+                return
+            if path == "/api/run/campaign":
+                identifier = request.get("campaign_id")
+                label = request.get("output_label")
+                if not isinstance(identifier, str) or not isinstance(label, str):
+                    raise RunControlError("Campaign start requires campaign_id and output_label")
+                result = self.workbench.runs.start_campaign(identifier, label, request.get("confirmed"))
+                self._send_json(HTTPStatus.ACCEPTED, result)
+                return
             identifier = request.get("source_id")
             changes = request.get("changes")
             if not isinstance(identifier, str) or not isinstance(changes, dict):
                 raise ScenarioWorkspaceError(
                     "Scenario request requires source_id and changes"
                 )
+            if path == "/api/run/scenario":
+                label = request.get("output_label")
+                if not isinstance(label, str):
+                    raise RunControlError("Scenario start requires an output_label")
+                result = self.workbench.runs.start_scenario(
+                    identifier, changes, label, request.get("confirmed")
+                )
+                self._send_json(HTTPStatus.ACCEPTED, result)
+                return
             if path == "/api/scenario/validate":
                 result = self.workbench.scenarios.validate(identifier, changes)
                 self._send_json(HTTPStatus.OK, result)
@@ -881,10 +1316,16 @@ class WorkbenchRequestHandler(BaseHTTPRequestHandler):
                 },
             )
             return
+        except RunNotFoundError as error:
+            self._send_json(HTTPStatus.NOT_FOUND, {"error": "run_not_found", "detail": str(error)})
+            return
+        except RunControlError as error:
+            self._send_json(HTTPStatus.BAD_REQUEST, {"error": "run_rejected", "detail": str(error)})
+            return
         except (ScenarioWorkspaceError, MehlissaCommandError, OSError) as error:
             self._send_json(
                 HTTPStatus.BAD_REQUEST,
-                {"error": "save_rejected", "detail": str(error)},
+                {"error": "operation_rejected", "detail": str(error)},
             )
             return
         self._send_json(HTTPStatus.CREATED, result)
@@ -909,9 +1350,12 @@ def create_server(
     session_token: str | None = None,
     catalog_loader: Callable[[MehlissaClient], dict[str, object]] = discover_catalog,
     workspace_root: Path | None = None,
+    runs_root: Path | None = None,
 ) -> WorkbenchServer:
     """Create, but do not start, a loopback-only workbench server."""
 
     if not 0 <= port <= 65535:
         raise ValueError("port must be between 0 and 65535")
-    return WorkbenchServer((host, port), client, session_token, catalog_loader, workspace_root)
+    return WorkbenchServer(
+        (host, port), client, session_token, catalog_loader, workspace_root, runs_root
+    )

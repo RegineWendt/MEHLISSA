@@ -21,3 +21,6 @@ models, schemas, or simulation behavior.
   defines authoritative live decisions, stable field/document locations,
   actionable repair guidance, warning/error separation, candidate hashes, and
   the pre-run gate.
+- [UX-6.4 run and campaign control](UX6_4_RUN_AND_CAMPAIGN_CONTROL.md)
+  defines confirmed scenario and six-run campaign starts, bounded output and
+  logs, cancellable execution, retained evidence, and protected artifact access.

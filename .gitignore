@@ -60,3 +60,4 @@ mehlissa2.0/src/CMakeCache.txt
 
 # Local graphical-workbench scenarios (user-authored research inputs)
 /workbench-scenarios/
+/workbench-runs/

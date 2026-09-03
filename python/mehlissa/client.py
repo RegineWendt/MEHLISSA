@@ -8,6 +8,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 import subprocess
+import threading
 from typing import Iterable
 
 
@@ -21,6 +22,16 @@ class MehlissaCommandError(RuntimeError):
         self.stderr = stderr
         detail = stderr.strip() or stdout.strip() or "no diagnostic output"
         super().__init__(f"MEHLISSA command failed with status {returncode}: {detail}")
+
+
+class MehlissaCancelledError(RuntimeError):
+    """A MEHLISSA command was cancelled by its local caller."""
+
+    def __init__(self, command: Iterable[str], stdout: str, stderr: str):
+        self.command = tuple(command)
+        self.stdout = stdout
+        self.stderr = stderr
+        super().__init__("MEHLISSA command was cancelled")
 
 
 @dataclass(frozen=True)
@@ -70,9 +81,32 @@ class MehlissaClient:
             Path(repository_root).expanduser().resolve() if repository_root is not None else None
         )
 
-    def _run(self, *arguments: str | Path) -> subprocess.CompletedProcess[str]:
+    def _run(
+        self,
+        *arguments: str | Path,
+        cancel_event: threading.Event | None = None,
+    ) -> subprocess.CompletedProcess[str]:
         command = [str(self.executable), *(str(argument) for argument in arguments)]
-        completed = subprocess.run(command, capture_output=True, text=True, check=False)
+        if cancel_event is None:
+            completed = subprocess.run(command, capture_output=True, text=True, check=False)
+        else:
+            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            while True:
+                try:
+                    stdout, stderr = process.communicate(timeout=0.1)
+                    if cancel_event.is_set():
+                        raise MehlissaCancelledError(command, stdout, stderr)
+                    break
+                except subprocess.TimeoutExpired:
+                    if cancel_event.is_set():
+                        process.terminate()
+                        try:
+                            stdout, stderr = process.communicate(timeout=2)
+                        except subprocess.TimeoutExpired:
+                            process.kill()
+                            stdout, stderr = process.communicate()
+                        raise MehlissaCancelledError(command, stdout, stderr)
+            completed = subprocess.CompletedProcess(command, process.returncode, stdout, stderr)
         if completed.returncode != 0:
             raise MehlissaCommandError(
                 command, completed.returncode, completed.stdout, completed.stderr
@@ -113,7 +147,12 @@ class MehlissaClient:
             "scenario", "validate", "--file", file, *self._root_arguments()
         ).stdout
 
-    def run_scenario(self, file: str | Path, output: str | Path) -> ScenarioExecution:
+    def run_scenario(
+        self,
+        file: str | Path,
+        output: str | Path,
+        cancel_event: threading.Event | None = None,
+    ) -> ScenarioExecution:
         completed = self._run(
             "scenario",
             "run",
@@ -122,6 +161,7 @@ class MehlissaClient:
             "--output",
             output,
             *self._root_arguments(),
+            cancel_event=cancel_event,
         )
         values = _properties(completed.stdout)
         required = (
@@ -172,7 +212,12 @@ class MehlissaClient:
             "campaign", "validate", "--file", file, *self._root_arguments()
         ).stdout
 
-    def run_campaign(self, file: str | Path, output: str | Path) -> CampaignExecution:
+    def run_campaign(
+        self,
+        file: str | Path,
+        output: str | Path,
+        cancel_event: threading.Event | None = None,
+    ) -> CampaignExecution:
         completed = self._run(
             "campaign",
             "run",
@@ -181,6 +226,7 @@ class MehlissaClient:
             "--output",
             output,
             *self._root_arguments(),
+            cancel_event=cancel_event,
         )
         values = _properties(completed.stdout)
         required = ("campaign_directory", "campaign_result", "campaign_csv", "derived_runs")

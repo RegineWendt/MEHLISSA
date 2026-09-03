@@ -14,6 +14,7 @@ from mehlissa import MehlissaClient
 
 from .server import (
     LOOPBACK_HOSTS,
+    RunWorkspace,
     ScenarioWorkspace,
     create_server,
     discover_catalog,
@@ -51,6 +52,11 @@ def _parser() -> argparse.ArgumentParser:
         type=Path,
         help="scenario save-as directory inside the repository (default: workbench-scenarios)",
     )
+    parser.add_argument(
+        "--runs",
+        type=Path,
+        help="unique run-evidence directories inside the repository (default: workbench-runs)",
+    )
     parser.add_argument("--no-browser", action="store_true")
     parser.add_argument(
         "--check",
@@ -83,13 +89,16 @@ def main() -> int:
         print(f"example_count={len(catalog['examples'])}")
         print(f"scenario_source_count={len(workspace['sources'])}")
         print(f"scenario_validation={'valid' if validation['valid'] else 'invalid'}")
+        run_workspace = RunWorkspace(client, scenario_workspace, arguments.runs)
+        print(f"run_plan_count={len(run_workspace.overview()['campaigns'])}")
         return 0
 
     server = create_server(
-        client, arguments.host, arguments.port, workspace_root=arguments.workspace
+        client, arguments.host, arguments.port,
+        workspace_root=arguments.workspace, runs_root=arguments.runs,
     )
-    print("MEHLISSA Next Research Workbench — UX-6.3 corrective validation")
-    print("Scenario editing validates live and saves without overwrite; runs start in UX-6.4.")
+    print("MEHLISSA Next Research Workbench — UX-6.4 run and campaign control")
+    print("Validated scenarios and the curated six-run campaign start after explicit confirmation.")
     print(f"workbench_url={server.url}")
     print("Press Ctrl+C to stop.")
     if not arguments.no_browser:

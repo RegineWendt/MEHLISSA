@@ -19,26 +19,26 @@ SPDX-License-Identifier: MPL-2.0
       <span class="brand-mark" aria-hidden="true">M</span>
       <span><strong>MEHLISSA</strong><small>Next Research Workbench</small></span>
     </a>
-    <span class="prototype-badge">UX-6.3 local workbench</span>
+    <span class="prototype-badge">UX-6.4 local workbench</span>
   </header>
   <main id="main-content" tabindex="-1">
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">Compose before you simulate</p>
-        <h1 id="page-title">Build a reproducible scenario without editing raw JSON.</h1>
-        <p class="hero-copy">Start from the accepted FP9 lung demonstrator, change schema-governed research parameters, and correct field or cross-file problems before saving a new local scenario.</p>
+        <p class="eyebrow">Compose, confirm, simulate</p>
+        <h1 id="page-title">Run reproducible experiments from one guarded workspace.</h1>
+        <p class="hero-copy">Configure and validate the FP9 lung demonstrator, inspect the exact run plan, then monitor one scenario or the curated six-run comparison campaign.</p>
       </div>
       <aside class="boundary" aria-labelledby="boundary-title">
         <p class="boundary-label">Current boundary</p>
-        <h2 id="boundary-title">Correct before execution</h2>
-        <p>UX-6.3 checks the complete candidate with the accepted MEHLISSA validator, identifies errors and warnings, and keeps the execution gate closed for invalid scenarios. Run control arrives in UX-6.4.</p>
+        <h2 id="boundary-title">Confirm before execution</h2>
+        <p>UX-6.4 runs only an exact validated candidate or the curated UX-4 campaign. Every start creates a new evidence directory; cancellation and failures remain inspectable.</p>
       </aside>
     </section>
     <section class="metrics" aria-label="Workbench overview">
       <div><span id="model-count" class="metric-value">—</span><span class="metric-label">model families</span></div>
       <div><span id="example-count" class="metric-value">—</span><span class="metric-label">starter examples</span></div>
       <div><span id="field-count" class="metric-value">—</span><span class="metric-label">guided fields</span></div>
-      <div><span class="metric-value metric-word">Save as</span><span class="metric-label">never overwrite</span></div>
+      <div><span class="metric-value metric-word">6 runs</span><span class="metric-label">controlled campaign</span></div>
     </section>
     <section class="workspace" aria-labelledby="workspace-title">
       <div class="section-heading">
@@ -96,6 +96,26 @@ SPDX-License-Identifier: MPL-2.0
         </div>
       </div>
     </section>
+    <section class="run-workspace" aria-labelledby="run-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">Execution workspace</p><h2 id="run-title">Run and monitor</h2></div>
+        <p id="run-status" class="status" role="status" aria-live="polite">Loading retained run controls…</p>
+      </div>
+      <div class="run-layout">
+        <form id="run-form" class="run-plan-builder">
+          <label><span>Experiment type</span><select id="run-kind"><option value="scenario">Current validated scenario</option><option value="campaign">Six-run collector-count campaign</option></select></label>
+          <label id="campaign-choice" hidden><span>Controlled campaign</span><select id="campaign-select"></select></label>
+          <label><span>Output label</span><input id="output-label" required pattern="[A-Za-z0-9][A-Za-z0-9._-]{0,79}" value="fp9-workbench" autocomplete="off"></label>
+          <div class="output-policy"><strong>Output root</strong><code id="output-root">Loading…</code><span>Each start adds a unique directory. Existing evidence is never overwritten.</span></div>
+          <section class="plan-preview" aria-labelledby="plan-preview-title"><h3 id="plan-preview-title">Run plan</h3><dl id="run-plan"></dl><ul id="run-limitations"></ul></section>
+          <button id="review-run" type="submit" disabled>Review and confirm run…</button>
+        </form>
+        <section class="run-monitor" aria-labelledby="monitor-title">
+          <div class="monitor-heading"><h3 id="monitor-title">Recent runs</h3><button id="refresh-runs" type="button" class="secondary">Refresh</button></div>
+          <div id="run-list" class="run-list"><p class="empty">No workbench runs in this session.</p></div>
+        </section>
+      </div>
+    </section>
     <section class="catalog compact-catalog" aria-labelledby="catalog-title">
       <div class="section-heading">
         <div><p class="eyebrow">Validated catalog</p><h2 id="catalog-title">Explore implemented building blocks</h2></div>
@@ -125,6 +145,24 @@ SPDX-License-Identifier: MPL-2.0
       <label><span>Filename</span><input id="save-filename" required pattern="[A-Za-z0-9][A-Za-z0-9._-]{0,119}\.json" placeholder="fp9-lung-derived-v1.json"></label>
       <p id="save-error" class="dialog-error" role="alert"></p>
       <div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button id="confirm-save" value="default">Save validated candidate</button></div>
+    </form>
+  </dialog>
+  <dialog id="run-dialog" aria-labelledby="confirm-run-title">
+    <form method="dialog" id="confirm-run-form">
+      <p class="eyebrow">Explicit execution gate</p>
+      <h2 id="confirm-run-title">Confirm this run plan</h2>
+      <pre id="confirm-run-summary" tabindex="0"></pre>
+      <label class="confirmation"><input id="run-confirmed" type="checkbox" required><span>I confirm this exact research run plan and output destination.</span></label>
+      <p class="notice"><strong>Research use only.</strong> This software is not validated for clinical decisions.</p>
+      <p id="run-error" class="dialog-error" role="alert"></p>
+      <div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button id="confirm-run" value="default">Start confirmed run</button></div>
+    </form>
+  </dialog>
+  <dialog id="artifact-dialog" aria-labelledby="artifact-title">
+    <form method="dialog">
+      <p class="eyebrow">Retained evidence</p><h2 id="artifact-title">Artifact</h2>
+      <pre id="artifact-content" tabindex="0"></pre>
+      <div class="dialog-actions"><button value="cancel">Close</button></div>
     </form>
   </dialog>
   <footer>

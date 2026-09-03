@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M7 and locally accepted UX-1 through UX-6.3
+**Covered software:** accepted M0 through M7 and locally accepted UX-1 through UX-6.4
 
-**Last updated:** 3 September 2026, after local acceptance of UX-6.3 corrective validation
+**Last updated:** 3 September 2026, after local acceptance of UX-6.4 run and campaign control
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -924,13 +924,13 @@ when an analysis can handle the failure explicitly; never convert failed runs
 into apparent observations. Identifiable patient data still must not be placed
 in notebooks, repository examples, or shared result bundles.
 
-#### Create and validate a scenario in the graphical workbench (UX-6.1 through UX-6.3)
+#### Configure, validate, and run in the graphical workbench (UX-6.1 through UX-6.4)
 
 The local browser workbench lets you search the five implemented model families
 and ten curated starter examples. UX-6.2 provides a guided editor for the
 complete FP9/lung fingerprinting scenario, and UX-6.3 explains structural,
-semantic, and cross-file problems before save. It does not start a simulation
-yet; run control is planned for UX-6.4.
+semantic, and cross-file problems before save. UX-6.4 starts and monitors either
+that exact validated scenario or the curated six-run collector-count campaign.
 
 From the repository root, make the source packages visible and check that the
 workbench can locate the application and read its validated catalog:
@@ -943,7 +943,8 @@ python -m mehlissa_workbench --repository-root . --check
 The check prints `workbench_status=ready`, `scenario_editing=true`, the model
 and example counts, the number of available scenario sources, and
 `scenario_validation=valid` after checking the starter through the accepted
-validator. Then start the interface:
+validator. It also prints `run_plan_count=1` for the one curated graphical
+campaign. Then start the interface:
 
 ```powershell
 python -m mehlissa_workbench --repository-root .
@@ -975,7 +976,7 @@ limitations, acceptance rules, and any fields not represented by a control.
 When you change a field, the page marks the scenario as unsaved, updates the
 source view, and briefly shows **Checking**. The host reconstructs the complete
 candidate and asks the normal `mehlissa scenario validate` command for the
-authoritative decision. A red **Invalid** state blocks save and the future run
+authoritative decision. A red **Invalid** state blocks save and the run
 gate. Each issue keeps a stable `WBV-*` workbench or `MEHLISSA-E####` command
 code, a dotted field/document location, and concrete repair guidance. Red
 errors block the workflow; amber warnings permit save but state a scientific
@@ -1010,6 +1011,46 @@ Unsupported or future fields are shown in the source view and retained; if the
 current schema does not accept them, save fails visibly instead of silently
 dropping them. A rejected save does not create the destination.
 
+In **Run and monitor**, choose **Current validated scenario** for one execution,
+or **Six-run collector-count campaign** for the accepted UX-4 experiment. The
+campaign plan visibly expands its two baseline replicates, two-value
+`run.collector_count` sweep, and paired 1,000-versus-10,000 comparison. A
+*replicate* repeats a configuration with a declared random seed; a *sweep*
+changes one declared parameter across selected values; and a *paired
+comparison* evaluates two parameter values with the same seed so stochastic
+variation is controlled within each pair.
+
+Enter an output label using letters, numbers, dots, underscores, or hyphens.
+This is a label, not a filesystem path. **Review and confirm run…** shows the
+exact scenario hash or campaign plan, seeds, run count, and resolved destination.
+Check the explicit confirmation only after reviewing it. The server repeats
+scenario validation immediately before start and rejects stale or invalid
+candidates.
+
+Every start creates a unique Git-ignored directory such as
+`workbench-runs/fp9-workbench-<unique-id>/`. It initially contains the exact
+`scenario-input.json` or `campaign-manifest.json` and an atomically updated
+`run-record.json`. To select another bounded repository-local root, use:
+
+```powershell
+python -m mehlissa_workbench `
+  --repository-root . `
+  --runs results/workbench-runs
+```
+
+The monitor shows queued, executing, collecting, completed, failed, or cancelled
+state plus progress, run identity, output path, run count, and seeds. Its log is
+deliberately bounded to the last 200 lines and 64,000 characters. Artifact
+buttons open the exact retained input, workbench record, command output,
+simulation result, provenance, simulation log, summary, or campaign CSV through
+the protected local API. The underlying files stay available after the browser
+view closes.
+
+**Cancel run** requests termination of the owned MEHLISSA process. Cancellation
+does not delete evidence: the retained input, run record, bounded output, and
+any partial files remain, and the terminal state is `cancelled`. A cancelled or
+failed run is not an observation and must not be counted in an analysis.
+
 The host listens only on the local computer, serves no remote assets, records
 no telemetry, and is not a patient-data workflow. The page's research-software
 notice is binding: displayed maturity and evidence do not make a model
@@ -1021,6 +1062,9 @@ round-trip, and security contracts are in the
 codes, locations, repair rules, validation responses, and the execution gate
 are specified in the
 [UX-6.3 validation contract](ux/UX6_3_VALIDATION_AND_CORRECTIVE_FEEDBACK.md).
+Run plans, state transitions, cancellation, retention, and protected artifact
+access are specified in the
+[UX-6.4 run-control contract](ux/UX6_4_RUN_AND_CAMPAIGN_CONTROL.md).
 
 If the page says that the catalog or scenario workspace could not be loaded,
 stop the process, run the `--check` command, and confirm that the selected
@@ -1031,6 +1075,11 @@ checkout and inspect the launching terminal. If a field is red, use its code
 and repair text; if only the document issue list is red, inspect the named
 section in **Complete source JSON**. A `$` location means the validator could
 not safely narrow the failure to one section. A rejected save creates no file.
+If a run start is rejected, recheck the visible plan, confirmation, output
+label, and current validation. If execution fails or is cancelled, inspect the
+retained workbench record and command log; do not rename the job to make it look
+successful. A missing artifact means it was not produced before the terminal
+state, not that its scientific value is zero.
 
 #### Validate an experiment manifest
 
@@ -2852,11 +2901,18 @@ The usability package status is:
   candidate is checked through the accepted CLI, structural and semantic errors
   carry stable codes, locations, and repair guidance, cross-file failures are
   explicit, warnings remain non-blocking, and a candidate-hashed summary can be
-  copied. Invalid candidates cannot be saved or admitted by the future run
+  copied. Invalid candidates cannot be saved or admitted by the run
   gate. All 285 Windows/MSVC tests and desktop/mobile browser checks pass;
+  publication and supported GitHub CI are pending an explicit push;
+- **UX-6.4, run and campaign control:** locally passed; an exact validated
+  scenario and the curated UX-4 six-run replicate/sweep/paired campaign run
+  through accepted process APIs after explicit plan confirmation. Unique
+  bounded outputs, staged monitoring, real cancellation, 200-line logs, atomic
+  records, seeds, manifests, and protected result/provenance links remain
+  traceable. All 285 Windows/MSVC tests and desktop/mobile browser checks pass;
   publication and supported GitHub CI are pending an explicit push; and
-- **UX-6.4 through UX-6.8, integrated graphical workbench:** next add execution,
-  results, provenance, uncertainty visualization,
+- **UX-6.5 through UX-6.8, integrated graphical workbench:** next add result
+  dashboards and comparisons, provenance/evidence views, uncertainty visualization,
   packaging, and final usability/accessibility acceptance.
 
 Planned substantive scientific extensions are:

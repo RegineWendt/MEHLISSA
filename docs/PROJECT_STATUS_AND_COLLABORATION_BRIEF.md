@@ -11,9 +11,9 @@ SPDX-License-Identifier: CC-BY-4.0
 **Status date:** 3 September 2026
 **Development branch:** `mehlissa-next-generation`
 **Published base revision:** `7b92c4ef930b188918a886041603e8de27e2891c`
-**Local candidate:** UX-6.1 through UX-6.3 accepted locally; not yet pushed
+**Local candidate:** UX-6.1 through UX-6.4 accepted locally; not yet pushed
 **Milestone status:** M0 through M7 passed
-**Current product focus:** UX-6.4 run and campaign control after local UX-6.3 acceptance
+**Current product focus:** UX-6.5 result dashboard and comparison after local UX-6.4 acceptance
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -67,6 +67,12 @@ behind explicit contracts.
   cross-file diagnostics, a candidate-hashed copyable summary, and a closed
   save/future-run gate for invalid configurations. All 285 Windows/MSVC tests
   and desktop/mobile browser checks pass; publication and supported CI are pending.
+- UX-6.4 adds explicitly confirmed starts for the exact validated scenario and
+  the curated UX-4 six-run replicate/sweep/paired-comparison campaign through
+  the accepted Python process API. Unique bounded outputs, visible stages,
+  actual cancellation, atomic run records, bounded logs, seeds, inputs, and
+  protected artifact views remain traceable. All 285 Windows/MSVC tests and
+  desktop/mobile browser checks pass; publication and supported CI are pending.
 - English user, architecture, model, traceability, and decision documentation
   supports international collaboration.
 - The result is a reproducible research-software demonstrator. It is not a
@@ -77,7 +83,7 @@ behind explicit contracts.
 | Software architecture | Strong modular foundation with explicit ownership, conservation, lifecycle, configuration, and evidence boundaries. |
 | End-to-end integration | Complete first software vertical slice through fingerprinting Levels A-E. |
 | Scientific validation | Mixed maturity: verified equations, literature-parameterized candidates, selected independent comparisons, and multiple synthetic mechanisms. |
-| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, UX-3 provides readable shareable result bundles, UX-4 provides controlled campaigns, UX-5 provides Python and notebook access, and UX-6.1 through UX-6.3 add the local graphical foundation, guided scenario round trips, and corrective pre-run validation. Graphical running and analysis remain. |
+| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, UX-3 provides readable shareable result bundles, UX-4 provides controlled campaigns, UX-5 provides Python and notebook access, and UX-6.1 through UX-6.4 add the local graphical foundation, guided scenario round trips, corrective validation, and guarded run/campaign control. Graphical result analysis remains. |
 | Clinical readiness | Not claimed. Patient prediction, diagnosis, and treatment recommendations are explicitly outside the present scope. |
 
 ## How to read project labels
@@ -319,7 +325,8 @@ they do not by themselves increase physiological or clinical validity.
 | UX-6.1 - Workbench product and technical foundation | Define users and workflows, select the interface architecture, establish safety/accessibility baselines, and prove read-only graphical discovery without duplicating scientific logic. | Locally passed; five model families and ten examples load through the accepted process API; all 285 Windows/MSVC tests and desktop/mobile browser checks pass; push and supported CI pending |
 | UX-6.2 - Guided scenario workspace | Open the complete FP9/lung starter, edit schema-derived scalar fields with their units/evidence/limits, retain the complete source, and validate/save/reopen without overwriting. | Locally passed; a 10,000-collector derivative round-trips with all 13 artifacts and evidence retained; unknown-field, path, session, and overwrite cases fail visibly; all 285 Windows/MSVC tests and desktop/mobile browser checks pass; push and supported CI pending |
 | UX-6.3 - Validation and corrective feedback | Explain structural, semantic, and cross-file problems before save/run and make the decision shareable. | Locally passed; accepted-CLI parity, stable field/document codes, repair guidance, warnings, candidate SHA-256, invalid-save/run gate, all 285 Windows/MSVC tests, and desktop/mobile browser checks pass; push and supported CI pending |
-| UX-6.4 through UX-6.8 - Integrated graphical workbench | Add run/campaign control, result comparison, provenance/evidence, uncertainty visualization/export, packaging, and final usability/accessibility acceptance. | Planned |
+| UX-6.4 - Run and campaign control | Confirm, start, monitor, cancel, and inspect an exact validated scenario or the curated six-run campaign without bypassing accepted APIs. | Locally passed; unique bounded evidence directories, exact inputs, seeds, atomic state, 200-line logs, real cancellation, and protected result/provenance/table links; all 285 Windows/MSVC tests and desktop/mobile browser checks pass; push and supported CI pending |
+| UX-6.5 through UX-6.8 - Integrated graphical workbench | Add result comparison, provenance/evidence, uncertainty visualization/export, packaging, and final usability/accessibility acceptance. | Planned |
 
 The intended first user experience is:
 
@@ -385,7 +392,19 @@ document section, or `$` whole-document location. Every issue has correction
 guidance. Errors close save and future execution, warnings remain non-blocking,
 and the copyable summary binds its decision to the candidate SHA-256. Save
 repeats validation and creates nothing on HTTP 422 rejection. All 285 local
-Windows/MSVC tests and desktop/mobile browser checks pass. UX-6.4 is next.
+Windows/MSVC tests and desktop/mobile browser checks pass.
+
+UX-6.4 now admits only the exact validated candidate or the allowlisted UX-4
+campaign after the researcher reviews and explicitly confirms its plan. The
+campaign view names the two replicates, collector-count sweep, same-seed paired
+comparison, six derived runs, and seeds. Each start allocates a unique bounded
+directory, retains its exact input and atomically updated job record, and calls
+the accepted Python process API. The monitor reports lifecycle stage and
+progress, limits terminal output to 200 lines/64,000 characters, links
+server-registered artifacts, and can terminate the owned child process while
+preserving a `cancelled` record. Reference scenario, six-run campaign, and real
+cancellation acceptance tests pass. UX-6.5 result dashboards and comparisons
+are next.
 
 ## 9. Opportunities for collaborators
 
@@ -397,7 +416,7 @@ Windows/MSVC tests and desktop/mobile browser checks pass. UX-6.4 is next.
 | Molecular communication | Calibrate local channels, implement assembly physics, and connect an external network simulator through the existing adapter. |
 | Cell biology and pharmacology | Replace synthetic receptor, signaling, apoptosis, and delivery assumptions with evidence-qualified models. |
 | Statistics and uncertainty quantification | Design independent validation, global sensitivity, uncertainty propagation, identifiability, and ensemble analysis. |
-| Research UX and visualization | Review the local guided editor and corrective validation, then add run control, provenance, comparison, and accessible uncertainty views. |
+| Research UX and visualization | Review the local editor, validation, and run control, then add result comparison, provenance, and accessible uncertainty views. |
 | Research data and governance | Model-card provenance, licensing, FAIR data, patient-data controls, and digital-twin governance. |
 
 A new module is reviewable when its public contract and units are explicit;

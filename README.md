@@ -79,7 +79,7 @@ print(load_result(execution.result).summary)
 See `examples/notebooks/01-first-scenario.ipynb` and
 `examples/notebooks/02-campaign-analysis.ipynb` for complete workflows.
 
-The UX-6.1 through UX-6.3 graphical workbench can browse the same validated model and
+The UX-6.1 through UX-6.4 graphical workbench can browse the same validated model and
 example catalog and create a schema-guided derivative of the complete FP9/lung
 scenario in a protected local page:
 
@@ -93,8 +93,11 @@ The launcher locates a normal build automatically or accepts `--executable`.
 Guided edits receive live field/document diagnostics, stable error codes,
 repair guidance, warning/error separation, a copyable validation summary, and
 authoritative non-overwriting save-as inside a repository-local workspace.
-Simulation execution remains a command/Python workflow until UX-6.4. See the
-User Guide for the complete workflow and diagnostics.
+After explicit plan confirmation, it runs either the exact validated candidate
+or the curated six-run replicate/sweep/paired-comparison campaign through the
+same Python process API. Unique bounded output, progress, cancellation, logs,
+and retained artifact views remain traceable. See the User Guide for the
+complete workflow and diagnostics.
 
 MEHLISSA Next is a research model. It is not a medical device and does not
 provide patient-specific clinical predictions.

@@ -6,6 +6,7 @@
 from .client import (
     CampaignExecution,
     MehlissaClient,
+    MehlissaCancelledError,
     MehlissaCommandError,
     ReportBundle,
     ScenarioExecution,
@@ -16,6 +17,7 @@ __all__ = [
     "CampaignExecution",
     "CampaignResult",
     "MehlissaClient",
+    "MehlissaCancelledError",
     "MehlissaCommandError",
     "ReportBundle",
     "ScenarioExecution",

@@ -10,6 +10,7 @@ from pathlib import Path
 import sys
 import tempfile
 import threading
+import time
 import unittest
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
@@ -41,7 +42,7 @@ class WorkbenchDiscoveryTest(unittest.TestCase):
         self.assertEqual(catalog["api_version"], "1.0.0")
         self.assertTrue(catalog["read_only"])
         self.assertTrue(catalog["scenario_editing"])
-        self.assertEqual(catalog["workbench_increment"], "UX-6.3")
+        self.assertEqual(catalog["workbench_increment"], "UX-6.4")
         self.assertFalse(catalog["clinical_use"])
         self.assertEqual(len(catalog["models"]), 5)
         self.assertEqual(len(catalog["examples"]), 10)
@@ -71,7 +72,7 @@ class WorkbenchServerTest(unittest.TestCase):
         temporary_parent = Path(ARGS.root).resolve() / "tmp"
         temporary_parent.mkdir(exist_ok=True)
         cls.temporary_directory = tempfile.TemporaryDirectory(
-            prefix="ux6-3-workspace-", dir=temporary_parent
+            prefix="ux6-4-workspace-", dir=temporary_parent
         )
         cls.workspace = Path(cls.temporary_directory.name)
         cls.server = create_server(
@@ -79,6 +80,7 @@ class WorkbenchServerTest(unittest.TestCase):
             port=0,
             session_token="test-session-token",
             workspace_root=cls.workspace,
+            runs_root=cls.workspace / "runs",
         )
         cls.thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
         cls.thread.start()
@@ -97,7 +99,7 @@ class WorkbenchServerTest(unittest.TestCase):
             body = response.read().decode("utf-8")
             self.assertEqual(response.status, HTTPStatus.OK)
             self.assertIn("MEHLISSA Next Research Workbench", body)
-            self.assertIn("Correct before execution", body)
+            self.assertIn("Confirm before execution", body)
             self.assertIn("Scenario validation", body)
             self.assertIn("frame-ancestors 'none'", response.headers["Content-Security-Policy"])
             self.assertEqual(response.headers["Referrer-Policy"], "no-referrer")
@@ -110,6 +112,7 @@ class WorkbenchServerTest(unittest.TestCase):
             self.assertIn("X-MEHLISSA-Session", script)
             self.assertIn("beforeunload", script)
             self.assertIn("/api/scenario/validate", script)
+            self.assertIn("/api/run/campaign", script)
 
     def test_catalog_api_requires_session(self) -> None:
         with self.assertRaises(HTTPError) as denied:
@@ -143,6 +146,15 @@ class WorkbenchServerTest(unittest.TestCase):
         request = Request(f"{self.base_url}{path}", headers=headers, data=data, method=method)
         with urlopen(request, timeout=20) as response:
             return response.status, json.load(response)
+
+    def wait_job(self, job_id: str, timeout: float = 40) -> dict[str, object]:
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            _, job = self.request_json(f"/api/run?id={job_id}")
+            if job["status"] not in {"queued", "running", "collecting"}:
+                return job
+            time.sleep(0.1)
+        self.fail(f"workbench run {job_id} did not finish")
 
     def test_guided_scenario_round_trip_retains_complete_document(self) -> None:
         status, overview = self.request_json("/api/scenarios")
@@ -298,12 +310,92 @@ class WorkbenchServerTest(unittest.TestCase):
         self.assertFalse(payload["validation"]["run_allowed"])
         self.assertFalse((self.workspace / "invalid-must-not-save.json").exists())
 
-        with self.assertRaises(HTTPError) as absent:
+        with self.assertRaises(HTTPError) as rejected_start:
             self.request_json(
-                "/api/scenario/run", "POST",
-                {"source_id": "template:scenario.fp9-complete", "changes": {}},
+                "/api/run/scenario", "POST",
+                {
+                    "source_id": "template:scenario.fp9-complete",
+                    "changes": {"run.collector_count": 0},
+                    "output_label": "invalid",
+                    "confirmed": True,
+                },
             )
-        self.assertEqual(absent.exception.code, HTTPStatus.NOT_FOUND)
+        self.assertEqual(rejected_start.exception.code, HTTPStatus.UNPROCESSABLE_ENTITY)
+        _, runs = self.request_json("/api/runs")
+        self.assertFalse(any(job["directory"].endswith("invalid") for job in runs["jobs"]))
+
+    def test_run_plan_requires_confirmation_and_safe_output_label(self) -> None:
+        _, plans = self.request_json("/api/run-plans")
+        self.assertEqual(plans["api_version"], "1.0.0")
+        self.assertEqual(plans["campaigns"][0]["run_count"], 6)
+        self.assertEqual(len(plans["campaigns"][0]["manifest_sha256"]), 64)
+        self.assertEqual(plans["campaigns"][0]["replicates"]["count"], 2)
+        self.assertTrue(plans["campaigns"][0]["sweeps"])
+        self.assertTrue(plans["campaigns"][0]["paired_comparisons"])
+        for body in (
+            {"source_id": "template:scenario.fp9-complete", "changes": {}, "output_label": "unconfirmed", "confirmed": False},
+            {"source_id": "template:scenario.fp9-complete", "changes": {}, "output_label": "../escape", "confirmed": True},
+        ):
+            with self.subTest(body=body), self.assertRaises(HTTPError) as rejected:
+                self.request_json("/api/run/scenario", "POST", body)
+            self.assertEqual(rejected.exception.code, HTTPStatus.BAD_REQUEST)
+
+    def test_reference_scenario_runs_with_retained_trace(self) -> None:
+        status, started = self.request_json(
+            "/api/run/scenario", "POST",
+            {
+                "source_id": "template:scenario.fp9-complete",
+                "changes": {}, "output_label": "reference-scenario", "confirmed": True,
+            },
+        )
+        self.assertEqual(status, HTTPStatus.ACCEPTED)
+        job = self.wait_job(started["id"])
+        self.assertEqual(job["status"], "completed")
+        self.assertEqual(job["progress_percent"], 100)
+        self.assertEqual(job["plan"]["run_count"], 1)
+        names = {artifact["name"] for artifact in job["artifacts"]}
+        self.assertTrue({"run-record", "input", "command-log", "result", "provenance", "simulation-log", "summary"}.issubset(names))
+        self.assertLessEqual(len(job["logs"]), 200)
+        request = Request(
+            f"{self.base_url}/api/run/artifact?id={job['id']}&name=provenance",
+            headers={"X-MEHLISSA-Session": "test-session-token"},
+        )
+        with urlopen(request, timeout=10) as response:
+            provenance = json.load(response)
+        self.assertIn("scenario", provenance)
+
+    def test_six_run_campaign_completes_and_preserves_design(self) -> None:
+        status, started = self.request_json(
+            "/api/run/campaign", "POST",
+            {"campaign_id": "campaign.fp9-collector-count", "output_label": "six-run-campaign", "confirmed": True},
+        )
+        self.assertEqual(status, HTTPStatus.ACCEPTED)
+        job = self.wait_job(started["id"], timeout=60)
+        self.assertEqual(job["status"], "completed")
+        self.assertEqual(job["plan"]["run_count"], 6)
+        self.assertEqual(job["plan"]["paired_comparisons"][0]["first_seed"], 20260930)
+        names = {artifact["name"] for artifact in job["artifacts"]}
+        self.assertTrue({"input", "result", "csv", "command-log"}.issubset(names))
+        self.assertEqual(len([name for name in names if name.startswith("derived-manifest-")]), 6)
+
+    def test_campaign_cancellation_preserves_auditable_state(self) -> None:
+        _, started = self.request_json(
+            "/api/run/campaign", "POST",
+            {"campaign_id": "campaign.fp9-collector-count", "output_label": "cancelled-campaign", "confirmed": True},
+        )
+        status, _ = self.request_json("/api/run/cancel", "POST", {"id": started["id"]})
+        self.assertEqual(status, HTTPStatus.ACCEPTED)
+        job = self.wait_job(started["id"], timeout=20)
+        self.assertEqual(job["status"], "cancelled")
+        self.assertTrue(any(artifact["name"] == "run-record" for artifact in job["artifacts"]))
+        self.assertTrue(job["cancel_requested"])
+        self.assertIn("preserved", job["stage"])
+
+    def test_unknown_run_and_artifact_are_not_exposed(self) -> None:
+        for path in ("/api/run?id=missing", "/api/run/artifact?id=missing&name=../input"):
+            with self.subTest(path=path), self.assertRaises(HTTPError) as missing:
+                self.request_json(path)
+            self.assertEqual(missing.exception.code, HTTPStatus.NOT_FOUND)
 
     def test_unsupported_fields_are_visible_and_never_silently_discarded(self) -> None:
         template = Path(ARGS.root).resolve() / "examples/scenarios/fp9-lung-level-a-v1.json"

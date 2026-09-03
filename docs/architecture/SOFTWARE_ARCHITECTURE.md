@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 This document is the entry point for developers who want to understand,
 integrate, or extend MEHLISSA Next. It describes the implemented architecture
-through the accepted M7 gate and locally accepted UX-6.3 workbench, the public
+through the accepted M7 gate and locally accepted UX-6.4 workbench, the public
 C++, command-line, Python, and local-workbench interfaces, the data contracts,
 and the workflow for adding a
 module such as a new organ model. It also explains
@@ -532,7 +532,8 @@ browser presentation -> Python workbench host -> MehlissaClient
 
 The foundation endpoint is `GET /api/catalog`. UX-6.2 adds `GET /api/scenarios`,
 `GET /api/scenario`, and `POST /api/scenario/save`; UX-6.3 adds
-`POST /api/scenario/validate`. They are private to the
+`POST /api/scenario/validate`. UX-6.4 adds run-plan, job, start, cancellation,
+and retained-artifact endpoints. They are private to the
 local application, require an ephemeral session capability, and are not a
 stable remote REST API. The server derives scalar field descriptions and
 constraints from the authoritative fingerprinting-scenario JSON Schema. It
@@ -551,6 +552,26 @@ Debounced browser requests are generation-guarded so stale results cannot
 replace the newest state. Warnings describe non-blocking interpretation risks
 and never change the authoritative validity decision.
 
+UX-6.4 adds `RunWorkspace`, an application service above
+`MehlissaClient.run_scenario()` and `run_campaign()`. A scenario start first
+reconstructs and revalidates the exact candidate. Campaign start accepts only
+the versioned UX-4 FP9 collector-count campaign. Both require an explicit
+confirmation flag and a basename-like output label. The host allocates a unique
+directory under `workbench-runs/` (or another repository-contained root),
+retains the exact input and an atomically replaced `run-record.json`, and runs
+the existing process API on a worker thread. No browser code constructs a
+scientific manifest or command line.
+
+The optional cancellation event on the Python process client uses an owned
+child-process handle. Cancellation terminates that process, raises
+`MehlissaCancelledError`, and therefore cannot be mistaken for successful
+execution. Completed, failed, and cancelled jobs all retain their identity,
+timestamps, stages, inputs, bounded command output, and available artifacts.
+Artifact reads use a server-created name allowlist and recheck containment in
+the job directory; the browser never supplies a filesystem path. Run history
+is scoped to the current host process, while its repository-local files remain
+available after shutdown.
+
 Curated examples are immutable. Derived files use safe basename-only `.json`
 names and exclusive creation inside `workbench-scenarios/` or an explicitly
 selected repository-internal workspace. Unsupported fields are displayed in
@@ -561,16 +582,18 @@ JSON object rather than being reconstructed from form controls.
 The host binds only to loopback, validates the HTTP host header, serves four
 allow-listed embedded assets, rejects unrecognized state-changing operations,
 suppresses request logging, and applies restrictive browser security headers.
-The single save operation also requires JSON content, enforces a one-megabyte
-body limit, checks editable paths, validates through the executable, and never
-overwrites. All content is inserted with DOM `textContent`; there are no remote
+All state-changing operations require JSON content and enforce a one-megabyte
+body limit. Save checks editable paths, validates through the executable, and
+never overwrites; run start and artifact access add narrower allowlists and
+containment checks. All content is inserted with DOM `textContent`; there are no remote
 assets or telemetry. These properties are architectural constraints for later
 UX-6 increments.
 Product roles, workflows, threat/privacy/accessibility baselines, and screen
 concepts are maintained in the
 [UX-6.1 foundation](../ux/UX6_1_PRODUCT_AND_TECHNICAL_FOUNDATION.md), the
 [UX-6.2 workspace contract](../ux/UX6_2_GUIDED_SCENARIO_WORKSPACE.md), the
-[UX-6.3 validation contract](../ux/UX6_3_VALIDATION_AND_CORRECTIVE_FEEDBACK.md), and the
+[UX-6.3 validation contract](../ux/UX6_3_VALIDATION_AND_CORRECTIVE_FEEDBACK.md),
+[UX-6.4 run-control contract](../ux/UX6_4_RUN_AND_CAMPAIGN_CONTROL.md), and the
 technology choice in [ADR-0050](adr/0050-local-browser-research-workbench.md).
 
 ## 8. Public API map
@@ -627,6 +650,7 @@ The current executable supports:
 | `load_result`, `ScenarioResult` | version-guarded fingerprinting-result reader, summary, stages, cases, and optional runtime plot |
 | `load_campaign_result`, `CampaignResult` | version-guarded aggregate reader, groups, metric series, paired differences, and optional response plot |
 | `MehlissaCommandError` | command vector, exit status, stdout, and structured stderr for explicit failure handling |
+| `MehlissaCancelledError` | explicit non-success outcome when a caller cancels an owned scenario or campaign process |
 
 ### 8.3 Local workbench API
 
@@ -635,6 +659,7 @@ The current executable supports:
 | `python -m mehlissa_workbench` / `mehlissa-workbench` | locate or accept the MEHLISSA executable, start the protected loopback host, and open the local interface |
 | `--check` | verify accepted catalog discovery and guided-scenario workspace loading without starting a persistent server |
 | `--workspace <path>` | select a scenario save-as directory that resolves inside the repository; default `workbench-scenarios/` |
+| `--runs <path>` | select a unique run-evidence root inside the repository; default `workbench-runs/` |
 | `discover_catalog(MehlissaClient)` | fail-closed adapter from accepted discovery command output to the private UX-6.1 response |
 | `create_server(...)` | testable loopback-only server factory with an ephemeral session capability |
 | `GET /api/catalog` | capability-protected, read-only model/example projection; private to the workbench and not a remote public API |
@@ -645,6 +670,11 @@ The current executable supports:
 | `GET /api/scenarios` / `GET /api/scenario` | capability-protected private projections for source selection and guided editing |
 | `POST /api/scenario/save` | bounded JSON-only, capability-protected, non-overwriting save-as operation; not generic filesystem access |
 | `POST /api/scenario/validate` | side-effect-free complete-candidate validation; returns authoritative validity and future-run gate state; not a public remote API |
+| `RunWorkspace` | allowlisted scenario/campaign execution, unique output allocation, lifecycle state, cancellation, and retained artifact registry |
+| `GET /api/run-plans` / `GET /api/runs` / `GET /api/run` | inspect the bounded campaign plan and current-process job records |
+| `POST /api/run/scenario` / `POST /api/run/campaign` | explicitly confirmed start through accepted process APIs; invalid candidates and arbitrary campaigns fail closed |
+| `POST /api/run/cancel` | terminate a queued/running owned process while preserving auditable state |
+| `GET /api/run/artifact` | read only a named artifact registered by the server for a specific job |
 
 Detailed commands are maintained in the [User Guide](../USER_GUIDE.md).
 
