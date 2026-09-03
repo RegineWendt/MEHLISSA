@@ -8,11 +8,10 @@ SPDX-License-Identifier: CC-BY-4.0
 ## 1. Purpose and status
 
 This document is the entry point for developers who want to understand,
-integrate, or extend MEHLISSA Next. It describes the implemented architecture
-through the accepted M7 gate and locally accepted UX-6 / Workbench 1.0, the public
-C++, command-line, Python, and local-workbench interfaces, the data contracts,
-and the workflow for adding a
-module such as a new organ model. It also explains
+integrate, or extend MEHLISSA Next. It describes the integrated platform through
+the accepted M7 gate and published UX-6 / Workbench 1.0 release, the public C++,
+command-line, Python, and local-workbench interfaces, the data contracts, and
+the workflow for adding a module such as a new organ model. It also explains
 which forms of personalization are possible today and which remain roadmap
 work.
 

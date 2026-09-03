@@ -10,15 +10,16 @@ SPDX-License-Identifier: CC-BY-4.0
 **Purpose:** Shareable overview for prospective contributors and research partners
 **Status date:** 3 September 2026
 **Development branch:** `mehlissa-next-generation`
-**Previously verified published base:** `7b92c4ef930b188918a886041603e8de27e2891c`
-**Release candidate:** Workbench 1.0.0; UX-6.1 through UX-6.8 accepted locally
+**Verified published release commit:** `5821c7358f490c1c92e9ec79eaed783f80851297`
+**Workbench release:** 1.0.0; UX-6.1 through UX-6.8 accepted
 **Milestone status:** M0 through M7 passed
-**Current product focus:** post-UX-6 scientific expansion and external user feedback; published Workbench acceptance remains conditional on green CI for its exact commit
+**Current product focus:** scientific expansion and external user feedback on the
+integrated platform
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
-Roadmap milestones and post-M7 user-experience packages must update this source
-and regenerate and visually verify the PDF.
+Scientific milestones and research-use capabilities must update this source and
+regenerate and visually verify the PDF.
 
 From the repository root, regenerate it with:
 
@@ -29,11 +30,13 @@ python scripts/generate_project_status_pdf.py
 ## Executive summary
 
 MEHLISSA Next has progressed from a set of valuable historical prototypes to a
-coherent, modular research simulation platform. The project now implements the
-complete architectural path envisioned for the first dissertation-driven
-demonstrator: systemic transport, a replaceable lung model, capillary transport
-and molecular channels, receptor and intracellular cell response, nanodevice
-communication, an active gateway, a body area network, and external analysis.
+coherent, modular research simulation platform. Its scientific simulation
+stack, research-use interfaces, and assurance mechanisms together constitute
+the platform. The scientific stack now implements the complete architectural
+path envisioned for the first dissertation-driven demonstrator: systemic
+transport, a replaceable lung model, capillary transport and molecular
+channels, receptor and intracellular cell response, nanodevice communication,
+an active gateway, a body area network, and external analysis.
 
 **Key achievement:** All major layers can now participate in one reproducible
 FP9/lung fingerprinting workflow while remaining independently replaceable
@@ -43,61 +46,19 @@ behind explicit contracts.
 - The implementation uses C++20, CMake, vcpkg, strict JSON Schemas, typed SI
   quantities, stable error contracts, deterministic random streams, and
   explicit provenance.
-- The published base passes all 284 local Windows/MSVC tests and GitHub
-  Windows/MSVC, Linux/GCC, and Linux/Clang CI. The Clang path also passes
+- The published Workbench 1.0 commit passes all 286 local Windows/MSVC tests and
+  GitHub Windows/MSVC, Linux/GCC, and Linux/Clang CI. The Clang path also passes
   formatting, clang-tidy, AddressSanitizer, and UndefinedBehaviorSanitizer.
-- UX-2 provides a validated five-family, ten-example catalog; UX-3 adds a
-  non-overwriting six-file text, CSV, HTML, and authoritative-JSON report.
-- UX-4 provides retained campaigns, deterministic replicates, sweeps, and
-  same-seed pairs; UX-5 adds process-based Python readers, optional plots, and
-  two notebooks. Their grouped CI run 33668850496 passes all 284 tests.
-- UX-6.1 defines the graphical product roles and workflows, chooses a local
-  browser client through an architecture decision, establishes threat, privacy,
-  and WCAG 2.2 accessibility baselines, and implements a protected read-only
-  catalog browser through the accepted Python process API. This increment is
-  included in the Workbench 1.0 release candidate.
-- UX-6.2 adds a schema-derived FP9/lung editor with contextual units, defaults,
-  evidence, and limitations; complete source retention; explicit unsaved-change
-  handling; authoritative validation; and bounded, non-overwriting save-as and
-  reopen. This increment is included in the Workbench 1.0 release candidate.
-- UX-6.3 adds debounced complete-candidate checks through the accepted CLI,
-  located stable errors with repair guidance, non-blocking scientific warnings,
-  cross-file diagnostics, a candidate-hashed copyable summary, and a closed
-  save/future-run gate for invalid configurations. This increment is included
-  in the Workbench 1.0 release candidate.
-- UX-6.4 adds explicitly confirmed starts for the exact validated scenario and
-  the curated UX-4 six-run replicate/sweep/paired-comparison campaign through
-  the accepted Python process API. Unique bounded outputs, visible stages,
-  actual cancellation, atomic run records, bounded logs, seeds, inputs, and
-  protected artifact views remain traceable. This increment is included in the
-  Workbench 1.0 release candidate.
-- UX-6.5 adds accepted-reader scenario and campaign dashboards, cumulative
-  stage and Level-E case tables, declared campaign groups, four paired
-  differences, and two-completed-scenario comparison. Authoritative JSON/CSV
-  and the UX-3 report remain reachable. Missing, incomplete, failed, and
-  cancelled jobs contribute zero observations. This increment is included in
-  the Workbench 1.0 release candidate.
-- UX-6.6 adds an artifact-backed provenance audit beside every completed
-  dashboard. It round-trips original provenance, verifies scenario/campaign
-  inputs, results, manifests, model definitions, and schemas, exposes seeds,
-  software/build identity, sources, licences, maturity, and limitations, and
-  exports the complete audit JSON. Altered hashes are conspicuous and absent
-  licence metadata remains incomplete. This increment is included in the
-  Workbench 1.0 release candidate.
-- UX-6.7 adds accepted-reader campaign analysis with separate replicate,
-  collector-count sweep, and same-seed paired-difference views. Every figure
-  states its unit and included sample count; exact-value tables and source-bound
-  JSON, CSV, and accessible SVG exports reproduce the displayed observations.
-  Observed ranges remain descriptive and no unsupported confidence, population,
-  patient, or clinical inference is fabricated. This increment is included in
-  the Workbench 1.0 release candidate.
-- UX-6.8 closes the workbench program as version 1.0.0. It adds a versioned
-  wheel and console entry point, an explicit package/executable/repository
-  boundary, an isolated clean-install check, a novice/expert example workspace,
-  semantic keyboard and screen-reader checks, responsive error-recovery review,
-  and synchronized English release documentation. The complete local suite now
-  contains 286 tests; publication acceptance requires all supported CI jobs on
-  the exact release-candidate commit.
+- The integrated research-use layer provides a validated five-family,
+  ten-example catalog; safe scenario editing and validation; direct and
+  campaign execution; non-overwriting reports; process-based Python readers;
+  optional plots; and two notebooks.
+- MEHLISSA Research Workbench 1.0 provides graphical discovery, guided
+  configuration, corrective validation, guarded execution, result comparison,
+  provenance and evidence audit, descriptive campaign analysis, exact-value
+  export, isolated installation, and tested accessibility and recovery paths.
+  It calls the accepted C++ and Python interfaces and does not create a second
+  scientific implementation.
 - English user, architecture, model, traceability, and decision documentation
   supports international collaboration.
 - The result is a reproducible research-software demonstrator. It is not a
@@ -108,7 +69,7 @@ behind explicit contracts.
 | Software architecture | Strong modular foundation with explicit ownership, conservation, lifecycle, configuration, and evidence boundaries. |
 | End-to-end integration | Complete first software vertical slice through fingerprinting Levels A-E. |
 | Scientific validation | Mixed maturity: verified equations, literature-parameterized candidates, selected independent comparisons, and multiple synthetic mechanisms. |
-| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, UX-3 provides readable shareable result bundles, UX-4 provides controlled campaigns, UX-5 provides Python and notebook access, and the completed UX-6 / Workbench 1.0 adds graphical discovery, scenario round trips, corrective validation, guarded execution, dashboards, comparison, provenance/evidence audit, descriptive campaign visualization/export, isolated installation, and a tested accessible release baseline. |
+| Integrated research-use layer | Commands, discovery, reports, campaigns, Python and notebook access, and Workbench 1.0 form the supported delivery surface of MEHLISSA. They expose the scientific stack without duplicating its schemas, models, validation, or result authority. |
 | Clinical readiness | Not claimed. Patient prediction, diagnosis, and treatment recommendations are explicitly outside the present scope. |
 
 ## How to read project labels
@@ -126,7 +87,7 @@ evidence. They are not assumed knowledge in this report.
 | Level D | Executed local, gateway, body-area-network, and external-station communication. |
 | Level E | Sensitivity, specificity, false-positive/false-negative, robustness, and misclassification analysis. |
 | P0 through P3 | Roadmap priority tiers: indispensable foundation, dissertation core, research-platform expansion, and long-term vision. They are not completion states. |
-| UX-1 through UX-6 | Ordered post-M7 user-experience packages, from one-command execution to a graphical research workbench. UX-6.1 through UX-6.8 are reviewable increments of that workbench. |
+| UX-1 through UX-6 | Delivery packages used to build MEHLISSA's cross-cutting research-use layer, from one-command execution to a graphical research workbench. They were implemented after M7, but their accepted outputs are integral platform capabilities rather than a separate add-on. UX-6.1 through UX-6.8 are reviewable increments of the workbench. |
 | run | One reproducible execution of an experiment or scenario. A qualified term such as “baseline run” must state what makes that execution distinct. |
 
 `FP9` is the nine-part molecular fingerprint used by the first complete
@@ -152,6 +113,24 @@ The implemented conceptual path is:
 4. **Cell:** receptor binding, intracellular signaling, delivery, and response.
 5. **Nano-IoT:** nanodevice endpoints, local links, bounded relays, and gateway.
 6. **BAN and station:** external measurement and a governed return command.
+
+That scientific path is one of three integrated aspects of MEHLISSA:
+
+1. **Scientific simulation stack:** the body, organ, capillary, cell,
+   Nano-IoT, BAN, and station components that represent the investigated
+   mechanisms.
+2. **Research-use layer:** the command line, catalog, reports, campaigns,
+   Python readers, notebooks, and Workbench that let researchers configure,
+   execute, inspect, compare, and share experiments.
+3. **Assurance layer:** schemas, typed units, provenance, evidence boundaries,
+   deterministic tests, gate reviews, and CI that keep both other aspects
+   reproducible and auditable.
+
+The historical M0-M7 gates primarily record growth of the scientific stack and
+its runtime contracts. UX-1 through UX-6 record delivery of the research-use
+layer. This distinction is useful for traceability, but neither sequence alone
+defines the product: MEHLISSA is the integrated platform formed by all three
+aspects.
 
 Binding engineering principles are:
 
@@ -218,11 +197,13 @@ Gate reviews explicitly prevent a software pass from being presented as
 physiological or clinical validation. The English User Guide is mandatory
 review evidence at every future milestone and UX-package review.
 
-## 4. How MEHLISSA can be used today
+## 4. How the integrated MEHLISSA platform can be used today
 
 | Access route | Suitable uses | Current examples |
 |---|---|---|
-| Command line | Direct use without writing C++ | Validate manifests and vascular graphs; run the minimal workflow and BVS regression; apply body-state overlays; validate and execute the complete M7 demonstrator. |
+| MEHLISSA Research Workbench 1.0 | Guided use by new and experienced researchers | Discover models and examples; edit, validate, and run FP9/lung scenarios; run the curated campaign; inspect results, comparisons, provenance, evidence, and descriptive analyses; export exact tables and figures. |
+| Command line | Scriptable and transparent direct use without writing C++ | Validate manifests and vascular graphs; run the minimal workflow and BVS regression; apply body-state overlays; discover, validate, execute, summarize, and report the complete M7 demonstrator. |
+| Python API and notebooks | Reproducible analysis and integration into research workflows | Launch accepted processes; read versioned scenario and campaign results; create optional plots; reproduce the two licensed notebook workflows. |
 | Reference and benchmark drivers | Reproduce accepted scientific and numerical comparisons | Pulmonary validations; coarse-versus-five-lobe comparison; molecular-channel comparisons; historical FP9 timing; benchmark campaigns. |
 | C++ component APIs | Compose or extend advanced research workflows | Organ-capillary round trip; cell and communication models; external simulator adapter; direct access to the same M7 runtime used by the CLI. |
 | Automated test suite | Audit contracts and reproduce gate evidence | Focused M1-M7 CTest filters, negative controls, deterministic replay, conservation, and identity checks. |
@@ -240,8 +221,18 @@ Representative research questions include:
 - Can the complete FP9/lung workflow preserve causal identity, report
   incomplete fingerprints, and compute classification metrics reproducibly?
 
-The complete M7 scenario can now be discovered, validated, executed, and
-summarized through the normal application:
+After installing the Workbench package and building the matching simulator, the
+integrated graphical route starts with:
+
+```powershell
+mehlissa-workbench --repository-root . --check
+mehlissa-workbench --repository-root .
+```
+
+The first command checks the repository, simulator, schemas, examples, and
+other prerequisites. The second starts the local Workbench and opens its
+address in the browser. The complete M7 scenario also remains available through
+the scriptable command-line route:
 
 ```powershell
 build/windows-msvc/apps/Debug/mehlissa.exe scenario list
@@ -257,7 +248,8 @@ existing result can be summarized with `mehlissa result summarize --file
 runner, validates all thirteen selected definition/schema pairs before
 execution, and preserves the non-clinical interpretation boundary.
 
-UX-2 adds discovery without creating a second source of scientific truth:
+The integrated discovery commands use the same catalog and do not create a
+second source of scientific truth:
 
 ```text
 mehlissa model list
@@ -270,8 +262,8 @@ The strict versioned catalog describes five model families and ten licensed
 starters, including maturity, validity, evidence, limitations, key parameter
 paths, artifacts, and documentation. Checks reject duplicate IDs, unknown model
 references, missing assets, and paths outside the repository. Copying preserves
-the license and refuses to overwrite work. All 281 local Windows/MSVC tests and
-all supported GitHub CI jobs pass.
+the license and refuses to overwrite work. The complete published platform
+passes all 286 local Windows/MSVC tests and all supported GitHub CI jobs.
 
 ## 5. Current personalization capability
 
@@ -315,13 +307,12 @@ mechanism predicts a biological or clinical outcome.
 
 | Program | Principal work | Intended outcome |
 |---|---|---|
-| Usability and orchestration | UX-1 through UX-5 provide commands, discovery, reports, campaigns, and Python analysis; the completed UX-6 adds Workbench 1.0 configuration, execution, dashboards, audit, analysis, packaging, and accessibility gates. | A researcher can find suitable models, run M7, inspect or share its result, execute reproducible parameter studies, and analyse them without C++ knowledge or manual JSON copying. Diverse-user evaluation remains continuous work. |
 | Scientific qualification | Replace historical or synthetic assumptions with measured parameters, calibration data, independent validation, uncertainty, and sensitivity campaigns. | Defensible scenario-specific conclusions within explicit scopes. |
 | Additional medical scenarios | Continuous monitoring, liquid biopsy, endocrine/adrenal venous sampling, CAR-T, and ultimately metastasis prevention. | Evidence that the architecture generalizes beyond fingerprinting. |
 | Additional organs | Begin with a kidney surrogate and progress toward regional filtration, clearance, and organ-specific capillary interfaces. | Evidence that organ factories and coupling contracts are not lung-specific. |
 | Personalization and digital twin | Patient manifest, imaging and SimVascular/CFD import, parameter estimation, identifiability, longitudinal updates, and governance. | Research-twin maturity from geometry to physiology and biochemistry. |
 | Scaling and HPC | Bound output, profile CPU/memory/I/O, use population and field representations, and parallelize safe work. | Large ensembles and sensitivity studies without sacrificing validated behavior. |
-| Visualization and analysis | Standardized result readers, plots, run comparison, uncertainty views, and reproducible figure export. | Results that non-developers can inspect and communicate. |
+| Advanced analysis and visualization | Extend the implemented dashboards and exports with qualified ensemble statistics, uncertainty propagation, spatiotemporal views, and larger-study comparison. | Evidence-backed analyses for study designs and scales beyond the bounded Workbench 1.0 demonstrators. |
 
 The roadmap priority tiers have the following meaning in the current state:
 
@@ -335,10 +326,14 @@ The roadmap priority tiers have the following meaning in the current state:
   patient-specific models, a dynamic digital twin, HPC ensembles, and eventual
   clinical validation where appropriate.
 
-## 8. Post-M7 usability program
+## 8. Integrated research-use capabilities and delivery record
 
-`UX` means user experience. These packages improve access and interpretation;
-they do not by themselves increase physiological or clinical validity.
+`UX` means user experience and identifies the implementation history of
+MEHLISSA's research-use layer. The resulting commands, reports, campaign tools,
+Python interfaces, notebooks, and Workbench 1.0 are supported parts of the
+platform, not a separate future program. They make the scientific capabilities
+operable, reproducible, and auditable, but do not by themselves increase
+physiological or clinical validity.
 
 | Package | Plain-language objective | Status |
 |---|---|---|
@@ -354,9 +349,17 @@ they do not by themselves increase physiological or clinical validity.
 | UX-6.5 - Result dashboard and comparison | Explain completed outcomes, cases, stages, campaign groups, and paired differences while retaining authoritative artifacts and excluding non-results. | Passed and included in Workbench 1.0; accepted-reader parity, guarded comparison/reporting, and explicit zero-observation failure policy |
 | UX-6.6 - Provenance, evidence, and interpretation boundaries | Keep software/build identity, seeds, hashes, models, sources, licences, maturity, limitations, and the non-clinical scope attached to every displayed result. | Passed and included in Workbench 1.0; round-trip provenance, integrity/evidence states, and exact JSON audit export |
 | UX-6.7 - Sensitivity, uncertainty, visualization, and export | Explain replicate variation, parameter effects, and same-seed differences without overstating the small curated campaign, then export the exact analysis. | Passed and included in Workbench 1.0; accepted-reader observations, descriptive views, exact-value table, and source-bound JSON/CSV/SVG exports |
-| UX-6.8 - Usability, accessibility, packaging, and release acceptance | Package and test the workbench as a dependable entry point for novice and expert researchers and contributors. | Locally passed; version 1.0 wheel/command, isolated install, example workspace, semantic accessibility and responsive recovery gates, 286-test regression, and synchronized documentation; published acceptance is conditional on green supported CI for the exact commit |
+| UX-6.8 - Usability, accessibility, packaging, and release acceptance | Package and test the workbench as a dependable entry point for novice and expert researchers and contributors. | Passed; version 1.0 wheel/command, isolated install, example workspace, semantic accessibility and responsive recovery gates, 286-test regression, synchronized documentation, and green supported CI for the exact published commit |
 
-The intended first user experience is:
+The Workbench is the recommended integrated entry point:
+
+```text
+mehlissa-workbench --repository-root . --check
+mehlissa-workbench --repository-root .
+```
+
+The equivalent composable command-line route remains available for automation,
+method inspection, and advanced workflows:
 
 ```text
 mehlissa scenario list
@@ -367,132 +370,29 @@ mehlissa result report --file results/fp9-reference/<printed-run-directory>/resu
 mehlissa campaign run --file examples/campaigns/fp9-collector-count-v1.json --output results/fp9-campaign
 ```
 
-UX-1 validates and runs the complete M7 composition, creates a unique directory
-with result, provenance, log, and summary, and reports actionable errors. Its
-end-to-end test covers positive and negative workflows. All 280 local tests and
-GitHub CI run 33620386319 pass across Windows/MSVC, Linux/GCC, and Linux/Clang.
+UX-1 and UX-2 established the operational entry layer: one-command execution,
+actionable errors, unique result directories, model and example discovery, and
+fail-safe starter copying. UX-3 through UX-5 added the reproducible research
+workflow: non-overwriting reports, retained campaign variants, deterministic
+replicates and paired comparisons, version-guarded Python readers, optional
+plots, and two licensed notebooks. Inputs, hashes, seeds, evidence, limitations,
+and the non-clinical boundary remain attached throughout.
 
-UX-2 adds model and example discovery plus fail-safe starter copying. The strict
-catalog and repository references are validated before use. All 281 local tests
-and cross-platform GitHub CI run 33628859417 pass.
+UX-6 delivered the graphical layer as MEHLISSA Research Workbench 1.0.0. Its
+eight increments cover product and safety foundations, schema-derived scenario
+editing, accepted-command validation, confirmed execution and cancellation,
+reader-backed dashboards and comparisons, provenance and evidence audit,
+descriptive campaign analysis and exact export, accessibility, packaging, and
+release acceptance. The local browser host delegates scientific authority to
+the matching C++ simulator, repository artifacts, and accepted Python process
+API. It binds only to the local computer, serves no remote assets, records no
+telemetry, and cannot convert failed or incomplete jobs into observations.
 
-UX-3 validates an existing result and creates a non-overwriting six-file HTML,
-text, CSV, and authoritative-JSON bundle. Evidence hashes, limitations, and the
-clinical non-claim remain visible.
-
-UX-4 expands a strict campaign into retained replicates, collector-count sweeps,
-and same-seed pairs. Hashed aggregate JSON and CSV bind all inputs and results;
-only the reviewed `run.collector_count` parameter is allow-listed.
-
-UX-5 adds the `mehlissa-research` process client and version-guarded readers for
-scenario and campaign analysis. Matplotlib remains optional; two licensed
-notebooks demonstrate complete workflows. Python cannot bypass the C++ schemas
-or convert failed runs into observations. All 284 local tests pass. Grouped
-UX-3 through UX-5 acceptance also passes on Windows/MSVC, Linux/GCC, and Linux/Clang
-with formatting, clang-tidy, AddressSanitizer, and UndefinedBehaviorSanitizer in
-GitHub CI run 33668850496.
-
-UX-6.1 adds a small Python-hosted local browser interface that calls
-`MehlissaClient.list_models()` and `list_examples()`. It is read-only, binds
-only to the local computer, uses an ephemeral session capability, serves no
-remote assets, records no telemetry, and displays the permanent non-clinical
-boundary. It contains no simulation or independent schema implementation.
-The UX-6.1 product and technical foundation document records roles, workflows,
-screen concepts, technology trade-offs, threats, privacy, accessibility, and
-local acceptance.
-
-UX-6.2 now adds that guided round trip. Field controls are projected from the
-versioned fingerprinting-scenario schema rather than maintained in browser
-code. Every field carries a description, unit, default, evidence note, and
-limitation; constant contract values remain visible and locked. The browser
-shows the complete live JSON, while the host reloads the original and applies
-only server-declared scalar changes. New files stay in a bounded
-repository-local workspace, pass the accepted C++ scenario validator before
-creation, and are created exclusively. The accepted browser exercise saved and
-reopened a 10,000-collector derivative and visibly rejected overwrite. All 285
-local Windows/MSVC tests pass.
-
-UX-6.3 now validates each complete candidate after a short edit debounce through
-the accepted command rather than a browser-owned scientific rule set. Schema
-hints locate elementary field failures; semantic and cross-file command
-diagnostics retain native MEHLISSA codes and map conservatively to a field,
-document section, or `$` whole-document location. Every issue has correction
-guidance. Errors close save and future execution, warnings remain non-blocking,
-and the copyable summary binds its decision to the candidate SHA-256. Save
-repeats validation and creates nothing on HTTP 422 rejection. All 285 local
-Windows/MSVC tests and desktop/mobile browser checks pass.
-
-UX-6.4 now admits only the exact validated candidate or the allowlisted UX-4
-campaign after the researcher reviews and explicitly confirms its plan. The
-campaign view names the two replicates, collector-count sweep, same-seed paired
-comparison, six derived runs, and seeds. Each start allocates a unique bounded
-directory, retains its exact input and atomically updated job record, and calls
-the accepted Python process API. The monitor reports lifecycle stage and
-progress, limits terminal output to 200 lines/64,000 characters, links
-server-registered artifacts, and can terminate the owned child process while
-preserving a `cancelled` record. Reference scenario, six-run campaign, and real
-cancellation acceptance tests pass.
-
-UX-6.5 now converts completed scenario and campaign artifacts into concise
-reader-backed dashboards. Individual runs show detection, assembly,
-sensitivity, specificity, seed, collector count, all cumulative stages, and the
-four Level-E cases. Campaigns retain their replicate, sweep, and same-seed pair
-grouping and calculate four paired differences through the accepted campaign
-reader. Two completed scenarios can be compared side by side; numeric
-differences are right minus left. Authoritative JSON/CSV and a sandboxed UX-3
-HTML report remain directly inspectable. Running, incomplete, failed, and
-cancelled jobs provide an explicit zero-observation response and cannot enter a
-comparison. Reader-parity tests, the complete 285-test Windows/MSVC suite, and
-desktop/mobile browser review pass.
-
-UX-6.6 now adds a server-owned audit projection to each completed dashboard.
-For a scenario, the original provenance object is returned without dropping
-fields, and the validated candidate, retained profile, authoritative result,
-13 component definitions, and their schemas are checked against declared
-SHA-256 identities. For a campaign, the retained source manifest, six derived
-manifests, six results, their provenance-linked result identities, and complete
-seed plan are checked. Build version, Git revision and dirty state, compiler,
-platform, source citations, declared licences, evidence classes, validity
-descriptions, and limitations remain visible. A deliberate retained-input
-change produces `Attention`. The current unmodified FP9 composition correctly
-reports verified integrity but incomplete evidence because the historical timer
-contract has citations without per-source licence fields; the workbench neither
-guesses nor inherits them. The exact displayed audit is downloadable as JSON,
-and every view repeats that file integrity is not biological or clinical
-validity. All 285 Windows/MSVC tests and desktop/mobile browser review pass.
-
-UX-6.7 now adds a separate server-owned analysis projection for completed
-campaigns. `load_campaign_result` remains the interpretation authority; the
-host extracts accepted observations and declared sensitivity hooks, calculates
-only arithmetic means, sample standard deviations, observed ranges, and
-accepted same-seed differences, and binds the response to the authoritative
-campaign result SHA-256. The browser draws semantic inline SVG from those exact
-values and repeats them in a table. JSON, CSV, and per-figure SVG downloads
-retain the source identity, metric, unit, sample count, and analysis contract
-version. The two baseline replicates, single observation at each sweep value,
-and one paired difference are sufficient to test software workflows, not to
-estimate population or clinical uncertainty. Consequently the current flat
-0.5 sensitivity/specificity views and zero paired difference are displayed
-honestly, and no confidence interval is invented. All 285 Windows/MSVC tests
-and desktop/mobile browser review pass.
-
-UX-6.8 now packages the integrated client as MEHLISSA Research Workbench
-1.0.0. Its PEP 517 wheel installs the Python process API, result readers, local
-host, browser assets, MPL-2.0 licence, and `mehlissa-workbench` command into a
-clean virtual environment. The C++ simulator plus the matching repository's
-schemas, models, evidence, examples, and campaign definitions remain explicit
-versioned prerequisites rather than being copied into a second scientific
-bundle. A new automated gate builds and inspects the wheel, performs an
-isolated no-index installation, imports all browser resources, identifies the
-release version, and exercises repository/executable `--check`. A documented
-example workspace covers a novice scenario and expert campaign. Static
-semantics plus desktop/mobile task review cover labelled controls, keyboard and
-dialog focus, live status/alerts, screen-reader structure, accessible figures,
-narrow reflow, contained tables, error recovery, and console cleanliness. The
-complete local Windows/MSVC suite contains 286 tests. The User Guide, Roadmap,
-architecture, requirements, traceability, status source, and shareable PDF are
-synchronized; publication acceptance still belongs to the green CI result for
-the exact published commit.
+The complete published release passes 286 local Windows/MSVC tests and GitHub
+Windows/MSVC, Linux/GCC, and Linux/Clang CI, including formatting, clang-tidy,
+AddressSanitizer, and UndefinedBehaviorSanitizer. Detailed increment contracts,
+acceptance evidence, and interpretation limits remain in `docs/ux` and the
+User Guide.
 
 ## 9. Opportunities for collaborators
 
@@ -529,12 +429,13 @@ and limitations are documented; and all supported CI paths pass.
 | `docs/m0` through `docs/m6` | Gate reviews, model notes, validation evidence, and accepted limitations for preceding milestones. |
 
 - **Repository:** https://github.com/RegineWendt/MEHLISSA
-- **Previous verified CI run:** https://github.com/RegineWendt/MEHLISSA/actions/runs/33668850496
+- **Verified Workbench 1.0 CI run:** https://github.com/RegineWendt/MEHLISSA/actions/runs/33745263319
 
-MEHLISSA Next now provides the dissertation-aligned executable backbone plus a
-graphical client for discovery, configuration, execution, results, provenance,
-and descriptive campaign analysis. Workbench 1.0 adds a cleanly installable,
-task-reviewed, accessibility-gated entry point while retaining the C++ and
-repository artifacts as authority. Scientific expansion still needs more
-scenarios, organs, qualified parameters, larger study designs, diverse-user
-evaluation, and independently validated models before any clinical claim.
+MEHLISSA Next is now an integrated research platform: the
+dissertation-aligned scientific stack, the Workbench/CLI/Python research-use
+layer, and the assurance mechanisms for provenance, evidence, reproducibility,
+and testing are all part of the system. M0-M7 and UX-1 through UX-6 remain useful
+delivery histories, but neither is an architectural boundary around the
+product. Scientific expansion still needs more scenarios, organs, qualified
+parameters, larger study designs, continuous user evaluation, and independently
+validated models before any clinical claim.

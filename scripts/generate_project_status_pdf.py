@@ -284,8 +284,8 @@ def parse_body(markdown: str) -> list:
 def cover_story() -> list:
     status = Table(
         [
-            [paragraph("M0-M7", "TableHead"), paragraph("PASSED", "TableHead"), paragraph("CURRENT FOCUS", "TableHead")],
-            [Paragraph("Architecture and implementation", STYLES["CoverMeta"]), Paragraph("All milestone gates", STYLES["CoverMeta"]), Paragraph("Post-UX-6 scientific expansion", STYLES["CoverMeta"])],
+            [paragraph("PLATFORM", "TableHead"), paragraph("ACCEPTED DELIVERY", "TableHead"), paragraph("CURRENT FOCUS", "TableHead")],
+            [Paragraph("Integrated research system", STYLES["CoverMeta"]), Paragraph("M0-M7 and UX-1-UX-6", STYLES["CoverMeta"]), Paragraph("Scientific expansion", STYLES["CoverMeta"])],
         ],
         colWidths=[51 * mm, 37 * mm, 76 * mm],
         style=TableStyle(
@@ -311,7 +311,7 @@ def cover_story() -> list:
         Spacer(1, 17 * mm),
         Paragraph("Prepared for prospective contributors and research partners", STYLES["CoverMeta"]),
         Paragraph("Status date: 3 September 2026", STYLES["CoverMeta"]),
-        Paragraph("Branch: mehlissa-next-generation | Workbench 1.0.0 | UX-6 complete locally", STYLES["CoverMeta"]),
+        Paragraph("Branch: mehlissa-next-generation | Workbench 1.0.0 | Published CI verified", STYLES["CoverMeta"]),
         Paragraph("Repository: github.com/RegineWendt/MEHLISSA", STYLES["CoverMeta"]),
         PageBreak(),
     ]
@@ -330,7 +330,7 @@ def main():
         bottomMargin=20 * mm,
         title="MEHLISSA Next - Project Status and Collaboration Brief",
         author="MEHLISSA contributors",
-        subject="Project status through M7, current uses, limitations, and next steps",
+        subject="Integrated MEHLISSA platform status, current uses, limitations, and next steps",
     )
     document.build(story)
     print(OUTPUT)

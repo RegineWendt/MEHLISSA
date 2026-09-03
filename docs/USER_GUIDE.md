@@ -7,9 +7,11 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M7 and complete UX-1 through UX-6 / MEHLISSA Research Workbench 1.0.0
+**Covered platform:** accepted M0 through M7 scientific/runtime capabilities,
+the complete UX-1 through UX-6 research-use layer, and MEHLISSA Research
+Workbench 1.0.0
 
-**Last updated:** 3 September 2026, after local UX-6.8 release acceptance
+**Last updated:** 3 September 2026, after published Workbench 1.0 acceptance
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -17,6 +19,11 @@ the simulator and its experiment families without assuming C++ or simulation
 expertise. Part II contains the installation, command, model, validation, and
 developer workflows. Scientific derivations and architecture decisions remain
 in linked specialist documents.
+
+MEHLISSA is the integrated platform formed by its scientific simulation stack,
+its research-use interfaces, and its assurance mechanisms. Milestones M0-M7
+and delivery packages UX-1 through UX-6 remain useful histories of how those
+capabilities were built; UX is not a separate add-on to the simulator.
 
 Quick navigation:
 
@@ -40,7 +47,7 @@ they are not assumed knowledge:
 | `Level D` | Executed local, gateway, body-area-network, and external-station communication. |
 | `Level E` | Sensitivity, specificity, false-positive/false-negative, robustness, and misclassification analysis. |
 | `P0` through `P3` | Roadmap priority tiers: indispensable foundation, dissertation core, platform expansion, and long-term vision. They do not indicate whether work has passed a gate. |
-| `UX-1` through `UX-6` | Ordered usability packages: one-command execution, discovery, readable reports, experiment campaigns, Python access, and finally a graphical workbench. |
+| `UX-1` through `UX-6` | Delivery packages used to build MEHLISSA's integral research-use layer: one-command execution, discovery, readable reports, experiment campaigns, Python access, and a graphical workbench. |
 | run | One reproducible execution of an experiment or scenario. Any qualified label such as “baseline run” must say what makes that execution different. |
 
 The same rule applies to domain abbreviations. `FP9` is the nine-part molecular
@@ -96,6 +103,14 @@ binding, explicit tiles, locator-to-station communication, and labelled
 misclassification analysis. Historical timing and synthetic-interface stages
 remain visibly qualified in the result.
 
+The scientific stack is used through an integral **research-use layer**:
+Workbench 1.0, the command line, reports, campaigns, the Python process and
+result APIs, and notebooks. A cross-cutting **assurance layer** supplies strict
+schemas, typed units, deterministic execution, provenance, evidence and licence
+boundaries, tests, gate reviews, and CI. The interface and assurance layers do
+not make a model biologically valid by themselves, but they make the scientific
+workflows accessible, reproducible, and auditable.
+
 The software is intended to help formulate and test computational research
 hypotheses. It does not assume that one model resolution is always best. A
 researcher should be able to compare a fast surrogate, a population or field
@@ -150,7 +165,8 @@ to answer it:
 
 ```mermaid
 flowchart LR
-    E[Experiment<br/>question, inputs, seed, outputs] --> B[Virtual body<br/>circulation and routes]
+    U[Research-use layer<br/>Workbench, CLI, Python, reports] --> E[Experiment<br/>question, inputs, seed, outputs]
+    E --> B[Virtual body<br/>circulation and routes]
     B --> O[Organ model<br/>coarse or regional]
     O --> C[Capillary model<br/>transit, exchange, channels]
     C -->|non-consuming tissue signal snapshot| L[Cell model<br/>binding and intracellular response]
@@ -158,6 +174,13 @@ flowchart LR
     O --> R
     C --> R
     L --> R
+    R --> U
+    A[Assurance layer<br/>schemas, provenance, evidence, tests] -.-> E
+    A -.-> B
+    A -.-> O
+    A -.-> C
+    A -.-> L
+    A -.-> R
 ```
 
 The central concepts are:
@@ -172,8 +195,8 @@ The central concepts are:
   unnecessary or too expensive.
 - **Substance:** a physical amount with explicit SI units that can be
   transported, exchanged, reacted, or measured.
-- **Model component:** an independently implemented body, organ, capillary, or
-  future cell model with named boundaries.
+- **Model component:** an independently implemented body, organ, capillary,
+  cell, or communication model with named boundaries.
 - **Resolution:** the abstraction level—surrogate, mesoscopic field/population,
   or detailed particle/trajectory model.
 - **Observation:** a bounded record of something the simulation exposes,
@@ -248,21 +271,34 @@ The current software can:
   an optional external network simulator through a strict payload-free
   request/response contract;
 - run twelve declared failure, miscontrol, replay, identity, capacity, and
-  resource cases without unintended downstream mutation; and
-- run all accepted M0–M6 contracts in a
-  reproducible cross-platform test suite.
+  resource cases without unintended downstream mutation;
+- validate and execute the complete FP9/lung Levels A-E workflow and retain its
+  result, provenance, log, and summary;
+- produce non-overwriting text, CSV, HTML, and authoritative-JSON reports;
+- run controlled replicates, parameter sweeps, and same-seed comparisons;
+- read and analyse scenario and campaign results through the Python API and
+  licensed notebooks;
+- use Workbench 1.0 for guided discovery, configuration, validation, execution,
+  dashboards, comparison, provenance/evidence audit, descriptive analysis, and
+  exact-value export; and
+- run all accepted M0-M7 and research-use contracts in a reproducible
+  cross-platform test suite.
 
-Not every capability has the same user-interface maturity:
+MEHLISSA provides several integrated access routes for different research and
+development needs:
 
-| Access level | Meaning | Examples |
+| Access route | Suitable uses | Examples |
 |---|---|---|
-| command-line workflow | intended to be invoked directly with the `mehlissa` executable | manifest validation, minimal run, body-model validation, BVS regression, body-state application, and the complete M7 fingerprinting demonstrator |
-| executable reference workflow | a checked scenario or evaluator with automated acceptance gates | pulmonary validation, coarse/five-lobe comparison, historical FP9 timer |
-| component/developer workflow | stable library contract exercised through focused tests; general CLI composition still follows | organ–capillary round trip, molecular channels, receptor binding, capillary-to-cell hand-off, intracellular ODE/SSA network, conservative device release/uptake, synthetic apoptosis feedback, nanodevices, local/multihop communication, active gateway, BAN and external station, external network-simulator adapter, and resilience scenarios |
+| Workbench 1.0 | guided use by new and experienced researchers | discover, edit, validate, run, inspect, compare, audit, analyse, and export the supported FP9/lung scenario and campaign |
+| command line | scriptable, transparent execution without C++ | validation, discovery, minimal and BVS workflows, body-state application, complete M7 execution, reporting, and campaigns |
+| Python API and notebooks | reproducible analysis and integration with research workflows | accepted process execution, versioned result readers, grouped campaign analysis, optional plots, and two notebooks |
+| reference and benchmark drivers | reproduce accepted scientific and numerical comparisons | pulmonary validation, coarse/five-lobe comparison, molecular-channel comparisons, historical FP9 timing, and benchmark campaigns |
+| C++ component APIs | extend or compose models and advanced workflows | organ-capillary round trip, cell and communication models, external-simulator adapters, and direct scenario composition |
+| automated tests | audit contracts and reproduce acceptance evidence | focused milestone filters, negative controls, deterministic replay, conservation, identity, static analysis, and sanitizers |
 
-The access level says how an experiment is run, not how scientifically valid it
-is. A CLI model can still be synthetic; a developer workflow can still be a
-strong software reference.
+The access route says how an experiment is run, not how scientifically valid it
+is. A Workbench or CLI result can still use synthetic assumptions; a focused
+C++ workflow can still be a strong software reference.
 
 The M4-to-M5 connection is currently a non-consuming, spatially uniform snapshot
 at an exact synchronization time. M5.3 can accept a prescribed time-varying
@@ -270,8 +306,10 @@ trajectory, but M4 does not yet generate that trajectory dynamically. The
 software does not yet model tissue depletion, spatial drug diffusion or binding,
 biologically calibrated pharmacodynamics or mechanistic apoptosis, biological
 cell heterogeneity, a spatially or physically qualified communication channel,
-a calibrated BAN protocol, authenticated or clinically authorized control, the
-complete fingerprinting workflow, or a participant-specific virtual body. M6
+a calibrated BAN protocol, authenticated or clinically authorized control, or
+a participant-specific virtual body. The complete fingerprinting workflow is
+implemented as a research-software demonstrator, but its historical and
+synthetic mechanisms do not establish biological or clinical validity. M6
 currently provides synthetic scheduled local and BAN links, not calibrated
 loss, error, energy, range, throughput, or capacity models.
 
@@ -617,9 +655,11 @@ categories are documented in [Errors, Logs, and Checkpoints](m1/ERRORS_LOGS_CHEC
 
 #### Run the complete M7 fingerprinting scenario with one command (UX-1)
 
-`UX-1` is the first post-M7 user-experience package. It exposes the accepted
-fingerprinting demonstrator through the normal `mehlissa` application, so a
-researcher no longer needs to write C++ or invoke a test binary.
+`UX-1` records the first delivery increment of MEHLISSA's research-use layer.
+It exposes the accepted fingerprinting demonstrator through the normal
+`mehlissa` application, so a researcher no longer needs to write C++ or invoke
+a test binary. The label describes implementation history; the resulting
+command is now an integral platform interface.
 
 First list the runnable scenario profiles known to the source tree:
 
@@ -926,8 +966,9 @@ in notebooks, repository examples, or shared result bundles.
 
 #### Configure, validate, run, analyse, and audit results in MEHLISSA Research Workbench 1.0 (UX-6.1 through UX-6.8)
 
-The local browser workbench lets you search the five implemented model families
-and ten curated starter examples. UX-6.2 provides a guided editor for the
+The local browser workbench is MEHLISSA's recommended guided entry point, not a
+separate simulator. It lets you search the five implemented model families and
+ten curated starter examples. UX-6.2 provides a guided editor for the
 complete FP9/lung fingerprinting scenario, and UX-6.3 explains structural,
 semantic, and cross-file problems before save. UX-6.4 starts and monitors either
 that exact validated scenario or the curated six-run collector-count campaign.
@@ -2995,13 +3036,13 @@ minutes on the current Windows reference system.
 
 This edition implements the two-level guide planned in the Roadmap: the new
 non-expert Part I precedes the retained and updated technical Part II. It covers
-the accepted software through M7
-while preserving the difference between CLI, reference-workflow, and
-component/developer access.
+the integrated platform through M7 and Workbench 1.0 while preserving the
+different purposes of Workbench, CLI, Python, reference/benchmark, C++
+component, and test access.
 
-The User Guide is mandatory gate- and UX-package-maintenance evidence. At M5
-and every later M-gate, and after each post-M7 UX package, the review must check
-and, where applicable, update:
+The User Guide is mandatory milestone- and research-use-maintenance evidence.
+At every future M-gate and after every future UX or other user-visible delivery
+package, the review must check and, where applicable, update:
 
 - the covered-software and last-updated metadata;
 - the current capability and explicit non-claim lists;
@@ -3022,7 +3063,7 @@ decision instead of silently skipping the guide. This policy is binding in the
 [Roadmap documentation rules](ROADMAP.md#66-documentation) and repeated in
 every future gate checklist.
 
-The usability package status is:
+The research-use delivery record is:
 
 - **UX-1, one-command M7 execution:** passed across all supported CI paths; the
   application validates and runs the complete fingerprinting demonstrator,
@@ -3047,24 +3088,35 @@ The usability package status is:
   differences, optional plotting, and two licensed notebooks pass all 284
   current tests. The grouped UX-3 through UX-5 GitHub CI run 33668850496 passes
   on Windows/MSVC, Linux/GCC, and Linux/Clang with static analysis and sanitizers;
-- **UX-6.1 through UX-6.8, graphical research workbench:** complete as the
-  Workbench 1.0.0 release candidate. The numbered increments respectively add
+- **UX-6.1 through UX-6.8, graphical research workbench:** accepted and
+  published as Workbench 1.0.0. The numbered increments respectively add
   the product/technical foundation, guided scenario workspace, corrective
   validation, guarded run/campaign control, result dashboard/comparison,
   provenance/evidence audit, descriptive campaign visualization/export, and
   final usability/accessibility/packaging acceptance. The isolated wheel,
   console command, matching executable/repository check, example workspace,
   semantic accessibility gate, desktop/mobile task review, complete regression,
-  and English documentation are release criteria. Local acceptance is recorded
-  in the [UX-6.8 contract](ux/UX6_8_RELEASE_ACCEPTANCE.md); a published revision
-  is accepted only when that exact commit passes Windows/MSVC, Linux/GCC, and
-  Linux/Clang-analysis CI.
+  and English documentation are release criteria. Acceptance is recorded in
+  the [UX-6.8 contract](ux/UX6_8_RELEASE_ACCEPTANCE.md); published commit
+  `5821c7358f490c1c92e9ec79eaed783f80851297` passes Windows/MSVC, Linux/GCC,
+  and Linux/Clang-analysis CI in run 33745263319. The complete local
+  Windows/MSVC suite contains 286 tests.
 
 Planned substantive scientific extensions are:
 
-- later medical scenarios, expanded result analysis, and visualization workflows;
-- participant-specific workflows only after their evidence and governance
-  requirements are met.
+- qualification of historical and synthetic assumptions with calibration,
+  independent validation, sensitivity, and uncertainty evidence;
+- additional medical scenarios and organ families, beginning with a kidney
+  surrogate;
+- larger ensembles, scaling, and advanced scientific visualization beyond the
+  bounded Workbench 1.0 demonstrations; and
+- participant-specific workflows only after their evidence, identifiability,
+  privacy, and governance requirements are met.
 
-For development details, use [MEHLISSA Next Development](DEVELOPMENT.md). For
-scientific scope and milestone gates, use the [Roadmap](ROADMAP.md).
+For build and test details, use
+[MEHLISSA Next Development](DEVELOPMENT.md). For public APIs and new module or
+organ-model implementation, use the
+[Software Architecture and Developer Guide](architecture/SOFTWARE_ARCHITECTURE.md#8-public-api-map),
+especially its [module extension workflow](architecture/SOFTWARE_ARCHITECTURE.md#9-how-to-add-a-module)
+and [worked kidney outline](architecture/SOFTWARE_ARCHITECTURE.md#95-worked-outline-adding-a-kidney-model).
+For scientific scope and milestone gates, use the [Roadmap](ROADMAP.md).

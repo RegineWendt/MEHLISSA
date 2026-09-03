@@ -9,6 +9,12 @@ This document describes the reproducible build of the new MEHLISSA generation.
 The historical implementations in `mehlissa/` and `mehlissa2.0/` are not
 changed by this build.
 
+MEHLISSA Next is one integrated research platform with three complementary
+aspects: the C++ scientific simulation stack, the Workbench/CLI/Python
+research-use layer, and the schema/provenance/test/CI assurance layer. M0-M7 and
+UX-1 through UX-6 describe how these capabilities were delivered; they are not
+separate products or build lineages.
+
 For the repository structure, public C++ APIs, coupling contracts, instructions
 for adding modules, and the current personalization workflow, see the
 [Software Architecture and Developer Guide](architecture/SOFTWARE_ARCHITECTURE.md).
@@ -40,12 +46,14 @@ $ctest = Join-Path $env:VSINSTALLDIR 'Common7\IDE\CommonExtensions\Microsoft\CMa
 
 The release build uses the `windows-msvc-release` presets accordingly.
 
-## Workbench package and clean-install check
+## Integrated Python and Workbench layer
 
 The Workbench 1.0 Python wheel contains the process API, versioned result
 readers, local web host, browser assets, console entry point, and licence. The
 C++ executable and repository-held schemas, models, evidence, examples, and
-campaign definitions remain separate versioned inputs.
+campaign definitions remain separate versioned inputs. This packaging boundary
+prevents duplication of scientific authority; it does not make the Workbench an
+optional or external product layer.
 
 Install the local source into an isolated environment and verify that it can
 find the accepted interfaces:
@@ -129,28 +137,32 @@ reproducible through the pinned vcpkg baseline.
 - Direct legacy ports remain `GPL-2.0-only` and are implemented in separate files with retained authorship and provenance information.
 - New project documentation and approved original data use `CC-BY-4.0`; data additionally requires a provenance manifest.
 
-## Current bootstrap
+## Current platform baseline
 
-The current system builds verifiable technical foundations around a deliberately
-small neutral kernel:
+The accepted baseline comprises:
 
-- monotonic simulation time with nanosecond resolution and overflow protection;
-- dimension-safe SI quantities and three-dimensional Euclidean geometry;
-- named, reproducible random streams;
-- versioned experiment validation and automatic run provenance;
-- structured JSONL run logging and a versioned checkpoint manifest;
-- validated vascular graphs, deterministic compartment transport, and schema-validated scientific reference reports;
-- bounded transport observation and flow-conserving body-state profiles; and
-- a versioned M6.1 nanodevice/profile contract with independently replaceable
-  local messages, lifecycle, energy, storage, and count accounting; and
-- an M6.2 neutral detection adapter and replaceable one-hop link with explicit
-  delivery/drop results and communication-only latency, loss/error, byte, and
-  energy metrics; and
-- an M6.3 strict directed cluster with bounded fewest-hop/lowest-latency route
-  selection, checked store-and-forward relays, and aggregate per-hop metrics;
-  and
-- an M6.4 active gateway with a neutral measurement publication boundary and a
-  traceable command-to-local-control downlink.
+- a deliberately small neutral kernel with monotonic time, dimension-safe SI
+  quantities, reproducible random streams, lifecycle ownership, and bounded
+  execution;
+- versioned experiment, schema, provenance, checkpoint, and structured logging
+  contracts;
+- independently replaceable body, lung, capillary, cell, Nano-IoT, BAN, and
+  external-station implementations plus explicit cross-layer couplers;
+- the complete M7 FP9/lung Levels A-E research-software demonstrator;
+- CLI discovery, validation, scenario execution, reporting, and controlled
+  campaigns;
+- version-guarded Python process and result APIs, optional plots, and notebooks;
+- MEHLISSA Research Workbench 1.0 for guided configuration, execution,
+  dashboards, provenance/evidence audit, descriptive campaign analysis, and
+  export; and
+- 286 local Windows/MSVC tests plus accepted Windows/MSVC, Linux/GCC, and
+  Linux/Clang CI with formatting, static analysis, and sanitizers.
 
 Medical scenarios and legacy state do not belong in the kernel. Biological and
-communication models depend on it as separate libraries.
+communication models depend on it as separate libraries. Browser code does not
+own scientific schemas or result semantics: the Workbench delegates through the
+accepted Python process boundary to the C++ executable and repository artifacts.
+
+For API selection and extension work, continue with the
+[public API map](architecture/SOFTWARE_ARCHITECTURE.md#8-public-api-map) and
+[module extension workflow](architecture/SOFTWARE_ARCHITECTURE.md#9-how-to-add-a-module).
