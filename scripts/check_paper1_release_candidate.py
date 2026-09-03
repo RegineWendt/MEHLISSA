@@ -31,8 +31,15 @@ def load_json(path: Path) -> dict[str, Any]:
     return value
 
 
+def portable_bytes(path: Path) -> bytes:
+    payload = path.read_bytes()
+    if path.suffix.lower() not in {".zip", ".pdf"}:
+        payload = payload.replace(b"\r\n", b"\n")
+    return payload
+
+
 def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    return hashlib.sha256(portable_bytes(path)).hexdigest()
 
 
 def repository_file(relative: str) -> Path:
@@ -190,7 +197,7 @@ def validate_candidate(candidate_directory: Path = DEFAULT_CANDIDATE) -> dict[st
         raise ValueError("SHA256SUMS does not cover the complete candidate directory")
     for entry in entries:
         path = candidate_directory / Path(*PurePosixPath(entry["path"]).parts)
-        if sha256(path) != entry["sha256"] or path.stat().st_size != entry["bytes"]:
+        if sha256(path) != entry["sha256"] or len(portable_bytes(path)) != entry["bytes"]:
             raise ValueError(f"SHA256SUMS mismatch: {entry['path']}")
     return manifest
 

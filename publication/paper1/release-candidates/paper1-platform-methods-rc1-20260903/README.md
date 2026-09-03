@@ -25,6 +25,10 @@ Start with:
    `docs/publication/PAPER1_TECHNICAL_MEASUREMENTS.md` for results;
 5. `SHA256SUMS.json` to verify retained bytes.
 
+For cross-platform identity, text files are hashed in their canonical LF form;
+ZIP and PDF files are hashed byte for byte. The checksum manifest records this
+rule explicitly, so Windows and Linux checkouts verify the same candidate.
+
 The package is not a manuscript, does not modify any separate
 `MEHLISSA-Papers` repository, and does not assert biological or clinical
 validation.

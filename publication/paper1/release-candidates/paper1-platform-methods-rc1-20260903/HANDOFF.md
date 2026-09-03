@@ -24,6 +24,10 @@ clinical fingerprinting system.
 - release manifest: `release-candidate.json`;
 - byte manifest: `SHA256SUMS.json`.
 
+Text hashes use canonical LF line endings; ZIP and PDF hashes cover raw bytes.
+This declared normalization prevents Git's Windows/Linux checkout policy from
+changing artifact identity.
+
 The tag is a suggestion only.  No tag or DOI is created by this package.
 
 ## Reproduce the technical checks

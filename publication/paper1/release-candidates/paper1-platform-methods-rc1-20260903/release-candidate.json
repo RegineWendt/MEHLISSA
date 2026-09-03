@@ -45,7 +45,7 @@
       "status": "complete",
       "report": {
         "path": "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E2-summary.json",
-        "sha256": "291b09851aa8b33336067e328a290020a515924cd89f48848ccd039ea45ac800"
+        "sha256": "731550d2b0bbdfb5f1d73b572f2198d3d013c6350daba69f41246c7ae88e62aa"
       },
       "raw_archive": {
         "path": "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E2-M7-RESOURCE.zip",
@@ -58,7 +58,7 @@
       "status": "complete",
       "report": {
         "path": "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E3-access-parity-report.json",
-        "sha256": "3613be8147ffaa351e4d3719e6fb65e6e8d7a9bed1d03c997836e257b5294a15"
+        "sha256": "5cc87f458c92e332f3f6d673be8c11aa4a9a6150eb4b35f3e5033bba4f774fe3"
       },
       "raw_archive": {
         "path": "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E3-ACCESS-PARITY.zip",

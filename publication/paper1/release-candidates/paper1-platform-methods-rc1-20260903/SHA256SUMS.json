@@ -2,6 +2,7 @@
   "schema_version": "1.0.0",
   "candidate_id": "paper1-platform-methods-rc1-20260903",
   "algorithm": "SHA-256",
+  "normalization": "Text files use canonical LF line endings; ZIP and PDF files are hashed byte for byte.",
   "files": [
     {
       "path": "claim-to-artifact-registry.json",
@@ -15,8 +16,8 @@
     },
     {
       "path": "HANDOFF.md",
-      "sha256": "e82bca31d6f595b1f25b777f04ae2960f02488e94a335a79c4d2edb8b5e6f204",
-      "bytes": 4337
+      "sha256": "f126ba19d0bc40ce67a136ee01ed966f81e41ba7ad5d7de76b0b43674e2596b9",
+      "bytes": 4523
     },
     {
       "path": "measurements/P1-E1-BODY-OBSERVATION.zip",
@@ -70,8 +71,8 @@
     },
     {
       "path": "measurements/P1-E2-summary.json",
-      "sha256": "291b09851aa8b33336067e328a290020a515924cd89f48848ccd039ea45ac800",
-      "bytes": 3221
+      "sha256": "731550d2b0bbdfb5f1d73b572f2198d3d013c6350daba69f41246c7ae88e62aa",
+      "bytes": 3108
     },
     {
       "path": "measurements/P1-E2-summary.json.license",
@@ -80,8 +81,8 @@
     },
     {
       "path": "measurements/P1-E3-access-parity-report.json",
-      "sha256": "3613be8147ffaa351e4d3719e6fb65e6e8d7a9bed1d03c997836e257b5294a15",
-      "bytes": 30895
+      "sha256": "5cc87f458c92e332f3f6d673be8c11aa4a9a6150eb4b35f3e5033bba4f774fe3",
+      "bytes": 30297
     },
     {
       "path": "measurements/P1-E3-access-parity-report.json.license",
@@ -115,12 +116,12 @@
     },
     {
       "path": "README.md",
-      "sha256": "218c87cac0458ed7873e22462b23efc90c923e7f18d7d1abe7ef54489acc82fd",
-      "bytes": 1119
+      "sha256": "85c4cdcd04a33644495cac39a83a922f96c5786b7daa43339fa2f51d1a11adf0",
+      "bytes": 1353
     },
     {
       "path": "release-candidate.json",
-      "sha256": "8cdc491e42c7edc80b0ba9fe1ff3295a4284d886ba28498fa6211c5054320854",
+      "sha256": "a6d10bf625cc2a327207f077a5b5a1ecee5a4187ccc0e554f06193cf392bcbe9",
       "bytes": 4147
     },
     {

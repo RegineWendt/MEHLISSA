@@ -62,6 +62,15 @@ class Paper1ReleaseCandidateTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 release.verify_zip(archive, ())
 
+    def test_text_hash_is_line_ending_independent(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="mehlissa-paper1-hash-") as directory:
+            root = Path(directory)
+            lf = root / "lf.json"
+            crlf = root / "crlf.json"
+            lf.write_bytes(b'{\n  "value": 1\n}\n')
+            crlf.write_bytes(b'{\r\n  "value": 1\r\n}\r\n')
+            self.assertEqual(release.sha256(lf), release.sha256(crlf))
+
 
 if __name__ == "__main__":
     unittest.main()

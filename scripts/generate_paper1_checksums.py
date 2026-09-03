@@ -18,6 +18,13 @@ DEFAULT_CANDIDATE = (
 )
 
 
+def portable_bytes(path: Path) -> bytes:
+    payload = path.read_bytes()
+    if path.suffix.lower() not in {".zip", ".pdf"}:
+        payload = payload.replace(b"\r\n", b"\n")
+    return payload
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--candidate-directory", type=Path, default=DEFAULT_CANDIDATE)
@@ -30,17 +37,19 @@ def main() -> int:
     for path in sorted(candidate.rglob("*")):
         if not path.is_file() or path.name in {"SHA256SUMS.json", "SHA256SUMS.json.license"}:
             continue
+        payload = portable_bytes(path)
         files.append(
             {
                 "path": path.relative_to(candidate).as_posix(),
-                "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
-                "bytes": path.stat().st_size,
+                "sha256": hashlib.sha256(payload).hexdigest(),
+                "bytes": len(payload),
             }
         )
     result = {
         "schema_version": "1.0.0",
         "candidate_id": manifest["candidate_id"],
         "algorithm": "SHA-256",
+        "normalization": "Text files use canonical LF line endings; ZIP and PDF files are hashed byte for byte.",
         "files": files,
     }
     (candidate / "SHA256SUMS.json").write_text(
