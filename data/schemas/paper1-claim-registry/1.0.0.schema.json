@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mehlissa.example/schemas/paper1-claim-registry/1.0.0.schema.json",
+  "title": "MEHLISSA Paper 1 claim-to-artifact registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "candidate_id", "claim_boundary", "claims"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "candidate_id": {"type": "string", "minLength": 1},
+    "claim_boundary": {"type": "string", "minLength": 20},
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id", "statement", "category", "status", "evidence_role",
+          "manuscript_use", "artifacts", "limitations"
+        ],
+        "properties": {
+          "id": {"type": "string", "pattern": "^P1-[A-Z0-9-]+$"},
+          "statement": {"type": "string", "minLength": 10},
+          "category": {
+            "enum": ["architecture", "reproducibility", "performance", "access", "evidence", "physiology", "biology", "clinical"]
+          },
+          "status": {"enum": ["supported", "partially_supported", "not_supported"]},
+          "evidence_role": {"enum": ["software_verification", "calibration", "independent_validation", "negative_boundary"]},
+          "manuscript_use": {"enum": ["allowed_with_scope", "limitations_only", "forbidden_as_positive_claim"]},
+          "artifacts": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "limitations": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string", "minLength": 10}
+          }
+        }
+      }
+    }
+  }
+}

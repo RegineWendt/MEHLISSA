@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0.0",
+  "candidate_id": "paper1-platform-methods-rc1-20260903",
+  "title": "MEHLISSA platform and methods paper release candidate 1",
+  "status": "review_candidate",
+  "created_at_utc": "2026-09-03T18:15:00Z",
+  "development_branch": "mehlissa-next-generation",
+  "source": {
+    "commit": "30415e1c6997cae9744115d502604b7df0fe234c",
+    "archive_path": "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/MEHLISSA-paper1-platform-methods-rc1-source.zip",
+    "archive_sha256": "df7006820a8f1b9ba541275f8ed2bb0ab4501dd1e6c99846ffa01feb53df2086"
+  },
+  "suggested_tag": "paper1-platform-methods-rc1",
+  "protocol": {
+    "path": "publication/paper1/technical-experiment-protocol-v2.0.0.json",
+    "sha256": "44a260e11990dc0cd3e865ffc24b88ffb5b60cabf2469ad83a08aeca359efa48"
+  },
+  "evidence_baseline": {
+    "matrix": {
+      "path": "data/evidence/evidence-validity-matrix-v1.json",
+      "sha256": "3c16651fa570628e9338de0ae94c1cbfbd8732a4a9eb331ff70f068f28b41e73"
+    },
+    "schema": {
+      "path": "data/schemas/evidence-validity-matrix/1.0.0.schema.json",
+      "sha256": "fd232000393efbc9ee87e6760517c206bd9de92562f6b418f62419411f97506f"
+    },
+    "family_count": 6
+  },
+  "measurements": [
+    {
+      "experiment_id": "P1-E1-BODY-OBSERVATION",
+      "status": "complete",
+      "report": {
+        "path": "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E1-campaign-report.json",
+        "sha256": "dfebe03083b286a6d7fae58d01b6764df14bce70f921bef7b139fc49d134e169"
+      },
+      "raw_archive": {
+        "path": "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E1-BODY-OBSERVATION.zip",
+        "sha256": "f51ba2398ed93d680762fda557d63411afa2467c94a2a20ef9d457a9ba9b0f31"
+      },
+      "interpretation": "Complete frozen technical observation campaign; state-neutrality and resource evidence only."
+    },
+    {
+      "experiment_id": "P1-E2-M7-RESOURCE",
+      "status": "complete",
+      "report": {
+        "path": "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E2-summary.json",
+        "sha256": "291b09851aa8b33336067e328a290020a515924cd89f48848ccd039ea45ac800"
+      },
+      "raw_archive": {
+        "path": "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E2-M7-RESOURCE.zip",
+        "sha256": "2001bd722978cb706bae73623949fc35953bcd5565612913867db063746d221f"
+      },
+      "interpretation": "Small predeclared M7 resource and deterministic-replay study; no biological feasibility claim."
+    },
+    {
+      "experiment_id": "P1-E3-ACCESS-PARITY",
+      "status": "complete",
+      "report": {
+        "path": "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E3-access-parity-report.json",
+        "sha256": "3613be8147ffaa351e4d3719e6fb65e6e8d7a9bed1d03c997836e257b5294a15"
+      },
+      "raw_archive": {
+        "path": "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E3-ACCESS-PARITY.zip",
+        "sha256": "65307b422e71214fa4f05a0450cbac5f1cd608ff2ce0c52532d5a5cd5fae9d37"
+      },
+      "interpretation": "Authoritative-result parity and integrity evidence across CLI, Python, and Workbench; not a usability study."
+    }
+  ],
+  "claim_registry": {
+    "path": "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/claim-to-artifact-registry.json",
+    "sha256": "f88ab4f8fbbf7d5e7b979010daaa909ec1a1daf498a9809f2a273009789833d9"
+  },
+  "quality": {
+    "local_status": "passed",
+    "supported_ci_status": "pending_for_candidate_commit",
+    "checks": [
+      "schema validation and negative tests",
+      "evidence matrix and protocol checks",
+      "complete Windows/MSVC Release CTest suite",
+      "formatting, clang-tidy, AddressSanitizer, UndefinedBehaviorSanitizer, Windows/MSVC, Linux/GCC, and Linux/Clang in GitHub CI"
+    ]
+  },
+  "boundaries": {
+    "doi_minted": false,
+    "final_tag_created": false,
+    "manuscript_included": false,
+    "clinical_claim": false
+  }
+}

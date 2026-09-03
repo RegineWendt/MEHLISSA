@@ -295,7 +295,7 @@ def cover_story(project_state: dict) -> list:
                     f"{research_use['delivery_range'].replace(' through ', '-')}",
                     STYLES["CoverMeta"],
                 ),
-                Paragraph("Scientific qualification", STYLES["CoverMeta"]),
+                Paragraph("Paper 1 candidate review", STYLES["CoverMeta"]),
             ],
         ],
         colWidths=[51 * mm, 37 * mm, 76 * mm],

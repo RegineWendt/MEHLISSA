@@ -23,6 +23,8 @@ rules are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 | understand what comes next | [Roadmap](ROADMAP.md) | integrated platform history, scientific qualification program, further scenarios and organs, scaling, and the digital-twin path |
 | assess evidence for Paper 1 | [Evidence and Validity Baseline](publication/EVIDENCE_AND_VALIDITY_BASELINE.md) | schema-validated evidence roles, calibration/validation separation, source audit, claim boundaries, and bibliography export |
 | reproduce Paper 1 technical measurements | [Technical Experiment Protocol v2](publication/PAPER1_TECHNICAL_EXPERIMENT_PROTOCOL_V2.md) | locked conditions, three experiments, metrics, controls, exclusions, failure handling, and archive structure |
+| inspect Paper 1 results | [Technical Measurement Report](publication/PAPER1_TECHNICAL_MEASUREMENTS.md) | 112-attempt body campaign, small M7 resource/replay study, access-path parity, retained setup deviation, and interpretation limits |
+| review the Paper 1 release candidate | [Candidate handoff](../publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/HANDOFF.md) | source export, raw archives, machine manifest, hashes, claim registry, reproduction, and review checklist |
 | assess requirement coverage | [System Requirements](requirements/SYSTEM_REQUIREMENTS.md) and [Traceability Matrix](requirements/TRACEABILITY_MATRIX.md) | 82 numbered requirements, sources, implementation status, and verification evidence |
 | understand the historical starting point | [Legacy-baseline analysis](IST_ANALYSE.md) | frozen analysis of legacy commit `4f4fc5a`; not the current Next status |
 
@@ -39,6 +41,10 @@ rules are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 - `python scripts/check_evidence_validity_matrix.py` validates the Paper 1
   evidence baseline, its six-family coverage, cited-source roles and referenced
   artifacts. The associated negative tests run in CI.
+- `python scripts/check_paper1_protocol.py` and
+  `python scripts/check_paper1_release_candidate.py` validate the locked Paper
+  1 protocol and complete review-candidate package, including raw archives,
+  hashes, negative controls, state neutrality, parity, and anti-overclaim rules.
 - [Data licensing](DATA_LICENSING.md), the
   [licence and data inventory](m0/LICENSE_AND_DATA_INVENTORY.md), and
   [ADR-0007](architecture/adr/0007-repository-license.md) define release and

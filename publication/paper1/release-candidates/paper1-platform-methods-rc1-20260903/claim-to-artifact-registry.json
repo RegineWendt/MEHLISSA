@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0.0",
+  "candidate_id": "paper1-platform-methods-rc1-20260903",
+  "claim_boundary": "This registry supports scoped technical platform claims only. It does not promote software verification, literature parameterization, or historical regression into biological, diagnostic, therapeutic, patient-specific, or clinical validation.",
+  "claims": [
+    {
+      "id": "P1-ARCH-001",
+      "statement": "MEHLISSA implements a versioned, testable multiscale research platform spanning body, organ, capillary/molecular, cell/intracellular, Nano-IoT, and integrated FP9 scenario families.",
+      "category": "architecture",
+      "status": "supported",
+      "evidence_role": "software_verification",
+      "manuscript_use": "allowed_with_scope",
+      "artifacts": [
+        "docs/architecture/SOFTWARE_ARCHITECTURE.md",
+        "data/evidence/evidence-validity-matrix-v1.json",
+        "docs/requirements/TRACEABILITY_MATRIX.md"
+      ],
+      "limitations": ["Implemented components have different scientific maturity and are not a uniformly validated physiological model."]
+    },
+    {
+      "id": "P1-REPRO-001",
+      "statement": "The tested M7 reference conditions replay deterministically within condition under the declared software, artifacts, and seeds.",
+      "category": "reproducibility",
+      "status": "supported",
+      "evidence_role": "software_verification",
+      "manuscript_use": "allowed_with_scope",
+      "artifacts": [
+        "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E2-summary.json",
+        "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E2-M7-RESOURCE.zip"
+      ],
+      "limitations": ["This is same-host deterministic replay of two small conditions, not cross-platform numerical identity or biological repeatability."]
+    },
+    {
+      "id": "P1-OBS-001",
+      "statement": "The four tested body observation policies do not alter the simulated population, final state hash, transition count, or random-stream state in the frozen RQ4 campaign.",
+      "category": "reproducibility",
+      "status": "supported",
+      "evidence_role": "software_verification",
+      "manuscript_use": "allowed_with_scope",
+      "artifacts": [
+        "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E1-campaign-report.json",
+        "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E1-BODY-OBSERVATION.zip"
+      ],
+      "limitations": ["The claim is limited to the frozen model, populations, seeds, policies, and platform recorded by the campaign."]
+    },
+    {
+      "id": "P1-PERF-001",
+      "statement": "Bounded observation policies keep retained output small in the tested body campaign, while the deliberately detailed O3 condition incurs substantially larger output and memory at 1,000 particles.",
+      "category": "performance",
+      "status": "supported",
+      "evidence_role": "software_verification",
+      "manuscript_use": "allowed_with_scope",
+      "artifacts": [
+        "docs/publication/PAPER1_TECHNICAL_MEASUREMENTS.md",
+        "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E1-campaign-report.json"
+      ],
+      "limitations": ["The results are descriptive medians from one Windows/MSVC host and do not establish a general scaling law or platform comparison."]
+    },
+    {
+      "id": "P1-PERF-002",
+      "statement": "The integrated M7 demonstrator executed 1,000- and 10,000-collector configurations within the recorded small-study resource envelope.",
+      "category": "performance",
+      "status": "partially_supported",
+      "evidence_role": "software_verification",
+      "manuscript_use": "allowed_with_scope",
+      "artifacts": [
+        "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E2-summary.json"
+      ],
+      "limitations": ["Three repetitions per condition are insufficient for an HPC, asymptotic scaling, capacity, or feasibility claim."]
+    },
+    {
+      "id": "P1-ACCESS-001",
+      "statement": "CLI, Python, and Workbench access paths expose the same authoritative M7 scientific summary without mutating the retained result.",
+      "category": "access",
+      "status": "supported",
+      "evidence_role": "software_verification",
+      "manuscript_use": "allowed_with_scope",
+      "artifacts": [
+        "publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/measurements/P1-E3-access-parity-report.json",
+        "publication/paper1/check_access_parity.py"
+      ],
+      "limitations": ["The test establishes data-path parity and integrity handling, not usability, accessibility with participants, or scientific validity."]
+    },
+    {
+      "id": "P1-EVIDENCE-001",
+      "statement": "Every current executable model family has a schema-validated record of evidence roles, sources, licences, calibration/validation separation, uncertainty metadata, validity scope, blockers, and linked artifacts.",
+      "category": "evidence",
+      "status": "supported",
+      "evidence_role": "software_verification",
+      "manuscript_use": "allowed_with_scope",
+      "artifacts": [
+        "data/evidence/evidence-validity-matrix-v1.json",
+        "data/schemas/evidence-validity-matrix/1.0.0.schema.json",
+        "docs/publication/EVIDENCE_AND_VALIDITY_BASELINE.md"
+      ],
+      "limitations": ["Completeness and schema validity of metadata do not independently validate the cited scientific models."]
+    },
+    {
+      "id": "P1-PHYS-001",
+      "statement": "The pulmonary model family has literature-scoped parameterization and selected source-disjoint endpoint comparisons.",
+      "category": "physiology",
+      "status": "partially_supported",
+      "evidence_role": "independent_validation",
+      "manuscript_use": "allowed_with_scope",
+      "artifacts": [
+        "docs/m3/PULMONARY_0D_INDEPENDENT_VALIDATION.md",
+        "docs/m3/PULMONARY_0D_SUBJECT_MULTIPOINT_VALIDATION.md",
+        "docs/m3/PULMONARY_LOBAR_PERFUSION_VALIDATION.md",
+        "data/evidence/evidence-validity-matrix-v1.json"
+      ],
+      "limitations": ["Joint subject-level calibration/validation cohorts, disease coverage, anatomical resolution, pulsatility, and full uncertainty propagation remain open."]
+    },
+    {
+      "id": "P1-BIO-001",
+      "statement": "The present receptor, intracellular, apoptosis, and FP9 detection chain is biologically validated for a named FP9 disease mechanism.",
+      "category": "biology",
+      "status": "not_supported",
+      "evidence_role": "negative_boundary",
+      "manuscript_use": "forbidden_as_positive_claim",
+      "artifacts": [
+        "docs/m5/M5_EVIDENCE_QUALIFICATION.md",
+        "docs/m7/M7_GATE_REVIEW.md",
+        "data/evidence/evidence-validity-matrix-v1.json"
+      ],
+      "limitations": ["Current cell, assay, and classification values are analytical or synthetic software fixtures without named disease-specific biological calibration and independent validation."]
+    },
+    {
+      "id": "P1-CLIN-001",
+      "statement": "The integrated MEHLISSA demonstrator is validated for patient-specific or clinical decisions.",
+      "category": "clinical",
+      "status": "not_supported",
+      "evidence_role": "negative_boundary",
+      "manuscript_use": "forbidden_as_positive_claim",
+      "artifacts": [
+        "docs/publication/EVIDENCE_AND_VALIDITY_BASELINE.md",
+        "docs/PROJECT_STATUS_AND_COLLABORATION_BRIEF.md",
+        "docs/m7/M7_GATE_REVIEW.md"
+      ],
+      "limitations": ["No clinical cohort, diagnostic-performance study, regulatory validation, or patient-data workflow is part of this release candidate."]
+    }
+  ]
+}

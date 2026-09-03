@@ -201,3 +201,33 @@ The check verifies shared facts in the canonical entry documents, one-to-one
 requirement coverage in the Traceability Matrix, selected status and Roadmap
 section mappings, local links from the main guides, and obsolete terminology.
 CI runs the same command.
+
+## Paper 1 publication evidence
+
+The optional `publication` dependency installs the pinned JSON Schema validator
+used by the Paper 1 evidence, protocol, and release-candidate checks:
+
+```powershell
+python -m pip install -e ".[publication]"
+python scripts/check_evidence_validity_matrix.py
+python scripts/check_paper1_protocol.py
+python scripts/check_paper1_release_candidate.py
+python -m unittest tests.test_evidence_validity_matrix -v
+python -m unittest tests.test_paper1_protocol -v
+python -m unittest tests.test_paper1_measurement_tools -v
+python -m unittest tests.test_paper1_release_candidate -v
+```
+
+The candidate checker verifies the exact source export, protocol, evidence
+matrix, raw measurement archives, claim registry, SHA-256 inventory, positive
+outcomes, negative controls, retained invalid setup attempt, and explicit
+anti-overclaim boundaries. Regenerate `SHA256SUMS.json` only after an intentional
+candidate change:
+
+```powershell
+python scripts/generate_paper1_checksums.py
+```
+
+Do not edit the locked protocol or raw archives in place. A changed protocol
+requires a new version and pre-measurement commit; a changed candidate requires
+a new candidate identity or an explicitly reviewed replacement before tagging.

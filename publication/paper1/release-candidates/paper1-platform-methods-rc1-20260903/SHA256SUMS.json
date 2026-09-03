@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0.0",
+  "candidate_id": "paper1-platform-methods-rc1-20260903",
+  "algorithm": "SHA-256",
+  "files": [
+    {
+      "path": "claim-to-artifact-registry.json",
+      "sha256": "f88ab4f8fbbf7d5e7b979010daaa909ec1a1daf498a9809f2a273009789833d9",
+      "bytes": 7791
+    },
+    {
+      "path": "claim-to-artifact-registry.json.license",
+      "sha256": "2d926ee706e8ac00aa4fc9f2e7d25b6deeaa391d1acce4c34bd731f9e59e939d",
+      "bytes": 86
+    },
+    {
+      "path": "HANDOFF.md",
+      "sha256": "e82bca31d6f595b1f25b777f04ae2960f02488e94a335a79c4d2edb8b5e6f204",
+      "bytes": 4337
+    },
+    {
+      "path": "measurements/P1-E1-BODY-OBSERVATION.zip",
+      "sha256": "f51ba2398ed93d680762fda557d63411afa2467c94a2a20ef9d457a9ba9b0f31",
+      "bytes": 18262947
+    },
+    {
+      "path": "measurements/P1-E1-BODY-OBSERVATION.zip.license",
+      "sha256": "2d926ee706e8ac00aa4fc9f2e7d25b6deeaa391d1acce4c34bd731f9e59e939d",
+      "bytes": 86
+    },
+    {
+      "path": "measurements/P1-E1-campaign-report.json",
+      "sha256": "dfebe03083b286a6d7fae58d01b6764df14bce70f921bef7b139fc49d134e169",
+      "bytes": 184652
+    },
+    {
+      "path": "measurements/P1-E1-campaign-report.json.license",
+      "sha256": "2d926ee706e8ac00aa4fc9f2e7d25b6deeaa391d1acce4c34bd731f9e59e939d",
+      "bytes": 86
+    },
+    {
+      "path": "measurements/P1-E1-invalid-setup-report.json",
+      "sha256": "267df18ffd5ec2fc101a7a3b2079be6e3393be754c4e8eb1eced10ec0fd1c4ca",
+      "bytes": 183268
+    },
+    {
+      "path": "measurements/P1-E1-invalid-setup-report.json.license",
+      "sha256": "2d926ee706e8ac00aa4fc9f2e7d25b6deeaa391d1acce4c34bd731f9e59e939d",
+      "bytes": 86
+    },
+    {
+      "path": "measurements/P1-E1-machine-plan.json",
+      "sha256": "8889d1e4a73274bdc35d03438de4d204cb95e6dfd3371eeb32e1c2cbd785442d",
+      "bytes": 3609
+    },
+    {
+      "path": "measurements/P1-E1-machine-plan.json.license",
+      "sha256": "2d926ee706e8ac00aa4fc9f2e7d25b6deeaa391d1acce4c34bd731f9e59e939d",
+      "bytes": 86
+    },
+    {
+      "path": "measurements/P1-E2-M7-RESOURCE.zip",
+      "sha256": "2001bd722978cb706bae73623949fc35953bcd5565612913867db063746d221f",
+      "bytes": 84182
+    },
+    {
+      "path": "measurements/P1-E2-M7-RESOURCE.zip.license",
+      "sha256": "2d926ee706e8ac00aa4fc9f2e7d25b6deeaa391d1acce4c34bd731f9e59e939d",
+      "bytes": 86
+    },
+    {
+      "path": "measurements/P1-E2-summary.json",
+      "sha256": "291b09851aa8b33336067e328a290020a515924cd89f48848ccd039ea45ac800",
+      "bytes": 3221
+    },
+    {
+      "path": "measurements/P1-E2-summary.json.license",
+      "sha256": "2d926ee706e8ac00aa4fc9f2e7d25b6deeaa391d1acce4c34bd731f9e59e939d",
+      "bytes": 86
+    },
+    {
+      "path": "measurements/P1-E3-access-parity-report.json",
+      "sha256": "3613be8147ffaa351e4d3719e6fb65e6e8d7a9bed1d03c997836e257b5294a15",
+      "bytes": 30895
+    },
+    {
+      "path": "measurements/P1-E3-access-parity-report.json.license",
+      "sha256": "2d926ee706e8ac00aa4fc9f2e7d25b6deeaa391d1acce4c34bd731f9e59e939d",
+      "bytes": 86
+    },
+    {
+      "path": "measurements/P1-E3-ACCESS-PARITY.zip",
+      "sha256": "65307b422e71214fa4f05a0450cbac5f1cd608ff2ce0c52532d5a5cd5fae9d37",
+      "bytes": 18639
+    },
+    {
+      "path": "measurements/P1-E3-ACCESS-PARITY.zip.license",
+      "sha256": "2d926ee706e8ac00aa4fc9f2e7d25b6deeaa391d1acce4c34bd731f9e59e939d",
+      "bytes": 86
+    },
+    {
+      "path": "measurements/README.md",
+      "sha256": "56097e49b63c7e877ba784e068279b2bb6831536223970194a2f04a3a29a0451",
+      "bytes": 2928
+    },
+    {
+      "path": "MEHLISSA-paper1-platform-methods-rc1-source.zip",
+      "sha256": "df7006820a8f1b9ba541275f8ed2bb0ab4501dd1e6c99846ffa01feb53df2086",
+      "bytes": 43658257
+    },
+    {
+      "path": "MEHLISSA-paper1-platform-methods-rc1-source.zip.license",
+      "sha256": "04d781314f3187746ab7ee3915f0004f23584d83bf74fa8f38c8aac12fc768bd",
+      "bytes": 84
+    },
+    {
+      "path": "README.md",
+      "sha256": "218c87cac0458ed7873e22462b23efc90c923e7f18d7d1abe7ef54489acc82fd",
+      "bytes": 1119
+    },
+    {
+      "path": "release-candidate.json",
+      "sha256": "8cdc491e42c7edc80b0ba9fe1ff3295a4284d886ba28498fa6211c5054320854",
+      "bytes": 4147
+    },
+    {
+      "path": "release-candidate.json.license",
+      "sha256": "2d926ee706e8ac00aa4fc9f2e7d25b6deeaa391d1acce4c34bd731f9e59e939d",
+      "bytes": 86
+    }
+  ]
+}

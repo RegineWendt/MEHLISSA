@@ -3142,11 +3142,42 @@ The research-use delivery record is:
   and Linux/Clang-analysis CI in run 33745263319. The complete local
   Windows/MSVC suite contains 286 tests.
 
+The first Paper 1 platform/methods reproducibility package is also available.
+It is intended for reviewers and collaborators rather than as an additional
+simulation interface:
+
+- the [Evidence and Validity Baseline](publication/EVIDENCE_AND_VALIDITY_BASELINE.md)
+  explains the distinct evidence roles and current limits of all six executable
+  model families;
+- the [Technical Experiment Protocol v2](publication/PAPER1_TECHNICAL_EXPERIMENT_PROTOCOL_V2.md)
+  freezes the technical questions, conditions, seeds, repetitions, metrics,
+  controls, failures, exclusions, resources, and archive rules;
+- the [Technical Measurement Report](publication/PAPER1_TECHNICAL_MEASUREMENTS.md)
+  reports the complete 112-attempt body-observation campaign, small M7
+  resource/replay study, and CLI/Python/Workbench parity check; and
+- candidate `paper1-platform-methods-rc1-20260903` binds the complete raw ZIP
+  archives, source export, SHA-256 inventory, claim registry, and reviewer
+  handoff. Suggested tag `paper1-platform-methods-rc1` has not been created.
+
+`P1-E1`, `P1-E2`, and `P1-E3` mean the three predeclared Paper 1 technical
+experiments: body-observation state neutrality and resource behavior, bounded
+M7 resource/replay behavior, and scientific-result parity across the CLI,
+Python API, and Workbench. They are experiment identifiers, not evidence grades.
+All three produce software evidence only. To verify the package, install the
+`publication` optional dependency and run:
+
+```powershell
+python scripts/check_evidence_validity_matrix.py
+python scripts/check_paper1_protocol.py
+python scripts/check_paper1_release_candidate.py
+```
+
+Read the candidate claim registry before translating any result into a paper.
+In particular, deterministic execution, verified hashes, or a passing model
+contract do not establish biological or clinical validity.
+
 Planned substantive scientific extensions are:
 
-- an evidence and validity baseline mapping each executable parameter,
-  assumption, output, and claim to its source, licence, maturity, uncertainty,
-  and validation state;
 - pulmonary and capillary qualification using source-disjoint calibration and
   validation evidence, predeclared metrics, and quantified uncertainty;
 - at least one biological cell-model variant tied to a named ligand, receptor,

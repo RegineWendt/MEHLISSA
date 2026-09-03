@@ -4,7 +4,7 @@
   "status_date_display": "3 September 2026",
   "development_branch": "mehlissa-next-generation",
   "milestones_passed_through": "M7",
-  "current_focus": "scientific qualification and external user feedback on the integrated platform",
+  "current_focus": "Paper 1 platform/methods release-candidate review and scientific qualification",
   "research_use": {
     "delivery_range": "UX-1 through UX-6",
     "workbench_version": "1.0.0",
@@ -19,8 +19,18 @@
     "visualization_and_user_tools": "6.6",
     "documentation": "6.7"
   },
+  "paper1_platform_methods": {
+    "candidate_id": "paper1-platform-methods-rc1-20260903",
+    "candidate_status": "review candidate",
+    "source_commit": "30415e1c6997cae9744115d502604b7df0fe234c",
+    "suggested_tag": "paper1-platform-methods-rc1",
+    "protocol_version": "2.0.0",
+    "evidence_matrix_version": "1.0.0",
+    "measurement_experiments": 3,
+    "doi_minted": false,
+    "final_tag_created": false
+  },
   "next_scientific_packages": [
-    "Evidence and validity baseline",
     "Pulmonary and capillary qualification",
     "Biological cell-model qualification",
     "Dynamic capillary-tissue-cell coupling",
