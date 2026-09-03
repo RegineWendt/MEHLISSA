@@ -34,6 +34,7 @@ jobs:
           python scripts/check_paper1_protocol.py
           python -m unittest tests/test_evidence_validity_matrix.py
           python -m unittest tests/test_paper1_protocol.py
+          python -m unittest tests/test_paper1_measurement_tools.py
 
   windows-msvc:
     runs-on: windows-latest
