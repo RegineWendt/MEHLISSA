@@ -92,6 +92,28 @@ def verify_claim_semantics(registry: dict[str, Any]) -> None:
         raise ValueError("The registry has no explicit negative claim boundary")
 
 
+def verify_source_commit(source_commit: str) -> None:
+    completed = subprocess.run(
+        ["git", "cat-file", "-e", f"{source_commit}^{{commit}}"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if completed.returncode == 0:
+        return
+    shallow = subprocess.run(
+        ["git", "rev-parse", "--is-shallow-repository"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if shallow.returncode == 0 and shallow.stdout.strip() == "true":
+        return
+    raise ValueError(f"Source commit is not available: {source_commit}")
+
+
 def validate_candidate(candidate_directory: Path = DEFAULT_CANDIDATE) -> dict[str, Any]:
     candidate_directory = candidate_directory.resolve()
     manifest = load_json(candidate_directory / "release-candidate.json")
@@ -169,16 +191,7 @@ def validate_candidate(candidate_directory: Path = DEFAULT_CANDIDATE) -> dict[st
     verify_zip(repository_file(experiments["P1-E2-M7-RESOURCE"]["raw_archive"]["path"]), ("analysis/summary.json", "attempts.jsonl"))
     verify_zip(repository_file(experiments["P1-E3-ACCESS-PARITY"]["raw_archive"]["path"]), ("access-parity-report.json",))
 
-    source_commit = manifest["source"]["commit"]
-    completed = subprocess.run(
-        ["git", "cat-file", "-e", f"{source_commit}^{{commit}}"],
-        cwd=ROOT,
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    if completed.returncode != 0:
-        raise ValueError(f"Source commit is not available: {source_commit}")
+    verify_source_commit(manifest["source"]["commit"])
 
     sums_path = candidate_directory / "SHA256SUMS.json"
     sums = load_json(sums_path)

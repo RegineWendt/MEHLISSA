@@ -28,6 +28,11 @@ Text hashes use canonical LF line endings; ZIP and PDF hashes cover raw bytes.
 This declared normalization prevents Git's Windows/Linux checkout policy from
 changing artifact identity.
 
+In a complete clone, the checker also resolves the declared source commit as a
+Git commit. In a shallow CI checkout that deliberately omits ancestor objects,
+it verifies the byte-exact source archive and records the declared commit but
+does not misreport the missing checkout history as archive corruption.
+
 The tag is a suggestion only.  No tag or DOI is created by this package.
 
 ## Reproduce the technical checks

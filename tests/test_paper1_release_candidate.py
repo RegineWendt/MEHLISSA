@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest import mock
 
 import jsonschema
 
@@ -70,6 +71,17 @@ class Paper1ReleaseCandidateTests(unittest.TestCase):
             lf.write_bytes(b'{\n  "value": 1\n}\n')
             crlf.write_bytes(b'{\r\n  "value": 1\r\n}\r\n')
             self.assertEqual(release.sha256(lf), release.sha256(crlf))
+
+    def test_missing_source_commit_is_allowed_only_in_shallow_checkout(self) -> None:
+        missing = release.subprocess.CompletedProcess([], 1, "", "missing")
+        shallow = release.subprocess.CompletedProcess([], 0, "true\n", "")
+        with mock.patch.object(release.subprocess, "run", side_effect=[missing, shallow]):
+            release.verify_source_commit("0" * 40)
+
+        complete = release.subprocess.CompletedProcess([], 0, "false\n", "")
+        with mock.patch.object(release.subprocess, "run", side_effect=[missing, complete]):
+            with self.assertRaisesRegex(ValueError, "Source commit is not available"):
+                release.verify_source_commit("0" * 40)
 
 
 if __name__ == "__main__":
