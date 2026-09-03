@@ -79,8 +79,9 @@ print(load_result(execution.result).summary)
 See `examples/notebooks/01-first-scenario.ipynb` and
 `examples/notebooks/02-campaign-analysis.ipynb` for complete workflows.
 
-The UX-6.1 graphical foundation can browse the same validated model and example
-catalog in a protected, read-only local page:
+The UX-6.1/UX-6.2 graphical workbench can browse the same validated model and
+example catalog and create a schema-guided derivative of the complete FP9/lung
+scenario in a protected local page:
 
 ```powershell
 $env:PYTHONPATH = "$PWD/python"
@@ -89,8 +90,10 @@ python -m mehlissa_workbench --repository-root .
 ```
 
 The launcher locates a normal build automatically or accepts `--executable`.
-Scenario editing and execution remain command/Python workflows until later
-UX-6 increments. See the User Guide for the workbench boundary and diagnostics.
+Guided edits use authoritative validation and non-overwriting save-as inside a
+repository-local workspace. Simulation execution remains a command/Python
+workflow until UX-6.4. See the User Guide for the complete workflow and
+diagnostics.
 
 MEHLISSA Next is a research model. It is not a medical device and does not
 provide patient-specific clinical predictions.

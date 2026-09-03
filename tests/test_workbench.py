@@ -8,13 +8,20 @@ from http import HTTPStatus
 import json
 from pathlib import Path
 import sys
+import tempfile
 import threading
 import unittest
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 from mehlissa import MehlissaClient
-from mehlissa_workbench import CatalogFormatError, create_server, discover_catalog
+from mehlissa_workbench import (
+    CatalogFormatError,
+    ScenarioWorkspace,
+    ScenarioWorkspaceError,
+    create_server,
+    discover_catalog,
+)
 
 
 PARSER = argparse.ArgumentParser()
@@ -33,6 +40,8 @@ class WorkbenchDiscoveryTest(unittest.TestCase):
         catalog = discover_catalog(self.client)
         self.assertEqual(catalog["api_version"], "1.0.0")
         self.assertTrue(catalog["read_only"])
+        self.assertTrue(catalog["scenario_editing"])
+        self.assertEqual(catalog["workbench_increment"], "UX-6.2")
         self.assertFalse(catalog["clinical_use"])
         self.assertEqual(len(catalog["models"]), 5)
         self.assertEqual(len(catalog["examples"]), 10)
@@ -58,7 +67,18 @@ class WorkbenchServerTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         client = MehlissaClient(ARGS.executable, Path(ARGS.root).resolve())
-        cls.server = create_server(client, port=0, session_token="test-session-token")
+        temporary_parent = Path(ARGS.root).resolve() / "tmp"
+        temporary_parent.mkdir(exist_ok=True)
+        cls.temporary_directory = tempfile.TemporaryDirectory(
+            prefix="ux6-2-workspace-", dir=temporary_parent
+        )
+        cls.workspace = Path(cls.temporary_directory.name)
+        cls.server = create_server(
+            client,
+            port=0,
+            session_token="test-session-token",
+            workspace_root=cls.workspace,
+        )
         cls.thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
         cls.thread.start()
         host, port = cls.server.server_address
@@ -69,13 +89,14 @@ class WorkbenchServerTest(unittest.TestCase):
         cls.server.shutdown()
         cls.server.server_close()
         cls.thread.join(timeout=5)
+        cls.temporary_directory.cleanup()
 
     def test_static_shell_is_accessible_and_security_hardened(self) -> None:
         with urlopen(f"{self.base_url}/?session=test-session-token", timeout=10) as response:
             body = response.read().decode("utf-8")
             self.assertEqual(response.status, HTTPStatus.OK)
             self.assertIn("MEHLISSA Next Research Workbench", body)
-            self.assertIn("Read-only foundation", body)
+            self.assertIn("Guided editing, not execution", body)
             self.assertIn("frame-ancestors 'none'", response.headers["Content-Security-Policy"])
             self.assertEqual(response.headers["Referrer-Policy"], "no-referrer")
             self.assertEqual(response.headers["Cache-Control"], "no-store")
@@ -85,8 +106,9 @@ class WorkbenchServerTest(unittest.TestCase):
             script = response.read().decode("utf-8")
             self.assertNotIn("innerHTML", script)
             self.assertIn("X-MEHLISSA-Session", script)
+            self.assertIn("beforeunload", script)
 
-    def test_catalog_api_requires_session_and_is_read_only(self) -> None:
+    def test_catalog_api_requires_session(self) -> None:
         with self.assertRaises(HTTPError) as denied:
             urlopen(f"{self.base_url}/api/catalog", timeout=10)
         self.assertEqual(denied.exception.code, HTTPStatus.FORBIDDEN)
@@ -99,15 +121,107 @@ class WorkbenchServerTest(unittest.TestCase):
             catalog = json.load(response)
             self.assertEqual(response.status, HTTPStatus.OK)
             self.assertTrue(catalog["read_only"])
+            self.assertTrue(catalog["scenario_editing"])
             self.assertEqual(len(catalog["models"]), 5)
 
-        for method in ("POST", "PUT", "PATCH", "DELETE", "OPTIONS"):
+        for method in ("PUT", "PATCH", "DELETE", "OPTIONS"):
             with self.subTest(method=method):
                 request = Request(f"{self.base_url}/api/catalog", data=b"", method=method)
                 with self.assertRaises(HTTPError) as rejected:
                     urlopen(request, timeout=10)
                 self.assertEqual(rejected.exception.code, HTTPStatus.METHOD_NOT_ALLOWED)
-                self.assertEqual(rejected.exception.headers["Allow"], "GET")
+                self.assertEqual(rejected.exception.headers["Allow"], "GET, POST")
+
+    def request_json(self, path: str, method: str = "GET", body: object | None = None):
+        data = json.dumps(body).encode("utf-8") if body is not None else None
+        headers = {"X-MEHLISSA-Session": "test-session-token"}
+        if data is not None:
+            headers["Content-Type"] = "application/json"
+        request = Request(f"{self.base_url}{path}", headers=headers, data=data, method=method)
+        with urlopen(request, timeout=20) as response:
+            return response.status, json.load(response)
+
+    def test_guided_scenario_round_trip_retains_complete_document(self) -> None:
+        status, overview = self.request_json("/api/scenarios")
+        self.assertEqual(status, HTTPStatus.OK)
+        self.assertEqual(overview["save_policy"], "save_as_only")
+        self.assertEqual(len(overview["sources"]), 1)
+
+        source_id = overview["sources"][0]["id"]
+        _, original = self.request_json(f"/api/scenario?id={source_id}")
+        paths = {field["path"] for field in original["fields"]}
+        self.assertIn("run.collector_count", paths)
+        self.assertIn("The dissertation baseline", next(
+            field["evidence"]
+            for field in original["fields"]
+            if field["path"] == "run.collector_count"
+        ))
+        self.assertEqual(len(original["document"]["artifacts"]), 13)
+
+        filename = "ux6-2-round-trip.json"
+        status, saved = self.request_json(
+            "/api/scenario/save",
+            "POST",
+            {
+                "source_id": source_id,
+                "filename": filename,
+                "changes": {
+                    "scenario.id": "fp9-lung-ux6-2-round-trip",
+                    "scenario.title": "UX-6.2 round-trip scenario",
+                    "run.id": "fp9-lung-ux6-2-collectors-10000",
+                    "run.collector_count": 10000,
+                },
+            },
+        )
+        self.assertEqual(status, HTTPStatus.CREATED)
+        self.assertEqual(saved["document"]["run"]["collector_count"], 10000)
+        self.assertEqual(saved["document"]["artifacts"], original["document"]["artifacts"])
+        self.assertEqual(saved["document"]["sources"], original["document"]["sources"])
+
+        _, reopened = self.request_json(f"/api/scenario?id=saved:{filename}")
+        self.assertEqual(reopened["document"], saved["document"])
+
+        with self.assertRaises(HTTPError) as conflict:
+            self.request_json(
+                "/api/scenario/save",
+                "POST",
+                {"source_id": source_id, "filename": filename, "changes": {}},
+            )
+        self.assertEqual(conflict.exception.code, HTTPStatus.CONFLICT)
+
+    def test_unsupported_fields_are_visible_and_never_silently_discarded(self) -> None:
+        template = Path(ARGS.root).resolve() / "examples/scenarios/fp9-lung-level-a-v1.json"
+        document = json.loads(template.read_text(encoding="utf-8"))
+        document["future_extension"] = {"retained": True}
+        future = self.workspace / "future-compatible.json"
+        future.write_text(json.dumps(document), encoding="utf-8")
+
+        _, loaded = self.request_json("/api/scenario?id=saved:future-compatible.json")
+        self.assertIn("future_extension", loaded["unknown_paths"])
+        self.assertTrue(loaded["document"]["future_extension"]["retained"])
+
+        with self.assertRaises(HTTPError) as rejected:
+            self.request_json(
+                "/api/scenario/save",
+                "POST",
+                {
+                    "source_id": "saved:future-compatible.json",
+                    "filename": "must-not-save.json",
+                    "changes": {"future_extension.retained": False},
+                },
+            )
+        self.assertEqual(rejected.exception.code, HTTPStatus.BAD_REQUEST)
+        self.assertFalse((self.workspace / "must-not-save.json").exists())
+
+    def test_workspace_rejects_escape_and_arbitrary_source_ids(self) -> None:
+        client = MehlissaClient(ARGS.executable, Path(ARGS.root).resolve())
+        with self.assertRaises(ScenarioWorkspaceError):
+            ScenarioWorkspace(client, Path(ARGS.root).resolve())
+        with self.assertRaises(ScenarioWorkspaceError):
+            ScenarioWorkspace(client, Path(ARGS.root).resolve().parent / "outside")
+        with self.assertRaises(HTTPError) as rejected:
+            self.request_json("/api/scenario?id=saved:../pyproject.toml")
+        self.assertEqual(rejected.exception.code, HTTPStatus.BAD_REQUEST)
 
     def test_untrusted_host_header_is_rejected(self) -> None:
         request = Request(

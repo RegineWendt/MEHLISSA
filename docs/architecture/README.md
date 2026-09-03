@@ -65,7 +65,7 @@ decisions; a new decision supersedes an existing one through a new ADR.
 | [ADR-0047](adr/0047-versioned-external-network-simulator-boundary.md) | Accepted | metadata-only external network-simulator request/response boundary behind the BAN transport API |
 | [ADR-0048](adr/0048-fail-closed-synthetic-resilience-scope.md) | Accepted | typed transport failures, fail-closed boundary misuse, and explicit synthetic security non-claims |
 | [ADR-0049](adr/0049-scenario-owned-fingerprinting-composition.md) | Accepted | independent M7 scenario package with a strict artifact-selection and causal-stage contract |
-| [ADR-0050](adr/0050-local-browser-research-workbench.md) | Accepted | local browser workbench hosted by a loopback-only Python client of the accepted process API |
+| [ADR-0050](adr/0050-local-browser-research-workbench.md) | Accepted | local browser workbench with protected discovery and schema-preserving, validated, non-overwriting scenario save-as |
 
 ## Status model
 

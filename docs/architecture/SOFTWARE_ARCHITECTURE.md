@@ -9,8 +9,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 This document is the entry point for developers who want to understand,
 integrate, or extend MEHLISSA Next. It describes the implemented architecture
-through the accepted M7 gate, the public C++
-and command-line interfaces, the data contracts, and the workflow for adding a
+through the accepted M7 gate and locally accepted UX-6.2 workbench, the public
+C++, command-line, Python, and local-workbench interfaces, the data contracts,
+and the workflow for adding a
 module such as a new organ model. It also explains
 which forms of personalization are possible today and which remain roadmap
 work.
@@ -518,31 +519,44 @@ unvalidated implementation of MEHLISSA.
 ### 7.6 Local graphical workbench
 
 UX-6.1 adds `python/mehlissa_workbench` as a presentation client above the UX-5
-process API. Its local HTTP host calls only `MehlissaClient` methods; browser
-code receives a structured read-only projection and never reads catalog files,
-validates models, or executes scientific logic independently. The resulting
-dependency direction is:
+process API. UX-6.2 extends that client with `ScenarioWorkspace`, a bounded
+application service for opening the curated fingerprinting scenario and saved
+local derivatives. Its local HTTP host calls only `MehlissaClient` methods;
+browser code receives structured projections and never validates models or
+executes scientific logic independently. The resulting dependency direction is:
 
 ```text
 browser presentation -> Python workbench host -> MehlissaClient
                      -> MEHLISSA executable -> versioned authoritative artifacts
 ```
 
-The foundation endpoint is `GET /api/catalog`. It is private to the local
-prototype, requires an ephemeral session capability, and returns
-`api_version=1.0.0`, model summaries, example summaries, `read_only=true`, and
-`clinical_use=false`. It is not a stable remote REST API. Future scenario
-round trips, validation, execution, and result exploration must add bounded
-application commands or adapters based on the existing schemas and APIs.
+The foundation endpoint is `GET /api/catalog`. UX-6.2 adds `GET /api/scenarios`,
+`GET /api/scenario`, and `POST /api/scenario/save`. They are private to the
+local application, require an ephemeral session capability, and are not a
+stable remote REST API. The server derives scalar field descriptions and
+constraints from the authoritative fingerprinting-scenario JSON Schema. It
+reloads the complete source for every save, applies only server-declared scalar
+changes, and delegates complete candidate validation to `MehlissaClient`.
+
+Curated examples are immutable. Derived files use safe basename-only `.json`
+names and exclusive creation inside `workbench-scenarios/` or an explicitly
+selected repository-internal workspace. Unsupported fields are displayed in
+the source view and cannot be silently dropped. Source arrays, artifact
+bindings, acceptance rules, evidence, and limitations remain in the complete
+JSON object rather than being reconstructed from form controls.
 
 The host binds only to loopback, validates the HTTP host header, serves four
-allow-listed embedded assets, rejects state-changing HTTP methods, suppresses
-request logging, and applies restrictive browser security headers. Catalog text
-is inserted with DOM `textContent`; there are no remote assets or telemetry.
-These properties are architectural constraints for later UX-6 increments.
+allow-listed embedded assets, rejects unrecognized state-changing operations,
+suppresses request logging, and applies restrictive browser security headers.
+The single save operation also requires JSON content, enforces a one-megabyte
+body limit, checks editable paths, validates through the executable, and never
+overwrites. All content is inserted with DOM `textContent`; there are no remote
+assets or telemetry. These properties are architectural constraints for later
+UX-6 increments.
 Product roles, workflows, threat/privacy/accessibility baselines, and screen
 concepts are maintained in the
-[UX-6.1 foundation](../ux/UX6_1_PRODUCT_AND_TECHNICAL_FOUNDATION.md) and the
+[UX-6.1 foundation](../ux/UX6_1_PRODUCT_AND_TECHNICAL_FOUNDATION.md), the
+[UX-6.2 workspace contract](../ux/UX6_2_GUIDED_SCENARIO_WORKSPACE.md), and the
 technology choice in [ADR-0050](adr/0050-local-browser-research-workbench.md).
 
 ## 8. Public API map
@@ -605,10 +619,16 @@ The current executable supports:
 | Entry point | Purpose |
 |---|---|
 | `python -m mehlissa_workbench` / `mehlissa-workbench` | locate or accept the MEHLISSA executable, start the protected loopback host, and open the local interface |
-| `--check` | verify that the accepted discovery interface can provide a supported read-only catalog without starting a server |
+| `--check` | verify accepted catalog discovery and guided-scenario workspace loading without starting a persistent server |
+| `--workspace <path>` | select a scenario save-as directory that resolves inside the repository; default `workbench-scenarios/` |
 | `discover_catalog(MehlissaClient)` | fail-closed adapter from accepted discovery command output to the private UX-6.1 response |
 | `create_server(...)` | testable loopback-only server factory with an ephemeral session capability |
 | `GET /api/catalog` | capability-protected, read-only model/example projection; private to the workbench and not a remote public API |
+| `ScenarioWorkspace.overview()` | list the curated FP9/lung starter and safe basename-only saved scenarios |
+| `ScenarioWorkspace.load(source_id)` | load a permitted complete object and project scalar controls, evidence, limitations, and unknown paths from its authoritative schema |
+| `ScenarioWorkspace.save_as(source_id, filename, changes)` | apply only allow-listed scalar changes, validate through `MehlissaClient`, and exclusively create a new JSON file |
+| `GET /api/scenarios` / `GET /api/scenario` | capability-protected private projections for source selection and guided editing |
+| `POST /api/scenario/save` | bounded JSON-only, capability-protected, non-overwriting save-as operation; not generic filesystem access |
 
 Detailed commands are maintained in the [User Guide](../USER_GUIDE.md).
 

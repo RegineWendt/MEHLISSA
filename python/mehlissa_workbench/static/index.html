@@ -13,84 +13,108 @@ SPDX-License-Identifier: MPL-2.0
   <script src="/app.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to catalog</a>
+  <a class="skip-link" href="#main-content">Skip to scenario workspace</a>
   <header class="site-header">
     <a class="brand" href="/" aria-label="MEHLISSA Next home">
       <span class="brand-mark" aria-hidden="true">M</span>
       <span><strong>MEHLISSA</strong><small>Next Research Workbench</small></span>
     </a>
-    <span class="prototype-badge">UX-6.1 prototype</span>
+    <span class="prototype-badge">UX-6.2 local workbench</span>
   </header>
-
   <main id="main-content" tabindex="-1">
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">Explore before you simulate</p>
-        <h1 id="page-title">A clear view of the models already inside MEHLISSA.</h1>
-        <p class="hero-copy">Browse implemented model families and licensed starter examples through the same validated discovery interface used by the command line.</p>
+        <p class="eyebrow">Compose before you simulate</p>
+        <h1 id="page-title">Build a reproducible scenario without editing raw JSON.</h1>
+        <p class="hero-copy">Start from the accepted FP9 lung demonstrator, change schema-governed research parameters, inspect every retained source field, and save a new local scenario.</p>
       </div>
       <aside class="boundary" aria-labelledby="boundary-title">
         <p class="boundary-label">Current boundary</p>
-        <h2 id="boundary-title">Read-only foundation</h2>
-        <p>This first workbench increment cannot edit files or start simulations. It proves the interface and product direction without duplicating scientific logic.</p>
+        <h2 id="boundary-title">Guided editing, not execution</h2>
+        <p>UX-6.2 validates every saved scenario with the MEHLISSA executable. Starting simulations and corrective validation feedback arrive in later increments.</p>
       </aside>
     </section>
-
-    <section class="metrics" aria-label="Catalog overview">
+    <section class="metrics" aria-label="Workbench overview">
       <div><span id="model-count" class="metric-value">—</span><span class="metric-label">model families</span></div>
       <div><span id="example-count" class="metric-value">—</span><span class="metric-label">starter examples</span></div>
-      <div><span class="metric-value metric-word">Local</span><span class="metric-label">data access</span></div>
-      <div><span class="metric-value metric-word">Read-only</span><span class="metric-label">prototype mode</span></div>
+      <div><span id="field-count" class="metric-value">—</span><span class="metric-label">guided fields</span></div>
+      <div><span class="metric-value metric-word">Save as</span><span class="metric-label">never overwrite</span></div>
     </section>
-
-    <section class="catalog" aria-labelledby="catalog-title">
+    <section class="workspace" aria-labelledby="workspace-title">
       <div class="section-heading">
-        <div>
-          <p class="eyebrow">Validated catalog</p>
-          <h2 id="catalog-title">Find a starting point</h2>
+        <div><p class="eyebrow">Scenario workspace</p><h2 id="workspace-title">Configure an experiment</h2></div>
+        <p id="workspace-status" class="status" role="status" aria-live="polite">Loading the local workspace…</p>
+      </div>
+      <div class="selection-bar">
+        <label><span>Implemented model</span><select id="scenario-model" disabled><option>Loading…</option></select></label>
+        <label><span>Starter or saved scenario</span><select id="scenario-source" disabled><option>Loading…</option></select></label>
+      </div>
+      <div id="editor-shell" class="editor-shell" hidden>
+        <aside class="editor-aside" aria-labelledby="editor-context-title">
+          <p class="eyebrow">Research boundary</p>
+          <h3 id="editor-context-title">Evidence travels with the inputs</h3>
+          <p>Descriptions, defaults, units, evidence notes, and limitations come from the versioned scenario contract.</p>
+          <dl class="scenario-meta">
+            <div><dt>Source</dt><dd id="source-kind">—</dd></div>
+            <div><dt>File</dt><dd><code id="source-file">—</code></dd></div>
+            <div><dt>Unsaved edits</dt><dd id="dirty-state">No</dd></div>
+          </dl>
+          <div class="notice"><strong>Not clinical.</strong> Parameter changes create research configurations; they do not establish patient-specific validity.</div>
+        </aside>
+        <div class="editor-main">
+          <form id="scenario-form">
+            <div class="editor-heading">
+              <div><p class="eyebrow">Schema-derived controls</p><h3>Guided parameters</h3></div>
+              <div class="editor-actions"><button id="reset-button" type="button" class="secondary">Reset edits</button><button id="save-button" type="button">Save as…</button></div>
+            </div>
+            <div id="field-list" class="field-list"></div>
+          </form>
+          <details class="source-view">
+            <summary>Complete source JSON <span id="source-only-count"></span></summary>
+            <p>The complete document is read-only here. Arrays, evidence, limitations, and any unsupported fields remain intact when guided values change.</p>
+            <pre id="source-json" tabindex="0"></pre>
+          </details>
+          <div class="evidence-grid">
+            <section aria-labelledby="sources-title"><h3 id="sources-title">Scenario sources</h3><ul id="scenario-sources"></ul></section>
+            <section aria-labelledby="limits-title"><h3 id="limits-title">Scenario limitations</h3><ul id="scenario-limitations"></ul></section>
+          </div>
         </div>
+      </div>
+    </section>
+    <section class="catalog compact-catalog" aria-labelledby="catalog-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">Validated catalog</p><h2 id="catalog-title">Explore implemented building blocks</h2></div>
         <p id="catalog-status" class="status" role="status" aria-live="polite">Loading the local catalog…</p>
       </div>
-
       <div class="filters" aria-label="Catalog filters">
-        <label>
-          <span>Search</span>
-          <input id="search" type="search" placeholder="Model, layer, example…" autocomplete="off">
-        </label>
-        <label>
-          <span>Model layer</span>
-          <select id="layer">
-            <option value="">All layers</option>
-          </select>
-        </label>
+        <label><span>Search</span><input id="search" type="search" placeholder="Model, layer, example…" autocomplete="off"></label>
+        <label><span>Model layer</span><select id="layer"><option value="">All layers</option></select></label>
       </div>
-
       <section aria-labelledby="models-title">
-        <div class="subheading">
-          <h3 id="models-title">Model families</h3>
-          <span id="visible-model-count" class="result-count"></span>
-        </div>
+        <div class="subheading"><h3 id="models-title">Model families</h3><span id="visible-model-count" class="result-count"></span></div>
         <div id="models" class="model-grid" aria-busy="true"></div>
       </section>
-
       <section class="examples-section" aria-labelledby="examples-title">
-        <div class="subheading">
-          <h3 id="examples-title">Starter examples</h3>
-          <span id="visible-example-count" class="result-count"></span>
-        </div>
+        <div class="subheading"><h3 id="examples-title">Starter examples</h3><span id="visible-example-count" class="result-count"></span></div>
         <div class="table-frame" tabindex="0" aria-label="Scrollable starter example table">
-          <table>
-            <thead><tr><th scope="col">Example</th><th scope="col">Repository path</th><th scope="col">Related models</th></tr></thead>
-            <tbody id="examples"></tbody>
-          </table>
+          <table><thead><tr><th scope="col">Example</th><th scope="col">Repository path</th><th scope="col">Related models</th></tr></thead><tbody id="examples"></tbody></table>
         </div>
       </section>
     </section>
   </main>
-
+  <dialog id="save-dialog" aria-labelledby="save-title">
+    <form method="dialog" id="save-form">
+      <p class="eyebrow">Non-overwriting save</p>
+      <h2 id="save-title">Save a derived scenario</h2>
+      <p>A new JSON file will be created in the local workbench workspace. Existing files are never replaced.</p>
+      <label><span>Filename</span><input id="save-filename" required pattern="[A-Za-z0-9][A-Za-z0-9._-]{0,119}\.json" placeholder="fp9-lung-derived-v1.json"></label>
+      <p id="save-error" class="dialog-error" role="alert"></p>
+      <div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button id="confirm-save" value="default">Validate and save</button></div>
+    </form>
+  </dialog>
   <footer>
     <p><strong>Research software demonstrator.</strong> Not a medical device and not validated for clinical decisions.</p>
-    <p>All content is loaded from the local MEHLISSA repository. No remote service is contacted.</p>
+    <p>All content stays on this computer. No remote service is contacted.</p>
   </footer>
 </body>
 </html>

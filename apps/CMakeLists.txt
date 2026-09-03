@@ -158,7 +158,7 @@ if(Python3_Interpreter_FOUND)
     set_tests_properties(mehlissa_python_ux5_api PROPERTIES LABELS "UX-5;python;cli")
 
     add_test(
-        NAME mehlissa_python_ux6_1_workbench
+        NAME mehlissa_python_ux6_workbench
         COMMAND
             ${CMAKE_COMMAND} -E env "PYTHONPATH=${PROJECT_SOURCE_DIR}/python"
             ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/tests/test_workbench.py
@@ -166,9 +166,9 @@ if(Python3_Interpreter_FOUND)
             --root ${PROJECT_SOURCE_DIR}
     )
     set_tests_properties(
-        mehlissa_python_ux6_1_workbench
-        PROPERTIES LABELS "UX-6.1;python;workbench"
+        mehlissa_python_ux6_workbench
+        PROPERTIES LABELS "UX-6.1;UX-6.2;python;workbench"
     )
 else()
-    message(WARNING "Python 3 was not found; the UX-5 and UX-6.1 Python tests are disabled")
+    message(WARNING "Python 3 was not found; the UX-5 and UX-6 Python tests are disabled")
 endif()

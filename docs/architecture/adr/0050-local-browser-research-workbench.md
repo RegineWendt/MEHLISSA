@@ -30,11 +30,14 @@ browser application hosted by a Python process. The host delegates to the
 accepted `python/mehlissa` process API, which in turn invokes the authoritative
 C++ application. Browser code owns presentation and interaction only.
 
-The UX-6.1 host uses Python's standard library, binds only to loopback, serves an
+The host uses Python's standard library, binds only to loopback, serves an
 explicit static-asset allow-list, and protects its API with an ephemeral
-per-process capability. It exposes only read-only catalog discovery. Each later
-state-changing endpoint requires its own reviewed contract and must preserve
-existing validation, non-overwriting output, provenance, and error semantics.
+per-process capability. UX-6.1 exposed only read-only catalog discovery.
+UX-6.2 adds a reviewed, bounded scenario workspace: the browser submits only
+allow-listed scalar changes, the host retains the complete source object,
+delegates candidate validation to the existing application, and creates only a
+new file inside a repository-local workspace. Existing files are never
+overwritten.
 
 The browser interface targets WCAG 2.2 level AA. No telemetry, cloud service,
 remote asset, patient-data workflow, or clinical claim is part of the decision.
@@ -45,7 +48,8 @@ remote asset, patient-data workflow, or clinical claim is part of the decision.
   scenario behavior cannot diverge silently from command-line use.
 - HTML provides a cross-platform, semantic, responsive presentation layer and a
   broad accessibility-testing ecosystem.
-- UX-6.1 adds no mandatory third-party runtime dependency to the Python package.
+- UX-6.1 and UX-6.2 add no mandatory third-party runtime dependency to the
+  Python package.
 - Local HTTP introduces a security boundary. Loopback restriction, host-header
   validation, session capability, restrictive response headers, safe text
   insertion, and bounded file serving are requirements, not optional polish.
@@ -72,6 +76,6 @@ remote asset, patient-data workflow, or clinical claim is part of the decision.
 
 ## Affected requirements and packages
 
-- `UX-002` through `UX-007`
+- `UX-002` through `UX-008`
 - `UX-6.1` through `UX-6.8`
 - `QUA-005`, `QUA-006`

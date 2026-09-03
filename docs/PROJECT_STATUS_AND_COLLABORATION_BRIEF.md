@@ -11,9 +11,9 @@ SPDX-License-Identifier: CC-BY-4.0
 **Status date:** 3 September 2026
 **Development branch:** `mehlissa-next-generation`
 **Published base revision:** `7b92c4ef930b188918a886041603e8de27e2891c`
-**Local candidate:** UX-6.1 accepted locally; not yet pushed
+**Local candidate:** UX-6.1 and UX-6.2 accepted locally; not yet pushed
 **Milestone status:** M0 through M7 passed
-**Current product focus:** UX-6.2 guided scenario workspace after local UX-6.1 acceptance
+**Current product focus:** UX-6.3 corrective validation after local UX-6.2 acceptance
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -57,6 +57,11 @@ behind explicit contracts.
   catalog browser through the accepted Python process API. All 285 Windows/MSVC
   tests and desktop/mobile browser checks pass; publication and supported CI are
   pending.
+- UX-6.2 adds a schema-derived FP9/lung editor with contextual units, defaults,
+  evidence, and limitations; complete source retention; explicit unsaved-change
+  handling; authoritative validation; and bounded, non-overwriting save-as and
+  reopen. All 285 Windows/MSVC tests and the desktop/mobile browser round trip
+  pass; publication and supported CI are pending.
 - English user, architecture, model, traceability, and decision documentation
   supports international collaboration.
 - The result is a reproducible research-software demonstrator. It is not a
@@ -67,7 +72,7 @@ behind explicit contracts.
 | Software architecture | Strong modular foundation with explicit ownership, conservation, lifecycle, configuration, and evidence boundaries. |
 | End-to-end integration | Complete first software vertical slice through fingerprinting Levels A-E. |
 | Scientific validation | Mixed maturity: verified equations, literature-parameterized candidates, selected independent comparisons, and multiple synthetic mechanisms. |
-| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, UX-3 provides readable shareable result bundles, UX-4 provides controlled campaigns, UX-5 provides Python and notebook access, and UX-6.1 adds the locally accepted read-only graphical foundation. Guided editing, running, and analysis remain. |
+| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, UX-3 provides readable shareable result bundles, UX-4 provides controlled campaigns, UX-5 provides Python and notebook access, UX-6.1 adds the graphical foundation, and UX-6.2 adds locally accepted guided scenario round trips. Corrective validation, running, and analysis remain. |
 | Clinical readiness | Not claimed. Patient prediction, diagnosis, and treatment recommendations are explicitly outside the present scope. |
 
 ## How to read project labels
@@ -307,7 +312,8 @@ they do not by themselves increase physiological or clinical validity.
 | UX-4 - Derived experiments and campaigns | Create controlled variants, replicates, parameter sweeps, paired comparisons, and aggregate analyses. | Passed; six-run reference campaign, all 284 current tests, and all supported GitHub CI jobs pass |
 | UX-5 - Python API and notebooks | Support common scientific analysis and plotting workflows without replacing the C++ implementation authority. | Passed; process API, readers, analysis, optional plots, two notebooks, all 284 current tests, and all supported GitHub CI jobs pass |
 | UX-6.1 - Workbench product and technical foundation | Define users and workflows, select the interface architecture, establish safety/accessibility baselines, and prove read-only graphical discovery without duplicating scientific logic. | Locally passed; five model families and ten examples load through the accepted process API; all 285 Windows/MSVC tests and desktop/mobile browser checks pass; push and supported CI pending |
-| UX-6.2 through UX-6.8 - Integrated graphical workbench | Add guided scenario round trips, corrective validation, run/campaign control, result comparison, provenance/evidence, uncertainty visualization/export, packaging, and final usability/accessibility acceptance. | Planned |
+| UX-6.2 - Guided scenario workspace | Open the complete FP9/lung starter, edit schema-derived scalar fields with their units/evidence/limits, retain the complete source, and validate/save/reopen without overwriting. | Locally passed; a 10,000-collector derivative round-trips with all 13 artifacts and evidence retained; unknown-field, path, session, and overwrite cases fail visibly; all 285 Windows/MSVC tests and desktop/mobile browser checks pass; push and supported CI pending |
+| UX-6.3 through UX-6.8 - Integrated graphical workbench | Add corrective validation, run/campaign control, result comparison, provenance/evidence, uncertainty visualization/export, packaging, and final usability/accessibility acceptance. | Planned |
 
 The intended first user experience is:
 
@@ -350,10 +356,21 @@ UX-6.1 adds a small Python-hosted local browser interface that calls
 only to the local computer, uses an ephemeral session capability, serves no
 remote assets, records no telemetry, and displays the permanent non-clinical
 boundary. It contains no simulation or independent schema implementation.
-The UX-6.1 product and technical foundation document records
-roles, workflows, screen concepts, technology trade-offs, threats, privacy,
-accessibility, and local acceptance. UX-6.2 is the next increment and must add
-safe schema-preserving open, edit, save-as, and reopen behavior.
+The UX-6.1 product and technical foundation document records roles, workflows,
+screen concepts, technology trade-offs, threats, privacy, accessibility, and
+local acceptance.
+
+UX-6.2 now adds that guided round trip. Field controls are projected from the
+versioned fingerprinting-scenario schema rather than maintained in browser
+code. Every field carries a description, unit, default, evidence note, and
+limitation; constant contract values remain visible and locked. The browser
+shows the complete live JSON, while the host reloads the original and applies
+only server-declared scalar changes. New files stay in a bounded
+repository-local workspace, pass the accepted C++ scenario validator before
+creation, and are created exclusively. The accepted browser exercise saved and
+reopened a 10,000-collector derivative and visibly rejected overwrite. All 285
+local Windows/MSVC tests pass. UX-6.3 is next and will turn validation failures
+into stable field-linked corrective guidance.
 
 ## 9. Opportunities for collaborators
 
@@ -365,7 +382,7 @@ safe schema-preserving open, edit, save-as, and reopen behavior.
 | Molecular communication | Calibrate local channels, implement assembly physics, and connect an external network simulator through the existing adapter. |
 | Cell biology and pharmacology | Replace synthetic receptor, signaling, apoptosis, and delivery assumptions with evidence-qualified models. |
 | Statistics and uncertainty quantification | Design independent validation, global sensitivity, uncertainty propagation, identifiability, and ensemble analysis. |
-| Research UX and visualization | Review the local workbench, implement schema-preserving scenario editing, and later add corrective validation, run control, provenance, comparison, and accessible uncertainty views. |
+| Research UX and visualization | Review the local guided editor and add corrective validation, run control, provenance, comparison, and accessible uncertainty views. |
 | Research data and governance | Model-card provenance, licensing, FAIR data, patient-data controls, and digital-twin governance. |
 
 A new module is reviewable when its public contract and units are explicit;
@@ -385,14 +402,15 @@ and limitations are documented; and all supported CI paths pass.
 | `docs/requirements/TRACEABILITY_MATRIX.md` | Implementation and verification status for every tracked requirement. |
 | `docs/m7/M7_GATE_REVIEW.md` | Formal decision and scientific limitations of the holistic fingerprinting demonstrator. |
 | `docs/ux/UX6_1_PRODUCT_AND_TECHNICAL_FOUNDATION.md` | Workbench roles, workflows, screen concepts, architecture trade-offs, security/privacy/accessibility baseline, and local acceptance. |
+| `docs/ux/UX6_2_GUIDED_SCENARIO_WORKSPACE.md` | Guided-field contract, complete-source round trip, bounded file access, non-overwriting save-as, and local acceptance. |
 | `docs/m0` through `docs/m6` | Gate reviews, model notes, validation evidence, and accepted limitations for preceding milestones. |
 
 - **Repository:** https://github.com/RegineWendt/MEHLISSA
 - **Verified CI run:** https://github.com/RegineWendt/MEHLISSA/actions/runs/33668850496
 
 MEHLISSA Next now provides the architectural and executable backbone required
-by the dissertation vision and the first graphical discovery client over that
-backbone. The next workbench step is a safe, schema-preserving scenario
-workspace; scientific expansion still requires further scenarios and organs
-and progressive replacement of synthetic assumptions with independently
-validated models.
+by the dissertation vision and a graphical discovery and guided-scenario client
+over that backbone. The next workbench step is corrective, field-linked
+validation before execution controls are added; scientific expansion still
+requires further scenarios and organs and progressive replacement of synthetic
+assumptions with independently validated models.

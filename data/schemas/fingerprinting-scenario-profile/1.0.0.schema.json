@@ -12,10 +12,41 @@
       "additionalProperties": false,
       "required": ["id", "version", "title", "acceptance_level"],
       "properties": {
-        "id": {"$ref": "#/$defs/id"},
-        "version": {"$ref": "#/$defs/version"},
-        "title": {"$ref": "#/$defs/nonempty"},
-        "acceptance_level": {"const": "A"}
+        "id": {
+          "$ref": "#/$defs/id",
+          "title": "Scenario identifier",
+          "description": "Stable machine-readable identity for this derived scenario.",
+          "default": "fp9-lung-derived-v1",
+          "x-unit": "identifier",
+          "x-evidence": "Research metadata governed by the versioned scenario contract.",
+          "x-limitation": "Changing the identifier does not change model behavior."
+        },
+        "version": {
+          "$ref": "#/$defs/version",
+          "title": "Scenario version",
+          "description": "Semantic version of this scenario definition.",
+          "default": "1.0.0",
+          "x-unit": "semantic version",
+          "x-evidence": "MEHLISSA scenario provenance convention.",
+          "x-limitation": "The author is responsible for incrementing this version when meaning changes."
+        },
+        "title": {
+          "$ref": "#/$defs/nonempty",
+          "title": "Scenario title",
+          "description": "Human-readable name shown in reports and discovery views.",
+          "default": "Derived FP9 lung scenario",
+          "x-unit": "text",
+          "x-evidence": "Descriptive research metadata supplied by the scenario author.",
+          "x-limitation": "A title is not evidence of scientific or clinical validity."
+        },
+        "acceptance_level": {
+          "const": "A",
+          "title": "Acceptance level",
+          "description": "Level A preserves the historical dissertation timing baseline.",
+          "x-unit": "maturity class",
+          "x-evidence": "ADR-0004 and the accepted M7 vertical-slice contract.",
+          "x-limitation": "Level A is a software acceptance level, not a clinical evidence grade."
+        }
       }
     },
     "run": {
@@ -23,9 +54,35 @@
       "additionalProperties": false,
       "required": ["id", "master_seed", "collector_count"],
       "properties": {
-        "id": {"$ref": "#/$defs/id"},
-        "master_seed": {"type": "integer", "minimum": 0},
-        "collector_count": {"type": "integer", "minimum": 1}
+        "id": {
+          "$ref": "#/$defs/id",
+          "title": "Run-plan identifier",
+          "description": "Stable label for the intended execution configuration.",
+          "default": "fp9-lung-derived-collectors-1000",
+          "x-unit": "identifier",
+          "x-evidence": "Research metadata retained in scenario and run provenance.",
+          "x-limitation": "Changing the label alone does not alter the simulation."
+        },
+        "master_seed": {
+          "type": "integer",
+          "minimum": 0,
+          "title": "Master random seed",
+          "description": "Non-negative seed from which deterministic stochastic streams are derived.",
+          "default": 20260901,
+          "x-unit": "dimensionless integer",
+          "x-evidence": "MEHLISSA deterministic-replay contract.",
+          "x-limitation": "One seed is one stochastic realization; it does not quantify uncertainty."
+        },
+        "collector_count": {
+          "type": "integer",
+          "minimum": 1,
+          "title": "Collector population",
+          "description": "Number of collector nanodevices used by the historical timer cohort.",
+          "default": 1000,
+          "x-unit": "devices",
+          "x-evidence": "The dissertation baseline publishes independent cohorts of 1,000 and 10,000 collectors.",
+          "x-limitation": "Values other than 1,000 or 10,000 are not supported by a predictive interpolation law."
+        }
       }
     },
     "target": {
@@ -33,9 +90,33 @@
       "additionalProperties": false,
       "required": ["fingerprint_id", "tissue", "region_id"],
       "properties": {
-        "fingerprint_id": {"$ref": "#/$defs/id"},
-        "tissue": {"$ref": "#/$defs/nonempty"},
-        "region_id": {"$ref": "#/$defs/id"}
+        "fingerprint_id": {
+          "$ref": "#/$defs/id",
+          "title": "Fingerprint identifier",
+          "description": "Identifier of the target proteome fingerprint in the composed demonstrator.",
+          "default": "FP9",
+          "x-unit": "identifier",
+          "x-evidence": "FP9 is the dissertation reference fingerprint used by the accepted M7 workflow.",
+          "x-limitation": "The current cellular profiles are synthetic surrogates, not an FP9-specific proteomic mechanism."
+        },
+        "tissue": {
+          "$ref": "#/$defs/nonempty",
+          "title": "Target tissue",
+          "description": "Human-readable tissue associated with the target region.",
+          "default": "lung",
+          "x-unit": "anatomical label",
+          "x-evidence": "The current vertical slice composes the qualified pulmonary model.",
+          "x-limitation": "The workbench does not automatically substitute an organ model when this label changes."
+        },
+        "region_id": {
+          "$ref": "#/$defs/id",
+          "title": "Target region identifier",
+          "description": "Region identity expected by the composed body and organ artifacts.",
+          "default": "lung",
+          "x-unit": "identifier",
+          "x-evidence": "Cross-artifact identity used by the accepted FP9/lung composition.",
+          "x-limitation": "The identifier must remain consistent with the referenced model artifacts."
+        }
       }
     },
     "artifacts": {

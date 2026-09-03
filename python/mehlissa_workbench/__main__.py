@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2026 MEHLISSA contributors
 # SPDX-License-Identifier: MPL-2.0
 
-"""Command-line entry point for the local UX-6.1 prototype."""
+"""Command-line entry point for the local MEHLISSA research workbench."""
 
 from __future__ import annotations
 
@@ -12,7 +12,12 @@ import webbrowser
 
 from mehlissa import MehlissaClient
 
-from .server import LOOPBACK_HOSTS, create_server, discover_catalog
+from .server import (
+    LOOPBACK_HOSTS,
+    ScenarioWorkspace,
+    create_server,
+    discover_catalog,
+)
 
 
 def _default_executable(repository_root: Path) -> Path | None:
@@ -23,7 +28,11 @@ def _default_executable(repository_root: Path) -> Path | None:
         "build/linux-clang-analysis/apps/mehlissa",
     )
     return next(
-        (repository_root / candidate for candidate in candidates if (repository_root / candidate).is_file()),
+        (
+            repository_root / candidate
+            for candidate in candidates
+            if (repository_root / candidate).is_file()
+        ),
         None,
     )
 
@@ -31,17 +40,22 @@ def _default_executable(repository_root: Path) -> Path | None:
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="mehlissa-workbench",
-        description="Start the loopback-only read-only MEHLISSA UX-6.1 prototype.",
+        description="Start the loopback-only MEHLISSA research workbench.",
     )
     parser.add_argument("--repository-root", type=Path, default=Path.cwd())
     parser.add_argument("--executable", type=Path)
     parser.add_argument("--host", default="127.0.0.1", choices=sorted(LOOPBACK_HOSTS))
     parser.add_argument("--port", type=int, default=8765)
+    parser.add_argument(
+        "--workspace",
+        type=Path,
+        help="scenario save-as directory inside the repository (default: workbench-scenarios)",
+    )
     parser.add_argument("--no-browser", action="store_true")
     parser.add_argument(
         "--check",
         action="store_true",
-        help="verify read-only discovery and exit without starting a server",
+        help="verify discovery and scenario-workspace loading, then exit",
     )
     return parser
 
@@ -59,15 +73,19 @@ def main() -> int:
     client = MehlissaClient(executable, repository_root)
     if arguments.check:
         catalog = discover_catalog(client)
+        workspace = ScenarioWorkspace(client, arguments.workspace).overview()
         print("workbench_status=ready")
-        print("read_only=true")
+        print("scenario_editing=true")
         print(f"model_count={len(catalog['models'])}")
         print(f"example_count={len(catalog['examples'])}")
+        print(f"scenario_source_count={len(workspace['sources'])}")
         return 0
 
-    server = create_server(client, arguments.host, arguments.port)
-    print("MEHLISSA Next Research Workbench — UX-6.1 foundation prototype")
-    print("Read-only: this prototype cannot create, change, or run a scenario.")
+    server = create_server(
+        client, arguments.host, arguments.port, workspace_root=arguments.workspace
+    )
+    print("MEHLISSA Next Research Workbench — UX-6.2 guided scenario workspace")
+    print("Scenario editing uses non-overwriting save-as; simulations are not started yet.")
     print(f"workbench_url={server.url}")
     print("Press Ctrl+C to stop.")
     if not arguments.no_browser:

@@ -175,6 +175,7 @@ implementation is correct or sufficiently validated.
 | UX-005 | A graphical workbench shall delegate discovery, validation, execution, and analysis to accepted MEHLISSA interfaces and shall not duplicate simulation or schema semantics in its presentation layer. | A/N | P1 | T/I | RM UX-6.1; ADR-0050 |
 | UX-006 | The local workbench shall default to loopback-only, no-telemetry operation and protect its interfaces, files, and untrusted content according to a documented threat and privacy baseline. | N | P1 | T/I | RM UX-6.1; ADR-0050 |
 | UX-007 | The graphical workbench shall target WCAG 2.2 level AA and support semantic, keyboard-operable, reflow-capable workflows with visible non-color feedback. | N | P1 | T/I | RM UX-6.1; WCAG 2.2 |
+| UX-008 | Guided scenario editing shall derive field semantics from versioned schemas, retain unsupported source content visibly, validate complete candidates through accepted interfaces, and save only to new bounded local files. | N | P1 | T/I | RM UX-6.2; ADR-0050 |
 
 ## 12. Medical scenarios
 

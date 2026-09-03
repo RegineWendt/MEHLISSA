@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M7 and locally accepted UX-1 through UX-6.1
+**Covered software:** accepted M0 through M7 and locally accepted UX-1 through UX-6.2
 
-**Last updated:** 3 September 2026, after local acceptance of the UX-6.1 workbench foundation
+**Last updated:** 3 September 2026, after local acceptance of the UX-6.2 guided scenario workspace
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -924,13 +924,12 @@ when an analysis can handle the failure explicitly; never convert failed runs
 into apparent observations. Identifiable patient data still must not be placed
 in notebooks, repository examples, or shared result bundles.
 
-#### Explore the graphical workbench foundation (UX-6.1)
+#### Create a scenario in the graphical workbench (UX-6.1 and UX-6.2)
 
-UX-6.1 introduces the first local browser interface. It is intentionally
-read-only: it lets you search the five implemented model families and ten
-curated starter examples, but it cannot yet edit a scenario or start a run.
-That boundary lets contributors evaluate navigation and terminology before the
-safe scenario round trip is added in UX-6.2.
+The local browser workbench lets you search the five implemented model families
+and ten curated starter examples. UX-6.2 also provides a guided editor for the
+complete FP9/lung fingerprinting scenario. It does not start a simulation yet;
+run control is planned for UX-6.4.
 
 From the repository root, make the source packages visible and check that the
 workbench can locate the application and read its validated catalog:
@@ -940,8 +939,9 @@ $env:PYTHONPATH = "$PWD/python"
 python -m mehlissa_workbench --repository-root . --check
 ```
 
-The check prints `workbench_status=ready`, `read_only=true`, and the model and
-example counts. Then start the interface:
+The check prints `workbench_status=ready`, `scenario_editing=true`, the model
+and example counts, and the number of available scenario sources. Then start
+the interface:
 
 ```powershell
 python -m mehlissa_workbench --repository-root .
@@ -962,18 +962,52 @@ launching terminal to stop the host. Do not bookmark or share the URL: it
 contains a short-lived capability that authorizes this one local process and is
 removed from browser history after startup.
 
-The host listens only on the local computer, serves no remote assets, records
-no telemetry, accepts no personal data, and exposes only read operations. The
-page's research-software notice is binding: displayed maturity and evidence do
-not make a model patient-specific or clinically valid. Product roles,
-technology trade-offs, wireframes, and the full threat/privacy/accessibility
-baseline are in the
-[UX-6.1 foundation](ux/UX6_1_PRODUCT_AND_TECHNICAL_FOUNDATION.md).
+In **Configure an experiment**, keep the implemented complete FP9/lung model
+selected and choose either the curated starter or a previously saved local
+scenario. Each guided field shows its schema definition, unit, documented
+default, evidence basis, and interpretation limitation. Immutable contract
+fields remain visible but disabled. Expand **Complete source JSON** to inspect
+the live full document, including all 13 artifact bindings, evidence sources,
+limitations, acceptance rules, and any fields not represented by a control.
 
-If the page says that the catalog could not be loaded, stop the process, run
-the `--check` command, and confirm that the selected executable belongs to this
-repository build. A missing session message usually means an old or bookmarked
-URL was used; restart the launcher and use its newly printed URL.
+When you change a field, the page marks the scenario as unsaved and updates the
+source view. Resetting, opening a different source, or leaving the page asks
+before discarding changes. Choose **Save as…** and a new basename ending in
+`.json`. The workbench reconstructs the candidate from the complete source,
+applies only supported changes, and asks the normal MEHLISSA executable to
+validate it. A successful file immediately appears as a saved scenario and can
+be reopened. Existing files are never overwritten.
+
+By default, new files are written to the Git-ignored
+`workbench-scenarios/` directory. To use another directory inside this
+repository, start the host with:
+
+```powershell
+python -m mehlissa_workbench `
+  --repository-root . `
+  --workspace results/scenario-drafts
+```
+
+Only safe JSON filenames and sources listed by the workbench can be accessed.
+Unsupported or future fields are shown in the source view and retained; if the
+current schema does not accept them, save fails visibly instead of silently
+dropping them. A rejected save does not create the destination.
+
+The host listens only on the local computer, serves no remote assets, records
+no telemetry, and is not a patient-data workflow. The page's research-software
+notice is binding: displayed maturity and evidence do not make a model
+patient-specific or clinically valid. Product roles, technology trade-offs,
+wireframes, and the baseline are in the
+[UX-6.1 foundation](ux/UX6_1_PRODUCT_AND_TECHNICAL_FOUNDATION.md); the editor,
+round-trip, and security contracts are in the
+[UX-6.2 workspace description](ux/UX6_2_GUIDED_SCENARIO_WORKSPACE.md).
+
+If the page says that the catalog or scenario workspace could not be loaded,
+stop the process, run the `--check` command, and confirm that the selected
+executable belongs to this repository build. A missing session message usually
+means an old or bookmarked URL was used; restart the launcher and use its newly
+printed URL. If save is rejected, first check the filename and the message;
+UX-6.3 will add detailed field-linked correction guidance.
 
 #### Validate an experiment manifest
 
@@ -2784,11 +2818,17 @@ The usability package status is:
   security/privacy/accessibility baselines, and a protected read-only catalog
   browser reuse the Python process API. All 285 Windows/MSVC tests and the
   desktop/mobile browser review pass; publication and supported GitHub CI are
-  pending an explicit push; and
-- **UX-6.2 through UX-6.8, integrated graphical workbench:** next add safe
-  scenario round trips, corrective validation, execution, results, provenance,
-  uncertainty visualization, packaging, and final usability/accessibility
-  acceptance.
+  pending an explicit push;
+- **UX-6.2, guided scenario workspace:** locally passed; 13 displayed fields are
+  projected from the scenario schema with units, defaults, evidence, and
+  limitations. The complete source remains visible, unsaved changes are
+  explicit, and bounded save-as validates and reopens a derivative without
+  overwriting. All 285 Windows/MSVC tests and the desktop/mobile browser round
+  trip pass; publication and supported GitHub CI are pending an explicit push;
+  and
+- **UX-6.3 through UX-6.8, integrated graphical workbench:** next add corrective
+  validation, execution, results, provenance, uncertainty visualization,
+  packaging, and final usability/accessibility acceptance.
 
 Planned substantive scientific extensions are:
 
