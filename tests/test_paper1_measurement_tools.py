@@ -23,6 +23,9 @@ def load_module(name: str, path: Path):
 resource = load_module(
     "paper1_resource", ROOT / "publication/paper1/run_m7_resource_study.py"
 )
+parity = load_module(
+    "paper1_parity", ROOT / "publication/paper1/check_access_parity.py"
+)
 
 
 class Paper1MeasurementToolTests(unittest.TestCase):
@@ -58,6 +61,20 @@ class Paper1MeasurementToolTests(unittest.TestCase):
             (root / "one.txt").write_bytes(b"123")
             (root / "two.txt").write_bytes(b"4567")
             self.assertEqual(resource.directory_metrics(root), (2, 7))
+
+    def test_workbench_candidate_hash_is_line_ending_independent(self) -> None:
+        import tempfile
+
+        with tempfile.TemporaryDirectory(prefix="mehlissa-paper1-parity-") as directory:
+            root = Path(directory)
+            lf = root / "lf.json"
+            crlf = root / "crlf.json"
+            lf.write_bytes(b'{\n  "value": 1\n}\n')
+            crlf.write_bytes(b'{\r\n  "value": 1\r\n}\r\n')
+            self.assertEqual(
+                parity.canonical_json_sha256(lf),
+                parity.canonical_json_sha256(crlf),
+            )
 
 
 if __name__ == "__main__":

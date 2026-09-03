@@ -31,6 +31,12 @@ def write_json(path: Path, value: Any) -> None:
     path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def canonical_json_sha256(path: Path) -> str:
+    document = json.loads(path.read_text(encoding="utf-8"))
+    payload = (json.dumps(document, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--executable", required=True, type=Path)
@@ -79,7 +85,10 @@ def main() -> int:
         "completed_at": None,
         "directory": relative_job,
         "plan": {
-            "candidate_sha256": sha256(copied_scenario),
+            # The Workbench validates the parsed JSON candidate in its canonical
+            # LF-terminated representation.  Keep this independent of the host's
+            # native line endings while provenance continues to verify raw bytes.
+            "candidate_sha256": canonical_json_sha256(copied_scenario),
             "master_seeds": [python_first.summary["seed"]],
         },
         "artifacts": [
