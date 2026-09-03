@@ -1,0 +1,598 @@
+{
+  "schema_version": "1.0.0",
+  "experiment_id": "P1-E3-ACCESS-PARITY",
+  "source_result": {
+    "path": "tmp/paper1-measurements/P1-E2-M7-RESOURCE/raw/baseline-1/run/fp9-lung-level-a-v1-20260903T173552Z/result.json",
+    "sha256": "37cd31569769a1a3dbc4762efd9f5b42766d9e009388ddc3a19cc61e8b988bc7"
+  },
+  "cli": {
+    "repeated_read_identity": true,
+    "summary": "MEHLISSA fingerprinting scenario summary\nScenario: FP9 lung historical-timer vertical-slice composition (fp9-lung-level-a-v1)\nRun identity: paper1-m7-baseline\nTarget: FP9 in lung/lung\nMolecular target detected: yes\nFingerprint assembled: yes (9/9 tiles)\nLocal messages delivered: 2/2\nBody-area-network frames delivered: 1/1\nSensitivity in the four-case software analysis: 50.0% (95% interval 9.5-90.5%)\nSpecificity in the four-case software analysis: 50.0% (95% interval 9.5-90.5%)\nClinical validation claim: no\nDocumented limitations: 8\nresult_file=C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E2-M7-RESOURCE\\raw\\baseline-1\\run\\fp9-lung-level-a-v1-20260903T173552Z\\result.json\n"
+  },
+  "python": {
+    "reader": "mehlissa.load_result",
+    "repeated_read_identity": true,
+    "summary": {
+      "scenario_id": "fp9-lung-level-a-v1",
+      "run_id": "paper1-m7-baseline",
+      "seed": 20260901,
+      "collector_count": 1000,
+      "detected": true,
+      "assembled": true,
+      "sensitivity": 0.5,
+      "specificity": 0.5,
+      "clinical_validation_claim": false
+    },
+    "runtime_stages": [
+      {
+        "basis": "model_execution",
+        "component_id": "bvs95-dissertation-rest",
+        "input_identity": "paper1-m7-baseline",
+        "ordinal": 0,
+        "output_identity": "paper1-m7-baseline:entity:1",
+        "qualification": "The selected body component is initialized with a deterministic representative particle; the population-scale FP9 timing remains historical.",
+        "stage": "injection",
+        "time_ns": 0
+      },
+      {
+        "basis": "historical_timer",
+        "component_id": "bvs95-dissertation-rest",
+        "input_identity": "paper1-m7-baseline:entity:1",
+        "ordinal": 1,
+        "output_identity": "paper1-m7-baseline:entity:1",
+        "qualification": "Intermediate body-stage time is a declared partition of the historical first-localization interval, not an independently calibrated transit prediction.",
+        "stage": "body_transport",
+        "time_ns": 12500000000
+      },
+      {
+        "basis": "historical_timer",
+        "component_id": "lung.pulmonary-0d.healthy-adult-lobar-parallel.v7",
+        "input_identity": "paper1-m7-baseline:entity:1",
+        "ordinal": 2,
+        "output_identity": "paper1-m7-baseline:entity:1",
+        "qualification": "The selected five-lobe organ model is instantiated and advanced; this Level-A timestamp remains timer-derived.",
+        "stage": "organ_transfer",
+        "time_ns": 20000000000
+      },
+      {
+        "basis": "historical_timer",
+        "component_id": "capillary.lung.healthy-adult-rest-supine.v1",
+        "input_identity": "paper1-m7-baseline:entity:1",
+        "ordinal": 3,
+        "output_identity": "paper1-m7-baseline:localized:FP9",
+        "qualification": "The pulmonary capillary component is instantiated and advanced; localization time is the published FP9 regression target.",
+        "stage": "capillary_localization",
+        "time_ns": 25000000000
+      },
+      {
+        "basis": "model_execution",
+        "component_id": "cell.receptor-ligand.synthetic.v1",
+        "input_identity": "paper1-m7-baseline:localized:FP9",
+        "ordinal": 4,
+        "output_identity": "paper1-m7-baseline:detection:FP9",
+        "qualification": "Level B evaluates the selected concentration with the selected analytical 1:1 receptor model. Parameters remain a synthetic software surrogate, not an FP9-specific proteomic calibration.",
+        "stage": "molecular_recognition",
+        "time_ns": 27746530721
+      },
+      {
+        "basis": "software_surrogate",
+        "component_id": "fp9.explicit-tile-assembly.v1",
+        "input_identity": "paper1-m7-baseline:detection:FP9",
+        "ordinal": 5,
+        "output_identity": "paper1-m7-baseline:assembly:FP9",
+        "qualification": "Level C executes explicit tile identities and an all-required-tiles rule. The assembly duration remains the historical FP9 timer and is not a NetTAS or diffusion calculation.",
+        "stage": "fingerprint_assembly",
+        "time_ns": 43736530721
+      },
+      {
+        "basis": "software_surrogate",
+        "component_id": "cluster.fp9.lung.level-a.1",
+        "input_identity": "paper1-m7-baseline:assembly:FP9",
+        "ordinal": 6,
+        "output_identity": "paper1-m7-baseline:message:assembled",
+        "qualification": "Level D executes the selected deterministic locator-collector and collector-gateway links, active-gateway publication, BAN transport, and external station reception. All channel timing and energy values remain synthetic software-contract parameters.",
+        "stage": "local_collection",
+        "time_ns": 43746530721
+      },
+      {
+        "basis": "software_surrogate",
+        "component_id": "cluster.fp9.lung.level-a.1",
+        "input_identity": "paper1-m7-baseline:message:assembled",
+        "ordinal": 7,
+        "output_identity": "paper1-m7-baseline:message:collector-uplink",
+        "qualification": "Level D executes the selected deterministic locator-collector and collector-gateway links, active-gateway publication, BAN transport, and external station reception. All channel timing and energy values remain synthetic software-contract parameters.",
+        "stage": "collector_return",
+        "time_ns": 208970000000
+      },
+      {
+        "basis": "software_surrogate",
+        "component_id": "gateway.synthetic.wrist",
+        "input_identity": "paper1-m7-baseline:message:collector-uplink",
+        "ordinal": 8,
+        "output_identity": "measurement.m6-4.paper1-m7-baseline:message:collector-uplink",
+        "qualification": "Level D executes the selected deterministic locator-collector and collector-gateway links, active-gateway publication, BAN transport, and external station reception. All channel timing and energy values remain synthetic software-contract parameters.",
+        "stage": "gateway_measurement",
+        "time_ns": 208970000000
+      },
+      {
+        "basis": "software_surrogate",
+        "component_id": "station.synthetic.analysis-control",
+        "input_identity": "measurement.m6-4.paper1-m7-baseline:message:collector-uplink",
+        "ordinal": 9,
+        "output_identity": "paper1-m7-baseline:report:FP9",
+        "qualification": "Level D executes the selected deterministic locator-collector and collector-gateway links, active-gateway publication, BAN transport, and external station reception. All channel timing and energy values remain synthetic software-contract parameters.",
+        "stage": "external_report",
+        "time_ns": 208980000000
+      }
+    ],
+    "analysis_cases": [
+      {
+        "case_id": "present-reference",
+        "classification": "true_positive",
+        "detected": true,
+        "exposure_duration_ns": 10000000000,
+        "final_bound_fraction": 0.7362632708334492,
+        "ligand_concentration_mol_m3": 0.0003,
+        "target_present": true
+      },
+      {
+        "case_id": "present-below-threshold",
+        "classification": "false_negative",
+        "detected": false,
+        "exposure_duration_ns": 10000000000,
+        "final_bound_fraction": 6.321179164254112e-06,
+        "ligand_concentration_mol_m3": 1e-09,
+        "target_present": true
+      },
+      {
+        "case_id": "absent-cross-reactive-reference",
+        "classification": "false_positive",
+        "detected": true,
+        "exposure_duration_ns": 10000000000,
+        "final_bound_fraction": 0.7362632708334492,
+        "ligand_concentration_mol_m3": 0.0003,
+        "target_present": false
+      },
+      {
+        "case_id": "absent-below-threshold",
+        "classification": "true_negative",
+        "detected": false,
+        "exposure_duration_ns": 10000000000,
+        "final_bound_fraction": 6.321179164254112e-06,
+        "ligand_concentration_mol_m3": 1e-09,
+        "target_present": false
+      }
+    ]
+  },
+  "workbench": {
+    "reader": "mehlissa.load_result",
+    "summary_parity": true,
+    "source_integrity": {
+      "status": "verified",
+      "checked_count": 29,
+      "verified_count": 29,
+      "altered_count": 0,
+      "missing_count": 0,
+      "checks": [
+        {
+          "label": "validated scenario candidate",
+          "path": "tmp/paper1-measurements/P1-E3-ACCESS-PARITY/workbench-job/scenario-input.json",
+          "expected_sha256": "b027e39fcfeac3b7552b7830b6074f5282e0816ec9e76bdcbb5f72d709c85883",
+          "actual_sha256": "b027e39fcfeac3b7552b7830b6074f5282e0816ec9e76bdcbb5f72d709c85883",
+          "status": "verified"
+        },
+        {
+          "label": "provenance scenario profile",
+          "path": "tmp/paper1-measurements/P1-E3-ACCESS-PARITY/workbench-job/scenario-input.json",
+          "expected_sha256": "b620f2e60b6e99fa1f698fba43d9773df084c622a546091fa25266f66f86742f",
+          "actual_sha256": "b620f2e60b6e99fa1f698fba43d9773df084c622a546091fa25266f66f86742f",
+          "status": "verified"
+        },
+        {
+          "label": "authoritative result",
+          "path": "tmp/paper1-measurements/P1-E3-ACCESS-PARITY/workbench-job/result.json",
+          "expected_sha256": "37cd31569769a1a3dbc4762efd9f5b42766d9e009388ddc3a19cc61e8b988bc7",
+          "actual_sha256": "37cd31569769a1a3dbc4762efd9f5b42766d9e009388ddc3a19cc61e8b988bc7",
+          "status": "verified"
+        },
+        {
+          "label": "body_model definition",
+          "path": "data/body-models/bvs95-dissertation-rest-v1.json",
+          "expected_sha256": "1266ac9f30033820255161ccfb53104a20c76188df4d50e38c1d6e329ece0c28",
+          "actual_sha256": "1266ac9f30033820255161ccfb53104a20c76188df4d50e38c1d6e329ece0c28",
+          "status": "verified"
+        },
+        {
+          "label": "body_model schema",
+          "path": "data/schemas/vascular-graph/1.0.0.schema.json",
+          "expected_sha256": "b8deb9e2a5b36771caa86e83f03cfdd6076f96d6bb976b3d1f34f418859f8d51",
+          "actual_sha256": "b8deb9e2a5b36771caa86e83f03cfdd6076f96d6bb976b3d1f34f418859f8d51",
+          "status": "verified"
+        },
+        {
+          "label": "body_state definition",
+          "path": "data/body-states/bvs95-rest-supine-v1.json",
+          "expected_sha256": "7950463681ea9b5e89bb7d91223d707b8fa3ffe1165f7401be4f6741fce09d91",
+          "actual_sha256": "7950463681ea9b5e89bb7d91223d707b8fa3ffe1165f7401be4f6741fce09d91",
+          "status": "verified"
+        },
+        {
+          "label": "body_state schema",
+          "path": "data/schemas/body-state-profile/1.0.0.schema.json",
+          "expected_sha256": "80a4ae109351ac4cf05c89e5fe7f51a8a5d6741b59bebdd46d1ef9f411faf421",
+          "actual_sha256": "80a4ae109351ac4cf05c89e5fe7f51a8a5d6741b59bebdd46d1ef9f411faf421",
+          "status": "verified"
+        },
+        {
+          "label": "organ_model definition",
+          "path": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json",
+          "expected_sha256": "1374bdd7eef2bc849b4fb5a06726adeecfec2ba2e74beb6d166db919b7a1c3c6",
+          "actual_sha256": "1374bdd7eef2bc849b4fb5a06726adeecfec2ba2e74beb6d166db919b7a1c3c6",
+          "status": "verified"
+        },
+        {
+          "label": "organ_model schema",
+          "path": "data/schemas/lung-model-definition/1.6.0.schema.json",
+          "expected_sha256": "a964f0b9bc5d8dc9f4ec2486330c493f2a7d6f4833b1eea6468447938cd9378b",
+          "actual_sha256": "a964f0b9bc5d8dc9f4ec2486330c493f2a7d6f4833b1eea6468447938cd9378b",
+          "status": "verified"
+        },
+        {
+          "label": "capillary_model definition",
+          "path": "examples/capillary-models/pulmonary-healthy-adult-rest-supine-v1.json",
+          "expected_sha256": "b36bbacf118e062ccbb0e71b3d7794241ebdb9e461c7140242d4476509ea545b",
+          "actual_sha256": "b36bbacf118e062ccbb0e71b3d7794241ebdb9e461c7140242d4476509ea545b",
+          "status": "verified"
+        },
+        {
+          "label": "capillary_model schema",
+          "path": "data/schemas/capillary-bed-definition/3.0.0.schema.json",
+          "expected_sha256": "2ea870b26ba45d6b3fed22774f3810432b954cf3e630e7f2c24899d429dfbc45",
+          "actual_sha256": "2ea870b26ba45d6b3fed22774f3810432b954cf3e630e7f2c24899d429dfbc45",
+          "status": "verified"
+        },
+        {
+          "label": "capillary_cell_signal definition",
+          "path": "examples/cosimulation/synthetic-capillary-cell-signal-v1.json",
+          "expected_sha256": "9855448bbea1d8a47ad08e98a6611142062b515a25a8da087ad25c328a048229",
+          "actual_sha256": "9855448bbea1d8a47ad08e98a6611142062b515a25a8da087ad25c328a048229",
+          "status": "verified"
+        },
+        {
+          "label": "capillary_cell_signal schema",
+          "path": "data/schemas/capillary-cell-signal-profile/1.0.0.schema.json",
+          "expected_sha256": "032a2264b6e2a5312518c9b5f8987c90d89db8fd72f273add92986cbc5f2f5a2",
+          "actual_sha256": "032a2264b6e2a5312518c9b5f8987c90d89db8fd72f273add92986cbc5f2f5a2",
+          "status": "verified"
+        },
+        {
+          "label": "receptor_model definition",
+          "path": "examples/cell-models/synthetic-receptor-ligand-v1.json",
+          "expected_sha256": "027034db2154a463c60ab27c0654a156e515d46889a0760a407de7a8bfecaebd",
+          "actual_sha256": "027034db2154a463c60ab27c0654a156e515d46889a0760a407de7a8bfecaebd",
+          "status": "verified"
+        },
+        {
+          "label": "receptor_model schema",
+          "path": "data/schemas/receptor-ligand-profile/1.0.0.schema.json",
+          "expected_sha256": "4d2ebaec00b2c26106ab0a7d1f98e85b68c6409591ce05356812731f32a7f7eb",
+          "actual_sha256": "4d2ebaec00b2c26106ab0a7d1f98e85b68c6409591ce05356812731f32a7f7eb",
+          "status": "verified"
+        },
+        {
+          "label": "locator_device definition",
+          "path": "examples/iot-models/synthetic-locator-v1.json",
+          "expected_sha256": "a3176e6a0243cf3dd96627860edb4e327b63200f69797b3258fa6d2d7ab5b061",
+          "actual_sha256": "a3176e6a0243cf3dd96627860edb4e327b63200f69797b3258fa6d2d7ab5b061",
+          "status": "verified"
+        },
+        {
+          "label": "locator_device schema",
+          "path": "data/schemas/nanodevice-profile/1.0.0.schema.json",
+          "expected_sha256": "a0821a5e4a6319487878d74267b4d166308de9877b5e730e1b0de6b57e9c536a",
+          "actual_sha256": "a0821a5e4a6319487878d74267b4d166308de9877b5e730e1b0de6b57e9c536a",
+          "status": "verified"
+        },
+        {
+          "label": "collector_device definition",
+          "path": "examples/iot-models/synthetic-uplink-collector-v1.json",
+          "expected_sha256": "0d969f3e28d417456b3cf8231dc81ca864a838a56ccb1fc5c0b21d28aeaef0ff",
+          "actual_sha256": "0d969f3e28d417456b3cf8231dc81ca864a838a56ccb1fc5c0b21d28aeaef0ff",
+          "status": "verified"
+        },
+        {
+          "label": "collector_device schema",
+          "path": "data/schemas/nanodevice-profile/1.0.0.schema.json",
+          "expected_sha256": "a0821a5e4a6319487878d74267b4d166308de9877b5e730e1b0de6b57e9c536a",
+          "actual_sha256": "a0821a5e4a6319487878d74267b4d166308de9877b5e730e1b0de6b57e9c536a",
+          "status": "verified"
+        },
+        {
+          "label": "communication_cluster definition",
+          "path": "examples/scenarios/fp9-lung-level-a-cluster-v1.json",
+          "expected_sha256": "0437dbe49fce3a0e8a9a14a10d86e5dfcae2c1018daf907cd73d5f9145f8fcb0",
+          "actual_sha256": "0437dbe49fce3a0e8a9a14a10d86e5dfcae2c1018daf907cd73d5f9145f8fcb0",
+          "status": "verified"
+        },
+        {
+          "label": "communication_cluster schema",
+          "path": "data/schemas/cluster-communication-profile/1.0.0.schema.json",
+          "expected_sha256": "0028379d5d6e9a9653fce912bbc7d4c69c05bd3e8998899aa0604e2369268820",
+          "actual_sha256": "0028379d5d6e9a9653fce912bbc7d4c69c05bd3e8998899aa0604e2369268820",
+          "status": "verified"
+        },
+        {
+          "label": "gateway_endpoint definition",
+          "path": "examples/iot-models/synthetic-gateway-endpoint-v1.json",
+          "expected_sha256": "e9827513a5d2acb1f3e6326f92ba10333efa75747091b03445943d81f4dbdf3e",
+          "actual_sha256": "e9827513a5d2acb1f3e6326f92ba10333efa75747091b03445943d81f4dbdf3e",
+          "status": "verified"
+        },
+        {
+          "label": "gateway_endpoint schema",
+          "path": "data/schemas/nanodevice-profile/1.0.0.schema.json",
+          "expected_sha256": "a0821a5e4a6319487878d74267b4d166308de9877b5e730e1b0de6b57e9c536a",
+          "actual_sha256": "a0821a5e4a6319487878d74267b4d166308de9877b5e730e1b0de6b57e9c536a",
+          "status": "verified"
+        },
+        {
+          "label": "active_gateway definition",
+          "path": "examples/iot-models/synthetic-active-gateway-v1.json",
+          "expected_sha256": "d0b9af3c76e0420e0393a56fd320a4678a7ba0213c953689fdfaf00918b92305",
+          "actual_sha256": "d0b9af3c76e0420e0393a56fd320a4678a7ba0213c953689fdfaf00918b92305",
+          "status": "verified"
+        },
+        {
+          "label": "active_gateway schema",
+          "path": "data/schemas/active-gateway-profile/1.0.0.schema.json",
+          "expected_sha256": "05e810695ac39fb5f83722d5fd2f66a3e6e5c15658c5dc2ff65354c67f3e4282",
+          "actual_sha256": "05e810695ac39fb5f83722d5fd2f66a3e6e5c15658c5dc2ff65354c67f3e4282",
+          "status": "verified"
+        },
+        {
+          "label": "ban_station definition",
+          "path": "examples/iot-models/synthetic-ban-station-v1.json",
+          "expected_sha256": "343b3d64ff3ef05d757baf32eee2b9b9add4a9d83c353f5d7c74e3962a70c749",
+          "actual_sha256": "343b3d64ff3ef05d757baf32eee2b9b9add4a9d83c353f5d7c74e3962a70c749",
+          "status": "verified"
+        },
+        {
+          "label": "ban_station schema",
+          "path": "data/schemas/ban-station-profile/1.0.0.schema.json",
+          "expected_sha256": "f971f14294f2abdb465e364146a0a2b2abdf0a3a5ca46fbb6315a9066d277e3e",
+          "actual_sha256": "f971f14294f2abdb465e364146a0a2b2abdf0a3a5ca46fbb6315a9066d277e3e",
+          "status": "verified"
+        },
+        {
+          "label": "timer_baseline definition",
+          "path": "examples/scenarios/fp9-lung-historical-timer-v1.json",
+          "expected_sha256": "80718cd832e03166198c7e80fcf22e28eb936d0ce3876a878683801a879a8b33",
+          "actual_sha256": "80718cd832e03166198c7e80fcf22e28eb936d0ce3876a878683801a879a8b33",
+          "status": "verified"
+        },
+        {
+          "label": "timer_baseline schema",
+          "path": "data/schemas/fingerprint-timer-baseline/1.0.0.schema.json",
+          "expected_sha256": "6c2b354f938004b5dd36ede6846928daad0554703c7c7ffd0d8ae9b627eb3afa",
+          "actual_sha256": "6c2b354f938004b5dd36ede6846928daad0554703c7c7ffd0d8ae9b627eb3afa",
+          "status": "verified"
+        }
+      ]
+    },
+    "tampered_result_status": {
+      "status": "attention",
+      "checked_count": 29,
+      "verified_count": 28,
+      "altered_count": 1,
+      "missing_count": 0,
+      "checks": [
+        {
+          "label": "validated scenario candidate",
+          "path": "tmp/paper1-measurements/P1-E3-ACCESS-PARITY/tampered-workbench-job/scenario-input.json",
+          "expected_sha256": "b027e39fcfeac3b7552b7830b6074f5282e0816ec9e76bdcbb5f72d709c85883",
+          "actual_sha256": "b027e39fcfeac3b7552b7830b6074f5282e0816ec9e76bdcbb5f72d709c85883",
+          "status": "verified"
+        },
+        {
+          "label": "provenance scenario profile",
+          "path": "tmp/paper1-measurements/P1-E3-ACCESS-PARITY/tampered-workbench-job/scenario-input.json",
+          "expected_sha256": "b620f2e60b6e99fa1f698fba43d9773df084c622a546091fa25266f66f86742f",
+          "actual_sha256": "b620f2e60b6e99fa1f698fba43d9773df084c622a546091fa25266f66f86742f",
+          "status": "verified"
+        },
+        {
+          "label": "authoritative result",
+          "path": "tmp/paper1-measurements/P1-E3-ACCESS-PARITY/tampered-workbench-job/result.json",
+          "expected_sha256": "37cd31569769a1a3dbc4762efd9f5b42766d9e009388ddc3a19cc61e8b988bc7",
+          "actual_sha256": "9cc724ddd1cd49df0b9c2d32fec3783e69e95743037199a98484cb49edc52307",
+          "status": "altered"
+        },
+        {
+          "label": "body_model definition",
+          "path": "data/body-models/bvs95-dissertation-rest-v1.json",
+          "expected_sha256": "1266ac9f30033820255161ccfb53104a20c76188df4d50e38c1d6e329ece0c28",
+          "actual_sha256": "1266ac9f30033820255161ccfb53104a20c76188df4d50e38c1d6e329ece0c28",
+          "status": "verified"
+        },
+        {
+          "label": "body_model schema",
+          "path": "data/schemas/vascular-graph/1.0.0.schema.json",
+          "expected_sha256": "b8deb9e2a5b36771caa86e83f03cfdd6076f96d6bb976b3d1f34f418859f8d51",
+          "actual_sha256": "b8deb9e2a5b36771caa86e83f03cfdd6076f96d6bb976b3d1f34f418859f8d51",
+          "status": "verified"
+        },
+        {
+          "label": "body_state definition",
+          "path": "data/body-states/bvs95-rest-supine-v1.json",
+          "expected_sha256": "7950463681ea9b5e89bb7d91223d707b8fa3ffe1165f7401be4f6741fce09d91",
+          "actual_sha256": "7950463681ea9b5e89bb7d91223d707b8fa3ffe1165f7401be4f6741fce09d91",
+          "status": "verified"
+        },
+        {
+          "label": "body_state schema",
+          "path": "data/schemas/body-state-profile/1.0.0.schema.json",
+          "expected_sha256": "80a4ae109351ac4cf05c89e5fe7f51a8a5d6741b59bebdd46d1ef9f411faf421",
+          "actual_sha256": "80a4ae109351ac4cf05c89e5fe7f51a8a5d6741b59bebdd46d1ef9f411faf421",
+          "status": "verified"
+        },
+        {
+          "label": "organ_model definition",
+          "path": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json",
+          "expected_sha256": "1374bdd7eef2bc849b4fb5a06726adeecfec2ba2e74beb6d166db919b7a1c3c6",
+          "actual_sha256": "1374bdd7eef2bc849b4fb5a06726adeecfec2ba2e74beb6d166db919b7a1c3c6",
+          "status": "verified"
+        },
+        {
+          "label": "organ_model schema",
+          "path": "data/schemas/lung-model-definition/1.6.0.schema.json",
+          "expected_sha256": "a964f0b9bc5d8dc9f4ec2486330c493f2a7d6f4833b1eea6468447938cd9378b",
+          "actual_sha256": "a964f0b9bc5d8dc9f4ec2486330c493f2a7d6f4833b1eea6468447938cd9378b",
+          "status": "verified"
+        },
+        {
+          "label": "capillary_model definition",
+          "path": "examples/capillary-models/pulmonary-healthy-adult-rest-supine-v1.json",
+          "expected_sha256": "b36bbacf118e062ccbb0e71b3d7794241ebdb9e461c7140242d4476509ea545b",
+          "actual_sha256": "b36bbacf118e062ccbb0e71b3d7794241ebdb9e461c7140242d4476509ea545b",
+          "status": "verified"
+        },
+        {
+          "label": "capillary_model schema",
+          "path": "data/schemas/capillary-bed-definition/3.0.0.schema.json",
+          "expected_sha256": "2ea870b26ba45d6b3fed22774f3810432b954cf3e630e7f2c24899d429dfbc45",
+          "actual_sha256": "2ea870b26ba45d6b3fed22774f3810432b954cf3e630e7f2c24899d429dfbc45",
+          "status": "verified"
+        },
+        {
+          "label": "capillary_cell_signal definition",
+          "path": "examples/cosimulation/synthetic-capillary-cell-signal-v1.json",
+          "expected_sha256": "9855448bbea1d8a47ad08e98a6611142062b515a25a8da087ad25c328a048229",
+          "actual_sha256": "9855448bbea1d8a47ad08e98a6611142062b515a25a8da087ad25c328a048229",
+          "status": "verified"
+        },
+        {
+          "label": "capillary_cell_signal schema",
+          "path": "data/schemas/capillary-cell-signal-profile/1.0.0.schema.json",
+          "expected_sha256": "032a2264b6e2a5312518c9b5f8987c90d89db8fd72f273add92986cbc5f2f5a2",
+          "actual_sha256": "032a2264b6e2a5312518c9b5f8987c90d89db8fd72f273add92986cbc5f2f5a2",
+          "status": "verified"
+        },
+        {
+          "label": "receptor_model definition",
+          "path": "examples/cell-models/synthetic-receptor-ligand-v1.json",
+          "expected_sha256": "027034db2154a463c60ab27c0654a156e515d46889a0760a407de7a8bfecaebd",
+          "actual_sha256": "027034db2154a463c60ab27c0654a156e515d46889a0760a407de7a8bfecaebd",
+          "status": "verified"
+        },
+        {
+          "label": "receptor_model schema",
+          "path": "data/schemas/receptor-ligand-profile/1.0.0.schema.json",
+          "expected_sha256": "4d2ebaec00b2c26106ab0a7d1f98e85b68c6409591ce05356812731f32a7f7eb",
+          "actual_sha256": "4d2ebaec00b2c26106ab0a7d1f98e85b68c6409591ce05356812731f32a7f7eb",
+          "status": "verified"
+        },
+        {
+          "label": "locator_device definition",
+          "path": "examples/iot-models/synthetic-locator-v1.json",
+          "expected_sha256": "a3176e6a0243cf3dd96627860edb4e327b63200f69797b3258fa6d2d7ab5b061",
+          "actual_sha256": "a3176e6a0243cf3dd96627860edb4e327b63200f69797b3258fa6d2d7ab5b061",
+          "status": "verified"
+        },
+        {
+          "label": "locator_device schema",
+          "path": "data/schemas/nanodevice-profile/1.0.0.schema.json",
+          "expected_sha256": "a0821a5e4a6319487878d74267b4d166308de9877b5e730e1b0de6b57e9c536a",
+          "actual_sha256": "a0821a5e4a6319487878d74267b4d166308de9877b5e730e1b0de6b57e9c536a",
+          "status": "verified"
+        },
+        {
+          "label": "collector_device definition",
+          "path": "examples/iot-models/synthetic-uplink-collector-v1.json",
+          "expected_sha256": "0d969f3e28d417456b3cf8231dc81ca864a838a56ccb1fc5c0b21d28aeaef0ff",
+          "actual_sha256": "0d969f3e28d417456b3cf8231dc81ca864a838a56ccb1fc5c0b21d28aeaef0ff",
+          "status": "verified"
+        },
+        {
+          "label": "collector_device schema",
+          "path": "data/schemas/nanodevice-profile/1.0.0.schema.json",
+          "expected_sha256": "a0821a5e4a6319487878d74267b4d166308de9877b5e730e1b0de6b57e9c536a",
+          "actual_sha256": "a0821a5e4a6319487878d74267b4d166308de9877b5e730e1b0de6b57e9c536a",
+          "status": "verified"
+        },
+        {
+          "label": "communication_cluster definition",
+          "path": "examples/scenarios/fp9-lung-level-a-cluster-v1.json",
+          "expected_sha256": "0437dbe49fce3a0e8a9a14a10d86e5dfcae2c1018daf907cd73d5f9145f8fcb0",
+          "actual_sha256": "0437dbe49fce3a0e8a9a14a10d86e5dfcae2c1018daf907cd73d5f9145f8fcb0",
+          "status": "verified"
+        },
+        {
+          "label": "communication_cluster schema",
+          "path": "data/schemas/cluster-communication-profile/1.0.0.schema.json",
+          "expected_sha256": "0028379d5d6e9a9653fce912bbc7d4c69c05bd3e8998899aa0604e2369268820",
+          "actual_sha256": "0028379d5d6e9a9653fce912bbc7d4c69c05bd3e8998899aa0604e2369268820",
+          "status": "verified"
+        },
+        {
+          "label": "gateway_endpoint definition",
+          "path": "examples/iot-models/synthetic-gateway-endpoint-v1.json",
+          "expected_sha256": "e9827513a5d2acb1f3e6326f92ba10333efa75747091b03445943d81f4dbdf3e",
+          "actual_sha256": "e9827513a5d2acb1f3e6326f92ba10333efa75747091b03445943d81f4dbdf3e",
+          "status": "verified"
+        },
+        {
+          "label": "gateway_endpoint schema",
+          "path": "data/schemas/nanodevice-profile/1.0.0.schema.json",
+          "expected_sha256": "a0821a5e4a6319487878d74267b4d166308de9877b5e730e1b0de6b57e9c536a",
+          "actual_sha256": "a0821a5e4a6319487878d74267b4d166308de9877b5e730e1b0de6b57e9c536a",
+          "status": "verified"
+        },
+        {
+          "label": "active_gateway definition",
+          "path": "examples/iot-models/synthetic-active-gateway-v1.json",
+          "expected_sha256": "d0b9af3c76e0420e0393a56fd320a4678a7ba0213c953689fdfaf00918b92305",
+          "actual_sha256": "d0b9af3c76e0420e0393a56fd320a4678a7ba0213c953689fdfaf00918b92305",
+          "status": "verified"
+        },
+        {
+          "label": "active_gateway schema",
+          "path": "data/schemas/active-gateway-profile/1.0.0.schema.json",
+          "expected_sha256": "05e810695ac39fb5f83722d5fd2f66a3e6e5c15658c5dc2ff65354c67f3e4282",
+          "actual_sha256": "05e810695ac39fb5f83722d5fd2f66a3e6e5c15658c5dc2ff65354c67f3e4282",
+          "status": "verified"
+        },
+        {
+          "label": "ban_station definition",
+          "path": "examples/iot-models/synthetic-ban-station-v1.json",
+          "expected_sha256": "343b3d64ff3ef05d757baf32eee2b9b9add4a9d83c353f5d7c74e3962a70c749",
+          "actual_sha256": "343b3d64ff3ef05d757baf32eee2b9b9add4a9d83c353f5d7c74e3962a70c749",
+          "status": "verified"
+        },
+        {
+          "label": "ban_station schema",
+          "path": "data/schemas/ban-station-profile/1.0.0.schema.json",
+          "expected_sha256": "f971f14294f2abdb465e364146a0a2b2abdf0a3a5ca46fbb6315a9066d277e3e",
+          "actual_sha256": "f971f14294f2abdb465e364146a0a2b2abdf0a3a5ca46fbb6315a9066d277e3e",
+          "status": "verified"
+        },
+        {
+          "label": "timer_baseline definition",
+          "path": "examples/scenarios/fp9-lung-historical-timer-v1.json",
+          "expected_sha256": "80718cd832e03166198c7e80fcf22e28eb936d0ce3876a878683801a879a8b33",
+          "actual_sha256": "80718cd832e03166198c7e80fcf22e28eb936d0ce3876a878683801a879a8b33",
+          "status": "verified"
+        },
+        {
+          "label": "timer_baseline schema",
+          "path": "data/schemas/fingerprint-timer-baseline/1.0.0.schema.json",
+          "expected_sha256": "6c2b354f938004b5dd36ede6846928daad0554703c7c7ffd0d8ae9b627eb3afa",
+          "actual_sha256": "6c2b354f938004b5dd36ede6846928daad0554703c7c7ffd0d8ae9b627eb3afa",
+          "status": "verified"
+        }
+      ]
+    }
+  },
+  "authoritative_result_mutated": false,
+  "scientific_value_parity": true,
+  "interpretation": "Research-access integrity evidence, not a usability or scientific-validity study."
+}

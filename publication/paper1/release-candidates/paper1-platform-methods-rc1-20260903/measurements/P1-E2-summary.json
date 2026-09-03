@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0.0",
+  "experiment_id": "P1-E2-M7-RESOURCE",
+  "protocol_version": "2.0.0",
+  "completed_at_utc": "2026-09-03T17:35:54.104828Z",
+  "environment": {
+    "recorded_at_utc": "2026-09-03T17:35:50.689092Z",
+    "machine_label": "sf24xps",
+    "os": "Windows-11-10.0.26200-SP0",
+    "architecture": "AMD64",
+    "cpu": "Intel64 Family 6 Model 189 Stepping 1, GenuineIntel",
+    "logical_cpu_count": 8,
+    "physical_memory_bytes": 33895956480,
+    "python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]",
+    "cmake": "cmake version 3.29.2",
+    "git_commit": "55322f8b5bc7177d90514e2fcdc66ed106014a78",
+    "git_branch": "mehlissa-next-generation",
+    "git_remote": "https://github.com/RegineWendt/MEHLISSA.git",
+    "git_status_porcelain": "",
+    "executable": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\apps\\Release\\mehlissa.exe",
+    "executable_sha256": "070c0c36646ad3d4cdecece1737cce83344fab5e6b9905a2cbeb9100aef074ff",
+    "build_type_required": "Release"
+  },
+  "conditions": {
+    "baseline": {
+      "attempt_count": 3,
+      "result_sha256": "37cd31569769a1a3dbc4762efd9f5b42766d9e009388ddc3a19cc61e8b988bc7",
+      "deterministic_projection_identity": true,
+      "wall_seconds": {
+        "values": [
+          0.24109530000714585,
+          0.2598621000070125,
+          0.2144010000047274
+        ],
+        "median": 0.24109530000714585,
+        "range": [
+          0.2144010000047274,
+          0.2598621000070125
+        ]
+      },
+      "peak_memory_bytes": {
+        "values": [
+          8585216,
+          8458240,
+          8486912
+        ],
+        "median": 8486912,
+        "range": [
+          8458240,
+          8585216
+        ]
+      },
+      "artifact_bytes": {
+        "values": [
+          28816,
+          28816,
+          28816
+        ],
+        "median": 28816,
+        "range": [
+          28816,
+          28816
+        ]
+      }
+    },
+    "collector-10000": {
+      "attempt_count": 3,
+      "result_sha256": "591081ef5201c16208bb4bf49516316d69d23d7df793ec39c9df603de2dc97c2",
+      "deterministic_projection_identity": true,
+      "wall_seconds": {
+        "values": [
+          0.32571289999759756,
+          0.38788309998926707,
+          0.5963530000008177
+        ],
+        "median": 0.38788309998926707,
+        "range": [
+          0.32571289999759756,
+          0.5963530000008177
+        ]
+      },
+      "peak_memory_bytes": {
+        "values": [
+          8544256,
+          8486912,
+          8462336
+        ],
+        "median": 8486912,
+        "range": [
+          8462336,
+          8544256
+        ]
+      },
+      "artifact_bytes": {
+        "values": [
+          29160,
+          29160,
+          29160
+        ],
+        "median": 29160,
+        "range": [
+          29160,
+          29160
+        ]
+      }
+    }
+  },
+  "negative_controls": {
+    "invalid_scenario_rejected": true,
+    "tampered_hash_rejected": true
+  },
+  "interpretation": "Technical resource and reproducibility evidence only; no biological or clinical feasibility claim."
+}

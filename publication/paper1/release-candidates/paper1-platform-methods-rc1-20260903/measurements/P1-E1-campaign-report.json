@@ -1,0 +1,3966 @@
+{
+  "campaign_id": "paper1-rq4-primary",
+  "conditional_population": {
+    "eligible": true,
+    "median_peak_rss_bytes": 11808768,
+    "median_peak_rss_fraction": 0.0003483827932977096,
+    "median_simulation_seconds": 2.4047553,
+    "reason": "both thresholds passed",
+    "thresholds": {
+      "o0_median_peak_rss_fraction_below": 0.2,
+      "o0_median_simulation_seconds_below": 180
+    }
+  },
+  "correctness": {
+    "passed": true,
+    "violations": []
+  },
+  "driver": {
+    "path": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\benchmarks\\Release\\mehlissa_body_transport_benchmark.exe",
+    "sha256": "6cc69ff8cfc2975690804f668b9f51759c0a1628a2f6dbd3955ba2ccf48c3cfb"
+  },
+  "ordering_seed": 20260827,
+  "plan": {
+    "path": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\rq4-primary-campaign.json",
+    "sha256": "8889d1e4a73274bdc35d03438de4d204cb95e6dfd3371eeb32e1c2cbd785442d"
+  },
+  "runs": [
+    {
+      "block": null,
+      "condition": "n1000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.25987999999779277,
+      "kind": "warmup",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\001-mandatory-warmup-n1000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\001-mandatory-warmup-n1000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\001-mandatory-warmup-n1000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\001-mandatory-warmup-n1000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\001-mandatory-warmup-n1000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2052096,
+      "sequence": 1,
+      "started_at_utc": "2026-09-03T17:41:13Z",
+      "status": "completed"
+    },
+    {
+      "block": null,
+      "condition": "n1000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.260626700008288,
+      "kind": "warmup",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\002-mandatory-warmup-n1000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\002-mandatory-warmup-n1000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\002-mandatory-warmup-n1000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\002-mandatory-warmup-n1000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\002-mandatory-warmup-n1000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2088960,
+      "sequence": 2,
+      "started_at_utc": "2026-09-03T17:41:13Z",
+      "status": "completed"
+    },
+    {
+      "block": null,
+      "condition": "n1000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.26695119999931194,
+      "kind": "warmup",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\003-mandatory-warmup-n1000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\003-mandatory-warmup-n1000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\003-mandatory-warmup-n1000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\003-mandatory-warmup-n1000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\003-mandatory-warmup-n1000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2052096,
+      "sequence": 3,
+      "started_at_utc": "2026-09-03T17:41:14Z",
+      "status": "completed"
+    },
+    {
+      "block": null,
+      "condition": "n10000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.26438070001313463,
+      "kind": "warmup",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\004-mandatory-warmup-n10000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\004-mandatory-warmup-n10000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\004-mandatory-warmup-n10000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\004-mandatory-warmup-n10000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\004-mandatory-warmup-n10000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2052096,
+      "sequence": 4,
+      "started_at_utc": "2026-09-03T17:41:14Z",
+      "status": "completed"
+    },
+    {
+      "block": null,
+      "condition": "n10000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.5117532000003848,
+      "kind": "warmup",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\005-mandatory-warmup-n10000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\005-mandatory-warmup-n10000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\005-mandatory-warmup-n10000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\005-mandatory-warmup-n10000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\005-mandatory-warmup-n10000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7360512,
+      "sequence": 5,
+      "started_at_utc": "2026-09-03T17:41:14Z",
+      "status": "completed"
+    },
+    {
+      "block": null,
+      "condition": "n10000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.26035359999514185,
+      "kind": "warmup",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\006-mandatory-warmup-n10000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\006-mandatory-warmup-n10000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\006-mandatory-warmup-n10000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\006-mandatory-warmup-n10000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\006-mandatory-warmup-n10000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2105344,
+      "sequence": 6,
+      "started_at_utc": "2026-09-03T17:41:15Z",
+      "status": "completed"
+    },
+    {
+      "block": null,
+      "condition": "n100000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 2.019162900018273,
+      "kind": "warmup",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\007-mandatory-warmup-n100000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\007-mandatory-warmup-n100000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\007-mandatory-warmup-n100000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\007-mandatory-warmup-n100000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\007-mandatory-warmup-n100000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 10084352,
+      "sequence": 7,
+      "started_at_utc": "2026-09-03T17:41:15Z",
+      "status": "completed"
+    },
+    {
+      "block": null,
+      "condition": "n100000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 2.0546046000090428,
+      "kind": "warmup",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\008-mandatory-warmup-n100000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\008-mandatory-warmup-n100000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\008-mandatory-warmup-n100000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\008-mandatory-warmup-n100000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\008-mandatory-warmup-n100000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 11501568,
+      "sequence": 8,
+      "started_at_utc": "2026-09-03T17:41:17Z",
+      "status": "completed"
+    },
+    {
+      "block": null,
+      "condition": "n100000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 2.0271210000209976,
+      "kind": "warmup",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\009-mandatory-warmup-n100000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\009-mandatory-warmup-n100000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\009-mandatory-warmup-n100000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\009-mandatory-warmup-n100000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\009-mandatory-warmup-n100000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 9646080,
+      "sequence": 9,
+      "started_at_utc": "2026-09-03T17:41:19Z",
+      "status": "completed"
+    },
+    {
+      "block": null,
+      "condition": "n1000-o3",
+      "diagnostic": null,
+      "elapsed_seconds": 2.0192772000154946,
+      "kind": "warmup",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\010-mandatory-warmup-n1000-o3.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\010-mandatory-warmup-n1000-o3.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\010-mandatory-warmup-n1000-o3.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\010-mandatory-warmup-n1000-o3.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\010-mandatory-warmup-n1000-o3.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 103698432,
+      "sequence": 10,
+      "started_at_utc": "2026-09-03T17:41:21Z",
+      "status": "completed"
+    },
+    {
+      "block": null,
+      "condition": "anchor-n6359-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 2.046833600004902,
+      "kind": "warmup",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\011-mandatory-warmup-anchor-n6359-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\011-mandatory-warmup-anchor-n6359-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\011-mandatory-warmup-anchor-n6359-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\011-mandatory-warmup-anchor-n6359-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\011-mandatory-warmup-anchor-n6359-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7188480,
+      "sequence": 11,
+      "started_at_utc": "2026-09-03T17:41:23Z",
+      "status": "completed"
+    },
+    {
+      "block": 1,
+      "condition": "n10000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2650640999781899,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\012-mandatory-block-01-n10000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\012-mandatory-block-01-n10000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\012-mandatory-block-01-n10000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\012-mandatory-block-01-n10000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\012-mandatory-block-01-n10000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2084864,
+      "sequence": 12,
+      "started_at_utc": "2026-09-03T17:41:25Z",
+      "status": "completed"
+    },
+    {
+      "block": 1,
+      "condition": "n1000-o3",
+      "diagnostic": null,
+      "elapsed_seconds": 2.2730192000162788,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\013-mandatory-block-01-n1000-o3.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\013-mandatory-block-01-n1000-o3.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\013-mandatory-block-01-n1000-o3.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\013-mandatory-block-01-n1000-o3.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\013-mandatory-block-01-n1000-o3.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 102031360,
+      "sequence": 13,
+      "started_at_utc": "2026-09-03T17:41:25Z",
+      "status": "completed"
+    },
+    {
+      "block": 1,
+      "condition": "n1000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.26209730000118725,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\014-mandatory-block-01-n1000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\014-mandatory-block-01-n1000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\014-mandatory-block-01-n1000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\014-mandatory-block-01-n1000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\014-mandatory-block-01-n1000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2084864,
+      "sequence": 14,
+      "started_at_utc": "2026-09-03T17:41:28Z",
+      "status": "completed"
+    },
+    {
+      "block": 1,
+      "condition": "n100000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 2.0156662999943364,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\015-mandatory-block-01-n100000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\015-mandatory-block-01-n100000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\015-mandatory-block-01-n100000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\015-mandatory-block-01-n100000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\015-mandatory-block-01-n100000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 10588160,
+      "sequence": 15,
+      "started_at_utc": "2026-09-03T17:41:28Z",
+      "status": "completed"
+    },
+    {
+      "block": 1,
+      "condition": "anchor-n6359-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 2.035001199983526,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\016-mandatory-block-01-anchor-n6359-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\016-mandatory-block-01-anchor-n6359-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\016-mandatory-block-01-anchor-n6359-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\016-mandatory-block-01-anchor-n6359-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\016-mandatory-block-01-anchor-n6359-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7196672,
+      "sequence": 16,
+      "started_at_utc": "2026-09-03T17:41:30Z",
+      "status": "completed"
+    },
+    {
+      "block": 1,
+      "condition": "n10000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2623656000068877,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\017-mandatory-block-01-n10000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\017-mandatory-block-01-n10000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\017-mandatory-block-01-n10000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\017-mandatory-block-01-n10000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\017-mandatory-block-01-n10000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2084864,
+      "sequence": 17,
+      "started_at_utc": "2026-09-03T17:41:32Z",
+      "status": "completed"
+    },
+    {
+      "block": 1,
+      "condition": "n1000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2615910999884363,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\018-mandatory-block-01-n1000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\018-mandatory-block-01-n1000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\018-mandatory-block-01-n1000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\018-mandatory-block-01-n1000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\018-mandatory-block-01-n1000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2093056,
+      "sequence": 18,
+      "started_at_utc": "2026-09-03T17:41:32Z",
+      "status": "completed"
+    },
+    {
+      "block": 1,
+      "condition": "n100000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 2.03494879999198,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\019-mandatory-block-01-n100000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\019-mandatory-block-01-n100000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\019-mandatory-block-01-n100000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\019-mandatory-block-01-n100000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\019-mandatory-block-01-n100000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 9973760,
+      "sequence": 19,
+      "started_at_utc": "2026-09-03T17:41:33Z",
+      "status": "completed"
+    },
+    {
+      "block": 1,
+      "condition": "n10000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.25989009998738766,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\020-mandatory-block-01-n10000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\020-mandatory-block-01-n10000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\020-mandatory-block-01-n10000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\020-mandatory-block-01-n10000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\020-mandatory-block-01-n10000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2052096,
+      "sequence": 20,
+      "started_at_utc": "2026-09-03T17:41:35Z",
+      "status": "completed"
+    },
+    {
+      "block": 1,
+      "condition": "n1000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.26384530001087114,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\021-mandatory-block-01-n1000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\021-mandatory-block-01-n1000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\021-mandatory-block-01-n1000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\021-mandatory-block-01-n1000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\021-mandatory-block-01-n1000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2048000,
+      "sequence": 21,
+      "started_at_utc": "2026-09-03T17:41:36Z",
+      "status": "completed"
+    },
+    {
+      "block": 1,
+      "condition": "n100000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 2.2699059000005946,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\022-mandatory-block-01-n100000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\022-mandatory-block-01-n100000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\022-mandatory-block-01-n100000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\022-mandatory-block-01-n100000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\022-mandatory-block-01-n100000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 9801728,
+      "sequence": 22,
+      "started_at_utc": "2026-09-03T17:41:36Z",
+      "status": "completed"
+    },
+    {
+      "block": 2,
+      "condition": "n100000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 2.0236043999902904,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\023-mandatory-block-02-n100000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\023-mandatory-block-02-n100000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\023-mandatory-block-02-n100000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\023-mandatory-block-02-n100000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\023-mandatory-block-02-n100000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 9748480,
+      "sequence": 23,
+      "started_at_utc": "2026-09-03T17:41:39Z",
+      "status": "completed"
+    },
+    {
+      "block": 2,
+      "condition": "n1000-o3",
+      "diagnostic": null,
+      "elapsed_seconds": 2.289427199983038,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\024-mandatory-block-02-n1000-o3.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\024-mandatory-block-02-n1000-o3.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\024-mandatory-block-02-n1000-o3.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\024-mandatory-block-02-n1000-o3.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\024-mandatory-block-02-n1000-o3.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 184205312,
+      "sequence": 24,
+      "started_at_utc": "2026-09-03T17:41:41Z",
+      "status": "completed"
+    },
+    {
+      "block": 2,
+      "condition": "n100000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 2.8067984999797773,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\025-mandatory-block-02-n100000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\025-mandatory-block-02-n100000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\025-mandatory-block-02-n100000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\025-mandatory-block-02-n100000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\025-mandatory-block-02-n100000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 10190848,
+      "sequence": 25,
+      "started_at_utc": "2026-09-03T17:41:43Z",
+      "status": "completed"
+    },
+    {
+      "block": 2,
+      "condition": "n10000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.5251235000032466,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\026-mandatory-block-02-n10000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\026-mandatory-block-02-n10000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\026-mandatory-block-02-n10000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\026-mandatory-block-02-n10000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\026-mandatory-block-02-n10000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7249920,
+      "sequence": 26,
+      "started_at_utc": "2026-09-03T17:41:47Z",
+      "status": "completed"
+    },
+    {
+      "block": 2,
+      "condition": "n100000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 5.39080069999909,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\027-mandatory-block-02-n100000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\027-mandatory-block-02-n100000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\027-mandatory-block-02-n100000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\027-mandatory-block-02-n100000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\027-mandatory-block-02-n100000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 11001856,
+      "sequence": 27,
+      "started_at_utc": "2026-09-03T17:41:48Z",
+      "status": "completed"
+    },
+    {
+      "block": 2,
+      "condition": "n1000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2619118000147864,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\028-mandatory-block-02-n1000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\028-mandatory-block-02-n1000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\028-mandatory-block-02-n1000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\028-mandatory-block-02-n1000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\028-mandatory-block-02-n1000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2088960,
+      "sequence": 28,
+      "started_at_utc": "2026-09-03T17:41:54Z",
+      "status": "completed"
+    },
+    {
+      "block": 2,
+      "condition": "n10000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.8320207000069786,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\029-mandatory-block-02-n10000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\029-mandatory-block-02-n10000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\029-mandatory-block-02-n10000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\029-mandatory-block-02-n10000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\029-mandatory-block-02-n10000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7327744,
+      "sequence": 29,
+      "started_at_utc": "2026-09-03T17:41:55Z",
+      "status": "completed"
+    },
+    {
+      "block": 2,
+      "condition": "n1000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.26601750002009794,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\030-mandatory-block-02-n1000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\030-mandatory-block-02-n1000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\030-mandatory-block-02-n1000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\030-mandatory-block-02-n1000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\030-mandatory-block-02-n1000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2097152,
+      "sequence": 30,
+      "started_at_utc": "2026-09-03T17:41:57Z",
+      "status": "completed"
+    },
+    {
+      "block": 2,
+      "condition": "anchor-n6359-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 5.128372800012585,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\031-mandatory-block-02-anchor-n6359-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\031-mandatory-block-02-anchor-n6359-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\031-mandatory-block-02-anchor-n6359-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\031-mandatory-block-02-anchor-n6359-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\031-mandatory-block-02-anchor-n6359-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7110656,
+      "sequence": 31,
+      "started_at_utc": "2026-09-03T17:41:58Z",
+      "status": "completed"
+    },
+    {
+      "block": 2,
+      "condition": "n10000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.5155281000188552,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\032-mandatory-block-02-n10000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\032-mandatory-block-02-n10000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\032-mandatory-block-02-n10000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\032-mandatory-block-02-n10000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\032-mandatory-block-02-n10000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7172096,
+      "sequence": 32,
+      "started_at_utc": "2026-09-03T17:42:04Z",
+      "status": "completed"
+    },
+    {
+      "block": 2,
+      "condition": "n1000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2751886999758426,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\033-mandatory-block-02-n1000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\033-mandatory-block-02-n1000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\033-mandatory-block-02-n1000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\033-mandatory-block-02-n1000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\033-mandatory-block-02-n1000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2088960,
+      "sequence": 33,
+      "started_at_utc": "2026-09-03T17:42:05Z",
+      "status": "completed"
+    },
+    {
+      "block": 3,
+      "condition": "n1000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.7177774000156205,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\034-mandatory-block-03-n1000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\034-mandatory-block-03-n1000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\034-mandatory-block-03-n1000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\034-mandatory-block-03-n1000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\034-mandatory-block-03-n1000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7192576,
+      "sequence": 34,
+      "started_at_utc": "2026-09-03T17:42:06Z",
+      "status": "completed"
+    },
+    {
+      "block": 3,
+      "condition": "n10000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.5119367000006605,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\035-mandatory-block-03-n10000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\035-mandatory-block-03-n10000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\035-mandatory-block-03-n10000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\035-mandatory-block-03-n10000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\035-mandatory-block-03-n10000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7241728,
+      "sequence": 35,
+      "started_at_utc": "2026-09-03T17:42:08Z",
+      "status": "completed"
+    },
+    {
+      "block": 3,
+      "condition": "n100000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 2.8123393999994732,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\036-mandatory-block-03-n100000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\036-mandatory-block-03-n100000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\036-mandatory-block-03-n100000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\036-mandatory-block-03-n100000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\036-mandatory-block-03-n100000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 10584064,
+      "sequence": 36,
+      "started_at_utc": "2026-09-03T17:42:09Z",
+      "status": "completed"
+    },
+    {
+      "block": 3,
+      "condition": "n10000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.5361671000136994,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\037-mandatory-block-03-n10000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\037-mandatory-block-03-n10000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\037-mandatory-block-03-n10000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\037-mandatory-block-03-n10000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\037-mandatory-block-03-n10000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7286784,
+      "sequence": 37,
+      "started_at_utc": "2026-09-03T17:42:12Z",
+      "status": "completed"
+    },
+    {
+      "block": 3,
+      "condition": "n10000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2637850999890361,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\038-mandatory-block-03-n10000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\038-mandatory-block-03-n10000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\038-mandatory-block-03-n10000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\038-mandatory-block-03-n10000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\038-mandatory-block-03-n10000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2097152,
+      "sequence": 38,
+      "started_at_utc": "2026-09-03T17:42:14Z",
+      "status": "completed"
+    },
+    {
+      "block": 3,
+      "condition": "n1000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.26290899998275563,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\039-mandatory-block-03-n1000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\039-mandatory-block-03-n1000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\039-mandatory-block-03-n1000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\039-mandatory-block-03-n1000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\039-mandatory-block-03-n1000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2064384,
+      "sequence": 39,
+      "started_at_utc": "2026-09-03T17:42:15Z",
+      "status": "completed"
+    },
+    {
+      "block": 3,
+      "condition": "n1000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.26610079998499714,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\040-mandatory-block-03-n1000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\040-mandatory-block-03-n1000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\040-mandatory-block-03-n1000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\040-mandatory-block-03-n1000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\040-mandatory-block-03-n1000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2088960,
+      "sequence": 40,
+      "started_at_utc": "2026-09-03T17:42:16Z",
+      "status": "completed"
+    },
+    {
+      "block": 3,
+      "condition": "anchor-n6359-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 2.9071244999940973,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\041-mandatory-block-03-anchor-n6359-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\041-mandatory-block-03-anchor-n6359-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\041-mandatory-block-03-anchor-n6359-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\041-mandatory-block-03-anchor-n6359-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\041-mandatory-block-03-anchor-n6359-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7106560,
+      "sequence": 41,
+      "started_at_utc": "2026-09-03T17:42:16Z",
+      "status": "completed"
+    },
+    {
+      "block": 3,
+      "condition": "n1000-o3",
+      "diagnostic": null,
+      "elapsed_seconds": 3.025355599995237,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\042-mandatory-block-03-n1000-o3.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\042-mandatory-block-03-n1000-o3.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\042-mandatory-block-03-n1000-o3.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\042-mandatory-block-03-n1000-o3.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\042-mandatory-block-03-n1000-o3.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 143228928,
+      "sequence": 42,
+      "started_at_utc": "2026-09-03T17:42:20Z",
+      "status": "completed"
+    },
+    {
+      "block": 3,
+      "condition": "n100000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 4.8663740000047255,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\043-mandatory-block-03-n100000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\043-mandatory-block-03-n100000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\043-mandatory-block-03-n100000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\043-mandatory-block-03-n100000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\043-mandatory-block-03-n100000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 9777152,
+      "sequence": 43,
+      "started_at_utc": "2026-09-03T17:42:24Z",
+      "status": "completed"
+    },
+    {
+      "block": 3,
+      "condition": "n100000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 3.8282193999912124,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\044-mandatory-block-03-n100000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\044-mandatory-block-03-n100000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\044-mandatory-block-03-n100000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\044-mandatory-block-03-n100000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\044-mandatory-block-03-n100000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 10833920,
+      "sequence": 44,
+      "started_at_utc": "2026-09-03T17:42:30Z",
+      "status": "completed"
+    },
+    {
+      "block": 4,
+      "condition": "anchor-n6359-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 4.166702299989993,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\045-mandatory-block-04-anchor-n6359-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\045-mandatory-block-04-anchor-n6359-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\045-mandatory-block-04-anchor-n6359-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\045-mandatory-block-04-anchor-n6359-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\045-mandatory-block-04-anchor-n6359-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7131136,
+      "sequence": 45,
+      "started_at_utc": "2026-09-03T17:42:35Z",
+      "status": "completed"
+    },
+    {
+      "block": 4,
+      "condition": "n10000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.5427474000025541,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\046-mandatory-block-04-n10000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\046-mandatory-block-04-n10000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\046-mandatory-block-04-n10000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\046-mandatory-block-04-n10000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\046-mandatory-block-04-n10000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7401472,
+      "sequence": 46,
+      "started_at_utc": "2026-09-03T17:42:40Z",
+      "status": "completed"
+    },
+    {
+      "block": 4,
+      "condition": "n1000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2605337999993935,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\047-mandatory-block-04-n1000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\047-mandatory-block-04-n1000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\047-mandatory-block-04-n1000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\047-mandatory-block-04-n1000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\047-mandatory-block-04-n1000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2113536,
+      "sequence": 47,
+      "started_at_utc": "2026-09-03T17:42:41Z",
+      "status": "completed"
+    },
+    {
+      "block": 4,
+      "condition": "n10000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2632844000181649,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\048-mandatory-block-04-n10000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\048-mandatory-block-04-n10000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\048-mandatory-block-04-n10000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\048-mandatory-block-04-n10000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\048-mandatory-block-04-n10000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2084864,
+      "sequence": 48,
+      "started_at_utc": "2026-09-03T17:42:42Z",
+      "status": "completed"
+    },
+    {
+      "block": 4,
+      "condition": "n1000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2690377999970224,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\049-mandatory-block-04-n1000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\049-mandatory-block-04-n1000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\049-mandatory-block-04-n1000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\049-mandatory-block-04-n1000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\049-mandatory-block-04-n1000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2088960,
+      "sequence": 49,
+      "started_at_utc": "2026-09-03T17:42:43Z",
+      "status": "completed"
+    },
+    {
+      "block": 4,
+      "condition": "n100000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 2.022633799992036,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\050-mandatory-block-04-n100000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\050-mandatory-block-04-n100000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\050-mandatory-block-04-n100000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\050-mandatory-block-04-n100000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\050-mandatory-block-04-n100000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 11390976,
+      "sequence": 50,
+      "started_at_utc": "2026-09-03T17:42:44Z",
+      "status": "completed"
+    },
+    {
+      "block": 4,
+      "condition": "n100000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 2.2678243000118528,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\051-mandatory-block-04-n100000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\051-mandatory-block-04-n100000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\051-mandatory-block-04-n100000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\051-mandatory-block-04-n100000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\051-mandatory-block-04-n100000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 9764864,
+      "sequence": 51,
+      "started_at_utc": "2026-09-03T17:42:47Z",
+      "status": "completed"
+    },
+    {
+      "block": 4,
+      "condition": "n1000-o3",
+      "diagnostic": null,
+      "elapsed_seconds": 2.7770844999758992,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\052-mandatory-block-04-n1000-o3.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\052-mandatory-block-04-n1000-o3.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\052-mandatory-block-04-n1000-o3.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\052-mandatory-block-04-n1000-o3.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\052-mandatory-block-04-n1000-o3.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 109834240,
+      "sequence": 52,
+      "started_at_utc": "2026-09-03T17:42:50Z",
+      "status": "completed"
+    },
+    {
+      "block": 4,
+      "condition": "n100000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 3.0423539000039455,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\053-mandatory-block-04-n100000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\053-mandatory-block-04-n100000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\053-mandatory-block-04-n100000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\053-mandatory-block-04-n100000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\053-mandatory-block-04-n100000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 9994240,
+      "sequence": 53,
+      "started_at_utc": "2026-09-03T17:42:54Z",
+      "status": "completed"
+    },
+    {
+      "block": 4,
+      "condition": "n1000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2875952000031248,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\054-mandatory-block-04-n1000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\054-mandatory-block-04-n1000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\054-mandatory-block-04-n1000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\054-mandatory-block-04-n1000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\054-mandatory-block-04-n1000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2060288,
+      "sequence": 54,
+      "started_at_utc": "2026-09-03T17:42:58Z",
+      "status": "completed"
+    },
+    {
+      "block": 4,
+      "condition": "n10000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.6132835999887902,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\055-mandatory-block-04-n10000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\055-mandatory-block-04-n10000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\055-mandatory-block-04-n10000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\055-mandatory-block-04-n10000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\055-mandatory-block-04-n10000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7323648,
+      "sequence": 55,
+      "started_at_utc": "2026-09-03T17:42:59Z",
+      "status": "completed"
+    },
+    {
+      "block": 5,
+      "condition": "n1000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2671961000014562,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\056-mandatory-block-05-n1000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\056-mandatory-block-05-n1000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\056-mandatory-block-05-n1000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\056-mandatory-block-05-n1000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\056-mandatory-block-05-n1000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2084864,
+      "sequence": 56,
+      "started_at_utc": "2026-09-03T17:43:01Z",
+      "status": "completed"
+    },
+    {
+      "block": 5,
+      "condition": "n1000-o3",
+      "diagnostic": null,
+      "elapsed_seconds": 2.516325100004906,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\057-mandatory-block-05-n1000-o3.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\057-mandatory-block-05-n1000-o3.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\057-mandatory-block-05-n1000-o3.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\057-mandatory-block-05-n1000-o3.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\057-mandatory-block-05-n1000-o3.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 151416832,
+      "sequence": 57,
+      "started_at_utc": "2026-09-03T17:43:02Z",
+      "status": "completed"
+    },
+    {
+      "block": 5,
+      "condition": "anchor-n6359-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 3.045197300001746,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\058-mandatory-block-05-anchor-n6359-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\058-mandatory-block-05-anchor-n6359-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\058-mandatory-block-05-anchor-n6359-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\058-mandatory-block-05-anchor-n6359-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\058-mandatory-block-05-anchor-n6359-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7196672,
+      "sequence": 58,
+      "started_at_utc": "2026-09-03T17:43:05Z",
+      "status": "completed"
+    },
+    {
+      "block": 5,
+      "condition": "n10000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.5155923999845982,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\059-mandatory-block-05-n10000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\059-mandatory-block-05-n10000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\059-mandatory-block-05-n10000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\059-mandatory-block-05-n10000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\059-mandatory-block-05-n10000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7266304,
+      "sequence": 59,
+      "started_at_utc": "2026-09-03T17:43:09Z",
+      "status": "completed"
+    },
+    {
+      "block": 5,
+      "condition": "n10000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.513716999994358,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\060-mandatory-block-05-n10000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\060-mandatory-block-05-n10000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\060-mandatory-block-05-n10000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\060-mandatory-block-05-n10000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\060-mandatory-block-05-n10000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 8220672,
+      "sequence": 60,
+      "started_at_utc": "2026-09-03T17:43:10Z",
+      "status": "completed"
+    },
+    {
+      "block": 5,
+      "condition": "n10000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.26038140000309795,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\061-mandatory-block-05-n10000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\061-mandatory-block-05-n10000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\061-mandatory-block-05-n10000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\061-mandatory-block-05-n10000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\061-mandatory-block-05-n10000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2052096,
+      "sequence": 61,
+      "started_at_utc": "2026-09-03T17:43:12Z",
+      "status": "completed"
+    },
+    {
+      "block": 5,
+      "condition": "n1000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.262615999992704,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\062-mandatory-block-05-n1000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\062-mandatory-block-05-n1000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\062-mandatory-block-05-n1000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\062-mandatory-block-05-n1000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\062-mandatory-block-05-n1000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2084864,
+      "sequence": 62,
+      "started_at_utc": "2026-09-03T17:43:13Z",
+      "status": "completed"
+    },
+    {
+      "block": 5,
+      "condition": "n100000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 2.516034000000218,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\063-mandatory-block-05-n100000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\063-mandatory-block-05-n100000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\063-mandatory-block-05-n100000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\063-mandatory-block-05-n100000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\063-mandatory-block-05-n100000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 10027008,
+      "sequence": 63,
+      "started_at_utc": "2026-09-03T17:43:14Z",
+      "status": "completed"
+    },
+    {
+      "block": 5,
+      "condition": "n100000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 2.2695014999771956,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\064-mandatory-block-05-n100000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\064-mandatory-block-05-n100000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\064-mandatory-block-05-n100000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\064-mandatory-block-05-n100000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\064-mandatory-block-05-n100000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 10530816,
+      "sequence": 64,
+      "started_at_utc": "2026-09-03T17:43:17Z",
+      "status": "completed"
+    },
+    {
+      "block": 5,
+      "condition": "n1000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2673015000182204,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\065-mandatory-block-05-n1000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\065-mandatory-block-05-n1000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\065-mandatory-block-05-n1000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\065-mandatory-block-05-n1000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\065-mandatory-block-05-n1000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2052096,
+      "sequence": 65,
+      "started_at_utc": "2026-09-03T17:43:20Z",
+      "status": "completed"
+    },
+    {
+      "block": 5,
+      "condition": "n100000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 2.265486599993892,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\066-mandatory-block-05-n100000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\066-mandatory-block-05-n100000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\066-mandatory-block-05-n100000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\066-mandatory-block-05-n100000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\066-mandatory-block-05-n100000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 9773056,
+      "sequence": 66,
+      "started_at_utc": "2026-09-03T17:43:22Z",
+      "status": "completed"
+    },
+    {
+      "block": 6,
+      "condition": "n1000-o3",
+      "diagnostic": null,
+      "elapsed_seconds": 2.5175804999889806,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\067-mandatory-block-06-n1000-o3.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\067-mandatory-block-06-n1000-o3.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\067-mandatory-block-06-n1000-o3.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\067-mandatory-block-06-n1000-o3.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\067-mandatory-block-06-n1000-o3.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 101978112,
+      "sequence": 67,
+      "started_at_utc": "2026-09-03T17:43:25Z",
+      "status": "completed"
+    },
+    {
+      "block": 6,
+      "condition": "n1000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2604806000017561,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\068-mandatory-block-06-n1000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\068-mandatory-block-06-n1000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\068-mandatory-block-06-n1000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\068-mandatory-block-06-n1000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\068-mandatory-block-06-n1000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2052096,
+      "sequence": 68,
+      "started_at_utc": "2026-09-03T17:43:28Z",
+      "status": "completed"
+    },
+    {
+      "block": 6,
+      "condition": "n100000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 2.546234099980211,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\069-mandatory-block-06-n100000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\069-mandatory-block-06-n100000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\069-mandatory-block-06-n100000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\069-mandatory-block-06-n100000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\069-mandatory-block-06-n100000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 10465280,
+      "sequence": 69,
+      "started_at_utc": "2026-09-03T17:43:30Z",
+      "status": "completed"
+    },
+    {
+      "block": 6,
+      "condition": "n100000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 2.267790399986552,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\070-mandatory-block-06-n100000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\070-mandatory-block-06-n100000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\070-mandatory-block-06-n100000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\070-mandatory-block-06-n100000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\070-mandatory-block-06-n100000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 10551296,
+      "sequence": 70,
+      "started_at_utc": "2026-09-03T17:43:33Z",
+      "status": "completed"
+    },
+    {
+      "block": 6,
+      "condition": "n10000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.5136308000073768,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\071-mandatory-block-06-n10000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\071-mandatory-block-06-n10000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\071-mandatory-block-06-n10000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\071-mandatory-block-06-n10000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\071-mandatory-block-06-n10000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7241728,
+      "sequence": 71,
+      "started_at_utc": "2026-09-03T17:43:37Z",
+      "status": "completed"
+    },
+    {
+      "block": 6,
+      "condition": "n1000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2610461000003852,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\072-mandatory-block-06-n1000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\072-mandatory-block-06-n1000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\072-mandatory-block-06-n1000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\072-mandatory-block-06-n1000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\072-mandatory-block-06-n1000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2088960,
+      "sequence": 72,
+      "started_at_utc": "2026-09-03T17:43:38Z",
+      "status": "completed"
+    },
+    {
+      "block": 6,
+      "condition": "n100000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 2.5303688000130933,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\073-mandatory-block-06-n100000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\073-mandatory-block-06-n100000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\073-mandatory-block-06-n100000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\073-mandatory-block-06-n100000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\073-mandatory-block-06-n100000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 9699328,
+      "sequence": 73,
+      "started_at_utc": "2026-09-03T17:43:40Z",
+      "status": "completed"
+    },
+    {
+      "block": 6,
+      "condition": "anchor-n6359-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 2.8133504999859724,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\074-mandatory-block-06-anchor-n6359-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\074-mandatory-block-06-anchor-n6359-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\074-mandatory-block-06-anchor-n6359-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\074-mandatory-block-06-anchor-n6359-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\074-mandatory-block-06-anchor-n6359-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7122944,
+      "sequence": 74,
+      "started_at_utc": "2026-09-03T17:43:43Z",
+      "status": "completed"
+    },
+    {
+      "block": 6,
+      "condition": "n10000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.5121440000075381,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\075-mandatory-block-06-n10000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\075-mandatory-block-06-n10000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\075-mandatory-block-06-n10000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\075-mandatory-block-06-n10000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\075-mandatory-block-06-n10000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 8204288,
+      "sequence": 75,
+      "started_at_utc": "2026-09-03T17:43:47Z",
+      "status": "completed"
+    },
+    {
+      "block": 6,
+      "condition": "n1000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.25988329999381676,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\076-mandatory-block-06-n1000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\076-mandatory-block-06-n1000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\076-mandatory-block-06-n1000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\076-mandatory-block-06-n1000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\076-mandatory-block-06-n1000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2088960,
+      "sequence": 76,
+      "started_at_utc": "2026-09-03T17:43:49Z",
+      "status": "completed"
+    },
+    {
+      "block": 6,
+      "condition": "n10000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2795563999970909,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\077-mandatory-block-06-n10000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\077-mandatory-block-06-n10000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\077-mandatory-block-06-n10000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\077-mandatory-block-06-n10000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\077-mandatory-block-06-n10000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2088960,
+      "sequence": 77,
+      "started_at_utc": "2026-09-03T17:43:51Z",
+      "status": "completed"
+    },
+    {
+      "block": 7,
+      "condition": "n10000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.5148388000088744,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\078-mandatory-block-07-n10000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\078-mandatory-block-07-n10000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\078-mandatory-block-07-n10000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\078-mandatory-block-07-n10000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\078-mandatory-block-07-n10000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7520256,
+      "sequence": 78,
+      "started_at_utc": "2026-09-03T17:43:52Z",
+      "status": "completed"
+    },
+    {
+      "block": 7,
+      "condition": "n1000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2734899999923073,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\079-mandatory-block-07-n1000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\079-mandatory-block-07-n1000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\079-mandatory-block-07-n1000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\079-mandatory-block-07-n1000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\079-mandatory-block-07-n1000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2088960,
+      "sequence": 79,
+      "started_at_utc": "2026-09-03T17:43:54Z",
+      "status": "completed"
+    },
+    {
+      "block": 7,
+      "condition": "n1000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2641126000089571,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\080-mandatory-block-07-n1000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\080-mandatory-block-07-n1000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\080-mandatory-block-07-n1000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\080-mandatory-block-07-n1000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\080-mandatory-block-07-n1000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2056192,
+      "sequence": 80,
+      "started_at_utc": "2026-09-03T17:43:56Z",
+      "status": "completed"
+    },
+    {
+      "block": 7,
+      "condition": "n10000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 0.5108654999930877,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\081-mandatory-block-07-n10000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\081-mandatory-block-07-n10000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\081-mandatory-block-07-n10000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\081-mandatory-block-07-n10000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\081-mandatory-block-07-n10000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7376896,
+      "sequence": 81,
+      "started_at_utc": "2026-09-03T17:43:57Z",
+      "status": "completed"
+    },
+    {
+      "block": 7,
+      "condition": "n100000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 2.264573600026779,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\082-mandatory-block-07-n100000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\082-mandatory-block-07-n100000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\082-mandatory-block-07-n100000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\082-mandatory-block-07-n100000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\082-mandatory-block-07-n100000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 11382784,
+      "sequence": 82,
+      "started_at_utc": "2026-09-03T17:43:59Z",
+      "status": "completed"
+    },
+    {
+      "block": 7,
+      "condition": "n1000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.26314860000275075,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\083-mandatory-block-07-n1000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\083-mandatory-block-07-n1000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\083-mandatory-block-07-n1000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\083-mandatory-block-07-n1000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\083-mandatory-block-07-n1000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2052096,
+      "sequence": 83,
+      "started_at_utc": "2026-09-03T17:44:02Z",
+      "status": "completed"
+    },
+    {
+      "block": 7,
+      "condition": "n100000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 2.2702975000138395,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\084-mandatory-block-07-n100000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\084-mandatory-block-07-n100000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\084-mandatory-block-07-n100000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\084-mandatory-block-07-n100000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\084-mandatory-block-07-n100000-o2.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 9637888,
+      "sequence": 84,
+      "started_at_utc": "2026-09-03T17:44:04Z",
+      "status": "completed"
+    },
+    {
+      "block": 7,
+      "condition": "anchor-n6359-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 2.528113599983044,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\085-mandatory-block-07-anchor-n6359-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\085-mandatory-block-07-anchor-n6359-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\085-mandatory-block-07-anchor-n6359-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\085-mandatory-block-07-anchor-n6359-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\085-mandatory-block-07-anchor-n6359-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 7204864,
+      "sequence": 85,
+      "started_at_utc": "2026-09-03T17:44:07Z",
+      "status": "completed"
+    },
+    {
+      "block": 7,
+      "condition": "n100000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 2.5178661000099964,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\086-mandatory-block-07-n100000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\086-mandatory-block-07-n100000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\086-mandatory-block-07-n100000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\086-mandatory-block-07-n100000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\086-mandatory-block-07-n100000-o1.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 11378688,
+      "sequence": 86,
+      "started_at_utc": "2026-09-03T17:44:11Z",
+      "status": "completed"
+    },
+    {
+      "block": 7,
+      "condition": "n10000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 0.2627189000195358,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\087-mandatory-block-07-n10000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\087-mandatory-block-07-n10000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\087-mandatory-block-07-n10000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\087-mandatory-block-07-n10000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\087-mandatory-block-07-n10000-o0.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 2052096,
+      "sequence": 87,
+      "started_at_utc": "2026-09-03T17:44:15Z",
+      "status": "completed"
+    },
+    {
+      "block": 7,
+      "condition": "n1000-o3",
+      "diagnostic": null,
+      "elapsed_seconds": 2.515655600000173,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\088-mandatory-block-07-n1000-o3.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\088-mandatory-block-07-n1000-o3.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\088-mandatory-block-07-n1000-o3.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\088-mandatory-block-07-n1000-o3.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\088-mandatory-block-07-n1000-o3.stdout.log"
+      },
+      "phase": "mandatory",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 183980032,
+      "sequence": 88,
+      "started_at_utc": "2026-09-03T17:44:17Z",
+      "status": "completed"
+    },
+    {
+      "block": null,
+      "condition": "n1000000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 32.326581400004216,
+      "kind": "warmup",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\089-conditional-warmup-n1000000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\089-conditional-warmup-n1000000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\089-conditional-warmup-n1000000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\089-conditional-warmup-n1000000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\089-conditional-warmup-n1000000-o0.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 42270720,
+      "sequence": 89,
+      "started_at_utc": "2026-09-03T17:44:21Z",
+      "status": "completed"
+    },
+    {
+      "block": null,
+      "condition": "n1000000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 28.914800300000934,
+      "kind": "warmup",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\090-conditional-warmup-n1000000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\090-conditional-warmup-n1000000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\090-conditional-warmup-n1000000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\090-conditional-warmup-n1000000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\090-conditional-warmup-n1000000-o1.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 38502400,
+      "sequence": 90,
+      "started_at_utc": "2026-09-03T17:44:55Z",
+      "status": "completed"
+    },
+    {
+      "block": null,
+      "condition": "n1000000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 27.610042699991027,
+      "kind": "warmup",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\091-conditional-warmup-n1000000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\091-conditional-warmup-n1000000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\091-conditional-warmup-n1000000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\091-conditional-warmup-n1000000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\091-conditional-warmup-n1000000-o2.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 44240896,
+      "sequence": 91,
+      "started_at_utc": "2026-09-03T17:45:25Z",
+      "status": "completed"
+    },
+    {
+      "block": 1,
+      "condition": "n1000000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 27.591411600005813,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\092-conditional-block-01-n1000000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\092-conditional-block-01-n1000000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\092-conditional-block-01-n1000000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\092-conditional-block-01-n1000000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\092-conditional-block-01-n1000000-o2.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 43290624,
+      "sequence": 92,
+      "started_at_utc": "2026-09-03T17:45:54Z",
+      "status": "completed"
+    },
+    {
+      "block": 1,
+      "condition": "n1000000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 30.86560879999888,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\093-conditional-block-01-n1000000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\093-conditional-block-01-n1000000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\093-conditional-block-01-n1000000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\093-conditional-block-01-n1000000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\093-conditional-block-01-n1000000-o0.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 39751680,
+      "sequence": 93,
+      "started_at_utc": "2026-09-03T17:46:23Z",
+      "status": "completed"
+    },
+    {
+      "block": 1,
+      "condition": "n1000000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 30.868917999992846,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\094-conditional-block-01-n1000000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\094-conditional-block-01-n1000000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\094-conditional-block-01-n1000000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\094-conditional-block-01-n1000000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\094-conditional-block-01-n1000000-o1.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 38969344,
+      "sequence": 94,
+      "started_at_utc": "2026-09-03T17:46:56Z",
+      "status": "completed"
+    },
+    {
+      "block": 2,
+      "condition": "n1000000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 31.84310979998554,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\095-conditional-block-02-n1000000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\095-conditional-block-02-n1000000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\095-conditional-block-02-n1000000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\095-conditional-block-02-n1000000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\095-conditional-block-02-n1000000-o2.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 43745280,
+      "sequence": 95,
+      "started_at_utc": "2026-09-03T17:47:28Z",
+      "status": "completed"
+    },
+    {
+      "block": 2,
+      "condition": "n1000000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 31.091278800013242,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\096-conditional-block-02-n1000000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\096-conditional-block-02-n1000000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\096-conditional-block-02-n1000000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\096-conditional-block-02-n1000000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\096-conditional-block-02-n1000000-o1.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 41152512,
+      "sequence": 96,
+      "started_at_utc": "2026-09-03T17:48:02Z",
+      "status": "completed"
+    },
+    {
+      "block": 2,
+      "condition": "n1000000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 29.371866300003603,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\097-conditional-block-02-n1000000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\097-conditional-block-02-n1000000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\097-conditional-block-02-n1000000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\097-conditional-block-02-n1000000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\097-conditional-block-02-n1000000-o0.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 42033152,
+      "sequence": 97,
+      "started_at_utc": "2026-09-03T17:48:35Z",
+      "status": "completed"
+    },
+    {
+      "block": 3,
+      "condition": "n1000000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 28.66421970000374,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\098-conditional-block-03-n1000000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\098-conditional-block-03-n1000000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\098-conditional-block-03-n1000000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\098-conditional-block-03-n1000000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\098-conditional-block-03-n1000000-o2.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 43667456,
+      "sequence": 98,
+      "started_at_utc": "2026-09-03T17:49:06Z",
+      "status": "completed"
+    },
+    {
+      "block": 3,
+      "condition": "n1000000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 28.837806700001238,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\099-conditional-block-03-n1000000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\099-conditional-block-03-n1000000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\099-conditional-block-03-n1000000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\099-conditional-block-03-n1000000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\099-conditional-block-03-n1000000-o1.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 41623552,
+      "sequence": 99,
+      "started_at_utc": "2026-09-03T17:49:36Z",
+      "status": "completed"
+    },
+    {
+      "block": 3,
+      "condition": "n1000000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 27.90975069999695,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\100-conditional-block-03-n1000000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\100-conditional-block-03-n1000000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\100-conditional-block-03-n1000000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\100-conditional-block-03-n1000000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\100-conditional-block-03-n1000000-o0.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 44752896,
+      "sequence": 100,
+      "started_at_utc": "2026-09-03T17:50:06Z",
+      "status": "completed"
+    },
+    {
+      "block": 4,
+      "condition": "n1000000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 28.646303000015905,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\101-conditional-block-04-n1000000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\101-conditional-block-04-n1000000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\101-conditional-block-04-n1000000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\101-conditional-block-04-n1000000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\101-conditional-block-04-n1000000-o0.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 42848256,
+      "sequence": 101,
+      "started_at_utc": "2026-09-03T17:50:36Z",
+      "status": "completed"
+    },
+    {
+      "block": 4,
+      "condition": "n1000000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 28.329097800015006,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\102-conditional-block-04-n1000000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\102-conditional-block-04-n1000000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\102-conditional-block-04-n1000000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\102-conditional-block-04-n1000000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\102-conditional-block-04-n1000000-o2.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 42684416,
+      "sequence": 102,
+      "started_at_utc": "2026-09-03T17:51:06Z",
+      "status": "completed"
+    },
+    {
+      "block": 4,
+      "condition": "n1000000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 29.23937600001227,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\103-conditional-block-04-n1000000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\103-conditional-block-04-n1000000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\103-conditional-block-04-n1000000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\103-conditional-block-04-n1000000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\103-conditional-block-04-n1000000-o1.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 43171840,
+      "sequence": 103,
+      "started_at_utc": "2026-09-03T17:51:36Z",
+      "status": "completed"
+    },
+    {
+      "block": 5,
+      "condition": "n1000000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 29.176114200003212,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\104-conditional-block-05-n1000000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\104-conditional-block-05-n1000000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\104-conditional-block-05-n1000000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\104-conditional-block-05-n1000000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\104-conditional-block-05-n1000000-o1.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 40837120,
+      "sequence": 104,
+      "started_at_utc": "2026-09-03T17:52:07Z",
+      "status": "completed"
+    },
+    {
+      "block": 5,
+      "condition": "n1000000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 30.143500899983337,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\105-conditional-block-05-n1000000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\105-conditional-block-05-n1000000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\105-conditional-block-05-n1000000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\105-conditional-block-05-n1000000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\105-conditional-block-05-n1000000-o2.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 41852928,
+      "sequence": 105,
+      "started_at_utc": "2026-09-03T17:52:38Z",
+      "status": "completed"
+    },
+    {
+      "block": 5,
+      "condition": "n1000000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 27.592610399995465,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\106-conditional-block-05-n1000000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\106-conditional-block-05-n1000000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\106-conditional-block-05-n1000000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\106-conditional-block-05-n1000000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\106-conditional-block-05-n1000000-o0.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 43188224,
+      "sequence": 106,
+      "started_at_utc": "2026-09-03T17:53:10Z",
+      "status": "completed"
+    },
+    {
+      "block": 6,
+      "condition": "n1000000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 27.86873360001482,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\107-conditional-block-06-n1000000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\107-conditional-block-06-n1000000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\107-conditional-block-06-n1000000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\107-conditional-block-06-n1000000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\107-conditional-block-06-n1000000-o0.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 45473792,
+      "sequence": 107,
+      "started_at_utc": "2026-09-03T17:53:39Z",
+      "status": "completed"
+    },
+    {
+      "block": 6,
+      "condition": "n1000000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 27.864944300003117,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\108-conditional-block-06-n1000000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\108-conditional-block-06-n1000000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\108-conditional-block-06-n1000000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\108-conditional-block-06-n1000000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\108-conditional-block-06-n1000000-o2.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 41058304,
+      "sequence": 108,
+      "started_at_utc": "2026-09-03T17:54:08Z",
+      "status": "completed"
+    },
+    {
+      "block": 6,
+      "condition": "n1000000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 28.182232999999542,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\109-conditional-block-06-n1000000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\109-conditional-block-06-n1000000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\109-conditional-block-06-n1000000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\109-conditional-block-06-n1000000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\109-conditional-block-06-n1000000-o1.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 42655744,
+      "sequence": 109,
+      "started_at_utc": "2026-09-03T17:54:38Z",
+      "status": "completed"
+    },
+    {
+      "block": 7,
+      "condition": "n1000000-o1",
+      "diagnostic": null,
+      "elapsed_seconds": 28.83737339999061,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\110-conditional-block-07-n1000000-o1.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\110-conditional-block-07-n1000000-o1.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\110-conditional-block-07-n1000000-o1.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\110-conditional-block-07-n1000000-o1.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\110-conditional-block-07-n1000000-o1.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 41627648,
+      "sequence": 110,
+      "started_at_utc": "2026-09-03T17:55:08Z",
+      "status": "completed"
+    },
+    {
+      "block": 7,
+      "condition": "n1000000-o0",
+      "diagnostic": null,
+      "elapsed_seconds": 28.44059600000037,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\111-conditional-block-07-n1000000-o0.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\111-conditional-block-07-n1000000-o0.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\111-conditional-block-07-n1000000-o0.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\111-conditional-block-07-n1000000-o0.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\111-conditional-block-07-n1000000-o0.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 37359616,
+      "sequence": 111,
+      "started_at_utc": "2026-09-03T17:55:38Z",
+      "status": "completed"
+    },
+    {
+      "block": 7,
+      "condition": "n1000000-o2",
+      "diagnostic": null,
+      "elapsed_seconds": 28.120010300015565,
+      "kind": "measured",
+      "paths": {
+        "manifest": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\manifests\\112-conditional-block-07-n1000000-o2.manifest.json",
+        "observation": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\observations\\112-conditional-block-07-n1000000-o2.observation.json",
+        "result": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\results\\112-conditional-block-07-n1000000-o2.result.json",
+        "stderr": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\112-conditional-block-07-n1000000-o2.stderr.log",
+        "stdout": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\tmp\\paper1-measurements\\P1-E1-BODY-OBSERVATION\\logs\\112-conditional-block-07-n1000000-o2.stdout.log"
+      },
+      "phase": "conditional",
+      "return_code": 0,
+      "sampled_peak_rss_bytes": 43700224,
+      "sequence": 112,
+      "started_at_utc": "2026-09-03T17:56:08Z",
+      "status": "completed"
+    }
+  ],
+  "schedule": [
+    {
+      "block": null,
+      "condition": "n1000-o0",
+      "kind": "warmup",
+      "phase": "mandatory"
+    },
+    {
+      "block": null,
+      "condition": "n1000-o1",
+      "kind": "warmup",
+      "phase": "mandatory"
+    },
+    {
+      "block": null,
+      "condition": "n1000-o2",
+      "kind": "warmup",
+      "phase": "mandatory"
+    },
+    {
+      "block": null,
+      "condition": "n10000-o0",
+      "kind": "warmup",
+      "phase": "mandatory"
+    },
+    {
+      "block": null,
+      "condition": "n10000-o1",
+      "kind": "warmup",
+      "phase": "mandatory"
+    },
+    {
+      "block": null,
+      "condition": "n10000-o2",
+      "kind": "warmup",
+      "phase": "mandatory"
+    },
+    {
+      "block": null,
+      "condition": "n100000-o0",
+      "kind": "warmup",
+      "phase": "mandatory"
+    },
+    {
+      "block": null,
+      "condition": "n100000-o1",
+      "kind": "warmup",
+      "phase": "mandatory"
+    },
+    {
+      "block": null,
+      "condition": "n100000-o2",
+      "kind": "warmup",
+      "phase": "mandatory"
+    },
+    {
+      "block": null,
+      "condition": "n1000-o3",
+      "kind": "warmup",
+      "phase": "mandatory"
+    },
+    {
+      "block": null,
+      "condition": "anchor-n6359-o0",
+      "kind": "warmup",
+      "phase": "mandatory"
+    },
+    {
+      "block": 1,
+      "condition": "n10000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 1,
+      "condition": "n1000-o3",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 1,
+      "condition": "n1000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 1,
+      "condition": "n100000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 1,
+      "condition": "anchor-n6359-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 1,
+      "condition": "n10000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 1,
+      "condition": "n1000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 1,
+      "condition": "n100000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 1,
+      "condition": "n10000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 1,
+      "condition": "n1000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 1,
+      "condition": "n100000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 2,
+      "condition": "n100000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 2,
+      "condition": "n1000-o3",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 2,
+      "condition": "n100000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 2,
+      "condition": "n10000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 2,
+      "condition": "n100000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 2,
+      "condition": "n1000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 2,
+      "condition": "n10000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 2,
+      "condition": "n1000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 2,
+      "condition": "anchor-n6359-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 2,
+      "condition": "n10000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 2,
+      "condition": "n1000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 3,
+      "condition": "n1000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 3,
+      "condition": "n10000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 3,
+      "condition": "n100000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 3,
+      "condition": "n10000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 3,
+      "condition": "n10000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 3,
+      "condition": "n1000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 3,
+      "condition": "n1000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 3,
+      "condition": "anchor-n6359-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 3,
+      "condition": "n1000-o3",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 3,
+      "condition": "n100000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 3,
+      "condition": "n100000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 4,
+      "condition": "anchor-n6359-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 4,
+      "condition": "n10000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 4,
+      "condition": "n1000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 4,
+      "condition": "n10000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 4,
+      "condition": "n1000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 4,
+      "condition": "n100000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 4,
+      "condition": "n100000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 4,
+      "condition": "n1000-o3",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 4,
+      "condition": "n100000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 4,
+      "condition": "n1000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 4,
+      "condition": "n10000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 5,
+      "condition": "n1000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 5,
+      "condition": "n1000-o3",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 5,
+      "condition": "anchor-n6359-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 5,
+      "condition": "n10000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 5,
+      "condition": "n10000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 5,
+      "condition": "n10000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 5,
+      "condition": "n1000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 5,
+      "condition": "n100000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 5,
+      "condition": "n100000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 5,
+      "condition": "n1000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 5,
+      "condition": "n100000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 6,
+      "condition": "n1000-o3",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 6,
+      "condition": "n1000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 6,
+      "condition": "n100000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 6,
+      "condition": "n100000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 6,
+      "condition": "n10000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 6,
+      "condition": "n1000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 6,
+      "condition": "n100000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 6,
+      "condition": "anchor-n6359-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 6,
+      "condition": "n10000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 6,
+      "condition": "n1000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 6,
+      "condition": "n10000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 7,
+      "condition": "n10000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 7,
+      "condition": "n1000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 7,
+      "condition": "n1000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 7,
+      "condition": "n10000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 7,
+      "condition": "n100000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 7,
+      "condition": "n1000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 7,
+      "condition": "n100000-o2",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 7,
+      "condition": "anchor-n6359-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 7,
+      "condition": "n100000-o1",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 7,
+      "condition": "n10000-o0",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": 7,
+      "condition": "n1000-o3",
+      "kind": "measured",
+      "phase": "mandatory"
+    },
+    {
+      "block": null,
+      "condition": "n1000000-o0",
+      "kind": "warmup",
+      "phase": "conditional"
+    },
+    {
+      "block": null,
+      "condition": "n1000000-o1",
+      "kind": "warmup",
+      "phase": "conditional"
+    },
+    {
+      "block": null,
+      "condition": "n1000000-o2",
+      "kind": "warmup",
+      "phase": "conditional"
+    },
+    {
+      "block": 1,
+      "condition": "n1000000-o2",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 1,
+      "condition": "n1000000-o0",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 1,
+      "condition": "n1000000-o1",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 2,
+      "condition": "n1000000-o2",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 2,
+      "condition": "n1000000-o1",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 2,
+      "condition": "n1000000-o0",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 3,
+      "condition": "n1000000-o2",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 3,
+      "condition": "n1000000-o1",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 3,
+      "condition": "n1000000-o0",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 4,
+      "condition": "n1000000-o0",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 4,
+      "condition": "n1000000-o2",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 4,
+      "condition": "n1000000-o1",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 5,
+      "condition": "n1000000-o1",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 5,
+      "condition": "n1000000-o2",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 5,
+      "condition": "n1000000-o0",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 6,
+      "condition": "n1000000-o0",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 6,
+      "condition": "n1000000-o2",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 6,
+      "condition": "n1000000-o1",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 7,
+      "condition": "n1000000-o1",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 7,
+      "condition": "n1000000-o0",
+      "kind": "measured",
+      "phase": "conditional"
+    },
+    {
+      "block": 7,
+      "condition": "n1000000-o2",
+      "kind": "measured",
+      "phase": "conditional"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "schemas": {
+    "benchmark_manifest": {
+      "path": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\data\\schemas\\body-transport-benchmark\\1.0.0.schema.json",
+      "sha256": "17bc8c9e397f4676f5434936b04ef286ba22ca7248c6751574f0725cd146bf3f"
+    },
+    "benchmark_report": {
+      "path": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\data\\schemas\\body-transport-benchmark-report\\1.0.0.schema.json",
+      "sha256": "de3d514fb01d3db473c1e8ac129e35e0a01cd1527b1d09d2c80a5e7b5896345b"
+    },
+    "campaign_plan": {
+      "path": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\data\\schemas\\rq4-benchmark-campaign\\1.0.0.schema.json",
+      "sha256": "c708ab1a75547b2e8f25b87f39ff6f0ee2da6a4c62388f6cd016994af2f27a64"
+    },
+    "campaign_report": {
+      "path": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\data\\schemas\\rq4-benchmark-campaign-report\\1.0.0.schema.json",
+      "sha256": "e19ac8045e2ea5a2e392acadbfa764d449422317abd0ee26fab9cb3c8f93774d"
+    },
+    "observation_report": {
+      "path": "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\data\\schemas\\transport-observation-report\\1.0.0.schema.json",
+      "sha256": "349f3163d2c3f2c94442af93bd6a5de89f29de64503c5965625636b3f02f68a0"
+    }
+  },
+  "started_at_utc": "2026-09-03T17:41:13Z",
+  "status": "complete",
+  "suitable_for_analysis": true,
+  "summaries": {
+    "anchor-n6359-o0": {
+      "complete": true,
+      "observation_output_bytes": {
+        "all": [
+          911,
+          911,
+          911,
+          911,
+          911,
+          911,
+          911
+        ],
+        "iqr": 0.0,
+        "maximum": 911,
+        "median": 911,
+        "minimum": 911,
+        "q1": 911.0,
+        "q3": 911.0
+      },
+      "peak_resident_set_bytes": {
+        "all": [
+          7946240,
+          7942144,
+          7938048,
+          7954432,
+          7942144,
+          7946240,
+          7950336
+        ],
+        "iqr": 6144.0,
+        "maximum": 7954432,
+        "median": 7946240,
+        "minimum": 7938048,
+        "q1": 7942144.0,
+        "q3": 7948288.0
+      },
+      "simulation_ns": {
+        "all": [
+          1834616200,
+          4994679200,
+          2639847000,
+          3928587800,
+          2828698500,
+          2622351300,
+          2271787600
+        ],
+        "iqr": 931573700.0,
+        "maximum": 4994679200,
+        "median": 2639847000,
+        "minimum": 1834616200,
+        "q1": 2447069450.0,
+        "q3": 3378643150.0
+      },
+      "transition_throughput_per_second": {
+        "all": [
+          12788286.182145344,
+          4697318.098027197,
+          8887483.630680112,
+          5972017.985699594,
+          8294131.382330071,
+          8946778.79352015,
+          10327372.594163293
+        ],
+        "iqr": 2504001.0098268893,
+        "maximum": 12788286.182145344,
+        "median": 8887483.630680112,
+        "minimum": 4697318.098027197,
+        "q1": 7133074.684014833,
+        "q3": 9637075.693841722
+      }
+    },
+    "n1000-o0": {
+      "complete": true,
+      "observation_output_bytes": {
+        "all": [
+          909,
+          909,
+          909,
+          909,
+          909,
+          909,
+          909
+        ],
+        "iqr": 0.0,
+        "maximum": 909,
+        "median": 909,
+        "minimum": 909,
+        "q1": 909.0,
+        "q3": 909.0
+      },
+      "peak_resident_set_bytes": {
+        "all": [
+          7905280,
+          7942144,
+          7946240,
+          7933952,
+          7942144,
+          7938048,
+          7933952
+        ],
+        "iqr": 8192.0,
+        "maximum": 7946240,
+        "median": 7938048,
+        "minimum": 7905280,
+        "q1": 7933952.0,
+        "q3": 7942144.0
+      },
+      "simulation_ns": {
+        "all": [
+          15504400,
+          28507200,
+          19808000,
+          14761600,
+          18253300,
+          20202700,
+          18690200
+        ],
+        "iqr": 3126500.0,
+        "maximum": 28507200,
+        "median": 18690200,
+        "minimum": 14761600,
+        "q1": 16878850.0,
+        "q3": 20005350.0
+      },
+      "transition_throughput_per_second": {
+        "all": [
+          13982998.374654938,
+          7605026.098669809,
+          10944971.728594508,
+          14686619.336657273,
+          11877194.80860995,
+          10731139.89714246,
+          11599554.846925126
+        ],
+        "iqr": 2092040.778763961,
+        "maximum": 14686619.336657273,
+        "median": 11599554.846925126,
+        "minimum": 7605026.098669809,
+        "q1": 10838055.812868483,
+        "q3": 12930096.591632444
+      }
+    },
+    "n1000-o1": {
+      "complete": true,
+      "observation_output_bytes": {
+        "all": [
+          98286,
+          98286,
+          98286,
+          98286,
+          98286,
+          98286,
+          98286
+        ],
+        "iqr": 0.0,
+        "maximum": 98286,
+        "median": 98286,
+        "minimum": 98286,
+        "q1": 98286.0,
+        "q3": 98286.0
+      },
+      "peak_resident_set_bytes": {
+        "all": [
+          7938048,
+          7901184,
+          7921664,
+          7933952,
+          7929856,
+          7938048,
+          7938048
+        ],
+        "iqr": 12288.0,
+        "maximum": 7938048,
+        "median": 7933952,
+        "minimum": 7901184,
+        "q1": 7925760.0,
+        "q3": 7938048.0
+      },
+      "simulation_ns": {
+        "all": [
+          15032900,
+          23410200,
+          36006000,
+          16229700,
+          18838100,
+          17664800,
+          18938200
+        ],
+        "iqr": 4226950.0,
+        "maximum": 36006000,
+        "median": 18838100,
+        "minimum": 15032900,
+        "q1": 16947250.0,
+        "q3": 21174200.0
+      },
+      "transition_throughput_per_second": {
+        "all": [
+          14421568.692667415,
+          9260835.020632032,
+          6021163.139476754,
+          13358102.737573707,
+          11508485.462971319,
+          12272881.662968162,
+          11447656.060238037
+        ],
+        "iqr": 2461246.659835901,
+        "maximum": 14421568.692667415,
+        "median": 11508485.462971319,
+        "minimum": 6021163.139476754,
+        "q1": 10354245.540435035,
+        "q3": 12815492.200270936
+      }
+    },
+    "n1000-o2": {
+      "complete": true,
+      "observation_output_bytes": {
+        "all": [
+          286076,
+          286076,
+          286076,
+          286076,
+          286076,
+          286076,
+          286076
+        ],
+        "iqr": 0.0,
+        "maximum": 286076,
+        "median": 286076,
+        "minimum": 286076,
+        "q1": 286076.0,
+        "q3": 286076.0
+      },
+      "peak_resident_set_bytes": {
+        "all": [
+          8904704,
+          8949760,
+          8945664,
+          8957952,
+          8941568,
+          8908800,
+          8880128
+        ],
+        "iqr": 40960.0,
+        "maximum": 8957952,
+        "median": 8941568,
+        "minimum": 8880128,
+        "q1": 8906752.0,
+        "q3": 8947712.0
+      },
+      "simulation_ns": {
+        "all": [
+          15378100,
+          20162000,
+          21756700,
+          26854700,
+          21659000,
+          19927500,
+          20231100
+        ],
+        "iqr": 1663100.0,
+        "maximum": 26854700,
+        "median": 20231100,
+        "minimum": 15378100,
+        "q1": 20044750.0,
+        "q3": 21707850.0
+      },
+      "transition_throughput_per_second": {
+        "all": [
+          14097840.435424402,
+          10752802.301358992,
+          9964654.566179615,
+          8073000.256938264,
+          10009603.39812549,
+          10879337.598795634,
+          10716075.744769191
+        ],
+        "iqr": 828940.9679247625,
+        "maximum": 14097840.435424402,
+        "median": 10716075.744769191,
+        "minimum": 8073000.256938264,
+        "q1": 9987128.982152551,
+        "q3": 10816069.950077314
+      }
+    },
+    "n1000-o3": {
+      "complete": true,
+      "observation_output_bytes": {
+        "all": [
+          40383573,
+          40383573,
+          40383573,
+          40383573,
+          40383573,
+          40383573,
+          40383573
+        ],
+        "iqr": 0.0,
+        "maximum": 40383573,
+        "median": 40383573,
+        "minimum": 40383573,
+        "q1": 40383573.0,
+        "q3": 40383573.0
+      },
+      "peak_resident_set_bytes": {
+        "all": [
+          183914496,
+          184205312,
+          184221696,
+          183889920,
+          183914496,
+          183775232,
+          183980032
+        ],
+        "iqr": 190464.0,
+        "maximum": 184221696,
+        "median": 183914496,
+        "minimum": 183775232,
+        "q1": 183902208.0,
+        "q3": 184092672.0
+      },
+      "simulation_ns": {
+        "all": [
+          34256800,
+          33199900,
+          41160700,
+          37739700,
+          43576200,
+          39906300,
+          44381500
+        ],
+        "iqr": 6370200.0,
+        "maximum": 44381500,
+        "median": 39906300,
+        "minimum": 33199900,
+        "q1": 35998250.0,
+        "q3": 42368450.0
+      },
+      "transition_throughput_per_second": {
+        "all": [
+          6328612.129562598,
+          6530079.909879247,
+          5267111.589453046,
+          5744560.76757367,
+          4975146.983904058,
+          5432676.043632208,
+          4884873.201671868
+        ],
+        "iqr": 915457.161889581,
+        "maximum": 6530079.909879247,
+        "median": 5432676.043632208,
+        "minimum": 4884873.201671868,
+        "q1": 5121129.286678553,
+        "q3": 6036586.448568134
+      }
+    },
+    "n10000-o0": {
+      "complete": true,
+      "observation_output_bytes": {
+        "all": [
+          912,
+          912,
+          912,
+          912,
+          912,
+          912,
+          912
+        ],
+        "iqr": 0.0,
+        "maximum": 912,
+        "median": 912,
+        "minimum": 912,
+        "q1": 912.0,
+        "q3": 912.0
+      },
+      "peak_resident_set_bytes": {
+        "all": [
+          7921664,
+          7909376,
+          7933952,
+          7938048,
+          7958528,
+          7950336,
+          7938048
+        ],
+        "iqr": 16384.0,
+        "maximum": 7958528,
+        "median": 7938048,
+        "minimum": 7909376,
+        "q1": 7927808.0,
+        "q3": 7944192.0
+      },
+      "simulation_ns": {
+        "all": [
+          187641100,
+          235769600,
+          204884500,
+          164512000,
+          194634900,
+          209747400,
+          209624300
+        ],
+        "iqr": 18547850.0,
+        "maximum": 235769600,
+        "median": 204884500,
+        "minimum": 164512000,
+        "q1": 191138000.0,
+        "q3": 209685850.0
+      },
+      "transition_throughput_per_second": {
+        "all": [
+          11552095.996026456,
+          9193924.91652868,
+          10579853.527231196,
+          13176230.305388058,
+          11136995.472035076,
+          10334564.337865451,
+          10340633.218572466
+        ],
+        "iqr": 1006946.9558118079,
+        "maximum": 13176230.305388058,
+        "median": 10579853.527231196,
+        "minimum": 9193924.91652868,
+        "q1": 10337598.778218959,
+        "q3": 11344545.734030766
+      }
+    },
+    "n10000-o1": {
+      "complete": true,
+      "observation_output_bytes": {
+        "all": [
+          98876,
+          98876,
+          98876,
+          98876,
+          98876,
+          98876,
+          98876
+        ],
+        "iqr": 0.0,
+        "maximum": 98876,
+        "median": 98876,
+        "minimum": 98876,
+        "q1": 98876.0,
+        "q3": 98876.0
+      },
+      "peak_resident_set_bytes": {
+        "all": [
+          7991296,
+          7970816,
+          7958528,
+          7917568,
+          7970816,
+          7938048,
+          7958528
+        ],
+        "iqr": 22528.0,
+        "maximum": 7991296,
+        "median": 7958528,
+        "minimum": 7917568,
+        "q1": 7948288.0,
+        "q3": 7970816.0
+      },
+      "simulation_ns": {
+        "all": [
+          178459100,
+          361191300,
+          232168400,
+          194751000,
+          245942400,
+          241742900,
+          205863600
+        ],
+        "iqr": 43535350.0,
+        "maximum": 361191300,
+        "median": 232168400,
+        "minimum": 178459100,
+        "q1": 200307300.0,
+        "q3": 243842650.0
+      },
+      "transition_throughput_per_second": {
+        "all": [
+          12146469.415120889,
+          6001384.8617062485,
+          9336533.309442628,
+          11130356.198427737,
+          8813640.917548174,
+          8966749.38540077,
+          10529535.09022479
+        ],
+        "iqr": 1939750.49285179,
+        "maximum": 12146469.415120889,
+        "median": 9336533.309442628,
+        "minimum": 6001384.8617062485,
+        "q1": 8890195.151474472,
+        "q3": 10829945.644326262
+      }
+    },
+    "n10000-o2": {
+      "complete": true,
+      "observation_output_bytes": {
+        "all": [
+          286708,
+          286708,
+          286708,
+          286708,
+          286708,
+          286708,
+          286708
+        ],
+        "iqr": 0.0,
+        "maximum": 286708,
+        "median": 286708,
+        "minimum": 286708,
+        "q1": 286708.0,
+        "q3": 286708.0
+      },
+      "peak_resident_set_bytes": {
+        "all": [
+          9035776,
+          9179136,
+          9138176,
+          9125888,
+          9150464,
+          9154560,
+          9109504
+        ],
+        "iqr": 34816.0,
+        "maximum": 9179136,
+        "median": 9138176,
+        "minimum": 9035776,
+        "q1": 9117696.0,
+        "q3": 9152512.0
+      },
+      "simulation_ns": {
+        "all": [
+          174849800,
+          481870600,
+          229638100,
+          238498100,
+          215064000,
+          221778400,
+          202705600
+        ],
+        "iqr": 25183300.0,
+        "maximum": 481870600,
+        "median": 221778400,
+        "minimum": 174849800,
+        "q1": 208884800.0,
+        "q3": 234068100.0
+      },
+      "transition_throughput_per_second": {
+        "all": [
+          12397200.339948917,
+          4498402.683209973,
+          9439409.226953194,
+          9088743.264621396,
+          10079083.435628464,
+          9773936.505989762,
+          10693577.286468651
+        ],
+        "iqr": 1122254.1152612623,
+        "maximum": 12397200.339948917,
+        "median": 9773936.505989762,
+        "minimum": 4498402.683209973,
+        "q1": 9264076.245787295,
+        "q3": 10386330.361048557
+      }
+    },
+    "n100000-o0": {
+      "complete": true,
+      "observation_output_bytes": {
+        "all": [
+          915,
+          915,
+          915,
+          915,
+          915,
+          915,
+          915
+        ],
+        "iqr": 0.0,
+        "maximum": 915,
+        "median": 915,
+        "minimum": 915,
+        "q1": 915.0,
+        "q3": 915.0
+      },
+      "peak_resident_set_bytes": {
+        "all": [
+          11808768,
+          11804672,
+          12660736,
+          11808768,
+          11808768,
+          12341248,
+          13230080
+        ],
+        "iqr": 692224.0,
+        "maximum": 13230080,
+        "median": 11808768,
+        "minimum": 11804672,
+        "q1": 11808768.0,
+        "q3": 12500992.0
+      },
+      "simulation_ns": {
+        "all": [
+          1860150700,
+          2457166500,
+          3599515100,
+          2760243500,
+          2296983000,
+          2404755300,
+          2097746900
+        ],
+        "iqr": 411340050.0,
+        "maximum": 3599515100,
+        "median": 2404755300,
+        "minimum": 1860150700,
+        "q1": 2197364950.0,
+        "q3": 2608705000.0
+      },
+      "transition_throughput_per_second": {
+        "all": [
+          11648733.08383025,
+          8818449.624801576,
+          6019810.557260893,
+          7850176.623910173,
+          9433417.225987306,
+          9010646.114388436,
+          10329367.665851396
+        ],
+        "iqr": 1547079.3215634748,
+        "maximum": 11648733.08383025,
+        "median": 9010646.114388436,
+        "minimum": 6019810.557260893,
+        "q1": 8334313.124355875,
+        "q3": 9881392.44591935
+      }
+    },
+    "n100000-o1": {
+      "complete": true,
+      "observation_output_bytes": {
+        "all": [
+          99555,
+          99555,
+          99555,
+          99555,
+          99555,
+          99555,
+          99555
+        ],
+        "iqr": 0.0,
+        "maximum": 99555,
+        "median": 99555,
+        "minimum": 99555,
+        "q1": 99555.0,
+        "q3": 99555.0
+      },
+      "peak_resident_set_bytes": {
+        "all": [
+          12365824,
+          12664832,
+          12386304,
+          13197312,
+          12390400,
+          12390400,
+          13197312
+        ],
+        "iqr": 542720.0,
+        "maximum": 13197312,
+        "median": 12390400,
+        "minimum": 12365824,
+        "q1": 12388352.0,
+        "q3": 12931072.0
+      },
+      "simulation_ns": {
+        "all": [
+          1872161400,
+          5109747100,
+          2429946700,
+          1862450500,
+          2083171700,
+          2142729000,
+          2256117100
+        ],
+        "iqr": 365365350.0,
+        "maximum": 5109747100,
+        "median": 2142729000,
+        "minimum": 1862450500,
+        "q1": 1977666550.0,
+        "q3": 2343031900.0
+      },
+      "transition_throughput_per_second": {
+        "all": [
+          11574001.579137355,
+          4240601.066146699,
+          8917232.217480326,
+          11634348.939743634,
+          10401638.52072299,
+          10112524.262284217,
+          9604288.270320721
+        ],
+        "iqr": 1727059.8060296513,
+        "maximum": 11634348.939743634,
+        "median": 10112524.262284217,
+        "minimum": 4240601.066146699,
+        "q1": 9260760.243900523,
+        "q3": 10987820.049930174
+      }
+    },
+    "n100000-o2": {
+      "complete": true,
+      "observation_output_bytes": {
+        "all": [
+          287334,
+          287334,
+          287334,
+          287334,
+          287334,
+          287334,
+          287334
+        ],
+        "iqr": 0.0,
+        "maximum": 287334,
+        "median": 287334,
+        "minimum": 287334,
+        "q1": 287334.0,
+        "q3": 287334.0
+      },
+      "peak_resident_set_bytes": {
+        "all": [
+          11845632,
+          11825152,
+          12382208,
+          12357632,
+          11853824,
+          12697600,
+          13205504
+        ],
+        "iqr": 690176.0,
+        "maximum": 13205504,
+        "median": 12357632,
+        "minimum": 11825152,
+        "q1": 11849728.0,
+        "q3": 12539904.0
+      },
+      "simulation_ns": {
+        "all": [
+          1956907400,
+          1872970400,
+          4508517600,
+          1994407600,
+          2073729700,
+          2237364400,
+          2129583800
+        ],
+        "iqr": 207816600.0,
+        "maximum": 4508517600,
+        "median": 2073729700,
+        "minimum": 1872970400,
+        "q1": 1975657500.0,
+        "q3": 2183474100.0
+      },
+      "transition_throughput_per_second": {
+        "all": [
+          11072776.872324158,
+          11569002.371847413,
+          4806102.786423635,
+          10864579.035900185,
+          10448998.729197929,
+          9684787.600982657,
+          10174945.451782644
+        ],
+        "iqr": 1038811.427729521,
+        "maximum": 11569002.371847413,
+        "median": 10448998.729197929,
+        "minimum": 4806102.786423635,
+        "q1": 9929866.526382651,
+        "q3": 10968677.954112172
+      }
+    },
+    "n1000000-o0": {
+      "complete": true,
+      "observation_output_bytes": {
+        "all": [
+          918,
+          918,
+          918,
+          918,
+          918,
+          918,
+          918
+        ],
+        "iqr": 0.0,
+        "maximum": 918,
+        "median": 918,
+        "minimum": 918,
+        "q1": 918.0,
+        "q3": 918.0
+      },
+      "peak_resident_set_bytes": {
+        "all": [
+          48848896,
+          47435776,
+          48771072,
+          48316416,
+          48828416,
+          48836608,
+          47415296
+        ],
+        "iqr": 956416.0,
+        "maximum": 48848896,
+        "median": 48771072,
+        "minimum": 47415296,
+        "q1": 47876096.0,
+        "q3": 48832512.0
+      },
+      "simulation_ns": {
+        "all": [
+          30704421900,
+          29271107300,
+          27808778300,
+          28313489500,
+          27401089700,
+          27584509000,
+          28068211700
+        ],
+        "iqr": 1095654750.0,
+        "maximum": 30704421900,
+        "median": 28068211700,
+        "minimum": 27401089700,
+        "q1": 27696643650.0,
+        "q3": 28792298400.0
+      },
+      "transition_throughput_per_second": {
+        "all": [
+          7058726.77576776,
+          7404370.554850858,
+          7793730.550183861,
+          7654800.903293817,
+          7909689.99309542,
+          7857095.62566439,
+          7721693.39879961
+        ],
+        "iqr": 295827.3588517867,
+        "maximum": 7909689.99309542,
+        "median": 7721693.39879961,
+        "minimum": 7058726.77576776,
+        "q1": 7529585.729072338,
+        "q3": 7825413.087924125
+      }
+    },
+    "n1000000-o1": {
+      "complete": true,
+      "observation_output_bytes": {
+        "all": [
+          100224,
+          100224,
+          100224,
+          100224,
+          100224,
+          100224,
+          100224
+        ],
+        "iqr": 0.0,
+        "maximum": 100224,
+        "median": 100224,
+        "minimum": 100224,
+        "q1": 100224.0,
+        "q3": 100224.0
+      },
+      "peak_resident_set_bytes": {
+        "all": [
+          47984640,
+          47984640,
+          48242688,
+          48005120,
+          47992832,
+          48013312,
+          48807936
+        ],
+        "iqr": 139264.0,
+        "maximum": 48807936,
+        "median": 48005120,
+        "minimum": 47984640,
+        "q1": 47988736.0,
+        "q3": 48128000.0
+      },
+      "simulation_ns": {
+        "all": [
+          30624974600,
+          30940293200,
+          28516145300,
+          29092094600,
+          28918075000,
+          27967873100,
+          28510469500
+        ],
+        "iqr": 1345227200.0,
+        "maximum": 30940293200,
+        "median": 28918075000,
+        "minimum": 27967873100,
+        "q1": 28513307400.0,
+        "q3": 29858534600.0
+      },
+      "transition_throughput_per_second": {
+        "all": [
+          7077038.522670317,
+          7004915.034224692,
+          7600400.500133515,
+          7449931.948179489,
+          7494763.223347335,
+          7749396.038270783,
+          7601913.570732323
+        ],
+        "iqr": 337671.80000801664,
+        "maximum": 7749396.038270783,
+        "median": 7494763.223347335,
+        "minimum": 7004915.034224692,
+        "q1": 7263485.235424903,
+        "q3": 7601157.03543292
+      }
+    },
+    "n1000000-o2": {
+      "complete": true,
+      "observation_output_bytes": {
+        "all": [
+          288009,
+          288009,
+          288009,
+          288009,
+          288009,
+          288009,
+          288009
+        ],
+        "iqr": 0.0,
+        "maximum": 288009,
+        "median": 288009,
+        "minimum": 288009,
+        "q1": 288009.0,
+        "q3": 288009.0
+      },
+      "peak_resident_set_bytes": {
+        "all": [
+          47767552,
+          48013312,
+          47988736,
+          48795648,
+          48029696,
+          48812032,
+          48820224
+        ],
+        "iqr": 802816.0,
+        "maximum": 48820224,
+        "median": 48029696,
+        "minimum": 47767552,
+        "q1": 48001024.0,
+        "q3": 48803840.0
+      },
+      "simulation_ns": {
+        "all": [
+          27363923000,
+          31630923400,
+          28301316800,
+          28055730400,
+          29818011300,
+          27478798200,
+          27968620700
+        ],
+        "iqr": 1335954600.0,
+        "maximum": 31630923400,
+        "median": 28055730400,
+        "minimum": 27363923000,
+        "q1": 27723709450.0,
+        "q3": 29059664050.0
+      },
+      "transition_throughput_per_second": {
+        "all": [
+          7920433.2288173735,
+          6851969.582399229,
+          7658093.315290545,
+          7725128.5890600085,
+          7268564.05074875,
+          7887321.833456311,
+          7749188.897255845
+        ],
+        "iqr": 354926.682336431,
+        "maximum": 7920433.2288173735,
+        "median": 7725128.5890600085,
+        "minimum": 6851969.582399229,
+        "q1": 7463328.683019647,
+        "q3": 7818255.365356078
+      }
+    }
+  },
+  "updated_at_utc": "2026-09-03T17:56:40Z"
+}
