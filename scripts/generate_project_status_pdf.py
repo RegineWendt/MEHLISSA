@@ -21,6 +21,7 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
 from reportlab.platypus import (
     BaseDocTemplate,
+    CondPageBreak,
     Flowable,
     Frame,
     PageBreak,
@@ -254,7 +255,7 @@ def parse_body(markdown: str) -> list:
         if stripped.startswith("## "):
             flush_paragraph(paragraph_buffer, story)
             if not first_section:
-                story.append(PageBreak())
+                story.append(CondPageBreak(52 * mm))
             first_section = False
             story.append(paragraph(stripped[3:], "H1x"))
             story.append(AccentRule(32 * mm))
@@ -284,7 +285,7 @@ def cover_story() -> list:
     status = Table(
         [
             [paragraph("M0-M7", "TableHead"), paragraph("PASSED", "TableHead"), paragraph("CURRENT FOCUS", "TableHead")],
-            [Paragraph("Architecture and implementation", STYLES["CoverMeta"]), Paragraph("All milestone gates", STYLES["CoverMeta"]), Paragraph("UX-6.5 result dashboard and comparison", STYLES["CoverMeta"])],
+            [Paragraph("Architecture and implementation", STYLES["CoverMeta"]), Paragraph("All milestone gates", STYLES["CoverMeta"]), Paragraph("UX-6.6 provenance and evidence", STYLES["CoverMeta"])],
         ],
         colWidths=[51 * mm, 37 * mm, 76 * mm],
         style=TableStyle(
@@ -310,7 +311,7 @@ def cover_story() -> list:
         Spacer(1, 17 * mm),
         Paragraph("Prepared for prospective contributors and research partners", STYLES["CoverMeta"]),
         Paragraph("Status date: 3 September 2026", STYLES["CoverMeta"]),
-        Paragraph("Branch: mehlissa-next-generation | Published base: 7b92c4e | UX-6.1 through UX-6.4 local", STYLES["CoverMeta"]),
+        Paragraph("Branch: mehlissa-next-generation | Published base: 7b92c4e | UX-6.1 through UX-6.5 local", STYLES["CoverMeta"]),
         Paragraph("Repository: github.com/RegineWendt/MEHLISSA", STYLES["CoverMeta"]),
         PageBreak(),
     ]

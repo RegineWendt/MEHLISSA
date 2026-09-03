@@ -22,13 +22,20 @@ import threading
 from typing import Callable, Mapping, Sequence, cast
 from urllib.parse import parse_qs, urlsplit
 
-from mehlissa import MehlissaCancelledError, MehlissaClient, MehlissaCommandError
+from mehlissa import (
+    MehlissaCancelledError,
+    MehlissaClient,
+    MehlissaCommandError,
+    load_campaign_result,
+    load_result,
+)
 
 
 CATALOG_API_VERSION = "1.0.0"
 WORKSPACE_API_VERSION = "1.0.0"
 VALIDATION_API_VERSION = "1.0.0"
 RUN_API_VERSION = "1.0.0"
+RESULT_API_VERSION = "1.0.0"
 LOOPBACK_HOSTS = frozenset({"127.0.0.1", "localhost"})
 SCENARIO_SCHEMA_PATH = Path(
     "data/schemas/fingerprinting-scenario-profile/1.0.0.schema.json"
@@ -171,7 +178,7 @@ def discover_catalog(client: MehlissaClient) -> dict[str, object]:
     return {
         "api_version": CATALOG_API_VERSION,
         "application": "MEHLISSA Next Research Workbench",
-        "workbench_increment": "UX-6.4",
+        "workbench_increment": "UX-6.5",
         "read_only": True,
         "scenario_editing": True,
         "clinical_use": False,
@@ -970,6 +977,9 @@ class RunWorkspace:
                 ("summary", "Scenario summary", execution.summary),
             ):
                 self._artifact(job_id, name, label, path)
+            report = self.client.report_result(execution.result, directory / "report")
+            self._artifact(job_id, "report-html", "UX-3 HTML report", report.html)
+            self._artifact(job_id, "report-result", "UX-3 retained result", report.result)
             self._update(job_id, status="completed", stage="Completed", progress_percent=100, completed_at=self._now())
         except MehlissaCancelledError as error:
             self._finish_output(job_id, directory, error.stdout, error.stderr)
@@ -1044,8 +1054,160 @@ class RunWorkspace:
         directory = (self.repository_root / str(job["directory"])).resolve()
         if directory not in path.parents or not path.is_file():
             raise RunNotFoundError("Retained artifact is unavailable")
-        content_type = "application/json; charset=utf-8" if path.suffix == ".json" else "text/plain; charset=utf-8"
+        content_type = {
+            ".json": "application/json; charset=utf-8",
+            ".html": "text/html; charset=utf-8",
+            ".csv": "text/csv; charset=utf-8",
+        }.get(path.suffix.lower(), "text/plain; charset=utf-8")
         return path, content_type
+
+    def _result_path(self, job: Mapping[str, object]) -> Path:
+        artifact = next(
+            (
+                entry
+                for entry in cast(list[dict[str, str]], job["artifacts"])
+                if entry["name"] == "result"
+            ),
+            None,
+        )
+        if artifact is None:
+            raise RunControlError("The completed run has no authoritative result artifact")
+        path = (self.repository_root / artifact["path"]).resolve()
+        directory = (self.repository_root / str(job["directory"])).resolve()
+        if directory not in path.parents or not path.is_file():
+            raise RunControlError("The authoritative result artifact is unavailable")
+        return path
+
+    @staticmethod
+    def _unavailable_dashboard(job: Mapping[str, object]) -> dict[str, object]:
+        status = str(job["status"])
+        return {
+            "api_version": RESULT_API_VERSION,
+            "available": False,
+            "job_id": job["id"],
+            "kind": job["kind"],
+            "status": status,
+            "observation_count": 0,
+            "reason": (
+                f"Results are excluded because this job is {status}; "
+                "missing, failed, and cancelled runs are never observations."
+            ),
+        }
+
+    def dashboard(self, job_id: str) -> dict[str, object]:
+        """Project an accepted result reader into the graphical result contract."""
+        job = self.get(job_id)
+        if job["status"] != "completed":
+            return self._unavailable_dashboard(job)
+        path = self._result_path(job)
+        if job["kind"] == "scenario":
+            result = load_result(path)
+            stages = [
+                {**stage, "time_ms": float(stage["time_ns"]) / 1_000_000.0}
+                for stage in result.runtime_stages
+            ]
+            return {
+                "api_version": RESULT_API_VERSION,
+                "available": True,
+                "job_id": job_id,
+                "kind": "scenario",
+                "status": "completed",
+                "reader": "mehlissa.load_result",
+                "observation_count": 1,
+                "summary": result.summary,
+                "runtime_stages": stages,
+                "analysis_cases": result.analysis_cases,
+                "authoritative_artifact": "result",
+                "ux3_report_artifact": "report-html",
+            }
+
+        result = load_campaign_result(path)
+        metrics = ("detected", "assembled", "sensitivity", "specificity")
+        grouped = []
+        for name, runs in result.groups().items():
+            grouped.append(
+                {
+                    "name": name,
+                    "design": runs[0]["design"] if runs else None,
+                    "run_count": len(runs),
+                    "runs": runs,
+                    "available_counts": {
+                        metric: sum(run[metric] is not None for run in runs)
+                        for metric in metrics
+                    },
+                }
+            )
+        differences = []
+        for metric in metrics:
+            for difference in result.paired_differences(metric):
+                differences.append(
+                    {**difference, "included": difference["difference"] is not None}
+                )
+        return {
+            "api_version": RESULT_API_VERSION,
+            "available": True,
+            "job_id": job_id,
+            "kind": "campaign",
+            "status": "completed",
+            "reader": "mehlissa.load_campaign_result",
+            "observation_count": len(result.runs),
+            "summary": {
+                "campaign_id": result.document["campaign"]["id"],
+                "title": result.document["campaign"]["title"],
+                "run_count": len(result.runs),
+                "group_count": len(grouped),
+            },
+            "groups": grouped,
+            "paired_differences": differences,
+            "limitations": result.document["limitations"],
+            "authoritative_artifact": "result",
+            "table_artifact": "csv",
+        }
+
+    def compare(self, left_id: str, right_id: str) -> dict[str, object]:
+        """Compare two completed scenario results without inventing missing values."""
+        if not left_id or not right_id or left_id == right_id:
+            raise RunControlError("Comparison requires two different run ids")
+        jobs = [self.get(left_id), self.get(right_id)]
+        for job in jobs:
+            if job["kind"] != "scenario" or job["status"] != "completed":
+                raise RunControlError(
+                    "Only two completed individual scenario runs can be compared; "
+                    "failed, cancelled, running, and campaign jobs are excluded"
+                )
+        summaries = [load_result(self._result_path(job)).summary for job in jobs]
+        metrics = ("collector_count", "detected", "assembled", "sensitivity", "specificity")
+        rows: list[dict[str, object]] = []
+        for metric in metrics:
+            left = summaries[0][metric]
+            right = summaries[1][metric]
+            numeric = (
+                left is not None
+                and right is not None
+                and not isinstance(left, bool)
+                and not isinstance(right, bool)
+                and isinstance(left, (int, float))
+                and isinstance(right, (int, float))
+            )
+            rows.append(
+                {
+                    "metric": metric,
+                    "left": left,
+                    "right": right,
+                    "difference": float(right) - float(left) if numeric else None,
+                    "comparable": left is not None and right is not None,
+                }
+            )
+        return {
+            "api_version": RESULT_API_VERSION,
+            "available": True,
+            "reader": "mehlissa.load_result",
+            "observation_count": 2,
+            "left": {"job_id": left_id, "run_id": summaries[0]["run_id"]},
+            "right": {"job_id": right_id, "run_id": summaries[1]["run_id"]},
+            "rows": rows,
+            "interpretation": "Differences are right minus left; missing values are not imputed.",
+        }
 
 
 class WorkbenchServer(ThreadingHTTPServer):
@@ -1083,7 +1245,7 @@ class WorkbenchServer(ThreadingHTTPServer):
 class WorkbenchRequestHandler(BaseHTTPRequestHandler):
     """Serve embedded assets and capability-protected local APIs."""
 
-    server_version = "MEHLISSAWorkbench/0.4"
+    server_version = "MEHLISSAWorkbench/0.5"
     sys_version = ""
 
     @property
@@ -1103,7 +1265,7 @@ class WorkbenchRequestHandler(BaseHTTPRequestHandler):
         self.send_header(
             "Content-Security-Policy",
             "default-src 'self'; script-src 'self'; style-src 'self'; "
-            "img-src 'self'; connect-src 'self'; base-uri 'none'; "
+            "img-src 'self'; connect-src 'self'; frame-src 'self'; base-uri 'none'; "
             "form-action 'none'; frame-ancestors 'none'",
         )
         self.send_header("Cache-Control", "no-store")
@@ -1205,6 +1367,17 @@ class WorkbenchRequestHandler(BaseHTTPRequestHandler):
             except RunNotFoundError as error:
                 self._send_json(HTTPStatus.NOT_FOUND, {"error": "run_not_found", "detail": str(error)})
             return
+        if path == "/api/run/dashboard":
+            if not self._require_session():
+                return
+            identifier = parse_qs(urlsplit(self.path).query).get("id", [""])[0]
+            try:
+                self._send_json(HTTPStatus.OK, self.workbench.runs.dashboard(identifier))
+            except RunNotFoundError as error:
+                self._send_json(HTTPStatus.NOT_FOUND, {"error": "run_not_found", "detail": str(error)})
+            except (RunControlError, ValueError, OSError) as error:
+                self._send_json(HTTPStatus.CONFLICT, {"error": "result_unavailable", "detail": str(error)})
+            return
         if path == "/api/run/artifact":
             if not self._require_session():
                 return
@@ -1259,6 +1432,7 @@ class WorkbenchRequestHandler(BaseHTTPRequestHandler):
         if path not in {
             "/api/scenario/validate", "/api/scenario/save",
             "/api/run/scenario", "/api/run/campaign", "/api/run/cancel",
+            "/api/run/compare",
         }:
             self._send_json(HTTPStatus.NOT_FOUND, {"error": "not_found"})
             return
@@ -1266,6 +1440,13 @@ class WorkbenchRequestHandler(BaseHTTPRequestHandler):
             return
         try:
             request = self._read_json_request()
+            if path == "/api/run/compare":
+                left = request.get("left_id")
+                right = request.get("right_id")
+                if not isinstance(left, str) or not isinstance(right, str):
+                    raise RunControlError("Comparison requires left_id and right_id")
+                self._send_json(HTTPStatus.OK, self.workbench.runs.compare(left, right))
+                return
             if path == "/api/run/cancel":
                 job_id = request.get("id")
                 if not isinstance(job_id, str):

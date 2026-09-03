@@ -15,7 +15,7 @@ import unittest
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
-from mehlissa import MehlissaClient, MehlissaCommandError
+from mehlissa import MehlissaClient, MehlissaCommandError, load_campaign_result, load_result
 from mehlissa_workbench import (
     CatalogFormatError,
     ScenarioWorkspace,
@@ -42,7 +42,7 @@ class WorkbenchDiscoveryTest(unittest.TestCase):
         self.assertEqual(catalog["api_version"], "1.0.0")
         self.assertTrue(catalog["read_only"])
         self.assertTrue(catalog["scenario_editing"])
-        self.assertEqual(catalog["workbench_increment"], "UX-6.4")
+        self.assertEqual(catalog["workbench_increment"], "UX-6.5")
         self.assertFalse(catalog["clinical_use"])
         self.assertEqual(len(catalog["models"]), 5)
         self.assertEqual(len(catalog["examples"]), 10)
@@ -72,7 +72,7 @@ class WorkbenchServerTest(unittest.TestCase):
         temporary_parent = Path(ARGS.root).resolve() / "tmp"
         temporary_parent.mkdir(exist_ok=True)
         cls.temporary_directory = tempfile.TemporaryDirectory(
-            prefix="ux6-4-workspace-", dir=temporary_parent
+            prefix="ux6-5-workspace-", dir=temporary_parent
         )
         cls.workspace = Path(cls.temporary_directory.name)
         cls.server = create_server(
@@ -99,8 +99,9 @@ class WorkbenchServerTest(unittest.TestCase):
             body = response.read().decode("utf-8")
             self.assertEqual(response.status, HTTPStatus.OK)
             self.assertIn("MEHLISSA Next Research Workbench", body)
-            self.assertIn("Confirm before execution", body)
+            self.assertIn("Results are descriptive", body)
             self.assertIn("Scenario validation", body)
+            self.assertIn("Understand completed outcomes", body)
             self.assertIn("frame-ancestors 'none'", response.headers["Content-Security-Policy"])
             self.assertEqual(response.headers["Referrer-Policy"], "no-referrer")
             self.assertEqual(response.headers["Cache-Control"], "no-store")
@@ -113,6 +114,8 @@ class WorkbenchServerTest(unittest.TestCase):
             self.assertIn("beforeunload", script)
             self.assertIn("/api/scenario/validate", script)
             self.assertIn("/api/run/campaign", script)
+            self.assertIn("/api/run/dashboard", script)
+            self.assertIn("/api/run/compare", script)
 
     def test_catalog_api_requires_session(self) -> None:
         with self.assertRaises(HTTPError) as denied:
@@ -354,7 +357,7 @@ class WorkbenchServerTest(unittest.TestCase):
         self.assertEqual(job["progress_percent"], 100)
         self.assertEqual(job["plan"]["run_count"], 1)
         names = {artifact["name"] for artifact in job["artifacts"]}
-        self.assertTrue({"run-record", "input", "command-log", "result", "provenance", "simulation-log", "summary"}.issubset(names))
+        self.assertTrue({"run-record", "input", "command-log", "result", "provenance", "simulation-log", "summary", "report-html", "report-result"}.issubset(names))
         self.assertLessEqual(len(job["logs"]), 200)
         request = Request(
             f"{self.base_url}/api/run/artifact?id={job['id']}&name=provenance",
@@ -363,6 +366,36 @@ class WorkbenchServerTest(unittest.TestCase):
         with urlopen(request, timeout=10) as response:
             provenance = json.load(response)
         self.assertIn("scenario", provenance)
+
+        _, dashboard = self.request_json(f"/api/run/dashboard?id={job['id']}")
+        artifact = next(item for item in job["artifacts"] if item["name"] == "result")
+        accepted = load_result(Path(ARGS.root) / artifact["path"])
+        self.assertTrue(dashboard["available"])
+        self.assertEqual(dashboard["reader"], "mehlissa.load_result")
+        self.assertEqual(dashboard["summary"], accepted.summary)
+        self.assertEqual(len(dashboard["runtime_stages"]), len(accepted.runtime_stages))
+        self.assertEqual(dashboard["analysis_cases"], accepted.analysis_cases)
+
+        _, second_started = self.request_json(
+            "/api/run/scenario", "POST",
+            {
+                "source_id": "template:scenario.fp9-complete",
+                "changes": {
+                    "scenario.id": "fp9-lung-comparison-10000",
+                    "run.id": "fp9-lung-comparison-collectors-10000",
+                    "run.collector_count": 10000,
+                },
+                "output_label": "comparison-scenario", "confirmed": True,
+            },
+        )
+        second = self.wait_job(second_started["id"])
+        self.assertEqual(second["status"], "completed")
+        _, comparison = self.request_json(
+            "/api/run/compare", "POST", {"left_id": job["id"], "right_id": second["id"]}
+        )
+        collector = next(row for row in comparison["rows"] if row["metric"] == "collector_count")
+        self.assertEqual((collector["left"], collector["right"], collector["difference"]), (1000, 10000, 9000.0))
+        self.assertEqual(comparison["observation_count"], 2)
 
     def test_six_run_campaign_completes_and_preserves_design(self) -> None:
         status, started = self.request_json(
@@ -377,6 +410,15 @@ class WorkbenchServerTest(unittest.TestCase):
         names = {artifact["name"] for artifact in job["artifacts"]}
         self.assertTrue({"input", "result", "csv", "command-log"}.issubset(names))
         self.assertEqual(len([name for name in names if name.startswith("derived-manifest-")]), 6)
+        _, dashboard = self.request_json(f"/api/run/dashboard?id={job['id']}")
+        artifact = next(item for item in job["artifacts"] if item["name"] == "result")
+        accepted = load_campaign_result(Path(ARGS.root) / artifact["path"])
+        self.assertTrue(dashboard["available"])
+        self.assertEqual(dashboard["reader"], "mehlissa.load_campaign_result")
+        self.assertEqual(dashboard["observation_count"], len(accepted.runs))
+        self.assertEqual({group["name"] for group in dashboard["groups"]}, set(accepted.groups()))
+        sensitivity = [row for row in dashboard["paired_differences"] if row["metric"] == "sensitivity"]
+        self.assertEqual(sensitivity, [{**accepted.paired_differences("sensitivity")[0], "included": True}])
 
     def test_campaign_cancellation_preserves_auditable_state(self) -> None:
         _, started = self.request_json(
@@ -390,6 +432,22 @@ class WorkbenchServerTest(unittest.TestCase):
         self.assertTrue(any(artifact["name"] == "run-record" for artifact in job["artifacts"]))
         self.assertTrue(job["cancel_requested"])
         self.assertIn("preserved", job["stage"])
+        _, dashboard = self.request_json(f"/api/run/dashboard?id={job['id']}")
+        self.assertFalse(dashboard["available"])
+        self.assertEqual(dashboard["observation_count"], 0)
+        self.assertNotIn("summary", dashboard)
+
+        failed, _, _ = self.server.runs._new_job(
+            "scenario", "failed-result-fixture", "Failed result fixture",
+            {"run_count": 1, "master_seeds": [1]},
+        )
+        self.server.runs._update(str(failed["id"]), status="failed")
+        with self.assertRaises(HTTPError) as rejected:
+            self.request_json(
+                "/api/run/compare", "POST",
+                {"left_id": str(failed["id"]), "right_id": job["id"]},
+            )
+        self.assertEqual(rejected.exception.code, HTTPStatus.BAD_REQUEST)
 
     def test_unknown_run_and_artifact_are_not_exposed(self) -> None:
         for path in ("/api/run?id=missing", "/api/run/artifact?id=missing&name=../input"):

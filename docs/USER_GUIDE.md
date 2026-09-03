@@ -7,9 +7,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Guide status:** living document
 
-**Covered software:** accepted M0 through M7 and locally accepted UX-1 through UX-6.4
+**Covered software:** accepted M0 through M7 and locally accepted UX-1 through UX-6.5
 
-**Last updated:** 3 September 2026, after local acceptance of UX-6.4 run and campaign control
+**Last updated:** 3 September 2026, after local acceptance of UX-6.5 result dashboards and comparison
 
 This guide is the main entry point for researchers, students, and developers
 who want to understand, build, inspect, or run MEHLISSA Next. Part I explains
@@ -924,13 +924,15 @@ when an analysis can handle the failure explicitly; never convert failed runs
 into apparent observations. Identifiable patient data still must not be placed
 in notebooks, repository examples, or shared result bundles.
 
-#### Configure, validate, and run in the graphical workbench (UX-6.1 through UX-6.4)
+#### Configure, validate, run, and inspect results in the graphical workbench (UX-6.1 through UX-6.5)
 
 The local browser workbench lets you search the five implemented model families
 and ten curated starter examples. UX-6.2 provides a guided editor for the
 complete FP9/lung fingerprinting scenario, and UX-6.3 explains structural,
 semantic, and cross-file problems before save. UX-6.4 starts and monitors either
 that exact validated scenario or the curated six-run collector-count campaign.
+UX-6.5 turns completed artifacts into readable dashboards and guarded
+comparisons without moving scientific interpretation into the browser.
 
 From the repository root, make the source packages visible and check that the
 workbench can locate the application and read its validated catalog:
@@ -1051,6 +1053,32 @@ does not delete evidence: the retained input, run record, bounded output, and
 any partial files remain, and the terminal state is `cancelled`. A cancelled or
 failed run is not an observation and must not be counted in an analysis.
 
+In **Understand completed outcomes**, select any retained job and choose
+**Open result dashboard**. A completed individual scenario shows detection,
+nine-tile assembly, sensitivity, specificity, collector count, master seed,
+cumulative stage times in milliseconds, and the four Level-E analysis cases.
+Use **Open authoritative result JSON** for exact machine-readable detail.
+**Open UX-3 HTML report** displays the established self-contained report in a
+script-disabled sandbox inside the workbench.
+
+Completed campaigns are separated into the declared reproducibility replicate,
+collector-count sweep, and same-seed paired-comparison groups. Their tables show
+identity, role, replicate number, seed, collector count, detection, assembly,
+sensitivity, and specificity. Paired differences are comparison minus baseline
+for all four supported outcomes and come from the accepted campaign reader.
+The aggregate JSON and CSV remain available for audit and downstream analysis.
+
+After at least two individual scenarios have completed, select a **Left run**
+and **Right run** under **Compare two completed scenarios**. Numeric differences
+are right minus left. Boolean outcomes are not turned into artificial numbers,
+and missing values are labelled and excluded rather than replaced with zero.
+
+Running, collecting, failed, and cancelled jobs can be selected only to explain
+why no result is available: their dashboard states zero included observations
+and returns no scientific rows. They never appear in the two-run comparison
+selectors. Execution failure therefore cannot look like a negative biological
+result.
+
 The host listens only on the local computer, serves no remote assets, records
 no telemetry, and is not a patient-data workflow. The page's research-software
 notice is binding: displayed maturity and evidence do not make a model
@@ -1065,6 +1093,9 @@ are specified in the
 Run plans, state transitions, cancellation, retention, and protected artifact
 access are specified in the
 [UX-6.4 run-control contract](ux/UX6_4_RUN_AND_CAMPAIGN_CONTROL.md).
+Reader ownership, displayed fields, comparison arithmetic, report preview, and
+the missing/failed-run policy are specified in the
+[UX-6.5 dashboard contract](ux/UX6_5_RESULT_DASHBOARD_AND_COMPARISON.md).
 
 If the page says that the catalog or scenario workspace could not be loaded,
 stop the process, run the `--check` command, and confirm that the selected
@@ -1080,6 +1111,10 @@ label, and current validation. If execution fails or is cancelled, inspect the
 retained workbench record and command log; do not rename the job to make it look
 successful. A missing artifact means it was not produced before the terminal
 state, not that its scientific value is zero.
+If a completed dashboard cannot be read, open its retained result JSON and
+confirm that its schema version is supported by the installed Python package.
+If comparison controls remain disabled, complete two individual scenarios;
+campaigns and non-completed jobs are intentionally ineligible.
 
 #### Validate an experiment manifest
 
@@ -2910,10 +2945,18 @@ The usability package status is:
   bounded outputs, staged monitoring, real cancellation, 200-line logs, atomic
   records, seeds, manifests, and protected result/provenance links remain
   traceable. All 285 Windows/MSVC tests and desktop/mobile browser checks pass;
-  publication and supported GitHub CI are pending an explicit push; and
-- **UX-6.5 through UX-6.8, integrated graphical workbench:** next add result
-  dashboards and comparisons, provenance/evidence views, uncertainty visualization,
-  packaging, and final usability/accessibility acceptance.
+  publication and supported GitHub CI are pending an explicit push;
+- **UX-6.5, result dashboard and comparison:** locally passed; completed
+  scenario outcomes, stage timing, Level-E cases, campaign groups, and paired
+  differences come from the accepted versioned readers. Two completed scenarios
+  can be compared side by side, while authoritative JSON/CSV and the UX-3 HTML
+  report remain inspectable. Missing, incomplete, failed, and cancelled jobs
+  contribute zero observations. All 285 Windows/MSVC tests and desktop/mobile
+  browser checks pass; publication and supported GitHub CI are pending an
+  explicit push; and
+- **UX-6.6 through UX-6.8, integrated graphical workbench:** next add
+  provenance/evidence views, uncertainty visualization, packaging, and final
+  usability/accessibility acceptance.
 
 Planned substantive scientific extensions are:
 

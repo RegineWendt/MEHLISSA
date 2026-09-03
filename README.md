@@ -79,7 +79,7 @@ print(load_result(execution.result).summary)
 See `examples/notebooks/01-first-scenario.ipynb` and
 `examples/notebooks/02-campaign-analysis.ipynb` for complete workflows.
 
-The UX-6.1 through UX-6.4 graphical workbench can browse the same validated model and
+The UX-6.1 through UX-6.5 graphical workbench can browse the same validated model and
 example catalog and create a schema-guided derivative of the complete FP9/lung
 scenario in a protected local page:
 
@@ -97,7 +97,10 @@ After explicit plan confirmation, it runs either the exact validated candidate
 or the curated six-run replicate/sweep/paired-comparison campaign through the
 same Python process API. Unique bounded output, progress, cancellation, logs,
 and retained artifact views remain traceable. See the User Guide for the
-complete workflow and diagnostics.
+complete workflow and diagnostics. Completed scenarios and campaigns can then
+be read as outcome, stage, case, group, and paired-difference dashboards through
+the accepted result readers. Two completed scenarios can be compared; failed,
+cancelled, partial, and missing results are explicitly excluded.
 
 MEHLISSA Next is a research model. It is not a medical device and does not
 provide patient-specific clinical predictions.

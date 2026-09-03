@@ -97,7 +97,7 @@ def main() -> int:
         client, arguments.host, arguments.port,
         workspace_root=arguments.workspace, runs_root=arguments.runs,
     )
-    print("MEHLISSA Next Research Workbench — UX-6.4 run and campaign control")
+    print("MEHLISSA Next Research Workbench — UX-6.5 result dashboard and comparison")
     print("Validated scenarios and the curated six-run campaign start after explicit confirmation.")
     print(f"workbench_url={server.url}")
     print("Press Ctrl+C to stop.")

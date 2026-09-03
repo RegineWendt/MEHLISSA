@@ -55,6 +55,14 @@ command output, available scientific artifacts, failures, and cancellation are
 retained. Artifact access is by a server-created name allowlist, never by a
 browser-supplied path.
 
+UX-6.5 adds result projection without adding analysis semantics to JavaScript.
+`RunWorkspace` loads completed scenario and campaign artifacts through the
+accepted version-guarded Python result readers. It exposes private dashboard and
+two-scenario comparison responses, while jobs outside `completed` state yield
+zero observations and cannot enter comparisons. The authoritative JSON/CSV and
+the generated UX-3 HTML report remain retained artifacts; HTML report preview
+uses an authenticated fetch followed by a script-disabled sandboxed frame.
+
 The browser interface targets WCAG 2.2 level AA. No telemetry, cloud service,
 remote asset, patient-data workflow, or clinical claim is part of the decision.
 
@@ -64,7 +72,7 @@ remote asset, patient-data workflow, or clinical claim is part of the decision.
   scenario behavior cannot diverge silently from command-line use.
 - HTML provides a cross-platform, semantic, responsive presentation layer and a
   broad accessibility-testing ecosystem.
-- UX-6.1 through UX-6.4 add no mandatory third-party runtime dependency to the
+- UX-6.1 through UX-6.5 add no mandatory third-party runtime dependency to the
   Python package.
 - Local HTTP introduces a security boundary. Loopback restriction, host-header
   validation, session capability, restrictive response headers, safe text
@@ -92,6 +100,6 @@ remote asset, patient-data workflow, or clinical claim is part of the decision.
 
 ## Affected requirements and packages
 
-- `UX-002` through `UX-010`
+- `UX-002` through `UX-011`
 - `UX-6.1` through `UX-6.8`
 - `QUA-005`, `QUA-006`

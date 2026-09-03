@@ -268,11 +268,109 @@ function renderRunPlan() {
 function artifactButton(job, artifact) {
   const button = document.createElement("button"); button.type = "button"; button.className = "artifact-link"; button.textContent = artifact.label;
   button.addEventListener("click", async () => {
-    byId("artifact-title").textContent = artifact.label; byId("artifact-content").textContent = "Loading retained evidence…"; artifactDialog.showModal();
-    try { byId("artifact-content").textContent = await apiText(`/api/run/artifact?id=${encodeURIComponent(job.id)}&name=${encodeURIComponent(artifact.name)}`); }
+    const content = byId("artifact-content"); const frame = byId("report-frame");
+    content.hidden = false; frame.hidden = true; content.textContent = "Loading retained evidence…"; byId("artifact-title").textContent = artifact.label; artifactDialog.showModal();
+    try {
+      const text = await apiText(`/api/run/artifact?id=${encodeURIComponent(job.id)}&name=${encodeURIComponent(artifact.name)}`);
+      if (artifact.name === "report-html") {
+        frame.srcdoc = text; frame.hidden = false; content.hidden = true;
+      } else content.textContent = text;
+    }
     catch (error) { byId("artifact-content").textContent = error.message; }
   });
   return button;
+}
+
+function displayValue(value) {
+  if (value === null || value === undefined) return "Missing — excluded";
+  if (typeof value === "boolean") return value ? "Yes" : "No";
+  if (typeof value === "number") return Number.isInteger(value) ? String(value) : value.toPrecision(5).replace(/0+$/, "").replace(/\.$/, "");
+  return String(value);
+}
+
+function readableName(value) { return String(value).replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase()); }
+
+function makeTable(headers, rows, label) {
+  const frame = document.createElement("div"); frame.className = "table-frame"; frame.tabIndex = 0; frame.setAttribute("aria-label", label);
+  const table = document.createElement("table"); const head = document.createElement("thead"); const headRow = document.createElement("tr");
+  for (const header of headers) appendText(headRow, "th", header).scope = "col";
+  head.append(headRow); table.append(head); const body = document.createElement("tbody");
+  for (const row of rows) { const tableRow = document.createElement("tr"); for (const value of row) appendText(tableRow, "td", displayValue(value)); body.append(tableRow); }
+  table.append(body); frame.append(table); return frame;
+}
+
+function addOutcomeCards(parent, entries) {
+  const cards = document.createElement("dl"); cards.className = "outcome-cards";
+  for (const [label, value] of entries) { const card = document.createElement("div"); appendText(card, "dt", label); appendText(card, "dd", displayValue(value)); cards.append(card); }
+  parent.append(cards);
+}
+
+function artifactAction(jobId, name, label) {
+  const job = state.jobs.find((candidate) => candidate.id === jobId);
+  const artifact = job?.artifacts.find((candidate) => candidate.name === name);
+  return artifact ? artifactButton(job, { ...artifact, label }) : null;
+}
+
+function renderScenarioDashboard(data) {
+  const root = byId("dashboard-content"); const summary = data.summary;
+  appendText(root, "p", `Accepted by ${data.reader}; one completed run is included.`, "reader-note");
+  addOutcomeCards(root, [["Detected", summary.detected], ["Assembled", summary.assembled], ["Sensitivity", summary.sensitivity], ["Specificity", summary.specificity], ["Collectors", summary.collector_count], ["Seed", summary.seed]]);
+  appendText(root, "h4", "Cumulative stage timing");
+  root.append(makeTable(["Stage", "Time (ms)", "Basis"], data.runtime_stages.map((stage) => [readableName(stage.stage), stage.time_ms, readableName(stage.basis)]), "Scenario stage timing"));
+  appendText(root, "h4", "Analysis cases");
+  root.append(makeTable(["Case", "Target present", "Detected", "Classification", "Bound fraction"], data.analysis_cases.map((item) => [item.case_id, item.target_present, item.detected, readableName(item.classification), item.final_bound_fraction]), "Scenario analysis cases"));
+  const actions = document.createElement("div"); actions.className = "artifact-actions";
+  for (const action of [artifactAction(data.job_id, data.authoritative_artifact, "Open authoritative result JSON"), artifactAction(data.job_id, data.ux3_report_artifact, "Open UX-3 HTML report")]) if (action) actions.append(action);
+  root.append(actions);
+}
+
+function renderCampaignDashboard(data) {
+  const root = byId("dashboard-content");
+  appendText(root, "p", `Accepted by ${data.reader}; ${data.observation_count} completed derived runs are included.`, "reader-note");
+  addOutcomeCards(root, [["Completed runs", data.summary.run_count], ["Experimental groups", data.summary.group_count], ["Campaign", data.summary.campaign_id]]);
+  for (const group of data.groups) {
+    appendText(root, "h4", `${readableName(group.name)} — ${readableName(group.design)} (${group.run_count})`);
+    root.append(makeTable(["Run", "Role", "Replicate", "Seed", "Collectors", "Detected", "Assembled", "Sensitivity", "Specificity"], group.runs.map((run) => [run.id, readableName(run.role), run.replicate_index, run.seed, run.value, run.detected, run.assembled, run.sensitivity, run.specificity]), `${group.name} campaign runs`));
+  }
+  appendText(root, "h4", "Paired differences (comparison minus baseline)");
+  root.append(makeTable(["Metric", "Seed", "Baseline", "Comparison", "Difference", "Included"], data.paired_differences.map((row) => [readableName(row.metric), row.seed, row.baseline, row.comparison, row.difference, row.included]), "Campaign paired differences"));
+  const limitations = document.createElement("ul"); limitations.className = "dashboard-limitations"; for (const item of data.limitations) appendText(limitations, "li", item); root.append(limitations);
+  const actions = document.createElement("div"); actions.className = "artifact-actions";
+  for (const action of [artifactAction(data.job_id, data.authoritative_artifact, "Open authoritative campaign JSON"), artifactAction(data.job_id, data.table_artifact, "Open campaign CSV")]) if (action) actions.append(action);
+  root.append(actions);
+}
+
+async function openDashboard(jobId = byId("dashboard-run").value) {
+  const root = byId("dashboard-content"); root.replaceChildren(); byId("results-status").textContent = "Reading retained results…";
+  try {
+    const data = await api(`/api/run/dashboard?id=${encodeURIComponent(jobId)}`);
+    if (!data.available) {
+      appendText(root, "p", data.reason, "excluded-result");
+      addOutcomeCards(root, [["Job status", data.status], ["Included observations", data.observation_count]]);
+      byId("results-status").textContent = "No result values are available for this job."; return;
+    }
+    if (data.kind === "scenario") renderScenarioDashboard(data); else renderCampaignDashboard(data);
+    byId("results-status").textContent = `${readableName(data.kind)} dashboard loaded from accepted results.`;
+  } catch (error) { appendText(root, "p", error.message, "excluded-result"); byId("results-status").textContent = "The retained result could not be read."; }
+}
+
+function populateResultControls() {
+  const dashboard = byId("dashboard-run"); const selected = dashboard.value; dashboard.replaceChildren();
+  if (!state.jobs.length) { const option = document.createElement("option"); option.value = ""; option.textContent = "No runs in this session"; dashboard.append(option); }
+  for (const job of state.jobs) { const option = document.createElement("option"); option.value = job.id; option.textContent = `${job.kind} — ${job.title} — ${job.status}`; dashboard.append(option); }
+  dashboard.value = state.jobs.some((job) => job.id === selected) ? selected : (state.jobs.find((job) => job.status === "completed")?.id || state.jobs[0]?.id || "");
+  byId("open-dashboard").disabled = !dashboard.value;
+
+  const completed = state.jobs.filter((job) => job.kind === "scenario" && job.status === "completed");
+  for (const id of ["compare-left", "compare-right"]) {
+    const select = byId(id); const previous = select.value; select.replaceChildren();
+    for (const job of completed) { const option = document.createElement("option"); option.value = job.id; option.textContent = `${job.title} — ${job.id}`; select.append(option); }
+    if (completed.some((job) => job.id === previous)) select.value = previous; select.disabled = completed.length < 2;
+  }
+  if (completed.length >= 2 && byId("compare-left").value === byId("compare-right").value) {
+    byId("compare-right").value = completed.find((job) => job.id !== byId("compare-left").value).id;
+  }
+  byId("compare-runs").disabled = completed.length < 2;
 }
 
 function renderJob(job) {
@@ -283,6 +381,8 @@ function renderJob(job) {
   const facts = document.createElement("dl"); facts.className = "run-facts"; addPlanRow(facts, "Run ID", job.id); addPlanRow(facts, "Output", job.directory); addPlanRow(facts, "Runs", String(job.plan.run_count)); addPlanRow(facts, "Seeds", job.plan.master_seeds.join(", ")); card.append(facts);
   if (job.error) appendText(card, "p", job.error, "run-error");
   const actions = document.createElement("div"); actions.className = "artifact-actions"; for (const artifact of job.artifacts) actions.append(artifactButton(job, artifact)); card.append(actions);
+  const dashboard = document.createElement("button"); dashboard.type = "button"; dashboard.className = "secondary dashboard-link"; dashboard.textContent = job.status === "completed" ? "View result dashboard" : "Explain result availability";
+  dashboard.addEventListener("click", async () => { byId("dashboard-run").value = job.id; await openDashboard(job.id); byId("results-title").scrollIntoView({ behavior: "smooth" }); }); card.append(dashboard);
   const details = document.createElement("details"); appendText(details, "summary", `Bounded log (${job.logs.length}/${200} lines maximum)`); const log = appendText(details, "pre", job.logs.join("\n")); log.tabIndex = 0; card.append(details);
   if (["queued", "running"].includes(job.status)) {
     const cancel = document.createElement("button"); cancel.type = "button"; cancel.className = "danger"; cancel.textContent = job.cancel_requested ? "Cancellation requested…" : "Cancel run"; cancel.disabled = job.cancel_requested;
@@ -295,6 +395,7 @@ function renderRuns() {
   const list = byId("run-list"); list.replaceChildren();
   if (!state.jobs.length) appendText(list, "p", "No workbench runs in this session.", "empty");
   for (const job of state.jobs) list.append(renderJob(job));
+  populateResultControls();
   const active = state.jobs.some((job) => ["queued", "running", "collecting"].includes(job.status));
   window.clearTimeout(state.runPoll); if (active) state.runPoll = window.setTimeout(loadRuns, 750);
 }
@@ -357,6 +458,16 @@ byId("save-form").addEventListener("submit", async (event) => {
 byId("run-kind").addEventListener("change", renderRunPlan);
 byId("campaign-select").addEventListener("change", renderRunPlan);
 byId("refresh-runs").addEventListener("click", () => loadRuns().catch((error) => { byId("run-status").textContent = error.message; }));
+byId("open-dashboard").addEventListener("click", () => openDashboard());
+byId("comparison-form").addEventListener("submit", async (event) => {
+  event.preventDefault(); const root = byId("comparison-content"); root.replaceChildren(); appendText(root, "p", "Comparing accepted results…", "empty");
+  try {
+    const data = await api("/api/run/compare", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ left_id: byId("compare-left").value, right_id: byId("compare-right").value }) });
+    root.replaceChildren(); appendText(root, "p", `${data.left.run_id} compared with ${data.right.run_id}. ${data.interpretation}`, "reader-note");
+    root.append(makeTable(["Metric", "Left", "Right", "Difference"], data.rows.map((row) => [readableName(row.metric), row.left, row.right, !row.comparable ? "Missing — excluded" : (row.difference === null ? "Not numeric" : row.difference)]), "Side-by-side scenario comparison"));
+  } catch (error) { root.replaceChildren(); appendText(root, "p", error.message, "excluded-result"); }
+});
+artifactDialog.addEventListener("close", () => { byId("report-frame").srcdoc = ""; });
 byId("run-form").addEventListener("submit", (event) => {
   event.preventDefault();
   if (byId("run-kind").value === "scenario" && !state.validation?.run_allowed) return;

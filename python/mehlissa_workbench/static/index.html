@@ -19,19 +19,19 @@ SPDX-License-Identifier: MPL-2.0
       <span class="brand-mark" aria-hidden="true">M</span>
       <span><strong>MEHLISSA</strong><small>Next Research Workbench</small></span>
     </a>
-    <span class="prototype-badge">UX-6.4 local workbench</span>
+    <span class="prototype-badge">UX-6.5 local workbench</span>
   </header>
   <main id="main-content" tabindex="-1">
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">Compose, confirm, simulate</p>
-        <h1 id="page-title">Run reproducible experiments from one guarded workspace.</h1>
-        <p class="hero-copy">Configure and validate the FP9 lung demonstrator, inspect the exact run plan, then monitor one scenario or the curated six-run comparison campaign.</p>
+        <p class="eyebrow">Compose, confirm, simulate, understand</p>
+        <h1 id="page-title">Run and interpret reproducible experiments in one guarded workspace.</h1>
+        <p class="hero-copy">Configure and validate the FP9 lung demonstrator, run one scenario or the curated six-run campaign, then inspect outcomes through accepted result readers.</p>
       </div>
       <aside class="boundary" aria-labelledby="boundary-title">
         <p class="boundary-label">Current boundary</p>
-        <h2 id="boundary-title">Confirm before execution</h2>
-        <p>UX-6.4 runs only an exact validated candidate or the curated UX-4 campaign. Every start creates a new evidence directory; cancellation and failures remain inspectable.</p>
+        <h2 id="boundary-title">Results are descriptive</h2>
+        <p>UX-6.5 shows only accepted completed results. Missing, failed, cancelled, or still-running jobs never become observations, and every view links back to retained evidence.</p>
       </aside>
     </section>
     <section class="metrics" aria-label="Workbench overview">
@@ -116,6 +116,34 @@ SPDX-License-Identifier: MPL-2.0
         </section>
       </div>
     </section>
+    <section class="results-workspace" aria-labelledby="results-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">Result workspace</p><h2 id="results-title">Understand completed outcomes</h2></div>
+        <p id="results-status" class="status" role="status" aria-live="polite">Start or select a run to inspect its results.</p>
+      </div>
+      <div class="results-layout">
+        <section class="dashboard-card" aria-labelledby="dashboard-title">
+          <div class="dashboard-controls">
+            <label><span>Retained run</span><select id="dashboard-run"><option value="">No runs in this session</option></select></label>
+            <button id="open-dashboard" type="button" class="secondary" disabled>Open result dashboard</button>
+          </div>
+          <div id="dashboard-content" class="dashboard-content" aria-live="polite">
+            <p class="empty">Completed individual runs show outcomes, stage timing, and analysis cases. Campaigns show experimental groups and paired differences.</p>
+          </div>
+        </section>
+        <section class="comparison-card" aria-labelledby="comparison-title">
+          <p class="eyebrow">Side-by-side</p><h3 id="comparison-title">Compare two completed scenarios</h3>
+          <p>Only completed individual runs are selectable. Numeric differences are calculated as right minus left; missing values are not imputed.</p>
+          <form id="comparison-form">
+            <label><span>Left run</span><select id="compare-left" disabled></select></label>
+            <label><span>Right run</span><select id="compare-right" disabled></select></label>
+            <button id="compare-runs" type="submit" disabled>Compare accepted results</button>
+          </form>
+          <div id="comparison-content" class="comparison-content" aria-live="polite"><p class="empty">Run at least two individual scenarios to compare them.</p></div>
+        </section>
+      </div>
+      <p class="notice"><strong>Interpretation boundary.</strong> Dashboard values describe software outputs from synthetic and historical assumptions. They do not establish clinical or patient-specific performance.</p>
+    </section>
     <section class="catalog compact-catalog" aria-labelledby="catalog-title">
       <div class="section-heading">
         <div><p class="eyebrow">Validated catalog</p><h2 id="catalog-title">Explore implemented building blocks</h2></div>
@@ -162,6 +190,7 @@ SPDX-License-Identifier: MPL-2.0
     <form method="dialog">
       <p class="eyebrow">Retained evidence</p><h2 id="artifact-title">Artifact</h2>
       <pre id="artifact-content" tabindex="0"></pre>
+      <iframe id="report-frame" title="UX-3 result report" sandbox hidden></iframe>
       <div class="dialog-actions"><button value="cancel">Close</button></div>
     </form>
   </dialog>

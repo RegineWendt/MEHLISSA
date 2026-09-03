@@ -11,9 +11,9 @@ SPDX-License-Identifier: CC-BY-4.0
 **Status date:** 3 September 2026
 **Development branch:** `mehlissa-next-generation`
 **Published base revision:** `7b92c4ef930b188918a886041603e8de27e2891c`
-**Local candidate:** UX-6.1 through UX-6.4 accepted locally; not yet pushed
+**Local candidate:** UX-6.1 through UX-6.5 accepted locally; not yet pushed
 **Milestone status:** M0 through M7 passed
-**Current product focus:** UX-6.5 result dashboard and comparison after local UX-6.4 acceptance
+**Current product focus:** UX-6.6 provenance, evidence, and interpretation boundaries after local UX-6.5 acceptance
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -73,6 +73,12 @@ behind explicit contracts.
   actual cancellation, atomic run records, bounded logs, seeds, inputs, and
   protected artifact views remain traceable. All 285 Windows/MSVC tests and
   desktop/mobile browser checks pass; publication and supported CI are pending.
+- UX-6.5 adds accepted-reader scenario and campaign dashboards, cumulative
+  stage and Level-E case tables, declared campaign groups, four paired
+  differences, and two-completed-scenario comparison. Authoritative JSON/CSV
+  and the UX-3 report remain reachable. Missing, incomplete, failed, and
+  cancelled jobs contribute zero observations. All 285 Windows/MSVC tests and
+  desktop/mobile browser checks pass; publication and supported CI are pending.
 - English user, architecture, model, traceability, and decision documentation
   supports international collaboration.
 - The result is a reproducible research-software demonstrator. It is not a
@@ -83,7 +89,7 @@ behind explicit contracts.
 | Software architecture | Strong modular foundation with explicit ownership, conservation, lifecycle, configuration, and evidence boundaries. |
 | End-to-end integration | Complete first software vertical slice through fingerprinting Levels A-E. |
 | Scientific validation | Mixed maturity: verified equations, literature-parameterized candidates, selected independent comparisons, and multiple synthetic mechanisms. |
-| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, UX-3 provides readable shareable result bundles, UX-4 provides controlled campaigns, UX-5 provides Python and notebook access, and UX-6.1 through UX-6.4 add the local graphical foundation, guided scenario round trips, corrective validation, and guarded run/campaign control. Graphical result analysis remains. |
+| User experience | UX-1 exposes the complete M7 demonstrator, UX-2 provides discovery, UX-3 provides readable shareable result bundles, UX-4 provides controlled campaigns, UX-5 provides Python and notebook access, and UX-6.1 through UX-6.5 add graphical discovery, scenario round trips, corrective validation, guarded execution, dashboards, and comparison. Provenance, visualization/export, and release acceptance remain. |
 | Clinical readiness | Not claimed. Patient prediction, diagnosis, and treatment recommendations are explicitly outside the present scope. |
 
 ## How to read project labels
@@ -326,7 +332,8 @@ they do not by themselves increase physiological or clinical validity.
 | UX-6.2 - Guided scenario workspace | Open the complete FP9/lung starter, edit schema-derived scalar fields with their units/evidence/limits, retain the complete source, and validate/save/reopen without overwriting. | Locally passed; a 10,000-collector derivative round-trips with all 13 artifacts and evidence retained; unknown-field, path, session, and overwrite cases fail visibly; all 285 Windows/MSVC tests and desktop/mobile browser checks pass; push and supported CI pending |
 | UX-6.3 - Validation and corrective feedback | Explain structural, semantic, and cross-file problems before save/run and make the decision shareable. | Locally passed; accepted-CLI parity, stable field/document codes, repair guidance, warnings, candidate SHA-256, invalid-save/run gate, all 285 Windows/MSVC tests, and desktop/mobile browser checks pass; push and supported CI pending |
 | UX-6.4 - Run and campaign control | Confirm, start, monitor, cancel, and inspect an exact validated scenario or the curated six-run campaign without bypassing accepted APIs. | Locally passed; unique bounded evidence directories, exact inputs, seeds, atomic state, 200-line logs, real cancellation, and protected result/provenance/table links; all 285 Windows/MSVC tests and desktop/mobile browser checks pass; push and supported CI pending |
-| UX-6.5 through UX-6.8 - Integrated graphical workbench | Add result comparison, provenance/evidence, uncertainty visualization/export, packaging, and final usability/accessibility acceptance. | Planned |
+| UX-6.5 - Result dashboard and comparison | Explain completed outcomes, cases, stages, campaign groups, and paired differences while retaining authoritative artifacts and excluding non-results. | Locally passed; accepted-reader parity, 1,000-versus-10,000 scenario comparison, sandboxed UX-3 report, zero-observation failure policy, all 285 Windows/MSVC tests, and desktop/mobile browser checks pass; push and supported CI pending |
+| UX-6.6 through UX-6.8 - Integrated graphical workbench | Add provenance/evidence, uncertainty visualization/export, packaging, and final usability/accessibility acceptance. | Planned |
 
 The intended first user experience is:
 
@@ -403,8 +410,20 @@ the accepted Python process API. The monitor reports lifecycle stage and
 progress, limits terminal output to 200 lines/64,000 characters, links
 server-registered artifacts, and can terminate the owned child process while
 preserving a `cancelled` record. Reference scenario, six-run campaign, and real
-cancellation acceptance tests pass. UX-6.5 result dashboards and comparisons
-are next.
+cancellation acceptance tests pass.
+
+UX-6.5 now converts completed scenario and campaign artifacts into concise
+reader-backed dashboards. Individual runs show detection, assembly,
+sensitivity, specificity, seed, collector count, all cumulative stages, and the
+four Level-E cases. Campaigns retain their replicate, sweep, and same-seed pair
+grouping and calculate four paired differences through the accepted campaign
+reader. Two completed scenarios can be compared side by side; numeric
+differences are right minus left. Authoritative JSON/CSV and a sandboxed UX-3
+HTML report remain directly inspectable. Running, incomplete, failed, and
+cancelled jobs provide an explicit zero-observation response and cannot enter a
+comparison. Reader-parity tests, the complete 285-test Windows/MSVC suite, and
+desktop/mobile browser review pass. UX-6.6 provenance and evidence display is
+next.
 
 ## 9. Opportunities for collaborators
 
@@ -438,14 +457,17 @@ and limitations are documented; and all supported CI paths pass.
 | `docs/ux/UX6_1_PRODUCT_AND_TECHNICAL_FOUNDATION.md` | Workbench roles, workflows, screen concepts, architecture trade-offs, security/privacy/accessibility baseline, and local acceptance. |
 | `docs/ux/UX6_2_GUIDED_SCENARIO_WORKSPACE.md` | Guided-field contract, complete-source round trip, bounded file access, non-overwriting save-as, and local acceptance. |
 | `docs/ux/UX6_3_VALIDATION_AND_CORRECTIVE_FEEDBACK.md` | Authoritative validity, coded field/document issues, repair guidance, warnings, candidate hashes, and the pre-run gate. |
+| `docs/ux/UX6_4_RUN_AND_CAMPAIGN_CONTROL.md` | Confirmed scenario/campaign execution, lifecycle, cancellation, and retained evidence. |
+| `docs/ux/UX6_5_RESULT_DASHBOARD_AND_COMPARISON.md` | Reader-backed outcome views, campaign grouping, guarded comparison, report drill-through, and missing/failed-run treatment. |
 | `docs/m0` through `docs/m6` | Gate reviews, model notes, validation evidence, and accepted limitations for preceding milestones. |
 
 - **Repository:** https://github.com/RegineWendt/MEHLISSA
 - **Verified CI run:** https://github.com/RegineWendt/MEHLISSA/actions/runs/33668850496
 
 MEHLISSA Next now provides the architectural and executable backbone required
-by the dissertation vision and a graphical discovery, guided-scenario, and
-corrective-validation client over that backbone. The next workbench step is
-controlled scenario and campaign execution; scientific expansion still
+by the dissertation vision and a graphical discovery, scenario, validation,
+execution, monitoring, and result-comparison client over that backbone. The
+next workbench step exposes provenance, evidence, licences, maturity, hashes,
+and interpretation limits in the normal workflow; scientific expansion still
 requires further scenarios and organs and progressive replacement of synthetic
 assumptions with independently validated models.

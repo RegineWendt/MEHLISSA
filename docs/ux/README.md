@@ -24,3 +24,7 @@ models, schemas, or simulation behavior.
 - [UX-6.4 run and campaign control](UX6_4_RUN_AND_CAMPAIGN_CONTROL.md)
   defines confirmed scenario and six-run campaign starts, bounded output and
   logs, cancellable execution, retained evidence, and protected artifact access.
+- [UX-6.5 result dashboard and comparison](UX6_5_RESULT_DASHBOARD_AND_COMPARISON.md)
+  defines reader-backed scenario and campaign views, side-by-side comparison,
+  UX-3 report drill-through, and the zero-observation policy for incomplete,
+  failed, or cancelled jobs.

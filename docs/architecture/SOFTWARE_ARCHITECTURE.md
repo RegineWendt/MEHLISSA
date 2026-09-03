@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 This document is the entry point for developers who want to understand,
 integrate, or extend MEHLISSA Next. It describes the implemented architecture
-through the accepted M7 gate and locally accepted UX-6.4 workbench, the public
+through the accepted M7 gate and locally accepted UX-6.5 workbench, the public
 C++, command-line, Python, and local-workbench interfaces, the data contracts,
 and the workflow for adding a
 module such as a new organ model. It also explains
@@ -533,7 +533,8 @@ browser presentation -> Python workbench host -> MehlissaClient
 The foundation endpoint is `GET /api/catalog`. UX-6.2 adds `GET /api/scenarios`,
 `GET /api/scenario`, and `POST /api/scenario/save`; UX-6.3 adds
 `POST /api/scenario/validate`. UX-6.4 adds run-plan, job, start, cancellation,
-and retained-artifact endpoints. They are private to the
+and retained-artifact endpoints. UX-6.5 adds reader-backed dashboard and
+two-scenario comparison endpoints. They are private to the
 local application, require an ephemeral session capability, and are not a
 stable remote REST API. The server derives scalar field descriptions and
 constraints from the authoritative fingerprinting-scenario JSON Schema. It
@@ -572,6 +573,16 @@ the job directory; the browser never supplies a filesystem path. Run history
 is scoped to the current host process, while its repository-local files remain
 available after shutdown.
 
+UX-6.5 keeps result semantics on the Python side. `RunWorkspace.dashboard()`
+loads only completed artifacts through `load_result()` or
+`load_campaign_result()` and projects outcomes, runtime stages, analysis cases,
+campaign groups, and paired differences. Non-completed jobs return an explicit
+zero-observation record without result arrays. `RunWorkspace.compare()` admits
+only two distinct completed scenario jobs, reports numeric differences as
+right minus left, and never imputes missing values. Completed scenario jobs also
+retain a UX-3 HTML report; the browser fetches it with the session capability
+and previews it in a script-disabled sandbox.
+
 Curated examples are immutable. Derived files use safe basename-only `.json`
 names and exclusive creation inside `workbench-scenarios/` or an explicitly
 selected repository-internal workspace. Unsupported fields are displayed in
@@ -593,7 +604,8 @@ concepts are maintained in the
 [UX-6.1 foundation](../ux/UX6_1_PRODUCT_AND_TECHNICAL_FOUNDATION.md), the
 [UX-6.2 workspace contract](../ux/UX6_2_GUIDED_SCENARIO_WORKSPACE.md), the
 [UX-6.3 validation contract](../ux/UX6_3_VALIDATION_AND_CORRECTIVE_FEEDBACK.md),
-[UX-6.4 run-control contract](../ux/UX6_4_RUN_AND_CAMPAIGN_CONTROL.md), and the
+[UX-6.4 run-control contract](../ux/UX6_4_RUN_AND_CAMPAIGN_CONTROL.md), the
+[UX-6.5 dashboard contract](../ux/UX6_5_RESULT_DASHBOARD_AND_COMPARISON.md), and the
 technology choice in [ADR-0050](adr/0050-local-browser-research-workbench.md).
 
 ## 8. Public API map
@@ -670,11 +682,13 @@ The current executable supports:
 | `GET /api/scenarios` / `GET /api/scenario` | capability-protected private projections for source selection and guided editing |
 | `POST /api/scenario/save` | bounded JSON-only, capability-protected, non-overwriting save-as operation; not generic filesystem access |
 | `POST /api/scenario/validate` | side-effect-free complete-candidate validation; returns authoritative validity and future-run gate state; not a public remote API |
-| `RunWorkspace` | allowlisted scenario/campaign execution, unique output allocation, lifecycle state, cancellation, and retained artifact registry |
+| `RunWorkspace` | allowlisted execution, unique output allocation, lifecycle/cancellation evidence, retained artifact registry, reader-backed dashboards, and completed-scenario comparison |
 | `GET /api/run-plans` / `GET /api/runs` / `GET /api/run` | inspect the bounded campaign plan and current-process job records |
 | `POST /api/run/scenario` / `POST /api/run/campaign` | explicitly confirmed start through accepted process APIs; invalid candidates and arbitrary campaigns fail closed |
 | `POST /api/run/cancel` | terminate a queued/running owned process while preserving auditable state |
 | `GET /api/run/artifact` | read only a named artifact registered by the server for a specific job |
+| `GET /api/run/dashboard` | return a reader-backed completed result view or an explicit zero-observation exclusion record |
+| `POST /api/run/compare` | compare two distinct completed scenario jobs; incomplete, failed, cancelled, and campaign jobs are rejected |
 
 Detailed commands are maintained in the [User Guide](../USER_GUIDE.md).
 
