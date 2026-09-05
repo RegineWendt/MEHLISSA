@@ -35,8 +35,7 @@ Length distance(const Position3D& first, const Position3D& second) noexcept {
     const auto second_ratio = second_largest / largest;
     const auto third_ratio = third_largest / largest;
     return meters(largest *
-                  std::sqrt(1.0 + (second_ratio * second_ratio) +
-                            (third_ratio * third_ratio)));
+                  std::sqrt(1.0 + (second_ratio * second_ratio) + (third_ratio * third_ratio)));
 }
 
 } // namespace mehlissa::core
