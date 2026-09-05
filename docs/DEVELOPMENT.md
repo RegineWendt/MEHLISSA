@@ -265,6 +265,7 @@ python scripts/check_pulmonary_capillary_preoutcome_amendment.py
 python scripts/check_pulmonary_capillary_data_ingress.py
 python scripts/check_pulmonary_capillary_uncertainty.py
 python scripts/check_pulmonary_capillary_repository_audit.py
+python scripts/check_biological_cell_model_candidates.py
 python scripts/check_paper1_release_candidate.py
 python -m unittest tests.test_evidence_validity_matrix -v
 python -m unittest tests.test_paper1_protocol -v
@@ -273,6 +274,8 @@ python -m unittest tests.test_pulmonary_capillary_evidence_candidates -v
 python -m unittest tests.test_pulmonary_capillary_preoutcome_amendment -v
 python -m unittest tests.test_pulmonary_capillary_data_ingress -v
 python -m unittest tests.test_pulmonary_capillary_uncertainty -v
+python -m unittest tests.test_pulmonary_capillary_repository_audit -v
+python -m unittest tests.test_biological_cell_model_candidates -v
 python -m unittest tests.test_paper1_measurement_tools -v
 python -m unittest tests.test_paper1_release_candidate -v
 ```
@@ -338,6 +341,19 @@ activate PCQ-C2 or turn synthetic design calculations into qualification
 decisions. See the
 [uncertainty and identifiability report](qualification/PCQ1_UNCERTAINTY_IDENTIFIABILITY.md)
 for the endpoint methods, structural results, rank findings, and PCQ-1.6 handoff.
+
+The BCQ-1.1 checker validates the ranked biological cell-model screen before
+any third-party model is imported. It binds the minimal Kallenberger
+`BIOMD0000000523`/`0524` source commits and SBML hashes, verifies the CC0 model
+licence without extending it to the article or experimental data, keeps the
+larger 525/526 pair in its non-independent structural role, and prevents the
+unreleased endothelial BioModels submission from being treated as an audited
+artifact. Passing BCQ-1.1 proves selection and provenance discipline only.
+BCQ-1.2 must freeze solver, version, inputs, outputs, tolerances, controls, and
+failure behavior before a developer executes, vendors, converts, or maps the
+selected model. Keep any external SBML engine an optional scientific
+reproduction dependency unless a later architecture decision establishes a
+supported runtime contract.
 
 Do not edit the locked protocol or raw archives in place. A changed protocol
 requires a new version and pre-measurement commit; a changed candidate requires

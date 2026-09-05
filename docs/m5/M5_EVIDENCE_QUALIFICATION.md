@@ -32,30 +32,32 @@ and constant-input reaction-network equilibria, supplemented by a shared
 ODE/SSA comparison. This is a technical
 acceptance criterion, not a substitute for external biological validation.
 
-## External comparison candidate—not current evidence
+## Selected external comparison—not current evidence
 
-A reviewed next-step candidate is BioModels
-[`BIOMD0000000525`](https://www.ebi.ac.uk/biomodels/services/download/get-files/MODEL1403050002/3/BIOMD0000000525.pdf),
-the Kallenberger et al. CD95/caspase-8 apoptosis model. Its BioModels report
-describes a large ensemble of single-cell models fitted to single-cell and
-population data and states that the encoded model is dedicated to the public
-domain under CC0. It is attractive because it directly exposes the
-single-cell/population distinction that M5.8 now makes explicit.
+[BCQ-1.1](../qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md) has now
+completed the candidate and licence screen. The selected family is the minimal
+Kallenberger et al. CD95L-CD95-caspase-8 model: BioModels
+`BIOMD0000000523` for CD95-overexpressing HeLa and `BIOMD0000000524` for
+wild-type HeLa. Both are compact SBML Level 2 Version 4 average-cell artifacts
+under CC0 1.0. Their exact public Git commits, file hashes, model dimensions,
+rights boundary, and alternatives are machine checked.
 
-The earlier Eissing et al. receptor-induced caspase model is another compact
-mechanistic candidate: *Bistability analyses of a caspase activation model for
-receptor-induced apoptosis*, Journal of Biological Chemistry 279 (2004),
-36892–36897, [DOI 10.1074/jbc.M404893200](https://doi.org/10.1074/jbc.M404893200),
-[PMID 15208304](https://pubmed.ncbi.nlm.nih.gov/15208304/). It links fast
-single-cell caspase activation with slower population-level behavior.
+The earlier note identified `BIOMD0000000525`. The evidence-led screen instead
+selected 523/524 because the associated paper found the minimal cis/trans
+mechanism sufficient. The larger 525/526 cis/trans-cis/trans pair remains a
+same-publication structural-sensitivity companion, not independent evidence.
+Rehm 2006 is the public CC0 fallback; the Eissing model remains conceptual only
+because no stable, licensed machine artifact was established. A VEGF-A/VEGFR
+endothelial model is retained for the later dynamic capillary-tissue-cell
+program rather than used as this first, deliberately compact qualification.
 
-Neither candidate has been imported, mapped, reproduced, licensed for bundled
-redistribution, or compared numerically with MEHLISSA in M5. Therefore neither
-is counted as gate evidence. A later qualification package must freeze a model
-version and checksum; review units, compartments, stimulus, cell line, and
-license; reproduce published outputs in an independent solver; define a typed
-adapter; and predeclare comparison metrics before mapping it to a MEHLISSA
-scenario.
+BCQ-1.1 does not change the M5 evidence classification. The selected models
+have not been imported, executed, mapped, or compared numerically with
+MEHLISSA. Article and experimental-data rights are separate from the CC0 model
+licence, and the public SBML artifacts each encode one average cell rather than
+the reported population ensemble. BCQ-1.2 must predeclare the external solver,
+observables, numerical tolerances, controls, failure handling, and no-refit
+rules before reproduction begins.
 
 ## Evidence gaps retained after M5
 

@@ -24,9 +24,9 @@ Start here:
 - [Roadmap](docs/ROADMAP.md) — achieved M0-M7 and research-use delivery record,
   scientific qualification program, further scenarios, additional organs,
   scaling, and the governed digital-twin path.
-- [Active pulmonary and capillary qualification protocol](docs/qualification/PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md)
-  — frozen candidates, bounded claim, endpoints, data separation, uncertainty,
-  controls, and the next evidence-acquisition increment.
+- [Active scientific qualification packages](docs/qualification/README.md)
+  — access-pending pulmonary/capillary work and the selected public biological
+  cell-model family, with explicit evidence and licence boundaries.
 - [Legacy-baseline analysis](docs/IST_ANALYSE.md) — dated inventory of the
   historical implementations at commit `4f4fc5a`; it is not the current Next
   status.

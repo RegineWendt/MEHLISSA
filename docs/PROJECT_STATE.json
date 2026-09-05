@@ -4,7 +4,7 @@
   "status_date_display": "5 September 2026",
   "development_branch": "mehlissa-next-generation",
   "milestones_passed_through": "M7",
-  "current_focus": "PCQ-1.6 locked no-refit pulmonary and capillary execution",
+  "current_focus": "BCQ-1.2 prospective no-refit biological cell-model reproduction protocol",
   "research_use": {
     "delivery_range": "UX-1 through UX-6",
     "workbench_version": "1.0.0",
@@ -50,6 +50,16 @@
     "repository_audit": "data/qualification/pulmonary-capillary-repository-audit-v1.json",
     "outreach_package": "docs/qualification/PCQ1_DATA_REQUEST_PACKAGE.md",
     "next_increment": "PCQ-1.6 locked no-refit evaluation when rights-authorized source-disjoint observations are available"
+  },
+  "active_biological_cell_qualification": {
+    "protocol_id": "BCQ-1",
+    "completed_increment": "BCQ-1.1 candidate and licence selection",
+    "status": "minimal Kallenberger 2014 CD95L-CD95-caspase-8 model family selected before import or execution; no biological qualification result claimed",
+    "selection_document": "docs/qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md",
+    "candidate_register": "data/qualification/biological-cell-model-candidate-register-v1.json",
+    "selected_artifacts": ["BIOMD0000000523", "BIOMD0000000524"],
+    "model_artifact_license": "CC0-1.0",
+    "next_increment": "BCQ-1.2 prospective no-refit reproduction protocol"
   },
   "next_scientific_packages": [
     "Pulmonary and capillary qualification",

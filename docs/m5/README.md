@@ -246,3 +246,11 @@ satisfies the measurable higher-layer-response gate statement at the synthetic
 software-contract level. The evidence qualification and mandatory User Guide
 review are complete. M5 is closed as a technical gate; the limitations above
 remain binding.
+
+Post-gate [BCQ-1.1](../qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md)
+has selected and licence-screened the minimal Kallenberger 2014
+CD95L-CD95-caspase-8 BioModels pair `BIOMD0000000523`/`0524`. This is an
+auditable next-model decision only. The artifacts are not imported or executed,
+so no M5 evidence status changes until the prospective BCQ-1.2 protocol,
+external-solver reproduction, typed adapter, cross-engine checks, population
+decision, and independent review have been completed.

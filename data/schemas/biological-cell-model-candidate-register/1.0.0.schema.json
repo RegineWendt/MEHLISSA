@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/biological-cell-model-candidate-register/1.0.0.schema.json",
+  "title": "MEHLISSA biological cell-model candidate register",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "screen", "criteria", "candidates", "decision"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "screen": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "program", "version", "performed_date", "status", "question", "selection_boundary", "clinical_use"],
+      "properties": {
+        "id": {"const": "BCQ-1.1"},
+        "program": {"const": "BCQ-1 biological cell-model qualification"},
+        "version": {"const": "1.0.0"},
+        "performed_date": {"type": "string", "format": "date"},
+        "status": {"const": "candidate-and-licence-selection-complete-before-model-import"},
+        "question": {"type": "string", "minLength": 1},
+        "selection_boundary": {"type": "string", "minLength": 1},
+        "clinical_use": {"const": false}
+      }
+    },
+    "criteria": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description"],
+        "properties": {
+          "id": {"enum": ["biological-fit", "public-artifact", "reuse-rights", "experimental-evidence", "integration-cost", "scope-clarity"]},
+          "description": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {"$ref": "#/$defs/candidate"}
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selected_candidate_id", "selected_artifact_accessions", "selection_reason", "not_yet_authorized", "next_increment"],
+      "properties": {
+        "selected_candidate_id": {"const": "BCQ-SRC-001"},
+        "selected_artifact_accessions": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {"enum": ["BIOMD0000000523", "BIOMD0000000524"]}
+        },
+        "selection_reason": {"type": "string", "minLength": 1},
+        "not_yet_authorized": {"$ref": "#/$defs/nonempty_strings"},
+        "next_increment": {"const": "BCQ-1.2 prospective no-refit reproduction protocol"}
+      }
+    }
+  },
+  "$defs": {
+    "nonempty_strings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "publication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["citation", "doi", "url", "article_rights"],
+      "properties": {
+        "citation": {"type": "string", "minLength": 1},
+        "doi": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "format": "uri"},
+        "article_rights": {"type": "string", "minLength": 1}
+      }
+    },
+    "biology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ligand", "receptor", "cell_type", "response", "model_form"],
+      "properties": {
+        "ligand": {"type": "string", "minLength": 1},
+        "receptor": {"type": "string", "minLength": 1},
+        "cell_type": {"type": "string", "minLength": 1},
+        "response": {"type": "string", "minLength": 1},
+        "model_form": {"type": "string", "minLength": 1}
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "accession", "submission_id", "variant", "source_url", "source_commit", "file", "sha256", "license", "sbml_level_version", "compartments", "species", "reactions", "global_parameters"],
+      "properties": {
+        "role": {"type": "string", "minLength": 1},
+        "accession": {"type": "string", "pattern": "^BIOMD[0-9]{10}$"},
+        "submission_id": {"type": "string", "minLength": 1},
+        "variant": {"type": "string", "minLength": 1},
+        "source_url": {"type": "string", "format": "uri"},
+        "source_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "file": {"type": "string", "pattern": "\\.xml$"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "license": {"const": "CC0-1.0"},
+        "sbml_level_version": {"type": "string", "minLength": 1},
+        "compartments": {"type": "integer", "minimum": 1},
+        "species": {"type": "integer", "minimum": 1},
+        "reactions": {"type": "integer", "minimum": 1},
+        "global_parameters": {"type": "integer", "minimum": 1}
+      }
+    },
+    "scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["biological-fit", "public-artifact", "reuse-rights", "experimental-evidence", "integration-cost", "scope-clarity"],
+      "properties": {
+        "biological-fit": {"type": "integer", "minimum": 0, "maximum": 3},
+        "public-artifact": {"type": "integer", "minimum": 0, "maximum": 3},
+        "reuse-rights": {"type": "integer", "minimum": 0, "maximum": 3},
+        "experimental-evidence": {"type": "integer", "minimum": 0, "maximum": 3},
+        "integration-cost": {"type": "integer", "minimum": 0, "maximum": 3},
+        "scope-clarity": {"type": "integer", "minimum": 0, "maximum": 3}
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "rank", "decision", "name", "biology", "publication", "artifacts", "structural_companions", "evidence_role", "public_data_status", "scores", "total_score", "strengths", "limitations", "next_action"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^BCQ-SRC-[0-9]{3}$"},
+        "rank": {"type": "integer", "minimum": 1},
+        "decision": {"enum": ["selected-model-family", "fallback-downstream-model", "later-capillary-endothelial-program", "conceptual-benchmark-only"]},
+        "name": {"type": "string", "minLength": 1},
+        "biology": {"$ref": "#/$defs/biology"},
+        "publication": {"$ref": "#/$defs/publication"},
+        "artifacts": {"type": "array", "items": {"$ref": "#/$defs/artifact"}},
+        "structural_companions": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "evidence_role": {"type": "string", "minLength": 1},
+        "public_data_status": {"type": "string", "minLength": 1},
+        "scores": {"$ref": "#/$defs/scores"},
+        "total_score": {"type": "integer", "minimum": 0, "maximum": 18},
+        "strengths": {"$ref": "#/$defs/nonempty_strings"},
+        "limitations": {"$ref": "#/$defs/nonempty_strings"},
+        "next_action": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -1,0 +1,283 @@
+{
+  "schema_version": "1.0.0",
+  "screen": {
+    "id": "BCQ-1.1",
+    "program": "BCQ-1 biological cell-model qualification",
+    "version": "1.0.0",
+    "performed_date": "2026-09-05",
+    "status": "candidate-and-licence-selection-complete-before-model-import",
+    "question": "Which public model is the strongest first step from MEHLISSA M5 software surrogates to a narrow, evidence-backed biological cell-model variant?",
+    "selection_boundary": "Public metadata, model files, licences, papers, and aggregate published results were inspected. No external model or experimental data are bundled, no trajectory has been executed in MEHLISSA, no fitting is permitted before a successor protocol, and no biological qualification result is claimed.",
+    "clinical_use": false
+  },
+  "criteria": [
+    {
+      "id": "biological-fit",
+      "description": "Named ligand, receptor, cell type, and measurable intracellular response align with the existing M5 receptor-network-response contracts."
+    },
+    {
+      "id": "public-artifact",
+      "description": "A stable, machine-readable public model can be identified and content-hashed."
+    },
+    {
+      "id": "reuse-rights",
+      "description": "Model redistribution and modification rights are explicit; article and experimental-data rights remain separate."
+    },
+    {
+      "id": "experimental-evidence",
+      "description": "The associated study compares model behavior with biological observations and exposes a defensible calibration-versus-validation role."
+    },
+    {
+      "id": "integration-cost",
+      "description": "The first reproduction and typed mapping can be completed without replacing the simulation kernel or importing an entire multicellular platform."
+    },
+    {
+      "id": "scope-clarity",
+      "description": "A narrow validity domain and non-clinical claim can be stated without implying organ or patient realism."
+    }
+  ],
+  "candidates": [
+    {
+      "id": "BCQ-SRC-001",
+      "rank": 1,
+      "decision": "selected-model-family",
+      "name": "Kallenberger 2014 minimal CD95L-CD95-caspase-8 model family",
+      "biology": {
+        "ligand": "CD95L (Fas ligand)",
+        "receptor": "CD95 (Fas/APO-1)",
+        "cell_type": "CD95-overexpressing HeLa and wild-type HeLa cells",
+        "response": "caspase-8 activation and cleavage intermediates, probe cleavage, tBID threshold-linked apoptosis timing",
+        "model_form": "deterministic SBML ordinary differential equations for one average cell per artifact; population behavior requires the separately described ensemble distributions"
+      },
+      "publication": {
+        "citation": "Kallenberger SM, Beaudouin J, Claus J, et al. Intra- and Interdimeric Caspase-8 Self-Cleavage Controls Strength and Timing of CD95-Induced Apoptosis. Science Signaling. 2014;7(316):ra23.",
+        "doi": "10.1126/scisignal.2004738",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4208692/",
+        "article_rights": "AAAS article copyright; do not redistribute article text, figures, or supplementary experimental data without a separate rights basis"
+      },
+      "artifacts": [
+        {
+          "role": "calibration-like-CD95-HeLa-average-cell",
+          "accession": "BIOMD0000000523",
+          "submission_id": "MODEL1403050000",
+          "variant": "minimal cis/trans",
+          "source_url": "https://github.com/biomodels/BIOMD0000000523",
+          "source_commit": "8605e43f8e2fd364f122d579341891c0058ef778",
+          "file": "BIOMD0000000523.xml",
+          "sha256": "2afe6758ab396038e71fcb1716fefcfec67656b8bd0bfb3da8d4e1eda9524ff4",
+          "license": "CC0-1.0",
+          "sbml_level_version": "Level 2 Version 4",
+          "compartments": 1,
+          "species": 18,
+          "reactions": 13,
+          "global_parameters": 12
+        },
+        {
+          "role": "publication-wild-type-HeLa-average-cell",
+          "accession": "BIOMD0000000524",
+          "submission_id": "MODEL1403050001",
+          "variant": "minimal cis/trans",
+          "source_url": "https://github.com/biomodels/BIOMD0000000524",
+          "source_commit": "d091308a14fb4301a4a2b1b567ea874484bb97e6",
+          "file": "BIOMD0000000524.xml",
+          "sha256": "4bf4a5bcda5b43a551bcdda09fca91a5e777d2c5db1eafcb17dcb6f1574221bc",
+          "license": "CC0-1.0",
+          "sbml_level_version": "Level 2 Version 4",
+          "compartments": 1,
+          "species": 18,
+          "reactions": 13,
+          "global_parameters": 12
+        }
+      ],
+      "structural_companions": [
+        "BIOMD0000000525 and BIOMD0000000526 encode the larger cis/trans-cis/trans variant from the same publication and evidence family; they are sensitivity companions, not independent validation sources."
+      ],
+      "evidence_role": "The publication fitted a CD95-HeLa subset and tested cell-death predictions against wild-type HeLa timing and variability. The standalone BIOMD0000000524 average-cell artifact is not by itself that held-out ensemble execution: the paper's prediction step also used distributions and tBID thresholds. A MEHLISSA reproduction remains an independent software reproduction of one published evidence family, not a new experiment or clinical validation.",
+      "public_data_status": "CC0 SBML artifacts and published aggregate figures are available. A reusable, row-level table of the reported single-cell measurements and ensemble parameter distributions was not established during this screen.",
+      "scores": {
+        "biological-fit": 3,
+        "public-artifact": 3,
+        "reuse-rights": 3,
+        "experimental-evidence": 3,
+        "integration-cost": 3,
+        "scope-clarity": 3
+      },
+      "total_score": 18,
+      "strengths": [
+        "Directly connects a named extracellular ligand and receptor to intracellular activation and apoptosis-related outputs.",
+        "Minimal paired SBML artifacts are small enough for an independent solver reproduction and later typed adapter.",
+        "The model artifacts are explicitly CC0 and can be versioned and redistributed after provenance review.",
+        "The publication contains single-cell and population observations and a genuine within-study held-out wild-type prediction step."
+      ],
+      "limitations": [
+        "The encoded SBML artifacts represent one average cell each, not the full population ensemble.",
+        "HeLa cancer-cell and high-dose CD95L behavior does not establish normal endothelial, organ, patient, diagnostic, therapeutic, or clinical validity.",
+        "Reproducing the public wild-type artifact does not create a source-disjoint external validation study.",
+        "Article and experimental-data rights are not inherited from the CC0 model licence."
+      ],
+      "next_action": "Freeze a BCQ-1.2 no-refit reproduction protocol for BIOMD0000000523 and BIOMD0000000524 before executing either artifact or mapping species to MEHLISSA."
+    },
+    {
+      "id": "BCQ-SRC-002",
+      "rank": 2,
+      "decision": "fallback-downstream-model",
+      "name": "Rehm 2006 apoptosome-dependent effector-caspase model",
+      "biology": {
+        "ligand": "staurosporine is the experimental apoptosis stimulus; the encoded mechanism begins downstream of receptor binding",
+        "receptor": "none represented in the selected intracellular model",
+        "cell_type": "HeLa cells",
+        "response": "effector caspase substrate cleavage controlled by XIAP and Smac",
+        "model_form": "deterministic SBML ordinary differential equation network"
+      },
+      "publication": {
+        "citation": "Rehm M, Huber HJ, Dussmann H, Prehn JHM. Systems analysis of effector caspase activation and its control by X-linked inhibitor of apoptosis protein. EMBO Journal. 2006;25:4338-4349.",
+        "doi": "10.1038/sj.emboj.7601295",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1570423/",
+        "article_rights": "article rights are separate from the BioModels artifact; verify before redistributing figures or supplementary data"
+      },
+      "artifacts": [
+        {
+          "role": "downstream-effector-caspase-reference",
+          "accession": "BIOMD0000000256",
+          "submission_id": "Rehm2006_Caspase",
+          "variant": "standard model",
+          "source_url": "https://github.com/biomodels/BIOMD0000000256",
+          "source_commit": "94d83bb48c2f166ff2e09fcf83b7932c3f17cf7e",
+          "file": "BIOMD0000000256.xml",
+          "sha256": "b54079ae3f4f003a0476b2b676ab53091654677334d611169739af322022c29e",
+          "license": "CC0-1.0",
+          "sbml_level_version": "Level 2 Version 4",
+          "compartments": 2,
+          "species": 27,
+          "reactions": 56,
+          "global_parameters": 99
+        }
+      ],
+      "structural_companions": [],
+      "evidence_role": "The publication compared model predictions with single-cell FRET experiments and XIAP perturbation, providing a strong downstream biological reference but no ligand-receptor entry point.",
+      "public_data_status": "The CC0 SBML artifact is public; a reusable row-level experimental data package was not established during this screen.",
+      "scores": {
+        "biological-fit": 2,
+        "public-artifact": 3,
+        "reuse-rights": 3,
+        "experimental-evidence": 3,
+        "integration-cost": 1,
+        "scope-clarity": 3
+      },
+      "total_score": 15,
+      "strengths": [
+        "Public, content-hashed, CC0 SBML artifact.",
+        "Quantitative single-cell perturbation evidence for an apoptosis-related output.",
+        "Useful later check of downstream caspase and inhibitor behavior."
+      ],
+      "limitations": [
+        "Does not start with a named extracellular ligand-receptor interaction and therefore fits the current M5 chain less directly.",
+        "Larger network and parameter surface increase reproduction and identifiability cost.",
+        "Same HeLa and non-clinical scope limitations apply."
+      ],
+      "next_action": "Retain as the first fallback or a later downstream cross-model challenge if BCQ-SRC-001 cannot be reproduced without undocumented assumptions."
+    },
+    {
+      "id": "BCQ-SRC-003",
+      "rank": 3,
+      "decision": "later-capillary-endothelial-program",
+      "name": "Kuehn and Checa 2019 VEGF-A-VEGFR1-VEGFR2 endothelial signaling and angiogenesis",
+      "biology": {
+        "ligand": "VEGF-A",
+        "receptor": "VEGFR1 and VEGFR2",
+        "cell_type": "endothelial cells in a mouse embryoid-body sprouting assay",
+        "response": "VEGFR signaling, Dll4-Notch lateral inhibition, tip-cell behavior, and sprouting morphology",
+        "model_form": "21-variable intracellular model embedded in a stochastic two-dimensional agent-based angiogenesis simulator"
+      },
+      "publication": {
+        "citation": "Kuehn C, Checa S. Computational Modeling to Quantify the Contributions of VEGFR1, VEGFR2, and Lateral Inhibition in Sprouting Angiogenesis. Frontiers in Physiology. 2019;10:288.",
+        "doi": "10.3389/fphys.2019.00288",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6445957/",
+        "article_rights": "CC-BY-4.0 article; the paper reports Apache-2.0 for AngioABM, but exact model and analysis artifacts require a separate commit-and-licence audit"
+      },
+      "artifacts": [],
+      "structural_companions": [
+        "The publication names BioModels submission MODEL1804030001, but the repository record located during this screen reports it as not released.",
+        "The paper links AngioABM and ABMTools branches; no exact commit, complete dependency closure, or bundled-data licence was frozen in BCQ-1.1."
+      ],
+      "evidence_role": "The study reproduces wild-type and VEGFR1-knockout sprouting measurements and is biologically closer to a capillary-endothelial extension than the apoptosis candidates.",
+      "public_data_status": "Article supplements and source-code links are public, but the named BioModels submission was not available as a released, version-frozen artifact during this screen.",
+      "scores": {
+        "biological-fit": 3,
+        "public-artifact": 1,
+        "reuse-rights": 1,
+        "experimental-evidence": 2,
+        "integration-cost": 0,
+        "scope-clarity": 2
+      },
+      "total_score": 9,
+      "strengths": [
+        "Named endothelial ligand and receptors align with future capillary-tissue-cell coupling.",
+        "Includes perturbation and multicellular morphology outputs.",
+        "Publication and reported simulator licence are reuse-friendly."
+      ],
+      "limitations": [
+        "The public BioModels identifier is an unreleased submission rather than an audited stable artifact.",
+        "The relevant result depends on intracellular, extracellular, and agent-based dynamics, making it a poor first qualification target.",
+        "Mouse embryoid-body sprouting is not normal human pulmonary capillary physiology."
+      ],
+      "next_action": "Revisit after BCQ-1 and dynamic capillary-tissue-cell contracts; audit the exact source commits, supplements, dependencies, and redistribution terms before adoption."
+    },
+    {
+      "id": "BCQ-SRC-004",
+      "rank": 4,
+      "decision": "conceptual-benchmark-only",
+      "name": "Eissing 2004 receptor-induced caspase bistability model",
+      "biology": {
+        "ligand": "generic death-receptor stimulus",
+        "receptor": "receptor-induced apoptosis represented abstractly",
+        "cell_type": "population-versus-single-cell apoptosis context; no first-package cell-line artifact was frozen",
+        "response": "caspase activation bistability",
+        "model_form": "compact mechanistic ordinary differential equation model"
+      },
+      "publication": {
+        "citation": "Eissing T, Conzelmann H, Gilles ED, Allgoewer F, Bullinger E, Scheurich P. Bistability analyses of a caspase activation model for receptor-induced apoptosis. Journal of Biological Chemistry. 2004;279:36892-36897.",
+        "doi": "10.1074/jbc.M404893200",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/15208304/",
+        "article_rights": "article rights do not establish reusable model-artifact rights"
+      },
+      "artifacts": [],
+      "structural_companions": [],
+      "evidence_role": "Useful conceptual and mathematical benchmark for switch-like caspase behavior, but not the best auditable first biological package.",
+      "public_data_status": "No stable, content-hashed public SBML package and explicit redistribution licence were established during this screen.",
+      "scores": {
+        "biological-fit": 2,
+        "public-artifact": 0,
+        "reuse-rights": 0,
+        "experimental-evidence": 1,
+        "integration-cost": 3,
+        "scope-clarity": 2
+      },
+      "total_score": 8,
+      "strengths": [
+        "Compact model with interpretable bistability behavior.",
+        "Historically relevant to the single-cell-versus-population question."
+      ],
+      "limitations": [
+        "No audited versioned model artifact or reusable artifact licence was located.",
+        "Less directly tied to a named ligand, receptor, cell line, and public measurement package than BCQ-SRC-001.",
+        "Would require manual reconstruction, weakening reproducibility and provenance."
+      ],
+      "next_action": "Use only as a conceptual comparison unless a stable licensed model artifact and complete reproduction inputs are located."
+    }
+  ],
+  "decision": {
+    "selected_candidate_id": "BCQ-SRC-001",
+    "selected_artifact_accessions": [
+      "BIOMD0000000523",
+      "BIOMD0000000524"
+    ],
+    "selection_reason": "This is the only screened option that simultaneously provides a named ligand-receptor-cell context, compact paired public SBML artifacts, explicit CC0 model rights, single-cell and population evidence, and a publication-level held-out prediction step that matches the existing M5 architecture.",
+    "not_yet_authorized": [
+      "bundling or modifying an external model inside the MEHLISSA source tree",
+      "redistributing article figures or experimental observations",
+      "claiming biological qualification, organ realism, patient prediction, diagnosis, treatment, or clinical validity"
+    ],
+    "next_increment": "BCQ-1.2 prospective no-refit reproduction protocol"
+  }
+}

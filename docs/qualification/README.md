@@ -11,6 +11,17 @@ the milestone evidence without rewriting it after results are known.
 | Protocol | Status | Purpose |
 |---|---|---|
 | [PCQ-1 pulmonary and capillary qualification](PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md) | design v0.1.0, [PCQ-1.2 source screen](PCQ1_EVIDENCE_SOURCE_SCREEN.md), [PCQ-1.3 amendment](PCQ1_PRE_OUTCOME_AMENDMENT.md) v0.2.0, [PCQ-1.4 rights-aware ingress](PCQ1_DATA_INGRESS.md), [PCQ-1.5 uncertainty/identifiability analysis](PCQ1_UNCERTAINTY_IDENTIFIABILITY.md), [PCQ-1.5a repository-first data audit](PCQ1_REPOSITORY_FIRST_DATA_AUDIT.md), and an unsent [request and waiting-period package](PCQ1_DATA_REQUEST_PACKAGE.md); no participant outcomes acquired | qualify participant-level pulmonary hemodynamics, regional perfusion, capillary volume and transit, and their joint coherence |
+| [BCQ-1 biological cell-model qualification](BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md) | BCQ-1.1 candidate and licence selection complete before model import or execution | reproduce and map a bounded CD95L-CD95-caspase-8 model family so that one M5 variant can progress beyond synthetic software evidence |
+
+BCQ means **Biological Cell-model Qualification**. Its BCQ-1.1 machine
+authority is
+`data/qualification/biological-cell-model-candidate-register-v1.json`. The
+screen selects the minimal Kallenberger 2014 `BIOMD0000000523` and
+`BIOMD0000000524` pair, freezes their public source commits and SBML hashes,
+separates CC0 model rights from article and experimental-data rights, and
+retains three ranked alternatives. It proves an auditable selection, not a
+model reproduction or biological result. BCQ-1.2 must freeze the no-refit
+reproduction protocol before either model is executed or mapped to MEHLISSA.
 
 The machine-readable design authority for PCQ-1 is
 `data/qualification/pulmonary-capillary-qualification-protocol-v1.json`. Its
