@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "dataset": {
+    "id": "pcq14-synthetic-capillary-volume-v1",
+    "measurement_family": "pcq_capillary_volume",
+    "candidate_id": "PCQ-SRC-CJ-001",
+    "data_origin": "synthetic_test_fixture",
+    "participant_identifier_policy": "study_pseudonym_only",
+    "generation_note": "Arbitrary positive values created only to exercise Vc, flow, hemoglobin, method-quality, and adapter fields; not derived from a participant or publication."
+  },
+  "units": {
+    "age": "year",
+    "functional_capillary_volume": "mL",
+    "cardiac_output": "L/min",
+    "hemoglobin": "g/dL"
+  },
+  "participants": [
+    {
+      "participant_id": "SYN-C1-001",
+      "age_years": 30,
+      "phenotype": "healthy_control",
+      "body_position": "semirecumbent",
+      "state": "baseline_rest",
+      "measurement_method": "multiple_inspired_oxygen_DLCO_regression",
+      "functional_capillary_volume_mL": 80,
+      "cardiac_output_L_min": 6,
+      "hemoglobin_g_dL": 14,
+      "hemoglobin_adjusted": true,
+      "second_correction_applied": false,
+      "regression_r_squared": 0.97,
+      "method_coefficient_of_variation": 0.08,
+      "uncertainty_basis": "protocol_floor"
+    }
+  ],
+  "limitations": [
+    "Synthetic software fixture only; it is not physiological, participant-level, calibration, or validation evidence."
+  ]
+}

@@ -10,8 +10,9 @@ SPDX-License-Identifier: CC-BY-4.0
 This is a send-ready draft, not a record of a submitted request. An authorized
 project representative must review the institutional, ethical, and data-use
 wording before sending it to the corresponding author named in the article.
-No participant-level data should be opened before the PCQ-1.3 observation
-model, numeric tolerances, and analysis version are committed.
+PCQ-1.3 is committed. No participant-level data should be opened unless the
+PCQ-1.4 rights/provenance manifest is approved and the file resolves outside
+Git inside the explicitly declared institutional quarantine root.
 
 ## Suggested subject
 
@@ -105,8 +106,10 @@ Kind regards,
 - replace all bracketed fields;
 - select the legal recipient institution;
 - confirm who may accept a data-use agreement;
-- independently review and commit PCQ-1.3 before data delivery or outcome
-  access;
+- independently review the committed PCQ-1.3 amendment and PCQ-1.4 ingress
+  contract before data delivery or outcome access;
+- prepare the exact rights/provenance manifest and outside-repository
+  quarantine directory before accepting a file;
 - request secure delivery rather than ordinary email attachment if records are
   granted; and
 - record the sent date, response, grant, and retention deadline in a non-public

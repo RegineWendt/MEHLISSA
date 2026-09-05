@@ -458,6 +458,23 @@ or their joint physiological state have passed validation. Researchers should
 continue to cite the existing M3/M4 evidence level until a locked PCQ-1 result
 is published.
 
+[PCQ-1.4 rights-aware data ingress](qualification/PCQ1_DATA_INGRESS.md) now
+provides the safe technical entry point for any future authorized records. It
+checks a separate rights/provenance manifest before opening a data file,
+requires measured records to remain outside Git inside an explicitly supplied
+institutional quarantine directory, rejects direct identifiers and unresolved
+cohort overlap, and normalizes four measurement families. Its command prints
+only identities, record counts, and readiness states - never observation
+values. The four repository fixtures are arbitrary synthetic software tests and
+require an explicit test flag; they provide no new physiological evidence.
+
+Researchers should not copy participant data into the repository or Workbench
+workspace. A future authorized data steward must follow the quarantine and
+manifest procedure in the PCQ-1.4 guide. A successful import means only that
+the records are structurally and administratively eligible for later frozen
+analysis. It does not mean that the sample is large enough or that any PCQ
+endpoint has passed.
+
 #### 5.9 Capillary signal, receptor binding, drug delivery, and cell response
 
 | Question element | Guided example |

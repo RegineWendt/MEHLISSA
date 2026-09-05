@@ -262,12 +262,14 @@ python scripts/check_paper1_protocol.py
 python scripts/check_pulmonary_capillary_qualification_protocol.py
 python scripts/check_pulmonary_capillary_evidence_candidates.py
 python scripts/check_pulmonary_capillary_preoutcome_amendment.py
+python scripts/check_pulmonary_capillary_data_ingress.py
 python scripts/check_paper1_release_candidate.py
 python -m unittest tests.test_evidence_validity_matrix -v
 python -m unittest tests.test_paper1_protocol -v
 python -m unittest tests.test_pulmonary_capillary_qualification_protocol -v
 python -m unittest tests.test_pulmonary_capillary_evidence_candidates -v
 python -m unittest tests.test_pulmonary_capillary_preoutcome_amendment -v
+python -m unittest tests.test_pulmonary_capillary_data_ingress -v
 python -m unittest tests.test_paper1_measurement_tools -v
 python -m unittest tests.test_paper1_release_candidate -v
 ```
@@ -304,6 +306,16 @@ tests prevent a small pilot from silently becoming a full track decision and
 prevent the capillary-only residence time from being compared directly with a
 whole-pulmonary transit measurement. Passing it proves prospective analysis
 discipline, not physiological agreement.
+
+The PCQ-1.4 ingress checker validates the policy and four outcome-blind
+synthetic family adapters. Measured records are deliberately not discovered by
+the repository: callers must provide an approved manifest, the exact data path,
+and an absolute quarantine root outside the checkout. Authorization, privacy,
+cohort disjointness, schema identity, and path containment are checked before
+the data file is opened. The command emits metadata only. See the
+[data-ingress guide](qualification/PCQ1_DATA_INGRESS.md) before adding a
+source-specific converter; never weaken the normalized schemas to fit an
+unknown or unauthorized source layout.
 
 Do not edit the locked protocol or raw archives in place. A changed protocol
 requires a new version and pre-measurement commit; a changed candidate requires

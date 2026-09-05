@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "manifest": {
+    "dataset_id": "pcq14-synthetic-hemodynamics-v1",
+    "measurement_family": "pcq_hemodynamics",
+    "candidate_id": "PCQ-SRC-H-001",
+    "evidence_status": "synthetic_test_only",
+    "created_date": "2026-09-05",
+    "adapter_version": "pcq-ingress-1.0.0"
+  },
+  "content": {
+    "file_name": "synthetic-hemodynamics-v1.json",
+    "sha256": "45d3faba7bd5372bc5b81277552089fc89937995b228116c77219b1ba4cde193",
+    "dataset_schema": "data/schemas/pulmonary-hemodynamics-observations/1.0.0.schema.json",
+    "dataset_schema_sha256": "1a3cc34d10bb6860731e08b9341997491499393d07ce8fc8b3c11336b5f8fd2b",
+    "participant_count": 1
+  },
+  "rights": {
+    "data_controller": "MEHLISSA synthetic-fixture maintainers",
+    "authorization_status": "not_applicable_synthetic",
+    "approval_reference": "Not applicable: generated software-test fixture",
+    "processing_allowed": true,
+    "analysis_allowed": true,
+    "aggregate_publication_allowed": false,
+    "raw_redistribution": "not_applicable_synthetic",
+    "retention_policy": "Retain as a versioned CC0 software-test fixture"
+  },
+  "privacy": {
+    "pseudonymized": true,
+    "direct_identifiers_removed": true,
+    "identifier_policy": "study_pseudonym_only",
+    "repository_storage": "synthetic_fixture_allowed"
+  },
+  "independence": {
+    "status": "not_applicable_synthetic",
+    "source_cohort_ids": ["synthetic-pcq14-hemodynamics"],
+    "calibration_cohort_ids": [],
+    "assessment": "No human cohort exists; the values are arbitrary software-test inputs."
+  },
+  "governance": {
+    "quarantine_required": false,
+    "release_to_adapter": true,
+    "reviewer_role": "automated software verification",
+    "audit_note": "Explicit test flag required; never eligible as physiological evidence."
+  }
+}

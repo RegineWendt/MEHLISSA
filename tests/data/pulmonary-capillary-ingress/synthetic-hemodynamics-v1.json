@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0.0",
+  "dataset": {
+    "id": "pcq14-synthetic-hemodynamics-v1",
+    "measurement_family": "pcq_hemodynamics",
+    "candidate_id": "PCQ-SRC-H-001",
+    "data_origin": "synthetic_test_fixture",
+    "participant_identifier_policy": "study_pseudonym_only",
+    "generation_note": "Arbitrary values created only to exercise schema, order, uncertainty, and adapter behavior; not derived from a participant or publication."
+  },
+  "units": {
+    "age": "year",
+    "workload": "W",
+    "cardiac_output": "L/min",
+    "pressure": "mmHg",
+    "heart_rate": "1/min"
+  },
+  "participants": [
+    {
+      "participant_id": "SYN-H-001",
+      "age_years": 30,
+      "phenotype": "healthy_control",
+      "body_position": "supine",
+      "cardiac_output_method": "synthetic_direct_fick_like_fixture",
+      "protocol": "incremental_exercise",
+      "stages": [
+        {
+          "id": "rest",
+          "ordinal": 0,
+          "state": "rest",
+          "workload_W": 0,
+          "cardiac_output_L_min": 5.5,
+          "mean_pulmonary_arterial_pressure_mmHg": 15,
+          "pulmonary_arterial_wedge_pressure_mmHg": 8,
+          "mPAP_standard_uncertainty_mmHg": 2,
+          "PAWP_standard_uncertainty_mmHg": 3,
+          "cardiac_output_relative_standard_uncertainty": 0.1,
+          "uncertainty_basis": "protocol_floor",
+          "systolic_pulmonary_arterial_pressure_mmHg": 24,
+          "diastolic_pulmonary_arterial_pressure_mmHg": 9,
+          "heart_rate_per_minute": 65
+        },
+        {
+          "id": "exercise-1",
+          "ordinal": 1,
+          "state": "exercise",
+          "workload_W": 40,
+          "cardiac_output_L_min": 6.8,
+          "mean_pulmonary_arterial_pressure_mmHg": 19,
+          "pulmonary_arterial_wedge_pressure_mmHg": 10,
+          "mPAP_standard_uncertainty_mmHg": 2,
+          "PAWP_standard_uncertainty_mmHg": 3,
+          "cardiac_output_relative_standard_uncertainty": 0.1,
+          "uncertainty_basis": "protocol_floor"
+        },
+        {
+          "id": "exercise-2",
+          "ordinal": 2,
+          "state": "exercise",
+          "workload_W": 80,
+          "cardiac_output_L_min": 8.0,
+          "mean_pulmonary_arterial_pressure_mmHg": 23,
+          "pulmonary_arterial_wedge_pressure_mmHg": 12,
+          "mPAP_standard_uncertainty_mmHg": 2,
+          "PAWP_standard_uncertainty_mmHg": 3,
+          "cardiac_output_relative_standard_uncertainty": 0.1,
+          "uncertainty_basis": "protocol_floor"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Synthetic software fixture only; it is not physiological, participant-level, calibration, or validation evidence."
+  ]
+}

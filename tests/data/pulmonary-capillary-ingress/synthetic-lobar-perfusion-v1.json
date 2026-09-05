@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "dataset": {
+    "id": "pcq14-synthetic-lobar-perfusion-v1",
+    "measurement_family": "pcq_lobar_perfusion",
+    "candidate_id": "PCQ-SRC-R-002",
+    "data_origin": "synthetic_test_fixture",
+    "participant_identifier_policy": "study_pseudonym_only",
+    "generation_note": "Arbitrary composition created only to exercise five-lobe normalization and adapter behavior; not derived from a participant or publication."
+  },
+  "units": {"age": "year", "perfusion_fraction": "1"},
+  "participants": [
+    {
+      "participant_id": "SYN-R-001",
+      "age_years": 30,
+      "phenotype": "healthy_control",
+      "body_position": "supine",
+      "state": "rest",
+      "acquisition_method": "synthetic_five_lobe_fixture",
+      "normalization": "five_anatomical_lobes_sum_to_one",
+      "lobe_fractions": {
+        "right_upper": 0.18,
+        "right_middle": 0.10,
+        "right_lower": 0.27,
+        "left_upper": 0.20,
+        "left_lower": 0.25
+      },
+      "standard_uncertainty_fractions": {
+        "right_upper": 0.02,
+        "right_middle": 0.02,
+        "right_lower": 0.02,
+        "left_upper": 0.02,
+        "left_lower": 0.02,
+        "basis": "protocol_floor"
+      }
+    }
+  ],
+  "limitations": [
+    "Synthetic software fixture only; it is not physiological, participant-level, calibration, or validation evidence."
+  ]
+}

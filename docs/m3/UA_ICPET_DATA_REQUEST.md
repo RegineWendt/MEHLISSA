@@ -12,6 +12,10 @@ authorized project representative must review the institutional, ethical, and
 data-use wording before sending it to the corresponding author listed in
 Elliott et al. 2023.
 
+PCQ-1.3 is committed. No participant-level data should be opened unless the
+PCQ-1.4 rights/provenance manifest is approved and the file resolves outside
+Git inside the explicitly declared institutional quarantine root.
+
 ## Suggested subject
 
 Request for de-identified stage-level hemodynamics from the healthy-control
@@ -79,7 +83,10 @@ Kind regards,
 - confirm who is authorized to accept a data-use agreement;
 - decide whether TU Berlin, University of Lübeck, or another institution is the
   formal recipient;
-- attach or link the locked analysis protocol only after project review; and
+- attach or link the locked analysis protocol only after project review;
+- review the PCQ-1.4 ingress contract, prepare its exact manifest, and create
+  the institution-controlled outside-repository quarantine directory before
+  accepting any file; and
 - record the sent date and response in a non-public project register, not in a
   subject-data file.
 

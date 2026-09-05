@@ -22,7 +22,7 @@ rules are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 | understand APIs or add a model such as kidney | [Software Architecture and Developer Guide](architecture/SOFTWARE_ARCHITECTURE.md) | implemented structure, public APIs, coupling contracts, extension workflow, kidney outline, and personalization |
 | understand what comes next | [Roadmap](ROADMAP.md) | integrated platform history, scientific qualification program, further scenarios and organs, scaling, and the digital-twin path |
 | assess evidence for Paper 1 | [Evidence and Validity Baseline](publication/EVIDENCE_AND_VALIDITY_BASELINE.md) | schema-validated evidence roles, calibration/validation separation, source audit, claim boundaries, and bibliography export |
-| follow the active scientific qualification cycle | [PCQ-1 pulmonary and capillary protocol](qualification/PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md), [evidence-source screen](qualification/PCQ1_EVIDENCE_SOURCE_SCREEN.md), and [pre-outcome amendment](qualification/PCQ1_PRE_OUTCOME_AMENDMENT.md) | bounded candidate claim, frozen models, endpoint hierarchy, ranked sources, observation models, sample floors, numeric gates, access and rights boundaries, and next data-adapter increment |
+| follow the active scientific qualification cycle | [PCQ-1 protocol](qualification/PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md), [source screen](qualification/PCQ1_EVIDENCE_SOURCE_SCREEN.md), [pre-outcome amendment](qualification/PCQ1_PRE_OUTCOME_AMENDMENT.md), and [rights-aware ingress](qualification/PCQ1_DATA_INGRESS.md) | bounded claim, frozen models/sources/observation rules, numeric gates, manifest-first authorization, quarantine boundary, four normalized adapters, and next uncertainty increment |
 | reproduce Paper 1 technical measurements | [Technical Experiment Protocol v2](publication/PAPER1_TECHNICAL_EXPERIMENT_PROTOCOL_V2.md) | locked conditions, three experiments, metrics, controls, exclusions, failure handling, and archive structure |
 | inspect Paper 1 results | [Technical Measurement Report](publication/PAPER1_TECHNICAL_MEASUREMENTS.md) | 112-attempt body campaign, small M7 resource/replay study, access-path parity, retained setup deviation, and interpretation limits |
 | review the Paper 1 release candidate | [Candidate handoff](../publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/HANDOFF.md) | source export, raw archives, machine manifest, hashes, claim registry, reproduction, and review checklist |
@@ -59,6 +59,10 @@ rules are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
   the PCQ-1.3 source roles, parent hashes, eight observation models, sample and
   precision floors, six primary numeric gates, statistical rules, explicit
   blocked states, and absence of participant-level outcome access.
+- `python scripts/check_pulmonary_capillary_data_ingress.py` validates the
+  PCQ-1.4 policy, manifest-first authorization, outside-Git quarantine rule,
+  four strict measurement-family adapters, metadata-only output, and
+  outcome-blind fixtures without acquiring participant records.
 - [Data licensing](DATA_LICENSING.md), the
   [licence and data inventory](m0/LICENSE_AND_DATA_INVENTORY.md), and
   [ADR-0007](architecture/adr/0007-repository-license.md) define release and

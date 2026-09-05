@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/pulmonary-capillary-data-ingress-policy/1.0.0.schema.json",
+  "title": "MEHLISSA PCQ-1.4 pulmonary and capillary data ingress policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "policy", "ingress_boundary", "families", "rights_gate", "next_step"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "protocol_id", "protocol_version", "created_date", "status", "baseline_commit", "parent_amendment", "outcome_access", "clinical_use"],
+      "properties": {
+        "id": {"const": "PCQ-1.4"},
+        "protocol_id": {"const": "PCQ-1"},
+        "protocol_version": {"const": "0.2.0"},
+        "created_date": {"type": "string", "format": "date"},
+        "status": {"const": "outcome-blind-fixture-adapters-complete-no-measured-data-acquired"},
+        "baseline_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "parent_amendment": {"$ref": "#/$defs/file_hash"},
+        "outcome_access": {"type": "string", "minLength": 1},
+        "clinical_use": {"const": false}
+      }
+    },
+    "ingress_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["manifest_first", "read_dataset_only_after_authorization", "measured_data_repository_policy", "measured_data_quarantine_policy", "synthetic_fixture_repository_policy", "forbidden_field_names", "command_output_policy"],
+      "properties": {
+        "manifest_first": {"const": true},
+        "read_dataset_only_after_authorization": {"const": true},
+        "measured_data_repository_policy": {"const": "forbidden"},
+        "measured_data_quarantine_policy": {"const": "explicit_absolute_root_outside_repository_required"},
+        "synthetic_fixture_repository_policy": {"const": "allowed_only_with_explicit_test_flag"},
+        "forbidden_field_names": {"type": "array", "minItems": 10, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "command_output_policy": {"const": "metadata_summary_only_never_raw_observations"}
+      }
+    },
+    "families": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {"$ref": "#/$defs/family"}
+    },
+    "rights_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["measured_authorization", "measured_independence", "measured_privacy", "measured_release", "synthetic_evidence_status"],
+      "properties": {
+        "measured_authorization": {"const": "approved_processing_and_analysis_required"},
+        "measured_independence": {"const": "confirmed_disjoint_required"},
+        "measured_privacy": {"const": "pseudonymized_direct_identifiers_removed"},
+        "measured_release": {"const": "explicit_release_to_adapter_required"},
+        "synthetic_evidence_status": {"const": "software_test_only_never_physiological_evidence"}
+      }
+    },
+    "next_step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["increment", "deliverable", "external_contact"],
+      "properties": {
+        "increment": {"const": "PCQ-1.5"},
+        "deliverable": {"type": "string", "minLength": 1},
+        "external_contact": {"type": "string", "minLength": 1}
+      }
+    }
+  },
+  "$defs": {
+    "file_hash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "family": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["track", "measurement_family", "candidate_id", "endpoint_ids", "dataset_schema", "activation_status", "pilot_floor", "decision_floor"],
+      "properties": {
+        "track": {"enum": ["PCQ-H", "PCQ-R", "PCQ-C"]},
+        "measurement_family": {"enum": ["pcq_hemodynamics", "pcq_lobar_perfusion", "pcq_capillary_volume", "pcq_whole_pulmonary_transit"]},
+        "candidate_id": {"type": "string", "pattern": "^PCQ-SRC-[A-Z0-9-]+$"},
+        "endpoint_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^PCQ-[HRCJ][0-9]$"}},
+        "dataset_schema": {"type": "string", "minLength": 1},
+        "activation_status": {"enum": ["locked-awaiting-data", "locked-awaiting-feasibility-and-data", "blocked-observation-model"]},
+        "pilot_floor": {"type": "integer", "minimum": 0},
+        "decision_floor": {"type": "integer", "minimum": 1}
+      }
+    }
+  }
+}

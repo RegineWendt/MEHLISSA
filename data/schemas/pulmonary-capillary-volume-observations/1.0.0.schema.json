@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/pulmonary-capillary-volume-observations/1.0.0.schema.json",
+  "title": "PCQ-C1 normalized functional pulmonary capillary volume observations",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "dataset", "units", "participants", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "dataset": {"$ref": "#/$defs/dataset"},
+    "units": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["age", "functional_capillary_volume", "cardiac_output", "hemoglobin"],
+      "properties": {
+        "age": {"const": "year"},
+        "functional_capillary_volume": {"const": "mL"},
+        "cardiac_output": {"const": "L/min"},
+        "hemoglobin": {"const": "g/dL"}
+      }
+    },
+    "participants": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/participant"}},
+    "limitations": {"$ref": "#/$defs/nonempty_strings"}
+  },
+  "$defs": {
+    "positive": {"type": "number", "exclusiveMinimum": 0},
+    "nonempty_strings": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "dataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "measurement_family", "candidate_id", "data_origin", "participant_identifier_policy", "generation_note"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,95}$"},
+        "measurement_family": {"const": "pcq_capillary_volume"},
+        "candidate_id": {"const": "PCQ-SRC-CJ-001"},
+        "data_origin": {"enum": ["synthetic_test_fixture", "measured_source"]},
+        "participant_identifier_policy": {"const": "study_pseudonym_only"},
+        "generation_note": {"type": "string", "minLength": 1}
+      }
+    },
+    "participant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["participant_id", "age_years", "phenotype", "body_position", "state", "measurement_method", "functional_capillary_volume_mL", "cardiac_output_L_min", "hemoglobin_g_dL", "hemoglobin_adjusted", "second_correction_applied", "regression_r_squared", "method_coefficient_of_variation", "uncertainty_basis"],
+      "properties": {
+        "participant_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"},
+        "age_years": {"type": "number", "minimum": 20, "maximum": 40},
+        "phenotype": {"const": "healthy_control"},
+        "body_position": {"enum": ["recumbent", "semirecumbent"]},
+        "state": {"const": "baseline_rest"},
+        "measurement_method": {"const": "multiple_inspired_oxygen_DLCO_regression"},
+        "functional_capillary_volume_mL": {"$ref": "#/$defs/positive"},
+        "cardiac_output_L_min": {"$ref": "#/$defs/positive"},
+        "hemoglobin_g_dL": {"type": "number", "exclusiveMinimum": 0, "maximum": 30},
+        "hemoglobin_adjusted": {"const": true},
+        "second_correction_applied": {"const": false},
+        "regression_r_squared": {"type": "number", "minimum": 0.95, "maximum": 1},
+        "method_coefficient_of_variation": {"type": "number", "minimum": 0.08, "maximum": 1},
+        "uncertainty_basis": {"enum": ["source_supplied", "protocol_floor", "larger_of_source_and_protocol_floor"]}
+      }
+    }
+  }
+}

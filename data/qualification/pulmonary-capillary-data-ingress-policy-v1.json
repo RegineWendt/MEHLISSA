@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0.0",
+  "policy": {
+    "id": "PCQ-1.4",
+    "protocol_id": "PCQ-1",
+    "protocol_version": "0.2.0",
+    "created_date": "2026-09-05",
+    "status": "outcome-blind-fixture-adapters-complete-no-measured-data-acquired",
+    "baseline_commit": "5412a0352648f652eea08ebf036fbda85e125cf1",
+    "parent_amendment": {
+      "path": "data/qualification/pulmonary-capillary-preoutcome-amendment-v1.json",
+      "sha256": "16e8b5286970c4df22a159275316bc4e5f2ee31e2199facfbe88d60fb9790f38"
+    },
+    "outcome_access": "No candidate participant-level outcome record was requested, downloaded, received, opened, or inspected while PCQ-1.4 was implemented.",
+    "clinical_use": false
+  },
+  "ingress_boundary": {
+    "manifest_first": true,
+    "read_dataset_only_after_authorization": true,
+    "measured_data_repository_policy": "forbidden",
+    "measured_data_quarantine_policy": "explicit_absolute_root_outside_repository_required",
+    "synthetic_fixture_repository_policy": "allowed_only_with_explicit_test_flag",
+    "forbidden_field_names": [
+      "name",
+      "first_name",
+      "last_name",
+      "date_of_birth",
+      "birth_date",
+      "email",
+      "phone",
+      "address",
+      "medical_record_number",
+      "mrn",
+      "free_text_note",
+      "source_system_identifier",
+      "examination_date",
+      "admission_date"
+    ],
+    "command_output_policy": "metadata_summary_only_never_raw_observations"
+  },
+  "families": [
+    {
+      "track": "PCQ-H",
+      "measurement_family": "pcq_hemodynamics",
+      "candidate_id": "PCQ-SRC-H-001",
+      "endpoint_ids": ["PCQ-H1", "PCQ-H2", "PCQ-H3", "PCQ-H4"],
+      "dataset_schema": "data/schemas/pulmonary-hemodynamics-observations/1.0.0.schema.json",
+      "activation_status": "locked-awaiting-data",
+      "pilot_floor": 3,
+      "decision_floor": 10
+    },
+    {
+      "track": "PCQ-R",
+      "measurement_family": "pcq_lobar_perfusion",
+      "candidate_id": "PCQ-SRC-R-002",
+      "endpoint_ids": ["PCQ-R1"],
+      "dataset_schema": "data/schemas/pulmonary-lobar-perfusion-observations/1.0.0.schema.json",
+      "activation_status": "locked-awaiting-feasibility-and-data",
+      "pilot_floor": 5,
+      "decision_floor": 10
+    },
+    {
+      "track": "PCQ-C",
+      "measurement_family": "pcq_capillary_volume",
+      "candidate_id": "PCQ-SRC-CJ-001",
+      "endpoint_ids": ["PCQ-C1", "PCQ-C3", "PCQ-J1"],
+      "dataset_schema": "data/schemas/pulmonary-capillary-volume-observations/1.0.0.schema.json",
+      "activation_status": "locked-awaiting-data",
+      "pilot_floor": 8,
+      "decision_floor": 12
+    },
+    {
+      "track": "PCQ-C",
+      "measurement_family": "pcq_whole_pulmonary_transit",
+      "candidate_id": "PCQ-SRC-C-003",
+      "endpoint_ids": ["PCQ-C2"],
+      "dataset_schema": "data/schemas/pulmonary-transit-observations/1.0.0.schema.json",
+      "activation_status": "blocked-observation-model",
+      "pilot_floor": 0,
+      "decision_floor": 20
+    }
+  ],
+  "rights_gate": {
+    "measured_authorization": "approved_processing_and_analysis_required",
+    "measured_independence": "confirmed_disjoint_required",
+    "measured_privacy": "pseudonymized_direct_identifiers_removed",
+    "measured_release": "explicit_release_to_adapter_required",
+    "synthetic_evidence_status": "software_test_only_never_physiological_evidence"
+  },
+  "next_step": {
+    "increment": "PCQ-1.5",
+    "deliverable": "Execute uncertainty propagation, structural ensemble analysis, sensitivity, convergence, and identifiability against the frozen endpoints without opening unavailable measured outcomes.",
+    "external_contact": "No external request is sent by PCQ-1.4; an authorized institutional representative remains responsible for any data-use agreement."
+  }
+}

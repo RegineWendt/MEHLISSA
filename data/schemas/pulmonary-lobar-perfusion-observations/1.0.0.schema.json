@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/pulmonary-lobar-perfusion-observations/1.0.0.schema.json",
+  "title": "PCQ-R normalized five-lobe perfusion observations",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "dataset", "units", "participants", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "dataset": {"$ref": "#/$defs/dataset"},
+    "units": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["age", "perfusion_fraction"],
+      "properties": {"age": {"const": "year"}, "perfusion_fraction": {"const": "1"}}
+    },
+    "participants": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/participant"}},
+    "limitations": {"$ref": "#/$defs/nonempty_strings"}
+  },
+  "$defs": {
+    "fraction": {"type": "number", "minimum": 0, "maximum": 1},
+    "uncertainty": {"type": "number", "minimum": 0.02, "maximum": 1},
+    "nonempty_strings": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "dataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "measurement_family", "candidate_id", "data_origin", "participant_identifier_policy", "generation_note"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,95}$"},
+        "measurement_family": {"const": "pcq_lobar_perfusion"},
+        "candidate_id": {"const": "PCQ-SRC-R-002"},
+        "data_origin": {"enum": ["synthetic_test_fixture", "measured_source"]},
+        "participant_identifier_policy": {"const": "study_pseudonym_only"},
+        "generation_note": {"type": "string", "minLength": 1}
+      }
+    },
+    "lobes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["right_upper", "right_middle", "right_lower", "left_upper", "left_lower"],
+      "properties": {
+        "right_upper": {"$ref": "#/$defs/fraction"},
+        "right_middle": {"$ref": "#/$defs/fraction"},
+        "right_lower": {"$ref": "#/$defs/fraction"},
+        "left_upper": {"$ref": "#/$defs/fraction"},
+        "left_lower": {"$ref": "#/$defs/fraction"}
+      }
+    },
+    "uncertainties": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["right_upper", "right_middle", "right_lower", "left_upper", "left_lower", "basis"],
+      "properties": {
+        "right_upper": {"$ref": "#/$defs/uncertainty"},
+        "right_middle": {"$ref": "#/$defs/uncertainty"},
+        "right_lower": {"$ref": "#/$defs/uncertainty"},
+        "left_upper": {"$ref": "#/$defs/uncertainty"},
+        "left_lower": {"$ref": "#/$defs/uncertainty"},
+        "basis": {"enum": ["source_supplied", "protocol_floor", "larger_of_source_and_protocol_floor"]}
+      }
+    },
+    "participant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["participant_id", "age_years", "phenotype", "body_position", "state", "acquisition_method", "normalization", "lobe_fractions", "standard_uncertainty_fractions"],
+      "properties": {
+        "participant_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"},
+        "age_years": {"type": "number", "minimum": 20, "maximum": 40},
+        "phenotype": {"const": "healthy_control"},
+        "body_position": {"const": "supine"},
+        "state": {"const": "rest"},
+        "acquisition_method": {"type": "string", "minLength": 1},
+        "normalization": {"const": "five_anatomical_lobes_sum_to_one"},
+        "lobe_fractions": {"$ref": "#/$defs/lobes"},
+        "standard_uncertainty_fractions": {"$ref": "#/$defs/uncertainties"}
+      }
+    }
+  }
+}

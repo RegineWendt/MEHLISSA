@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "dataset": {
+    "id": "pcq14-synthetic-whole-pulmonary-transit-v1",
+    "measurement_family": "pcq_whole_pulmonary_transit",
+    "candidate_id": "PCQ-SRC-C-003",
+    "data_origin": "synthetic_test_fixture",
+    "participant_identifier_policy": "study_pseudonym_only",
+    "generation_note": "Arbitrary transit value created only to exercise anatomical and blocked-state safeguards; not derived from a participant or publication."
+  },
+  "units": {"age": "year", "mean_bolus_transit_time": "s"},
+  "observation_model": {
+    "status": "blocked-observation-model",
+    "transit_start": "pulmonary_trunk",
+    "transit_end": "left_atrium",
+    "capillary_only_direct_comparison": "forbidden",
+    "derived_pulmonary_blood_volume_is_independent_evidence": false
+  },
+  "participants": [
+    {
+      "participant_id": "SYN-C2-001",
+      "age_years": 30,
+      "phenotype": "healthy_control",
+      "body_position": "supine",
+      "state": "rest",
+      "measurement_method": "rubidium_82_first_pass_PET",
+      "mean_bolus_transit_time_s": 4,
+      "repeatability_coefficient": 0.172,
+      "tracer_retention_relative_bias_sensitivity": 0.25,
+      "uncertainty_basis": "protocol_floor"
+    }
+  ],
+  "limitations": [
+    "Synthetic software fixture only; transit comparison remains blocked and this value is not physiological or validation evidence."
+  ]
+}

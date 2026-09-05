@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "manifest": {
+    "dataset_id": "pcq14-synthetic-whole-pulmonary-transit-v1",
+    "measurement_family": "pcq_whole_pulmonary_transit",
+    "candidate_id": "PCQ-SRC-C-003",
+    "evidence_status": "synthetic_test_only",
+    "created_date": "2026-09-05",
+    "adapter_version": "pcq-ingress-1.0.0"
+  },
+  "content": {
+    "file_name": "synthetic-whole-pulmonary-transit-v1.json",
+    "sha256": "a3eb09ec58bea2368d57209f0ec661ec5691e1781a164d47963a55bf797b16b9",
+    "dataset_schema": "data/schemas/pulmonary-transit-observations/1.0.0.schema.json",
+    "dataset_schema_sha256": "6f163877402c34c5be14a1791b2e50a6ac4555af327c64d1e1715a1d6bc116de",
+    "participant_count": 1
+  },
+  "rights": {
+    "data_controller": "MEHLISSA synthetic-fixture maintainers",
+    "authorization_status": "not_applicable_synthetic",
+    "approval_reference": "Not applicable: generated software-test fixture",
+    "processing_allowed": true,
+    "analysis_allowed": true,
+    "aggregate_publication_allowed": false,
+    "raw_redistribution": "not_applicable_synthetic",
+    "retention_policy": "Retain as a versioned CC0 software-test fixture"
+  },
+  "privacy": {
+    "pseudonymized": true,
+    "direct_identifiers_removed": true,
+    "identifier_policy": "study_pseudonym_only",
+    "repository_storage": "synthetic_fixture_allowed"
+  },
+  "independence": {
+    "status": "not_applicable_synthetic",
+    "source_cohort_ids": ["synthetic-pcq14-whole-pulmonary-transit"],
+    "calibration_cohort_ids": [],
+    "assessment": "No human cohort exists; the values are arbitrary software-test inputs."
+  },
+  "governance": {
+    "quarantine_required": false,
+    "release_to_adapter": true,
+    "reviewer_role": "automated software verification",
+    "audit_note": "Explicit test flag required; observation-model block remains active and the fixture is never physiological evidence."
+  }
+}

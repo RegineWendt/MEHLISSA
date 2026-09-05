@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "manifest": {
+    "dataset_id": "pcq14-synthetic-capillary-volume-v1",
+    "measurement_family": "pcq_capillary_volume",
+    "candidate_id": "PCQ-SRC-CJ-001",
+    "evidence_status": "synthetic_test_only",
+    "created_date": "2026-09-05",
+    "adapter_version": "pcq-ingress-1.0.0"
+  },
+  "content": {
+    "file_name": "synthetic-capillary-volume-v1.json",
+    "sha256": "54240a5d8cc91de443a1e7948e41808c0658b749c1b2ef2771856932f8521b81",
+    "dataset_schema": "data/schemas/pulmonary-capillary-volume-observations/1.0.0.schema.json",
+    "dataset_schema_sha256": "c77203f909341dbf5d467ba6cc4a1eb1655702679e334d108416ad08455aaade",
+    "participant_count": 1
+  },
+  "rights": {
+    "data_controller": "MEHLISSA synthetic-fixture maintainers",
+    "authorization_status": "not_applicable_synthetic",
+    "approval_reference": "Not applicable: generated software-test fixture",
+    "processing_allowed": true,
+    "analysis_allowed": true,
+    "aggregate_publication_allowed": false,
+    "raw_redistribution": "not_applicable_synthetic",
+    "retention_policy": "Retain as a versioned CC0 software-test fixture"
+  },
+  "privacy": {
+    "pseudonymized": true,
+    "direct_identifiers_removed": true,
+    "identifier_policy": "study_pseudonym_only",
+    "repository_storage": "synthetic_fixture_allowed"
+  },
+  "independence": {
+    "status": "not_applicable_synthetic",
+    "source_cohort_ids": ["synthetic-pcq14-capillary-volume"],
+    "calibration_cohort_ids": [],
+    "assessment": "No human cohort exists; the values are arbitrary software-test inputs."
+  },
+  "governance": {
+    "quarantine_required": false,
+    "release_to_adapter": true,
+    "reviewer_role": "automated software verification",
+    "audit_note": "Explicit test flag required; never eligible as physiological evidence."
+  }
+}

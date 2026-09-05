@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/pulmonary-capillary-source-manifest/1.0.0.schema.json",
+  "title": "MEHLISSA PCQ-1.4 source rights and provenance manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "manifest", "content", "rights", "privacy", "independence", "governance"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dataset_id", "measurement_family", "candidate_id", "evidence_status", "created_date", "adapter_version"],
+      "properties": {
+        "dataset_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,95}$"},
+        "measurement_family": {"enum": ["pcq_hemodynamics", "pcq_lobar_perfusion", "pcq_capillary_volume", "pcq_whole_pulmonary_transit"]},
+        "candidate_id": {"type": "string", "pattern": "^PCQ-SRC-[A-Z0-9-]+$"},
+        "evidence_status": {"enum": ["synthetic_test_only", "measured_validation"]},
+        "created_date": {"type": "string", "format": "date"},
+        "adapter_version": {"const": "pcq-ingress-1.0.0"}
+      }
+    },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file_name", "sha256", "dataset_schema", "dataset_schema_sha256", "participant_count"],
+      "properties": {
+        "file_name": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}\\.json$"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "dataset_schema": {"type": "string", "minLength": 1},
+        "dataset_schema_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "participant_count": {"type": "integer", "minimum": 1}
+      }
+    },
+    "rights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["data_controller", "authorization_status", "approval_reference", "processing_allowed", "analysis_allowed", "aggregate_publication_allowed", "raw_redistribution", "retention_policy"],
+      "properties": {
+        "data_controller": {"type": "string", "minLength": 1},
+        "authorization_status": {"enum": ["not_applicable_synthetic", "approved", "pending", "denied"]},
+        "approval_reference": {"type": "string", "minLength": 1},
+        "processing_allowed": {"type": "boolean"},
+        "analysis_allowed": {"type": "boolean"},
+        "aggregate_publication_allowed": {"type": "boolean"},
+        "raw_redistribution": {"enum": ["not_applicable_synthetic", "allowed", "prohibited"]},
+        "retention_policy": {"type": "string", "minLength": 1},
+        "valid_from": {"type": "string", "format": "date"},
+        "expires_on": {"type": "string", "format": "date"}
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pseudonymized", "direct_identifiers_removed", "identifier_policy", "repository_storage"],
+      "properties": {
+        "pseudonymized": {"const": true},
+        "direct_identifiers_removed": {"const": true},
+        "identifier_policy": {"const": "study_pseudonym_only"},
+        "repository_storage": {"enum": ["synthetic_fixture_allowed", "outside_repository_required"]}
+      }
+    },
+    "independence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "source_cohort_ids", "calibration_cohort_ids", "assessment"],
+      "properties": {
+        "status": {"enum": ["not_applicable_synthetic", "confirmed_disjoint", "unresolved", "overlap"]},
+        "source_cohort_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "calibration_cohort_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "assessment": {"type": "string", "minLength": 1}
+      }
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["quarantine_required", "release_to_adapter", "reviewer_role", "audit_note"],
+      "properties": {
+        "quarantine_required": {"type": "boolean"},
+        "release_to_adapter": {"type": "boolean"},
+        "reviewer_role": {"type": "string", "minLength": 1},
+        "audit_note": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

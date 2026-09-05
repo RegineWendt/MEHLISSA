@@ -10,7 +10,7 @@ the milestone evidence without rewriting it after results are known.
 
 | Protocol | Status | Purpose |
 |---|---|---|
-| [PCQ-1 pulmonary and capillary qualification](PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md) | design v0.1.0, [PCQ-1.2 evidence-source screen](PCQ1_EVIDENCE_SOURCE_SCREEN.md), and [PCQ-1.3 pre-outcome amendment](PCQ1_PRE_OUTCOME_AMENDMENT.md) v0.2.0; no participant outcomes acquired | qualify participant-level pulmonary hemodynamics, regional perfusion, capillary volume and transit, and their joint coherence |
+| [PCQ-1 pulmonary and capillary qualification](PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md) | design v0.1.0, [PCQ-1.2 source screen](PCQ1_EVIDENCE_SOURCE_SCREEN.md), [PCQ-1.3 amendment](PCQ1_PRE_OUTCOME_AMENDMENT.md) v0.2.0, and [PCQ-1.4 rights-aware ingress](PCQ1_DATA_INGRESS.md); no participant outcomes acquired | qualify participant-level pulmonary hemodynamics, regional perfusion, capillary volume and transit, and their joint coherence |
 
 The machine-readable design authority for PCQ-1 is
 `data/qualification/pulmonary-capillary-qualification-protocol-v1.json`. Its
@@ -35,6 +35,14 @@ rules, and explicit inconclusive or blocked states. In particular, the current
 capillary residence time cannot be compared directly with Lassen's pulmonary-
 trunk-to-left-atrium transit measurement. A machine-checked amendment is
 prospective analysis discipline, not a physiological qualification result.
+
+The PCQ-1.4 ingress authority is
+`data/qualification/pulmonary-capillary-data-ingress-policy-v1.json`. Its
+manifest-first checker requires approved rights, privacy, confirmed cohort
+independence, and an explicit outside-repository quarantine path before opening
+measured data. Four strict family schemas and CC0 synthetic fixtures verify the
+normalized adapters without using outcomes. Command output contains metadata,
+never raw observations; whole-pulmonary transit remains blocked.
 
 Each later protocol must preserve the separation between:
 

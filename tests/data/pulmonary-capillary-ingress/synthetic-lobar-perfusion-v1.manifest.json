@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "manifest": {
+    "dataset_id": "pcq14-synthetic-lobar-perfusion-v1",
+    "measurement_family": "pcq_lobar_perfusion",
+    "candidate_id": "PCQ-SRC-R-002",
+    "evidence_status": "synthetic_test_only",
+    "created_date": "2026-09-05",
+    "adapter_version": "pcq-ingress-1.0.0"
+  },
+  "content": {
+    "file_name": "synthetic-lobar-perfusion-v1.json",
+    "sha256": "2b1ae5824bc44f7ee748801fb913eb08c4fd9005a8ec81a10fd75983c44e871a",
+    "dataset_schema": "data/schemas/pulmonary-lobar-perfusion-observations/1.0.0.schema.json",
+    "dataset_schema_sha256": "924920cc495e9caa94a3053c65e69c1201ae2cfcee88b323b9e5623d8076cd9e",
+    "participant_count": 1
+  },
+  "rights": {
+    "data_controller": "MEHLISSA synthetic-fixture maintainers",
+    "authorization_status": "not_applicable_synthetic",
+    "approval_reference": "Not applicable: generated software-test fixture",
+    "processing_allowed": true,
+    "analysis_allowed": true,
+    "aggregate_publication_allowed": false,
+    "raw_redistribution": "not_applicable_synthetic",
+    "retention_policy": "Retain as a versioned CC0 software-test fixture"
+  },
+  "privacy": {
+    "pseudonymized": true,
+    "direct_identifiers_removed": true,
+    "identifier_policy": "study_pseudonym_only",
+    "repository_storage": "synthetic_fixture_allowed"
+  },
+  "independence": {
+    "status": "not_applicable_synthetic",
+    "source_cohort_ids": ["synthetic-pcq14-lobar-perfusion"],
+    "calibration_cohort_ids": [],
+    "assessment": "No human cohort exists; the values are arbitrary software-test inputs."
+  },
+  "governance": {
+    "quarantine_required": false,
+    "release_to_adapter": true,
+    "reviewer_role": "automated software verification",
+    "audit_note": "Explicit test flag required; never eligible as physiological evidence."
+  }
+}

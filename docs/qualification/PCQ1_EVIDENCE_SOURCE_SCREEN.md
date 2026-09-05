@@ -182,7 +182,9 @@ to all published aggregate outcomes. The mitigation is explicit and binding:
    floors, missingness, hemoglobin handling, statistical rules, and numeric
    gates.
 2. Build PCQ-1.4 rights-aware source manifests, quarantine boundary, strict
-   measured-data schemas, and outcome-blind fixture adapters.
+   measured-data schemas, and outcome-blind fixture adapters. This is now
+   complete locally and documented in the
+   [data-ingress guide](PCQ1_DATA_INGRESS.md).
 3. Have an authorized representative review the existing
    [UA iCPET request](../m3/UA_ICPET_DATA_REQUEST.md) and the
    [D'Souza request](DSOUZA_2025_DATA_REQUEST.md), then decide whether to send
@@ -190,8 +192,9 @@ to all published aggregate outcomes. The mitigation is explicit and binding:
 4. Ask only for feasibility and reuse terms for Lassen participant-level
    transit replicates and Bailey five-lobe posture data. Lassen analysis remains
    blocked until its extra-capillary observation model is independently fixed.
-5. If data arrive before PCQ-1.4 is complete, quarantine them outside the
-   repository and do not inspect them.
+5. Before any data arrive, prepare the approved PCQ-1.4 manifest and an
+   institution-controlled quarantine directory outside the repository. Do not
+   inspect a file that fails the manifest-first release gate.
 
 External contact is not performed by this repository change. The responsible
 institution must decide who can accept data-use terms and whether TU Berlin,
