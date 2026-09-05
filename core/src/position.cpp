@@ -34,8 +34,12 @@ Length distance(const Position3D& first, const Position3D& second) noexcept {
 
     const auto second_ratio = second_largest / largest;
     const auto third_ratio = third_largest / largest;
-    return meters(largest *
-                  std::sqrt(1.0 + (second_ratio * second_ratio) + (third_ratio * third_ratio)));
+    // Separate statements preserve the intended rounding points and prevent
+    // Clang from contracting the normalized sum differently from MSVC.
+    const auto second_square = second_ratio * second_ratio;
+    const auto third_square = third_ratio * third_ratio;
+    const auto normalized_square = (1.0 + second_square) + third_square;
+    return meters(largest * std::sqrt(normalized_square));
 }
 
 } // namespace mehlissa::core
