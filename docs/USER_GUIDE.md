@@ -428,6 +428,16 @@ Use [the shared axial experiment](#one-flow-diffusion-and-wall-reaction-experime
 Start with [interpreting model evidence](#how-to-interpret-model-evidence) and
 [the pulmonary validation workflows](#run-the-pulmonary-0d-independent-validation).
 
+The active next qualification cycle is governed by design v0.1.0 of the
+[PCQ-1 pulmonary and capillary protocol](qualification/PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md).
+It freezes the entering pulmonary and capillary candidates, separates four
+qualification tracks, and predeclares endpoints, data-role rules, uncertainty,
+controls, and amendment policy before new outcomes. Its current design status
+does **not** mean that participant-level hemodynamics, capillary volume, transit,
+or their joint physiological state have passed validation. Researchers should
+continue to cite the existing M3/M4 evidence level until a locked PCQ-1 result
+is published.
+
 #### 5.9 Capillary signal, receptor binding, drug delivery, and cell response
 
 | Question element | Guided example |

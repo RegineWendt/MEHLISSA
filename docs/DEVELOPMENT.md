@@ -249,18 +249,21 @@ analytical, reference, inspection, or independent-data evidence declared by
 that requirement. Record achieved evidence and the remaining qualification gap
 in the same matrix row.
 
-## Paper 1 publication evidence
+## Publication and scientific qualification evidence
 
 The optional `publication` dependency installs the pinned JSON Schema validator
-used by the Paper 1 evidence, protocol, and release-candidate checks:
+used by the Paper 1 evidence, protocol, release-candidate checks, and the active
+pulmonary/capillary qualification design:
 
 ```powershell
 python -m pip install -e ".[publication]"
 python scripts/check_evidence_validity_matrix.py
 python scripts/check_paper1_protocol.py
+python scripts/check_pulmonary_capillary_qualification_protocol.py
 python scripts/check_paper1_release_candidate.py
 python -m unittest tests.test_evidence_validity_matrix -v
 python -m unittest tests.test_paper1_protocol -v
+python -m unittest tests.test_pulmonary_capillary_qualification_protocol -v
 python -m unittest tests.test_paper1_measurement_tools -v
 python -m unittest tests.test_paper1_release_candidate -v
 ```
@@ -274,6 +277,14 @@ candidate change:
 ```powershell
 python scripts/generate_paper1_checksums.py
 ```
+
+The PCQ-1 checker verifies the four pulmonary/capillary qualification tracks,
+the six primary endpoints, no-refit and non-clinical boundaries, unique
+negative controls, and SHA-256 hashes of the entering lung and capillary
+candidates. Its design status cannot be changed to a successful evidence claim
+without a successor protocol and actual qualification result. Numeric limits
+for new primary evidence belong in a reviewed amendment committed before
+validation outcomes are inspected.
 
 Do not edit the locked protocol or raw archives in place. A changed protocol
 requires a new version and pre-measurement commit; a changed candidate requires

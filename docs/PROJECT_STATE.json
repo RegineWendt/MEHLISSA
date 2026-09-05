@@ -4,7 +4,7 @@
   "status_date_display": "5 September 2026",
   "development_branch": "mehlissa-next-generation",
   "milestones_passed_through": "M7",
-  "current_focus": "Paper 1 release preparation and the next scientific qualification cycle",
+  "current_focus": "PCQ-1 pulmonary and capillary qualification design and evidence acquisition",
   "research_use": {
     "delivery_range": "UX-1 through UX-6",
     "workbench_version": "1.0.0",
@@ -37,6 +37,13 @@
     "measurement_experiments": 3,
     "doi_minted": false,
     "final_tag_created": false
+  },
+  "active_scientific_qualification": {
+    "protocol_id": "PCQ-1",
+    "protocol_version": "0.1.0",
+    "status": "design established before new validation outcomes",
+    "machine_record": "data/qualification/pulmonary-capillary-qualification-protocol-v1.json",
+    "next_increment": "PCQ-1.2 evidence-source screen"
   },
   "next_scientific_packages": [
     "Pulmonary and capillary qualification",

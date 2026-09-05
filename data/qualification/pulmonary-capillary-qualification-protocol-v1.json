@@ -1,0 +1,240 @@
+{
+  "schema_version": "1.0.0",
+  "protocol": {
+    "id": "PCQ-1",
+    "version": "0.1.0",
+    "status": "design-before-new-validation-outcomes",
+    "created_date": "2026-09-05",
+    "baseline_commit": "5482f0e",
+    "scope": "First source-disjoint qualification cycle for the aggregate pulmonary and equivalent pulmonary-capillary reference candidates. The protocol records the design before any new validation outcomes are inspected; its unresolved data-derived tolerances must be locked in a versioned amendment before evaluation.",
+    "clinical_use": false
+  },
+  "candidate_claim": {
+    "statement": "For a declared healthy-adult recumbent reference context, frozen MEHLISSA pulmonary and capillary candidates reproduce selected pressure-flow, regional perfusion, functional capillary-volume, and transit observables within predeclared uncertainty-aware tolerances.",
+    "evidence_status": "not-yet-tested",
+    "population": "Healthy adults; the first joint target is ages 20-40 unless the accepted source-disjoint data justify a narrower range.",
+    "state": "Resting recumbent or supine physiology is primary. Supine exercise and other challenges are separate extension or stress-test states and cannot broaden the primary claim silently.",
+    "resolution": "Aggregate zero-dimensional pulmonary circulation, five named parallel lobe beds, and an equivalent pulmonary capillary bed; no patient-specific anatomical flow field.",
+    "exclusions": [
+      "disease prediction",
+      "gas exchange",
+      "pulsatile wave propagation",
+      "patient-specific prediction",
+      "diagnostic or treatment decisions",
+      "clinical validity"
+    ]
+  },
+  "qualification_tracks": [
+    {
+      "id": "PCQ-H",
+      "name": "Participant-level pulmonary hemodynamics",
+      "purpose": "Test stage-matched pulmonary pressure-flow behavior without refitting the frozen candidate.",
+      "entry_state": "The evaluator and strict subject schema are software-verified; measured participant-level records and outcome-blind tolerances remain pending.",
+      "data_requirement": "Source-disjoint healthy participants with at least three jointly measured stages of cardiac output, mean pulmonary arterial pressure, and pulmonary arterial wedge pressure; body position and cardiac-output method are mandatory.",
+      "exit_condition": "All retained participants and stages are reported, primary tolerances were locked before outcome access, and the candidate is evaluated without parameter refitting."
+    },
+    {
+      "id": "PCQ-R",
+      "name": "Regional pulmonary perfusion",
+      "purpose": "Extend current aggregate five-lobe compatibility evidence toward participant-level and dynamic regional evidence.",
+      "entry_state": "Two reconstructions from one independent normal-supine cohort satisfy the existing fixed-share compatibility criteria; participant-level and dynamic evidence is absent.",
+      "data_requirement": "Source-disjoint lobe-resolved perfusion observations with participant identity, posture, acquisition state, normalization method, and repeated or challenge measurements where available.",
+      "exit_condition": "The fixed or explicitly state-dependent lobe candidate is evaluated on source-disjoint data with compositional metrics and participant-level uncertainty."
+    },
+    {
+      "id": "PCQ-C",
+      "name": "Pulmonary capillary volume and transit",
+      "purpose": "Replace the present cross-cohort numerical closure with an independently evaluated physiological capillary claim.",
+      "entry_state": "Functional volume, morphometric capacity, equivalent diameter, and transit closure are evidence-bounded but derive from different small historical cohorts.",
+      "data_requirement": "Prefer jointly measured flow and functional pulmonary capillary blood volume in the same healthy participants and state; include transit observations when available and record the hematocrit assumption or measurement.",
+      "exit_condition": "Volume and transit endpoints are evaluated against an independent cohort, method uncertainty and hematocrit are propagated, and numerical closure variables are not misreported as anatomy."
+    },
+    {
+      "id": "PCQ-J",
+      "name": "Joint pulmonary-capillary coherence",
+      "purpose": "Determine whether one compatible parameterization can explain hemodynamic, regional, volume, and transit observations together.",
+      "entry_state": "The lung and capillary candidates compose in software, but no joint physiological cohort currently validates the combined state.",
+      "data_requirement": "A joint cohort is preferred. If separate cohorts are unavoidable, a predeclared bridging model must propagate protocol, posture, age, method, and cohort uncertainty and the result remains partial.",
+      "exit_condition": "Conservation and numerical checks pass and either one source-disjoint joint cohort supports the combined claim or the report explicitly remains a partial cross-cohort compatibility result."
+    }
+  ],
+  "endpoints": [
+    {
+      "id": "PCQ-H1",
+      "track": "PCQ-H",
+      "role": "primary",
+      "observable": "Mean pulmonary arterial pressure at every measured stage",
+      "unit": "mmHg (reported) and Pa (internal)",
+      "metrics": ["signed residual by stage", "participant RMSE", "cohort bias with interval", "prediction-interval coverage"],
+      "tolerance_status": "to-lock-before-outcome-access",
+      "acceptance_rule": "Derive a clinically neutral compatibility tolerance from measurement repeatability and the accepted study protocol before unblinding outcomes; do not reuse the historical one-standard-deviation engineering rule as an individual tolerance.",
+      "tolerance_basis": "Measurement method repeatability, protocol uncertainty, and a reviewed statistical analysis plan.",
+      "current_evidence": "Aggregate and published-population no-refit comparisons exist; participant-level qualification is pending."
+    },
+    {
+      "id": "PCQ-H2",
+      "track": "PCQ-H",
+      "role": "primary",
+      "observable": "Pulmonary vascular resistance derived from stage-matched pressure and flow",
+      "unit": "Wood units and Pa s/m3",
+      "metrics": ["signed and relative error by stage", "participant RMSE", "cohort bias with interval"],
+      "tolerance_status": "to-lock-before-outcome-access",
+      "acceptance_rule": "Lock limits from the error model of jointly measured pressure, wedge pressure, and flow before inspecting validation residuals.",
+      "tolerance_basis": "Propagation of observational uncertainty in all three measured quantities.",
+      "current_evidence": "The executable model exposes resistance, but no participant-level uncertainty-aware validation has passed."
+    },
+    {
+      "id": "PCQ-H3",
+      "track": "PCQ-H",
+      "role": "primary",
+      "observable": "Within-participant mean pulmonary arterial pressure versus flow slope",
+      "unit": "mmHg/(L/min)",
+      "metrics": ["observed and predicted slope", "slope difference", "slope interval coverage", "coefficient of determination as diagnostic"],
+      "tolerance_status": "to-lock-before-outcome-access",
+      "acceptance_rule": "Set the slope compatibility margin from repeatability or a source-independent physiological rationale before outcome access.",
+      "tolerance_basis": "Within-participant repeated-stage uncertainty, not cross-sectional population spread.",
+      "current_evidence": "The subject evaluator calculates slopes on synthetic fixtures; measured subject-level evidence is pending."
+    },
+    {
+      "id": "PCQ-H4",
+      "track": "PCQ-H",
+      "role": "secondary",
+      "observable": "Pulmonary arterial compliance and resistance-compliance time when systolic pressure, diastolic pressure, and heart rate are jointly available",
+      "unit": "mL/mmHg and s",
+      "metrics": ["signed residual", "relative error", "participant and cohort summaries"],
+      "tolerance_status": "to-lock-before-outcome-access",
+      "acceptance_rule": "Analyze only complete stage-matched measurement triplets and lock endpoint-specific limits before outcome access.",
+      "tolerance_basis": "Measurement and pulse-pressure derivation uncertainty.",
+      "current_evidence": "Aggregate resting and exercise comparisons exist, including a retained exercise RC-time failure."
+    },
+    {
+      "id": "PCQ-R1",
+      "track": "PCQ-R",
+      "role": "primary",
+      "observable": "Normalized perfusion fraction in each of the five anatomical lung lobes",
+      "unit": "fraction and percentage points",
+      "metrics": ["per-lobe signed error", "maximum absolute lobe error", "five-lobe RMSE", "right-lung aggregate error"],
+      "tolerance_status": "locked-existing-reproduction",
+      "acceptance_rule": "Reproduce the existing aggregate case at no more than 3 percentage points per lobe, no more than 2 percentage points five-lobe RMSE, and no more than 3 percentage points right-lung error. New participant-level or dynamic limits require a separate pre-outcome lock.",
+      "tolerance_basis": "Existing source reconstruction sensitivity for aggregate reproduction only; it is not a statistical equivalence margin.",
+      "current_evidence": "Two reconstructions from one source-disjoint aggregate cohort pass; participant-level and dynamic qualification remain pending."
+    },
+    {
+      "id": "PCQ-C1",
+      "track": "PCQ-C",
+      "role": "primary",
+      "observable": "Functional pulmonary capillary blood volume",
+      "unit": "mL and m3",
+      "metrics": ["signed and relative error", "cohort bias with interval", "prediction-interval coverage"],
+      "tolerance_status": "to-lock-before-outcome-access",
+      "acceptance_rule": "Lock a method-specific tolerance using the accepted measurement model, its repeatability, and hematocrit uncertainty before validation outcomes are inspected.",
+      "tolerance_basis": "Functional-volume measurement uncertainty rather than morphometric capacity or an assumed recruitment fraction.",
+      "current_evidence": "The resting value is literature-parameterized from four recumbent observations and has not been independently validated."
+    },
+    {
+      "id": "PCQ-C2",
+      "track": "PCQ-C",
+      "role": "primary",
+      "observable": "Pulmonary capillary or appropriately defined pulmonary transit time",
+      "unit": "s",
+      "metrics": ["signed and relative error", "distributional distance when a transit distribution is available", "cohort bias with interval"],
+      "tolerance_status": "to-lock-before-outcome-access",
+      "acceptance_rule": "Accept only a measurement whose anatomical start and end points match the simulated quantity or are connected by a predeclared observation model; lock its tolerance before outcome access.",
+      "tolerance_basis": "Acquisition repeatability plus uncertainty from any observation-model conversion.",
+      "current_evidence": "Capillary residence is currently the volume-flow closure V/Q; whole-pulmonary first-pass transit has a separate literature calibration but no lobe-specific independent series."
+    },
+    {
+      "id": "PCQ-C3",
+      "track": "PCQ-C",
+      "role": "covariate",
+      "observable": "Pulmonary capillary hematocrit assumption or measurement",
+      "unit": "fraction",
+      "metrics": ["recorded value and source", "sensitivity of volume and transit results", "uncertainty contribution"],
+      "tolerance_status": "to-lock-before-outcome-access",
+      "acceptance_rule": "A capillary-volume result is not qualified unless hematocrit is measured, explicitly assumed with evidence, or included as an uncertainty distribution.",
+      "tolerance_basis": "Accepted measurement equation and study-specific hematological evidence.",
+      "current_evidence": "The current capillary card deliberately omits an undocumented hematocrit parameter."
+    },
+    {
+      "id": "PCQ-J1",
+      "track": "PCQ-J",
+      "role": "diagnostic",
+      "observable": "Joint flow-volume-transit consistency",
+      "unit": "mL or m3 and s",
+      "metrics": ["V minus Q times transit residual", "relative balance residual", "variance contribution by measurement and parameter source"],
+      "tolerance_status": "hard-invariant",
+      "acceptance_rule": "Numerical volume-flow-transit closure must pass the declared machine tolerance. Physiological agreement requires separate uncertainty-aware limits and cannot be inferred from exact numerical closure.",
+      "tolerance_basis": "Dimensional conservation for software integrity; observational uncertainty for physiology.",
+      "current_evidence": "Exact equivalent-geometry closure is verified, but the current flow, volume, and morphometry anchors are not a joint cohort validation."
+    }
+  ],
+  "frozen_assets": [
+    {
+      "path": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json",
+      "sha256": "1374bdd7eef2bc849b4fb5a06726adeecfec2ba2e74beb6d166db919b7a1c3c6",
+      "role": "Pulmonary and five-lobe candidate entering PCQ-1"
+    },
+    {
+      "path": "examples/capillary-models/pulmonary-healthy-adult-rest-supine-v1.json",
+      "sha256": "b36bbacf118e062ccbb0e71b3d7794241ebdb9e461c7140242d4476509ea545b",
+      "role": "Equivalent pulmonary capillary candidate entering PCQ-1"
+    }
+  ],
+  "data_governance": {
+    "calibration_validation_separation": "Every source is assigned exactly one role for a candidate version. A validation source cannot be used to select structure, parameters, thresholds, or exclusions for that same version.",
+    "independence": "Author, institution, cohort, recruitment period, protocol, and upstream data reuse are assessed explicitly. A distinct citation alone does not prove independence.",
+    "rights": "Access, permitted processing, redistribution, derived-result publication, and retention terms are recorded before ingest. Source articles and restricted participant records are never relicensed as MEHLISSA data.",
+    "outcome_blinding": "New primary endpoint values remain inaccessible to model developers until frozen asset hashes, analysis code, metrics, and numeric tolerances are committed. Metadata may be used to establish eligibility and an observation model.",
+    "participant_data": "Store only pseudonymous study identifiers and required physiological fields. Direct identifiers, free text, dates, locations, and source-system identifiers are forbidden. Restricted raw records remain outside the public repository."
+  },
+  "analysis": {
+    "no_refit_on_validation": true,
+    "analysis_population": "Report every eligible participant and stage. The primary analysis follows the predeclared target population and state; protocol-mismatched records are separately labelled stress tests or excluded with reasons.",
+    "missing_data": "Do not impute primary stage measurements for qualification. Report missingness and complete-case counts per endpoint; optional derived endpoints require their complete input tuple.",
+    "subgroups": "Age, sex, posture, measurement method, and exercise state are reported when available. Subgroup claims are exploratory unless separately powered and predeclared.",
+    "multiplicity": "Use a named hierarchy: PCQ-H1, PCQ-H2, PCQ-H3, PCQ-R1, PCQ-C1, and PCQ-C2 are primary within their tracks; no global pass is constructed by silently selecting successful endpoints.",
+    "reporting": "Publish residuals, uncertainty intervals, sample sizes, exclusions, missingness, negative controls, source-overlap assessment, and every partial or failed endpoint alongside aggregate summaries."
+  },
+  "uncertainty": {
+    "observational": "Propagate reported or study-supplied measurement error and covariance. Do not treat a confidence interval for a population mean as an individual physiological range.",
+    "parameter": "Represent evidence-backed parameter ranges or distributions, preserve correlation when available, and distinguish fixed numerical closure choices from physiological parameters.",
+    "structural": "Compare accepted pressure-flow, age-conditioning, and distensibility variants without selecting a winner on validation outcomes; report between-variant spread separately.",
+    "numerical": "Retain exact conservation and schema checks and add convergence tests wherever time stepping, sampling, or observation-model numerics affect an endpoint.",
+    "sensitivity": "Screen all uncertain parameters, then perform global variance-based analysis on influential parameters when data support their distributions; retain signed direction and interaction effects.",
+    "identifiability": "Before calibration, test whether the selected observations can distinguish the adjustable parameters; freeze or report non-identifiable combinations instead of returning a unique-looking estimate."
+  },
+  "negative_controls": [
+    {"id": "PCQ-NC-1", "test": "Reuse a calibration source as validation.", "expected_result": "The evidence loader rejects the case before evaluation."},
+    {"id": "PCQ-NC-2", "test": "Load a synthetic subject fixture through the evidence-enabled path.", "expected_result": "The default loader rejects synthetic evidence."},
+    {"id": "PCQ-NC-3", "test": "Change a frozen model or capillary asset without updating its registered hash and amendment.", "expected_result": "The qualification checker rejects the protocol or run."},
+    {"id": "PCQ-NC-4", "test": "Supply stages out of order or with decreasing workload while claiming a trajectory.", "expected_result": "The subject-data validator rejects the record."},
+    {"id": "PCQ-NC-5", "test": "Mutate a declared pressure, flow, volume, or time unit.", "expected_result": "Schema or semantic validation rejects the case before comparison."},
+    {"id": "PCQ-NC-6", "test": "Evaluate an out-of-range age, posture, disease state, or unmatched transit definition as if it were in scope.", "expected_result": "The report refuses the primary claim and labels the result out of scope or a stress test."},
+    {"id": "PCQ-NC-7", "test": "Perturb flow, volume, or transit so that the declared numerical closure no longer holds.", "expected_result": "The conservation or qualification gate fails while preserving the failed result."}
+  ],
+  "decision_rules": {
+    "existing_reproduction": "PCQ-1 must first reproduce all currently accepted pulmonary and capillary software and evidence cases without changing their original claims or thresholds.",
+    "track_qualification": "A track can advance only when its primary endpoints have locked tolerances, eligible source-disjoint data, no-refit execution, uncertainty analysis, and retained negative controls. Secondary failures narrow the claim and cannot be hidden.",
+    "joint_claim": "A joint pulmonary-capillary claim requires compatible simultaneous measurements. Separate cohorts can support only a partial, explicitly model-mediated compatibility claim with propagated bridging uncertainty.",
+    "partial_and_failed_results": "All eligible observations count. Partial and failed endpoints remain versioned artifacts and may motivate a new candidate version, but the evaluated candidate and protocol are never rewritten.",
+    "threshold_amendment": "Numeric limits for new primary endpoints must be added in a reviewed, versioned amendment before outcome access. After access, changes require a new protocol and independent validation set."
+  },
+  "completion_criteria": [
+    "The protocol checker, schema-negative tests, frozen-asset hash checks, and all existing pulmonary/capillary regressions pass in every supported continuous-integration job.",
+    "Each new data source has documented rights, eligibility, independence, acquisition method, units, posture, physiological state, and uncertainty.",
+    "Numeric tolerances for new primary endpoints are committed before validation outcomes are inspected.",
+    "At least PCQ-H and PCQ-C are evaluated without refitting; PCQ-R and PCQ-J retain partial status unless their stronger data requirements are met.",
+    "The final report exposes per-observation results, uncertainty, sensitivity, identifiability, exclusions, negative controls, and failed findings.",
+    "The evidence-validity matrix, traceability matrix, Roadmap, User Guide, status brief, and shareable PDF are updated without claiming clinical validity."
+  ],
+  "amendments": {
+    "policy": "Append-only history. A pre-outcome amendment may add selected data sources, the observation model, sample-size rationale, and numeric tolerances without changing frozen candidate behavior. Any post-outcome change creates a new protocol and validation split.",
+    "history": [
+      {
+        "version": "0.1.0",
+        "date": "2026-09-05",
+        "change": "Established bounded claim, four qualification tracks, endpoint hierarchy, asset freeze, data separation, uncertainty plan, controls, and exit criteria before new validation outcomes."
+      }
+    ]
+  }
+}

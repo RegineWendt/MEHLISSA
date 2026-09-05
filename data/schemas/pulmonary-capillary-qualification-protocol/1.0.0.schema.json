@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/pulmonary-capillary-qualification-protocol/1.0.0.schema.json",
+  "title": "MEHLISSA pulmonary and capillary qualification protocol",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "protocol",
+    "candidate_claim",
+    "qualification_tracks",
+    "endpoints",
+    "frozen_assets",
+    "data_governance",
+    "analysis",
+    "uncertainty",
+    "negative_controls",
+    "decision_rules",
+    "completion_criteria",
+    "amendments"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "status", "created_date", "baseline_commit", "scope", "clinical_use"],
+      "properties": {
+        "id": {"const": "PCQ-1"},
+        "version": {"const": "0.1.0"},
+        "status": {"const": "design-before-new-validation-outcomes"},
+        "created_date": {"type": "string", "format": "date"},
+        "baseline_commit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"},
+        "scope": {"type": "string", "minLength": 1},
+        "clinical_use": {"const": false}
+      }
+    },
+    "candidate_claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "evidence_status", "population", "state", "resolution", "exclusions"],
+      "properties": {
+        "statement": {"type": "string", "minLength": 1},
+        "evidence_status": {"const": "not-yet-tested"},
+        "population": {"type": "string", "minLength": 1},
+        "state": {"type": "string", "minLength": 1},
+        "resolution": {"type": "string", "minLength": 1},
+        "exclusions": {"$ref": "#/$defs/nonempty_strings"}
+      }
+    },
+    "qualification_tracks": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "purpose", "entry_state", "data_requirement", "exit_condition"],
+        "properties": {
+          "id": {"enum": ["PCQ-H", "PCQ-R", "PCQ-C", "PCQ-J"]},
+          "name": {"type": "string", "minLength": 1},
+          "purpose": {"type": "string", "minLength": 1},
+          "entry_state": {"type": "string", "minLength": 1},
+          "data_requirement": {"type": "string", "minLength": 1},
+          "exit_condition": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "endpoints": {
+      "type": "array",
+      "minItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "track", "role", "observable", "unit", "metrics", "tolerance_status", "acceptance_rule", "tolerance_basis", "current_evidence"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^PCQ-[HRCJ][0-9]+$"},
+          "track": {"enum": ["PCQ-H", "PCQ-R", "PCQ-C", "PCQ-J"]},
+          "role": {"enum": ["primary", "secondary", "covariate", "diagnostic"]},
+          "observable": {"type": "string", "minLength": 1},
+          "unit": {"type": "string", "minLength": 1},
+          "metrics": {"$ref": "#/$defs/nonempty_strings"},
+          "tolerance_status": {"enum": ["locked-existing-reproduction", "to-lock-before-outcome-access", "hard-invariant"]},
+          "acceptance_rule": {"type": "string", "minLength": 1},
+          "tolerance_basis": {"type": "string", "minLength": 1},
+          "current_evidence": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "frozen_assets": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "role"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "role": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "data_governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["calibration_validation_separation", "independence", "rights", "outcome_blinding", "participant_data"],
+      "properties": {
+        "calibration_validation_separation": {"type": "string", "minLength": 1},
+        "independence": {"type": "string", "minLength": 1},
+        "rights": {"type": "string", "minLength": 1},
+        "outcome_blinding": {"type": "string", "minLength": 1},
+        "participant_data": {"type": "string", "minLength": 1}
+      }
+    },
+    "analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["no_refit_on_validation", "analysis_population", "missing_data", "subgroups", "multiplicity", "reporting"],
+      "properties": {
+        "no_refit_on_validation": {"const": true},
+        "analysis_population": {"type": "string", "minLength": 1},
+        "missing_data": {"type": "string", "minLength": 1},
+        "subgroups": {"type": "string", "minLength": 1},
+        "multiplicity": {"type": "string", "minLength": 1},
+        "reporting": {"type": "string", "minLength": 1}
+      }
+    },
+    "uncertainty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observational", "parameter", "structural", "numerical", "sensitivity", "identifiability"],
+      "properties": {
+        "observational": {"type": "string", "minLength": 1},
+        "parameter": {"type": "string", "minLength": 1},
+        "structural": {"type": "string", "minLength": 1},
+        "numerical": {"type": "string", "minLength": 1},
+        "sensitivity": {"type": "string", "minLength": 1},
+        "identifiability": {"type": "string", "minLength": 1}
+      }
+    },
+    "negative_controls": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "test", "expected_result"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^PCQ-NC-[0-9]+$"},
+          "test": {"type": "string", "minLength": 1},
+          "expected_result": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "decision_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["existing_reproduction", "track_qualification", "joint_claim", "partial_and_failed_results", "threshold_amendment"],
+      "properties": {
+        "existing_reproduction": {"type": "string", "minLength": 1},
+        "track_qualification": {"type": "string", "minLength": 1},
+        "joint_claim": {"type": "string", "minLength": 1},
+        "partial_and_failed_results": {"type": "string", "minLength": 1},
+        "threshold_amendment": {"type": "string", "minLength": 1}
+      }
+    },
+    "completion_criteria": {"$ref": "#/$defs/nonempty_strings"},
+    "amendments": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy", "history"],
+      "properties": {
+        "policy": {"type": "string", "minLength": 1},
+        "history": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["version", "date", "change"],
+            "properties": {
+              "version": {"type": "string", "minLength": 1},
+              "date": {"type": "string", "format": "date"},
+              "change": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "nonempty_strings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}

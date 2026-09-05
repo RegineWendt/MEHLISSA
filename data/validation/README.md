@@ -9,6 +9,12 @@ This directory contains versioned observations reserved for validation rather
 than model calibration. Validation loaders reject reuse of model evidence
 sources where an executable independence check exists.
 
+The next source-disjoint qualification cycle is governed by the
+[PCQ-1 pulmonary and capillary protocol](../../docs/qualification/PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md).
+Its design-stage endpoint hierarchy and frozen assets do not relabel the
+existing validation results; new numeric tolerances must be locked before new
+primary outcomes are inspected.
+
 The first case is the
 [healthy-adult pulmonary 0D aggregate validation](../../docs/m3/PULMONARY_0D_INDEPENDENT_VALIDATION.md).
 It stores only attributed aggregate facts, not source articles or subject

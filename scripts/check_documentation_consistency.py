@@ -54,6 +54,7 @@ def main() -> int:
     errors: list[str] = []
 
     research_use = state["research_use"]
+    active_qualification = state["active_scientific_qualification"]
     shared_checks = {
         "docs/PROJECT_STATUS_AND_COLLABORATION_BRIEF.md": [
             state["status_date_display"],
@@ -62,16 +63,22 @@ def main() -> int:
             research_use["workbench_version"],
             research_use["release_commit"],
             research_use["verified_ci_run"],
+            active_qualification["protocol_id"],
+            active_qualification["protocol_version"],
         ],
         "docs/ROADMAP.md": [
             research_use["release_commit"],
             research_use["verified_ci_run"],
             "Scientific qualification and realism",
+            active_qualification["protocol_id"],
+            active_qualification["protocol_version"],
         ],
         "docs/USER_GUIDE.md": [
             research_use["workbench_version"],
             research_use["release_commit"],
             research_use["verified_ci_run"],
+            active_qualification["protocol_id"],
+            active_qualification["protocol_version"],
         ],
         "docs/DEVELOPMENT.md": [
             research_use["workbench_version"],
