@@ -10,7 +10,7 @@ the milestone evidence without rewriting it after results are known.
 
 | Protocol | Status | Purpose |
 |---|---|---|
-| [PCQ-1 pulmonary and capillary qualification](PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md) | design v0.1.0, [PCQ-1.2 source screen](PCQ1_EVIDENCE_SOURCE_SCREEN.md), [PCQ-1.3 amendment](PCQ1_PRE_OUTCOME_AMENDMENT.md) v0.2.0, [PCQ-1.4 rights-aware ingress](PCQ1_DATA_INGRESS.md), [PCQ-1.5 uncertainty/identifiability analysis](PCQ1_UNCERTAINTY_IDENTIFIABILITY.md), and [PCQ-1.5a repository-first data audit](PCQ1_REPOSITORY_FIRST_DATA_AUDIT.md); no participant outcomes acquired | qualify participant-level pulmonary hemodynamics, regional perfusion, capillary volume and transit, and their joint coherence |
+| [PCQ-1 pulmonary and capillary qualification](PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md) | design v0.1.0, [PCQ-1.2 source screen](PCQ1_EVIDENCE_SOURCE_SCREEN.md), [PCQ-1.3 amendment](PCQ1_PRE_OUTCOME_AMENDMENT.md) v0.2.0, [PCQ-1.4 rights-aware ingress](PCQ1_DATA_INGRESS.md), [PCQ-1.5 uncertainty/identifiability analysis](PCQ1_UNCERTAINTY_IDENTIFIABILITY.md), [PCQ-1.5a repository-first data audit](PCQ1_REPOSITORY_FIRST_DATA_AUDIT.md), and an unsent [request and waiting-period package](PCQ1_DATA_REQUEST_PACKAGE.md); no participant outcomes acquired | qualify participant-level pulmonary hemodynamics, regional perfusion, capillary volume and transit, and their joint coherence |
 
 The machine-readable design authority for PCQ-1 is
 `data/qualification/pulmonary-capillary-qualification-protocol-v1.json`. Its
@@ -23,9 +23,14 @@ The PCQ-1.2 source-selection authority is
 Its separate schema and semantic checker retain thirteen candidates, rankings,
 access and rights boundaries, measurement jointness, source independence,
 public outcome exposure, rejection reasons, and unsent next actions. The
-[D'Souza request draft](DSOUZA_2025_DATA_REQUEST.md) and the existing
-[University of Arizona request](../m3/UA_ICPET_DATA_REQUEST.md) are templates;
-they are not records of external contact or granted data access.
+coordinated [PCQ-1 data-request package](PCQ1_DATA_REQUEST_PACKAGE.md) indexes
+the [D'Souza](DSOUZA_2025_DATA_REQUEST.md),
+[University of Arizona](../m3/UA_ICPET_DATA_REQUEST.md),
+[Bailey](BAILEY_2019_DATA_REQUEST.md), and
+[Lassen](LASSEN_2023_FEASIBILITY_REQUEST.md) drafts and defines work that can
+remain outcome blind while replies are pending. These are templates, not
+records of external contact or granted data access. Lassen is deliberately a
+feasibility inquiry rather than a request to transfer participant records.
 
 The PCQ-1.3 analysis authority is
 `data/qualification/pulmonary-capillary-preoutcome-amendment-v1.json`. It

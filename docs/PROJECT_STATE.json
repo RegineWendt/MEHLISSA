@@ -41,13 +41,14 @@
   "active_scientific_qualification": {
     "protocol_id": "PCQ-1",
     "protocol_version": "0.2.0",
-    "status": "design, source screen, pre-outcome amendment, rights-aware data ingress, outcome-blind uncertainty and identifiability analysis, and repository-first data-availability audit established before participant-level outcome access",
+    "status": "design, source screen, pre-outcome amendment, rights-aware data ingress, outcome-blind uncertainty and identifiability analysis, repository-first data-availability audit, and unsent governed request package established before participant-level outcome access",
     "machine_record": "data/qualification/pulmonary-capillary-qualification-protocol-v1.json",
     "candidate_register": "data/qualification/pulmonary-capillary-evidence-candidate-register-v1.json",
     "preoutcome_amendment": "data/qualification/pulmonary-capillary-preoutcome-amendment-v1.json",
     "data_ingress_policy": "data/qualification/pulmonary-capillary-data-ingress-policy-v1.json",
     "uncertainty_plan": "data/qualification/pulmonary-capillary-uncertainty-plan-v1.json",
     "repository_audit": "data/qualification/pulmonary-capillary-repository-audit-v1.json",
+    "outreach_package": "docs/qualification/PCQ1_DATA_REQUEST_PACKAGE.md",
     "next_increment": "PCQ-1.6 locked no-refit evaluation when rights-authorized source-disjoint observations are available"
   },
   "next_scientific_packages": [

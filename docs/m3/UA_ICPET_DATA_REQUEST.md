@@ -21,6 +21,14 @@ Git inside the explicitly declared institutional quarantine root.
 Request for de-identified stage-level hemodynamics from the healthy-control
 iCPET cohort (JAHA 2023, e029667)
 
+## Suggested recipient
+
+Professor Rebecca R. Vanderpool. The article lists
+`rebecca.vanderpool@osumc.edu` for correspondence. Verify that address on an
+institutional or publisher page immediately before sending. The coordinated
+request order and waiting-period work are recorded in the
+[PCQ-1 data-request package](../qualification/PCQ1_DATA_REQUEST_PACKAGE.md).
+
 ## Suggested message
 
 Dear Professor Vanderpool,

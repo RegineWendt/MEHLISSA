@@ -472,7 +472,19 @@ SCG-RHC can stress the pressure/flow adapters in a disease cohort. None may be
 used as primary PCQ-1 evidence without a successor pre-outcome amendment,
 independent review, explicit licence and overlap decisions, and PCQ-1.4
 rights-aware ingress. The current contact order remains D'Souza, Arizona,
-Bailey, then conditionally Lassen.
+Bailey, then conditionally Lassen. The
+[PCQ-1 data-request package](qualification/PCQ1_DATA_REQUEST_PACKAGE.md)
+contains the copy-ready messages, recipient-verification links, institutional
+checklist, and response rules. D'Souza, Arizona, and Bailey can be sent after
+institutional review; Lassen is deliberately feasibility-only until an
+independently reviewed whole-pulmonary observation model exists.
+
+While replies are pending, development does not need to stop. The safe next
+work is a source-neutral PCQ-1.6 execution and reporting shell tested only with
+arbitrary synthetic fixtures, plus dry runs of manifest approval, quarantine,
+provenance, and blocked/partial-result reporting. No source-specific converter
+should be invented before a provider supplies the actual data dictionary, and
+no absent reply justifies changing a frozen endpoint or numeric gate.
 
 [PCQ-1.4 rights-aware data ingress](qualification/PCQ1_DATA_INGRESS.md) now
 provides the safe technical entry point for any future authorized records. It
@@ -3307,7 +3319,9 @@ Planned substantive scientific extensions are:
 
 - pulmonary and capillary qualification using source-disjoint calibration and
   validation evidence, predeclared metrics, quantified uncertainty, and the
-  repository-first availability audit completed before direct data requests;
+  repository-first availability audit and governed request package completed
+  before direct data requests, followed by the source-neutral PCQ-1.6 shell
+  while access remains pending;
 - at least one biological cell-model variant tied to a named ligand, receptor,
   cell type, and reusable public model or data set;
 - dynamic capillary-tissue-cell coupling with time-dependent transport,

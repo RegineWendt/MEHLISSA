@@ -19,6 +19,14 @@ Git inside the explicitly declared institutional quarantine root.
 Request for minimal de-identified stage-level pulmonary capillary and flow data
 from D'Souza et al. 2025
 
+## Suggested recipient
+
+Professor Michael K. Stickland. The publisher lists
+`michael.stickland@ualberta.ca` for the article. Verify that address on an
+institutional or publisher page immediately before sending. The coordinated
+request order and waiting-period work are recorded in the
+[PCQ-1 data-request package](PCQ1_DATA_REQUEST_PACKAGE.md).
+
 ## Suggested message
 
 Dear Professor Stickland,
