@@ -264,6 +264,7 @@ python scripts/check_pulmonary_capillary_evidence_candidates.py
 python scripts/check_pulmonary_capillary_preoutcome_amendment.py
 python scripts/check_pulmonary_capillary_data_ingress.py
 python scripts/check_pulmonary_capillary_uncertainty.py
+python scripts/check_pulmonary_capillary_repository_audit.py
 python scripts/check_paper1_release_candidate.py
 python -m unittest tests.test_evidence_validity_matrix -v
 python -m unittest tests.test_paper1_protocol -v

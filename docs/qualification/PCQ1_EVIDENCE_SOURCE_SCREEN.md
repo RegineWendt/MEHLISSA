@@ -20,6 +20,12 @@ jointness, uncertainty, access route, licence boundary, source independence,
 possible cohort reuse, public outcome exposure, rejection reasons, and next
 action.
 
+This source-selection record remains frozen. The subsequent
+[PCQ-1.5a repository-first data audit](PCQ1_REPOSITORY_FIRST_DATA_AUDIT.md)
+binds that exact register by SHA-256 and records the later availability search,
+five non-equivalent repository alternatives, and current unsent contact order
+without rewriting the rankings or numeric analysis plan.
+
 No candidate participant-level data were downloaded, received, or inspected.
 No external request was sent. Article access is not permission to redistribute
 participant data, and no source data acquire the repository's CC BY 4.0 licence.

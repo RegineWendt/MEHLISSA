@@ -441,6 +441,13 @@ identifies the University of Arizona iCPET cohort for primary hemodynamics,
 D'Souza 2025 for same-stage functional capillary volume and flow, Lassen 2023
 for a separate whole-pulmonary transit observation model, and Bailey 2019 for
 the next five-lobe access inquiry. The
+[PCQ-1.5a repository-first audit](qualification/PCQ1_REPOSITORY_FIRST_DATA_AUDIT.md)
+has now checked whether repositories can remove the need for these requests.
+It found useful open or controlled posture, cardiac-output, invasive disease,
+and lung-water datasets, but no drop-in source with the frozen healthy
+participant-level pressure, regional-perfusion, capillary-volume, or transit
+endpoints. No newly located participant file was downloaded or opened, and no
+source role or numeric limit changed. The
 [PCQ-1.3 pre-outcome amendment](qualification/PCQ1_PRE_OUTCOME_AMENDMENT.md)
 now locks how those measurements may be compared, minimum sample sizes,
 uncertainty floors, 90% equivalence intervals, missing-data handling, and six
@@ -457,6 +464,15 @@ participant-level hemodynamics, capillary volume, transit, regional dynamics,
 or their joint physiological state have passed validation. Researchers should
 continue to cite the existing M3/M4 evidence level until a locked PCQ-1 result
 is published.
+
+For practical planning, repository availability is not the same as scientific
+eligibility. The open Zenodo posture dataset can later test healthy recumbent
+cardiac-output behavior, HeartCycle can support observation-method checks, and
+SCG-RHC can stress the pressure/flow adapters in a disease cohort. None may be
+used as primary PCQ-1 evidence without a successor pre-outcome amendment,
+independent review, explicit licence and overlap decisions, and PCQ-1.4
+rights-aware ingress. The current contact order remains D'Souza, Arizona,
+Bailey, then conditionally Lassen.
 
 [PCQ-1.4 rights-aware data ingress](qualification/PCQ1_DATA_INGRESS.md) now
 provides the safe technical entry point for any future authorized records. It
@@ -3290,7 +3306,8 @@ contract do not establish biological or clinical validity.
 Planned substantive scientific extensions are:
 
 - pulmonary and capillary qualification using source-disjoint calibration and
-  validation evidence, predeclared metrics, and quantified uncertainty;
+  validation evidence, predeclared metrics, quantified uncertainty, and the
+  repository-first availability audit completed before direct data requests;
 - at least one biological cell-model variant tied to a named ligand, receptor,
   cell type, and reusable public model or data set;
 - dynamic capillary-tissue-cell coupling with time-dependent transport,

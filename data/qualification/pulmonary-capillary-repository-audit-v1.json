@@ -1,0 +1,262 @@
+{
+  "schema_version": "1.0.0",
+  "audit": {
+    "id": "PCQ-1.5a",
+    "protocol_id": "PCQ-1",
+    "version": "1.0.0",
+    "performed_date": "2026-09-05",
+    "status": "completed-repository-first-metadata-audit",
+    "parent_register": {
+      "path": "data/qualification/pulmonary-capillary-evidence-candidate-register-v1.json",
+      "sha256": "40f94e63abcb13e9d292efec3e38270a61879107890e6c6fb03fe782cc98cb14"
+    },
+    "baseline_commit": "d3bd0024c344e6b61f55e013c5c76d6aa509ed0f",
+    "mode": "metadata-only-before-any-new-participant-file-evaluation",
+    "outcome_boundary": "Repository landing pages, identifiers, access conditions, file names, resource types, methods, and public publication or metadata summaries were inspected. No newly located participant file was downloaded, opened, parsed, or evaluated; no candidate participant-level outcome was inspected. Public metadata sometimes displayed aggregate results, which were treated only as exposure to document and never as a basis for changing the frozen PCQ-1.3 limits.",
+    "clinical_use": false
+  },
+  "search_plan": {
+    "cutoff_date": "2026-09-05",
+    "repositories": [
+      "BioLINCC",
+      "DataCite Commons and API metadata",
+      "Dryad",
+      "Figshare",
+      "Harvard Dataverse",
+      "NCBI dbGaP",
+      "OSF",
+      "PhysioNet",
+      "Springer supplementary-material records",
+      "White Rose Research Online",
+      "Zenodo"
+    ],
+    "query_families": [
+      "exact DOI and exact title for every priority or backup target",
+      "author and cohort names combined with data, dataset, raw data, supplement, and repository",
+      "healthy human invasive exercise hemodynamics with mPAP, PAWP, and cardiac output",
+      "healthy human five-lobe or regional pulmonary perfusion",
+      "functional pulmonary capillary blood volume, pulmonary blood volume, and pulmonary transit",
+      "healthy exercise, posture, cardiac output, lung water, and multimodal hemodynamic alternatives"
+    ],
+    "permitted_inspection": [
+      "repository landing-page metadata and access controls",
+      "resource type, persistent identifier, licence field, file names, sizes, and checksums",
+      "publication abstract, methods, data-availability statement, and public aggregate summary",
+      "supplement type and non-numeric document structure needed to decide whether participant data exist"
+    ],
+    "forbidden_inspection": [
+      "download or opening of a newly located participant-level dataset",
+      "parsing or summarizing participant-level outcome values",
+      "running a PCQ comparison before rights and activation checks pass",
+      "changing frozen candidate roles, observation models, or numeric limits in response to outcomes"
+    ]
+  },
+  "target_studies": [
+    {
+      "candidate_id": "PCQ-SRC-H-001",
+      "doi": "10.1161/JAHA.123.029667",
+      "track_ids": ["PCQ-H"],
+      "repository_status": "software-only",
+      "objects": [
+        {
+          "repository": "Zenodo",
+          "identifier": "10.5281/zenodo.7789925",
+          "resource_type": "software",
+          "access": "open",
+          "url": "https://zenodo.org/records/7789925",
+          "scope": "Initial iCPET calculator code and usage description; one software ZIP, not clinical participant data."
+        },
+        {
+          "repository": "GitHub",
+          "identifier": "vanderpoolrr/iCPET_calculator",
+          "resource_type": "software",
+          "access": "open",
+          "url": "https://github.com/vanderpoolrr/iCPET_calculator",
+          "scope": "Calculator application source and screenshots, not healthy-control stage records."
+        }
+      ],
+      "participant_data_route": "The article states that clinical data are available from the corresponding author on reasonable request.",
+      "conclusion": "No repository-hosted healthy-control participant trajectories were located; the University of Arizona request remains necessary for primary PCQ-H."
+    },
+    {
+      "candidate_id": "PCQ-SRC-R-002",
+      "doi": "10.1053/j.semnuclmed.2018.10.008",
+      "track_ids": ["PCQ-R"],
+      "repository_status": "no-participant-dataset-located",
+      "objects": [],
+      "participant_data_route": "No public participant-data object or reusable supplement was located; feasibility and reuse terms require author contact.",
+      "conclusion": "Bailey remains the preferred five-lobe access inquiry, not an immediately downloadable PCQ-R dataset."
+    },
+    {
+      "candidate_id": "PCQ-SRC-CJ-001",
+      "doi": "10.1152/ajplung.00358.2024",
+      "track_ids": ["PCQ-C", "PCQ-J"],
+      "repository_status": "no-participant-dataset-located",
+      "objects": [],
+      "participant_data_route": "The article states that data are available from the corresponding author on reasonable request.",
+      "conclusion": "No linked public participant dataset was located; D'Souza remains the priority request for joint functional capillary volume and flow."
+    },
+    {
+      "candidate_id": "PCQ-SRC-C-002",
+      "doi": "10.1152/japplphysiol.00694.2016",
+      "track_ids": ["PCQ-C", "PCQ-J"],
+      "repository_status": "article-copy-only",
+      "objects": [
+        {
+          "repository": "White Rose Research Online",
+          "identifier": "eprint/114363",
+          "resource_type": "article-copy",
+          "access": "open",
+          "url": "https://eprints.whiterose.ac.uk/id/eprint/114363/",
+          "scope": "Accepted manuscript record only; no participant-level data files."
+        }
+      ],
+      "participant_data_route": "No public participant dataset was located; author contact would be required after the higher-priority path.",
+      "conclusion": "The repository object improves article access but does not remove the need for a data request."
+    },
+    {
+      "candidate_id": "PCQ-SRC-C-003",
+      "doi": "10.1007/s12350-023-03308-1",
+      "track_ids": ["PCQ-C"],
+      "repository_status": "supplements-only",
+      "objects": [
+        {
+          "repository": "Springer Nature",
+          "identifier": "supplementary-information-1",
+          "resource_type": "supplement",
+          "access": "open",
+          "url": "https://link.springer.com/article/10.1007/s12350-023-03308-1",
+          "scope": "Three aggregate group figures for end-diastolic volume, end-systolic volume, and cardiac output; no table or participant records."
+        },
+        {
+          "repository": "Springer Nature",
+          "identifier": "supplementary-information-2",
+          "resource_type": "supplement",
+          "access": "open",
+          "url": "https://link.springer.com/article/10.1007/s12350-023-03308-1",
+          "scope": "Presentation material, not a participant dataset."
+        }
+      ],
+      "participant_data_route": "Participant-level transit data and reuse rights require author contact.",
+      "conclusion": "Public supplements do not supply the required records, and whole-pulmonary transit remains observation-model blocked independently of access."
+    }
+  ],
+  "alternative_sources": [
+    {
+      "id": "PCQ-REPO-AUX-001",
+      "title": "Posture matters: how body position shapes cardiopulmonary response to maximal exercise testing",
+      "repository": "Zenodo",
+      "identifier": "10.5281/zenodo.19330868",
+      "url": "https://zenodo.org/records/19330868",
+      "access": "open",
+      "license": "No licence was displayed in the repository metadata at the audit cutoff; reuse must remain blocked pending clarification.",
+      "population": "Twelve healthy adults, mean age approximately 31 years, half female.",
+      "states": ["rest", "upright exercise", "semi-recumbent exercise", "supine exercise"],
+      "measurements": ["cardiac output by thoracic bioimpedance", "stroke volume", "heart rate", "breath-by-breath gas exchange", "workload and posture"],
+      "track_relevance": ["PCQ-H", "generalization"],
+      "eligibility": "supplementary-candidate-only",
+      "reason": "It is unusually close in age, posture, state, and stage-level cardiac output, but lacks invasive mPAP and PAWP and therefore cannot satisfy the primary PCQ-H tuple or replace Arizona.",
+      "file_inspection": "not-opened-or-downloaded"
+    },
+    {
+      "id": "PCQ-REPO-AUX-002",
+      "title": "HeartCycle: A comprehensive dataset of synchronized impedance cardiography and echocardiography for accurate hemodynamic predictions",
+      "repository": "PhysioNet",
+      "identifier": "10.13026/z865-eb23",
+      "url": "https://physionet.org/content/heartcycle/1.0.0/",
+      "access": "open",
+      "license": "Open Data Commons Attribution License v1.0",
+      "population": "Seventeen healthy volunteers represented by 208 multimodal records.",
+      "states": ["multiple physiological study runs described by activity labels"],
+      "measurements": ["impedance cardiography", "echocardiography", "ECG", "PPG", "heart sounds", "derived stroke-volume and cardiac-output parameters"],
+      "track_relevance": ["PCQ-H", "method-context"],
+      "eligibility": "supplementary-candidate-only",
+      "reason": "It can test cardiac-output observation methods and healthy variability but contains no invasive pulmonary arterial or wedge pressure tuple and is not a replacement PCQ-H cohort.",
+      "file_inspection": "not-opened-or-downloaded"
+    },
+    {
+      "id": "PCQ-REPO-AUX-003",
+      "title": "SCG-RHC: Wearable Seismocardiogram Signal and Right Heart Catheter Database",
+      "repository": "PhysioNet",
+      "identifier": "10.13026/133d-pk11",
+      "url": "https://physionet.org/content/scg-rhc-wearable-database/1.0.0/",
+      "access": "open",
+      "license": "Open Data Commons Attribution License v1.0",
+      "population": "Seventy-three patients referred for heart-failure hemodynamic evaluation, ages 26 to 84 years.",
+      "states": ["supine rest", "pharmacological vasodilation"],
+      "measurements": ["invasive pulmonary arterial pressure", "pulmonary capillary wedge pressure", "Fick and thermodilution cardiac output", "ECG", "seismocardiography"],
+      "track_relevance": ["PCQ-H", "method-context", "generalization"],
+      "eligibility": "later-stress-test-only",
+      "reason": "The invasive tuple is valuable, but the heart-failure referral population and pharmacological rather than exercise perturbation are outside the frozen healthy recumbent claim.",
+      "file_inspection": "not-opened-or-downloaded"
+    },
+    {
+      "id": "PCQ-REPO-AUX-004",
+      "title": "Method to Assess Lung Water Accumulation During Exercise",
+      "repository": "NCBI dbGaP",
+      "identifier": "phs003346.v1.p1",
+      "url": "https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs003346.v1.p1",
+      "access": "controlled",
+      "license": "Authorized access under a Data Use Certification; redistribution is not assumed.",
+      "population": "Twelve healthy volunteers plus two stable-heart-failure participants in the reported human feasibility cohort.",
+      "states": ["rest", "exercise stress"],
+      "measurements": ["dynamic quantitative MRI of extravascular lung water"],
+      "track_relevance": ["generalization"],
+      "eligibility": "not-eligible-for-current-pcq",
+      "reason": "The repository-backed healthy exercise data may support a future lung-water or gas-exchange extension, but extravascular lung water is not a frozen PCQ-H, PCQ-R, PCQ-C, or PCQ-J endpoint.",
+      "file_inspection": "not-opened-or-downloaded"
+    },
+    {
+      "id": "PCQ-REPO-AUX-005",
+      "title": "Pulmonary Vascular Disease Phenomics Program (PVDOMICS)",
+      "repository": "NCBI dbGaP",
+      "identifier": "phs002451.v1.p1",
+      "url": "https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002451.v1.p1",
+      "access": "controlled",
+      "license": "Authorized access under repository and consent terms; redistribution is restricted.",
+      "population": "Pulmonary vascular disease groups, disease comparators, and healthy controls in a multicenter deep-phenotyping program.",
+      "states": ["resting phenotyping", "non-invasive CPET for healthy controls", "invasive CPET for selected pulmonary-hypertension participants"],
+      "measurements": ["deep phenotype variables", "non-invasive CPET in healthy controls", "resting hemodynamics where applicable", "omics and imaging"],
+      "track_relevance": ["PCQ-H", "generalization"],
+      "eligibility": "not-eligible-for-current-pcq",
+      "reason": "Official controlled access exists, but the published protocol does not establish healthy invasive exercise mPAP-PAWP-cardiac-output trajectories and the multicenter cohort requires an overlap audit.",
+      "file_inspection": "not-opened-or-downloaded"
+    }
+  ],
+  "decision": {
+    "drop_in_repository_dataset_found": false,
+    "participant_files_opened": false,
+    "participant_outcomes_inspected": false,
+    "external_requests_sent": false,
+    "frozen_source_ranking_changed": false,
+    "conclusion": "Repositories materially improve supplementary method, posture, cardiac-output, disease-stress, and future lung-water evidence, but none of the located objects replaces the rights-authorized participant-level data needed by the frozen PCQ-1.3 primary endpoints. Repository access and physiological eligibility are separate dimensions.",
+    "contact_queue": [
+      {
+        "priority": 1,
+        "candidate_id": "PCQ-SRC-CJ-001",
+        "purpose": "Joint stage-matched functional pulmonary capillary volume, cardiac output, hematological covariates, covariance, and reuse terms.",
+        "status": "not-sent-in-repository-audit"
+      },
+      {
+        "priority": 2,
+        "candidate_id": "PCQ-SRC-H-001",
+        "purpose": "Healthy supine invasive multipoint mPAP, PAWP, and cardiac-output trajectories plus uncertainty and reuse terms.",
+        "status": "not-sent-in-repository-audit"
+      },
+      {
+        "priority": 3,
+        "candidate_id": "PCQ-SRC-R-002",
+        "purpose": "Participant-level five-lobe perfusion fractions, posture and acquisition metadata, uncertainty, and reuse terms.",
+        "status": "not-sent-in-repository-audit"
+      },
+      {
+        "priority": 4,
+        "candidate_id": "PCQ-SRC-C-003",
+        "purpose": "Participant-level pulmonary transit feasibility only after an independently reviewed whole-pulmonary observation model is available.",
+        "status": "not-sent-in-repository-audit"
+      }
+    ],
+    "activation_rule": "Do not download or inspect any alternative participant file for qualification. First create and independently review a successor pre-outcome amendment that names its source role, endpoint, population, posture, observation model, licence, covariance treatment, overlap decision, and numeric rule; then pass PCQ-1.4 rights-aware ingress. Existing frozen primary roles and limits remain unchanged.",
+    "next_increment": "PCQ-1.6"
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/pulmonary-capillary-repository-audit/1.0.0.schema.json",
+  "title": "MEHLISSA pulmonary and capillary repository-first data audit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "audit", "search_plan", "target_studies", "alternative_sources", "decision"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "protocol_id", "version", "performed_date", "status", "parent_register", "baseline_commit", "mode", "outcome_boundary", "clinical_use"],
+      "properties": {
+        "id": {"const": "PCQ-1.5a"},
+        "protocol_id": {"const": "PCQ-1"},
+        "version": {"const": "1.0.0"},
+        "performed_date": {"type": "string", "format": "date"},
+        "status": {"const": "completed-repository-first-metadata-audit"},
+        "parent_register": {"$ref": "#/$defs/frozen_asset"},
+        "baseline_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "mode": {"const": "metadata-only-before-any-new-participant-file-evaluation"},
+        "outcome_boundary": {"type": "string", "minLength": 1},
+        "clinical_use": {"const": false}
+      }
+    },
+    "search_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cutoff_date", "repositories", "query_families", "permitted_inspection", "forbidden_inspection"],
+      "properties": {
+        "cutoff_date": {"type": "string", "format": "date"},
+        "repositories": {
+          "type": "array",
+          "minItems": 8,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "query_families": {"$ref": "#/$defs/nonempty_strings"},
+        "permitted_inspection": {"$ref": "#/$defs/nonempty_strings"},
+        "forbidden_inspection": {"$ref": "#/$defs/nonempty_strings"}
+      }
+    },
+    "target_studies": {
+      "type": "array",
+      "minItems": 5,
+      "items": {"$ref": "#/$defs/target_study"}
+    },
+    "alternative_sources": {
+      "type": "array",
+      "minItems": 5,
+      "items": {"$ref": "#/$defs/alternative_source"}
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["drop_in_repository_dataset_found", "participant_files_opened", "participant_outcomes_inspected", "external_requests_sent", "frozen_source_ranking_changed", "conclusion", "contact_queue", "activation_rule", "next_increment"],
+      "properties": {
+        "drop_in_repository_dataset_found": {"const": false},
+        "participant_files_opened": {"const": false},
+        "participant_outcomes_inspected": {"const": false},
+        "external_requests_sent": {"const": false},
+        "frozen_source_ranking_changed": {"const": false},
+        "conclusion": {"type": "string", "minLength": 1},
+        "contact_queue": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["priority", "candidate_id", "purpose", "status"],
+            "properties": {
+              "priority": {"type": "integer", "minimum": 1},
+              "candidate_id": {"type": "string", "pattern": "^PCQ-SRC-[A-Z0-9-]+$"},
+              "purpose": {"type": "string", "minLength": 1},
+              "status": {"const": "not-sent-in-repository-audit"}
+            }
+          }
+        },
+        "activation_rule": {"type": "string", "minLength": 1},
+        "next_increment": {"const": "PCQ-1.6"}
+      }
+    }
+  },
+  "$defs": {
+    "nonempty_strings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "frozen_asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"const": "data/qualification/pulmonary-capillary-evidence-candidate-register-v1.json"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "repository_object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "identifier", "resource_type", "access", "url", "scope"],
+      "properties": {
+        "repository": {"type": "string", "minLength": 1},
+        "identifier": {"type": "string", "minLength": 1},
+        "resource_type": {"enum": ["software", "dataset", "article-copy", "supplement", "study-record", "literature-index-record"]},
+        "access": {"enum": ["open", "controlled", "on-request", "metadata-only", "not-located"]},
+        "url": {"type": "string", "format": "uri"},
+        "scope": {"type": "string", "minLength": 1}
+      }
+    },
+    "target_study": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "doi", "track_ids", "repository_status", "objects", "participant_data_route", "conclusion"],
+      "properties": {
+        "candidate_id": {"type": "string", "pattern": "^PCQ-SRC-[A-Z0-9-]+$"},
+        "doi": {"type": "string", "minLength": 1},
+        "track_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"enum": ["PCQ-H", "PCQ-R", "PCQ-C", "PCQ-J"]}
+        },
+        "repository_status": {"enum": ["no-participant-dataset-located", "software-only", "supplements-only", "article-copy-only", "controlled-nonmatching-study"]},
+        "objects": {"type": "array", "items": {"$ref": "#/$defs/repository_object"}},
+        "participant_data_route": {"type": "string", "minLength": 1},
+        "conclusion": {"type": "string", "minLength": 1}
+      }
+    },
+    "alternative_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "repository", "identifier", "url", "access", "license", "population", "states", "measurements", "track_relevance", "eligibility", "reason", "file_inspection"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^PCQ-REPO-AUX-[0-9]{3}$"},
+        "title": {"type": "string", "minLength": 1},
+        "repository": {"type": "string", "minLength": 1},
+        "identifier": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "format": "uri"},
+        "access": {"enum": ["open", "controlled"]},
+        "license": {"type": "string", "minLength": 1},
+        "population": {"type": "string", "minLength": 1},
+        "states": {"$ref": "#/$defs/nonempty_strings"},
+        "measurements": {"$ref": "#/$defs/nonempty_strings"},
+        "track_relevance": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"enum": ["PCQ-H", "PCQ-R", "PCQ-C", "PCQ-J", "method-context", "generalization"]}
+        },
+        "eligibility": {"enum": ["supplementary-candidate-only", "later-stress-test-only", "not-eligible-for-current-pcq"]},
+        "reason": {"type": "string", "minLength": 1},
+        "file_inspection": {"const": "not-opened-or-downloaded"}
+      }
+    }
+  }
+}

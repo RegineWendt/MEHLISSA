@@ -14,8 +14,11 @@ validated against schema
 `data/schemas/pulmonary-capillary-qualification-protocol/1.0.0.schema.json`.
 
 **Current status:** design v0.1.0, PCQ-1.2 evidence-source screen,
-[PCQ-1.3 pre-outcome amendment](PCQ1_PRE_OUTCOME_AMENDMENT.md) v0.2.0, and
-[PCQ-1.4 rights-aware data ingress](PCQ1_DATA_INGRESS.md) completed.
+[PCQ-1.3 pre-outcome amendment](PCQ1_PRE_OUTCOME_AMENDMENT.md) v0.2.0,
+[PCQ-1.4 rights-aware data ingress](PCQ1_DATA_INGRESS.md),
+[PCQ-1.5 uncertainty/identifiability](PCQ1_UNCERTAINTY_IDENTIFIABILITY.md), and
+[PCQ-1.5a repository-first data audit](PCQ1_REPOSITORY_FIRST_DATA_AUDIT.md)
+completed.
 The design was recorded before inspection of any new validation outcomes and
 freezes the entering model artifacts, bounded candidate claim, qualification
 tracks, endpoint hierarchy, analysis rules, uncertainty classes, negative
@@ -193,12 +196,15 @@ candidate, but cannot be removed from the evaluated version.
 | ~~PCQ-1.3 pre-outcome amendment~~ | **Completed locally:** selected-source roles, eight observation models, precision floors, six primary numeric gates, statistics, explicit blocked states, and analysis version | machine and human records pass their semantic and negative tests before participant-level outcome access |
 | ~~PCQ-1.4 data adapters~~ | **Completed locally:** manifest-first rights/provenance gate, outside-Git quarantine boundary, four strict normalized schemas and adapters, metadata-only output, outcome-blind fixtures, and negative tests | invalid rights, paths, units, ages/states, stage tuples/order, source overlap, checksums, lobe sums, direct identifiers, and transit activation fail closed before evaluation |
 | ~~PCQ-1.5 uncertainty and identifiability~~ | **Completed locally:** [outcome-blind uncertainty report](PCQ1_UNCERTAINTY_IDENTIFIABILITY.md), strict machine plan/schema, nine endpoint-specific observation models, parameter registry, seven-structure flow-age ensemble, covariance envelopes, converged local sensitivity screen, nine identifiability rank analyses, and explicit global/transit blockers | all six uncertainty classes are represented or explicitly unavailable with consequences; no measured outcome or qualification decision was used |
+| ~~PCQ-1.5a repository-first data audit~~ | **Completed locally:** [metadata-only repository audit](PCQ1_REPOSITORY_FIRST_DATA_AUDIT.md), strict machine record/schema, five intended targets, five non-equivalent alternatives, licence/access distinctions, and an unsent contact queue bound to the frozen PCQ-1.2 register | no new participant file was downloaded or opened, no source role or limit changed, and the absence of a drop-in primary repository dataset is explicit |
 | PCQ-1.6 locked execution | no-refit track reports with raw permissible artifacts and retained failures | every eligible observation, control, exclusion, and result is reproducible |
 | PCQ-1.7 qualification review | bounded claims and statuses updated across evidence matrix, traceability, documentation, and shareable report | independent review agrees that wording does not exceed the evidence |
 
 ## 10. Immediate next action
 
-PCQ-1.6 is next. Use the PCQ-1.4 ingress boundary and PCQ-1.5 uncertainty plan
+PCQ-1.6 is next. The PCQ-1.5a repository audit found useful supplementary
+sources but no equivalent primary dataset. Use the PCQ-1.4 ingress boundary
+and PCQ-1.5 uncertainty plan
 to execute each eligible endpoint against rights-authorized, source-disjoint
 observations without refitting. Every eligible observation, missingness count,
 exclusion, covariance limitation, negative control, partial result, and failed
