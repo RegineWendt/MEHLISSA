@@ -1,0 +1,344 @@
+{
+  "schema_version": "1.0.0",
+  "amendment": {
+    "id": "PCQ-1.3",
+    "protocol_id": "PCQ-1",
+    "protocol_version": "0.2.0",
+    "created_date": "2026-09-05",
+    "status": "locked-before-participant-level-outcome-access",
+    "baseline_commit": "c7d1e374949c5e9b085679127356a76ddb7c821e",
+    "analysis_plan_id": "pcq-analysis-plan-1.0.0",
+    "parent_protocol": {
+      "path": "data/qualification/pulmonary-capillary-qualification-protocol-v1.json",
+      "sha256": "d2de34b8a99a6ebf5e180d2c63f4a3fe09b6c73fec8263909a9bf6a2682614ef"
+    },
+    "candidate_register": {
+      "path": "data/qualification/pulmonary-capillary-evidence-candidate-register-v1.json",
+      "sha256": "40f94e63abcb13e9d292efec3e38270a61879107890e6c6fb03fe782cc98cb14"
+    },
+    "outcome_access": "No candidate participant-level outcome record had been downloaded, received, or inspected when this amendment was written.",
+    "public_outcome_exposure": "Published aggregate means, spreads, figures, and repeatability results were visible during PCQ-1.2. The limits below are fixed from method repeatability, existing reconstruction sensitivity, conservative model-discrepancy choices, and precision rules; they were not tuned to make any published candidate outcome pass.",
+    "review_status": "internally reviewed; independent domain-method review requested before locked execution",
+    "clinical_use": false
+  },
+  "selected_sources": [
+    {
+      "candidate_id": "PCQ-SRC-H-001",
+      "tracks": ["PCQ-H"],
+      "role": "primary-pilot-and-confirmatory-if-sample-sufficient",
+      "status": "access-and-rights-pending",
+      "activation_requirements": [
+        "healthy-control phenotype confirmed per participant",
+        "age, posture, stage timing, pressure reference, and cardiac-output method supplied",
+        "at least three complete same-stage mPAP, PAWP, and cardiac-output tuples",
+        "source rights permit the declared analysis and aggregate publication"
+      ]
+    },
+    {
+      "candidate_id": "PCQ-SRC-R-002",
+      "tracks": ["PCQ-R"],
+      "role": "provisional-primary-five-lobe-source",
+      "status": "feasibility-access-and-rights-pending",
+      "activation_requirements": [
+        "five lobe contributions available for the same healthy participant and posture",
+        "normalization and lobe segmentation are documented",
+        "participant-level covariance or sufficient replicate information is supplied",
+        "source rights permit the declared analysis and aggregate publication"
+      ]
+    },
+    {
+      "candidate_id": "PCQ-SRC-CJ-001",
+      "tracks": ["PCQ-C", "PCQ-J"],
+      "role": "primary-functional-volume-and-partial-joint-source",
+      "status": "access-and-rights-pending",
+      "activation_requirements": [
+        "same-stage Vc and cardiac output are available",
+        "measured hemoglobin and the applied correction are documented",
+        "baseline posture and condition ordering are confirmed",
+        "source rights permit the declared analysis and aggregate publication"
+      ]
+    },
+    {
+      "candidate_id": "PCQ-SRC-C-003",
+      "tracks": ["PCQ-C"],
+      "role": "provisional-whole-pulmonary-transit-source",
+      "status": "observation-model-blocked-and-access-pending",
+      "activation_requirements": [
+        "participant-level pulmonary-trunk-to-left-atrium transit and repeatability records are permitted",
+        "an independent model supplies precapillary, postcapillary, and mixing-delay terms without fitting them to Lassen outcomes",
+        "tracer-retention bias is handled in a one-sided sensitivity analysis",
+        "algebraically derived pulmonary blood volume is excluded as independent closure evidence"
+      ]
+    }
+  ],
+  "analysis_sets": [
+    {
+      "track": "PCQ-H",
+      "primary_population": "healthy adults aged 20 through 40 years in supine or recumbent incremental exercise",
+      "primary_state": "rest and at least two ordered exercise stages in one visit",
+      "minimum_complete_participants_for_bounded_pilot": 3,
+      "minimum_complete_participants_for_track_decision": 10,
+      "minimum_complete_stages_per_participant": 3,
+      "insufficient_precision_rule": "Three through nine eligible participants permit only a pilot compatibility report; fewer than three are insufficient. Neither state may be described as a completed PCQ-H qualification."
+    },
+    {
+      "track": "PCQ-R",
+      "primary_population": "healthy adults aged 20 through 40 years with anatomically assigned five-lobe perfusion",
+      "primary_state": "supine or recumbent rest; erect administration and exercise are separate extensions",
+      "minimum_complete_participants_for_bounded_pilot": 5,
+      "minimum_complete_participants_for_track_decision": 10,
+      "minimum_complete_stages_per_participant": 1,
+      "insufficient_precision_rule": "Aggregate-only data or fewer than ten complete participants remain supportive or pilot evidence and cannot close participant-level PCQ-R."
+    },
+    {
+      "track": "PCQ-C",
+      "primary_population": "healthy adults aged 20 through 40 years in a recumbent or semirecumbent state",
+      "primary_state": "baseline rest; exercise and adenosine are separately reported extensions",
+      "minimum_complete_participants_for_bounded_pilot": 8,
+      "minimum_complete_participants_for_track_decision": 12,
+      "minimum_complete_stages_per_participant": 1,
+      "insufficient_precision_rule": "A source can remain informative when the minimum is missed, but an equivalence interval that is too wide is inconclusive rather than a pass or a model failure. PCQ-C cannot close while PCQ-C2 remains observation-model blocked."
+    },
+    {
+      "track": "PCQ-J",
+      "primary_population": "the eligible intersection of the PCQ-H, PCQ-R, and PCQ-C analysis sets",
+      "primary_state": "only same-participant and same-stage measurements, or an explicitly partial cross-cohort bridge",
+      "minimum_complete_participants_for_bounded_pilot": 0,
+      "minimum_complete_participants_for_track_decision": 0,
+      "minimum_complete_stages_per_participant": 0,
+      "insufficient_precision_rule": "No screened complete joint cohort exists. PCQ-J remains partial regardless of numerical closure or a successful D'Souza flow-volume comparison."
+    }
+  ],
+  "observation_models": [
+    {
+      "id": "PCQ-OM-H1",
+      "endpoint_ids": ["PCQ-H1"],
+      "measured_quantity": "end-expiratory stage mean pulmonary arterial pressure",
+      "model_quantity": "stage mean pulmonary arterial pressure at the observed cardiac-output and PAWP boundary conditions",
+      "equation": "residual_mmHg = predicted_mPAP_mmHg - observed_mPAP_mmHg",
+      "status": "locked-awaiting-data",
+      "non_equivalence": "RVSP, systolic PAP, and echo-derived mPAP are not interchangeable with invasive mPAP."
+    },
+    {
+      "id": "PCQ-OM-H2",
+      "endpoint_ids": ["PCQ-H2"],
+      "measured_quantity": "stage pulmonary vascular resistance derived from jointly measured invasive pressures and flow",
+      "model_quantity": "model effective pulmonary vascular resistance at the same stage",
+      "equation": "observed_PVR_WU = (observed_mPAP_mmHg - observed_PAWP_mmHg) / observed_CO_L_min",
+      "status": "locked-awaiting-data",
+      "non_equivalence": "A population reference PVR or a resistance fitted to these validation records is not an observed participant PVR."
+    },
+    {
+      "id": "PCQ-OM-H3",
+      "endpoint_ids": ["PCQ-H3"],
+      "measured_quantity": "within-participant ordinary-least-squares mPAP versus cardiac-output slope",
+      "model_quantity": "within-participant model mPAP versus observed cardiac-output slope at observed PAWP",
+      "equation": "slope_difference_WU = predicted_OLS_slope_WU - observed_OLS_slope_WU",
+      "status": "locked-awaiting-data",
+      "non_equivalence": "A two-point peak-minus-rest ratio is diagnostic only and cannot replace the primary three-or-more-stage slope."
+    },
+    {
+      "id": "PCQ-OM-H4",
+      "endpoint_ids": ["PCQ-H4"],
+      "measured_quantity": "stage pulmonary arterial compliance and resistance-compliance time derived only from a complete systolic pressure, diastolic pressure, heart-rate, and cardiac-output tuple",
+      "model_quantity": "model effective compliance and resistance-compliance time at the same stage",
+      "equation": "observed_compliance_mL_mmHg = (observed_CO_L_min * 1000 / observed_HR_bpm) / (observed_sPAP_mmHg - observed_dPAP_mmHg)",
+      "status": "locked-awaiting-data",
+      "non_equivalence": "Missing pulse-pressure inputs are not imputed and this secondary endpoint cannot substitute for a failed primary endpoint."
+    },
+    {
+      "id": "PCQ-OM-R1",
+      "endpoint_ids": ["PCQ-R1"],
+      "measured_quantity": "five same-state anatomical lobe perfusion contributions normalized to sum to one",
+      "model_quantity": "five frozen MEHLISSA lobe flow fractions normalized to sum to one",
+      "equation": "lobe_error_fraction[i] = predicted_fraction[i] - observed_fraction[i]",
+      "status": "locked-awaiting-feasibility-and-data",
+      "non_equivalence": "Four pulmonary-vein territories, spatial slices, or gravity zones require a separate frozen aggregation and are not five-lobe primary observations."
+    },
+    {
+      "id": "PCQ-OM-C1",
+      "endpoint_ids": ["PCQ-C1", "PCQ-C3"],
+      "measured_quantity": "hemoglobin-adjusted functional pulmonary capillary blood volume from the multiple-inspired-oxygen DLCO regression",
+      "model_quantity": "frozen functional pulmonary capillary blood volume, not morphometric lumen capacity",
+      "equation": "volume_ratio = model_functional_Vc_mL / observed_functional_Vc_mL",
+      "status": "locked-awaiting-data",
+      "non_equivalence": "Measured systemic hemoglobin correction is recorded but is not relabelled as directly measured pulmonary capillary hematocrit."
+    },
+    {
+      "id": "PCQ-OM-C2",
+      "endpoint_ids": ["PCQ-C2"],
+      "measured_quantity": "rubidium-82 mean bolus transit from pulmonary trunk to left atrium",
+      "model_quantity": "pulmonary-trunk-to-left-atrium transit formed from independently fixed precapillary delay, frozen capillary residence, postcapillary delay, and method-specific mixing delay",
+      "equation": "predicted_MBTT_s = independent_precapillary_s + frozen_capillary_residence_s + independent_postcapillary_s + independent_mixing_delay_s",
+      "status": "blocked-until-independent-extra-capillary-terms-are-frozen",
+      "non_equivalence": "The current 0.859-second capillary residence cannot be compared directly with whole-pulmonary MBTT, and PBV = CO times MBTT cannot independently validate volume-flow-transit closure."
+    },
+    {
+      "id": "PCQ-OM-J1",
+      "endpoint_ids": ["PCQ-J1"],
+      "measured_quantity": "same-stage functional volume divided by flow as a derived residence proxy",
+      "model_quantity": "frozen functional capillary volume divided by the same-stage model flow",
+      "equation": "functional_residence_proxy_s = functional_Vc_mL / (CO_L_min * 1000 / 60)",
+      "status": "diagnostic-partial-only",
+      "non_equivalence": "A derived Vc divided by flow proxy is not a measured anatomical capillary transit and cannot complete PCQ-J."
+    }
+  ],
+  "endpoint_rules": [
+    {
+      "endpoint_id": "PCQ-H1",
+      "role": "primary",
+      "activation_status": "locked-awaiting-data",
+      "minimum_complete_participants": 10,
+      "uncertainty_model": {
+        "mPAP_standard_uncertainty_floor_mmHg": 2.0,
+        "use_larger_source_supplied_uncertainty": true
+      },
+      "numeric_rule": {
+        "stage_absolute_error_limit_mmHg": 5.0,
+        "minimum_stage_fraction_within_limit": 0.8,
+        "participant_RMSE_limit_mmHg": 5.0,
+        "cohort_mean_bias_equivalence_margin_mmHg": 5.0,
+        "equivalence_confidence_level": 0.9
+      },
+      "decision": "Qualifies only if the eligible sample minimum is met, at least 80 percent of stages and every participant-level RMSE satisfy the limits, and the two-sided 90 percent interval for cohort mean bias lies wholly inside plus or minus 5 mmHg. Otherwise report fail or inconclusive according to precision."
+    },
+    {
+      "endpoint_id": "PCQ-H2",
+      "role": "primary",
+      "activation_status": "locked-awaiting-data",
+      "minimum_complete_participants": 10,
+      "uncertainty_model": {
+        "mPAP_standard_uncertainty_floor_mmHg": 2.0,
+        "PAWP_standard_uncertainty_floor_mmHg": 3.0,
+        "cardiac_output_relative_standard_uncertainty_floor": 0.1,
+        "use_larger_source_supplied_uncertainty": true
+      },
+      "numeric_rule": {
+        "stage_absolute_error_floor_WU": 0.5,
+        "stage_relative_error_limit": 0.25,
+        "minimum_stage_fraction_within_combined_limit": 0.8,
+        "cohort_mean_relative_bias_equivalence_margin": 0.25,
+        "equivalence_confidence_level": 0.9
+      },
+      "decision": "A stage is compatible when absolute error is no greater than the larger of 0.5 WU and 25 percent of observed PVR. Qualification also requires the eligible sample minimum and a 90 percent cohort relative-bias interval wholly inside plus or minus 25 percent."
+    },
+    {
+      "endpoint_id": "PCQ-H3",
+      "role": "primary",
+      "activation_status": "locked-awaiting-data",
+      "minimum_complete_participants": 10,
+      "uncertainty_model": {
+        "mPAP_standard_uncertainty_floor_mmHg": 2.0,
+        "cardiac_output_relative_standard_uncertainty_floor": 0.1,
+        "minimum_cardiac_output_span_L_min": 2.0,
+        "use_larger_source_supplied_uncertainty": true
+      },
+      "numeric_rule": {
+        "participant_absolute_slope_difference_limit_WU": 0.75,
+        "minimum_participant_fraction_within_limit": 0.8,
+        "cohort_median_absolute_slope_difference_limit_WU": 0.75,
+        "equivalence_confidence_level": 0.9
+      },
+      "decision": "Qualifies only with at least three stages spanning at least 2 L/min per participant, the eligible sample minimum, at least 80 percent of participant slopes within 0.75 WU, and cohort median absolute slope difference no greater than 0.75 WU."
+    },
+    {
+      "endpoint_id": "PCQ-R1",
+      "role": "primary",
+      "activation_status": "locked-awaiting-feasibility-and-data",
+      "minimum_complete_participants": 10,
+      "uncertainty_model": {
+        "per_lobe_standard_uncertainty_floor_fraction": 0.02,
+        "use_larger_source_supplied_uncertainty": true
+      },
+      "numeric_rule": {
+        "participant_maximum_absolute_lobe_error_fraction": 0.05,
+        "participant_five_lobe_RMSE_limit_fraction": 0.03,
+        "participant_right_lung_error_limit_fraction": 0.04,
+        "minimum_participant_fraction_passing_all_limits": 0.8,
+        "cohort_center_uses_same_limits": true,
+        "aggregate_reproduction_maximum_lobe_error_fraction": 0.03,
+        "aggregate_reproduction_RMSE_limit_fraction": 0.02,
+        "aggregate_reproduction_right_lung_error_limit_fraction": 0.03
+      },
+      "decision": "Participant-level qualification requires the eligible minimum, at least 80 percent of participants to pass all three participant limits, and the cohort compositional center to pass the same limits. Existing aggregate reproduction retains its stricter original limits and cannot substitute for participant data."
+    },
+    {
+      "endpoint_id": "PCQ-C1",
+      "role": "primary",
+      "activation_status": "locked-awaiting-data",
+      "minimum_complete_participants": 12,
+      "uncertainty_model": {
+        "method_coefficient_of_variation": 0.08,
+        "minimum_regression_r_squared": 0.95,
+        "hemoglobin_handling": "Use the source-supplied hemoglobin-adjusted Vc and measured hemoglobin metadata; do not apply an undocumented second correction.",
+        "use_larger_source_supplied_uncertainty": true
+      },
+      "numeric_rule": {
+        "geometric_mean_ratio_lower": 0.8,
+        "geometric_mean_ratio_upper": 1.25,
+        "equivalence_confidence_level": 0.9,
+        "bootstrap_resamples": 10000,
+        "bootstrap_seed": 20260905
+      },
+      "decision": "Qualifies only if at least twelve eligible positive Vc records remain and the complete two-sided 90 percent bootstrap interval for the model-to-observed geometric-mean ratio lies within 0.80 to 1.25. A wider interval is inconclusive. Individual residuals and the 8 percent method CV are still reported."
+    },
+    {
+      "endpoint_id": "PCQ-C2",
+      "role": "primary",
+      "activation_status": "blocked-until-independent-observation-model",
+      "minimum_complete_participants": 20,
+      "uncertainty_model": {
+        "rest_repeatability_coefficient": 0.172,
+        "stress_repeatability_coefficient": 0.179,
+        "tracer_retention_relative_bias_sensitivity": 0.25,
+        "use_larger_source_supplied_uncertainty": true
+      },
+      "numeric_rule": {
+        "geometric_mean_ratio_lower": 0.75,
+        "geometric_mean_ratio_upper": 1.3333333333333333,
+        "equivalence_confidence_level": 0.9,
+        "bootstrap_resamples": 10000,
+        "bootstrap_seed": 20260905
+      },
+      "decision": "No comparison may run until independently sourced extra-capillary and mixing terms are frozen. If activated before outcome access, qualification requires at least twenty eligible rest records and a complete 90 percent ratio interval within 0.75 to 1.3333; adenosine remains a stress extension."
+    }
+  ],
+  "supplementary_rules": [
+    {
+      "endpoint_id": "PCQ-H4",
+      "status": "secondary-no-track-veto",
+      "numeric_rule": "Report absolute and relative error; flag absolute relative error above 30 percent, but do not rescue or veto the PCQ-H primary decision with this optional endpoint."
+    },
+    {
+      "endpoint_id": "PCQ-C3",
+      "status": "required-covariate-limitation",
+      "numeric_rule": "Measured systemic hemoglobin and its correction are mandatory when available. Absence of directly measured capillary hematocrit is retained as a limitation and prevents PCQ-C from being described as complete microvascular personalization."
+    },
+    {
+      "endpoint_id": "PCQ-J1",
+      "status": "diagnostic-partial-only",
+      "numeric_rule": "Software volume-flow-transit relative closure must be no greater than 1e-12. Exact closure and a Vc divided by flow proxy do not constitute independent physiological validation or a complete PCQ-J pass."
+    }
+  ],
+  "statistics": {
+    "interval_type": "two-sided 90 percent confidence interval for equivalence decisions",
+    "bootstrap": "participant-cluster bootstrap with 10000 resamples and seed 20260905; preserve all stages from a sampled participant",
+    "coverage": "Report the observed compatible fraction and its two-sided 95 percent Wilson interval; the point fraction drives the predeclared 0.80 gate while the interval exposes small-sample precision.",
+    "missingness": "No primary endpoint imputation. Report eligible, complete, and missing counts per participant, stage, source, and endpoint.",
+    "multiplicity": "All six primary endpoints are reported. Each track requires every activated primary endpoint; no global pass, endpoint substitution, or success-selected subgroup is allowed.",
+    "outliers": "No outcome-based exclusion. Retain all eligible values; source quality flags are reported and exclusion is allowed only by a pre-outcome eligibility rule.",
+    "failure_states": ["qualified", "not-qualified", "inconclusive-insufficient-precision", "blocked-access-or-rights", "blocked-observation-model", "out-of-scope-stress-test"]
+  },
+  "decision_policy": {
+    "PCQ-H": "The Arizona cohort can produce a bounded pilot with three through nine eligible participants. A track qualification decision requires at least ten; another recumbent healthy source is required if Arizona cannot supply that number.",
+    "PCQ-R": "The Bailey source is provisional. Aggregate-only results remain supportive; five-lobe participant-level data and the minimum sample are required for a track decision.",
+    "PCQ-C": "PCQ-C1 can be evaluated from D'Souza when rights and records are available. PCQ-C as a whole remains partial while PCQ-C2 lacks an independently fixed whole-pulmonary observation model.",
+    "PCQ-J": "No global joint qualification decision is available in this amendment. D'Souza can support only same-stage flow-volume compatibility, and algebraic closure cannot upgrade the result.",
+    "amendment_after_outcome_access": "Any changed endpoint, eligibility rule, observation equation, uncertainty floor, numeric limit, or analysis method after participant-level outcome access creates a new protocol version and requires an independent validation split."
+  },
+  "next_step": {
+    "increment": "PCQ-1.4",
+    "deliverable": "strict rights-aware data schemas, provenance manifests, quarantine boundary, and outcome-blind fixture adapters implementing this frozen analysis contract",
+    "external_contact": "No data request is sent by PCQ-1.3; an authorized institutional representative must review and send any request."
+  }
+}

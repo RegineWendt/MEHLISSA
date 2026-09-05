@@ -4,7 +4,7 @@
   "status_date_display": "5 September 2026",
   "development_branch": "mehlissa-next-generation",
   "milestones_passed_through": "M7",
-  "current_focus": "PCQ-1 pulmonary and capillary pre-outcome amendment and governed evidence acquisition",
+  "current_focus": "PCQ-1.4 rights-aware pulmonary and capillary data adapters",
   "research_use": {
     "delivery_range": "UX-1 through UX-6",
     "workbench_version": "1.0.0",
@@ -40,11 +40,12 @@
   },
   "active_scientific_qualification": {
     "protocol_id": "PCQ-1",
-    "protocol_version": "0.1.0",
-    "status": "design and evidence-source screen established before participant-level outcome access",
+    "protocol_version": "0.2.0",
+    "status": "design, evidence-source screen, and pre-outcome analysis amendment established before participant-level outcome access",
     "machine_record": "data/qualification/pulmonary-capillary-qualification-protocol-v1.json",
     "candidate_register": "data/qualification/pulmonary-capillary-evidence-candidate-register-v1.json",
-    "next_increment": "PCQ-1.3 pre-outcome amendment and governed data requests"
+    "preoutcome_amendment": "data/qualification/pulmonary-capillary-preoutcome-amendment-v1.json",
+    "next_increment": "PCQ-1.4 rights-aware data schemas, quarantine boundary, and outcome-blind adapters"
   },
   "next_scientific_packages": [
     "Pulmonary and capillary qualification",

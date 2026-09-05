@@ -428,7 +428,8 @@ Use [the shared axial experiment](#one-flow-diffusion-and-wall-reaction-experime
 Start with [interpreting model evidence](#how-to-interpret-model-evidence) and
 [the pulmonary validation workflows](#run-the-pulmonary-0d-independent-validation).
 
-The active next qualification cycle is governed by design v0.1.0 of the
+The active next qualification cycle is governed by design v0.1.0 and analysis
+amendment v0.2.0 of the
 [PCQ-1 pulmonary and capillary protocol](qualification/PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md).
 It freezes the entering pulmonary and capillary candidates, separates four
 qualification tracks, and predeclares endpoints, data-role rules, uncertainty,
@@ -439,8 +440,19 @@ rights, independence, public outcome exposure, and rejection reasons. It
 identifies the University of Arizona iCPET cohort for primary hemodynamics,
 D'Souza 2025 for same-stage functional capillary volume and flow, Lassen 2023
 for a separate whole-pulmonary transit observation model, and Bailey 2019 for
-the next five-lobe access inquiry. No request has been sent and no participant
-record has been acquired. This source selection does **not** mean that
+the next five-lobe access inquiry. The
+[PCQ-1.3 pre-outcome amendment](qualification/PCQ1_PRE_OUTCOME_AMENDMENT.md)
+now locks how those measurements may be compared, minimum sample sizes,
+uncertainty floors, 90% equivalence intervals, missing-data handling, and six
+primary decision gates. Ten eligible participants are required for full
+hemodynamic or five-lobe decisions and twelve for the functional-capillary-
+volume decision; smaller eligible sets can only be reported as pilot or
+inconclusive evidence. Whole-pulmonary transit remains blocked because it is
+not the same observable as the model's capillary-only residence time.
+
+No request has been sent and no participant record has been acquired. A
+machine-checked protocol and numeric analysis plan show that the evaluation was
+specified prospectively; they do **not** mean that
 participant-level hemodynamics, capillary volume, transit, regional dynamics,
 or their joint physiological state have passed validation. Researchers should
 continue to cite the existing M3/M4 evidence level until a locked PCQ-1 result

@@ -28,7 +28,11 @@ into participant-level trajectories. This document therefore remains the
 higher-resolution evidence plan rather than the immediate M3 blocker. The
 [PCQ-1.2 evidence-source screen](../qualification/PCQ1_EVIDENCE_SOURCE_SCREEN.md)
 has since rechecked the candidate hierarchy against primary protocols and
-official repositories.
+official repositories. The subsequent
+[PCQ-1.3 pre-outcome amendment](../qualification/PCQ1_PRE_OUTCOME_AMENDMENT.md)
+supersedes the older open-ended acceptance wording for new PCQ-H evidence: it
+locks the observation model, numeric gates, uncertainty floors, and a minimum
+of ten eligible participants for a full track decision.
 
 ## 2. Preferred first data set
 
@@ -147,8 +151,9 @@ true:
 
 1. access and reuse terms are documented;
 2. the cohort is confirmed disjoint from calibration and prior validation;
-3. at least one healthy subject has three jointly measured stages, with a
-   larger cohort preferred;
+3. at least three eligible healthy participants have three jointly measured
+   stages for a bounded pilot, and at least ten meet the same rule for a full
+   PCQ-H track decision;
 4. acceptance criteria are locked before the values are inspected;
 5. the immutable v2 model is evaluated without fitting;
 6. subject and cohort reports expose all failures; and

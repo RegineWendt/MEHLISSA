@@ -261,11 +261,13 @@ python scripts/check_evidence_validity_matrix.py
 python scripts/check_paper1_protocol.py
 python scripts/check_pulmonary_capillary_qualification_protocol.py
 python scripts/check_pulmonary_capillary_evidence_candidates.py
+python scripts/check_pulmonary_capillary_preoutcome_amendment.py
 python scripts/check_paper1_release_candidate.py
 python -m unittest tests.test_evidence_validity_matrix -v
 python -m unittest tests.test_paper1_protocol -v
 python -m unittest tests.test_pulmonary_capillary_qualification_protocol -v
 python -m unittest tests.test_pulmonary_capillary_evidence_candidates -v
+python -m unittest tests.test_pulmonary_capillary_preoutcome_amendment -v
 python -m unittest tests.test_paper1_measurement_tools -v
 python -m unittest tests.test_paper1_release_candidate -v
 ```
@@ -293,6 +295,15 @@ track-specific rankings, access and participant-data rights, source overlap,
 public aggregate-outcome exposure, rejected-primary decisions, anatomical
 transit boundaries, and unsent external actions. It deliberately cannot turn a
 source screen, public article, or draft request into physiological evidence.
+
+The PCQ-1.3 amendment checker binds the chosen candidate-register and design
+hashes to guarded source roles, eight anatomical/measurement observation
+models, minimum samples, uncertainty floors, six primary numeric gates,
+missingness and statistical policy, and explicit blocked outcomes. Its negative
+tests prevent a small pilot from silently becoming a full track decision and
+prevent the capillary-only residence time from being compared directly with a
+whole-pulmonary transit measurement. Passing it proves prospective analysis
+discipline, not physiological agreement.
 
 Do not edit the locked protocol or raw archives in place. A changed protocol
 requires a new version and pre-measurement commit; a changed candidate requires

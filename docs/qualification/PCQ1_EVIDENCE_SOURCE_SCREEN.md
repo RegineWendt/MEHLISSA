@@ -49,7 +49,7 @@ later reviewer can reproduce or extend the decision.
 
 | Track | Priority path | Backup or context | Present conclusion |
 |---|---|---|---|
-| PCQ-H, participant hemodynamics | University of Arizona healthy-control iCPET | Coffman 2018 upright catheter cohort; Pandey 2020 upright historical cohort | Arizona remains the only screened candidate matching the primary supine, repeated mPAP-PAWP-cardiac-output tuple. Access and reuse terms are pending. |
+| PCQ-H, participant hemodynamics | University of Arizona healthy-control iCPET | Coffman 2018 upright catheter cohort; Pandey 2020 upright historical cohort | Arizona remains the only screened candidate matching the primary supine, repeated mPAP-PAWP-cardiac-output tuple. It has only five controls and a public group age of 43 plus or minus 16 years, so individual 20-to-40-year eligibility, access, and reuse terms remain pending. |
 | PCQ-R, regional perfusion | Bailey 2019 five-lobe supine/erect V/Q SPECT | Wong 2014 four pulmonary venous territories across posture and exercise; Hall 2014 right-lung spatial perfusion | No new participant-level five-lobe data are yet available. Dynamic sources require an observation model rather than pretending that four venous territories or spatial zones are five lobes. |
 | PCQ-C, capillary volume and transit | D'Souza 2025 for functional `Vc` plus flow and hemoglobin; Lassen 2023 for whole-pulmonary transit and repeatability | Coffman 2017 five-stage upright `Vc`-flow-Hb replication | The two priority sources are complementary, not interchangeable. Their data and rights must be requested separately. |
 | PCQ-J, joint coherence | D'Souza 2025 supports partial same-stage flow-volume coherence | Lassen 2023 supports a separate transit observation model | No screened cohort contains the complete hemodynamic, five-lobe, functional-volume, anatomically matched transit, and hematocrit state. PCQ-J therefore remains partial. |
@@ -175,18 +175,23 @@ to all published aggregate outcomes. The mitigation is explicit and binding:
 
 ## 6. Ordered next actions
 
-1. Have an authorized representative review and send the existing
-   [UA iCPET request](../m3/UA_ICPET_DATA_REQUEST.md).
-2. Have an authorized representative review and send the new
-   [D'Souza request](DSOUZA_2025_DATA_REQUEST.md).
-3. Ask only for feasibility and reuse terms for Lassen participant-level
-   transit replicates and Bailey five-lobe posture data.
-4. While responses are pending, draft PCQ-1.3 using method evidence only:
-   observation models, sample-size/precision rationale, missingness, covariance,
-   hemoglobin handling, and numeric tolerances.
-5. Commit PCQ-1.3 before receiving or opening any participant-level outcome
-   file. If data arrive first, quarantine them outside the repository and do
-   not inspect them until the amendment is committed.
+1. Complete and commit the
+   [PCQ-1.3 pre-outcome amendment](PCQ1_PRE_OUTCOME_AMENDMENT.md) before
+   receiving or opening any participant-level outcome file. This is now done
+   locally; the amendment freezes observation models, sample and precision
+   floors, missingness, hemoglobin handling, statistical rules, and numeric
+   gates.
+2. Build PCQ-1.4 rights-aware source manifests, quarantine boundary, strict
+   measured-data schemas, and outcome-blind fixture adapters.
+3. Have an authorized representative review the existing
+   [UA iCPET request](../m3/UA_ICPET_DATA_REQUEST.md) and the
+   [D'Souza request](DSOUZA_2025_DATA_REQUEST.md), then decide whether to send
+   them under an identified institutional data controller.
+4. Ask only for feasibility and reuse terms for Lassen participant-level
+   transit replicates and Bailey five-lobe posture data. Lassen analysis remains
+   blocked until its extra-capillary observation model is independently fixed.
+5. If data arrive before PCQ-1.4 is complete, quarantine them outside the
+   repository and do not inspect them.
 
 External contact is not performed by this repository change. The responsible
 institution must decide who can accept data-use terms and whether TU Berlin,

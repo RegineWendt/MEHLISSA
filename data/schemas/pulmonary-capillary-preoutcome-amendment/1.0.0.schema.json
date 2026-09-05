@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/pulmonary-capillary-preoutcome-amendment/1.0.0.schema.json",
+  "title": "MEHLISSA PCQ-1.3 pulmonary and capillary pre-outcome amendment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "amendment",
+    "selected_sources",
+    "analysis_sets",
+    "observation_models",
+    "endpoint_rules",
+    "supplementary_rules",
+    "statistics",
+    "decision_policy",
+    "next_step"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "amendment": {"$ref": "#/$defs/amendment"},
+    "selected_sources": {
+      "type": "array",
+      "minItems": 4,
+      "items": {"$ref": "#/$defs/selected_source"}
+    },
+    "analysis_sets": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {"$ref": "#/$defs/analysis_set"}
+    },
+    "observation_models": {
+      "type": "array",
+      "minItems": 8,
+      "items": {"$ref": "#/$defs/observation_model"}
+    },
+    "endpoint_rules": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"$ref": "#/$defs/endpoint_rule"}
+    },
+    "supplementary_rules": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/supplementary_rule"}
+    },
+    "statistics": {"$ref": "#/$defs/statistics"},
+    "decision_policy": {"$ref": "#/$defs/decision_policy"},
+    "next_step": {"$ref": "#/$defs/next_step"}
+  },
+  "$defs": {
+    "track": {"enum": ["PCQ-H", "PCQ-R", "PCQ-C", "PCQ-J"]},
+    "endpoint": {"enum": ["PCQ-H1", "PCQ-H2", "PCQ-H3", "PCQ-H4", "PCQ-R1", "PCQ-C1", "PCQ-C2", "PCQ-C3", "PCQ-J1"]},
+    "nonempty_strings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "file_hash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "amendment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "protocol_id",
+        "protocol_version",
+        "created_date",
+        "status",
+        "baseline_commit",
+        "analysis_plan_id",
+        "parent_protocol",
+        "candidate_register",
+        "outcome_access",
+        "public_outcome_exposure",
+        "review_status",
+        "clinical_use"
+      ],
+      "properties": {
+        "id": {"const": "PCQ-1.3"},
+        "protocol_id": {"const": "PCQ-1"},
+        "protocol_version": {"const": "0.2.0"},
+        "created_date": {"type": "string", "format": "date"},
+        "status": {"const": "locked-before-participant-level-outcome-access"},
+        "baseline_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "analysis_plan_id": {"const": "pcq-analysis-plan-1.0.0"},
+        "parent_protocol": {"$ref": "#/$defs/file_hash"},
+        "candidate_register": {"$ref": "#/$defs/file_hash"},
+        "outcome_access": {"type": "string", "minLength": 1},
+        "public_outcome_exposure": {"type": "string", "minLength": 1},
+        "review_status": {"type": "string", "minLength": 1},
+        "clinical_use": {"const": false}
+      }
+    },
+    "selected_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "tracks", "role", "status", "activation_requirements"],
+      "properties": {
+        "candidate_id": {"type": "string", "pattern": "^PCQ-SRC-[A-Z0-9-]+$"},
+        "tracks": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/track"}
+        },
+        "role": {"type": "string", "minLength": 1},
+        "status": {
+          "enum": [
+            "access-and-rights-pending",
+            "feasibility-access-and-rights-pending",
+            "observation-model-blocked-and-access-pending"
+          ]
+        },
+        "activation_requirements": {"$ref": "#/$defs/nonempty_strings"}
+      }
+    },
+    "analysis_set": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "track",
+        "primary_population",
+        "primary_state",
+        "minimum_complete_participants_for_bounded_pilot",
+        "minimum_complete_participants_for_track_decision",
+        "minimum_complete_stages_per_participant",
+        "insufficient_precision_rule"
+      ],
+      "properties": {
+        "track": {"$ref": "#/$defs/track"},
+        "primary_population": {"type": "string", "minLength": 1},
+        "primary_state": {"type": "string", "minLength": 1},
+        "minimum_complete_participants_for_bounded_pilot": {"type": "integer", "minimum": 0},
+        "minimum_complete_participants_for_track_decision": {"type": "integer", "minimum": 0},
+        "minimum_complete_stages_per_participant": {"type": "integer", "minimum": 0},
+        "insufficient_precision_rule": {"type": "string", "minLength": 1}
+      }
+    },
+    "observation_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "endpoint_ids", "measured_quantity", "model_quantity", "equation", "status", "non_equivalence"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^PCQ-OM-[A-Z0-9]+$"},
+        "endpoint_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/endpoint"}
+        },
+        "measured_quantity": {"type": "string", "minLength": 1},
+        "model_quantity": {"type": "string", "minLength": 1},
+        "equation": {"type": "string", "minLength": 1},
+        "status": {
+          "enum": [
+            "locked-awaiting-data",
+            "locked-awaiting-feasibility-and-data",
+            "blocked-until-independent-extra-capillary-terms-are-frozen",
+            "diagnostic-partial-only"
+          ]
+        },
+        "non_equivalence": {"type": "string", "minLength": 1}
+      }
+    },
+    "parameter_value": {
+      "type": ["number", "integer", "boolean", "string"],
+      "minLength": 1
+    },
+    "parameter_object": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"$ref": "#/$defs/parameter_value"}
+    },
+    "endpoint_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["endpoint_id", "role", "activation_status", "minimum_complete_participants", "uncertainty_model", "numeric_rule", "decision"],
+      "properties": {
+        "endpoint_id": {"enum": ["PCQ-H1", "PCQ-H2", "PCQ-H3", "PCQ-R1", "PCQ-C1", "PCQ-C2"]},
+        "role": {"const": "primary"},
+        "activation_status": {
+          "enum": [
+            "locked-awaiting-data",
+            "locked-awaiting-feasibility-and-data",
+            "blocked-until-independent-observation-model"
+          ]
+        },
+        "minimum_complete_participants": {"type": "integer", "minimum": 1},
+        "uncertainty_model": {"$ref": "#/$defs/parameter_object"},
+        "numeric_rule": {"$ref": "#/$defs/parameter_object"},
+        "decision": {"type": "string", "minLength": 1}
+      }
+    },
+    "supplementary_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["endpoint_id", "status", "numeric_rule"],
+      "properties": {
+        "endpoint_id": {"enum": ["PCQ-H4", "PCQ-C3", "PCQ-J1"]},
+        "status": {"enum": ["secondary-no-track-veto", "required-covariate-limitation", "diagnostic-partial-only"]},
+        "numeric_rule": {"type": "string", "minLength": 1}
+      }
+    },
+    "statistics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["interval_type", "bootstrap", "coverage", "missingness", "multiplicity", "outliers", "failure_states"],
+      "properties": {
+        "interval_type": {"type": "string", "minLength": 1},
+        "bootstrap": {"type": "string", "minLength": 1},
+        "coverage": {"type": "string", "minLength": 1},
+        "missingness": {"type": "string", "minLength": 1},
+        "multiplicity": {"type": "string", "minLength": 1},
+        "outliers": {"type": "string", "minLength": 1},
+        "failure_states": {"$ref": "#/$defs/nonempty_strings"}
+      }
+    },
+    "decision_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["PCQ-H", "PCQ-R", "PCQ-C", "PCQ-J", "amendment_after_outcome_access"],
+      "properties": {
+        "PCQ-H": {"type": "string", "minLength": 1},
+        "PCQ-R": {"type": "string", "minLength": 1},
+        "PCQ-C": {"type": "string", "minLength": 1},
+        "PCQ-J": {"type": "string", "minLength": 1},
+        "amendment_after_outcome_access": {"type": "string", "minLength": 1}
+      }
+    },
+    "next_step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["increment", "deliverable", "external_contact"],
+      "properties": {
+        "increment": {"const": "PCQ-1.4"},
+        "deliverable": {"type": "string", "minLength": 1},
+        "external_contact": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

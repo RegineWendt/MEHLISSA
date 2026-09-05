@@ -75,7 +75,7 @@
         "url": "https://doi.org/10.1161/JAHA.123.029667",
         "supporting_urls": []
       },
-      "population": "Five reported healthy controls; exact eligible complete-stage count must be confirmed.",
+      "population": "Five reported healthy controls; the public supplement reports group age 43 plus or minus 16 years and 60 percent female. Individual age eligibility and the exact complete-stage count must be confirmed.",
       "sample_size": 5,
       "posture": "supine",
       "states": ["rest", "incremental exercise"],
@@ -97,10 +97,10 @@
       },
       "outcome_exposure": {
         "status": "public-aggregate-inspected",
-        "detail": "The publication and public method description were known before data access; no healthy-control participant trajectory has been inspected."
+        "detail": "The publication, public method description, and aggregate control age, sex, resting-pressure, alpha, and slope summaries were known before data access; no healthy-control participant trajectory has been inspected."
       },
       "strengths": ["matches the primary recumbent posture", "invasive stage-matched mPAP, PAWP, and cardiac output", "already has a minimal pseudonymous request contract"],
-      "gaps": ["small cohort", "participant data and rights pending", "complete-stage count and uncertainty fields unconfirmed"],
+      "gaps": ["small cohort", "group age 43 plus or minus 16 years may leave fewer participants inside the primary 20-to-40-year window", "participant data and rights pending", "complete-stage count and uncertainty fields unconfirmed"],
       "decision_rationale": "Best match to all three primary PCQ-H trajectory inputs in the declared posture.",
       "next_action": "Have an authorized institutional representative review and send docs/m3/UA_ICPET_DATA_REQUEST.md; do not inspect records until the PCQ-1.3 numeric amendment is committed."
     },

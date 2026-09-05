@@ -13,7 +13,9 @@ demonstrator and Workbench 1.0. The machine-readable design is
 validated against schema
 `data/schemas/pulmonary-capillary-qualification-protocol/1.0.0.schema.json`.
 
-**Current status:** design v0.1.0 and PCQ-1.2 evidence-source screen completed.
+**Current status:** design v0.1.0, PCQ-1.2 evidence-source screen, and
+[PCQ-1.3 pre-outcome amendment](PCQ1_PRE_OUTCOME_AMENDMENT.md) v0.2.0
+completed.
 The design was recorded before inspection of any new validation outcomes and
 freezes the entering model artifacts, bounded candidate claim, qualification
 tracks, endpoint hierarchy, analysis rules, uncertainty classes, negative
@@ -23,10 +25,12 @@ in their publications; no participant-level candidate data were acquired or
 inspected. This progress does not claim that pulmonary or capillary
 qualification has passed.
 
-The next protocol amendment may name the selected data, its observation model,
-sample-size rationale, and numeric tolerances. That amendment must be committed
-before primary validation outcomes are exposed to model developers. Any change
-after outcome access requires a new protocol version and an independent
+The amendment now freezes the selected-source roles, observation models,
+sample-size and precision floors, uncertainty handling, analysis version, and
+numeric decision limits before primary participant-level outcomes are exposed
+to model developers. It deliberately leaves whole-pulmonary transit blocked
+until independently sourced extra-capillary and mixing delays are fixed. Any
+change after outcome access requires a new protocol version and an independent
 validation split.
 
 ## 2. Bounded candidate claim
@@ -186,7 +190,7 @@ candidate, but cannot be removed from the evaluated version.
 |---|---|---|
 | ~~PCQ-1.1 design foundation~~ | **Completed locally:** human and machine-readable protocol, schema, frozen hashes, semantic checker, negative tests, and CI wiring | design validates and cannot claim success before outcomes |
 | ~~PCQ-1.2 evidence-source screen~~ | **Completed locally:** reusable search log, thirteen-candidate machine register, corrected PVDOMICS eligibility, ranked track paths, and send-ready D'Souza request | rights, variables, jointness, methods, uncertainty, independence, public outcome exposure, and rejection reasons reviewed; no participant records acquired and no request sent |
-| PCQ-1.3 pre-outcome amendment | selected data, observation models, sample-size rationale, numeric tolerances, and analysis version | reviewed and committed before outcome access |
+| ~~PCQ-1.3 pre-outcome amendment~~ | **Completed locally:** selected-source roles, eight observation models, precision floors, six primary numeric gates, statistics, explicit blocked states, and analysis version | machine and human records pass their semantic and negative tests before participant-level outcome access |
 | PCQ-1.4 data adapters | strict schemas and loaders for accepted measured data | invalid units, incomplete stages, source overlap, and restricted-field leakage fail closed |
 | PCQ-1.5 uncertainty and identifiability | parameter distributions, structural ensemble, measurement-error propagation, convergence, sensitivity, and identifiability report | all six uncertainty classes are represented or explicitly unavailable with consequences |
 | PCQ-1.6 locked execution | no-refit track reports with raw permissible artifacts and retained failures | every eligible observation, control, exclusion, and result is reproducible |
@@ -194,16 +198,12 @@ candidate, but cannot be removed from the evaluated version.
 
 ## 10. Immediate next action
 
-PCQ-1.3 is next. Before any participant-level outcome file is received or
-opened, it must freeze the selected-source roles, anatomical observation
-models, precision/sample-size rationale, missingness and covariance handling,
-hemoglobin treatment, numeric tolerances, and analysis version. The first
-authorized requests should target the University of Arizona iCPET records for
-PCQ-H and the D'Souza 2025 flow-volume records for PCQ-C and partial PCQ-J;
-Lassen transit and Bailey regional-perfusion contacts should initially confirm
-feasibility and rights. Numeric limits must come from repeatability,
-uncertainty propagation, and independently reviewed physiology rather than be
-tuned to the public aggregate results already seen during source screening.
+PCQ-1.4 is next. Implement strict, rights-aware source manifests and measured-
+data schemas, a quarantine boundary that prevents accidental outcome access,
+and outcome-blind fixture adapters implementing the frozen PCQ-1.3 contract.
+Invalid units, incomplete stage tuples, ineligible ages or states, unresolved
+calibration overlap, and restricted-field leakage must fail closed. No
+participant-level source is requested, opened, or committed by this step.
 
 ## 11. Existing evidence retained
 
