@@ -25,7 +25,10 @@ M3.11 now provides a separate, executable
 from Kovacs and Wolsk. It allows physiological development to continue without
 waiting for the Arizona request, but it does not turn aggregate group means
 into participant-level trajectories. This document therefore remains the
-higher-resolution evidence plan rather than the immediate M3 blocker.
+higher-resolution evidence plan rather than the immediate M3 blocker. The
+[PCQ-1.2 evidence-source screen](../qualification/PCQ1_EVIDENCE_SOURCE_SCREEN.md)
+has since rechecked the candidate hierarchy against primary protocols and
+official repositories.
 
 ## 2. Preferred first data set
 
@@ -59,8 +62,10 @@ The prepared request is
 | Priority | Candidate | Strength | Access or scope limitation |
 |---|---|---|---|
 | 1 | UA iCPET healthy controls, Elliott et al. 2023 | five healthy controls; supine multipoint protocol; joint mPAP/PAWP/CO acquisition | clinical records require author approval and explicit reuse terms; at least three complete stages per included control must be confirmed |
-| 2 | PVDOMICS | standardized deep phenotyping, healthy controls, invasive CPET at participating sites | controlled request through the Cleveland Clinic Data Coordinating Center; position and available stages must be checked per subject |
-| 3 | PEX-NET | large international registry; one to thirteen exercise measurements, median four | clinically indicated population rather than a clean healthy cohort; heterogeneous protocols; individual data are not public |
+| 2 | Coffman et al. 2018 | seven-stage exercise protocol; invasive mPAP and wedge pressure plus direct-Fick flow in nine catheterized healthy adults | upright rather than primary recumbent context; small cohort; possible participant overlap with Coffman et al. 2017 must be resolved |
+| 3 | Pandey et al. 2020 | 104 rigorously screened healthy adults spanning ages 20-76 with invasive upright exercise hemodynamics | historical source assembled from incompatible formats; exact availability of the complete PCQ-H endpoint tuple must be confirmed before selection |
+| rejected for initial PCQ-H | PVDOMICS | standardized deep phenotyping and controlled dbGaP access | the published protocol assigns healthy controls to non-invasive CPET and invasive CPET to consented pulmonary-hypertension participants; only a controlled variable inventory proving an eligible healthy invasive trajectory could overturn this decision |
+| later stress test | PEX-NET | large international registry; one to thirteen exercise measurements, median four | clinically referred rather than a clean healthy cohort; heterogeneous protocols; individual data are not public |
 
 The open PhysioNet SCG-RHC collection is not accepted for this task because it
 contains heart-failure catheterizations with pharmacological vasodilation, not
@@ -160,6 +165,14 @@ true:
    Cardiovascular Physiology in Patients With Pulmonary Vascular Disease:
    Insights From the PVDOMICS Program. *Circulation: Heart Failure*. 2020.
    <https://doi.org/10.1161/CIRCHEARTFAILURE.119.006363>
-3. Kovacs G, et al. Pulmonary hemodynamics during exercise and prognosis in the
+3. Coffman KE, et al. The effect of pulmonary vascular resistance on
+   cardiopulmonary exercise response in older adults. *Physiological Reports*.
+   2018;6:e13565.
+   <https://doi.org/10.14814/phy2.13565>
+4. Pandey A, et al. Determinants and prognostic implications of pulmonary
+   arterial pressure response to exercise. *JACC: Heart Failure*.
+   2020;8:111-121.
+   <https://doi.org/10.1016/j.jchf.2019.08.020>
+5. Kovacs G, et al. Pulmonary hemodynamics during exercise and prognosis in the
    PEX-NET registry. *European Respiratory Journal*. 2024.
    <https://doi.org/10.1183/13993003.00698-2024>

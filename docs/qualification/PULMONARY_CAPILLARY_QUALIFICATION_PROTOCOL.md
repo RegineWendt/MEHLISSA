@@ -13,11 +13,15 @@ demonstrator and Workbench 1.0. The machine-readable design is
 validated against schema
 `data/schemas/pulmonary-capillary-qualification-protocol/1.0.0.schema.json`.
 
-**Current status:** design v0.1.0, recorded before inspection of any new
-validation outcomes. It freezes the entering model artifacts, bounded candidate
-claim, qualification tracks, endpoint hierarchy, analysis rules, uncertainty
-classes, negative controls, amendment policy, and exit criteria. It does not
-claim that pulmonary or capillary qualification has passed.
+**Current status:** design v0.1.0 and PCQ-1.2 evidence-source screen completed.
+The design was recorded before inspection of any new validation outcomes and
+freezes the entering model artifacts, bounded candidate claim, qualification
+tracks, endpoint hierarchy, analysis rules, uncertainty classes, negative
+controls, amendment policy, and exit criteria. The source screen then reviewed
+thirteen candidates and transparently recorded the aggregate outcomes visible
+in their publications; no participant-level candidate data were acquired or
+inspected. This progress does not claim that pulmonary or capillary
+qualification has passed.
 
 The next protocol amendment may name the selected data, its observation model,
 sample-size rationale, and numeric tolerances. That amendment must be committed
@@ -99,18 +103,22 @@ They are not recycled as participant-level physiological tolerance limits.
 | Need | Candidate or present source | Current use | Blocking decision |
 |---|---|---|---|
 | participant-level multipoint hemodynamics | University of Arizona iCPET healthy controls | preferred PCQ-H candidate | author approval, reuse terms, complete-stage count, and outcome-blind threshold basis |
-| broader deeply phenotyped controls | Pulmonary Vascular Disease Phenomics Program (PVDOMICS) | PCQ-H alternative or later external replication | controlled request, exact variables, posture, stages, and rights |
+| upright invasive hemodynamics | Coffman et al. 2018 | PCQ-H backup and posture/age generalization | nine catheterized healthy participants; possible overlap with Coffman 2017 must be resolved |
+| broader deeply phenotyped controls | Pulmonary Vascular Disease Phenomics Program (PVDOMICS) | rejected for initial healthy invasive PCQ-H under the published protocol; possible later non-invasive or disease work | healthy controls receive non-invasive CPET, while invasive CPET is specified for pulmonary-hypertension participants; a controlled variable inventory would be needed to overturn this screen |
 | heterogeneous exercise registry | Pulmonary Hemodynamics during Exercise Network (PEX-NET) | external stress-test or generalization evidence | protocol heterogeneity and non-healthy referral population prevent use as the initial narrow claim without a separate design |
 | regional normal-supine perfusion | current Bourhis ventilation/perfusion single-photon emission computed tomography cohort | reproduce current PCQ-R aggregate result | a distinct participant-level or dynamic cohort is still required |
 | functional capillary volume | current Lewis recumbent values | historical parameter anchor | small historical cohort, indirect method, hematocrit assumption, and no independent joint validation |
 | morphometric capacity and surface | current Muehlfeld human lung morphometry | structural context and capacity anchor | destructive ex-vivo morphometry is not a functional-volume or transit validation |
-| joint flow, functional volume, and transit | no accepted candidate yet | highest-priority evidence search for PCQ-C and PCQ-J | method-compatible source, reuse rights, matched state, and uncertainty model |
+| joint flow and functional capillary volume | D'Souza et al. 2025 | priority PCQ-C request and partial PCQ-J bridge | raw-data rights, posture details, covariance, and participant-level extract remain pending; `Vc/Q` is a derived functional residence proxy, not measured capillary transit |
+| pulmonary transit | Lassen et al. 2023 | PCQ-C2 observation-model candidate | pulmonary-trunk-to-left-atrium transit is broader than capillary transit and its pulmonary blood volume is algebraically derived from flow times transit, so it cannot independently validate closure |
+| dynamic or participant-level regional perfusion | Bailey et al. 2019 and Wong et al. 2014 | priority five-lobe request and four-territory dynamic backup | access and reuse terms remain pending; Wong requires a frozen observation model that combines right-middle and right-lower predictions |
 
-The next source-search step must use a recorded screening log. For every
-candidate it captures population, posture, state, measured variables, jointness,
-sample size, acquisition method, uncertainty, access, licence, calibration
-overlap, cohort reuse, and acceptance or rejection reason. Published aggregates
-can support context but cannot be relabelled as participant-level evidence.
+The completed [PCQ-1.2 screen](PCQ1_EVIDENCE_SOURCE_SCREEN.md) and its
+machine-readable candidate register capture population, posture, state,
+measured variables, jointness, sample size, acquisition method, uncertainty,
+access, licence, calibration overlap, cohort reuse, outcome exposure, and
+acceptance or rejection reason. Published aggregates support source selection
+and method context but cannot be relabelled as participant-level evidence.
 
 ### 6.2 Minimum eligibility rules
 
@@ -177,7 +185,7 @@ candidate, but cannot be removed from the evaluated version.
 | Increment | Deliverable | Completion condition |
 |---|---|---|
 | ~~PCQ-1.1 design foundation~~ | **Completed locally:** human and machine-readable protocol, schema, frozen hashes, semantic checker, negative tests, and CI wiring | design validates and cannot claim success before outcomes |
-| PCQ-1.2 evidence-source screen | reusable search log and ranked candidate register for PCQ-H, PCQ-R, PCQ-C, and PCQ-J | rights, variables, jointness, methods, uncertainty, independence, and rejection reasons reviewed |
+| ~~PCQ-1.2 evidence-source screen~~ | **Completed locally:** reusable search log, thirteen-candidate machine register, corrected PVDOMICS eligibility, ranked track paths, and send-ready D'Souza request | rights, variables, jointness, methods, uncertainty, independence, public outcome exposure, and rejection reasons reviewed; no participant records acquired and no request sent |
 | PCQ-1.3 pre-outcome amendment | selected data, observation models, sample-size rationale, numeric tolerances, and analysis version | reviewed and committed before outcome access |
 | PCQ-1.4 data adapters | strict schemas and loaders for accepted measured data | invalid units, incomplete stages, source overlap, and restricted-field leakage fail closed |
 | PCQ-1.5 uncertainty and identifiability | parameter distributions, structural ensemble, measurement-error propagation, convergence, sensitivity, and identifiability report | all six uncertainty classes are represented or explicitly unavailable with consequences |
@@ -186,11 +194,16 @@ candidate, but cannot be removed from the evaluated version.
 
 ## 10. Immediate next action
 
-PCQ-1.2 is next. It should first search for a source-disjoint data set with
-joint cardiac output and functional pulmonary capillary blood volume, ideally
-with a compatible transit measurement and recorded hematocrit. In parallel,
-the already prepared iCPET request can serve PCQ-H. The search result should be
-reviewed before any new model code is written.
+PCQ-1.3 is next. Before any participant-level outcome file is received or
+opened, it must freeze the selected-source roles, anatomical observation
+models, precision/sample-size rationale, missingness and covariance handling,
+hemoglobin treatment, numeric tolerances, and analysis version. The first
+authorized requests should target the University of Arizona iCPET records for
+PCQ-H and the D'Souza 2025 flow-volume records for PCQ-C and partial PCQ-J;
+Lassen transit and Bailey regional-perfusion contacts should initially confirm
+feasibility and rights. Numeric limits must come from repeatability,
+uncertainty propagation, and independently reviewed physiology rather than be
+tuned to the public aggregate results already seen during source screening.
 
 ## 11. Existing evidence retained
 

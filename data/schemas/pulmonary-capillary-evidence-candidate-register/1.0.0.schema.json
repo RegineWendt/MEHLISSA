@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/pulmonary-capillary-evidence-candidate-register/1.0.0.schema.json",
+  "title": "MEHLISSA pulmonary and capillary evidence candidate register",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "screen", "screening_dimensions", "track_summary", "candidates", "next_actions"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "screen": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "protocol_id", "version", "performed_date", "status", "search_scope", "outcome_boundary", "clinical_use"],
+      "properties": {
+        "id": {"const": "PCQ-1.2"},
+        "protocol_id": {"const": "PCQ-1"},
+        "version": {"const": "1.0.0"},
+        "performed_date": {"type": "string", "format": "date"},
+        "status": {"const": "completed-metadata-and-rights-screen-before-participant-data-access"},
+        "search_scope": {"type": "string", "minLength": 1},
+        "outcome_boundary": {"type": "string", "minLength": 1},
+        "clinical_use": {"const": false}
+      }
+    },
+    "screening_dimensions": {"$ref": "#/$defs/nonempty_strings"},
+    "track_summary": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["track", "status", "ranked_candidate_ids", "conclusion"],
+        "properties": {
+          "track": {"$ref": "#/$defs/track"},
+          "status": {"enum": ["candidate-access-pending", "candidate-access-pending-and-observation-model-required", "partial-candidates-only"]},
+          "ranked_candidate_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^PCQ-SRC-[A-Z0-9-]+$"}},
+          "conclusion": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 10,
+      "items": {"$ref": "#/$defs/candidate"}
+    },
+    "next_actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["priority", "action", "authorization"],
+        "properties": {
+          "priority": {"type": "integer", "minimum": 1},
+          "action": {"type": "string", "minLength": 1},
+          "authorization": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "track": {"enum": ["PCQ-H", "PCQ-R", "PCQ-C", "PCQ-J"]},
+    "nonempty_strings": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["citation", "doi", "url", "supporting_urls"],
+      "properties": {
+        "citation": {"type": "string", "minLength": 1},
+        "doi": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "format": "uri"},
+        "supporting_urls": {"type": "array", "items": {"type": "string", "format": "uri"}}
+      }
+    },
+    "access": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["article", "participant_data", "route", "data_use_terms", "redistribution"],
+      "properties": {
+        "article": {"type": "string", "minLength": 1},
+        "participant_data": {"type": "string", "minLength": 1},
+        "route": {"type": "string", "minLength": 1},
+        "data_use_terms": {"type": "string", "minLength": 1},
+        "redistribution": {"type": "string", "minLength": 1}
+      }
+    },
+    "independence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "assessment"],
+      "properties": {
+        "status": {"enum": ["source-disjoint-provisional", "current-evidence-source", "overlap-audit-required", "not-applicable-method-only"]},
+        "assessment": {"type": "string", "minLength": 1}
+      }
+    },
+    "outcome_exposure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "detail"],
+      "properties": {
+        "status": {"enum": ["metadata-and-methods-only", "public-aggregate-inspected", "existing-outcome-inspected"]},
+        "detail": {"type": "string", "minLength": 1}
+      }
+    },
+    "ranking": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["track", "rank"],
+      "properties": {
+        "track": {"$ref": "#/$defs/track"},
+        "rank": {"type": "integer", "minimum": 1}
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "track_ids", "rankings", "decision", "source", "population", "sample_size", "posture", "states", "variables", "jointness", "uncertainty", "access", "article_license", "data_license", "independence", "outcome_exposure", "strengths", "gaps", "decision_rationale", "next_action"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^PCQ-SRC-[A-Z0-9-]+$"},
+        "track_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/track"}},
+        "rankings": {"type": "array", "items": {"$ref": "#/$defs/ranking"}},
+        "decision": {"enum": ["priority-request", "backup-request", "conditional-later", "rejected-for-primary", "existing-supportive", "method-only"]},
+        "source": {"$ref": "#/$defs/source"},
+        "population": {"type": "string", "minLength": 1},
+        "sample_size": {"type": ["integer", "null"], "minimum": 1},
+        "posture": {"type": "string", "minLength": 1},
+        "states": {"$ref": "#/$defs/nonempty_strings"},
+        "variables": {"$ref": "#/$defs/nonempty_strings"},
+        "jointness": {"type": "string", "minLength": 1},
+        "uncertainty": {"type": "string", "minLength": 1},
+        "access": {"$ref": "#/$defs/access"},
+        "article_license": {"type": "string", "minLength": 1},
+        "data_license": {"type": "string", "minLength": 1},
+        "independence": {"$ref": "#/$defs/independence"},
+        "outcome_exposure": {"$ref": "#/$defs/outcome_exposure"},
+        "strengths": {"$ref": "#/$defs/nonempty_strings"},
+        "gaps": {"$ref": "#/$defs/nonempty_strings"},
+        "decision_rationale": {"type": "string", "minLength": 1},
+        "next_action": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

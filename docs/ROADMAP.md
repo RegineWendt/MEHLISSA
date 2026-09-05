@@ -1465,9 +1465,12 @@ The following packages are derived directly from this roadmap:
       six primary endpoints, no-refit and source-disjointness rules, six
       uncertainty classes, seven negative controls, and a non-clinical claim
       boundary before new validation outcomes.
-    - PCQ-1.2 screen and rank evidence sources, beginning with joint cardiac
-      output, functional pulmonary capillary volume, transit, and hematocrit,
-      while continuing the participant-level hemodynamic access path.
+    - ~~PCQ-1.2 screen and rank evidence sources.~~ Complete locally: a
+      [thirteen-candidate register](qualification/PCQ1_EVIDENCE_SOURCE_SCREEN.md)
+      ranks all four tracks, records access, rights, jointness, uncertainty,
+      source overlap and public outcome exposure, corrects PVDOMICS from a
+      presumed healthy invasive fallback to an ineligible primary source under
+      its published protocol, and prepares a D'Souza flow-volume request.
     - PCQ-1.3 commit the selected sources, observation models, sample-size
       rationale, and numeric tolerances before outcome access.
     - PCQ-1.4 through PCQ-1.7 implement strict data adapters, quantify

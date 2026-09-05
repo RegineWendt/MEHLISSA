@@ -260,10 +260,12 @@ python -m pip install -e ".[publication]"
 python scripts/check_evidence_validity_matrix.py
 python scripts/check_paper1_protocol.py
 python scripts/check_pulmonary_capillary_qualification_protocol.py
+python scripts/check_pulmonary_capillary_evidence_candidates.py
 python scripts/check_paper1_release_candidate.py
 python -m unittest tests.test_evidence_validity_matrix -v
 python -m unittest tests.test_paper1_protocol -v
 python -m unittest tests.test_pulmonary_capillary_qualification_protocol -v
+python -m unittest tests.test_pulmonary_capillary_evidence_candidates -v
 python -m unittest tests.test_paper1_measurement_tools -v
 python -m unittest tests.test_paper1_release_candidate -v
 ```
@@ -278,13 +280,19 @@ candidate change:
 python scripts/generate_paper1_checksums.py
 ```
 
-The PCQ-1 checker verifies the four pulmonary/capillary qualification tracks,
+The PCQ-1 design checker verifies the four pulmonary/capillary qualification tracks,
 the six primary endpoints, no-refit and non-clinical boundaries, unique
 negative controls, and SHA-256 hashes of the entering lung and capillary
 candidates. Its design status cannot be changed to a successful evidence claim
 without a successor protocol and actual qualification result. Numeric limits
 for new primary evidence belong in a reviewed amendment committed before
 validation outcomes are inspected.
+
+The separate PCQ-1.2 candidate checker verifies the thirteen-source register,
+track-specific rankings, access and participant-data rights, source overlap,
+public aggregate-outcome exposure, rejected-primary decisions, anatomical
+transit boundaries, and unsent external actions. It deliberately cannot turn a
+source screen, public article, or draft request into physiological evidence.
 
 Do not edit the locked protocol or raw archives in place. A changed protocol
 requires a new version and pre-measurement commit; a changed candidate requires

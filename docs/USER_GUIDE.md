@@ -432,8 +432,16 @@ The active next qualification cycle is governed by design v0.1.0 of the
 [PCQ-1 pulmonary and capillary protocol](qualification/PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md).
 It freezes the entering pulmonary and capillary candidates, separates four
 qualification tracks, and predeclares endpoints, data-role rules, uncertainty,
-controls, and amendment policy before new outcomes. Its current design status
-does **not** mean that participant-level hemodynamics, capillary volume, transit,
+controls, and amendment policy before new participant-level outcomes. The
+[PCQ-1.2 evidence-source screen](qualification/PCQ1_EVIDENCE_SOURCE_SCREEN.md)
+now ranks thirteen candidates and records their methods, jointness, access,
+rights, independence, public outcome exposure, and rejection reasons. It
+identifies the University of Arizona iCPET cohort for primary hemodynamics,
+D'Souza 2025 for same-stage functional capillary volume and flow, Lassen 2023
+for a separate whole-pulmonary transit observation model, and Bailey 2019 for
+the next five-lobe access inquiry. No request has been sent and no participant
+record has been acquired. This source selection does **not** mean that
+participant-level hemodynamics, capillary volume, transit, regional dynamics,
 or their joint physiological state have passed validation. Researchers should
 continue to cite the existing M3/M4 evidence level until a locked PCQ-1 result
 is published.

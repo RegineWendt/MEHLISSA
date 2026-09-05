@@ -22,7 +22,7 @@ rules are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 | understand APIs or add a model such as kidney | [Software Architecture and Developer Guide](architecture/SOFTWARE_ARCHITECTURE.md) | implemented structure, public APIs, coupling contracts, extension workflow, kidney outline, and personalization |
 | understand what comes next | [Roadmap](ROADMAP.md) | integrated platform history, scientific qualification program, further scenarios and organs, scaling, and the digital-twin path |
 | assess evidence for Paper 1 | [Evidence and Validity Baseline](publication/EVIDENCE_AND_VALIDITY_BASELINE.md) | schema-validated evidence roles, calibration/validation separation, source audit, claim boundaries, and bibliography export |
-| follow the active scientific qualification cycle | [PCQ-1 pulmonary and capillary protocol](qualification/PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md) | bounded candidate claim, frozen models, endpoint hierarchy, data rules, uncertainty plan, controls, and next evidence-acquisition step |
+| follow the active scientific qualification cycle | [PCQ-1 pulmonary and capillary protocol](qualification/PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md) and [evidence-source screen](qualification/PCQ1_EVIDENCE_SOURCE_SCREEN.md) | bounded candidate claim, frozen models, endpoint hierarchy, ranked source candidates, access and rights boundaries, controls, and next pre-outcome amendment |
 | reproduce Paper 1 technical measurements | [Technical Experiment Protocol v2](publication/PAPER1_TECHNICAL_EXPERIMENT_PROTOCOL_V2.md) | locked conditions, three experiments, metrics, controls, exclusions, failure handling, and archive structure |
 | inspect Paper 1 results | [Technical Measurement Report](publication/PAPER1_TECHNICAL_MEASUREMENTS.md) | 112-attempt body campaign, small M7 resource/replay study, access-path parity, retained setup deviation, and interpretation limits |
 | review the Paper 1 release candidate | [Candidate handoff](../publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/HANDOFF.md) | source export, raw archives, machine manifest, hashes, claim registry, reproduction, and review checklist |
@@ -51,6 +51,10 @@ rules are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
   validates the active PCQ-1 design, frozen model hashes, four-track coverage,
   endpoint hierarchy, no-refit rule, negative controls, and non-clinical claim
   boundary before new pulmonary or capillary validation outcomes are used.
+- `python scripts/check_pulmonary_capillary_evidence_candidates.py` validates
+  the PCQ-1.2 thirteen-candidate register, four-track rankings, access and data-
+  rights boundaries, PVDOMICS rejection, visible-outcome record, anatomical
+  transit limitation, and the fact that external requests remain unsent.
 - [Data licensing](DATA_LICENSING.md), the
   [licence and data inventory](m0/LICENSE_AND_DATA_INVENTORY.md), and
   [ADR-0007](architecture/adr/0007-repository-license.md) define release and

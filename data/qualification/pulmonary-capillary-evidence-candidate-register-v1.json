@@ -1,0 +1,610 @@
+{
+  "schema_version": "1.0.0",
+  "screen": {
+    "id": "PCQ-1.2",
+    "protocol_id": "PCQ-1",
+    "version": "1.0.0",
+    "performed_date": "2026-09-05",
+    "status": "completed-metadata-and-rights-screen-before-participant-data-access",
+    "search_scope": "Primary human studies and official data repositories relevant to participant-level pulmonary hemodynamics, regional perfusion, functional pulmonary capillary blood volume, pulmonary or capillary transit, hematological covariates, and joint measurement compatibility.",
+    "outcome_boundary": "Published abstracts, methods, tables, and figures were visible during source screening. No participant-level candidate data were obtained or inspected. New numeric acceptance limits must therefore be based on measurement repeatability, protocol uncertainty, and an independently reviewed clinical or physiological rationale, not tuned to published candidate outcomes.",
+    "clinical_use": false
+  },
+  "screening_dimensions": [
+    "population and physiological state",
+    "body position and exercise or intervention protocol",
+    "participant and stage-level jointness",
+    "measurement variables, units, and anatomical definitions",
+    "sample size, missingness, repeatability, and uncertainty",
+    "article and participant-data access",
+    "processing, publication, redistribution, and retention rights",
+    "independence from MEHLISSA calibration and existing validation sources",
+    "possible cohort reuse across publications",
+    "public outcome exposure before numeric tolerance locking"
+  ],
+  "track_summary": [
+    {
+      "track": "PCQ-H",
+      "status": "candidate-access-pending",
+      "ranked_candidate_ids": [
+        "PCQ-SRC-H-001",
+        "PCQ-SRC-H-002",
+        "PCQ-SRC-H-003"
+      ],
+      "conclusion": "The University of Arizona healthy-control iCPET records remain the only screened source matching the primary recumbent multipoint mPAP-PAWP-cardiac-output tuple. Two upright cohorts can support a separately declared stress or generalization analysis. PVDOMICS healthy controls do not undergo invasive CPET under the published protocol and are rejected as the primary PCQ-H source unless a controlled variable inventory demonstrates otherwise."
+    },
+    {
+      "track": "PCQ-R",
+      "status": "candidate-access-pending-and-observation-model-required",
+      "ranked_candidate_ids": [
+        "PCQ-SRC-R-002",
+        "PCQ-SRC-R-003",
+        "PCQ-SRC-R-004"
+      ],
+      "conclusion": "The existing Bourhis five-lobe aggregate result remains supportive. Bailey is the closest five-lobe posture candidate, while Wong and Hopkins provide stronger dynamic-state designs but only four venous territories or right-lung spatial regions. Participant data and a predeclared mapping to the five MEHLISSA beds are still required."
+    },
+    {
+      "track": "PCQ-C",
+      "status": "candidate-access-pending",
+      "ranked_candidate_ids": [
+        "PCQ-SRC-CJ-001",
+        "PCQ-SRC-C-002",
+        "PCQ-SRC-C-003"
+      ],
+      "conclusion": "D'Souza is the best primary-context candidate because functional capillary volume, cardiac output, and hemoglobin-adjusted measurements are stage matched in young semirecumbent adults. Lassen is the best screened whole-pulmonary transit and repeatability source but needs an anatomical observation model and cannot independently test its defining PBV equals flow times transit identity. Coffman provides a larger upright five-stage replication candidate with measured hemoglobin."
+    },
+    {
+      "track": "PCQ-J",
+      "status": "partial-candidates-only",
+      "ranked_candidate_ids": [
+        "PCQ-SRC-CJ-001",
+        "PCQ-SRC-C-002"
+      ],
+      "conclusion": "No screened cohort jointly measures the complete hemodynamic, five-lobe regional, functional capillary-volume, anatomically matched transit, and hematocrit state. D'Souza can support same-stage flow-volume coherence and a derived Vc/Q residence proxy; this remains a partial joint claim rather than complete PCQ-J qualification."
+    }
+  ],
+  "candidates": [
+    {
+      "id": "PCQ-SRC-H-001",
+      "track_ids": ["PCQ-H"],
+      "rankings": [{"track": "PCQ-H", "rank": 1}],
+      "decision": "priority-request",
+      "source": {
+        "citation": "Elliott J, Menakuru N, Martin KJ, et al. iCPET Calculator: A Web-Based Application to Standardize the Calculation of Alpha Distensibility in Patients With Pulmonary Arterial Hypertension. Journal of the American Heart Association. 2023;12:e029667.",
+        "doi": "10.1161/JAHA.123.029667",
+        "url": "https://doi.org/10.1161/JAHA.123.029667",
+        "supporting_urls": []
+      },
+      "population": "Five reported healthy controls; exact eligible complete-stage count must be confirmed.",
+      "sample_size": 5,
+      "posture": "supine",
+      "states": ["rest", "incremental exercise"],
+      "variables": ["cardiac output", "mean pulmonary arterial pressure", "pulmonary arterial wedge pressure", "workload", "optional systolic and diastolic pulmonary arterial pressure", "optional heart rate"],
+      "jointness": "The requested variables are stage matched within participant; at least three complete stages per accepted control remain to be confirmed.",
+      "uncertainty": "Direct-Fick cardiac output and invasive pressure methods are reported; record-level measurement uncertainty and covariance are not public and must be requested or conservatively modelled.",
+      "access": {
+        "article": "public article and calculator",
+        "participant_data": "author request required",
+        "route": "Use the prepared UA iCPET request after institutional review.",
+        "data_use_terms": "not established",
+        "redistribution": "not established"
+      },
+      "article_license": "article-specific open-access terms; verify at grant",
+      "data_license": "not established",
+      "independence": {
+        "status": "source-disjoint-provisional",
+        "assessment": "The institution and investigator group are distinct from the current Toronto, Leuven, Lee, Wolsk, Bourhis, Lewis, and Muehlfeld evidence roles; cohort disjointness must still be confirmed by the provider."
+      },
+      "outcome_exposure": {
+        "status": "public-aggregate-inspected",
+        "detail": "The publication and public method description were known before data access; no healthy-control participant trajectory has been inspected."
+      },
+      "strengths": ["matches the primary recumbent posture", "invasive stage-matched mPAP, PAWP, and cardiac output", "already has a minimal pseudonymous request contract"],
+      "gaps": ["small cohort", "participant data and rights pending", "complete-stage count and uncertainty fields unconfirmed"],
+      "decision_rationale": "Best match to all three primary PCQ-H trajectory inputs in the declared posture.",
+      "next_action": "Have an authorized institutional representative review and send docs/m3/UA_ICPET_DATA_REQUEST.md; do not inspect records until the PCQ-1.3 numeric amendment is committed."
+    },
+    {
+      "id": "PCQ-SRC-H-002",
+      "track_ids": ["PCQ-H"],
+      "rankings": [{"track": "PCQ-H", "rank": 2}],
+      "decision": "backup-request",
+      "source": {
+        "citation": "Coffman KE, Curry TB, Dietz NM, et al. The influence of pulmonary vascular pressures on lung diffusing capacity during incremental exercise in healthy aging. Physiological Reports. 2018;6:e13565.",
+        "doi": "10.14814/phy2.13565",
+        "url": "https://doi.org/10.14814/phy2.13565",
+        "supporting_urls": []
+      },
+      "population": "Eighteen healthy adults, nine younger and nine older; invasive catheterization completed in four younger and five older participants.",
+      "sample_size": 9,
+      "posture": "upright cycle ergometry",
+      "states": ["rest", "unloaded cycling", "10, 15, 30, 50, and 70 percent peak workload", "pre-sildenafil", "post-sildenafil"],
+      "variables": ["mean pulmonary arterial pressure", "mean pulmonary capillary wedge pressure", "direct-Fick cardiac output", "rebreathe cardiac output", "systolic and diastolic pulmonary arterial pressure", "heart rate", "DLCO"],
+      "jointness": "Seven repeated stages are available in the catheterized subset, with pressure, wedge pressure, and direct-Fick flow sampled within the same stage but at sequential time points.",
+      "uncertainty": "Repeated stages and parallel direct-Fick and rebreathe flow support method checks; participant data, covariance, and raw waveform repeatability are not public.",
+      "access": {
+        "article": "open access",
+        "participant_data": "not publicly located; author request required",
+        "route": "Confirm data retention, participant-level availability, and reuse terms with the study team.",
+        "data_use_terms": "not established",
+        "redistribution": "not established"
+      },
+      "article_license": "CC-BY",
+      "data_license": "not established",
+      "independence": {
+        "status": "source-disjoint-provisional",
+        "assessment": "Not used to parameterize the frozen PCQ-1 candidates, but the Mayo research program overlaps authors and possibly participants with Coffman 2017; treat those two publications as one evidence family until audited."
+      },
+      "outcome_exposure": {
+        "status": "public-aggregate-inspected",
+        "detail": "Published cohort results and methods were inspected; no participant trajectories were obtained."
+      },
+      "strengths": ["complete invasive PCQ-H tuple", "seven stages", "direct-Fick cardiac output", "young and older healthy strata"],
+      "gaps": ["upright rather than recumbent", "only four young catheterized participants", "pharmacological arm outside the primary claim", "raw access and rights unknown"],
+      "decision_rationale": "Strong multipoint methodological backup and upright stress test, but not a posture-matched replacement for UA iCPET.",
+      "next_action": "Request only if the primary UA path fails or an upright generalization protocol is approved; audit overlap with Coffman 2017 first."
+    },
+    {
+      "id": "PCQ-SRC-H-003",
+      "track_ids": ["PCQ-H"],
+      "rankings": [{"track": "PCQ-H", "rank": 3}],
+      "decision": "conditional-later",
+      "source": {
+        "citation": "Pandey A, Kraus WE, Brubaker PH, Kitzman DW. Healthy Aging and Cardiovascular Function: Invasive Hemodynamics During Rest and Exercise in 104 Healthy Volunteers. JACC: Heart Failure. 2020;8:111-121.",
+        "doi": "10.1016/j.jchf.2019.08.020",
+        "url": "https://doi.org/10.1016/j.jchf.2019.08.020",
+        "supporting_urls": []
+      },
+      "population": "One hundred four rigorously screened healthy volunteers aged 20 to 76 years.",
+      "sample_size": 104,
+      "posture": "seated rest and upright exhaustive cycle exercise",
+      "states": ["rest", "25 W incremental stages", "50 W submaximal", "peak exercise"],
+      "variables": ["cardiac output by Fick", "pulmonary capillary wedge pressure", "systemic pressure", "gas exchange", "radionuclide ventriculography"],
+      "jointness": "Hemodynamic, gas-exchange, and imaging measurements were simultaneous by stage, but mPAP is not reported as an available endpoint in the source article and must not be assumed from catheter presence.",
+      "uncertainty": "Large cohort and common protocol are strengths; the article states that legacy raw formats limit new individual-level analyses and published tables were digitized from historical plots.",
+      "access": {
+        "article": "public manuscript",
+        "participant_data": "availability not established and legacy formats are limiting",
+        "route": "Ask the corresponding author whether stage-level mPAP and participant records remain recoverable before any formal request.",
+        "data_use_terms": "not established",
+        "redistribution": "not established"
+      },
+      "article_license": "publisher copyright; verify manuscript terms",
+      "data_license": "not established",
+      "independence": {
+        "status": "source-disjoint-provisional",
+        "assessment": "Duke historical cohort and investigators are distinct from the frozen candidate sources; no known overlap, subject to provider confirmation."
+      },
+      "outcome_exposure": {
+        "status": "public-aggregate-inspected",
+        "detail": "Published aggregate age-stratified tables were visible; participant data were not inspected."
+      },
+      "strengths": ["large healthy cohort", "Fick cardiac output", "multiple simultaneous exercise measurements"],
+      "gaps": ["upright rather than recumbent", "mPAP availability unconfirmed", "1982-1989 source data and incompatible legacy formats", "rights unknown"],
+      "decision_rationale": "Potential generalization resource, not currently eligible for the PCQ-H primary endpoint tuple.",
+      "next_action": "Perform a feasibility-only author inquiry after the higher-ranked requests if mPAP and stage-level records are still required."
+    },
+    {
+      "id": "PCQ-SRC-H-004",
+      "track_ids": ["PCQ-H"],
+      "rankings": [],
+      "decision": "rejected-for-primary",
+      "source": {
+        "citation": "Tang WHW, Wilcox JD, Jacob MS, et al. Comprehensive Diagnostic Evaluation of Cardiovascular Physiology in Patients With Pulmonary Vascular Disease: Insights From the PVDOMICS Program. Circulation: Heart Failure. 2020.",
+        "doi": "10.1161/CIRCHEARTFAILURE.119.006363",
+        "url": "https://doi.org/10.1161/CIRCHEARTFAILURE.119.006363",
+        "supporting_urls": ["https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002451.v1.p1"]
+      },
+      "population": "PVDOMICS includes pulmonary vascular disease groups, disease comparators, and healthy controls.",
+      "sample_size": null,
+      "posture": "upright at most centers and supine at Mayo; healthy-control invasive exercise is not part of the published protocol",
+      "states": ["resting phenotyping", "non-invasive CPET for healthy controls", "invasive CPET for selected pulmonary-hypertension participants"],
+      "variables": ["deep phenotype variables", "non-invasive CPET in healthy controls", "resting RHC in applicable participants", "omics and imaging"],
+      "jointness": "The published methods specify non-invasive CPET for healthy controls; they therefore do not establish the required healthy stage-matched mPAP-PAWP-cardiac-output trajectory.",
+      "uncertainty": "Standardized multicenter forms exist, but center, posture, phenotype, and protocol heterogeneity require controlled variable-level review.",
+      "access": {
+        "article": "open access",
+        "participant_data": "controlled dbGaP access",
+        "route": "dbGaP study phs002451.v1.p1 with Data Use Certification",
+        "data_use_terms": "controlled repository terms",
+        "redistribution": "restricted by repository and consent terms"
+      },
+      "article_license": "open-access article; verify exact terms",
+      "data_license": "controlled access; no MEHLISSA relicensing",
+      "independence": {
+        "status": "overlap-audit-required",
+        "assessment": "The multicenter network includes Arizona and Mayo sites represented in other screened candidates; site and cohort lineage must be checked before any later use."
+      },
+      "outcome_exposure": {
+        "status": "metadata-and-methods-only",
+        "detail": "Protocol and official repository metadata were inspected, not participant outcomes."
+      },
+      "strengths": ["deep standardized phenotyping", "official controlled repository", "healthy controls exist"],
+      "gaps": ["healthy controls receive non-invasive rather than invasive CPET", "center and posture heterogeneity", "controlled access"],
+      "decision_rationale": "Does not meet the published PCQ-H healthy invasive trajectory requirement; retained only for later non-invasive covariates or generalization.",
+      "next_action": "Do not submit a PCQ-H primary request unless the dbGaP variable inventory proves that eligible healthy invasive stages exist."
+    },
+    {
+      "id": "PCQ-SRC-H-005",
+      "track_ids": ["PCQ-H"],
+      "rankings": [],
+      "decision": "conditional-later",
+      "source": {
+        "citation": "Kovacs G, et al. Pulmonary hemodynamics during exercise and prognosis in the PEX-NET registry. European Respiratory Journal. 2024.",
+        "doi": "10.1183/13993003.00698-2024",
+        "url": "https://doi.org/10.1183/13993003.00698-2024",
+        "supporting_urls": []
+      },
+      "population": "Large clinically referred international exercise-hemodynamics registry rather than a narrow healthy-volunteer cohort.",
+      "sample_size": null,
+      "posture": "heterogeneous by contributing center",
+      "states": ["rest", "one to thirteen exercise measurements"],
+      "variables": ["exercise pulmonary hemodynamics", "cardiac output", "pulmonary pressures", "clinical outcomes"],
+      "jointness": "Repeated invasive hemodynamics exist, but protocol and phenotype heterogeneity prevent silent use as the primary healthy-recumbent cohort.",
+      "uncertainty": "Large sample supports later stress testing; between-center method and selection heterogeneity must be modeled.",
+      "access": {
+        "article": "publication access",
+        "participant_data": "not public",
+        "route": "registry collaboration or data-use request",
+        "data_use_terms": "not established",
+        "redistribution": "not established"
+      },
+      "article_license": "verify at access",
+      "data_license": "not established",
+      "independence": {
+        "status": "overlap-audit-required",
+        "assessment": "A multicenter registry may include cohorts or investigators represented by current aggregate sources; source lineage must be resolved before use."
+      },
+      "outcome_exposure": {
+        "status": "public-aggregate-inspected",
+        "detail": "Registry-level publication summaries were known; no participant records were inspected."
+      },
+      "strengths": ["large repeated-stage registry", "broad external stress-test potential"],
+      "gaps": ["not a clean healthy cohort", "heterogeneous posture and protocols", "access and overlap unresolved"],
+      "decision_rationale": "Useful only under a separate generalization design after the narrow PCQ-H evaluation.",
+      "next_action": "Retain for a later external stress-test protocol, not PCQ-1.3 primary selection."
+    },
+    {
+      "id": "PCQ-SRC-R-001",
+      "track_ids": ["PCQ-R"],
+      "rankings": [],
+      "decision": "existing-supportive",
+      "source": {
+        "citation": "Bourhis D, Robin P, Essalah A, Abgral R. V/Q SPECT for the Assessment of Regional Lung Function: Generation of Normal Mean and Standard Deviation 3-D Maps. Frontiers in Medicine. 2020;7:143.",
+        "doi": "10.3389/fmed.2020.00143",
+        "url": "https://doi.org/10.3389/fmed.2020.00143",
+        "supporting_urls": []
+      },
+      "population": "Seventy-three clinically referred examinations judged strictly normal by two nuclear physicians.",
+      "sample_size": 73,
+      "posture": "supine",
+      "states": ["rest"],
+      "variables": ["five relative lobe perfusion fractions with and without attenuation correction"],
+      "jointness": "Only aggregate lobe means are in the repository; both reconstruction series share the same cohort.",
+      "uncertainty": "Published lobe means and reconstruction sensitivity are available; participant-level covariance is absent locally.",
+      "access": {
+        "article": "open access",
+        "participant_data": "author request required",
+        "route": "Existing permitted aggregate transcription is data/validation/pulmonary-lobar-perfusion/healthy-normal-spect-v1.json.",
+        "data_use_terms": "aggregate article transcription only",
+        "redistribution": "participant records not permitted or obtained"
+      },
+      "article_license": "CC-BY-4.0",
+      "data_license": "published aggregate only",
+      "independence": {
+        "status": "current-evidence-source",
+        "assessment": "Already used as the source-disjoint aggregate validation of the Lee-derived fixed lobe shares and therefore not a new independent PCQ-R cohort."
+      },
+      "outcome_exposure": {
+        "status": "existing-outcome-inspected",
+        "detail": "This is an already executed MEHLISSA aggregate validation source."
+      },
+      "strengths": ["all five anatomical lobes", "normal supine reference", "existing reproducible no-refit comparison"],
+      "gaps": ["aggregate only", "clinically referred rather than population-sampled", "no dynamic state", "cannot count as new PCQ-R validation"],
+      "decision_rationale": "Retained as existing evidence and reproduction control, not promoted to participant-level PCQ-R qualification.",
+      "next_action": "Reproduce unchanged during PCQ-1.6 and seek a distinct participant-level or dynamic cohort."
+    },
+    {
+      "id": "PCQ-SRC-R-002",
+      "track_ids": ["PCQ-R"],
+      "rankings": [{"track": "PCQ-R", "rank": 1}],
+      "decision": "priority-request",
+      "source": {
+        "citation": "Bailey DL, Farrow CE, Lau EM. V/Q SPECT-Normal Values for Lobar Function and Comparison With CT Volumes. Seminars in Nuclear Medicine. 2019;49:58-61.",
+        "doi": "10.1053/j.semnuclmed.2018.10.008",
+        "url": "https://doi.org/10.1053/j.semnuclmed.2018.10.008",
+        "supporting_urls": []
+      },
+      "population": "Small cohort of normal subjects; exact participant count and eligibility details require full-text or author confirmation.",
+      "sample_size": null,
+      "posture": "radiotracer administered in supine and erect conditions; SPECT/CT acquired supine",
+      "states": ["normal supine perfusion", "normal erect perfusion"],
+      "variables": ["relative functional contribution of all five lung lobes", "CT lobe volumes", "ventilation and perfusion"],
+      "jointness": "Five lobe contributions and posture are reported within the study, but participant-level pairing and covariance are not publicly established.",
+      "uncertainty": "Normal ranges are reported; raw participant uncertainty, acquisition repeatability, and exact sample size require confirmation.",
+      "access": {
+        "article": "abstract public; full article access may be restricted",
+        "participant_data": "not publicly located; author request required",
+        "route": "Contact the corresponding author for a minimal lobe-by-posture extract and rights statement.",
+        "data_use_terms": "not established",
+        "redistribution": "not established"
+      },
+      "article_license": "publisher copyright",
+      "data_license": "not established",
+      "independence": {
+        "status": "source-disjoint-provisional",
+        "assessment": "Australian investigators and cohort are distinct from the Lee calibration and Bourhis validation sources; this must be confirmed by recruitment and upstream-data audit."
+      },
+      "outcome_exposure": {
+        "status": "public-aggregate-inspected",
+        "detail": "Abstract-level direction and methods were inspected; participant lobe values were not obtained."
+      },
+      "strengths": ["all five lobes", "posture contrast", "healthy/normal cohort", "direct match to PCQ-R composition"],
+      "gaps": ["small and incompletely described public sample", "participant data and rights unknown", "injection posture and acquisition posture must remain distinct"],
+      "decision_rationale": "Closest screened source to participant-level five-lobe posture qualification.",
+      "next_action": "Prepare an author feasibility request after confirming the full article metadata; require participant-level five-lobe fractions, posture labels, uncertainty, and reuse terms."
+    },
+    {
+      "id": "PCQ-SRC-R-003",
+      "track_ids": ["PCQ-R"],
+      "rankings": [{"track": "PCQ-R", "rank": 2}],
+      "decision": "backup-request",
+      "source": {
+        "citation": "Wong DTH, Lee KJ, Yoo SJ, Tomlinson G, Grosse-Wortmann L. Changes in systemic and pulmonary blood flow distribution in normal adult volunteers in response to posture and exercise: a phase contrast magnetic resonance imaging study. Journal of Physiological Sciences. 2014;64:105-112.",
+        "doi": "10.1007/s12576-013-0298-z",
+        "url": "https://doi.org/10.1007/s12576-013-0298-z",
+        "supporting_urls": []
+      },
+      "population": "Twenty-four healthy adult volunteers without known cardiac or respiratory abnormality.",
+      "sample_size": 24,
+      "posture": "prone rest, supine rest, and supine cycle exercise",
+      "states": ["prone rest", "supine rest", "supine exercise"],
+      "variables": ["right and left pulmonary artery flow", "right upper and lower pulmonary vein flow", "left upper and lower pulmonary vein flow", "ascending aortic cardiac output"],
+      "jointness": "Vessel flows are repeated within participant and condition; right middle pulmonary venous drainage is incorporated into the right lower pulmonary vein territory when separately present.",
+      "uncertainty": "Published means and standard deviations are available; participant covariance and vessel-level repeatability require raw data or provider estimates.",
+      "access": {
+        "article": "public full text",
+        "participant_data": "not publicly located; author request required",
+        "route": "Ask whether de-identified per-condition vessel flows and right-middle drainage anatomy remain available.",
+        "data_use_terms": "not established",
+        "redistribution": "not established"
+      },
+      "article_license": "publisher copyright; public archive copy",
+      "data_license": "not established",
+      "independence": {
+        "status": "source-disjoint-provisional",
+        "assessment": "Toronto pediatric/cardiac imaging investigators and cohort are distinct from the current Lee and Bourhis regional sources; recruitment lineage must still be confirmed."
+      },
+      "outcome_exposure": {
+        "status": "public-aggregate-inspected",
+        "detail": "Published aggregate vessel-flow tables and directional results were inspected; participant records were not."
+      },
+      "strengths": ["within-participant posture and exercise changes", "quantitative flow", "cardiac output and pulmonary vessel partition in one protocol"],
+      "gaps": ["four venous drainage territories rather than five anatomical lobes", "right middle lobe may be combined with right lower territory", "participant rights unknown"],
+      "decision_rationale": "Best screened dynamic regional-flow backup, but it can support only an explicitly aggregated observation model.",
+      "next_action": "Use only after PCQ-1.3 freezes a four-territory observation model that combines MEHLISSA right-middle and right-lower predictions."
+    },
+    {
+      "id": "PCQ-SRC-R-004",
+      "track_ids": ["PCQ-R"],
+      "rankings": [{"track": "PCQ-R", "rank": 3}],
+      "decision": "conditional-later",
+      "source": {
+        "citation": "Hall ET, Sa RC, Holverda S, et al. The effect of supine exercise on the distribution of regional pulmonary blood flow measured using proton MRI. Journal of Applied Physiology. 2014;116:451-461.",
+        "doi": "10.1152/japplphysiol.00659.2013",
+        "url": "https://doi.org/10.1152/japplphysiol.00659.2013",
+        "supporting_urls": []
+      },
+      "population": "Six healthy adults, four men and two women, mean age 32 plus or minus 6 years.",
+      "sample_size": 6,
+      "posture": "supine",
+      "states": ["rest", "low-intensity cycle exercise"],
+      "variables": ["right-lung arterial-spin-labelling perfusion", "lung density", "density-normalized perfusion", "metabolic measurements"],
+      "jointness": "Rest and exercise imaging are repeated within participant, but spatial slices and gravitational regions are not anatomical lobe measurements.",
+      "uncertainty": "Regional variability is reported; small sample, right-lung-only imaging, breath timing, and mapping uncertainty dominate translation to MEHLISSA beds.",
+      "access": {
+        "article": "public full text",
+        "participant_data": "not publicly located; author request required",
+        "route": "Use as method and dynamic-pattern context unless raw regional maps and rights are granted.",
+        "data_use_terms": "not established",
+        "redistribution": "not established"
+      },
+      "article_license": "publisher archive terms",
+      "data_license": "not established",
+      "independence": {
+        "status": "source-disjoint-provisional",
+        "assessment": "UC San Diego cohort and imaging approach are distinct from current regional parameterization and validation sources."
+      },
+      "outcome_exposure": {
+        "status": "public-aggregate-inspected",
+        "detail": "Published aggregate patterns were inspected; participant images and values were not obtained."
+      },
+      "strengths": ["posture-matched rest and exercise", "within-person regional perfusion", "density normalization"],
+      "gaps": ["not lobe resolved", "right lung only", "n equals six", "raw access unknown"],
+      "decision_rationale": "Useful as a dynamic spatial stress test after a separate observation model, not a direct PCQ-R1 five-lobe source.",
+      "next_action": "Retain as method context; do not prioritize over Bailey or Wong for PCQ-1."
+    },
+    {
+      "id": "PCQ-SRC-CJ-001",
+      "track_ids": ["PCQ-C", "PCQ-J"],
+      "rankings": [{"track": "PCQ-C", "rank": 1}, {"track": "PCQ-J", "rank": 1}],
+      "decision": "priority-request",
+      "source": {
+        "citation": "D'Souza AW, Brotto AR, Hicks B, et al. Pulmonary capillary blood volume and diffusing membrane capacity during exercise in humans: role of pulmonary artery pressure. American Journal of Physiology-Lung Cellular and Molecular Physiology. 2025;328:L631-L637.",
+        "doi": "10.1152/ajplung.00358.2024",
+        "url": "https://doi.org/10.1152/ajplung.00358.2024",
+        "supporting_urls": ["https://kclpure.kcl.ac.uk/ws/files/354293958/d-souza-et-al-2025-pulmonary-capillary-blood-volume-and-diffusing-membrane-capacity-during-exercise-in-humans-role-of.pdf"]
+      },
+      "population": "Fifteen healthy nonsmoking young adults, seven female, age 24 plus or minus 4 years; cardiac output available for fourteen and RVSP for six.",
+      "sample_size": 15,
+      "posture": "baseline and 60 W semirecumbent cycle exercise",
+      "states": ["baseline", "60 W control exercise", "60 W exercise with bilateral thigh cuffs at 90 mmHg"],
+      "variables": ["functional pulmonary capillary blood volume Vc", "diffusing membrane capacity DM", "DLCO", "cardiac output by impedance cardiography", "hemoglobin concentration used for correction", "right ventricular systolic pressure in a subset", "heart rate", "stroke volume"],
+      "jointness": "Vc and cardiac output are measured in the same participant and state for fourteen participants. RVSP is available in six. No PAWP or directly measured mPAP is available, and Vc divided by flow would be a derived functional residence proxy rather than a measured anatomical transit time.",
+      "uncertainty": "The multiple-inspired-oxygen Vc regression requires r-squared at least 0.95 and values are hemoglobin adjusted. Record-level repeatability, covariance, missingness, and the distinction between measurement error and biological variation must be requested.",
+      "access": {
+        "article": "open access",
+        "participant_data": "available from corresponding author on reasonable request",
+        "route": "Use docs/qualification/DSOUZA_2025_DATA_REQUEST.md after institutional review.",
+        "data_use_terms": "not established",
+        "redistribution": "not established separately from article licence"
+      },
+      "article_license": "CC-BY-4.0",
+      "data_license": "not established",
+      "independence": {
+        "status": "source-disjoint-provisional",
+        "assessment": "University of Alberta cohort and authors are distinct from the Lewis functional-volume parameter source and the frozen pulmonary calibration and validation sources. Cohort overlap with other Alberta papers must be confirmed."
+      },
+      "outcome_exposure": {
+        "status": "public-aggregate-inspected",
+        "detail": "Published group and plotted individual outcomes were visible during screening. Raw records were not inspected; numeric tolerances may not be tuned to the visible results."
+      },
+      "strengths": ["young-adult primary population", "semirecumbent state", "same-stage Vc and cardiac output", "hemoglobin-adjusted functional volume", "explicit reasonable-request route"],
+      "gaps": ["only three states with two distinct exercise interventions", "one missing cardiac-output record", "RVSP only in six", "no PAWP or direct mPAP", "no measured transit", "raw-data rights pending"],
+      "decision_rationale": "Best screened match for independent functional capillary-volume qualification and partial flow-volume coherence.",
+      "next_action": "Review and send the prepared minimal request; obtain rights and a data dictionary, then lock the Vc observation equation, hemoglobin handling, missingness rule, and numeric tolerance before record access."
+    },
+    {
+      "id": "PCQ-SRC-C-002",
+      "track_ids": ["PCQ-C", "PCQ-J"],
+      "rankings": [{"track": "PCQ-C", "rank": 2}, {"track": "PCQ-J", "rank": 2}],
+      "decision": "backup-request",
+      "source": {
+        "citation": "Coffman KE, Carlson AR, Miller AD, Johnson BD, Taylor BJ. The effect of aging and cardiorespiratory fitness on the lung diffusing capacity response to exercise in healthy humans. Journal of Applied Physiology. 2017;122:1425-1434.",
+        "doi": "10.1152/japplphysiol.00694.2016",
+        "url": "https://doi.org/10.1152/japplphysiol.00694.2016",
+        "supporting_urls": ["https://eprints.whiterose.ac.uk/id/eprint/114363/"]
+      },
+      "population": "Thirty-one healthy adults: sixteen young adults aged 22 to 30 and fifteen older adults aged 60 to 76, stratified by fitness.",
+      "sample_size": 31,
+      "posture": "seated upright cycle ergometry",
+      "states": ["rest", "25, 50, 75, and 90 percent peak workload"],
+      "variables": ["functional pulmonary capillary blood volume Vc", "diffusing membrane capacity", "DLCO", "DLNO", "cardiac output by acetylene rebreathing", "earlobe capillary hemoglobin", "workload", "fitness"],
+      "jointness": "Duplicate Vc, diffusing-capacity, cardiac-output, and measured-hemoglobin observations are available within participant at five stages. Vc and cardiac output share one rebreathing procedure, which may induce correlated method error.",
+      "uncertainty": "Duplicate measurements and measured hemoglobin are important strengths; raw replicate covariance and participant values are not publicly downloadable, and the article manuscript has restricted reuse terms.",
+      "access": {
+        "article": "accepted manuscript available for private research under repository terms",
+        "participant_data": "not publicly located; author request required",
+        "route": "Request minimal stage-level and replicate data plus explicit reuse terms from the corresponding author.",
+        "data_use_terms": "not established",
+        "redistribution": "not established"
+      },
+      "article_license": "publisher copyright; repository copy is not openly relicensable",
+      "data_license": "not established",
+      "independence": {
+        "status": "overlap-audit-required",
+        "assessment": "Not used in the frozen candidate, but shares Mayo investigators and potentially participants with Coffman 2018. It is independent from D'Souza and current Lewis calibration only after cohort confirmation."
+      },
+      "outcome_exposure": {
+        "status": "public-aggregate-inspected",
+        "detail": "Published figures, group statistics, and methods were inspected; participant-stage records were not obtained."
+      },
+      "strengths": ["five joint stages", "n equals 31", "duplicate measures", "measured hemoglobin", "young primary-age subset and older generalization subset"],
+      "gaps": ["upright rather than recumbent", "shared rebreathing method can correlate Vc and flow errors", "possible overlap with Coffman 2018", "rights pending"],
+      "decision_rationale": "Strong replication and uncertainty source after D'Souza, but posture and evidence-family overlap prevent it from replacing the primary candidate silently.",
+      "next_action": "Audit cohort overlap with Coffman 2018 and request only under a separately declared upright replication or generalization analysis."
+    },
+    {
+      "id": "PCQ-SRC-C-003",
+      "track_ids": ["PCQ-C"],
+      "rankings": [{"track": "PCQ-C", "rank": 3}],
+      "decision": "priority-request",
+      "source": {
+        "citation": "Lassen ML, Byrne C, et al. Pulmonary blood volume assessment from a standard cardiac rubidium-82 imaging protocol: impact of adenosine-induced hyperemia. Journal of Nuclear Cardiology. 2023;30:2504-2513.",
+        "doi": "10.1007/s12350-023-03308-1",
+        "url": "https://doi.org/10.1007/s12350-023-03308-1",
+        "supporting_urls": []
+      },
+      "population": "Thirty-three young healthy volunteers, fifteen female, median age 23 years; twenty-five had successful test-retest sessions.",
+      "sample_size": 33,
+      "posture": "recumbent PET/CT acquisition",
+      "states": ["rest", "adenosine stress", "test-retest in twenty-five participants"],
+      "variables": ["mean bolus transit time from pulmonary trunk to left atrium", "stroke volume", "heart rate", "cardiac output derived as stroke volume times heart rate", "pulmonary blood volume derived as cardiac output times mean bolus transit time", "body surface area"],
+      "jointness": "Transit and cardiac output are measured or derived in the same scan. Pulmonary blood volume is defined algebraically as flow times transit and therefore cannot independently validate volume-flow-transit closure.",
+      "uncertainty": "Test-retest repeatability coefficients and smallest real differences are reported. Rubidium retention may prolong transit by about 25 percent, stroke volume lacks an independent imaging reference, and the threshold-based arrival definition is method specific.",
+      "access": {
+        "article": "open access with supplementary material",
+        "participant_data": "not publicly located; author request required",
+        "route": "Ask for de-identified rest, stress, and replicate MBTT, HR, SV, and body-size records plus reuse terms.",
+        "data_use_terms": "not established",
+        "redistribution": "not established"
+      },
+      "article_license": "CC-BY-4.0",
+      "data_license": "not established",
+      "independence": {
+        "status": "source-disjoint-provisional",
+        "assessment": "Copenhagen PET cohort and investigators are distinct from the Swift transit calibration and all screened functional Vc sources; upstream cohort reuse must still be confirmed."
+      },
+      "outcome_exposure": {
+        "status": "public-aggregate-inspected",
+        "detail": "Published means, repeatability, and method limitations were inspected; participant scans and values were not obtained."
+      },
+      "strengths": ["primary age and recumbent setting", "directly defined pulmonary trunk-to-left-atrium transit", "test-retest sample", "reported method-specific repeatability"],
+      "gaps": ["whole-pulmonary rather than capillary transit", "adenosine is outside the primary resting state", "PBV is definitionally Q times transit", "tracer retention bias", "participant rights pending"],
+      "decision_rationale": "Best screened source for PCQ-C2 observation-model and tolerance development, but not an independent test of joint closure.",
+      "next_action": "Seek participant-level MBTT data and use the published repeatability only after PCQ-1.3 freezes a pulmonary-trunk-to-left-atrium observation model and explicitly excludes circular PBV closure as validation evidence."
+    },
+    {
+      "id": "PCQ-SRC-CM-001",
+      "track_ids": ["PCQ-C"],
+      "rankings": [],
+      "decision": "method-only",
+      "source": {
+        "citation": "Tedjasaputra V, van Diepen S, Collins SE, et al. Assessment of Pulmonary Capillary Blood Volume, Membrane Diffusing Capacity, and Intrapulmonary Arteriovenous Anastomoses During Exercise. Journal of Visualized Experiments. 2017;(120):54949.",
+        "doi": "10.3791/54949",
+        "url": "https://doi.org/10.3791/54949",
+        "supporting_urls": []
+      },
+      "population": "Representative healthy exercise measurement demonstration; not a validation cohort.",
+      "sample_size": 1,
+      "posture": "exercise protocol demonstration",
+      "states": ["rest", "incremental exercise"],
+      "variables": ["DLCO", "functional pulmonary capillary blood volume Vc", "diffusing membrane capacity", "echocardiographic shunt observations"],
+      "jointness": "Representative data illustrate the measurement workflow but do not constitute an independent participant-level validation data set.",
+      "uncertainty": "Useful for method steps and assumptions; no qualifying cohort precision or independent test split.",
+      "access": {
+        "article": "open access",
+        "participant_data": "representative article data only",
+        "route": "Use only to document the Vc observation method.",
+        "data_use_terms": "article terms",
+        "redistribution": "no derivative redistribution under the article licence"
+      },
+      "article_license": "CC-BY-NC-ND-3.0",
+      "data_license": "article-only representative data",
+      "independence": {
+        "status": "not-applicable-method-only",
+        "assessment": "Shares University of Alberta methods lineage with D'Souza and cannot be counted as an independent cohort."
+      },
+      "outcome_exposure": {
+        "status": "public-aggregate-inspected",
+        "detail": "Representative method data are public and were inspected only as methodological context."
+      },
+      "strengths": ["transparent Vc measurement protocol", "supports observation-model documentation"],
+      "gaps": ["representative rather than cohort data", "non-derivative article licence", "not independent of the Alberta evidence family"],
+      "decision_rationale": "Method authority only; it cannot advance a physiological qualification track.",
+      "next_action": "Cite for the observation equation and procedural assumptions, never as a PCQ-C pass."
+    }
+  ],
+  "next_actions": [
+    {
+      "priority": 1,
+      "action": "Institutionally review and send the existing UA iCPET healthy-control request for PCQ-H.",
+      "authorization": "external contact requires an authorized project representative; not sent by PCQ-1.2"
+    },
+    {
+      "priority": 2,
+      "action": "Institutionally review and send the D'Souza 2025 minimal stage-level Vc, cardiac-output, hemoglobin, and optional RVSP request for PCQ-C and partial PCQ-J.",
+      "authorization": "external contact requires an authorized project representative; not sent by PCQ-1.2"
+    },
+    {
+      "priority": 3,
+      "action": "Request a feasibility response for participant-level Lassen 2023 MBTT replicates and Bailey 2019 five-lobe posture data; do not request identifiable images or unrestricted raw clinical records.",
+      "authorization": "external contact requires an authorized project representative; not sent by PCQ-1.2"
+    },
+    {
+      "priority": 4,
+      "action": "Draft PCQ-1.3 observation models and repeatability-based tolerances using method evidence only; commit the amendment before receiving or opening participant outcomes.",
+      "authorization": "local protocol work only"
+    }
+  ]
+}
