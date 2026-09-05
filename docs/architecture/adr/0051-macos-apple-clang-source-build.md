@@ -46,6 +46,13 @@ No `.app` bundle, installer, universal binary, downloadable executable,
 code-signing identity, notarization workflow, or automatic update mechanism is
 part of this package.
 
+## Acceptance record
+
+The pinned macOS 15 ARM64 job configured with Apple Clang, built the complete
+source tree, and passed the full test suite in
+[CI run 33956456353](https://github.com/RegineWendt/MEHLISSA/actions/runs/33956456353).
+This satisfies `QUA-007` for the explicitly bounded ARM64 source-build claim.
+
 ## Consequences
 
 - macOS contributors receive the same source-level simulator and Workbench

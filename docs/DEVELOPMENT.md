@@ -142,6 +142,8 @@ above to use `mehlissa-workbench --repository-root .`. No `.app` package,
 installer, code signing, or notarization is produced. The dedicated GitHub job
 uses the pinned `macos-15` ARM64 runner image; the preset itself performs a
 native build and does not hard-code the local Mac architecture.
+The complete ARM64 source path is accepted by the Apple Clang job in
+[CI run 33956456353](https://github.com/RegineWendt/MEHLISSA/actions/runs/33956456353).
 
 ## Analysis build with Clang
 
@@ -206,10 +208,10 @@ The accepted baseline comprises:
 - MEHLISSA Research Workbench 1.0 for guided configuration, execution,
   dashboards, provenance/evidence audit, descriptive campaign analysis, and
   export; and
-- 286 local Windows/MSVC tests plus accepted Windows/MSVC, Linux/GCC, and
-  Linux/Clang CI with formatting, static analysis, and sanitizers; and
-- a native macOS/Apple Clang source-build preset and ARM64 CI job whose first
-  acceptance run remains pending until the working branch is pushed.
+- 286 local Windows/MSVC tests plus accepted Windows/MSVC, Linux/GCC,
+  Linux/Clang, and macOS/Apple Clang CI; the Clang analysis path also covers
+  formatting, static analysis, and sanitizers, while the macOS path covers the
+  complete native ARM64 source build and test suite.
 
 Medical scenarios and legacy state do not belong in the kernel. Biological and
 communication models depend on it as separate libraries. Browser code does not

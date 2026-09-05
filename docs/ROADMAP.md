@@ -1265,8 +1265,10 @@ The macOS package comprises:
 This package intentionally does not include a `.app` bundle, installer,
 universal binary, signing, notarization, downloadable executable, or update
 service. Its acceptance criterion is a complete green macOS/Apple Clang job for
-the implementation commit. Intel Macs remain source-compatible candidates but
-are not CI-qualified by the initial ARM64 job.
+the implementation commit. That criterion is satisfied by
+[CI run 33956456353](https://github.com/RegineWendt/MEHLISSA/actions/runs/33956456353).
+Intel Macs remain source-compatible candidates but are not CI-qualified by the
+initial ARM64 job.
 
 ## 7. Prioritization
 
@@ -1312,7 +1314,7 @@ are not CI-qualified by the initial ARM64 job.
 | Horizon | Focus | Expected result |
 |---|---|---|
 | Completed by 3 September 2026 | M0-M7 scientific/runtime capabilities and UX-1 through UX-6 research-use delivery | Integrated reproducible platform and Workbench 1.0 |
-| Immediate platform completion | Native macOS/Apple Clang source build and pinned ARM64 CI | Same simulator and Workbench workflow available to macOS contributors without an application bundle |
+| Completed by 5 September 2026 | Native macOS/Apple Clang source build and pinned ARM64 CI | Same simulator and Workbench workflow available to macOS contributors without an application bundle; accepted in CI run 33956456353 |
 | Next qualification cycle | Evidence/validity matrix; pulmonary-capillary evidence; first biological cell-model candidate | Existing mechanisms gain bounded, independently testable scientific claims |
 | Following scenario cycle | Dynamic capillary-tissue-cell coupling and one externally validated medical reference scenario | First end-to-end result compared with independent physiological or experimental observations |
 | Platform expansion | Additional organs beginning with kidney, further medical scenarios, larger ensembles, and advanced visualization | Generalization beyond the lung/FP9 demonstrator without weakening evidence rules |
@@ -1442,11 +1444,11 @@ The following packages are derived directly from this roadmap:
     handoff are bound under candidate `paper1-platform-methods-rc1-20260903`.
     Suggested tag `paper1-platform-methods-rc1` is not created; no DOI or final
     release is implied.
-23. Complete native macOS/Apple Clang source-build acceptance. The configure,
-    build, test, Workbench discovery, documentation, and pinned ARM64 GitHub job
-    are implemented locally; acceptance and strike-through require the first
-    complete green CI run for the implementation commit. No `.app` package is
-    part of this item.
+23. ~~Complete native macOS/Apple Clang source-build acceptance.~~ The
+    configure, build, test, Workbench discovery, documentation, and pinned
+    ARM64 GitHub job are accepted by
+    [CI run 33956456353](https://github.com/RegineWendt/MEHLISSA/actions/runs/33956456353).
+    No `.app` package is part of this item.
 24. Qualify pulmonary and capillary physiology. Use subject-level or otherwise
     joint data where possible, separate calibration from validation, predeclare
     metrics and tolerances, and quantify parameter and structural uncertainty.

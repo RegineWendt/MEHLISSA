@@ -4,7 +4,7 @@
   "status_date_display": "5 September 2026",
   "development_branch": "mehlissa-next-generation",
   "milestones_passed_through": "M7",
-  "current_focus": "macOS/Apple Clang source-build acceptance and Paper 1 release preparation",
+  "current_focus": "Paper 1 release preparation and the next scientific qualification cycle",
   "research_use": {
     "delivery_range": "UX-1 through UX-6",
     "workbench_version": "1.0.0",
@@ -15,7 +15,9 @@
     "macos_source_build": {
       "preset": "macos-apple-clang",
       "ci_runner": "macos-15 ARM64",
-      "status": "implemented locally; first CI acceptance pending"
+      "status": "accepted",
+      "verified_ci_run": "33956456353",
+      "verified_ci_url": "https://github.com/RegineWendt/MEHLISSA/actions/runs/33956456353"
     }
   },
   "roadmap_sections": {
@@ -59,7 +61,7 @@
     "UX-014": "DONE",
     "QUA-003": "PART",
     "QUA-004": "PART",
-    "QUA-007": "PART",
+    "QUA-007": "PASS",
     "DATA-008": "PART"
   }
 }

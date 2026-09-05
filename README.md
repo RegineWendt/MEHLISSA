@@ -33,7 +33,8 @@ Linux/Clang, and macOS/Apple Clang. The macOS path builds the command-line
 simulator and supports the same local Workbench workflow; it intentionally does
 not create an application bundle, installer, signed binary, or downloadable CI
 artifact. See the Development Guide for the platform-specific commands. The
-macOS path remains a candidate until its first complete GitHub CI job passes.
+ARM64 path is accepted by the complete Apple Clang build and test job in
+[CI run 33956456353](https://github.com/RegineWendt/MEHLISSA/actions/runs/33956456353).
 
 After building the normal Debug preset, the complete M7 fingerprinting
 research demonstrator can be run without writing C++:

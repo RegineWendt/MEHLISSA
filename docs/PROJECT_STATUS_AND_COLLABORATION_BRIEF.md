@@ -13,7 +13,7 @@ SPDX-License-Identifier: CC-BY-4.0
 **Verified published release commit:** `5821c7358f490c1c92e9ec79eaed783f80851297`
 **Workbench release:** 1.0.0; UX-6.1 through UX-6.8 accepted
 **Milestone status:** M0 through M7 passed
-**Current product focus:** macOS/Apple Clang source-build acceptance and Paper 1 release preparation
+**Current product focus:** Paper 1 release preparation and the next scientific qualification cycle
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -52,10 +52,10 @@ behind explicit contracts.
 - The published Workbench 1.0 commit passes all 286 local Windows/MSVC tests and
   GitHub Windows/MSVC, Linux/GCC, and Linux/Clang CI. The Clang path also passes
   formatting, clang-tidy, AddressSanitizer, and UndefinedBehaviorSanitizer.
-- The current unpublished working tree adds a native macOS/Apple Clang CMake
-  path, automatic Workbench executable discovery, and a required `macos-15`
-  ARM64 GitHub job. It produces a source-built command-line simulator, not a
-  `.app` bundle; acceptance remains pending until that first job passes.
+- The native macOS/Apple Clang CMake path, automatic Workbench executable
+  discovery, and required `macos-15` ARM64 GitHub job are accepted by CI run
+  33956456353. The path produces a source-built command-line simulator, not a
+  `.app` bundle.
 - The integrated research-use layer provides a validated five-family,
   ten-example catalog; safe scenario editing and validation; direct and
   campaign execution; non-overwriting reports; process-based Python readers;
@@ -412,18 +412,18 @@ the matching C++ simulator, repository artifacts, and accepted Python process
 API. It binds only to the local computer, serves no remote assets, records no
 telemetry, and cannot convert failed or incomplete jobs into observations.
 
-The complete published release passes 286 local Windows/MSVC tests and GitHub
-Windows/MSVC, Linux/GCC, and Linux/Clang CI, including formatting, clang-tidy,
-AddressSanitizer, and UndefinedBehaviorSanitizer. Detailed increment contracts,
-acceptance evidence, and interpretation limits remain in `docs/ux` and the
-User Guide.
+The complete published Workbench release passes 286 local Windows/MSVC tests
+and GitHub Windows/MSVC, Linux/GCC, and Linux/Clang CI, including formatting,
+clang-tidy, AddressSanitizer, and UndefinedBehaviorSanitizer. Detailed increment
+contracts, acceptance evidence, and interpretation limits remain in `docs/ux`
+and the User Guide.
 
-The next platform extension adds a native macOS/Apple Clang source build and
-the same Workbench workflow. The implementation uses dedicated CMake presets
-and a pinned macOS 15 ARM64 GitHub job. It does not create an application
-bundle, installer, signed or notarized binary, or downloadable executable. This
-extension remains a candidate until its complete CI job passes; the verified
-published baseline above is unchanged in the meantime.
+The platform now also provides an accepted native macOS/Apple Clang source
+build and the same Workbench workflow. Dedicated CMake presets and the pinned
+macOS 15 ARM64 job passed the complete suite in GitHub CI run 33956456353.
+This support does not create an application bundle, installer, signed or
+notarized binary, or downloadable executable. Intel Macs remain an unqualified
+source-compatibility expectation rather than an accepted CI claim.
 
 ## 9. Opportunities for collaborators
 

@@ -686,7 +686,9 @@ build/macos-apple-clang/apps/mehlissa
 This is a native source build. MEHLISSA does not currently create a `.app`
 bundle, installer, signed binary, or notarized distribution. The GitHub
 `macos-apple-clang` job validates the complete source build and test suite on a
-pinned macOS 15 ARM64 runner; it does not publish an executable artifact.
+pinned macOS 15 ARM64 runner; it does not publish an executable artifact. This
+path is accepted by the complete Apple Clang job in
+[CI run 33956456353](https://github.com/RegineWendt/MEHLISSA/actions/runs/33956456353).
 
 All paths in the following examples are relative to the repository root.
 
