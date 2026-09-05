@@ -18,6 +18,9 @@ STATE_PATH = ROOT / "docs" / "PROJECT_STATE.json"
 SYSTEM_REQUIREMENTS = ROOT / "docs" / "requirements" / "SYSTEM_REQUIREMENTS.md"
 TRACEABILITY = ROOT / "docs" / "requirements" / "TRACEABILITY_MATRIX.md"
 
+IMPLEMENTATION_STATUSES = {"DONE", "PART", "LEGACY", "SPEC"}
+EVIDENCE_STATUSES = {"VERIFIED", "PART", "UNVERIFIED", "RESEARCH"}
+
 
 def read(relative_path: str) -> str:
     return (ROOT / relative_path).read_text(encoding="utf-8")
@@ -106,14 +109,47 @@ def main() -> int:
         )
 
     trace_rows = requirement_rows(trace_text)
-    for requirement_id, expected_status in state["traceability_expectations"].items():
+    for requirement_id, row in trace_rows.items():
+        if len(row) != 6:
+            errors.append(
+                f"traceability: {requirement_id} must have six columns for "
+                "implementation and evidence status"
+            )
+            continue
+        implementation_status, evidence_status = row[2], row[3]
+        if implementation_status not in IMPLEMENTATION_STATUSES:
+            errors.append(
+                f"traceability: {requirement_id} has unknown implementation status "
+                f"{implementation_status!r}"
+            )
+        if evidence_status not in EVIDENCE_STATUSES:
+            errors.append(
+                f"traceability: {requirement_id} has unknown evidence status "
+                f"{evidence_status!r}"
+            )
+        if evidence_status == "VERIFIED" and implementation_status != "DONE":
+            errors.append(
+                f"traceability: {requirement_id} cannot be evidence-VERIFIED while "
+                f"implementation is {implementation_status}"
+            )
+        if evidence_status == "PART" and implementation_status not in {"DONE", "PART"}:
+            errors.append(
+                f"traceability: {requirement_id} cannot have partial Next evidence "
+                f"while implementation is {implementation_status}"
+            )
+
+    for requirement_id, expected in state["traceability_expectations"].items():
         row = trace_rows.get(requirement_id)
         if row is None:
             errors.append(f"traceability: missing expected row {requirement_id}")
-        elif len(row) < 3 or row[2] != expected_status:
-            actual = row[2] if row and len(row) >= 3 else "<missing>"
+            continue
+        actual = {
+            "implementation": row[2] if len(row) >= 3 else "<missing>",
+            "evidence": row[3] if len(row) >= 4 else "<missing>",
+        }
+        if actual != expected:
             errors.append(
-                f"traceability: {requirement_id} has status {actual}, expected {expected_status}"
+                f"traceability: {requirement_id} has statuses {actual}, expected {expected}"
             )
 
     section_checks = {
@@ -165,9 +201,18 @@ def main() -> int:
             print(f"documentation consistency error: {error}", file=sys.stderr)
         return 1
 
+    implementation_counts = Counter(row[2] for row in trace_rows.values())
+    evidence_counts = Counter(row[3] for row in trace_rows.values())
+    implementation_summary = ", ".join(
+        f"{status}={implementation_counts[status]}" for status in sorted(IMPLEMENTATION_STATUSES)
+    )
+    evidence_summary = ", ".join(
+        f"{status}={evidence_counts[status]}" for status in sorted(EVIDENCE_STATUSES)
+    )
     print(
         "documentation consistency: ok "
-        f"({len(system_ids)} requirements, {len(link_sources)} canonical link sources)"
+        f"({len(system_ids)} requirements; implementation: {implementation_summary}; "
+        f"evidence: {evidence_summary}; {len(link_sources)} canonical link sources)"
     )
     return 0
 

@@ -238,9 +238,16 @@ python scripts/check_documentation_consistency.py
 ```
 
 The check verifies shared facts in the canonical entry documents, one-to-one
-requirement coverage in the Traceability Matrix, selected status and Roadmap
-section mappings, local links from the main guides, and obsolete terminology.
-CI runs the same command.
+requirement coverage in the Traceability Matrix, the separate implementation
+and evidence status vocabularies and combinations, selected two-dimensional
+expectations and Roadmap section mappings, local links from the main guides,
+and obsolete terminology. CI runs the same command.
+
+When changing a requirement, review both axes. Marking implementation `DONE`
+does not authorize evidence `VERIFIED`: the latter requires the technical,
+analytical, reference, inspection, or independent-data evidence declared by
+that requirement. Record achieved evidence and the remaining qualification gap
+in the same matrix row.
 
 ## Paper 1 publication evidence
 

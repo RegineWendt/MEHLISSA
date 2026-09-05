@@ -26,7 +26,9 @@ validity scope, data basis, and uncertainty.
 The requirements describe the domain target state. Incremental implementation
 is defined in the [roadmap](../ROADMAP.md). The
 [traceability matrix](TRACEABILITY_MATRIX.md) maps them to sources, existing
-code, milestones, and verification.
+code, milestones, and verification. It tracks implementation maturity and
+evidence maturity separately so that functioning software is not mistaken for
+scientific validation.
 
 ## 2. Sources and reading key
 

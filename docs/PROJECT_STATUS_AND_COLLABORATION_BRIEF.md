@@ -53,9 +53,9 @@ behind explicit contracts.
   GitHub Windows/MSVC, Linux/GCC, and Linux/Clang CI. The Clang path also passes
   formatting, clang-tidy, AddressSanitizer, and UndefinedBehaviorSanitizer.
 - The native macOS/Apple Clang CMake path, automatic Workbench executable
-  discovery, and required `macos-15` ARM64 GitHub job are accepted by CI run
-  33956456353. The path produces a source-built command-line simulator, not a
-  `.app` bundle.
+  discovery, and required `macos-15` ARM64 GitHub job are accepted by GitHub CI
+  run 33956456353. The path produces a source-built command-line simulator,
+  not a `.app` bundle.
 - The integrated research-use layer provides a validated five-family,
   ten-example catalog; safe scenario editing and validation; direct and
   campaign execution; non-overwriting reports; process-based Python readers;
@@ -82,6 +82,24 @@ behind explicit contracts.
 | Integrated research-use layer | Commands, discovery, reports, campaigns, Python and notebook access, and Workbench 1.0 form the supported delivery surface of MEHLISSA. They expose the scientific stack without duplicating its schemas, models, validation, or result authority. |
 | Clinical readiness | Not claimed. Patient prediction, diagnosis, and treatment recommendations are explicitly outside the present scope. |
 
+### Requirements in two dimensions
+
+The 83 baseline requirements now carry separate implementation and evidence
+statuses. This prevents software completion from being read as scientific
+validation. Functionally, 58 requirements are complete, 15 are partly
+implemented, five remain legacy-only, and five are specified but not yet
+implemented. For evidence, 39 are verified for their declared bounded claim,
+34 have partial evidence, eight are unverified in MEHLISSA Next, and two need a
+dedicated research evidence programme.
+
+`DONE/PART` is an important and legitimate state: executable behavior and its
+software contracts are present, but physiological, biological, external-data,
+scale, or release-wide qualification remains incomplete. `VERIFIED` refers to
+the verification mode required by the individual requirement; it does not
+automatically mean clinical or participant-level validation. The canonical
+row-level assessment and remaining gaps are maintained in the Traceability
+Matrix.
+
 ## How to read project labels
 
 Short identifiers preserve traceability across requirements, code, tests, and
@@ -97,6 +115,7 @@ evidence. They are not assumed knowledge in this report.
 | Level D | Executed local, gateway, body-area-network, and external-station communication. |
 | Level E | Sensitivity, specificity, false-positive/false-negative, robustness, and misclassification analysis. |
 | P0 through P3 | Roadmap priority tiers: indispensable foundation, dissertation core, research-platform expansion, and long-term vision. They are not completion states. |
+| `DONE/PART` | Two-dimensional requirement status: functional implementation is complete, while the required evidence is only partial. Other rows independently combine `DONE`, `PART`, `LEGACY`, or `SPEC` implementation with `VERIFIED`, `PART`, `UNVERIFIED`, or `RESEARCH` evidence. |
 | UX-1 through UX-6 | Delivery packages used to build MEHLISSA's cross-cutting research-use layer, from one-command execution to a graphical research workbench. They were implemented after M7, but their accepted outputs are integral platform capabilities rather than a separate add-on. UX-6.1 through UX-6.8 are reviewable increments of the workbench. |
 | P1-E1 through P1-E3 | Predeclared Paper 1 technical experiments: body-observation neutrality/resources, small M7 resource/replay behavior, and CLI/Python/Workbench result parity. They are experiment identifiers, not evidence grades. |
 | run | One reproducible execution of an experiment or scenario. A qualified term such as “baseline run” must state what makes that execution distinct. |
@@ -453,7 +472,7 @@ and limitations are documented; and all supported CI paths pass.
 | `docs/ROADMAP.md` | Guiding principles, delivery history, scientific qualification sequence, medical scenarios, additional organs, personalization, scaling, and cross-cutting programs. |
 | `docs/PROJECT_STATE.json` | Machine-readable shared release facts, Roadmap section mappings, selected traceability expectations, and ordered qualification packages. |
 | `docs/requirements/SYSTEM_REQUIREMENTS.md` | Numbered requirements derived from the dissertation and project decisions. |
-| `docs/requirements/TRACEABILITY_MATRIX.md` | Implementation and verification status for every tracked requirement. |
+| `docs/requirements/TRACEABILITY_MATRIX.md` | Separate implementation and evidence status, achieved verification, and remaining gap for every tracked requirement. |
 | `docs/m7/M7_GATE_REVIEW.md` | Formal decision and scientific limitations of the holistic fingerprinting demonstrator. |
 | `docs/publication/EVIDENCE_AND_VALIDITY_BASELINE.md` | Six-family machine-readable evidence and validity baseline, source-role audit, and claim boundaries. |
 | `docs/publication/PAPER1_TECHNICAL_EXPERIMENT_PROTOCOL_V2.md` | Locked Paper 1 technical questions, conditions, controls, metrics, failure rules, and archive contract. |

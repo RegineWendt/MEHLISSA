@@ -3232,4 +3232,9 @@ especially its [module extension workflow](architecture/SOFTWARE_ARCHITECTURE.md
 and [worked kidney outline](architecture/SOFTWARE_ARCHITECTURE.md#95-worked-outline-adding-a-kidney-model).
 For scientific scope and milestone gates, use the [Roadmap](ROADMAP.md).
 Shared release facts and the ordered qualification package names are maintained
-in [`PROJECT_STATE.json`](PROJECT_STATE.json) and checked in CI.
+in [`PROJECT_STATE.json`](PROJECT_STATE.json) and checked in CI. Requirement
+coverage is reported separately for implementation and evidence in the
+[Traceability Matrix](requirements/TRACEABILITY_MATRIX.md). Thus, `DONE/PART`
+means that a capability can be used as documented, but some intended scientific
+or broader qualification is still incomplete; it is not a claim of clinical
+validity.

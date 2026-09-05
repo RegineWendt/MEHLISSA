@@ -1246,6 +1246,13 @@ workflow, and domain abbreviations at first use. Internal identifiers may be
 retained for traceability, but unexplained labels such as “A run”, “B run”, or
 `P2` are not acceptable in contributor-facing prose.
 
+Requirement reviews must maintain two independent status dimensions in the
+Traceability Matrix: functional implementation maturity and verification/
+validation evidence maturity. A software-complete model may remain
+evidence-partial, especially when physiological, biological, participant-level,
+or experimental qualification is still open. Gate completion must not collapse
+these dimensions into a single status.
+
 ### 6.8 Supported development platforms and CI
 
 Platform support is part of reproducibility and contributor access, not a
