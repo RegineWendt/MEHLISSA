@@ -10,7 +10,7 @@ the milestone evidence without rewriting it after results are known.
 
 | Protocol | Status | Purpose |
 |---|---|---|
-| [PCQ-1 pulmonary and capillary qualification](PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md) | design v0.1.0, [PCQ-1.2 source screen](PCQ1_EVIDENCE_SOURCE_SCREEN.md), [PCQ-1.3 amendment](PCQ1_PRE_OUTCOME_AMENDMENT.md) v0.2.0, and [PCQ-1.4 rights-aware ingress](PCQ1_DATA_INGRESS.md); no participant outcomes acquired | qualify participant-level pulmonary hemodynamics, regional perfusion, capillary volume and transit, and their joint coherence |
+| [PCQ-1 pulmonary and capillary qualification](PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md) | design v0.1.0, [PCQ-1.2 source screen](PCQ1_EVIDENCE_SOURCE_SCREEN.md), [PCQ-1.3 amendment](PCQ1_PRE_OUTCOME_AMENDMENT.md) v0.2.0, [PCQ-1.4 rights-aware ingress](PCQ1_DATA_INGRESS.md), and [PCQ-1.5 uncertainty/identifiability analysis](PCQ1_UNCERTAINTY_IDENTIFIABILITY.md); no participant outcomes acquired | qualify participant-level pulmonary hemodynamics, regional perfusion, capillary volume and transit, and their joint coherence |
 
 The machine-readable design authority for PCQ-1 is
 `data/qualification/pulmonary-capillary-qualification-protocol-v1.json`. Its
@@ -43,6 +43,16 @@ independence, and an explicit outside-repository quarantine path before opening
 measured data. Four strict family schemas and CC0 synthetic fixtures verify the
 normalized adapters without using outcomes. Command output contains metadata,
 never raw observations; whole-pulmonary transit remains blocked.
+
+The PCQ-1.5 uncertainty authority is
+`data/qualification/pulmonary-capillary-uncertainty-plan-v1.json`. It covers
+all six protocol uncertainty classes and all nine endpoints, registers
+distribution and correlation availability, compares seven pulmonary structures
+without winner selection, verifies seven convergent local sensitivities, and
+tests nine identifiability designs. Missing joint distributions block global
+variance attribution, and the whole-pulmonary transit observation model stays
+blocked. These are prospective design and software results, not participant-
+level qualification evidence.
 
 Each later protocol must preserve the separation between:
 

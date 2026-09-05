@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0.0",
+  "plan": {
+    "id": "PCQ-1.5",
+    "protocol_id": "PCQ-1",
+    "protocol_version": "0.2.0",
+    "created_date": "2026-09-05",
+    "status": "outcome-blind-uncertainty-and-identifiability-analysis-complete",
+    "baseline_commit": "e40a903bfb71e9e4ae196ce2880ea6edbd9d685a",
+    "parent_ingress": {
+      "path": "data/qualification/pulmonary-capillary-data-ingress-policy-v1.json",
+      "sha256": "555a446cf02ef1dccc70324e529b0f05fbcdf70e6efcb786567846afec2efaf9"
+    },
+    "outcome_access": "No candidate participant-level outcome record was requested, downloaded, received, opened, or inspected while PCQ-1.5 was implemented.",
+    "clinical_use": false
+  },
+  "uncertainty_classes": [
+    {
+      "id": "observational",
+      "status": "operational",
+      "method": "Endpoint-specific method floors, covariance envelopes, compositional constraints, and log-scale propagation are fixed before measured outcomes.",
+      "limitation": "Source-native covariance remains unavailable and may not be replaced by a hidden independence assumption.",
+      "consequence": "Measured reports must show a covariance envelope or remain inconclusive until the provider supplies a covariance estimate."
+    },
+    {
+      "id": "parameter",
+      "status": "partial-evidence-bounded",
+      "method": "Existing evidence intervals and standard deviations are registered separately from numerical closure choices.",
+      "limitation": "Most inputs lack evidence-backed distribution families and joint correlations.",
+      "consequence": "Intervals support deterministic screening only; probabilistic output intervals and global variance attribution remain blocked."
+    },
+    {
+      "id": "structural",
+      "status": "operational",
+      "method": "All seven immutable pulmonary definitions are compared over a fixed flow-age grid; aggregate-equivalent v4 and v7 share one equivalence group.",
+      "limitation": "The ensemble is a set of hypotheses, not a probability distribution over models.",
+      "consequence": "Between-structure spread is reported separately and no winning structure is selected from validation outcomes."
+    },
+    {
+      "id": "numerical",
+      "status": "not-applicable-analytic",
+      "method": "Equilibrium pressure, PVR, RC time, volume-flow residence, and algebraic propagation are closed-form; local derivative estimates must converge across three perturbation sizes.",
+      "limitation": "Participant-cluster bootstrap convergence cannot be evaluated without an authorized decision-size cohort.",
+      "consequence": "Current numerical error is tested only for analytic design calculations; later resampling must add replicate-count stability before a qualification decision."
+    },
+    {
+      "id": "sensitivity",
+      "status": "partial-evidence-bounded",
+      "method": "Signed central log-elasticities screen the frozen flow-adaptive and capillary closure equations with perturbation convergence.",
+      "limitation": "A variance-based global analysis is not scientifically defined without joint input distributions and correlations.",
+      "consequence": "Local direction and magnitude may guide interpretation, but Sobol-like percentages and probabilistic rankings are forbidden."
+    },
+    {
+      "id": "identifiability",
+      "status": "operational",
+      "method": "Pre-calibration design-matrix ranks test multipoint hemodynamics, H4 dynamics, age confounding, lobe composition, capillary geometry, and whole-transit delay decomposition.",
+      "limitation": "Rank is structural/local design evidence and does not guarantee practical identifiability in noisy small cohorts.",
+      "consequence": "Rank-deficient combinations stay independently fixed or are reported as non-identifiable; validation data are never optimized to a unique-looking solution."
+    }
+  ],
+  "model_assets": [
+    {"path": "data/lung-models/healthy-adult-rest-supine-0d-v1.json", "sha256": "1ec4f057bde8cd481b28be5f6e71e79b140d2e248ec337b615998da33328a26e", "model_id": "lung.pulmonary-0d.healthy-adult-rest-supine.v1", "structural_family": "fixed-resistance", "equivalence_group": "v1", "role": "hemodynamic-ensemble-member"},
+    {"path": "data/lung-models/healthy-adult-rest-exercise-0d-v2.json", "sha256": "86a2b982b75bdae9b1e483d9d47db252d119cd6f6f9f68f2f002513eb3f6b7fc", "model_id": "lung.pulmonary-0d.healthy-adult-rest-exercise.v2", "structural_family": "empirical-flow", "equivalence_group": "v2", "role": "hemodynamic-ensemble-member"},
+    {"path": "data/lung-models/healthy-adult-rest-exercise-age-0d-v3.json", "sha256": "8b504697d8880af0faf07d86ffdfc505f293d7c3cd624e2dab9392ae2068906c", "model_id": "lung.pulmonary-0d.healthy-adult-rest-exercise-age.v3", "structural_family": "empirical-flow-echo-age", "equivalence_group": "v3", "role": "hemodynamic-ensemble-member"},
+    {"path": "data/lung-models/healthy-adult-rest-exercise-age-invasive-0d-v4.json", "sha256": "a2621b03b237f5352b46bd5750da1da96720d5062cd40fa9dc98db0337f49df9", "model_id": "lung.pulmonary-0d.healthy-adult-rest-exercise-age-invasive.v4", "structural_family": "empirical-flow-invasive-age", "equivalence_group": "v4-aggregate", "role": "hemodynamic-ensemble-member"},
+    {"path": "data/lung-models/healthy-adult-pressure-distensible-age-0d-v5.json", "sha256": "ed3dc4dc3455b2b25b5adc1c4229b7a8cbd39dc6a7545b13c73bc1839006d2f7", "model_id": "lung.pulmonary-0d.healthy-adult-pressure-distensible-age.v5", "structural_family": "pressure-distensible", "equivalence_group": "v5", "role": "hemodynamic-ensemble-member"},
+    {"path": "data/lung-models/healthy-adult-pressure-distensible-age-0d-v6.json", "sha256": "7e5ef57530cf8e17a9cf99cac23177952696bc5e5f710f8737c6396c9178a4a7", "model_id": "lung.pulmonary-0d.healthy-adult-pressure-distensible-age.v6", "structural_family": "pressure-distensible-age", "equivalence_group": "v6", "role": "hemodynamic-ensemble-member"},
+    {"path": "data/lung-models/healthy-adult-lobar-parallel-0d-v7.json", "sha256": "1374bdd7eef2bc849b4fb5a06726adeecfec2ba2e74beb6d166db919b7a1c3c6", "model_id": "lung.pulmonary-0d.healthy-adult-lobar-parallel.v7", "structural_family": "empirical-flow-invasive-age-lobar", "equivalence_group": "v4-aggregate", "role": "hemodynamic-equivalent-alias"},
+    {"path": "examples/capillary-models/pulmonary-healthy-adult-rest-supine-v1.json", "sha256": "b36bbacf118e062ccbb0e71b3d7794241ebdb9e461c7140242d4476509ea545b", "model_id": "capillary.lung.healthy-adult-rest-supine.v1", "structural_family": "equivalent-parallel-tube-closure", "equivalence_group": "capillary-v1", "role": "capillary-closure"}
+  ],
+  "implementation_assets": [
+    {"path": "models/organ/src/pulmonary_zero_dimensional.cpp", "sha256": "a9b7590b6419601d07d78120671795f174e628b1e36a6c98a2527c0a2fd31fdb"},
+    {"path": "models/capillary/src/capillary_bed.cpp", "sha256": "729c90669c8044515390f5bcb06de67291d070c418c1e5fa25666c447a032adb"}
+  ],
+  "analysis_grid": {
+    "flow_L_min": [6.0, 10.0, 14.0],
+    "age_years": [30.0, 50.0, 70.0],
+    "finite_difference_relative_steps": [0.01, 0.001, 0.0001],
+    "derivative_relative_convergence_tolerance": 0.002
+  },
+  "observational_models": [
+    {"endpoint_id": "PCQ-H1", "status": "operational-method-floor", "method": "Use the larger of source-supplied mPAP standard uncertainty and 2 mmHg at every stage.", "required_inputs": ["mPAP", "mPAP standard uncertainty"], "covariance_handling": "No covariance term is needed for the direct mPAP residual.", "failure_consequence": "Missing uncertainty makes the endpoint inconclusive."},
+    {"endpoint_id": "PCQ-H2", "status": "operational-method-floor", "method": "First-order propagation for PVR=(mPAP-PAWP)/Q using 2 mmHg, 3 mmHg, and 10 percent floors.", "required_inputs": ["mPAP", "PAWP", "cardiac output", "three standard uncertainties"], "covariance_handling": "If joint covariance is unavailable, report the attainable correlation envelope across all three inputs; do not silently assume independence.", "failure_consequence": "A decision needing narrower uncertainty remains inconclusive."},
+    {"endpoint_id": "PCQ-H3", "status": "partial-requires-complete-tuple", "method": "Use within-participant repeated-stage pressure-flow uncertainty and retain all stages as one cluster.", "required_inputs": ["at least three complete stages", "stage covariance or declared covariance envelope", "cardiac output span at least 2 L/min"], "covariance_handling": "Stage covariance must be supplied or bracketed; ordinary unweighted slope error is descriptive only.", "failure_consequence": "Slope precision is not decision-capable without repeated-stage covariance."},
+    {"endpoint_id": "PCQ-H4", "status": "partial-requires-complete-tuple", "method": "Propagate complete stage-matched systolic PAP, diastolic PAP, heart rate, resistance, and compliance into RC summaries.", "required_inputs": ["systolic PAP", "diastolic PAP", "heart rate", "cardiac output", "complete stage tuple"], "covariance_handling": "Joint stage covariance is source-required for inferential intervals.", "failure_consequence": "Incomplete tuples are omitted only from H4 and reported as missing; primary H1-H3 remain retained."},
+    {"endpoint_id": "PCQ-R1", "status": "operational-compositional", "method": "Analyse five fractions on the simplex and retain the 2 percentage-point per-lobe floor.", "required_inputs": ["five normalized lobe fractions", "per-lobe uncertainty"], "covariance_handling": "The sum-to-one constraint requires compositional covariance; independent lobe errors are forbidden.", "failure_consequence": "Without covariance, only bounded perturbation screening and point-error gates are reported."},
+    {"endpoint_id": "PCQ-C1", "status": "operational-method-floor", "method": "Represent positive Vc on the log scale using at least the 8 percent method coefficient of variation.", "required_inputs": ["hemoglobin-adjusted Vc", "method coefficient of variation", "regression r-squared"], "covariance_handling": "Use source covariance when model and observed terms share inputs; otherwise expose a correlation envelope.", "failure_consequence": "Regression r-squared below 0.95 or undocumented hemoglobin handling rejects the record."},
+    {"endpoint_id": "PCQ-C2", "status": "blocked-observation-model", "method": "No uncertainty interval is evaluated until independent pre-capillary, post-capillary, and mixing delays are fixed.", "required_inputs": ["anatomically matched transit", "independent delay components", "repeatability", "tracer-bias model"], "covariance_handling": "Unavailable while the observation model is blocked.", "failure_consequence": "Whole-pulmonary transit remains blocked and cannot validate capillary residence."},
+    {"endpoint_id": "PCQ-C3", "status": "partial-requires-complete-tuple", "method": "Carry measured or independently evidenced hematocrit uncertainty once through the Vc observation model.", "required_inputs": ["hemoglobin or hematocrit metadata", "documented adjustment"], "covariance_handling": "Covariance with Vc is source-required when the same measurement fit produces both.", "failure_consequence": "Undocumented double correction rejects the record; missing covariance broadens or blocks inference."},
+    {"endpoint_id": "PCQ-J1", "status": "partial-requires-complete-tuple", "method": "Propagate joint Vc and Q uncertainty into the derived Vc/Q residence proxy while keeping numerical closure exact.", "required_inputs": ["same-stage Vc", "same-stage cardiac output", "joint covariance"], "covariance_handling": "If Vc-Q covariance is unavailable, report the rho=-1 to rho=+1 envelope.", "failure_consequence": "Separate cohorts support only model-mediated compatibility, never a joint physiological claim."}
+  ],
+  "parameter_registry": [
+    {"id": "lung.left_atrial_pressure", "owner": "lung", "unit": "mmHg", "uncertainty_representation": "Upper reference limit in the accepted cards; participant PAWP is an observed boundary condition.", "distribution_status": "interval-only", "correlation_status": "source-required", "endpoint_ids": ["PCQ-H1", "PCQ-H2", "PCQ-H3"], "adjustable_in_validation": false},
+    {"id": "lung.pulmonary_vascular_resistance", "owner": "lung", "unit": "WU", "uncertainty_representation": "Evidence interval from accepted pulmonary cards.", "distribution_status": "interval-only", "correlation_status": "unavailable", "endpoint_ids": ["PCQ-H1", "PCQ-H2", "PCQ-H3", "PCQ-H4"], "adjustable_in_validation": false},
+    {"id": "lung.pulmonary_arterial_compliance", "owner": "lung", "unit": "mL/mmHg", "uncertainty_representation": "Lower reference limit only.", "distribution_status": "interval-only", "correlation_status": "unavailable", "endpoint_ids": ["PCQ-H4"], "adjustable_in_validation": false},
+    {"id": "lung.flow_resistance_exponent", "owner": "lung", "unit": "1", "uncertainty_representation": "Point estimate derived from calibration aggregates; no sampling distribution available.", "distribution_status": "unavailable", "correlation_status": "unavailable", "endpoint_ids": ["PCQ-H1", "PCQ-H2", "PCQ-H3", "PCQ-H4"], "adjustable_in_validation": false},
+    {"id": "lung.flow_compliance_exponent", "owner": "lung", "unit": "1", "uncertainty_representation": "Point estimate derived from calibration aggregates; no sampling distribution available.", "distribution_status": "unavailable", "correlation_status": "unavailable", "endpoint_ids": ["PCQ-H4"], "adjustable_in_validation": false},
+    {"id": "lung.young_resistance_multiplier", "owner": "lung", "unit": "1", "uncertainty_representation": "Independent aggregate ratio without a sampling interval or joint distribution.", "distribution_status": "unavailable", "correlation_status": "unavailable", "endpoint_ids": ["PCQ-H1", "PCQ-H2", "PCQ-H3", "PCQ-H4"], "adjustable_in_validation": false},
+    {"id": "lung.older_resistance_multiplier", "owner": "lung", "unit": "1", "uncertainty_representation": "Independent aggregate ratio without a sampling interval or joint distribution.", "distribution_status": "unavailable", "correlation_status": "unavailable", "endpoint_ids": ["PCQ-H1", "PCQ-H2", "PCQ-H3", "PCQ-H4"], "adjustable_in_validation": false},
+    {"id": "lung.pressure_distensibility", "owner": "lung", "unit": "1/mmHg", "uncertainty_representation": "Source estimate with standard error in the distensible cards.", "distribution_status": "standard-error", "correlation_status": "unavailable", "endpoint_ids": ["PCQ-H1", "PCQ-H2", "PCQ-H3"], "adjustable_in_validation": false},
+    {"id": "lung.lobe_composition", "owner": "lung", "unit": "1", "uncertainty_representation": "Five-part composition with a 2 percentage-point observation floor.", "distribution_status": "method-floor", "correlation_status": "compositional-required", "endpoint_ids": ["PCQ-R1"], "adjustable_in_validation": false},
+    {"id": "capillary.functional_blood_volume", "owner": "capillary", "unit": "mL", "uncertainty_representation": "Historical SD in the model card and an 8 percent method CV floor for new data.", "distribution_status": "standard-deviation", "correlation_status": "source-required", "endpoint_ids": ["PCQ-C1", "PCQ-J1"], "adjustable_in_validation": false},
+    {"id": "capillary.equivalent_diameter", "owner": "capillary", "unit": "um", "uncertainty_representation": "Morphometric derived standard deviation.", "distribution_status": "standard-deviation", "correlation_status": "unavailable", "endpoint_ids": ["PCQ-C1", "PCQ-J1"], "adjustable_in_validation": false},
+    {"id": "capillary.perfused_path_count", "owner": "capillary", "unit": "1", "uncertainty_representation": "Round numerical closure choice, not anatomy.", "distribution_status": "fixed-numerical-choice", "correlation_status": "not-applicable", "endpoint_ids": ["PCQ-C1", "PCQ-J1"], "adjustable_in_validation": false},
+    {"id": "capillary.representative_path_length", "owner": "capillary", "unit": "m", "uncertainty_representation": "Derived closure after fixing volume, diameter, and path count.", "distribution_status": "fixed-numerical-choice", "correlation_status": "not-applicable", "endpoint_ids": ["PCQ-C1", "PCQ-J1"], "adjustable_in_validation": false},
+    {"id": "observation.mpap", "owner": "observation", "unit": "mmHg", "uncertainty_representation": "Source value or 2 mmHg standard uncertainty floor, whichever is larger.", "distribution_status": "method-floor", "correlation_status": "source-required", "endpoint_ids": ["PCQ-H1", "PCQ-H2", "PCQ-H3"], "adjustable_in_validation": false},
+    {"id": "observation.pawp", "owner": "observation", "unit": "mmHg", "uncertainty_representation": "Source value or 3 mmHg standard uncertainty floor, whichever is larger.", "distribution_status": "method-floor", "correlation_status": "source-required", "endpoint_ids": ["PCQ-H2", "PCQ-H3"], "adjustable_in_validation": false},
+    {"id": "observation.cardiac_output", "owner": "observation", "unit": "L/min", "uncertainty_representation": "Source value or 10 percent relative standard uncertainty floor, whichever is larger.", "distribution_status": "method-floor", "correlation_status": "source-required", "endpoint_ids": ["PCQ-H2", "PCQ-H3", "PCQ-J1"], "adjustable_in_validation": false},
+    {"id": "observation.hematocrit", "owner": "observation", "unit": "1", "uncertainty_representation": "Source-supplied measurement uncertainty and covariance with the Vc regression are required.", "distribution_status": "unavailable", "correlation_status": "source-required", "endpoint_ids": ["PCQ-C1", "PCQ-C3"], "adjustable_in_validation": false},
+    {"id": "observation.transit_delay_components", "owner": "observation", "unit": "s", "uncertainty_representation": "Independent pre-capillary, post-capillary, and mixing-delay distributions are unavailable.", "distribution_status": "unavailable", "correlation_status": "unavailable", "endpoint_ids": ["PCQ-C2"], "adjustable_in_validation": false}
+  ],
+  "identifiability_analyses": [
+    {"id": "ID-H-SINGLE", "endpoint_ids": ["PCQ-H1", "PCQ-H2"], "parameter_ids": ["log_R", "flow_resistance_exponent"], "design": "One equilibrium flow stage.", "expected_rank": 1, "parameter_count": 2, "status": "non-identifiable", "consequence": "Resistance level and flow exponent cannot both be estimated from one stage."},
+    {"id": "ID-H-MULTIPOINT", "endpoint_ids": ["PCQ-H1", "PCQ-H2", "PCQ-H3"], "parameter_ids": ["log_R", "flow_resistance_exponent"], "design": "Three distinct flow stages spanning at least 2 L/min with observed PAWP.", "expected_rank": 2, "parameter_count": 2, "status": "locally-identifiable-under-design", "consequence": "The two-parameter equilibrium flow law is locally distinguishable, subject to practical precision."},
+    {"id": "ID-H-EQUILIBRIUM", "endpoint_ids": ["PCQ-H1", "PCQ-H2", "PCQ-H3"], "parameter_ids": ["log_R", "flow_resistance_exponent", "log_C", "flow_compliance_exponent"], "design": "Three equilibrium pressure-flow stages without H4 dynamics.", "expected_rank": 2, "parameter_count": 4, "status": "non-identifiable", "consequence": "Compliance level and exponent do not affect equilibrium H1-H3 and must not be inferred from them."},
+    {"id": "ID-H-DYNAMIC", "endpoint_ids": ["PCQ-H1", "PCQ-H2", "PCQ-H3", "PCQ-H4"], "parameter_ids": ["log_R", "flow_resistance_exponent", "log_C", "flow_compliance_exponent"], "design": "Three distinct stages with independent PVR and RC-time information.", "expected_rank": 4, "parameter_count": 4, "status": "locally-identifiable-under-design", "consequence": "Complete H4 dynamics can separate resistance and compliance terms; missing tuples remove that capability."},
+    {"id": "ID-H-AGE", "endpoint_ids": ["PCQ-H1", "PCQ-H2", "PCQ-H3"], "parameter_ids": ["log_R", "log_age_multiplier"], "design": "Participants from one age band only.", "expected_rank": 1, "parameter_count": 2, "status": "non-identifiable", "consequence": "Baseline resistance and the band multiplier are confounded and remain independently fixed."},
+    {"id": "ID-R-COMPOSITION", "endpoint_ids": ["PCQ-R1"], "parameter_ids": ["five_lobe_log_ratios"], "design": "Five normalized lobe fractions constrained to sum to one.", "expected_rank": 4, "parameter_count": 5, "status": "non-identifiable", "consequence": "Four compositional degrees are observable; absolute total regional flow is not identified by fractions alone."},
+    {"id": "ID-C-GEOMETRY", "endpoint_ids": ["PCQ-C1", "PCQ-J1"], "parameter_ids": ["log_path_count", "log_diameter", "log_length"], "design": "Functional volume closure V=N*pi*(d/2)^2*L.", "expected_rank": 1, "parameter_count": 3, "status": "non-identifiable", "consequence": "Path count, equivalent diameter, and path length cannot be independently recovered from Vc; numerical choices remain explicit."},
+    {"id": "ID-C2-DELAYS", "endpoint_ids": ["PCQ-C2"], "parameter_ids": ["precapillary_delay", "capillary_residence", "postcapillary_delay", "mixing_delay"], "design": "One whole-pulmonary transit equals the sum of four delay components.", "expected_rank": 1, "parameter_count": 4, "status": "blocked-observation-model", "consequence": "The three extra delays require independent evidence before C2 can be compared."},
+    {"id": "ID-J-CLOSURE", "endpoint_ids": ["PCQ-C1", "PCQ-J1"], "parameter_ids": ["functional_volume", "flow", "derived_residence"], "design": "Residence is deterministically defined as Vc/Q.", "expected_rank": 2, "parameter_count": 3, "status": "diagnostic-no-new-information", "consequence": "The algebraic identity checks coherence but supplies no third independent physiological observation."}
+  ],
+  "decision_boundary": {
+    "validation_refit": "forbidden",
+    "synthetic_evidence": "software-test-only",
+    "global_variance_analysis": "blocked-until-joint-distributions-and-correlations-are-evidence-backed",
+    "transit_endpoint": "blocked-observation-model",
+    "raw_observations_emitted": false,
+    "qualification_decisions_emitted": false
+  },
+  "next_step": {
+    "increment": "PCQ-1.6",
+    "deliverable": "Run the frozen no-refit endpoint evaluator only on rights-authorized, source-disjoint observations and retain every eligible, partial, blocked, and failed result."
+  }
+}

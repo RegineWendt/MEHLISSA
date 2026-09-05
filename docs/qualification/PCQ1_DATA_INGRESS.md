@@ -177,10 +177,12 @@ provides a data dictionary, a source-specific converter may be added before
 this normalized boundary; it must receive its own fixtures and must not weaken
 the manifest-first rule.
 
-PCQ-1.5 is next: propagate observational, parameter, structural, and numerical
-uncertainty; run convergence and sensitivity analyses; and report
-identifiability for the frozen endpoints. That work can begin with model and
-synthetic uncertainty while authorized participant access remains pending.
+PCQ-1.5 has now supplied the separate, outcome-blind
+[uncertainty and identifiability plan](PCQ1_UNCERTAINTY_IDENTIFIABILITY.md).
+PCQ-1.6 is next: pass only rights-authorized normalized records from this
+boundary into the frozen no-refit evaluator and retain every eligible,
+partial, blocked, and failed result. Until such access exists, execution remains
+`blocked-access-or-rights` rather than falling back to repository fixtures.
 
 PCQ-1.4 is research infrastructure only. It is not a clinical data platform,
 medical device, ethics approval, data-use agreement, or physiological

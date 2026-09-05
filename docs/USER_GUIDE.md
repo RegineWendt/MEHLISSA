@@ -475,6 +475,39 @@ the records are structurally and administratively eligible for later frozen
 analysis. It does not mean that the sample is large enough or that any PCQ
 endpoint has passed.
 
+[PCQ-1.5 uncertainty and identifiability](qualification/PCQ1_UNCERTAINTY_IDENTIFIABILITY.md)
+now describes how uncertainty will be handled after such an import. In plain
+language, it distinguishes uncertainty in measurements, uncertainty in model
+inputs, disagreement among model structures, numerical approximation,
+sensitivity to inputs, and the question of whether the observations can
+separate the parameters at all. All nine planned endpoints have an explicit
+method or an explicit blocker.
+
+The result is deliberately mixed rather than artificially complete. Local
+sensitivity directions and structural-model spread can already be tested with
+frozen models and artificial design points. A global probabilistic analysis
+cannot yet be justified because most inputs lack evidence-backed joint
+distributions and correlations. Equilibrium pressure-flow data cannot identify
+compliance; one age band cannot separate baseline resistance from its age
+multiplier; capillary volume cannot separately identify path count, diameter,
+and path length; and one whole-pulmonary transit value cannot identify its four
+delay components. MEHLISSA therefore keeps those quantities independently
+fixed or labels them non-identifiable instead of presenting a unique-looking
+fit.
+
+Run the outcome-blind design check with:
+
+```powershell
+python scripts/check_pulmonary_capillary_uncertainty.py
+```
+
+A successful check means that the predeclared methods, frozen model identities,
+covariance rules, local sensitivity convergence, and identifiability ranks are
+internally consistent. It does not use participant outcomes and does not mean
+that a pulmonary or capillary endpoint is qualified. PCQ-1.6 remains dependent
+on rights-authorized, source-disjoint observations and will run without
+refitting.
+
 #### 5.9 Capillary signal, receptor binding, drug delivery, and cell response
 
 | Question element | Guided example |

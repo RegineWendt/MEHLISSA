@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/pulmonary-capillary-uncertainty-plan/1.0.0.schema.json",
+  "title": "MEHLISSA PCQ-1.5 uncertainty and identifiability plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "plan", "uncertainty_classes", "model_assets", "implementation_assets", "analysis_grid", "observational_models", "parameter_registry", "identifiability_analyses", "decision_boundary", "next_step"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "protocol_id", "protocol_version", "created_date", "status", "baseline_commit", "parent_ingress", "outcome_access", "clinical_use"],
+      "properties": {
+        "id": {"const": "PCQ-1.5"},
+        "protocol_id": {"const": "PCQ-1"},
+        "protocol_version": {"const": "0.2.0"},
+        "created_date": {"type": "string", "format": "date"},
+        "status": {"const": "outcome-blind-uncertainty-and-identifiability-analysis-complete"},
+        "baseline_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "parent_ingress": {"$ref": "#/$defs/file_hash"},
+        "outcome_access": {"type": "string", "minLength": 1},
+        "clinical_use": {"const": false}
+      }
+    },
+    "uncertainty_classes": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"$ref": "#/$defs/uncertainty_class"}
+    },
+    "model_assets": {
+      "type": "array",
+      "minItems": 8,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/model_asset"}
+    },
+    "implementation_assets": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/file_hash"}
+    },
+    "analysis_grid": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["flow_L_min", "age_years", "finite_difference_relative_steps", "derivative_relative_convergence_tolerance"],
+      "properties": {
+        "flow_L_min": {"type": "array", "minItems": 3, "uniqueItems": true, "items": {"type": "number", "exclusiveMinimum": 0}},
+        "age_years": {"type": "array", "minItems": 3, "uniqueItems": true, "items": {"type": "number", "minimum": 18, "maximum": 100}},
+        "finite_difference_relative_steps": {"type": "array", "minItems": 3, "items": {"type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 0.1}},
+        "derivative_relative_convergence_tolerance": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.01}
+      }
+    },
+    "observational_models": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": {"$ref": "#/$defs/observational_model"}
+    },
+    "parameter_registry": {
+      "type": "array",
+      "minItems": 12,
+      "items": {"$ref": "#/$defs/parameter"}
+    },
+    "identifiability_analyses": {
+      "type": "array",
+      "minItems": 7,
+      "items": {"$ref": "#/$defs/identifiability"}
+    },
+    "decision_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["validation_refit", "synthetic_evidence", "global_variance_analysis", "transit_endpoint", "raw_observations_emitted", "qualification_decisions_emitted"],
+      "properties": {
+        "validation_refit": {"const": "forbidden"},
+        "synthetic_evidence": {"const": "software-test-only"},
+        "global_variance_analysis": {"const": "blocked-until-joint-distributions-and-correlations-are-evidence-backed"},
+        "transit_endpoint": {"const": "blocked-observation-model"},
+        "raw_observations_emitted": {"const": false},
+        "qualification_decisions_emitted": {"const": false}
+      }
+    },
+    "next_step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["increment", "deliverable"],
+      "properties": {
+        "increment": {"const": "PCQ-1.6"},
+        "deliverable": {"type": "string", "minLength": 1}
+      }
+    }
+  },
+  "$defs": {
+    "file_hash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "uncertainty_class": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "method", "limitation", "consequence"],
+      "properties": {
+        "id": {"enum": ["observational", "parameter", "structural", "numerical", "sensitivity", "identifiability"]},
+        "status": {"enum": ["operational", "partial-evidence-bounded", "not-applicable-analytic", "blocked-evidence-input"]},
+        "method": {"type": "string", "minLength": 1},
+        "limitation": {"type": "string", "minLength": 1},
+        "consequence": {"type": "string", "minLength": 1}
+      }
+    },
+    "model_asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "model_id", "structural_family", "equivalence_group", "role"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "model_id": {"type": "string", "minLength": 1},
+        "structural_family": {"type": "string", "minLength": 1},
+        "equivalence_group": {"type": "string", "minLength": 1},
+        "role": {"enum": ["hemodynamic-ensemble-member", "hemodynamic-equivalent-alias", "capillary-closure"]}
+      }
+    },
+    "observational_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["endpoint_id", "status", "method", "required_inputs", "covariance_handling", "failure_consequence"],
+      "properties": {
+        "endpoint_id": {"pattern": "^PCQ-(H[1-4]|R1|C[1-3]|J1)$"},
+        "status": {"enum": ["operational-method-floor", "operational-compositional", "partial-requires-complete-tuple", "blocked-observation-model"]},
+        "method": {"type": "string", "minLength": 1},
+        "required_inputs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "covariance_handling": {"type": "string", "minLength": 1},
+        "failure_consequence": {"type": "string", "minLength": 1}
+      }
+    },
+    "parameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "owner", "unit", "uncertainty_representation", "distribution_status", "correlation_status", "endpoint_ids", "adjustable_in_validation"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9_.-]+$"},
+        "owner": {"enum": ["lung", "capillary", "observation"]},
+        "unit": {"type": "string", "minLength": 1},
+        "uncertainty_representation": {"type": "string", "minLength": 1},
+        "distribution_status": {"enum": ["interval-only", "standard-deviation", "standard-error", "method-floor", "fixed-numerical-choice", "unavailable"]},
+        "correlation_status": {"enum": ["not-applicable", "unavailable", "source-required", "compositional-required"]},
+        "endpoint_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"pattern": "^PCQ-(H[1-4]|R1|C[1-3]|J1)$"}},
+        "adjustable_in_validation": {"const": false}
+      }
+    },
+    "identifiability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "endpoint_ids", "parameter_ids", "design", "expected_rank", "parameter_count", "status", "consequence"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^ID-[A-Z0-9-]+$"},
+        "endpoint_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"pattern": "^PCQ-(H[1-4]|R1|C[1-3]|J1)$"}},
+        "parameter_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "design": {"type": "string", "minLength": 1},
+        "expected_rank": {"type": "integer", "minimum": 0},
+        "parameter_count": {"type": "integer", "minimum": 1},
+        "status": {"enum": ["locally-identifiable-under-design", "non-identifiable", "blocked-observation-model", "diagnostic-no-new-information"]},
+        "consequence": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -192,19 +192,19 @@ candidate, but cannot be removed from the evaluated version.
 | ~~PCQ-1.2 evidence-source screen~~ | **Completed locally:** reusable search log, thirteen-candidate machine register, corrected PVDOMICS eligibility, ranked track paths, and send-ready D'Souza request | rights, variables, jointness, methods, uncertainty, independence, public outcome exposure, and rejection reasons reviewed; no participant records acquired and no request sent |
 | ~~PCQ-1.3 pre-outcome amendment~~ | **Completed locally:** selected-source roles, eight observation models, precision floors, six primary numeric gates, statistics, explicit blocked states, and analysis version | machine and human records pass their semantic and negative tests before participant-level outcome access |
 | ~~PCQ-1.4 data adapters~~ | **Completed locally:** manifest-first rights/provenance gate, outside-Git quarantine boundary, four strict normalized schemas and adapters, metadata-only output, outcome-blind fixtures, and negative tests | invalid rights, paths, units, ages/states, stage tuples/order, source overlap, checksums, lobe sums, direct identifiers, and transit activation fail closed before evaluation |
-| PCQ-1.5 uncertainty and identifiability | parameter distributions, structural ensemble, measurement-error propagation, convergence, sensitivity, and identifiability report | all six uncertainty classes are represented or explicitly unavailable with consequences |
+| ~~PCQ-1.5 uncertainty and identifiability~~ | **Completed locally:** [outcome-blind uncertainty report](PCQ1_UNCERTAINTY_IDENTIFIABILITY.md), strict machine plan/schema, nine endpoint-specific observation models, parameter registry, seven-structure flow-age ensemble, covariance envelopes, converged local sensitivity screen, nine identifiability rank analyses, and explicit global/transit blockers | all six uncertainty classes are represented or explicitly unavailable with consequences; no measured outcome or qualification decision was used |
 | PCQ-1.6 locked execution | no-refit track reports with raw permissible artifacts and retained failures | every eligible observation, control, exclusion, and result is reproducible |
 | PCQ-1.7 qualification review | bounded claims and statuses updated across evidence matrix, traceability, documentation, and shareable report | independent review agrees that wording does not exceed the evidence |
 
 ## 10. Immediate next action
 
-PCQ-1.5 is next. Quantify the observational, parameter, structural, and
-numerical uncertainty already declared by PCQ-1.1/1.3; run convergence and
-sensitivity analyses; and state which parameters or claims are identifiable
-from each observation family. This work begins with frozen model and synthetic
-uncertainty inputs while participant-level access remains pending. It must not
-weaken the PCQ-1.4 manifest-first quarantine boundary or activate the blocked
-whole-pulmonary transit comparison.
+PCQ-1.6 is next. Use the PCQ-1.4 ingress boundary and PCQ-1.5 uncertainty plan
+to execute each eligible endpoint against rights-authorized, source-disjoint
+observations without refitting. Every eligible observation, missingness count,
+exclusion, covariance limitation, negative control, partial result, and failed
+result must remain reproducible. Until authorized data exist, PCQ-1.6 stays
+blocked-access-or-rights; the blocked whole-pulmonary transit comparison cannot
+be activated by execution alone.
 
 ## 11. Existing evidence retained
 

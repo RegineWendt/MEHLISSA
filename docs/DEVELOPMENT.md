@@ -263,6 +263,7 @@ python scripts/check_pulmonary_capillary_qualification_protocol.py
 python scripts/check_pulmonary_capillary_evidence_candidates.py
 python scripts/check_pulmonary_capillary_preoutcome_amendment.py
 python scripts/check_pulmonary_capillary_data_ingress.py
+python scripts/check_pulmonary_capillary_uncertainty.py
 python scripts/check_paper1_release_candidate.py
 python -m unittest tests.test_evidence_validity_matrix -v
 python -m unittest tests.test_paper1_protocol -v
@@ -270,6 +271,7 @@ python -m unittest tests.test_pulmonary_capillary_qualification_protocol -v
 python -m unittest tests.test_pulmonary_capillary_evidence_candidates -v
 python -m unittest tests.test_pulmonary_capillary_preoutcome_amendment -v
 python -m unittest tests.test_pulmonary_capillary_data_ingress -v
+python -m unittest tests.test_pulmonary_capillary_uncertainty -v
 python -m unittest tests.test_paper1_measurement_tools -v
 python -m unittest tests.test_paper1_release_candidate -v
 ```
@@ -316,6 +318,25 @@ the data file is opened. The command emits metadata only. See the
 [data-ingress guide](qualification/PCQ1_DATA_INGRESS.md) before adding a
 source-specific converter; never weaken the normalized schemas to fit an
 unknown or unauthorized source layout.
+
+The PCQ-1.5 checker binds its strict plan to the PCQ-1.4 ingress hash, eight
+immutable model assets, and the pulmonary/capillary implementation-source
+hashes. It mirrors the accepted pulmonary equilibrium equations
+using only frozen JSON values, checks v4/v7 aggregate equivalence over a fixed
+flow-age grid, evaluates convergent signed local sensitivities, propagates
+method floors through covariance envelopes, and verifies nine pre-calibration
+design-matrix ranks. This is intentionally a dependency-light reference
+analysis in the documentation job; the C++ suite remains the implementation
+authority for the runtime equations. If either implementation changes, update
+the model version and frozen hash rather than relaxing the checker.
+
+Do not add invented probability distributions merely to enable a global
+variance analysis. The current plan marks that analysis evidence-blocked until
+joint distributions and correlations are source-backed. Likewise, do not
+activate PCQ-C2 or turn synthetic design calculations into qualification
+decisions. See the
+[uncertainty and identifiability report](qualification/PCQ1_UNCERTAINTY_IDENTIFIABILITY.md)
+for the endpoint methods, structural results, rank findings, and PCQ-1.6 handoff.
 
 Do not edit the locked protocol or raw archives in place. A changed protocol
 requires a new version and pre-measurement commit; a changed candidate requires
