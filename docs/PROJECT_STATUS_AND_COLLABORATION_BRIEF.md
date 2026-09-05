@@ -8,12 +8,12 @@ SPDX-License-Identifier: CC-BY-4.0
 ## Project Status and Collaboration Brief
 
 **Purpose:** Shareable overview for prospective contributors and research partners
-**Status date:** 3 September 2026
+**Status date:** 5 September 2026
 **Development branch:** `mehlissa-next-generation`
 **Verified published release commit:** `5821c7358f490c1c92e9ec79eaed783f80851297`
 **Workbench release:** 1.0.0; UX-6.1 through UX-6.8 accepted
 **Milestone status:** M0 through M7 passed
-**Current product focus:** Paper 1 platform/methods release-candidate review and scientific qualification
+**Current product focus:** macOS/Apple Clang source-build acceptance and Paper 1 release preparation
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -52,6 +52,10 @@ behind explicit contracts.
 - The published Workbench 1.0 commit passes all 286 local Windows/MSVC tests and
   GitHub Windows/MSVC, Linux/GCC, and Linux/Clang CI. The Clang path also passes
   formatting, clang-tidy, AddressSanitizer, and UndefinedBehaviorSanitizer.
+- The current unpublished working tree adds a native macOS/Apple Clang CMake
+  path, automatic Workbench executable discovery, and a required `macos-15`
+  ARM64 GitHub job. It produces a source-built command-line simulator, not a
+  `.app` bundle; acceptance remains pending until that first job passes.
 - The integrated research-use layer provides a validated five-family,
   ten-example catalog; safe scenario editing and validation; direct and
   campaign execution; non-overwriting reports; process-based Python readers;
@@ -413,6 +417,13 @@ Windows/MSVC, Linux/GCC, and Linux/Clang CI, including formatting, clang-tidy,
 AddressSanitizer, and UndefinedBehaviorSanitizer. Detailed increment contracts,
 acceptance evidence, and interpretation limits remain in `docs/ux` and the
 User Guide.
+
+The next platform extension adds a native macOS/Apple Clang source build and
+the same Workbench workflow. The implementation uses dedicated CMake presets
+and a pinned macOS 15 ARM64 GitHub job. It does not create an application
+bundle, installer, signed or notarized binary, or downloadable executable. This
+extension remains a candidate until its complete CI job passes; the verified
+published baseline above is unchanged in the meantime.
 
 ## 9. Opportunities for collaborators
 

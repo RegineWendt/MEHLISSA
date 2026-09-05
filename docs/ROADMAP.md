@@ -1246,6 +1246,28 @@ workflow, and domain abbreviations at first use. Internal identifiers may be
 retained for traceability, but unexplained labels such as “A run”, “B run”, or
 `P2` are not acceptable in contributor-facing prose.
 
+### 6.8 Supported development platforms and CI
+
+Platform support is part of reproducibility and contributor access, not a
+separate user-interface product. The accepted Windows/MSVC, Linux/GCC, and
+Linux/Clang paths are extended by a native macOS/Apple Clang source build.
+
+The macOS package comprises:
+
+- native CMake configure, build, and test presets using the pinned vcpkg
+  baseline;
+- automatic Workbench discovery of the resulting command-line executable;
+- a required GitHub job on the explicitly pinned `macos-15` ARM64 runner;
+- the complete CTest and isolated Python-package acceptance suite; and
+- synchronized User Guide, Development Guide, architecture, requirements, and
+  status documentation.
+
+This package intentionally does not include a `.app` bundle, installer,
+universal binary, signing, notarization, downloadable executable, or update
+service. Its acceptance criterion is a complete green macOS/Apple Clang job for
+the implementation commit. Intel Macs remain source-compatible candidates but
+are not CI-qualified by the initial ARM64 job.
+
 ## 7. Prioritization
 
 ### Priority P0 – indispensable
@@ -1290,6 +1312,7 @@ retained for traceability, but unexplained labels such as “A run”, “B run�
 | Horizon | Focus | Expected result |
 |---|---|---|
 | Completed by 3 September 2026 | M0-M7 scientific/runtime capabilities and UX-1 through UX-6 research-use delivery | Integrated reproducible platform and Workbench 1.0 |
+| Immediate platform completion | Native macOS/Apple Clang source build and pinned ARM64 CI | Same simulator and Workbench workflow available to macOS contributors without an application bundle |
 | Next qualification cycle | Evidence/validity matrix; pulmonary-capillary evidence; first biological cell-model candidate | Existing mechanisms gain bounded, independently testable scientific claims |
 | Following scenario cycle | Dynamic capillary-tissue-cell coupling and one externally validated medical reference scenario | First end-to-end result compared with independent physiological or experimental observations |
 | Platform expansion | Additional organs beginning with kidney, further medical scenarios, larger ensembles, and advanced visualization | Generalization beyond the lung/FP9 demonstrator without weakening evidence rules |
@@ -1419,21 +1442,26 @@ The following packages are derived directly from this roadmap:
     handoff are bound under candidate `paper1-platform-methods-rc1-20260903`.
     Suggested tag `paper1-platform-methods-rc1` is not created; no DOI or final
     release is implied.
-23. Qualify pulmonary and capillary physiology. Use subject-level or otherwise
+23. Complete native macOS/Apple Clang source-build acceptance. The configure,
+    build, test, Workbench discovery, documentation, and pinned ARM64 GitHub job
+    are implemented locally; acceptance and strike-through require the first
+    complete green CI run for the implementation commit. No `.app` package is
+    part of this item.
+24. Qualify pulmonary and capillary physiology. Use subject-level or otherwise
     joint data where possible, separate calibration from validation, predeclare
     metrics and tolerances, and quantify parameter and structural uncertainty.
-24. Qualify at least one biological cell-model variant. Replace synthetic-only
+25. Qualify at least one biological cell-model variant. Replace synthetic-only
     biological behavior with an evidence-backed, calibrated, independently
     tested variant while retaining the current synthetic model as a software
     regression fixture.
-25. Implement and qualify dynamic capillary-tissue-cell coupling. Introduce
+26. Implement and qualify dynamic capillary-tissue-cell coupling. Introduce
     explicit time-dependent exchange and feedback, conservation checks, and
     sensitivity analysis across the coupling boundary.
-26. Validate one complete medical reference scenario externally. Freeze the
+27. Validate one complete medical reference scenario externally. Freeze the
     scenario and model versions, run the full injection-to-measurement path,
     compare against independent data, and publish a reproducible validation
     report with a bounded claim and explicit limitations.
-27. Expand organs, scenarios, scale, and the M8 platform only after the same
+28. Expand organs, scenarios, scale, and the M8 platform only after the same
     qualification workflow is in place. A kidney model remains a strong next
     organ candidate, but its scientific maturity must be reported separately
     from its software integration maturity.

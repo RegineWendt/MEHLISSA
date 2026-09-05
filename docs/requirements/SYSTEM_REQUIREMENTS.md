@@ -204,6 +204,7 @@ implementation is correct or sufficiently validated.
 | QUA-004 | Realistic scales shall become scalable through agent, population, compartment, field, and surrogate models. | A | P1 | T/R | MEH25 pp. 1–2; RM 2.3 |
 | QUA-005 | Public interfaces, models, data schemas, and scenarios shall be versioned and documented for researchers. | A/N | P1 | I | RM 6.7 |
 | QUA-006 | Patient data shall be processed only after a documented data-protection, consent, and pseudonymization concept exists. | N | P3 | I | RM M8 |
+| QUA-007 | The complete C++ application and research-use layer shall build and test from source on macOS with Apple Clang; native application packaging is not required. | N | P1 | T | RM 6.8; ADR-0051 |
 
 ## 14. Acceptance rules
 

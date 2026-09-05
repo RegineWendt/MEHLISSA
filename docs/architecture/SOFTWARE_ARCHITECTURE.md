@@ -799,8 +799,8 @@ Do not retain references to another layer or mutate it directly.
   conservation, determinism, overflow, invalid inputs, and step-size behavior.
 - Add an analytical or synthetic oracle before using physiological evidence.
 - Add integration tests for the complete boundary round trip.
-- Run formatting, Clang-Tidy, sanitizers, all CTest tests, and the three CI
-  compiler families.
+- Run formatting, Clang-Tidy, sanitizers, all CTest tests, and the supported CI
+  toolchains: Windows/MSVC, Linux/GCC, Linux/Clang, and macOS/Apple Clang.
 - Update the layer guide, model card, evidence qualification, User Guide when
   user-visible, roadmap gate, and traceability matrix.
 

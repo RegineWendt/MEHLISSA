@@ -179,6 +179,7 @@ statements.
 | QUA-004 | MEH25 pp. 1–2 | PART | M5/Phase 10 | explicit entities, stochastic populations, cohort-compressed one-trillion-cell aggregation, compartment transport, finite-volume fields, analytical/surrogate comparisons, and a small repeated 1,000/10,000-collector M7 resource baseline exist; representative end-to-end scale envelopes, profiling, parallel execution, and HPC evidence remain open |
 | QUA-005 | RM 6.7 | DONE | continuous | versioned API/schema/model/scenario documents plus a two-level English User Guide cover non-expert purpose, non-claims, mental model, guided experiment families, decision aid, glossary, and accepted M0–M7 and Workbench 1.0 workflows; formal gate and user-visible delivery reviews require synchronized Roadmap, status brief/PDF, architecture, traceability, and User Guide impact checks |
 | QUA-006 | RM M8 | SPEC | M8 | data-protection and data-management review |
+| QUA-007 | RM 6.8; ADR-0051 | PART | platform portability | native `macos-apple-clang` configure/build/test presets, Workbench executable discovery, and a pinned macOS 15 ARM64 Apple Clang CI job are implemented locally; acceptance requires the first complete green GitHub job |
 
 ## 7. M0 coverage review
 

@@ -28,6 +28,13 @@ Start here:
   historical implementations at commit `4f4fc5a`; it is not the current Next
   status.
 
+MEHLISSA provides native source-build paths for Windows/MSVC, Linux/GCC and
+Linux/Clang, and macOS/Apple Clang. The macOS path builds the command-line
+simulator and supports the same local Workbench workflow; it intentionally does
+not create an application bundle, installer, signed binary, or downloadable CI
+artifact. See the Development Guide for the platform-specific commands. The
+macOS path remains a candidate until its first complete GitHub CI job passes.
+
 After building the normal Debug preset, the complete M7 fingerprinting
 research demonstrator can be run without writing C++:
 

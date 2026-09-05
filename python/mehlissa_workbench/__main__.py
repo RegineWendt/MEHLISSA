@@ -28,6 +28,7 @@ def _default_executable(repository_root: Path) -> Path | None:
         "build/windows-msvc/apps/Debug/mehlissa.exe",
         "build/linux-gcc/apps/mehlissa",
         "build/linux-clang-analysis/apps/mehlissa",
+        "build/macos-apple-clang/apps/mehlissa",
     )
     return next(
         (

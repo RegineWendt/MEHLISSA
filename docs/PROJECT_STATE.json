@@ -1,23 +1,29 @@
 {
   "schema_version": "1.0.0",
-  "status_date": "2026-09-03",
-  "status_date_display": "3 September 2026",
+  "status_date": "2026-09-05",
+  "status_date_display": "5 September 2026",
   "development_branch": "mehlissa-next-generation",
   "milestones_passed_through": "M7",
-  "current_focus": "Paper 1 platform/methods release-candidate review and scientific qualification",
+  "current_focus": "macOS/Apple Clang source-build acceptance and Paper 1 release preparation",
   "research_use": {
     "delivery_range": "UX-1 through UX-6",
     "workbench_version": "1.0.0",
     "release_commit": "5821c7358f490c1c92e9ec79eaed783f80851297",
     "verified_ci_run": "33745263319",
     "verified_ci_url": "https://github.com/RegineWendt/MEHLISSA/actions/runs/33745263319",
-    "windows_msvc_ctest_count": 286
+    "windows_msvc_ctest_count": 286,
+    "macos_source_build": {
+      "preset": "macos-apple-clang",
+      "ci_runner": "macos-15 ARM64",
+      "status": "implemented locally; first CI acceptance pending"
+    }
   },
   "roadmap_sections": {
     "scientific_qualification": "6.4",
     "experiment_and_result_format": "6.5",
     "visualization_and_user_tools": "6.6",
-    "documentation": "6.7"
+    "documentation": "6.7",
+    "platform_portability": "6.8"
   },
   "paper1_platform_methods": {
     "candidate_id": "paper1-platform-methods-rc1-20260903",
@@ -53,6 +59,7 @@
     "UX-014": "DONE",
     "QUA-003": "PART",
     "QUA-004": "PART",
+    "QUA-007": "PART",
     "DATA-008": "PART"
   }
 }

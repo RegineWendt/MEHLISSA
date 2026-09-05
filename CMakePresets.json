@@ -69,6 +69,18 @@
         "MEHLISSA_ENABLE_CLANG_TIDY": "ON",
         "MEHLISSA_ENABLE_SANITIZERS": "ON"
       }
+    },
+    {
+      "name": "macos-apple-clang",
+      "displayName": "macOS Apple Clang Debug",
+      "description": "Native macOS source build with Apple Clang and Ninja",
+      "inherits": "common",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
     }
   ],
   "buildPresets": [
@@ -93,6 +105,10 @@
     {
       "name": "linux-clang-analysis",
       "configurePreset": "linux-clang-analysis"
+    },
+    {
+      "name": "macos-apple-clang-debug",
+      "configurePreset": "macos-apple-clang"
     }
   ],
   "testPresets": [
@@ -129,6 +145,13 @@
     {
       "name": "linux-clang-analysis",
       "configurePreset": "linux-clang-analysis",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "macos-apple-clang-debug",
+      "configurePreset": "macos-apple-clang",
       "output": {
         "outputOnFailure": true
       }

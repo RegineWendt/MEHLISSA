@@ -617,8 +617,10 @@ The recommended editor is Visual Studio Code with Microsoft's **C/C++** and
 **CMake Tools** extensions. These extensions improve editing and project
 control, but the Visual Studio C++ workload supplies the actual compiler.
 
-Linux builds use a C++20 compiler, CMake, Ninja, and vcpkg. See the
-[Development Guide](DEVELOPMENT.md) for the supported presets.
+Linux builds use a C++20 compiler, CMake, Ninja, and vcpkg. macOS builds use the
+Xcode Command Line Tools with Apple Clang, CMake, Ninja, Python, and vcpkg. See
+the [Development Guide](DEVELOPMENT.md) for the supported presets and the pinned
+vcpkg bootstrap.
 
 ### Configure, build, and test on Windows
 
@@ -662,6 +664,29 @@ Clang-Tidy, AddressSanitizer, and UndefinedBehaviorSanitizer. The remainder of
 this guide shows PowerShell command continuation with a trailing backtick. On
 Linux, use the executable above and either place the arguments on one line or
 replace the backtick with the shell continuation character `\`.
+
+### Configure, build, and test on macOS
+
+Install the Xcode Command Line Tools, CMake 3.28 or newer, Ninja, Python 3.10 or
+newer, and a pinned vcpkg checkout. With `VCPKG_ROOT` exported, run from the
+repository root:
+
+```bash
+cmake --preset macos-apple-clang
+cmake --build --preset macos-apple-clang-debug
+ctest --preset macos-apple-clang-debug --output-on-failure
+```
+
+The command-line simulator is then available at:
+
+```text
+build/macos-apple-clang/apps/mehlissa
+```
+
+This is a native source build. MEHLISSA does not currently create a `.app`
+bundle, installer, signed binary, or notarized distribution. The GitHub
+`macos-apple-clang` job validates the complete source build and test suite on a
+pinned macOS 15 ARM64 runner; it does not publish an executable artifact.
 
 All paths in the following examples are relative to the repository root.
 
@@ -1036,9 +1061,9 @@ campaign. Then start the interface:
 mehlissa-workbench --repository-root .
 ```
 
-The launcher searches the normal Windows Debug/Release and Linux GCC/Clang
-build locations, prints a unique local URL, and normally opens the default
-browser. If your executable is elsewhere, specify it explicitly:
+The launcher searches the normal Windows Debug/Release, Linux GCC/Clang, and
+macOS Apple Clang build locations, prints a unique local URL, and normally opens
+the default browser. If your executable is elsewhere, specify it explicitly:
 
 ```powershell
 mehlissa-workbench `
@@ -1056,6 +1081,10 @@ mehlissa-workbench --version
 mehlissa-workbench --repository-root . --check
 mehlissa-workbench --repository-root .
 ```
+
+The same commands apply on macOS after the Apple Clang source build; use
+`python3` to create the virtual environment. The launcher automatically checks
+`build/macos-apple-clang/apps/mehlissa`.
 
 The Python package contains the process API, readers, host, browser assets, and
 licence. It does not embed the C++ executable or duplicate the matching

@@ -83,6 +83,33 @@ jobs:
       - name: Test
         run: ctest --preset linux-gcc-debug
 
+  macos-apple-clang:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Prepare Python packaging tools
+        run: python -m pip install --disable-pip-version-check --no-input "setuptools>=77" wheel
+      - name: Record Apple toolchain
+        run: |
+          uname -a
+          clang++ --version
+          cmake --version
+          ninja --version
+      - name: Install pinned vcpkg
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git "$VCPKG_ROOT"
+          git -C "$VCPKG_ROOT" checkout "$VCPKG_COMMIT"
+          "$VCPKG_ROOT/bootstrap-vcpkg.sh" -disableMetrics
+      - name: Configure
+        run: cmake --preset macos-apple-clang
+      - name: Build
+        run: cmake --build --preset macos-apple-clang-debug
+      - name: Test
+        run: ctest --preset macos-apple-clang-debug
+
   linux-clang-analysis:
     runs-on: ubuntu-latest
     steps:

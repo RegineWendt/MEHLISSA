@@ -24,7 +24,7 @@ for adding modules, and the current personalization workflow, see the
 - CMake 3.28 or newer
 - a C++20 compiler
 - vcpkg with `VCPKG_ROOT` set
-- Ninja on Linux
+- Ninja on Linux and macOS
 - Python 3.10 or newer for the process API, Workbench, and release-package test
 
 On Windows, Visual Studio Community 2026 with the “Desktop development with
@@ -66,7 +66,7 @@ mehlissa-workbench --version
 mehlissa-workbench --repository-root . --check
 ```
 
-On Linux:
+On Linux and macOS:
 
 ```bash
 python3 -m venv .venv
@@ -77,9 +77,9 @@ mehlissa-workbench --repository-root . --check
 ```
 
 After a successful check, `mehlissa-workbench --repository-root .` starts the
-same local interface on either platform. The launcher searches the documented
-Windows MSVC and Linux GCC/Clang build locations; use `--executable` only for a
-non-standard build path.
+same local interface on all three operating systems. The launcher searches the
+documented Windows MSVC, Linux GCC/Clang, and macOS Apple Clang build locations;
+use `--executable` only for a non-standard build path.
 
 The CTest named `mehlissa_python_ux6_release_package` independently builds the
 wheel without dependency downloads, inspects its resources and licence,
@@ -106,6 +106,42 @@ cmake --preset linux-gcc
 cmake --build --preset linux-gcc-debug
 ctest --preset linux-gcc-debug
 ```
+
+## macOS with Apple Clang
+
+The supported macOS path is a native source build, not an application bundle.
+Install the Xcode Command Line Tools, CMake 3.28 or newer, Ninja, Python 3.10 or
+newer, and vcpkg. Homebrew is one convenient way to install CMake and Ninja:
+
+```bash
+xcode-select --install
+brew install cmake ninja
+```
+
+Set `VCPKG_ROOT` to a pinned vcpkg checkout. From the repository root, a local
+checkout matching the project baseline can be prepared with:
+
+```bash
+git clone https://github.com/microsoft/vcpkg.git .vcpkg
+git -C .vcpkg checkout ddd0023b0eee70986e42ed49d9d4afb8098f212e
+./.vcpkg/bootstrap-vcpkg.sh -disableMetrics
+export VCPKG_ROOT="$PWD/.vcpkg"
+```
+
+Configure, build, and run the complete suite with:
+
+```bash
+cmake --preset macos-apple-clang
+cmake --build --preset macos-apple-clang-debug
+ctest --preset macos-apple-clang-debug
+```
+
+The command-line simulator is then available at
+`build/macos-apple-clang/apps/mehlissa`. Install the Python package as described
+above to use `mehlissa-workbench --repository-root .`. No `.app` package,
+installer, code signing, or notarization is produced. The dedicated GitHub job
+uses the pinned `macos-15` ARM64 runner image; the preset itself performs a
+native build and does not hard-code the local Mac architecture.
 
 ## Analysis build with Clang
 
@@ -171,7 +207,9 @@ The accepted baseline comprises:
   dashboards, provenance/evidence audit, descriptive campaign analysis, and
   export; and
 - 286 local Windows/MSVC tests plus accepted Windows/MSVC, Linux/GCC, and
-  Linux/Clang CI with formatting, static analysis, and sanitizers.
+  Linux/Clang CI with formatting, static analysis, and sanitizers; and
+- a native macOS/Apple Clang source-build preset and ARM64 CI job whose first
+  acceptance run remains pending until the working branch is pushed.
 
 Medical scenarios and legacy state do not belong in the kernel. Biological and
 communication models depend on it as separate libraries. Browser code does not
