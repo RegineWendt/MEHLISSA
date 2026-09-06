@@ -121,7 +121,7 @@ void write_csv(const std::filesystem::path& path,
 
 } // namespace
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv) { // NOLINT(bugprone-exception-escape)
     try {
         if (argc != 5 && argc != 7) {
             std::cerr << "usage: mehlissa_dccq1_qualification_runner output.csv "
@@ -149,6 +149,9 @@ int main(int argc, char** argv) {
         return EXIT_SUCCESS;
     } catch (const std::exception& error) {
         std::cerr << "DCCQ-1 qualification run failed: " << error.what() << '\n';
+        return EXIT_FAILURE;
+    } catch (...) {
+        std::cerr << "DCCQ-1 qualification run failed with an unknown exception\n";
         return EXIT_FAILURE;
     }
 }

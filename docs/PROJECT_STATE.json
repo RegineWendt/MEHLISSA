@@ -104,7 +104,7 @@
     "qualification_result_document": "docs/qualification/DCCQ1_QUALIFICATION_RESULT.md",
     "qualification_result": "data/qualification/dynamic-capillary-tissue-cell-qualification-result-v1.json",
     "authoritative_run": "results/dccq1/vegfa165a-vegfr2-huvec/20260906T120000Z-dccq1-v1",
-    "authoritative_manifest_sha256": "a9a8c755045fd56f81c876b881fc7f104ebf2e044899455269d3384e6c34c697",
+    "authoritative_manifest_sha256": "44e974c24afbf38bd26229c654060b75fa81d37a778725edf0f5ee4567cfdaa2",
     "audited_baselines": 6,
     "ranked_targets": 4,
     "audited_source_artifacts": 10,

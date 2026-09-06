@@ -230,8 +230,9 @@ DynamicCapillaryTissueCellModel::derivative(const State& state,
     };
 }
 
-void DynamicCapillaryTissueCellModel::rk4_step(const double step_seconds,
+void DynamicCapillaryTissueCellModel::rk4_step(const core::Time step,
                                                const double feedback_multiplier) {
+    const auto step_seconds = core::in_seconds(step);
     const auto k1 = derivative(state_, feedback_multiplier);
     State intermediate{};
     for (std::size_t i = 0; i < state_.size(); ++i) {
@@ -284,7 +285,7 @@ DynamicCapillaryTissueCellModel::advance_one_synchronization_interval() {
     const auto multiplier_used = next_feedback_multiplier_;
     applied_feedback_multiplier_ = multiplier_used;
     for (std::size_t i = 0; i < step_count; ++i) {
-        rk4_step(step, multiplier_used);
+        rk4_step(core::seconds(step), multiplier_used);
     }
     time_seconds_ += interval;
     next_feedback_multiplier_ = scheduled_feedback_multiplier();

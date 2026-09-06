@@ -4,7 +4,7 @@
   "files": [
     {
       "path": "build-provenance.json",
-      "sha256": "24c599b096ae493d3df2cef5ec0d33c2f9f4b4320b75f3bcc92057b418ed1475"
+      "sha256": "ee17f8f17946592fab43bef4209d4ac98fb2ad8bfd9a60f0139ab49ad8d55993"
     },
     {
       "path": "local-sensitivity.json",
@@ -12,7 +12,7 @@
     },
     {
       "path": "protocol.json",
-      "sha256": "8837b47d8dd258e4b1ff21940fc34f0f2432ef6a01aeeb9b1373448a24c217d7"
+      "sha256": "1f5744e767c55e7df556e0222e60c228d5e7336f52f8368108fb4191d1abbc27"
     },
     {
       "path": "qualification-metrics.json",

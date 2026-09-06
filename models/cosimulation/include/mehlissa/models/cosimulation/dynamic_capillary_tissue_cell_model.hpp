@@ -7,6 +7,7 @@
 #include <mehlissa/core/quantity.hpp>
 
 #include <array>
+#include <cstdint>
 #include <string>
 #include <vector>
 
@@ -27,7 +28,7 @@ using AmountRate = core::Quantity<core::Dimension<0, -1, 1>>;
     return value.si_value();
 }
 
-enum class Nrp1StructuralMode {
+enum class Nrp1StructuralMode : std::uint8_t {
     excluded,
     tracked_neutral,
     facilitated_binding_assumption,
@@ -120,7 +121,7 @@ class DynamicCapillaryTissueCellModel final {
     using State = std::array<double, 8>;
 
     [[nodiscard]] State derivative(const State& state, double feedback_multiplier) const noexcept;
-    void rk4_step(double step_seconds, double feedback_multiplier);
+    void rk4_step(core::Time step, double feedback_multiplier);
     [[nodiscard]] double scheduled_feedback_multiplier() const noexcept;
     [[nodiscard]] DynamicLigandLedger ledger() const noexcept;
 

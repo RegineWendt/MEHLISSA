@@ -10,14 +10,14 @@
   },
   "protocol": {
     "path": "data/qualification/dynamic-capillary-tissue-cell-protocol-v1.json",
-    "sha256": "8837b47d8dd258e4b1ff21940fc34f0f2432ef6a01aeeb9b1373448a24c217d7"
+    "sha256": "1f5744e767c55e7df556e0222e60c228d5e7336f52f8368108fb4191d1abbc27"
   },
   "archive": {
     "run_id": "20260906T120000Z-dccq1-v1",
     "path": "results/dccq1/vegfa165a-vegfr2-huvec/20260906T120000Z-dccq1-v1",
     "checksum_manifest": {
       "path": "results/dccq1/vegfa165a-vegfr2-huvec/20260906T120000Z-dccq1-v1/sha256sums.json",
-      "sha256": "a9a8c755045fd56f81c876b881fc7f104ebf2e044899455269d3384e6c34c697"
+      "sha256": "44e974c24afbf38bd26229c654060b75fa81d37a778725edf0f5ee4567cfdaa2"
     },
     "raw_external_data_bundled": false,
     "unlicensed_external_code_bundled": false
