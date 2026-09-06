@@ -4,7 +4,7 @@
   "status_date_display": "6 September 2026",
   "development_branch": "mehlissa-next-generation",
   "milestones_passed_through": "M7",
-  "current_focus": "Dynamic capillary-tissue-cell coupling qualification design",
+  "current_focus": "DCCQ-1.2 biological target, artifact, data, and licence screen",
   "research_use": {
     "delivery_range": "UX-1 through UX-6",
     "workbench_version": "1.0.0",
@@ -86,6 +86,23 @@
     "external_solver": "COPASI command-line engine 4.46 Build 300 using LSODA; MEHLISSA uses deterministic fixed-step RK4",
     "unit_status": "unresolved-model-native; conversion forbidden until a citable mapping is frozen",
     "next_increment": "BCQ-1 series closed; reopen only under a new prospective protocol when publication-series, population, or external-review evidence becomes available"
+  },
+  "active_dynamic_coupling_qualification": {
+    "program_id": "DCCQ-1",
+    "full_name": "Dynamic Capillary-Tissue-Cell Qualification",
+    "plan_version": "0.1.0",
+    "completed_increment": "DCCQ-1.1 bounded intended-use and baseline compatibility audit",
+    "status": "prospective design only: six existing component baselines are hash-bound and explicitly limited; no dynamic coupling result or biological qualification is claimed",
+    "plan_document": "docs/qualification/DCCQ1_QUALIFICATION_PLAN.md",
+    "machine_record": "data/qualification/dynamic-capillary-tissue-cell-qualification-plan-v1.json",
+    "audited_baselines": 6,
+    "planned_gates": 8,
+    "currently_blocked_gates": 8,
+    "negative_controls": 10,
+    "evidence_levels": 5,
+    "uncertainty_classes": 6,
+    "qualified_dynamic_coupling": false,
+    "next_increment": "DCCQ-1.2 biological target, artifact, data, and licence screen"
   },
   "next_scientific_packages": [
     "Pulmonary and capillary qualification",

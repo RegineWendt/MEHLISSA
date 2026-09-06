@@ -402,6 +402,31 @@ The implemented couplers are:
 Couplers coordinate synchronization; they do not perform hidden unit
 conversion, biological calibration, or direct mutation of another component.
 
+### 6.1 Planned dynamic capillary-tissue-cell boundary
+
+DCCQ means **Dynamic Capillary-Tissue-Cell Qualification**. The completed
+DCCQ-1.1 design and compatibility audit does not add a new public runtime API;
+it constrains the API that DCCQ-1.3 and DCCQ-1.4 may introduce after the
+DCCQ-1.2 source screen.
+
+The existing `ExtracellularSignalSample` and `CapillaryCellSignalCoupler`
+remain deliberately non-consuming snapshot interfaces. A dynamic
+implementation must use a new versioned contract and must not change their
+meaning in place. Its minimum ledger has seven exclusive ligand owners:
+`blood_free`, `endothelium_free`, `interstitium_free`, `receptor_bound`,
+`internalized`, `cleared_or_degraded`, and `outlet`, plus cumulative inlet.
+The same named ligand and compatible explicit units cross every boundary.
+Binding removes ligand from free tissue; dissociation returns it; every other
+loss reaches a declared sink. Feedback is delayed to a declared synchronization
+boundary and cannot mutate the upstream state within the same step.
+
+The qualified Kallenberger adapter is not currently eligible for this SI path:
+it locks `CD95L=16.6`, retains unresolved model-native units, and represents an
+average HeLa cell. DCCQ-1.2 will rank biological candidates and alternatives;
+VEGF-A/VEGFR remains a candidate rather than an architectural assumption. See
+[ADR-0053](adr/0053-dynamic-capillary-tissue-cell-qualification-boundary.md)
+and the [DCCQ-1 plan](../qualification/DCCQ1_QUALIFICATION_PLAN.md).
+
 ## 7. Configuration and data contracts
 
 MEHLISSA uses two related APIs at every configurable boundary:

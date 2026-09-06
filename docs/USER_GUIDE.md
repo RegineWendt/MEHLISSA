@@ -3395,8 +3395,18 @@ Planned substantive scientific extensions are:
   published average-cell mechanism only; publication curves, a reusable
   population ensemble, external human attestation, and biological or clinical
   qualification remain blocked;
-- dynamic capillary-tissue-cell coupling with time-dependent transport,
-  interaction or consumption, feedback, and conservation checks;
+- DCCQ-1 dynamic capillary-tissue-cell qualification: DCCQ means **Dynamic
+  Capillary-Tissue-Cell Qualification**. DCCQ-1.1 has completed the prospective
+  intended-use and compatibility audit. It establishes the seven-owner ligand
+  ledger, compatible identity/unit rules, delayed feedback, eight qualification
+  gates, ten negative controls, six uncertainty classes, and the DCCQ-1.1 to
+  DCCQ-1.7 sequence. It does not add a user-runnable dynamic coupling. In
+  particular, repeated M5.2 non-consuming snapshots are not a dynamic model,
+  and the qualified fixed-input CD95 average-cell mechanism cannot receive SI
+  capillary concentrations while its source units remain unresolved. DCCQ-1.2
+  next screens a named ligand-receptor-cell context, artifacts, data roles,
+  reuse rights, units, and independent evidence before implementation. See the
+  [DCCQ-1 qualification plan](qualification/DCCQ1_QUALIFICATION_PLAN.md);
 - one frozen medical reference scenario evaluated end to end against
   independent physiological or experimental observations;
 - additional medical scenarios and organ families, beginning with a kidney

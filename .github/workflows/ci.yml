@@ -43,6 +43,7 @@ jobs:
           python scripts/check_biological_cell_model_reproduction_result.py
           python scripts/check_biological_cell_model_integration_protocol.py
           python scripts/check_biological_cell_model_qualification_result.py
+          python scripts/check_dynamic_capillary_tissue_cell_qualification_plan.py
           python scripts/check_paper1_release_candidate.py
           python -m unittest tests/test_evidence_validity_matrix.py
           python -m unittest tests/test_paper1_protocol.py
@@ -58,6 +59,7 @@ jobs:
           python -m unittest tests/test_biological_cell_model_reproduction_runner.py
           python -m unittest tests/test_biological_cell_model_integration_protocol.py
           python -m unittest tests/test_biological_cell_model_qualification_result.py
+          python -m unittest tests/test_dynamic_capillary_tissue_cell_qualification_plan.py
           python -m unittest tests/test_paper1_measurement_tools.py
           python -m unittest tests/test_paper1_release_candidate.py
 

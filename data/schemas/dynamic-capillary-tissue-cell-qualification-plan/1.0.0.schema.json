@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/dynamic-capillary-tissue-cell-qualification-plan/1.0.0.schema.json",
+  "title": "MEHLISSA Dynamic Capillary-Tissue-Cell Qualification plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "program",
+    "bounded_intended_use",
+    "baseline_components",
+    "cross_layer_state_contract",
+    "planned_gates",
+    "evidence_hierarchy",
+    "uncertainty_plan",
+    "increments",
+    "negative_controls",
+    "frozen_baseline_assets",
+    "governance_and_claim_policy",
+    "completion_criteria"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "program": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "full_name", "abbreviation", "version", "completed_increment", "status", "created_date", "baseline_commit", "scope", "clinical_use"],
+      "properties": {
+        "id": {"const": "DCCQ-1"},
+        "full_name": {"const": "Dynamic Capillary-Tissue-Cell Qualification"},
+        "abbreviation": {"const": "DCCQ"},
+        "version": {"const": "0.1.0"},
+        "completed_increment": {"const": "DCCQ-1.1"},
+        "status": {"const": "prospective-design-and-compatibility-audit-before-dynamic-implementation"},
+        "created_date": {"type": "string", "format": "date"},
+        "baseline_commit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"},
+        "scope": {"$ref": "#/$defs/nonempty_string"},
+        "clinical_use": {"const": false}
+      }
+    },
+    "bounded_intended_use": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "evidence_status", "population", "physiological_state", "inputs", "outputs", "resolution", "exclusions"],
+      "properties": {
+        "statement": {"$ref": "#/$defs/nonempty_string"},
+        "evidence_status": {"const": "not-yet-tested"},
+        "population": {"$ref": "#/$defs/nonempty_string"},
+        "physiological_state": {"$ref": "#/$defs/nonempty_string"},
+        "inputs": {"$ref": "#/$defs/nonempty_strings"},
+        "outputs": {"$ref": "#/$defs/nonempty_strings"},
+        "resolution": {"$ref": "#/$defs/nonempty_string"},
+        "exclusions": {"$ref": "#/$defs/nonempty_strings"}
+      }
+    },
+    "baseline_components": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "evidence_level", "entry_role", "capabilities", "blocking_gaps", "disposition"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^DCCQ-BASE-[0-9]{2}$"},
+          "name": {"$ref": "#/$defs/nonempty_string"},
+          "evidence_level": {"enum": ["software-verified-synthetic", "analytically-verified-synthetic", "computationally-qualified-published-average-cell", "literature-candidate-not-artifact-qualified", "analytically-and-numerically-verified-synthetic"]},
+          "entry_role": {"$ref": "#/$defs/nonempty_string"},
+          "capabilities": {"$ref": "#/$defs/nonempty_strings"},
+          "blocking_gaps": {"$ref": "#/$defs/nonempty_strings"},
+          "disposition": {"enum": ["retain-as-regression-not-qualification-candidate", "must-not-be-relabelled-dynamic-or-biological", "retain-as-analytical-limiting-case", "blocked-from-dynamic-coupling-until-new-prospective-unit-and-input-protocol", "reassess-in-dccq-1.2-with-alternatives", "retain-as-transport-verification-baseline"]}
+        }
+      }
+    },
+    "cross_layer_state_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ligand_identity_policy", "unit_policy", "ownership_ledger", "minimum_dynamic_processes", "balance_equation", "feedback_requirement", "forbidden_shortcuts"],
+      "properties": {
+        "ligand_identity_policy": {"$ref": "#/$defs/nonempty_string"},
+        "unit_policy": {"$ref": "#/$defs/nonempty_string"},
+        "ownership_ledger": {"type": "array", "minItems": 7, "maxItems": 7, "items": {"type": "string"}, "uniqueItems": true},
+        "minimum_dynamic_processes": {"type": "array", "minItems": 6, "items": {"$ref": "#/$defs/nonempty_string"}},
+        "balance_equation": {"$ref": "#/$defs/nonempty_string"},
+        "feedback_requirement": {"$ref": "#/$defs/nonempty_string"},
+        "forbidden_shortcuts": {"type": "array", "minItems": 6, "items": {"$ref": "#/$defs/nonempty_string"}}
+      }
+    },
+    "planned_gates": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "category", "purpose", "pass_rule_status", "current_state", "blocker"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^DCCQ-G[1-8]$"},
+          "category": {"enum": ["identity-and-units", "mass-balance", "limiting-cases", "numerical-convergence", "causal-timing", "uncertainty-and-sensitivity", "independent-reference", "claim-and-review"]},
+          "purpose": {"$ref": "#/$defs/nonempty_string"},
+          "pass_rule_status": {"enum": ["hard-invariant", "to-freeze-before-dynamic-output", "to-freeze-before-validation-output"]},
+          "current_state": {"const": "BLOCKED"},
+          "blocker": {"$ref": "#/$defs/nonempty_string"}
+        }
+      }
+    },
+    "evidence_hierarchy": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["level", "name", "required_evidence"],
+        "properties": {
+          "level": {"type": "integer", "minimum": 1, "maximum": 5},
+          "name": {"$ref": "#/$defs/nonempty_string"},
+          "required_evidence": {"$ref": "#/$defs/nonempty_string"}
+        }
+      }
+    },
+    "uncertainty_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["numerical", "parameter", "structural", "observational", "synchronization", "identifiability"],
+      "properties": {
+        "numerical": {"$ref": "#/$defs/nonempty_string"},
+        "parameter": {"$ref": "#/$defs/nonempty_string"},
+        "structural": {"$ref": "#/$defs/nonempty_string"},
+        "observational": {"$ref": "#/$defs/nonempty_string"},
+        "synchronization": {"$ref": "#/$defs/nonempty_string"},
+        "identifiability": {"$ref": "#/$defs/nonempty_string"}
+      }
+    },
+    "increments": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "status", "exit_condition"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^DCCQ-1\\.[1-7]$"},
+          "name": {"$ref": "#/$defs/nonempty_string"},
+          "status": {"enum": ["COMPLETE", "NEXT", "PLANNED"]},
+          "exit_condition": {"$ref": "#/$defs/nonempty_string"}
+        }
+      }
+    },
+    "negative_controls": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "test", "expected_result"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^DCCQ-NC-[0-9]{2}$"},
+          "test": {"$ref": "#/$defs/nonempty_string"},
+          "expected_result": {"$ref": "#/$defs/nonempty_string"}
+        }
+      }
+    },
+    "frozen_baseline_assets": {
+      "type": "array",
+      "minItems": 11,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "role"],
+        "properties": {
+          "path": {"$ref": "#/$defs/nonempty_string"},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "role": {"$ref": "#/$defs/nonempty_string"}
+        }
+      }
+    },
+    "governance_and_claim_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["calibration_validation_separation", "rights", "outcome_blinding", "partial_and_failed_results", "allowed_current_claim", "forbidden_claims"],
+      "properties": {
+        "calibration_validation_separation": {"$ref": "#/$defs/nonempty_string"},
+        "rights": {"$ref": "#/$defs/nonempty_string"},
+        "outcome_blinding": {"$ref": "#/$defs/nonempty_string"},
+        "partial_and_failed_results": {"$ref": "#/$defs/nonempty_string"},
+        "allowed_current_claim": {"$ref": "#/$defs/nonempty_string"},
+        "forbidden_claims": {"type": "array", "minItems": 5, "items": {"$ref": "#/$defs/nonempty_string"}}
+      }
+    },
+    "completion_criteria": {"$ref": "#/$defs/nonempty_strings"}
+  },
+  "$defs": {
+    "nonempty_string": {"type": "string", "minLength": 1},
+    "nonempty_strings": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/nonempty_string"}}
+  }
+}

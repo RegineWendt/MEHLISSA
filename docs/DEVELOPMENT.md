@@ -364,6 +364,8 @@ python scripts/check_biological_cell_model_integration_protocol.py
 python -m unittest tests/test_biological_cell_model_integration_protocol.py
 python scripts/check_biological_cell_model_qualification_result.py
 python -m unittest tests/test_biological_cell_model_qualification_result.py
+python scripts/check_dynamic_capillary_tissue_cell_qualification_plan.py
+python -m unittest tests/test_dynamic_capillary_tissue_cell_qualification_plan.py
 ```
 
 The checked machine authority is
@@ -422,6 +424,27 @@ protocol version. The completed result and code-to-equation review are in
 [`BCQ1_MEHLISSA_QUALIFICATION_RESULT.md`](qualification/BCQ1_MEHLISSA_QUALIFICATION_RESULT.md).
 The result checker reconstructs all numerical claims from the committed CSVs
 without invoking the result runner or requiring COPASI/SBML.
+
+DCCQ means **Dynamic Capillary-Tissue-Cell Qualification**. DCCQ-1.1 is the
+prospective design and compatibility audit for the next scientific coupling
+programme; its machine authority is
+`data/qualification/dynamic-capillary-tissue-cell-qualification-plan-v1.json`.
+The checker binds the current staged capillary exchange, non-consuming
+extracellular snapshot, prescribed-trajectory receptor solver, transport
+baselines, and BCQ result by canonical SHA-256. It also enforces a single
+biochemical ligand identity, explicit compatible units, a complete seven-owner
+amount ledger, delayed feedback, eight still-blocked gates, ten negative
+controls, and DCCQ-1.2 as the sole next increment.
+
+Do not implement the new path by looping over
+`CapillaryCellSignalCoupler::evaluate`: that contract is deliberately a
+non-consuming uniform snapshot. Do not pass `unresolved-model-native` BCQ
+states into SI transport, change the fixed CD95 stimulus, or map different
+chemical identifiers merely to make the APIs connect. DCCQ-1.2 must first
+select and licence-screen the target and alternatives; DCCQ-1.3 then freezes
+equations, units, parameters, synchronization, metrics, tolerances, and failure
+rules before dynamic output is inspected. See the
+[DCCQ-1 qualification plan](qualification/DCCQ1_QUALIFICATION_PLAN.md).
 
 Do not edit the locked protocol or raw archives in place. A changed protocol
 requires a new version and pre-measurement commit; a changed candidate requires
