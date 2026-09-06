@@ -5,14 +5,16 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Scientific qualification
 
-This directory contains prospective, bounded qualification plans that build on
-the milestone evidence without rewriting it after results are known.
+This directory contains prospective, bounded qualification plans and their
+retained results. Frozen pre-outcome records remain historical snapshots rather
+than being rewritten after results are known.
 
 | Protocol | Status | Purpose |
 |---|---|---|
 | [PCQ-1 pulmonary and capillary qualification](PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md) | design v0.1.0, [PCQ-1.2 source screen](PCQ1_EVIDENCE_SOURCE_SCREEN.md), [PCQ-1.3 amendment](PCQ1_PRE_OUTCOME_AMENDMENT.md) v0.2.0, [PCQ-1.4 rights-aware ingress](PCQ1_DATA_INGRESS.md), [PCQ-1.5 uncertainty/identifiability analysis](PCQ1_UNCERTAINTY_IDENTIFIABILITY.md), [PCQ-1.5a repository-first data audit](PCQ1_REPOSITORY_FIRST_DATA_AUDIT.md), and an unsent [request and waiting-period package](PCQ1_DATA_REQUEST_PACKAGE.md); no participant outcomes acquired | qualify participant-level pulmonary hemodynamics, regional perfusion, capillary volume and transit, and their joint coherence |
 | [BCQ-1 biological cell-model qualification](BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md) | BCQ-1.1 through BCQ-1.7 complete: selection, [COPASI protocol](BCQ1_REPRODUCTION_PROTOCOL.md), disclosed [replay amendment](BCQ1_REPRODUCTION_PROTOCOL_AMENDMENT_1.md), [external-solver reproduction](BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md), [typed MEHLISSA protocol](BCQ1_MEHLISSA_QUALIFICATION_PROTOCOL.md), and [bounded completion result](BCQ1_MEHLISSA_QUALIFICATION_RESULT.md) | one published average-cell mechanism is computationally qualified; publication-series, population, external-human-review, biological, patient, and clinical gates remain blocked |
 | [DCCQ-1 dynamic capillary-tissue-cell qualification](DCCQ1_QUALIFICATION_PLAN.md), [source screen](DCCQ1_EVIDENCE_SOURCE_SCREEN.md), and [qualification result](DCCQ1_QUALIFICATION_RESULT.md) | DCCQ-1.1 through DCCQ-1.6 complete; DCCQ-1.7 machine close-out complete with external human review blocked | typed SI VEGF-A165a/VEGFR2 HUVEC-informed seven-owner coupling; G1-G5 pass, G6 and G8 partial, G7 blocked; no pulmonary, independent biological, patient, or clinical claim |
+| [MRSQ-1 medical reference scenario qualification](MRSQ1_SCENARIO_SELECTION.md), [prospective protocol](MRSQ1_PROSPECTIVE_PROTOCOL.md), and [bounded result](MRSQ1_QUALIFICATION_RESULT.md) | MRSQ-1.1 through MRSQ-1.7 computational path complete; measured cohort execution and external human review blocked | exact public data revision, source separation and five endpoints precede synthetic-qualified manifest-first ingress, typed source-disjoint FDG/PET candidate, immutable archive, cohort evaluator and machine close-out; no participant outcome, physiological validation, individual prediction, or clinical claim |
 
 BCQ means **Biological Cell-model Qualification**. Its BCQ-1.1 machine
 authority is
@@ -117,3 +119,32 @@ Each later protocol must preserve the separation between:
 - calibration;
 - source-disjoint validation; and
 - clinical evidence, which is outside the current MEHLISSA claim.
+
+MRSQ means **Medical Reference Scenario Qualification**. MRSQ-1.1 is governed
+by `data/qualification/medical-reference-scenario-candidate-register-v1.json`.
+It compares five scenarios and eight sources without opening participant files
+or candidate validation outcomes. The selected HedyPET/Multimodal-HC family
+connects intravenous [18F]FDG administration to 70-minute dynamic total-body
+PET, organ/tissue time-activity curves, image-derived input functions, and a
+healthy adult cohort under an advertised CC-BY-4.0 data licence.
+
+MRSQ-1.2 is governed by
+`data/qualification/medical-reference-scenario-protocol-v1.json`. It freezes
+the exact public Hugging Face revision, six minimum objects, source-disjoint
+construction and validation roles, closed-loop and diagnostic tracks, PET frame
+transformations, lung/liver/kidney/bladder regions, five primary cohort gates,
+60-participant completeness floors, seven uncertainty classes, 16 negative
+controls, and amendment rules. Participant CSV ingress remains disabled, but
+MRSQ-1.3 through MRSQ-1.7 have now closed the computational path at its evidence
+boundary. The `medical-reference-scenario-data-ingress-policy-v1.json`
+authority qualifies a manifest-first adapter on four arbitrary CSV families
+and twelve failure controls while retaining measured-ingress blockers. The
+`medical-reference-scenario-candidate-freeze-v1.json` authority freezes the
+typed source-disjoint FDG/PET implementation, parameter sources and assumptions,
+seven uncertainty classes, code hashes and eight-frame software reference.
+The `medical-reference-scenario-closeout-v1.json` authority and independent
+checker record that the cohort evaluator is software-qualified but all five
+external endpoints and human review remain blocked. Read the
+[bounded MRSQ-1 result](MRSQ1_QUALIFICATION_RESULT.md). No participant CSV or
+validation outcome has been opened, and no physiological or clinical
+validation is claimed.

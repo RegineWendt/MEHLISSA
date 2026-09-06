@@ -208,7 +208,7 @@ The accepted baseline comprises:
 - MEHLISSA Research Workbench 1.0 for guided configuration, execution,
   dashboards, provenance/evidence audit, descriptive campaign analysis, and
   export; and
-- 295 local Windows/MSVC tests in the current DCCQ-complete development branch;
+- 299 local Windows/MSVC tests in the current MRSQ-computationally-complete development branch;
   the published Workbench baseline retains its accepted 286-test suite across
   Windows/MSVC, Linux/GCC, Linux/Clang, and macOS/Apple Clang CI; the Clang
   analysis path also covers formatting, static analysis, and sanitizers, while
@@ -492,3 +492,70 @@ python -m unittest tests/test_dynamic_capillary_tissue_cell_qualification_result
 Do not edit the locked protocol or raw archives in place. A changed protocol
 requires a new version and pre-measurement commit; a changed candidate requires
 a new candidate identity or an explicitly reviewed replacement before tagging.
+
+MRSQ means **Medical Reference Scenario Qualification**. MRSQ-1.1 is a
+data-first selection step for the first complete injection-to-measurement
+scenario. The candidate register ranks five alternatives and selects the
+healthy-adult HedyPET dynamic total-body [18F]FDG PET evidence family for a
+prospective protocol. It did not import participant files or make a validation
+claim. The selection record intentionally separates
+article, dataset, catalogue, processing-code, and fallback-source rights; in
+particular, an unlicensed processing repository must not be copied merely
+because the related data are advertised under CC-BY-4.0.
+
+MRSQ-1.2 now freezes the exact public Hugging Face revision and six-object
+minimum route, governance gate, source-disjoint construction/validation roles,
+closed/conditional/audit tracks, cohort aggregation, four region definitions,
+PET frame transformations, five primary endpoints, numeric tolerances, seven
+uncertainty classes, missingness, 16 negative controls, and no-refit/amendment
+policy. It explicitly excludes the full image collection and still forbids
+participant CSV access. See the [MRSQ-1.1 scenario
+selection](qualification/MRSQ1_SCENARIO_SELECTION.md) and [MRSQ-1.2 prospective
+protocol](qualification/MRSQ1_PROSPECTIVE_PROTOCOL.md). Run their integrity
+checks with:
+
+```powershell
+python scripts/check_medical_reference_scenario_candidates.py
+python -m unittest tests/test_medical_reference_scenario_candidates.py
+python scripts/check_medical_reference_scenario_protocol.py
+python -m unittest tests/test_medical_reference_scenario_protocol.py
+```
+
+Passing these checks proves only that the choice and prospective protocol are
+internally consistent. It cannot turn public metadata, a data licence, or a
+planned observation model into external medical validation.
+
+MRSQ-1.3 through MRSQ-1.7 now close the computational path. Run the full local
+checks with:
+
+```powershell
+python scripts/check_medical_reference_scenario_data_ingress.py
+python -m unittest tests/test_medical_reference_scenario_data_ingress.py
+cmake --build --preset windows-msvc-debug --target mehlissa_fdg_pet_reference_runner mehlissa_fdg_pet_scenario_tests
+build/windows-msvc/tests/Debug/mehlissa_fdg_pet_scenario_tests.exe
+build/windows-msvc/scenarios/fdg_pet/Debug/mehlissa_fdg_pet_reference_runner.exe
+python -m unittest tests/test_mrsq_cohort_evaluator.py
+python scripts/check_medical_reference_scenario_closeout.py
+python -m unittest tests/test_medical_reference_scenario_closeout.py
+```
+
+`MEHLISSA::fdg_pet_scenario` exposes `Administration`, `TissueKinetics`,
+`CandidateParameters`, `Frame`, `FramePrediction`, `DecayReference`,
+`source_disjoint_reference_candidate`, and `simulate` from
+`scenarios/fdg_pet/include/mehlissa/scenarios/fdg_pet/fdg_pet_model.hpp`.
+The candidate is deterministic RK4 and models a population blood input,
+reversible two-tissue lung/liver/kidney kinetics, renal transfer, a one-way
+bladder accumulator, an explicit fluorine-18 decay convention, and requested-
+frame averaging. Add alternative kinetics by constructing a new parameter set
+or a separately named implementation; never alter the frozen v1 candidate or
+fit it to HedyPET outcomes.
+
+The CSV ingress remains fail-closed for measured data. Authorization and
+manifest validation occur before any source CSV is opened. A future prospective
+amendment must record a local institutional determination, outside-repository
+quarantine/retention/access approval, exact content SHA-256 values, and an
+authoritative exact frame-duration mapping. Do not fetch participant files into
+the checkout or infer durations from outcome curves. The cohort evaluator in
+`scripts/mrsq_cohort_evaluator.py` is intentionally separate from access code
+and currently qualified only on arbitrary values. See the [bounded MRSQ-1
+result](qualification/MRSQ1_QUALIFICATION_RESULT.md).

@@ -195,6 +195,7 @@ implementation is correct or sufficiently validated.
 | SCN-004 | Metastasis prevention shall connect cell detachment, transport, detection, drug release, binding, and cell response across all layers. | V | P2 | T/R/E | DISS pp. 153–154; MEH20 pp. 4–5 |
 | SCN-005 | CAR-T shall combine cell populations and local agent models and use published interaction models as interchangeable model components. | B/A | P2 | R/E | MEH25 pp. 1–2 |
 | SCN-006 | A research digital twin shall incrementally support anatomical, physiological, and biochemical personalization and continuous data updates. | V/A | P3 | I/E | DISS pp. 140–143; RM M8 |
+| SCN-007 | At least one medical reference scenario shall follow a frozen injection-to-measurement path and be evaluated without validation refitting against source-disjoint external observations, with uncertainty and limitations reported. | V/B/A/N | P1 | T/R/E/I | RM 6.4, MRSQ-1 |
 
 ## 13. Non-functional quality objectives
 

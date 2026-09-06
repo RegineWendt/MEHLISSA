@@ -1,0 +1,10 @@
+Subject,Task,Label Index,Label Name,Erosion Iterations,Volume [mL]
+synthetic-subject-01,ts_total,1,lung_upper_lobe_left,0,900
+synthetic-subject-01,ts_total,2,lung_lower_lobe_left,0,1100
+synthetic-subject-01,ts_total,3,lung_upper_lobe_right,0,1000
+synthetic-subject-01,ts_total,4,lung_middle_lobe_right,0,500
+synthetic-subject-01,ts_total,5,lung_lower_lobe_right,0,1200
+synthetic-subject-01,ts_total,6,liver,0,1500
+synthetic-subject-01,ts_total,7,kidney_left,0,150
+synthetic-subject-01,ts_total,8,kidney_right,0,155
+synthetic-subject-01,ts_total,9,urinary_bladder,0,180

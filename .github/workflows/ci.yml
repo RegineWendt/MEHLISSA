@@ -47,6 +47,10 @@ jobs:
           python scripts/check_dynamic_capillary_tissue_cell_evidence_candidates.py
           python scripts/check_dynamic_capillary_tissue_cell_protocol.py
           python scripts/check_dynamic_capillary_tissue_cell_qualification_result.py
+          python scripts/check_medical_reference_scenario_candidates.py
+          python scripts/check_medical_reference_scenario_protocol.py
+          python scripts/check_medical_reference_scenario_data_ingress.py
+          python scripts/check_medical_reference_scenario_closeout.py
           python scripts/check_paper1_release_candidate.py
           python -m unittest tests/test_evidence_validity_matrix.py
           python -m unittest tests/test_paper1_protocol.py
@@ -66,6 +70,11 @@ jobs:
           python -m unittest tests/test_dynamic_capillary_tissue_cell_evidence_candidates.py
           python -m unittest tests/test_dynamic_capillary_tissue_cell_protocol.py
           python -m unittest tests/test_dynamic_capillary_tissue_cell_qualification_result.py
+          python -m unittest tests/test_medical_reference_scenario_candidates.py
+          python -m unittest tests/test_medical_reference_scenario_protocol.py
+          python -m unittest tests/test_medical_reference_scenario_data_ingress.py
+          python -m unittest tests/test_mrsq_cohort_evaluator.py
+          python -m unittest tests/test_medical_reference_scenario_closeout.py
           python -m unittest tests/test_paper1_measurement_tools.py
           python -m unittest tests/test_paper1_release_candidate.py
 
@@ -154,7 +163,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install --yes clang clang-format clang-tidy ninja-build
       - name: Verify formatting
         run: >-
-          find apps core experiment models tests -type f \( -name '*.cpp' -o -name '*.hpp' \) -print0 |
+          find apps core experiment models scenarios tests -type f \( -name '*.cpp' -o -name '*.hpp' \) -print0 |
           xargs -0 clang-format --dry-run --Werror
       - name: Install pinned vcpkg
         run: |

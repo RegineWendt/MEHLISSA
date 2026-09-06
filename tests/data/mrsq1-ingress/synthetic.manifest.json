@@ -1,0 +1,14 @@
+{
+  "schema_version":"1.0.0",
+  "manifest":{"id":"MRSQ-SYNTHETIC-INGRESS-001","run_id":"mrsq1-synthetic-ingress-v1","evidence_status":"synthetic_test_only","created_date":"2026-09-06","run_linkage_salt":"synthetic-only-fixed-salt-not-for-participant-use"},
+  "protocol":{"path":"data/qualification/medical-reference-scenario-protocol-v1.json","sha256":"ad4b1964bd36e97b0de3644d93f0fda7b8d7b90567d955d1480dca3104253225","data_revision":"b6daf89015481bdc20a238866df730f90274157d"},
+  "source":{"provider":"synthetic","repository_id":"MEHLISSA arbitrary test fixtures","licence":"CC-BY-4.0","attribution":"MEHLISSA contributors; deliberately non-human arbitrary values","raw_redistribution":"synthetic-fixture-only"},
+  "governance":{"local_determination":"not-applicable-synthetic","determination_reference":"synthetic-fixture-no-human-data","responsible_role":"MEHLISSA test maintainer","purpose":"fail-closed adapter qualification","access_roles":["public-test-runner"],"retention_start":"2026-09-06","review_date":"2027-09-06","deletion_trigger":"fixture superseded","quarantine_required":false,"release_to_adapter":true},
+  "content":{"assets":[
+    {"role":"administration","protocol_path":"train/derivatives/readouts/metadata.csv","file_name":"synthetic-metadata.csv","size_bytes":147,"sha256":"5b67f69aee88a93b92526db3f5aa5cc82a139a2d33e2071b2e431746b3c5ff77"},
+    {"role":"aortic_input","protocol_path":"train/derivatives/readouts/input_functions.csv","file_name":"synthetic-input-functions.csv","size_bytes":345,"sha256":"50e29d859bfb9834eba5254ca9549a79fb272ee15f641fbdab5069368038b320"},
+    {"role":"organ_tac","protocol_path":"train/derivatives/readouts/tacs.csv","file_name":"synthetic-tacs.csv","size_bytes":1940,"sha256":"c0f1504c42dc8706a4e23a1718d6a80083a33c76b16a7efe31e61ab7dba214ab"},
+    {"role":"region_volume","protocol_path":"train/derivatives/readouts/volumes.csv","file_name":"synthetic-volumes.csv","size_bytes":569,"sha256":"356321b07a2461f8d29a10ea27d5aaedd966f27df32186613f9aa4ab29493233"}
+  ]},
+  "semantics":{"decay_reference":"injection_time_decay_corrected","whole_blood":true,"frame_duration_authority":"synthetic-explicit-Frame Duration [s]-column","aortic_task_prefix":"aortavois","aortic_label":"aorta","primary_erosion_iterations":0,"region_components":{"MRSQ-ROI-LUNG":["lung_upper_lobe_left","lung_lower_lobe_left","lung_upper_lobe_right","lung_middle_lobe_right","lung_lower_lobe_right"],"MRSQ-ROI-LIVER":["liver"],"MRSQ-ROI-KIDNEY":["kidney_left","kidney_right"],"MRSQ-ROI-BLADDER":["urinary_bladder"]}}
+}

@@ -1,0 +1,4 @@
+Subject,Task,Label Index,Label Name,Erosion Iterations,Frame Index,Frame Time Middle [s],Frame Duration [s],PET Mean [Bq/mL],PET STD [Bq/mL]
+synthetic-subject-01,aortavois-synthetic,1,aorta,0,0,5,10,12000,200
+synthetic-subject-01,aortavois-synthetic,1,aorta,0,1,20,20,6500,150
+synthetic-subject-01,aortavois-synthetic,1,aorta,0,2,50,40,3000,100

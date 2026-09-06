@@ -1,0 +1,489 @@
+{
+  "schema_version": "1.0.0",
+  "screen": {
+    "id": "MRSQ-1.1",
+    "program": "MRSQ-1 Medical Reference Scenario Qualification",
+    "version": "1.0.0",
+    "performed_date": "2026-09-06",
+    "status": "scenario-family-selected-before-data-ingress-or-outcome-analysis",
+    "question": "Which measurable scenario provides the strongest data-accessible first path from a declared injection through body and organ transport to an external observation while remaining supportable by the current MEHLISSA architecture?",
+    "selection_boundary": "Only public article, repository, dataset-card, licence, access, cohort, acquisition, and asset metadata were screened. No raw participant data or candidate validation outcome table was downloaded, opened, parsed, or summarized; an illustrative repository README output was not used for selection. No FDG equations, parameters, calibration values, acceptance limits, or validation result are selected. No participant-specific, diagnostic, biological, or clinical qualification is claimed.",
+    "raw_participant_data_accessed": false,
+    "candidate_validation_outcomes_inspected": false,
+    "clinical_use": false,
+    "participant_specific_model": false
+  },
+  "criteria": [
+    {
+      "id": "injection-to-measurement-path",
+      "description": "The source defines an administered input and a temporally linked external observation across a medically meaningful body or organ path."
+    },
+    {
+      "id": "external-observability",
+      "description": "The primary endpoints are measurements rather than MEHLISSA-generated or third-party-model-generated values."
+    },
+    {
+      "id": "time-resolved-numeric-data",
+      "description": "Numeric temporal observations are advertised at a resolution suitable for transport or kinetic comparison."
+    },
+    {
+      "id": "measurement-definition",
+      "description": "The acquisition, observation region, units, timing, and transformations are sufficiently documented to freeze an observation model."
+    },
+    {
+      "id": "access-readiness",
+      "description": "A persistent data route exists and can be checked without relying on an informal author promise."
+    },
+    {
+      "id": "reuse-rights",
+      "description": "Article, data, derived readouts, and software rights are distinguished and support the intended research reuse."
+    },
+    {
+      "id": "source-separation",
+      "description": "The observations can be reserved for no-refit evaluation while model equations and calibration values come from separate sources."
+    },
+    {
+      "id": "current-platform-reuse",
+      "description": "Existing body, lung, capillary, scenario, provenance, experiment, and research-use layers can be reused without scenario-specific kernel logic."
+    },
+    {
+      "id": "bounded-extension",
+      "description": "Missing tracer and measurement behavior can be added as interchangeable models with a narrow, non-clinical claim."
+    }
+  ],
+  "candidates": [
+    {
+      "id": "MRSQ-SCN-001",
+      "rank": 1,
+      "disposition": "selected-for-prospective-protocol",
+      "name": "HedyPET healthy-adult dynamic total-body 18F-FDG injection-to-PET scenario",
+      "scenario": "An intravenous 18F-fluorodeoxyglucose injection is followed from the vascular input through whole-body and organ distribution, tissue uptake, trapping, radioactive decay, and a frame-integrated total-body PET observation over 70 minutes.",
+      "population": "One hundred healthy adults stratified by age and sex; the publication states that 80 participants are released immediately and the remaining 20 in 2027. MRSQ-1 will initially target a non-personalized cohort-level healthy-adult claim.",
+      "intervention": "Intravenous 18F-FDG administration at the start of a 70-minute dynamic total-body PET acquisition; exact administered activity, timing, fasting, glucose, and residual-dose fields must be frozen from the source metadata in MRSQ-1.2.",
+      "measurement": "Dynamic PET activity concentration and derived organ/tissue time-activity curves, image-derived input functions, static SUV/SUL, and Patlak Ki. MRSQ-1.2 must freeze frame timing, regions, decay convention, normalization, reconstruction, erosion, partial-volume assumptions, and aggregation.",
+      "numeric_assets": [
+        "dynamic total-body PET reconstructions for the released cohort",
+        "pre-extracted organ and tissue time-activity curves",
+        "image-derived input functions",
+        "static SUV and SUL readouts",
+        "Patlak Ki values",
+        "participant acquisition and demographic metadata"
+      ],
+      "sources": [
+        {
+          "id": "MRSQ-SRC-001",
+          "kind": "publication",
+          "citation": "Hinge C, Hoi-Hansen FE, Hansen RH, et al. A multimodal total-body dynamic [18F]FDG PET/CT/MRI dataset of 100 healthy humans. Scientific Data. 2026.",
+          "persistent_locator": "doi:10.1038/s41597-026-08157-4",
+          "url": "https://doi.org/10.1038/s41597-026-08157-4",
+          "version": "published-2026-08-24",
+          "rights": "CC-BY-4.0 for the article and included material unless a separate credit line states otherwise",
+          "access": "public open-access data descriptor",
+          "role": "cohort, acquisition, artifact, limitation, and citation authority; not an equation-calibration source"
+        },
+        {
+          "id": "MRSQ-SRC-002",
+          "kind": "dataset",
+          "citation": "DEPICT-RH. Multimodal-HC dataset. Hugging Face dataset DOI 10.57967/hf/9560.",
+          "persistent_locator": "doi:10.57967/hf/9560",
+          "url": "https://huggingface.co/datasets/DEPICT-RH/Multimodal-HC",
+          "version": "dataset-card-observed-2026-09-06-exact-revision-not-yet-frozen",
+          "rights": "dataset card declares CC-BY-4.0",
+          "access": "public 302 GB repository advertised; exact selective readout paths and immutable revision still require freeze",
+          "role": "candidate measured validation data; no file was downloaded or opened during MRSQ-1.1"
+        },
+        {
+          "id": "MRSQ-SRC-003",
+          "kind": "dataset",
+          "citation": "PublicnEUro PN000015 multimodal total-body dynamic 18F-FDG PET-CT-MRI, version V1.",
+          "persistent_locator": "doi:10.70883/UYAG3430",
+          "url": "https://datacatalog.publicneuro.eu/dataset/PN000015%20multimodal%20total-body%20dynamic%2018F-FDG%20PET-CT-MRI/V1",
+          "version": "V1",
+          "rights": "catalog declares CC-BY-4.0",
+          "access": "active catalog entry advertises dynamic data and DataLad access; any data-use agreement or access conflict must be resolved before ingress",
+          "role": "persistent dynamic-image identity and fallback acquisition route"
+        },
+        {
+          "id": "MRSQ-SRC-004",
+          "kind": "repository",
+          "citation": "DEPICT-RH/Multimodal-HC processing and dataset documentation repository.",
+          "persistent_locator": "https://github.com/DEPICT-RH/Multimodal-HC",
+          "url": "https://github.com/DEPICT-RH/Multimodal-HC",
+          "version": "main-observed-2026-09-06-exact-commit-not-yet-frozen",
+          "rights": "NOASSERTION for source-code reuse at this screen; data rights are recorded separately",
+          "access": "public inspection; do not copy code until an exact revision and licence are verified",
+          "role": "processing-method inspection and future hash binding only"
+        }
+      ],
+      "data_granularity": "Participant-level dynamic imaging and derived readouts are advertised; MRSQ-1 will report cohort-level validation and will not build an individual prediction or clinical decision model.",
+      "data_access": "public-metadata-direct-data-route-needs-freeze",
+      "rights_status": "mixed",
+      "source_role": "Reserve released HedyPET observations for no-refit validation. Derive equations and calibration parameters from source-disjoint physiology and FDG kinetic literature, analytical identities, or explicitly separate calibration data.",
+      "reusable_mehlissa_layers": [
+        "BVS95 whole-body vascular graph and typed transport contracts",
+        "healthy-adult body-state and pulmonary model variants",
+        "capillary ownership, exchange, and observation contracts",
+        "experiment manifests, provenance, result schemas, campaigns, and Workbench",
+        "deterministic execution, uncertainty reporting, negative controls, and CI"
+      ],
+      "nonreusable_mehlissa_layers": [
+        "DCCQ-1 VEGF-A165a/VEGFR2 kinetics are ligand-specific and cannot represent FDG",
+        "BCQ-1 CD95 apoptosis kinetics are not a glucose-tracer uptake model",
+        "M7 FP9 nanodevice communication is not a PET acquisition model",
+        "current organ models do not provide FDG phosphorylation, dephosphorylation, renal excretion, or radioactive decay"
+      ],
+      "eligibility": "eligible-after-protocol-and-ingress-freeze",
+      "scores": {
+        "injection-to-measurement-path": 3,
+        "external-observability": 3,
+        "time-resolved-numeric-data": 3,
+        "measurement-definition": 3,
+        "access-readiness": 2,
+        "reuse-rights": 3,
+        "source-separation": 3,
+        "current-platform-reuse": 2,
+        "bounded-extension": 3
+      },
+      "total_score": 25,
+      "strengths": [
+        "A single modern study connects a declared intravenous tracer administration to measured whole-body and organ-resolved temporal observations.",
+        "The healthy cohort, 70-minute acquisition, dynamic images, input functions, time-activity curves, segmentations, metadata, and derived readouts are explicitly described.",
+        "The data descriptor, dataset DOIs, and CC-BY-4.0 declaration provide stronger identity and reuse foundations than figure digitization.",
+        "The scenario exercises transport, organ exchange, tissue kinetics, radioactive decay, measurement transformation, uncertainty, and reproducible reporting without requiring clinical prediction."
+      ],
+      "limitations": [
+        "The dataset is very large; selective acquisition of only the frozen metadata and readout assets is required before any image download.",
+        "The repository description, Hugging Face route, and PublicnEUro route are not yet reconciled into one immutable access manifest.",
+        "The released measurements are observational validation evidence, not a permissible source for tuning the candidate and then claiming independence.",
+        "FDG physiology and PET observation models do not yet exist in MEHLISSA and must be implemented as new interchangeable modules.",
+        "Healthy-volunteer observations do not validate pulmonary disease, nanodevice sensing, treatment, diagnosis, or patient-specific predictions.",
+        "Handling participant-level files requires a reviewed minimal-data plan even though the advertised release is deidentified and CC-BY-4.0."
+      ],
+      "next_action": "Freeze the exact released asset paths, revisions, checksums, access terms, intended-use claim, source roles, cohort aggregation, observation model, endpoints, tolerances, and no-refit rules in MRSQ-1.2 before reading a participant record."
+    },
+    {
+      "id": "MRSQ-SCN-002",
+      "rank": 2,
+      "disposition": "pulmonary-imaging-fallback",
+      "name": "First-pass DCE-MRI pulmonary perfusion in healthy adults and idiopathic pulmonary fibrosis",
+      "scenario": "An intravenous gadolinium contrast bolus is observed during first passage through pulmonary arterial, parenchymal, and venous regions using dynamic contrast-enhanced MRI.",
+      "population": "Longitudinal healthy-adult and idiopathic-pulmonary-fibrosis cohorts; the 2022 study reports 41 participants with two to four visits.",
+      "intervention": "Intravenous gadobenate dimeglumine at 0.05 mmol/kg and 4 mL/s followed by a saline flush.",
+      "measurement": "Regional and whole-lung DCE-MRI curves and derived arrival, peak, wash-in, wash-out, area, flow, blood-volume, and mean-transit metrics.",
+      "numeric_assets": [
+        "article tables and figures",
+        "supplementary methods",
+        "reported regional and whole-lung summary endpoints"
+      ],
+      "sources": [
+        {
+          "id": "MRSQ-SRC-005",
+          "kind": "publication",
+          "citation": "Torres LA, Lee KE, Barton GP, et al. Dynamic Contrast Enhanced MRI for the Evaluation of Lung Perfusion in Idiopathic Pulmonary Fibrosis. European Respiratory Journal. 2022;60(4):2102058.",
+          "persistent_locator": "doi:10.1183/13993003.02058-2021",
+          "url": "https://doi.org/10.1183/13993003.02058-2021",
+          "version": "published-2022",
+          "rights": "article and author-manuscript access verified; participant-level numeric data reuse rights not established",
+          "access": "article and supplementary text public; reusable participant curves not located",
+          "role": "pulmonary method and aggregate endpoint candidate"
+        }
+      ],
+      "data_granularity": "Aggregate and regional reported results; no directly reusable participant-level dynamic series identified in this screen.",
+      "data_access": "article-and-supplement-only",
+      "rights_status": "NOASSERTION",
+      "source_role": "Potential validation source only after a rights-compatible numeric series is obtained without using the same observations for calibration.",
+      "reusable_mehlissa_layers": [
+        "pulmonary 0D and five-lobe variants",
+        "regional perfusion and capillary observation contracts",
+        "PCQ observation-model and uncertainty groundwork"
+      ],
+      "nonreusable_mehlissa_layers": [
+        "no contrast-agent MR signal observation model exists",
+        "no reusable participant-level time series was located",
+        "the scenario does not exercise biological detection or an external device communication path"
+      ],
+      "eligibility": "fallback-needs-data-request",
+      "scores": {
+        "injection-to-measurement-path": 2,
+        "external-observability": 3,
+        "time-resolved-numeric-data": 2,
+        "measurement-definition": 3,
+        "access-readiness": 1,
+        "reuse-rights": 1,
+        "source-separation": 3,
+        "current-platform-reuse": 3,
+        "bounded-extension": 2
+      },
+      "total_score": 20,
+      "strengths": [
+        "Directly targets lung perfusion and first-pass timing.",
+        "The acquisition and derived endpoints align strongly with existing PCQ and M3 work."
+      ],
+      "limitations": [
+        "No drop-in reusable participant time series was located.",
+        "The measured MRI signal requires a modality-specific observation model and does not cover cell sensing or whole-body biodistribution."
+      ],
+      "next_action": "Retain as the pulmonary fallback and revisit if rights-compatible numeric curves become available."
+    },
+    {
+      "id": "MRSQ-SCN-003",
+      "rank": 3,
+      "disposition": "hemodynamic-endpoint-comparator",
+      "name": "PhysioNet thermodilution cardiac-output and arterial-pressure scenario",
+      "scenario": "A clinically performed thermodilution intervention supplies intermittent cardiac-output reference values aligned to arterial blood-pressure waveforms.",
+      "population": "Critical-care patients represented by 535 records from 350 subjects in the expanded record list; the original algorithm comparison used 120 subjects.",
+      "intervention": "Cold-fluid injection for thermodilution cardiac-output measurement, with radial arterial pressure recorded around reference measurements.",
+      "measurement": "Thermodilution cardiac output and 125 Hz arterial blood-pressure waveforms; the raw downstream temperature-dilution curve is not supplied as the primary reusable signal.",
+      "numeric_assets": [
+        "arterial blood-pressure waveform records",
+        "intermittent thermodilution cardiac-output values",
+        "record lists and limited demographics"
+      ],
+      "sources": [
+        {
+          "id": "MRSQ-SRC-006",
+          "kind": "dataset",
+          "citation": "PhysioNet. Cardiac Output Estimation from Arterial Blood Pressure Waveforms, version 1.0.0.",
+          "persistent_locator": "https://physionet.org/content/cardiac-output/1.0.0/",
+          "url": "https://physionet.org/content/cardiac-output/1.0.0/",
+          "version": "1.0.0",
+          "rights": "Open Data Commons Attribution License v1.0",
+          "access": "public direct access under the declared licence",
+          "role": "independent cardiac-output endpoint and waveform resource"
+        }
+      ],
+      "data_granularity": "Subject records with waveform and intermittent numeric cardiac-output values; clinical context is heterogeneous.",
+      "data_access": "public-direct",
+      "rights_status": "ODC-BY-1.0",
+      "source_role": "Useful as a source-disjoint hemodynamic challenge, but not as the first complete MEHLISSA body-organ-cell measurement scenario.",
+      "reusable_mehlissa_layers": [
+        "body flow and state interfaces",
+        "experiment, observation, provenance, and reporting infrastructure"
+      ],
+      "nonreusable_mehlissa_layers": [
+        "no beat-resolved cardiovascular or arterial-pressure waveform model exists",
+        "the temperature-dilution curve and complete injection-to-sensor dynamics are unavailable",
+        "the dataset does not supply organ, tissue, cell, or molecular observations"
+      ],
+      "eligibility": "endpoint-only",
+      "scores": {
+        "injection-to-measurement-path": 1,
+        "external-observability": 3,
+        "time-resolved-numeric-data": 2,
+        "measurement-definition": 3,
+        "access-readiness": 3,
+        "reuse-rights": 3,
+        "source-separation": 3,
+        "current-platform-reuse": 1,
+        "bounded-extension": 2
+      },
+      "total_score": 21,
+      "strengths": [
+        "Public, versioned, attributed physiological measurements at useful scale.",
+        "Can later challenge cardiac-output and body-state assumptions independently."
+      ],
+      "limitations": [
+        "Thermodilution is present as an intermittent derived reference rather than a complete dilution time curve.",
+        "The ICU cohort and beat-resolved waveforms are outside the current healthy-rest MEHLISSA model domain."
+      ],
+      "next_action": "Retain as a future body-hemodynamic endpoint qualification resource, not as MRSQ-1."
+    },
+    {
+      "id": "MRSQ-SCN-004",
+      "rank": 4,
+      "disposition": "non-injection-measurement-resource",
+      "name": "PhysioNet HeartCycle synchronized impedance-cardiography and echocardiography scenario",
+      "scenario": "Synchronized thoracic impedance, echocardiography, electrocardiography, photoplethysmography, and heart-sound recordings characterize healthy-adult cardiovascular timing and output.",
+      "population": "Seventeen healthy volunteers represented by 208 synchronized records.",
+      "intervention": "Rest and study activities without an injected tracer or bolus.",
+      "measurement": "High-rate synchronized ICG, ECHO, ECG, PPG, and phonocardiography with hemodynamic descriptors and metadata.",
+      "numeric_assets": [
+        "208 HDF5 multimodal records",
+        "signal time vectors and sampling rates",
+        "hemodynamic descriptors",
+        "subject and file metadata"
+      ],
+      "sources": [
+        {
+          "id": "MRSQ-SRC-007",
+          "kind": "dataset",
+          "citation": "Illueca Fernandez E, Couceiro R, Abtahi F, et al. HeartCycle: A comprehensive dataset of synchronized impedance cardiography and echocardiography for accurate hemodynamic predictions. PhysioNet. 2025; version 1.0.0.",
+          "persistent_locator": "doi:10.13026/z865-eb23",
+          "url": "https://physionet.org/content/heartcycle/1.0.0/",
+          "version": "1.0.0",
+          "rights": "Open Data Commons Attribution License v1.0",
+          "access": "public direct access; 2.3 GB",
+          "role": "independent synchronized cardiovascular measurement resource"
+        }
+      ],
+      "data_granularity": "Participant-level synchronized physiological signals from healthy volunteers.",
+      "data_access": "public-direct",
+      "rights_status": "ODC-BY-1.0",
+      "source_role": "Potential independent validation of a future beat-resolved cardiovascular observation model; it cannot validate an injection-to-measurement scenario.",
+      "reusable_mehlissa_layers": [
+        "body-state metadata and observation infrastructure"
+      ],
+      "nonreusable_mehlissa_layers": [
+        "current body transport is not a beat-resolved impedance or echocardiography model",
+        "no administered tracer or injection path exists",
+        "no organ tracer uptake, cell response, or molecular detection is measured"
+      ],
+      "eligibility": "ineligible-no-injection",
+      "scores": {
+        "injection-to-measurement-path": 0,
+        "external-observability": 3,
+        "time-resolved-numeric-data": 3,
+        "measurement-definition": 3,
+        "access-readiness": 3,
+        "reuse-rights": 3,
+        "source-separation": 3,
+        "current-platform-reuse": 1,
+        "bounded-extension": 2
+      },
+      "total_score": 21,
+      "strengths": [
+        "Well documented, public, synchronized healthy-volunteer measurements.",
+        "Echo provides an independent reference for impedance-derived timing and output."
+      ],
+      "limitations": [
+        "There is no injection-to-measurement path.",
+        "The data answer a cardiovascular signal-model question rather than the selected holistic tracer-transport question."
+      ],
+      "next_action": "Retain for a later cardiovascular observation qualification, outside MRSQ-1."
+    },
+    {
+      "id": "MRSQ-SCN-005",
+      "rank": 5,
+      "disposition": "internal-software-demonstrator-only",
+      "name": "MEHLISSA M7 FP9 lung fingerprinting vertical slice",
+      "scenario": "The existing simulation follows injection, vascular transport, lung-capillary detection, tile assembly, communication, gateway aggregation, BAN delivery, and an external report.",
+      "population": "Synthetic research-software cohorts of configured collector agents; not measured participants.",
+      "intervention": "Versioned simulated molecular injection.",
+      "measurement": "Simulated receptor, nanodevice, communication, classification, timing, and resource outputs.",
+      "numeric_assets": [
+        "M7 deterministic holistic results",
+        "published historical FP9 timing baseline",
+        "synthetic sensitivity and misclassification cases"
+      ],
+      "sources": [
+        {
+          "id": "MRSQ-SRC-008",
+          "kind": "local-reference",
+          "citation": "MEHLISSA M7 Fingerprinting Vertical Slice gate review and retained result artifacts.",
+          "persistent_locator": "docs/m7/M7_GATE_REVIEW.md",
+          "url": "https://github.com/RegineWendt/MEHLISSA/blob/mehlissa-next-generation/docs/m7/M7_GATE_REVIEW.md",
+          "version": "M7-accepted-2026-09-02",
+          "rights": "MEHLISSA repository licences apply",
+          "access": "local",
+          "role": "software demonstrator and architectural reuse baseline only"
+        }
+      ],
+      "data_granularity": "Synthetic scenario results and historical aggregate timing assumptions.",
+      "data_access": "local",
+      "rights_status": "mixed",
+      "source_role": "Regression and integration evidence only; it must not serve as its own external validation source.",
+      "reusable_mehlissa_layers": [
+        "complete scenario composition and causal trace",
+        "all research-use, provenance, communication, and reporting layers"
+      ],
+      "nonreusable_mehlissa_layers": [
+        "no source-disjoint measured injection-to-report cohort exists",
+        "synthetic biology and communication assumptions cannot validate themselves"
+      ],
+      "eligibility": "ineligible-no-external-observation",
+      "scores": {
+        "injection-to-measurement-path": 3,
+        "external-observability": 0,
+        "time-resolved-numeric-data": 0,
+        "measurement-definition": 0,
+        "access-readiness": 3,
+        "reuse-rights": 3,
+        "source-separation": 0,
+        "current-platform-reuse": 3,
+        "bounded-extension": 1
+      },
+      "total_score": 13,
+      "strengths": [
+        "Already exercises the complete software architecture and Workbench path.",
+        "Provides a stable regression baseline for integrating a measured reference scenario."
+      ],
+      "limitations": [
+        "All decisive outcome stages are simulated or historically parameterized rather than independently measured.",
+        "Using it as both candidate and evidence would be circular."
+      ],
+      "next_action": "Keep M7 unchanged as an integration regression and reuse its scenario infrastructure for MRSQ-1."
+    }
+  ],
+  "programme": {
+    "id": "MRSQ-1",
+    "full_name": "Medical Reference Scenario Qualification",
+    "increments": [
+      {
+        "id": "MRSQ-1.1",
+        "title": "Select a measurable scenario and evidence family before data ingress",
+        "status": "complete",
+        "exit": "One ranked scenario family, source set, access boundary, architectural fit, limitations, and a single next protocol target are frozen without inspecting validation outcomes."
+      },
+      {
+        "id": "MRSQ-1.2",
+        "title": "Freeze intended use, access, source roles, observation models, endpoints, and acceptance rules",
+        "status": "next",
+        "exit": "A prospective protocol binds exact revisions and checksums, separates model construction from HedyPET validation, defines cohort aggregation and failure retention, and authorizes only the minimum required data ingress."
+      },
+      {
+        "id": "MRSQ-1.3",
+        "title": "Implement rights-aware selective FDG-PET data ingress",
+        "status": "planned",
+        "exit": "A manifest-first adapter reads only authorized metadata, input functions, and time-activity curves outside Git, normalizes units and frame timing, and emits no direct identifiers or raw observations to logs."
+      },
+      {
+        "id": "MRSQ-1.4",
+        "title": "Implement the typed FDG transport, organ exchange, trapping, decay, and PET observation path",
+        "status": "planned",
+        "exit": "Interchangeable models complete the selected injection-to-PET path without FDG-specific kernel branches and pass conservation, units, limiting-case, and numerical tests."
+      },
+      {
+        "id": "MRSQ-1.5",
+        "title": "Freeze and qualify the source-disjoint candidate before validation outcomes",
+        "status": "planned",
+        "exit": "Equations, literature-derived or separate calibration parameters, candidate hashes, uncertainty classes, sensitivity plan, and no-refit archive are frozen before HedyPET endpoint evaluation."
+      },
+      {
+        "id": "MRSQ-1.6",
+        "title": "Execute the locked cohort-level validation and retain every result",
+        "status": "planned",
+        "exit": "The candidate is compared with the frozen independent PET observations under predeclared metrics and tolerances, with numerical, parameter, structural, and observational uncertainty and every pass, partial, failure, or exclusion retained."
+      },
+      {
+        "id": "MRSQ-1.7",
+        "title": "Complete independent scientific, licence, archive, claim, and documentation review",
+        "status": "externally-blocked",
+        "exit": "A runner-independent checker and external human attestation reconcile equations, code, source roles, data rights, archive integrity, User Guide, Roadmap, Requirements Matrix, status brief, and the exact bounded claim."
+      }
+    ],
+    "exit_claim": "At most: a frozen MEHLISSA 18F-FDG healthy-adult cohort reference scenario has been evaluated without validation refitting against identified external dynamic PET observations, with reported uncertainty and explicit limitations. Disease, individual, diagnostic, treatment, biological-sensing, nanodevice, and clinical validity require separate evidence."
+  },
+  "decision": {
+    "selected_candidate_id": "MRSQ-SCN-001",
+    "selected_scenario": "Healthy-adult intravenous 18F-FDG whole-body transport, organ/tissue uptake and trapping, radioactive decay, and dynamic total-body PET observation using the HedyPET/Multimodal-HC evidence family.",
+    "selection_reason": "It is the only screened candidate that combines a declared injection, 70-minute human whole-body measurement, organ- and tissue-resolved time-activity assets, persistent dataset identities, explicit CC-BY-4.0 data rights, cohort variation, and a bounded extension path through existing MEHLISSA transport, organ, experiment, provenance, and Workbench infrastructure.",
+    "authorized_next": [
+      "inspect access metadata, licences, directory inventories, and checksums without opening participant observations",
+      "freeze a minimum-data ingress manifest and determine whether pre-extracted readouts can be acquired without the full 302 GB image collection",
+      "define the healthy-adult cohort-level intended use, exclusions, source-disjoint model-construction sources, observation model, endpoints, tolerances, uncertainty, missingness, and failure policy",
+      "design new FDG and PET modules through existing public model interfaces"
+    ],
+    "not_authorized": [
+      "download or parse participant files before MRSQ-1.2 freezes rights, access, retention, logging, and minimum-data rules",
+      "use HedyPET time-activity or Ki outcomes to fit the candidate and then call the same observations independent validation",
+      "reuse unlicensed repository code or infer software rights from the CC-BY-4.0 data licence",
+      "reinterpret VEGF-A165a DCCQ, CD95 BCQ, or FP9 synthetic behavior as FDG physiology",
+      "claim pulmonary disease, individual prediction, diagnosis, treatment, biological sensing, nanodevice performance, or clinical qualification",
+      "advance MRSQ-1.6 after viewing outcomes unless the prospective protocol and candidate version were already frozen"
+    ],
+    "access_decision": "metadata-qualified-data-ingress-not-yet-authorized",
+    "governance_boundary": "MRSQ-1 targets deidentified, openly advertised healthy-volunteer research observations and cohort-level comparison only. It does not create a participant-specific model. Before participant files are opened, MRSQ-1.2 must bind the exact licence and access route, minimize acquired fields, keep raw files outside Git, prohibit direct identifiers and raw terminal output, define retention and deletion, and record whether institutional review is required.",
+    "allowed_current_claim": "MRSQ-1.1 completes a prospective, data-first scenario selection and architectural fit assessment. It does not implement, calibrate, validate, or clinically qualify an FDG or PET model.",
+    "next_increment": "MRSQ-1.2 prospective intended-use, access, source-role, observation-model, and acceptance protocol"
+  }
+}

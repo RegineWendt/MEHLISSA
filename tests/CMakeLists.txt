@@ -249,6 +249,13 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
         catch_discover_tests(mehlissa_fingerprinting_scenario_tests DISCOVERY_MODE PRE_TEST)
     endif()
 
+    if(MEHLISSA_BUILD_FDG_PET_SCENARIO)
+        add_executable(mehlissa_fdg_pet_scenario_tests fdg_pet_model_tests.cpp)
+        target_link_libraries(mehlissa_fdg_pet_scenario_tests PRIVATE MEHLISSA::fdg_pet_scenario Catch2::Catch2WithMain)
+        mehlissa_configure_target(mehlissa_fdg_pet_scenario_tests)
+        catch_discover_tests(mehlissa_fdg_pet_scenario_tests DISCOVERY_MODE PRE_TEST)
+    endif()
+
     if(MEHLISSA_BUILD_CAPILLARY_MODELS AND MEHLISSA_BUILD_CELL_MODELS AND
        MEHLISSA_BUILD_COSIMULATION)
         add_executable(

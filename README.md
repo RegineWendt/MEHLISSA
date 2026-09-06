@@ -24,9 +24,11 @@ Start here:
 - [Roadmap](docs/ROADMAP.md) — achieved M0-M7 and research-use delivery record,
   scientific qualification program, further scenarios, additional organs,
   scaling, and the governed digital-twin path.
-- [Active scientific qualification packages](docs/qualification/README.md)
-  — access-pending pulmonary/capillary work and the selected public biological
-  cell-model family, with explicit evidence and licence boundaries.
+- [Scientific qualification packages](docs/qualification/README.md)
+  — access-pending pulmonary/capillary work, the completed bounded biological
+  cell-model and dynamic-coupling paths, and the computationally complete
+  FDG/PET medical-reference path, with explicit external-evidence and licence
+  boundaries.
 - [Legacy-baseline analysis](docs/IST_ANALYSE.md) — dated inventory of the
   historical implementations at commit `4f4fc5a`; it is not the current Next
   status.

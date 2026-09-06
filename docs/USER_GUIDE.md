@@ -48,6 +48,7 @@ they are not assumed knowledge:
 | `Level E` | Sensitivity, specificity, false-positive/false-negative, robustness, and misclassification analysis. |
 | `P0` through `P3` | Roadmap priority tiers: indispensable foundation, dissertation core, platform expansion, and long-term vision. They do not indicate whether work has passed a gate. |
 | `UX-1` through `UX-6` | Delivery packages used to build MEHLISSA's integral research-use layer: one-command execution, discovery, readable reports, experiment campaigns, Python access, and a graphical workbench. |
+| `PCQ`, `BCQ`, `DCCQ`, and `MRSQ` | Scientific qualification programmes for pulmonary/capillary physiology, a biological cell model, dynamic capillary-tissue-cell coupling, and a complete medical reference scenario, respectively. Their numbered increments record progress, not an automatic validation grade. |
 | run | One reproducible execution of an experiment or scenario. Any qualified label such as “baseline run” must say what makes that execution different. |
 
 The same rule applies to domain abbreviations. `FP9` is the nine-part molecular
@@ -3273,6 +3274,88 @@ parameter split, exact metrics, all eight gate states, and the permitted claim.
 Do not interpret this reduced reference as pulmonary, in-vivo, individual,
 patient-specific, diagnostic, treatment, safety, or clinical evidence.
 
+#### Understand the selected MRSQ-1 medical reference scenario
+
+MRSQ means **Medical Reference Scenario Qualification**. Its purpose is to move
+from individually qualified software and model components to one externally
+observable medical experiment. MRSQ-1.1 has selected a healthy-adult dynamic
+total-body [18F]FDG PET evidence family for prospective protocol development.
+In plain language, the intended experiment injects a radioactive glucose tracer,
+observes how it moves through the circulation and organs, and compares the
+simulated organ/tissue time courses with dynamic PET measurements.
+
+The selected HedyPET/Multimodal-HC data descriptor reports a 70-minute scan of
+100 healthy adults, stratified by age and sex, with dynamic PET images,
+image-derived vascular input functions, organ and tissue time-activity curves,
+SUV/SUL readouts, Patlak Ki values, segmentations, and acquisition metadata.
+Eighty participants are reported as immediately released and 20 for 2027; the
+advertised dataset licence is CC-BY-4.0.
+
+MRSQ-1 now includes a source-disjoint FDG simulation library and inspectable
+reference runner. MRSQ-1.1 answered which experiment should be built;
+MRSQ-1.2 froze how it would be tested before any participant file was opened:
+one exact
+public dataset revision; a six-object route of about 250 MB instead of the
+approximately 302 GB image collection; construction-versus-validation source
+roles; closed-loop, measured-input diagnostic, and measurement-audit tracks;
+PET frame transformations; lung, liver, bilateral-kidney, and bladder regions;
+five primary cohort endpoints; numeric tolerances; seven uncertainty classes;
+missingness; and immutable no-refit/failure rules.
+
+The primary experiment will begin with each participant's recorded injection
+metadata and predict the arterial input plus dynamic organ observations. A
+separate diagnostic experiment may supply the measured arterial input curve to
+the organ models. That second experiment helps locate error, but it cannot prove
+that MEHLISSA predicted the complete injection-to-measurement path. At least 60
+complete participants are required for a full endpoint decision, and all five
+primary endpoints must pass their predeclared cohort gates.
+
+MRSQ-1.3 now provides the manifest-first adapter, direct-identifier rejection,
+opaque run linkage and metadata-only reporting. Its four arbitrary synthetic
+CSV families and twelve failure controls pass. Participant-level CSV access
+nevertheless remains disabled because no approved local governance/quarantine/
+retention record or participant-file content hashes exist, and the selected
+combined curve files publish frame midpoints without the authoritative exact
+frame durations required by the frozen integration rule. Full PET/CT/MRI images
+and the unreleased 20-participant test set are not required or authorized.
+
+MRSQ-1.4 and MRSQ-1.5 add and freeze typed interchangeable modules for a
+population vascular input, FDG exchange and trapping in lung/liver/kidney,
+renal transfer to bladder, fluorine-18 decay convention, and arbitrary PET
+frame averaging. The deterministic candidate has explicit literature inputs,
+engineering assumptions, seven uncertainty classes, source-code hashes,
+convergence/replay checks and an eight-frame software reference. It is a
+standalone research/qualification library, not yet a Workbench scenario.
+
+To build and inspect it on Windows:
+
+```powershell
+cmake --build --preset windows-msvc-debug --target mehlissa_fdg_pet_reference_runner mehlissa_fdg_pet_scenario_tests
+build/windows-msvc/tests/Debug/mehlissa_fdg_pet_scenario_tests.exe
+build/windows-msvc/scenarios/fdg_pet/Debug/mehlissa_fdg_pet_reference_runner.exe
+python scripts/check_medical_reference_scenario_closeout.py
+```
+
+The emitted columns are frame start/duration, aortic/lung/liver/kidney activity
+concentration in Bq/mL, and urinary-bladder activity in Bq. They are synthetic
+software-reference predictions, not HedyPET observations or validation.
+
+MRSQ-1.6 supplies the frozen participant-first cohort metrics and deterministic
+bootstrap with explicit PASS, PARTIAL, FAIL and BLOCKED states. MRSQ-1.7 supplies
+an independent machine close-out. The real five-endpoint comparison and external
+human review remain blocked; therefore no physiological, individual, diagnostic
+or clinical validation is established. The VEGF DCCQ, CD95 BCQ and FP9
+nanodevice mechanisms remain separate and were not relabelled as FDG physiology.
+
+Read the [MRSQ-1.1 scenario selection](qualification/MRSQ1_SCENARIO_SELECTION.md)
+for the five compared candidates and the [MRSQ-1.2 prospective
+protocol](qualification/MRSQ1_PROSPECTIVE_PROTOCOL.md) for the exact data,
+analysis, uncertainty, decision, and governance rules, and the [MRSQ-1 bounded
+result](qualification/MRSQ1_QUALIFICATION_RESULT.md) for the executable API,
+assumptions, reproducibility route and remaining evidence gates. Users can run
+the standalone FDG/PET reference executable, but cannot yet import HedyPET data
+or launch this scenario through the main CLI or Workbench.
+
 ### Troubleshooting
 
 #### CMake selects the wrong Visual Studio version
@@ -3451,8 +3534,14 @@ Planned substantive scientific extensions are:
   result](qualification/DCCQ1_QUALIFICATION_RESULT.md); this is computational,
   HUVEC-informed qualification, not pulmonary, patient, biological or clinical
   validation;
-- one frozen medical reference scenario evaluated end to end against
-  independent physiological or experimental observations;
+- MRSQ-1 medical reference scenario qualification: MRSQ-1.1 through MRSQ-1.7
+  computational path is complete. It contains the selected healthy-adult
+  HedyPET dynamic total-body [18F]FDG PET family, prospective protocol,
+  manifest-first synthetic-qualified ingress, typed source-disjoint FDG/PET
+  candidate, immutable archive, cohort evaluator, and machine close-out.
+  Measured ingress and the five locked cohort endpoints remain blocked by local
+  governance, content-hash and authoritative frame-duration gates; external
+  human review and any physiological or clinical validation are also absent;
 - additional medical scenarios and organ families, beginning with a kidney
   surrogate after the shared qualification baseline is in place;
 - larger ensembles, scaling, and advanced scientific visualization beyond the

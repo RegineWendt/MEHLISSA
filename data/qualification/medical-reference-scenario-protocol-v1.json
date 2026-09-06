@@ -1,0 +1,477 @@
+{
+  "schema_version": "1.0.0",
+  "protocol": {
+    "id": "MRSQ-1.2",
+    "program": "MRSQ-1 Medical Reference Scenario Qualification",
+    "version": "1.0.0",
+    "frozen_date": "2026-09-06",
+    "status": "frozen-before-participant-file-ingress-or-validation-outcome-inspection",
+    "clinical_use": false,
+    "participant_specific_model": false
+  },
+  "parent_selection": {
+    "path": "data/qualification/medical-reference-scenario-candidate-register-v1.json",
+    "sha256": "9fd28ebecb239240bfda936efbc402116b948b36286b9de81930779203110939"
+  },
+  "intended_use": {
+    "question": "Can a frozen, source-disjoint MEHLISSA candidate reproduce cohort-level healthy-adult dynamic total-body 18F-FDG PET observations from a declared bolus injection through vascular delivery, lung, liver, kidney and urinary-bladder behavior without validation refitting?",
+    "population": "Released HedyPET healthy adults aged 18 years or older with the source-defined 70-minute dynamic PET acquisition and all fields required by an endpoint; the initial expected maximum is the 80 released train/validation participants, but HedyPET outcome values are reserved exclusively for locked evaluation.",
+    "intervention": "The participant's recorded intravenous 18F-FDG bolus, injection time, administered activity and residual activity when available; absence or ambiguity of a required injection field blocks the closed-loop analysis rather than permitting imputation from validation outcomes.",
+    "prediction": "Frame-averaged decay-convention-matched activity concentration in the arterial input region and four prospectively selected organ composites, plus urinary-bladder activity amount when region volume is available.",
+    "observation": "HedyPET image-derived input functions and pre-extracted frame-level time-activity curves from the exact frozen repository revision, with volumes used only for the predeclared bladder amount transformation.",
+    "decision_unit": "cohort-level-endpoint",
+    "scope": "Research qualification of one healthy-adult, single-centre, Siemens Biograph Vision Quadra, 70-minute dynamic 18F-FDG PET reference scenario. Participant metrics support the cohort calculation but are not individual predictions.",
+    "non_use": [
+      "disease diagnosis, treatment selection, safety assessment or clinical decision support",
+      "individual normality classification or patient-specific prediction",
+      "validation of FP9 nanodevices, molecular communication or VEGF/CD95 biology",
+      "a normative reference range for clinical use",
+      "claims for scanners, reconstructions, populations, tracers or acquisition protocols outside the frozen scope"
+    ]
+  },
+  "source_freeze": {
+    "publication": {
+      "id": "MRSQ-PROT-SRC-001",
+      "locator": "doi:10.1038/s41597-026-08157-4",
+      "version": "published-2026-08-24",
+      "role": "HedyPET cohort, acquisition, artifact, terminology and limitation authority; not a model-equation or parameter-calibration source",
+      "rights": "article CC-BY-4.0 unless separately credited",
+      "access": "public open-access data descriptor"
+    },
+    "data_repository": {
+      "provider": "Hugging Face",
+      "repository_id": "DEPICT-RH/Multimodal-HC",
+      "doi": "10.57967/hf/9560",
+      "revision": "b6daf89015481bdc20a238866df730f90274157d",
+      "observed_at": "2026-09-06T17:33:00Z",
+      "public": true,
+      "gated": false,
+      "licence": "CC-BY-4.0",
+      "sibling_count": 9463,
+      "minimum_assets": [
+        {
+          "path": "train/dataset_description.json",
+          "size_bytes": 1202,
+          "git_blob_id": "fea2f716fac2b7ff55ae9c20f59e8f138db19146",
+          "content_sha256": "required-after-authorized-download-before-first-parse",
+          "role": "dataset identity, BIDS version and declared licence metadata",
+          "participant_level": false,
+          "ingress_state": "metadata-only-download-permitted"
+        },
+        {
+          "path": "train/participants.json",
+          "size_bytes": 2137,
+          "git_blob_id": "7ce6a4ef14e9e738e1550a6dcd5f677e272afed4",
+          "content_sha256": "required-after-authorized-download-before-first-parse",
+          "role": "participant-table field dictionary only, not participant rows",
+          "participant_level": false,
+          "ingress_state": "metadata-only-download-permitted"
+        },
+        {
+          "path": "train/derivatives/readouts/metadata.csv",
+          "size_bytes": 14682,
+          "git_blob_id": "ccb10f855f5bf81c86463955a2087404e6c52f4c",
+          "content_sha256": "required-after-authorized-download-before-first-parse",
+          "role": "participant acquisition, injection, normalization and demographic fields required for eligibility and observation transformations",
+          "participant_level": true,
+          "ingress_state": "blocked-until-MRSQ-1.3"
+        },
+        {
+          "path": "train/derivatives/readouts/input_functions.csv",
+          "size_bytes": 6517065,
+          "git_blob_id": "4c9d833768c9bff036e6c1bfe8de2f93f533f664",
+          "content_sha256": "required-after-authorized-download-before-first-parse",
+          "role": "frame-level image-derived vascular input observations",
+          "participant_level": true,
+          "ingress_state": "blocked-until-MRSQ-1.3"
+        },
+        {
+          "path": "train/derivatives/readouts/tacs.csv",
+          "size_bytes": 239084285,
+          "git_blob_id": "7cfeae7e85657fcfcda060408a2e49db6be1c94e",
+          "content_sha256": "required-after-authorized-download-before-first-parse",
+          "role": "frame-level organ and tissue time-activity observations",
+          "participant_level": true,
+          "ingress_state": "blocked-until-MRSQ-1.3"
+        },
+        {
+          "path": "train/derivatives/readouts/volumes.csv",
+          "size_bytes": 4078118,
+          "git_blob_id": "c462868c114ce81e1aa62d0c28bfadba8286f548",
+          "content_sha256": "required-after-authorized-download-before-first-parse",
+          "role": "prospectively limited region volumes for composite weighting and bladder activity amount",
+          "participant_level": true,
+          "ingress_state": "blocked-until-MRSQ-1.3"
+        }
+      ],
+      "excluded_assets": [
+        "all NIfTI, CT, MRI, listmode and reconstruction files",
+        "train/derivatives/readouts/means.csv because static means are not required for primary dynamic endpoints",
+        "train/derivatives/readouts/patlak_ki.csv because its 382470712 bytes and derived outcome values are not required for primary qualification",
+        "the unreleased 20-participant test split",
+        "interactive data-explorer output",
+        "repository demonstration output and screenshots"
+      ]
+    },
+    "processing_repository": {
+      "id": "MRSQ-PROT-SRC-002",
+      "locator": "https://github.com/DEPICT-RH/Multimodal-HC",
+      "version": "b8e04e56934a2a12d87bbaa2258a1c1f8e250d15",
+      "role": "method inspection and source-file identity context only; no copied or executed code",
+      "rights": "NOASSERTION because the GitHub licence endpoint returned no repository licence",
+      "access": "public metadata and inspection; code reuse prohibited until separately licensed"
+    },
+    "full_image_fallback": {
+      "id": "MRSQ-PROT-SRC-003",
+      "locator": "doi:10.70883/UYAG3430",
+      "version": "V1",
+      "role": "persistent full dynamic-image identity and future fallback only",
+      "rights": "catalogue advertises CC-BY-4.0, while the platform requires an identified user and Data User Agreement",
+      "access": "not authorized or needed for MRSQ-1 primary endpoints"
+    },
+    "construction_context": [
+      {
+        "id": "MRSQ-PROT-SRC-004",
+        "locator": "doi:10.1007/s00259-020-05124-y",
+        "version": "published-2021",
+        "role": "source-disjoint healthy-organ two-tissue FDG kinetic-model and parameter-range context; exact parameter use requires MRSQ-1.5 freeze",
+        "rights": "bibliographic and reported scientific facts only; article licence must be checked before reuse",
+        "access": "public abstract and bibliographic record"
+      },
+      {
+        "id": "MRSQ-PROT-SRC-005",
+        "locator": "doi:10.3389/fnume.2025.1556848",
+        "version": "published-2025",
+        "role": "source-disjoint image-derived input-function observational uncertainty context; not HedyPET validation data",
+        "rights": "CC-BY-4.0 article",
+        "access": "public article"
+      },
+      {
+        "id": "MRSQ-PROT-SRC-006",
+        "locator": "doi:10.1038/s41597-025-05997-4",
+        "version": "published-2025",
+        "role": "source-disjoint healthy-organ PET test-retest and segmentation-variability context; not candidate calibration",
+        "rights": "CC-BY-4.0 article",
+        "access": "public article and separate dataset route"
+      },
+      {
+        "id": "MRSQ-PROT-SRC-007",
+        "locator": "doi:10.6028/jres.119.013",
+        "version": "NIST-2014",
+        "role": "physical fluorine-18 decay identity and half-life authority for later implementation",
+        "rights": "United States government publication; verify individual figure credits before reuse",
+        "access": "public NIST publication"
+      }
+    ]
+  },
+  "governance": {
+    "participant_files_opened": false,
+    "validation_outcomes_inspected": false,
+    "ingress_authorized": false,
+    "institutional_review_state": "local-determination-required-before-participant-file-ingress",
+    "storage": "Participant-level source files must remain outside Git and outside the repository tree in an explicitly supplied quarantine root; only schemas, hashes, metadata-only provenance and permitted aggregates may be committed.",
+    "logging": "No participant row, subject identifier, raw time-activity value, input-function value or demographic combination may appear in terminal, CI or application logs.",
+    "identifiers": "The ingress adapter accepts only the source pseudonym needed for row linkage, maps it to a run-scoped opaque identifier and rejects direct identifiers or unexpected identifying columns.",
+    "retention": "The ingress manifest must state responsible person, purpose, storage location, access list, start date, review date and deletion trigger before the first participant file is opened.",
+    "redistribution": "No source participant row or reconstructed individual curve is redistributed from MEHLISSA; derived publication aggregates require licence attribution and the recorded local governance decision.",
+    "authorization_gate": [
+      "confirm the Hugging Face revision, licence and six exact asset identities still match this protocol",
+      "record the local institutional determination for reuse of openly advertised deidentified participant-level research data",
+      "create and approve an outside-repository quarantine root and retention record",
+      "implement a manifest-first adapter that validates rights, paths, hashes, expected fields, units and direct-identifier absence before parsing outcomes",
+      "demonstrate all ingress and reporting failure cases on arbitrary synthetic fixtures",
+      "keep ingress_authorized false until MRSQ-1.3 records all preceding conditions"
+    ]
+  },
+  "analysis_sets": [
+    {
+      "id": "MRSQ-AS-CLOSED",
+      "role": "Closed-loop injection-to-PET evaluation beginning with recorded administration metadata and predicting the vascular input plus organ observations.",
+      "input_rule": "Only administration, acquisition, body-size and frame metadata may enter; no measured HedyPET input-function or organ outcome value may drive, tune or initialize the candidate.",
+      "outcome_rule": "The frozen predicted input function and region observations are compared with HedyPET only after the MRSQ-1.5 candidate archive is immutable.",
+      "qualification_role": "primary"
+    },
+    {
+      "id": "MRSQ-AS-CONDITIONAL",
+      "role": "Diagnostic organ-response evaluation conditioned on the participant's measured image-derived input function.",
+      "input_rule": "The observed input curve may be supplied unchanged as an external forcing function after candidate freeze; it may not be fitted, smoothed, rescaled or selected using organ outcomes except for transformations frozen in the adapter.",
+      "outcome_rule": "Organ time-activity metrics identify whether error is dominated by vascular delivery or organ kinetics, but cannot by themselves qualify the complete injection-to-measurement path.",
+      "qualification_role": "diagnostic-only"
+    },
+    {
+      "id": "MRSQ-AS-AUDIT",
+      "role": "Measurement and transformation integrity audit.",
+      "input_rule": "Frame boundaries, units, decay-reference time, region composition and volumes are checked without evaluating physiological agreement.",
+      "outcome_rule": "Patlak Ki, SUV/SUL and source-produced aggregates may be reported only as secondary cross-checks after their exact source transformation is reproduced independently.",
+      "qualification_role": "integrity-only"
+    }
+  ],
+  "source_roles": [
+    {
+      "id": "HEDYPET-ADMIN-METADATA",
+      "role": "participant-specific administered input and acquisition conditions",
+      "permitted": "closed-loop candidate input after MRSQ-1.3 authorization",
+      "forbidden": "parameter fitting, participant classification or exclusion based on prediction error"
+    },
+    {
+      "id": "HEDYPET-IDIF",
+      "role": "external vascular observation in the primary track and fixed forcing in the diagnostic track",
+      "permitted": "one predeclared use per track with separate labels and no transformation chosen from organ outcomes",
+      "forbidden": "candidate calibration, outcome-dependent rescaling or calling the conditional track a full-path validation"
+    },
+    {
+      "id": "HEDYPET-ORGAN-TAC",
+      "role": "external validation observation",
+      "permitted": "locked evaluation and descriptive cohort/subgroup reporting",
+      "forbidden": "equation selection, parameter tuning, tolerance adjustment or post-outcome region selection"
+    },
+    {
+      "id": "SOURCE-DISJOINT-KINETICS",
+      "role": "model equations, parameter priors and separate calibration evidence",
+      "permitted": "candidate construction followed by a versioned MRSQ-1.5 freeze",
+      "forbidden": "reuse of HedyPET outcomes or same-cohort derivatives"
+    },
+    {
+      "id": "SOURCE-DISJOINT-REPEATABILITY",
+      "role": "measurement-uncertainty context and pre-outcome tolerance rationale",
+      "permitted": "contextualize IDIF, reconstruction, organ and segmentation variability",
+      "forbidden": "represent a different cohort, scanner or static acquisition as HedyPET-specific uncertainty"
+    },
+    {
+      "id": "MEHLISSA-SYNTHETIC",
+      "role": "software, units, conservation, numerical and negative testing",
+      "permitted": "qualification of computational contracts",
+      "forbidden": "external physiological, biological, participant or clinical evidence"
+    }
+  ],
+  "observation_models": [
+    {
+      "id": "MRSQ-OM-IDIF",
+      "input": "recorded injection and acquisition metadata in MRSQ-AS-CLOSED",
+      "prediction": "whole-blood-equivalent arterial activity concentration as a continuous SI-time function",
+      "observation": "one prospectively selected aortic image-derived input-function series",
+      "transformation": "Integrate the prediction over each source frame and divide by frame duration. Match the source decay-reference convention exactly; never apply a second decay correction. Freeze the exact aortic series and any plasma-to-whole-blood rule before outcome parsing.",
+      "unit": "Bq/mL at the source-declared decay reference",
+      "status": "primary"
+    },
+    {
+      "id": "MRSQ-OM-TAC",
+      "input": "closed-loop predicted arterial delivery for primary evaluation or the unchanged observed IDIF for the separately labelled diagnostic evaluation",
+      "prediction": "total PET-visible regional activity concentration including prospectively frozen vascular and reversible/trapped tissue contributions",
+      "observation": "source time-activity curve for the predeclared non-eroded region composite",
+      "transformation": "Volume-weight source components, integrate the continuous prediction over each source frame, divide by frame duration and compare only on the intersection of valid source frames. No smoothing, interpolation or erosion choice may depend on residuals.",
+      "unit": "Bq/mL at the source-declared decay reference",
+      "status": "primary"
+    },
+    {
+      "id": "MRSQ-OM-AMOUNT",
+      "input": "the same frame-averaged activity concentration and frozen source region volume",
+      "prediction": "PET-visible activity amount in the urinary-bladder region",
+      "observation": "source bladder time-activity concentration multiplied by the prospectively selected source volume",
+      "transformation": "Convert mL to m3 only at the typed boundary and compare Bq amounts on identical frames; do not infer excreted chemical mass from radioactive activity.",
+      "unit": "Bq at the source-declared decay reference",
+      "status": "primary"
+    },
+    {
+      "id": "MRSQ-OM-PATLAK",
+      "input": "the frozen IDIF and tissue TAC after the source-defined linearization start time",
+      "prediction": "Patlak net influx constant derived independently from the MEHLISSA prediction",
+      "observation": "source-produced Patlak Ki only if its exact input-function choice, frame subset, units and implementation can be frozen without acquiring excluded assets",
+      "transformation": "Use weighted linear regression on the identical accepted frames and report the intercept and residuals; do not use Ki to fit the dynamic candidate.",
+      "unit": "source-declared Ki unit",
+      "status": "secondary-nongating"
+    }
+  ],
+  "regions": [
+    {
+      "id": "MRSQ-ROI-LUNG",
+      "semantic_region": "combined five pulmonary lobes",
+      "required_source_components": ["lung_upper_lobe_left", "lung_lower_lobe_left", "lung_upper_lobe_right", "lung_middle_lobe_right", "lung_lower_lobe_right"],
+      "combination": "volume-weighted activity concentration across exactly the five non-eroded lobe components",
+      "missing_rule": "Any missing lobe makes the participant incomplete for MRSQ-P2; no four-lobe substitute is permitted."
+    },
+    {
+      "id": "MRSQ-ROI-LIVER",
+      "semantic_region": "whole liver",
+      "required_source_components": ["liver"],
+      "combination": "non-eroded whole-region activity concentration without post-outcome subregion selection",
+      "missing_rule": "A missing or ambiguous liver label makes the participant incomplete for MRSQ-P3."
+    },
+    {
+      "id": "MRSQ-ROI-KIDNEY",
+      "semantic_region": "combined left and right kidneys",
+      "required_source_components": ["kidney_left", "kidney_right"],
+      "combination": "volume-weighted activity concentration across the two non-eroded kidney components",
+      "missing_rule": "A missing side makes the participant incomplete for MRSQ-P4; unilateral substitution is not permitted."
+    },
+    {
+      "id": "MRSQ-ROI-BLADDER",
+      "semantic_region": "urinary bladder",
+      "required_source_components": ["urinary_bladder"],
+      "combination": "non-eroded source activity concentration multiplied by the frozen source volume",
+      "missing_rule": "Missing volume, an empty segmentation or an ambiguous label makes the participant incomplete for MRSQ-P5."
+    }
+  ],
+  "endpoint_rules": [
+    {
+      "id": "MRSQ-P1",
+      "analysis_set": "MRSQ-AS-CLOSED",
+      "observation_model": "MRSQ-OM-IDIF",
+      "region": "prospectively frozen aortic image-derived input region",
+      "metrics": ["duration-weighted normalized root-mean-square error", "activity-concentration AUC ratio", "peak-frame midpoint absolute time error"],
+      "limits": {
+        "cohort_upper_90_ci_median_duration_weighted_nrmse": 0.25,
+        "cohort_90_ci_geometric_mean_auc_ratio_lower": 0.75,
+        "cohort_90_ci_geometric_mean_auc_ratio_upper": 1.25,
+        "peak_time_error_rule": "The cohort upper 90% confidence limit of median absolute peak-frame midpoint error must not exceed the larger of 10 seconds and one source peak-frame duration."
+      },
+      "minimum_complete_participants": 60,
+      "status": "frozen-before-outcomes"
+    },
+    {
+      "id": "MRSQ-P2",
+      "analysis_set": "MRSQ-AS-CLOSED",
+      "observation_model": "MRSQ-OM-TAC",
+      "region": "MRSQ-ROI-LUNG",
+      "metrics": ["duration-weighted normalized root-mean-square error", "activity-concentration AUC ratio"],
+      "limits": {
+        "cohort_upper_90_ci_median_duration_weighted_nrmse": 0.30,
+        "cohort_90_ci_geometric_mean_auc_ratio_lower": 0.70,
+        "cohort_90_ci_geometric_mean_auc_ratio_upper": 1.30,
+        "peak_time_error_rule": "reported descriptively and nongating because source frame duration changes over the acquisition"
+      },
+      "minimum_complete_participants": 60,
+      "status": "frozen-before-outcomes"
+    },
+    {
+      "id": "MRSQ-P3",
+      "analysis_set": "MRSQ-AS-CLOSED",
+      "observation_model": "MRSQ-OM-TAC",
+      "region": "MRSQ-ROI-LIVER",
+      "metrics": ["duration-weighted normalized root-mean-square error", "activity-concentration AUC ratio"],
+      "limits": {
+        "cohort_upper_90_ci_median_duration_weighted_nrmse": 0.30,
+        "cohort_90_ci_geometric_mean_auc_ratio_lower": 0.70,
+        "cohort_90_ci_geometric_mean_auc_ratio_upper": 1.30,
+        "peak_time_error_rule": "reported descriptively and nongating because liver dual-input physiology is a declared structural challenge"
+      },
+      "minimum_complete_participants": 60,
+      "status": "frozen-before-outcomes"
+    },
+    {
+      "id": "MRSQ-P4",
+      "analysis_set": "MRSQ-AS-CLOSED",
+      "observation_model": "MRSQ-OM-TAC",
+      "region": "MRSQ-ROI-KIDNEY",
+      "metrics": ["duration-weighted normalized root-mean-square error", "activity-concentration AUC ratio"],
+      "limits": {
+        "cohort_upper_90_ci_median_duration_weighted_nrmse": 0.35,
+        "cohort_90_ci_geometric_mean_auc_ratio_lower": 0.65,
+        "cohort_90_ci_geometric_mean_auc_ratio_upper": 1.35,
+        "peak_time_error_rule": "reported descriptively and nongating because cortical mixing and excretion are not separately observed in the frozen composite"
+      },
+      "minimum_complete_participants": 60,
+      "status": "frozen-before-outcomes"
+    },
+    {
+      "id": "MRSQ-P5",
+      "analysis_set": "MRSQ-AS-CLOSED",
+      "observation_model": "MRSQ-OM-AMOUNT",
+      "region": "MRSQ-ROI-BLADDER",
+      "metrics": ["duration-weighted normalized root-mean-square error", "activity-amount AUC ratio"],
+      "limits": {
+        "cohort_upper_90_ci_median_duration_weighted_nrmse": 0.40,
+        "cohort_90_ci_geometric_mean_auc_ratio_lower": 0.60,
+        "cohort_90_ci_geometric_mean_auc_ratio_upper": 1.40,
+        "peak_time_error_rule": "not applicable; the complete retained trajectory and terminal amount are reported"
+      },
+      "minimum_complete_participants": 60,
+      "status": "frozen-before-outcomes"
+    }
+  ],
+  "statistics": {
+    "participant_first": true,
+    "frame_weighting": "source-frame-duration",
+    "nrmse": "For participant j, sqrt(sum_i duration_i*(prediction_i-observation_i)^2/sum_i duration_i) divided by max_i(abs(observation_i)); a zero or nonfinite denominator blocks that participant-endpoint and is never replaced from cohort outcomes.",
+    "auc": "Trapezoidal integration over identical accepted frame midpoints; participant ratios require positive finite observed AUC and are aggregated on the natural-log scale.",
+    "cohort_interval": "two-sided-90-percent-percentile-bootstrap",
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 18042026,
+    "missingness": "Report eligibility and complete-case counts for every endpoint and every exclusion reason. Do not impute primary outcomes, drop residual outliers, or require a participant to be complete for unrelated endpoints.",
+    "subgroups": "Age, source-declared sex and body-size variables are descriptive only. No subgroup pass, comparison, threshold adjustment or participant classification is permitted in MRSQ-1.",
+    "multiplicity": "All five primary endpoints must pass their two required cohort metrics, and MRSQ-P1 must also pass its peak-time rule. There is no multiple-testing rescue, composite compensation or post-outcome endpoint reprioritization."
+  },
+  "uncertainty_policy": [
+    {
+      "class": "numerical",
+      "required_treatment": "Demonstrate independent solver-step and synchronization/frame-integration convergence; numerical error must consume no more than one tenth of the narrowest endpoint tolerance.",
+      "blocked_inference": "No endpoint decision when convergence is absent or numerical error is hidden inside biological residuals."
+    },
+    {
+      "class": "input-function",
+      "required_treatment": "Treat aortic-region choice, early-frame spillover/partial volume, whole-blood versus plasma convention and late IDIF bias as observation uncertainty; report both closed-loop and conditional tracks without mixing their claims.",
+      "blocked_inference": "The conditional track cannot validate injection-to-vascular delivery, and a late reported IDIF bias below 10 percent cannot be assumed for early frames."
+    },
+    {
+      "class": "pet-reconstruction",
+      "required_treatment": "Freeze reconstruction identity, decay reference, frame schedule and activity unit; retain the documented sub-017 reconstruction deviation as a source-defined flag and sensitivity stratum, not an automatic exclusion.",
+      "blocked_inference": "No generalization to other scanners or reconstruction families and no double decay correction."
+    },
+    {
+      "class": "segmentation-partial-volume",
+      "required_treatment": "Use only the predeclared non-eroded region composition for primary analysis; report missing regions and source volumes and perform an independently frozen erosion/partial-volume structural sensitivity only after the primary result.",
+      "blocked_inference": "No residual-driven ROI, erosion or component selection."
+    },
+    {
+      "class": "parameter",
+      "required_treatment": "MRSQ-1.5 must bind every parameter to source-disjoint values or a separate calibration family and provide local sensitivity plus any source-supported joint distributions.",
+      "blocked_inference": "No invented independent distributions, no HedyPET tuning and no population prediction from point estimates."
+    },
+    {
+      "class": "structural",
+      "required_treatment": "Compare at least irreversible two-tissue, reversible/dephosphorylation, liver dual-input, renal-excretion and vascular-fraction choices where applicable, with one reference fixed before outcomes.",
+      "blocked_inference": "No claim that a single compartment structure is uniquely identified by the selected observations."
+    },
+    {
+      "class": "cohort",
+      "required_treatment": "Use participant-first metrics, fixed 90 percent bootstrap intervals, endpoint-specific missingness and descriptive age/sex/body-size views; retain all eligible outcomes.",
+      "blocked_inference": "No individual normality range, causal demographic conclusion or clinical population generalization."
+    }
+  ],
+  "failure_policy": {
+    "pass": "PASS requires at least 60 complete released participants per primary endpoint, all five primary NRMSE and AUC interval gates, the MRSQ-P1 peak-time gate, all critical controls and an immutable MRSQ-1.5 candidate evaluated without validation refitting.",
+    "fail": "FAIL is reported when an evaluable frozen primary endpoint exceeds any numeric gate. A failed endpoint is retained and cannot be hidden by a passing conditional track, secondary measure or other organ.",
+    "partial": "PARTIAL_EVIDENCE is reported for 20 to 59 complete participants on any otherwise evaluable endpoint or when only diagnostic/secondary results are available; it never satisfies SCN-007.",
+    "blocked": "BLOCKED is reported for fewer than 20 complete participants, unresolved rights or governance, missing administration/input/frame/region semantics, candidate/source identity mismatch, unverified units, post-freeze mutation or any critical control failure.",
+    "amendment": "After any participant outcome is opened, this protocol and its endpoint/region/tolerance choices are immutable. A necessary change creates a new version that retains this version and labels all prior outcome exposure; it cannot retroactively rescue MRSQ-1."
+  },
+  "negative_controls": [
+    "reject-parent-selection-hash-mismatch",
+    "reject-data-repository-revision-or-blob-mismatch",
+    "reject-participant-file-before-MRSQ-1.3-authorization",
+    "reject-direct-identifier-or-raw-outcome-logging",
+    "reject-unknown-frame-time-unit-or-decay-reference",
+    "reject-point-sampling-instead-of-frame-integration",
+    "reject-double-radioactive-decay-correction",
+    "reject-HedyPET-outcome-as-calibration",
+    "reject-conditional-IDIF-track-as-complete-path-validation",
+    "reject-post-outcome-parameter-or-tolerance-change",
+    "reject-residual-based-participant-or-frame-exclusion",
+    "reject-post-outcome-region-erosion-or-composite-selection",
+    "reject-missing-lung-lobe-or-kidney-side-substitution",
+    "reject-static-SUV-or-Patlak-result-as-primary-dynamic-endpoint",
+    "reject-invented-uncertainty-distribution-or-correlation",
+    "reject-healthy-cohort-result-as-individual-disease-or-clinical-validity"
+  ],
+  "allowed_claim": "MRSQ-1.2 prospectively freezes the intended use, exact data revision and minimum assets, governance gate, source roles, analysis tracks, observation models, regions, five primary cohort endpoints, numeric limits, uncertainty classes and failure rules for a healthy-adult dynamic 18F-FDG PET qualification before participant-file ingress or validation-outcome inspection.",
+  "forbidden_claims": [
+    "that any participant data have been authorized, opened or analysed",
+    "that an FDG transport, organ-kinetic, renal-excretion or PET observation model has been implemented or calibrated",
+    "that any primary endpoint passes",
+    "that HedyPET is an independent validation after its outcomes are used for model construction",
+    "that a conditional measured-input result validates the closed injection-to-PET path",
+    "that the result applies to an individual, disease, diagnosis, treatment, safety, nanodevice or clinical decision",
+    "that source code without an established licence may be copied or redistributed"
+  ],
+  "next_increment": "MRSQ-1.3 rights-aware selective FDG-PET data ingress"
+}

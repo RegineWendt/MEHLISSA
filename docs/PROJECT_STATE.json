@@ -4,14 +4,14 @@
   "status_date_display": "6 September 2026",
   "development_branch": "mehlissa-next-generation",
   "milestones_passed_through": "M7",
-  "current_focus": "externally validated medical reference scenario and pending DCCQ source-disjoint evidence plus external review",
+  "current_focus": "external MRSQ-1 cohort enablement and pending PCQ/DCCQ external evidence",
   "research_use": {
     "delivery_range": "UX-1 through UX-6",
     "workbench_version": "1.0.0",
     "release_commit": "5821c7358f490c1c92e9ec79eaed783f80851297",
     "verified_ci_run": "33745263319",
     "verified_ci_url": "https://github.com/RegineWendt/MEHLISSA/actions/runs/33745263319",
-    "windows_msvc_ctest_count": 295,
+    "windows_msvc_ctest_count": 299,
     "macos_source_build": {
       "preset": "macos-apple-clang",
       "ci_runner": "macos-15 ARM64",
@@ -134,10 +134,53 @@
     "biological_or_clinical_validation": "NOT_ESTABLISHED",
     "next_increment": "DCCQ computational series closed; reopen under a prospective evidence protocol only when condition-matched source-disjoint primary-HUVEC dynamics or external review becomes available"
   },
+  "active_medical_reference_scenario_qualification": {
+    "program_id": "MRSQ-1",
+    "full_name": "Medical Reference Scenario Qualification",
+    "selection_version": "1.0.0",
+    "protocol_version": "1.0.0",
+    "completed_increment": "MRSQ-1.7 machine close-out; external cohort evaluation and human review blocked",
+    "status": "MRSQ-1.1 through MRSQ-1.7 are computationally complete: the source-disjoint typed FDG/PET candidate, synthetic-qualified manifest-first ingress, frozen archive, cohort evaluator, and independent machine close-out pass; no participant CSV or validation outcome was opened, measured ingress is blocked by governance, content-hash and exact-frame-duration gates, and no physiological or clinical validation exists",
+    "selection_document": "docs/qualification/MRSQ1_SCENARIO_SELECTION.md",
+    "candidate_register": "data/qualification/medical-reference-scenario-candidate-register-v1.json",
+    "protocol_document": "docs/qualification/MRSQ1_PROSPECTIVE_PROTOCOL.md",
+    "protocol_record": "data/qualification/medical-reference-scenario-protocol-v1.json",
+    "data_ingress_policy": "data/qualification/medical-reference-scenario-data-ingress-policy-v1.json",
+    "candidate_freeze": "data/qualification/medical-reference-scenario-candidate-freeze-v1.json",
+    "qualification_result_document": "docs/qualification/MRSQ1_QUALIFICATION_RESULT.md",
+    "closeout_record": "data/qualification/medical-reference-scenario-closeout-v1.json",
+    "selected_candidate": "healthy-adult intravenous 18F-FDG whole-body transport, organ/tissue uptake and trapping, radioactive decay, and dynamic total-body PET observation",
+    "selected_evidence_family": "HedyPET/Multimodal-HC",
+    "selected_publication_doi": "10.1038/s41597-026-08157-4",
+    "selected_dataset_dois": ["10.57967/hf/9560", "10.70883/UYAG3430"],
+    "advertised_data_license": "CC-BY-4.0",
+    "advertised_population": "100 healthy adults stratified by age and sex; 80 reported as immediately released and 20 planned for 2027",
+    "acquisition_duration_minutes": 70,
+    "ranked_scenarios": 5,
+    "screened_sources": 8,
+    "frozen_hugging_face_revision": "b6daf89015481bdc20a238866df730f90274157d",
+    "minimum_remote_assets": 6,
+    "primary_endpoints": 5,
+    "primary_regions": 4,
+    "minimum_complete_participants_per_endpoint": 60,
+    "uncertainty_classes": 7,
+    "prospective_protocol_negative_controls": 16,
+    "ingress_negative_controls": 12,
+    "raw_participant_data_accessed": false,
+    "candidate_validation_outcomes_inspected": false,
+    "participant_data_ingress_authorized": false,
+    "fdg_model_implemented": true,
+    "software_reference_frames": 8,
+    "computational_path_qualified": true,
+    "external_validation_established": false,
+    "participant_specific_or_clinical_claim": false,
+    "next_increment": "prospective MRSQ-1.3 measured-ingress amendment after governance, exact content hashes, and an authoritative frame-duration mapping are available"
+  },
   "next_scientific_packages": [
+    "MRSQ-1 external cohort enablement",
     "Pulmonary and capillary qualification",
     "DCCQ external evidence and reviewer close-out",
-    "Externally validated medical reference scenario"
+    "Additional medical reference scenarios"
   ],
   "traceability_expectations": {
     "UX-001": { "implementation": "PART", "evidence": "PART" },
@@ -158,6 +201,7 @@
     "QUA-004": { "implementation": "PART", "evidence": "PART" },
     "QUA-006": { "implementation": "PART", "evidence": "PART" },
     "QUA-007": { "implementation": "DONE", "evidence": "VERIFIED" },
-    "DATA-008": { "implementation": "DONE", "evidence": "PART" }
+    "DATA-008": { "implementation": "DONE", "evidence": "PART" },
+    "SCN-007": { "implementation": "DONE", "evidence": "PART" }
   }
 }

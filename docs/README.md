@@ -22,11 +22,11 @@ rules are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 | understand APIs or add a model such as kidney | [Software Architecture and Developer Guide](architecture/SOFTWARE_ARCHITECTURE.md) | implemented structure, public APIs, coupling contracts, extension workflow, kidney outline, and personalization |
 | understand what comes next | [Roadmap](ROADMAP.md) | integrated platform history, scientific qualification program, further scenarios and organs, scaling, and the digital-twin path |
 | assess evidence for Paper 1 | [Evidence and Validity Baseline](publication/EVIDENCE_AND_VALIDITY_BASELINE.md) | schema-validated evidence roles, calibration/validation separation, source audit, claim boundaries, and bibliography export |
-| follow the scientific qualification cycles | [Qualification index](qualification/README.md), [completed BCQ-1 biological cell-model package](qualification/BCQ1_MEHLISSA_QUALIFICATION_RESULT.md), and [DCCQ-1 dynamic coupling result](qualification/DCCQ1_QUALIFICATION_RESULT.md) | pulmonary/capillary access-dependent work, the bounded average-cell result, and the computationally qualified VEGF-A165a/VEGFR2 HUVEC-informed seven-owner dynamic coupling with external evidence blockers retained |
+| follow the scientific qualification cycles | [Qualification index](qualification/README.md), [completed BCQ-1 biological cell-model package](qualification/BCQ1_MEHLISSA_QUALIFICATION_RESULT.md), [DCCQ-1 dynamic coupling result](qualification/DCCQ1_QUALIFICATION_RESULT.md), and [MRSQ-1 medical reference result](qualification/MRSQ1_QUALIFICATION_RESULT.md) | pulmonary/capillary access-dependent work, the bounded average-cell result, the computationally qualified VEGF-A165a/VEGFR2 dynamic coupling, and the computationally complete FDG/PET path with all external-evidence blockers retained |
 | reproduce Paper 1 technical measurements | [Technical Experiment Protocol v2](publication/PAPER1_TECHNICAL_EXPERIMENT_PROTOCOL_V2.md) | locked conditions, three experiments, metrics, controls, exclusions, failure handling, and archive structure |
 | inspect Paper 1 results | [Technical Measurement Report](publication/PAPER1_TECHNICAL_MEASUREMENTS.md) | 112-attempt body campaign, small M7 resource/replay study, access-path parity, retained setup deviation, and interpretation limits |
 | review the Paper 1 release candidate | [Candidate handoff](../publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/HANDOFF.md) | source export, raw archives, machine manifest, hashes, claim registry, reproduction, and review checklist |
-| assess requirement coverage | [System Requirements](requirements/SYSTEM_REQUIREMENTS.md) and [Traceability Matrix](requirements/TRACEABILITY_MATRIX.md) | 83 numbered requirements with separate implementation and evidence status, sources, targets, achieved verification, and remaining gaps |
+| assess requirement coverage | [System Requirements](requirements/SYSTEM_REQUIREMENTS.md) and [Traceability Matrix](requirements/TRACEABILITY_MATRIX.md) | 84 numbered requirements with separate implementation and evidence status, sources, targets, achieved verification, and remaining gaps |
 | understand the historical starting point | [Legacy-baseline analysis](IST_ANALYSE.md) | frozen analysis of legacy commit `4f4fc5a`; not the current Next status |
 
 ## Current project truth and maintenance
@@ -96,6 +96,16 @@ rules are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
   comparisons, MEHLISSA convergence and replay, invariants, structural audit,
   sensitivity stability, review outcomes, documentation links, hashes, and
   bounded computational claim.
+- `python scripts/check_dynamic_capillary_tissue_cell_qualification_result.py`
+  reconstructs the DCCQ archive, trajectory and sensitivity metrics, gate
+  decisions, source-disjoint limits, hashes, documentation and bounded claim.
+- `python scripts/check_medical_reference_scenario_data_ingress.py` validates
+  the MRSQ manifest-first boundary on arbitrary CSV fixtures while proving that
+  policy v1 rejects measured ingress before any participant CSV is opened.
+- `python scripts/check_medical_reference_scenario_closeout.py` independently
+  binds the MRSQ candidate, software-reference and evaluation hashes to all
+  seven increment states and retains the blocked cohort and external-review
+  gates.
 - [Data licensing](DATA_LICENSING.md), the
   [licence and data inventory](m0/LICENSE_AND_DATA_INVENTORY.md), and
   [ADR-0007](architecture/adr/0007-repository-license.md) define release and

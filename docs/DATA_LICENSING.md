@@ -49,6 +49,15 @@ single-cell data. A later import must preserve the original CC0 notice,
 accession, source commit, file hash, and transformations and must not imply
 that third-party experimental data have been relicensed as MEHLISSA CC BY.
 
+The MRSQ-1 package commits only MEHLISSA-generated arbitrary CSV fixtures,
+software-reference output, protocols, machine records and reports under CC BY
+4.0, plus MPL-2.0 implementation and checker code. The HedyPET participant
+tables are not copied into the repository and are not relicensed by MEHLISSA.
+Their advertised CC-BY-4.0 licence, exact public revision and attribution remain
+third-party source metadata; a later authorized ingress must preserve them in
+its private manifest. The inspected HedyPET processing repository declares no
+licence, so no source code from it is copied or executed here.
+
 ## Attribution
 
 Unless a manifest specifies more precise wording, attribution should include at

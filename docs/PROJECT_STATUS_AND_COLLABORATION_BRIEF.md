@@ -13,7 +13,7 @@ SPDX-License-Identifier: CC-BY-4.0
 **Verified published release commit:** `5821c7358f490c1c92e9ec79eaed783f80851297`
 **Workbench release:** 1.0.0; UX-6.1 through UX-6.8 accepted
 **Milestone status:** M0 through M7 passed
-**Current product focus:** externally validated medical reference scenario and pending DCCQ source-disjoint evidence plus external review
+**Current product focus:** external MRSQ-1 cohort enablement and pending PCQ/DCCQ external evidence
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -56,7 +56,7 @@ behind explicit contracts.
   discovery, and required `macos-15` ARM64 GitHub job are accepted by GitHub CI
   run 33956456353. The path produces a source-built command-line simulator,
   not a `.app` bundle.
-- The current development branch contains 295 Windows/MSVC tests after the
+- The current development branch contains 299 Windows/MSVC tests after the
   completed DCCQ-1 typed dynamic-coupling and computational qualification work;
   the new commit's cross-platform CI status is reported separately after push.
 - The integrated research-use layer provides a validated five-family,
@@ -212,6 +212,38 @@ behind explicit contracts.
   physiology. The source-disjoint kinetic challenge uses engineered HEK293T
   cells and the independent HUVEC source has one directional endpoint; no
   condition-matched dynamic series or external human attestation exists.
+- MRSQ-1.1 initiated the first complete external medical-reference-scenario
+  programme. MRSQ means **Medical Reference Scenario Qualification**. A
+  machine-checked data-first screen ranks five scenarios and eight sources
+  before participant-data ingress or candidate-outcome analysis. It selects the
+  HedyPET/Multimodal-HC healthy-adult 70-minute dynamic total-body [18F]FDG PET
+  family: 100 adults stratified by age and sex, with 80 reported as immediately
+  released and 20 for 2027, dynamic images, input functions, organ/tissue
+  time-activity curves, SUV/SUL, Patlak Ki, segmentations, and an advertised
+  CC-BY-4.0 data licence. No participant file was opened.
+- MRSQ-1.2 freezes the prospective evaluation before data ingress. The
+  public, ungated Hugging Face revision and six exact minimum objects reduce the
+  intended acquisition from about 302 GB to about 250 MB; participant CSVs are
+  still blocked. Source-disjoint construction and HedyPET validation roles,
+  closed-loop/conditional/audit tracks, frame-integrated PET observation
+  models, five-lobe lung/liver/bilateral-kidney/bladder regions, five primary
+  cohort gates with 60-participant floors, seven uncertainty classes, 16
+  negative controls, missingness, and immutable no-refit/failure rules are
+  machine checked. Full images and the unreleased 20-participant test set are
+  excluded.
+- MRSQ-1.3 through MRSQ-1.7 now close the computational path at its evidence
+  boundary. A manifest-first adapter passes four arbitrary CSV families and
+  twelve negative controls but cannot release participant files. A typed,
+  source-disjoint FDG/PET candidate now covers population vascular input,
+  lung/liver/kidney two-tissue kinetics, renal transfer, fluorine-18 decay
+  semantics and arbitrary PET-frame averaging. Parameters, engineering
+  assumptions, seven uncertainty classes, three source hashes, an eight-frame
+  software reference, replay/convergence tests, participant-first cohort
+  metrics and a runner-independent close-out are frozen before outcomes.
+  Measured ingress and all five cohort endpoints remain blocked by local
+  governance/quarantine approval, missing content hashes and missing
+  authoritative exact frame durations. External human review is also absent;
+  no physiological, individual or clinical validation is claimed.
 - The result is a reproducible research-software demonstrator. It is not a
   clinical assay model, a medical device, or a patient-specific digital twin.
 
@@ -225,12 +257,12 @@ behind explicit contracts.
 
 ### Requirements in two dimensions
 
-The 83 baseline requirements now carry separate implementation and evidence
+The 84 baseline requirements now carry separate implementation and evidence
 statuses. This prevents software completion from being read as scientific
 validation. Functionally, 58 requirements are complete, 16 are partly
-implemented, five remain legacy-only, and four are specified but not yet
+implemented, five remain legacy-only, and five are specified but not yet
 implemented. For evidence, 39 are verified for their declared bounded claim,
-35 have partial evidence, seven are unverified in MEHLISSA Next, and two need a
+35 have partial evidence, eight are unverified in MEHLISSA Next, and two need a
 dedicated research evidence programme. The BCQ updates deliberately retain
 `PART` evidence for `CELL-002`, `CELL-004`, and `CELL-005`: computational
 qualification of one published average-cell mechanism does not supply the
@@ -262,6 +294,7 @@ evidence. They are not assumed knowledge in this report.
 | P0 through P3 | Roadmap priority tiers: indispensable foundation, dissertation core, research-platform expansion, and long-term vision. They are not completion states. |
 | `DONE/PART` | Two-dimensional requirement status: functional implementation is complete, while the required evidence is only partial. Other rows independently combine `DONE`, `PART`, `LEGACY`, or `SPEC` implementation with `VERIFIED`, `PART`, `UNVERIFIED`, or `RESEARCH` evidence. |
 | UX-1 through UX-6 | Delivery packages used to build MEHLISSA's cross-cutting research-use layer, from one-command execution to a graphical research workbench. They were implemented after M7, but their accepted outputs are integral platform capabilities rather than a separate add-on. UX-6.1 through UX-6.8 are reviewable increments of the workbench. |
+| PCQ, BCQ, DCCQ, and MRSQ | Scientific qualification programmes for pulmonary/capillary physiology, a biological cell model, dynamic capillary-tissue-cell coupling, and a complete medical reference scenario, respectively. Their numbered increments preserve prospective decisions and evidence boundaries; completion of one increment is not automatically a validation pass. |
 | P1-E1 through P1-E3 | Predeclared Paper 1 technical experiments: body-observation neutrality/resources, small M7 resource/replay behavior, and CLI/Python/Workbench result parity. They are experiment identifiers, not evidence grades. |
 | run | One reproducible execution of an experiment or scenario. A qualified term such as “baseline run” must state what makes that execution distinct. |
 
@@ -490,17 +523,19 @@ release is implied. The remaining programs begin by using and maintaining this
 qualification infrastructure.
 
 The access-pending pulmonary/capillary design, completed public cell-model path,
-and computationally closed DCCQ-1 path are indexed in
-`docs/qualification/README.md`. While PCQ-1 and the DCCQ external gates await
-rights-compatible evidence or review, the next implementation focus is one
-externally validated medical reference scenario.
+computationally closed DCCQ-1 path, and computationally closed MRSQ-1 medical
+reference software path are indexed in `docs/qualification/README.md`. PCQ-1
+and DCCQ await rights-compatible evidence or review. MRSQ awaits a prospective
+measured-ingress release after governance, content hashes and authoritative
+frame durations are available; only then may its frozen external cohort
+evaluation execute.
 
 | Program | Principal work | Intended outcome |
 |---|---|---|
 | Pulmonary and capillary qualification | **PCQ-1.1 through PCQ-1.5a completed locally:** design, source selection, observation models, numeric gates, safe ingress, uncertainty semantics, and repository availability are machine-checked. PCQ-1.5 covers six uncertainty classes and nine endpoints, seven pulmonary structures, covariance envelopes, local sensitivities, and identifiability. PCQ-1.5a finds no drop-in primary repository dataset, retains five non-equivalent alternatives, opens no participant file, and leaves the frozen source roles unchanged. A coordinated, still-unsent request package covers D'Souza, Arizona, Bailey, and feasibility-only Lassen. PCQ-1.6 next builds the outcome-blind execution/reporting shell and runs the frozen evaluator only when authorized source-disjoint observations exist. | Present result: auditable prospective design, source selection, safe data boundary, uncertainty/identifiability plan, repository-first access audit, and governed outreach drafts - not a validation pass. Intended exit: bounded pulmonary and capillary claims evaluated without refitting, with uncertainty and all partial or negative findings retained. |
 | Biological cell-model qualification | **BCQ-1.1 through BCQ-1.7 completed locally:** source and licence selection, prospective COPASI and MEHLISSA protocols, retained deviations, a typed no-refit 18-state M5 adapter, separate source equations, all-state cross-engine and convergence checks, 525/526 structural audit, average-cell population decision, stable local sensitivities, twelve negative controls, and a runner-independent close-out review. | One published average-cell mechanism is computationally qualified. Publication-curve alignment, a reusable population ensemble, external human attestation, biological qualification, endothelial/organ realism, individual or patient prediction, and clinical validity remain blocked. |
 | Dynamic capillary-tissue-cell coupling | **DCCQ-1.1 through DCCQ-1.6 complete; DCCQ-1.7 machine close-out complete:** a pre-output nine-equation/SI protocol, typed seven-owner VEGF-A165a/VEGFR2 HUVEC-informed model, consumptive binding, explicit sinks, delayed feedback, 41 trajectories, five passing computational gates, 24 local-sensitivity comparisons, NRP1/feedback variants, archive integrity and bounded claim are runner-independently machine checked. | Computational dynamic-coupling qualification passes. G6 remains partial, G7 blocked and G8 partial: no joint distributions, condition-matched source-disjoint HUVEC dynamics or external human attestation exist. Pulmonary, in-vivo, patient, biological-validation and clinical claims remain prohibited. |
-| Externally validated medical reference scenario | Freeze one measurable complete protocol and compare its injection-to-measurement outputs with independent physiological or experimental observations. | The first reproducible end-to-end validation report with a bounded claim and explicit limitations. |
+| Medical Reference Scenario Qualification | **MRSQ-1.1 through MRSQ-1.7 computational path completed locally:** selection and protocol precede a synthetic-qualified manifest-first ingress boundary, typed source-disjoint FDG/PET candidate, immutable code/parameter/reference freeze, cohort evaluator, and independent machine close-out. No participant file or candidate outcome was accessed. | Present result: the complete injection-to-PET software path is computationally qualified, while measured ingress and five external cohort endpoints are blocked by governance, content-hash and exact-frame-duration gates; external human review is absent. This is partial computational evidence, not physiological, individual, diagnostic or clinical validation. |
 | Additional medical scenarios | Continuous monitoring, liquid biopsy, endocrine/adrenal venous sampling, CAR-T, and ultimately metastasis prevention. | Evidence that the architecture generalizes beyond fingerprinting. |
 | Additional organs | Begin with a kidney surrogate and progress toward regional filtration, clearance, and organ-specific capillary interfaces. | Evidence that organ factories and coupling contracts are not lung-specific. |
 | Personalization and digital twin | Patient manifest, imaging and SimVascular/CFD import, parameter estimation, identifiability, longitudinal updates, and governance. | Research-twin maturity from geometry to physiology and biochemistry. |
@@ -624,6 +659,7 @@ and limitations are documented; and all supported CI paths pass.
 | `docs/qualification/PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md`, `PCQ1_EVIDENCE_SOURCE_SCREEN.md`, `PCQ1_PRE_OUTCOME_AMENDMENT.md`, `PCQ1_DATA_INGRESS.md`, `PCQ1_UNCERTAINTY_IDENTIFIABILITY.md`, `PCQ1_REPOSITORY_FIRST_DATA_AUDIT.md`, and `PCQ1_DATA_REQUEST_PACKAGE.md` | Active PCQ-1 claim, frozen candidates and analysis, ranked sources, safe ingress, uncertainty and identifiability, repository availability and alternatives, governed request drafts, controls, and pre-outcome sequence. |
 | `docs/qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md`, `BCQ1_REPRODUCTION_PROTOCOL.md`, `BCQ1_REPRODUCTION_PROTOCOL_AMENDMENT_1.md`, `BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md`, `BCQ1_MEHLISSA_QUALIFICATION_PROTOCOL.md`, and `BCQ1_MEHLISSA_QUALIFICATION_RESULT.md` | Complete BCQ-1.1–1.7 selection, prospective protocols, retained replay amendment, COPASI archive, typed MEHLISSA implementation, cross-engine result, structure/population decisions, independent checks, and bounded claim. |
 | `docs/qualification/DCCQ1_QUALIFICATION_PLAN.md`, `DCCQ1_EVIDENCE_SOURCE_SCREEN.md`, and `DCCQ1_QUALIFICATION_RESULT.md` | Dynamic Capillary-Tissue-Cell Qualification programme, source decision, prospective equations/SI/evaluation protocol, typed seven-owner implementation, 41-run computational and sensitivity archive, five passed and three bounded partial/blocked gates, independent checker, and exact permitted claim. |
+| `docs/qualification/MRSQ1_SCENARIO_SELECTION.md`, `MRSQ1_PROSPECTIVE_PROTOCOL.md`, and `MRSQ1_QUALIFICATION_RESULT.md` | Medical Reference Scenario Qualification selection, pre-ingress protocol and bounded result: five ranked scenarios, selected healthy-adult dynamic total-body [18F]FDG PET family, exact minimum-data snapshot, access/governance boundary, source roles, observation models, typed source-disjoint candidate, software-reference archive, cohort evaluator, machine close-out, remaining external gates and exact non-claim. |
 | `docs/PROJECT_STATE.json` | Machine-readable shared release facts, Roadmap section mappings, selected traceability expectations, and ordered qualification packages. |
 | `docs/requirements/SYSTEM_REQUIREMENTS.md` | Numbered requirements derived from the dissertation and project decisions. |
 | `docs/requirements/TRACEABILITY_MATRIX.md` | Separate implementation and evidence status, achieved verification, and remaining gap for every tracked requirement. |

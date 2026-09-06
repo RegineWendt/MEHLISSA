@@ -1,0 +1,298 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/medical-reference-scenario-protocol/1.0.0.schema.json",
+  "title": "MEHLISSA MRSQ-1.2 prospective medical reference scenario protocol",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "protocol", "parent_selection", "intended_use",
+    "source_freeze", "governance", "analysis_sets", "source_roles",
+    "observation_models", "regions", "endpoint_rules", "statistics",
+    "uncertainty_policy", "failure_policy", "negative_controls",
+    "allowed_claim", "forbidden_claims", "next_increment"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "program", "version", "frozen_date", "status", "clinical_use", "participant_specific_model"],
+      "properties": {
+        "id": {"const": "MRSQ-1.2"},
+        "program": {"const": "MRSQ-1 Medical Reference Scenario Qualification"},
+        "version": {"const": "1.0.0"},
+        "frozen_date": {"type": "string", "format": "date"},
+        "status": {"const": "frozen-before-participant-file-ingress-or-validation-outcome-inspection"},
+        "clinical_use": {"const": false},
+        "participant_specific_model": {"const": false}
+      }
+    },
+    "parent_selection": {"$ref": "#/$defs/frozen_local_authority"},
+    "intended_use": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question", "population", "intervention", "prediction", "observation", "decision_unit", "scope", "non_use"],
+      "properties": {
+        "question": {"$ref": "#/$defs/text"},
+        "population": {"$ref": "#/$defs/text"},
+        "intervention": {"$ref": "#/$defs/text"},
+        "prediction": {"$ref": "#/$defs/text"},
+        "observation": {"$ref": "#/$defs/text"},
+        "decision_unit": {"const": "cohort-level-endpoint"},
+        "scope": {"$ref": "#/$defs/text"},
+        "non_use": {"$ref": "#/$defs/text_array"}
+      }
+    },
+    "source_freeze": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["publication", "data_repository", "processing_repository", "full_image_fallback", "construction_context"],
+      "properties": {
+        "publication": {"$ref": "#/$defs/external_source"},
+        "data_repository": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["provider", "repository_id", "doi", "revision", "observed_at", "public", "gated", "licence", "sibling_count", "minimum_assets", "excluded_assets"],
+          "properties": {
+            "provider": {"const": "Hugging Face"},
+            "repository_id": {"const": "DEPICT-RH/Multimodal-HC"},
+            "doi": {"const": "10.57967/hf/9560"},
+            "revision": {"pattern": "^[0-9a-f]{40}$"},
+            "observed_at": {"type": "string", "format": "date-time"},
+            "public": {"const": true},
+            "gated": {"const": false},
+            "licence": {"const": "CC-BY-4.0"},
+            "sibling_count": {"type": "integer", "minimum": 1},
+            "minimum_assets": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "items": {"$ref": "#/$defs/remote_asset"}
+            },
+            "excluded_assets": {"$ref": "#/$defs/text_array"}
+          }
+        },
+        "processing_repository": {"$ref": "#/$defs/external_source"},
+        "full_image_fallback": {"$ref": "#/$defs/external_source"},
+        "construction_context": {
+          "type": "array",
+          "minItems": 4,
+          "items": {"$ref": "#/$defs/external_source"}
+        }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "participant_files_opened", "validation_outcomes_inspected",
+        "ingress_authorized", "institutional_review_state", "storage",
+        "logging", "identifiers", "retention", "redistribution",
+        "authorization_gate"
+      ],
+      "properties": {
+        "participant_files_opened": {"const": false},
+        "validation_outcomes_inspected": {"const": false},
+        "ingress_authorized": {"const": false},
+        "institutional_review_state": {"const": "local-determination-required-before-participant-file-ingress"},
+        "storage": {"$ref": "#/$defs/text"},
+        "logging": {"$ref": "#/$defs/text"},
+        "identifiers": {"$ref": "#/$defs/text"},
+        "retention": {"$ref": "#/$defs/text"},
+        "redistribution": {"$ref": "#/$defs/text"},
+        "authorization_gate": {"$ref": "#/$defs/text_array"}
+      }
+    },
+    "analysis_sets": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "role", "input_rule", "outcome_rule", "qualification_role"],
+        "properties": {
+          "id": {"enum": ["MRSQ-AS-CLOSED", "MRSQ-AS-CONDITIONAL", "MRSQ-AS-AUDIT"]},
+          "role": {"$ref": "#/$defs/text"},
+          "input_rule": {"$ref": "#/$defs/text"},
+          "outcome_rule": {"$ref": "#/$defs/text"},
+          "qualification_role": {"enum": ["primary", "diagnostic-only", "integrity-only"]}
+        }
+      }
+    },
+    "source_roles": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "role", "permitted", "forbidden"],
+        "properties": {
+          "id": {"$ref": "#/$defs/text"},
+          "role": {"$ref": "#/$defs/text"},
+          "permitted": {"$ref": "#/$defs/text"},
+          "forbidden": {"$ref": "#/$defs/text"}
+        }
+      }
+    },
+    "observation_models": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "input", "prediction", "observation", "transformation", "unit", "status"],
+        "properties": {
+          "id": {"enum": ["MRSQ-OM-IDIF", "MRSQ-OM-TAC", "MRSQ-OM-AMOUNT", "MRSQ-OM-PATLAK"]},
+          "input": {"$ref": "#/$defs/text"},
+          "prediction": {"$ref": "#/$defs/text"},
+          "observation": {"$ref": "#/$defs/text"},
+          "transformation": {"$ref": "#/$defs/text"},
+          "unit": {"$ref": "#/$defs/text"},
+          "status": {"enum": ["primary", "secondary-nongating"]}
+        }
+      }
+    },
+    "regions": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "semantic_region", "required_source_components", "combination", "missing_rule"],
+        "properties": {
+          "id": {"enum": ["MRSQ-ROI-LUNG", "MRSQ-ROI-LIVER", "MRSQ-ROI-KIDNEY", "MRSQ-ROI-BLADDER"]},
+          "semantic_region": {"$ref": "#/$defs/text"},
+          "required_source_components": {"$ref": "#/$defs/text_array"},
+          "combination": {"$ref": "#/$defs/text"},
+          "missing_rule": {"$ref": "#/$defs/text"}
+        }
+      }
+    },
+    "endpoint_rules": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "analysis_set", "observation_model", "region", "metrics", "limits", "minimum_complete_participants", "status"],
+        "properties": {
+          "id": {"enum": ["MRSQ-P1", "MRSQ-P2", "MRSQ-P3", "MRSQ-P4", "MRSQ-P5"]},
+          "analysis_set": {"const": "MRSQ-AS-CLOSED"},
+          "observation_model": {"enum": ["MRSQ-OM-IDIF", "MRSQ-OM-TAC", "MRSQ-OM-AMOUNT"]},
+          "region": {"$ref": "#/$defs/text"},
+          "metrics": {"$ref": "#/$defs/text_array"},
+          "limits": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["cohort_upper_90_ci_median_duration_weighted_nrmse", "cohort_90_ci_geometric_mean_auc_ratio_lower", "cohort_90_ci_geometric_mean_auc_ratio_upper", "peak_time_error_rule"],
+            "properties": {
+              "cohort_upper_90_ci_median_duration_weighted_nrmse": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+              "cohort_90_ci_geometric_mean_auc_ratio_lower": {"type": "number", "exclusiveMinimum": 0},
+              "cohort_90_ci_geometric_mean_auc_ratio_upper": {"type": "number", "exclusiveMinimum": 0},
+              "peak_time_error_rule": {"$ref": "#/$defs/text"}
+            }
+          },
+          "minimum_complete_participants": {"const": 60},
+          "status": {"const": "frozen-before-outcomes"}
+        }
+      }
+    },
+    "statistics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["participant_first", "frame_weighting", "nrmse", "auc", "cohort_interval", "bootstrap_replicates", "bootstrap_seed", "missingness", "subgroups", "multiplicity"],
+      "properties": {
+        "participant_first": {"const": true},
+        "frame_weighting": {"const": "source-frame-duration"},
+        "nrmse": {"$ref": "#/$defs/text"},
+        "auc": {"$ref": "#/$defs/text"},
+        "cohort_interval": {"const": "two-sided-90-percent-percentile-bootstrap"},
+        "bootstrap_replicates": {"const": 10000},
+        "bootstrap_seed": {"const": 18042026},
+        "missingness": {"$ref": "#/$defs/text"},
+        "subgroups": {"$ref": "#/$defs/text"},
+        "multiplicity": {"$ref": "#/$defs/text"}
+      }
+    },
+    "uncertainty_policy": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["class", "required_treatment", "blocked_inference"],
+        "properties": {
+          "class": {"enum": ["numerical", "input-function", "pet-reconstruction", "segmentation-partial-volume", "parameter", "structural", "cohort"]},
+          "required_treatment": {"$ref": "#/$defs/text"},
+          "blocked_inference": {"$ref": "#/$defs/text"}
+        }
+      }
+    },
+    "failure_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pass", "fail", "partial", "blocked", "amendment"],
+      "properties": {
+        "pass": {"$ref": "#/$defs/text"},
+        "fail": {"$ref": "#/$defs/text"},
+        "partial": {"$ref": "#/$defs/text"},
+        "blocked": {"$ref": "#/$defs/text"},
+        "amendment": {"$ref": "#/$defs/text"}
+      }
+    },
+    "negative_controls": {
+      "type": "array",
+      "minItems": 14,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/text"}
+    },
+    "allowed_claim": {"$ref": "#/$defs/text"},
+    "forbidden_claims": {"$ref": "#/$defs/text_array"},
+    "next_increment": {"const": "MRSQ-1.3 rights-aware selective FDG-PET data ingress"}
+  },
+  "$defs": {
+    "text": {"type": "string", "minLength": 1},
+    "text_array": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/text"}},
+    "frozen_local_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/text"},
+        "sha256": {"pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "external_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "locator", "version", "role", "rights", "access"],
+      "properties": {
+        "id": {"$ref": "#/$defs/text"},
+        "locator": {"$ref": "#/$defs/text"},
+        "version": {"$ref": "#/$defs/text"},
+        "role": {"$ref": "#/$defs/text"},
+        "rights": {"$ref": "#/$defs/text"},
+        "access": {"$ref": "#/$defs/text"}
+      }
+    },
+    "remote_asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "size_bytes", "git_blob_id", "content_sha256", "role", "participant_level", "ingress_state"],
+      "properties": {
+        "path": {"$ref": "#/$defs/text"},
+        "size_bytes": {"type": "integer", "minimum": 1},
+        "git_blob_id": {"pattern": "^[0-9a-f]{40}$"},
+        "content_sha256": {"enum": ["required-after-authorized-download-before-first-parse"]},
+        "role": {"$ref": "#/$defs/text"},
+        "participant_level": {"type": "boolean"},
+        "ingress_state": {"enum": ["metadata-only-download-permitted", "blocked-until-MRSQ-1.3"]}
+      }
+    }
+  }
+}

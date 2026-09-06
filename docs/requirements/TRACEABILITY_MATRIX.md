@@ -199,6 +199,7 @@ four accepted milestone statements.
 | SCN-004 | DISS pp. 153–154 | SPEC | UNVERIFIED | Phase 8 | complete multilayer capstone |
 | SCN-005 | MEH25 pp. 1–2 | LEGACY | UNVERIFIED | Phase 8 | CAR-T benchmark and model comparison |
 | SCN-006 | DISS pp. 140–143 | SPEC | UNVERIFIED | M8 | incrementally personalized research twin |
+| SCN-007 | RM 6.4, item 27 | DONE | PART | MRSQ-1 | MRSQ-1.1 through MRSQ-1.7 computational path complete: prospective selection/protocol, synthetic-qualified manifest-first ingress, typed source-disjoint FDG/PET candidate, immutable code/parameter/reference archive, cohort evaluator and independent machine close-out pass; HedyPET participant ingress and all five external cohort endpoints remain blocked by governance, content hashes and missing authoritative frame durations, and external human review is absent |
 | QUA-001 | RM M1 | DONE | VERIFIED | M1 | green MSVC/GCC/Clang CI matrix |
 | QUA-002 | RM M1 | DONE | VERIFIED | M1 | clang-tidy, ASan/UBSan, and warnings as errors in CI |
 | QUA-003 | MEH25 pp. 1–2 | DONE | PART | continuous | the frozen full RQ4 campaign now retains 112/112 completed attempts, exact cross-policy state/RNG/population invariants, bounded outputs, resource summaries, raw artifacts, and a rejected setup deviation; cross-platform replication and optimization-regression history remain open |

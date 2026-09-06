@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/medical-reference-scenario-candidate-register/1.0.0.schema.json",
+  "title": "MEHLISSA MRSQ-1.1 medical reference scenario candidate register",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "screen", "criteria", "candidates", "programme", "decision"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "screen": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "program", "version", "performed_date", "status", "question",
+        "selection_boundary", "raw_participant_data_accessed", "candidate_validation_outcomes_inspected",
+        "clinical_use", "participant_specific_model"
+      ],
+      "properties": {
+        "id": {"const": "MRSQ-1.1"},
+        "program": {"const": "MRSQ-1 Medical Reference Scenario Qualification"},
+        "version": {"const": "1.0.0"},
+        "performed_date": {"type": "string", "format": "date"},
+        "status": {"const": "scenario-family-selected-before-data-ingress-or-outcome-analysis"},
+        "question": {"$ref": "#/$defs/nonempty_string"},
+        "selection_boundary": {"$ref": "#/$defs/nonempty_string"},
+        "raw_participant_data_accessed": {"const": false},
+        "candidate_validation_outcomes_inspected": {"const": false},
+        "clinical_use": {"const": false},
+        "participant_specific_model": {"const": false}
+      }
+    },
+    "criteria": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description"],
+        "properties": {
+          "id": {
+            "enum": [
+              "injection-to-measurement-path", "external-observability",
+              "time-resolved-numeric-data", "measurement-definition",
+              "access-readiness", "reuse-rights", "source-separation",
+              "current-platform-reuse", "bounded-extension"
+            ]
+          },
+          "description": {"$ref": "#/$defs/nonempty_string"}
+        }
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {"$ref": "#/$defs/candidate"}
+    },
+    "programme": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "full_name", "increments", "exit_claim"],
+      "properties": {
+        "id": {"const": "MRSQ-1"},
+        "full_name": {"const": "Medical Reference Scenario Qualification"},
+        "increments": {
+          "type": "array",
+          "minItems": 7,
+          "maxItems": 7,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "title", "status", "exit"],
+            "properties": {
+              "id": {"pattern": "^MRSQ-1\\.[1-7]$"},
+              "title": {"$ref": "#/$defs/nonempty_string"},
+              "status": {"enum": ["complete", "next", "planned", "externally-blocked"]},
+              "exit": {"$ref": "#/$defs/nonempty_string"}
+            }
+          }
+        },
+        "exit_claim": {"$ref": "#/$defs/nonempty_string"}
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selected_candidate_id", "selected_scenario", "selection_reason",
+        "authorized_next", "not_authorized", "access_decision", "governance_boundary",
+        "allowed_current_claim", "next_increment"
+      ],
+      "properties": {
+        "selected_candidate_id": {"const": "MRSQ-SCN-001"},
+        "selected_scenario": {"$ref": "#/$defs/nonempty_string"},
+        "selection_reason": {"$ref": "#/$defs/nonempty_string"},
+        "authorized_next": {"$ref": "#/$defs/nonempty_strings"},
+        "not_authorized": {"$ref": "#/$defs/nonempty_strings"},
+        "access_decision": {"enum": ["metadata-qualified-data-ingress-not-yet-authorized"]},
+        "governance_boundary": {"$ref": "#/$defs/nonempty_string"},
+        "allowed_current_claim": {"$ref": "#/$defs/nonempty_string"},
+        "next_increment": {"const": "MRSQ-1.2 prospective intended-use, access, source-role, observation-model, and acceptance protocol"}
+      }
+    }
+  },
+  "$defs": {
+    "nonempty_string": {"type": "string", "minLength": 1},
+    "nonempty_strings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/nonempty_string"}
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "citation", "persistent_locator", "url", "version", "rights", "access", "role"],
+      "properties": {
+        "id": {"pattern": "^MRSQ-SRC-[0-9]{3}$"},
+        "kind": {"enum": ["publication", "dataset", "repository", "local-reference"]},
+        "citation": {"$ref": "#/$defs/nonempty_string"},
+        "persistent_locator": {"$ref": "#/$defs/nonempty_string"},
+        "url": {"type": "string", "format": "uri"},
+        "version": {"$ref": "#/$defs/nonempty_string"},
+        "rights": {"$ref": "#/$defs/nonempty_string"},
+        "access": {"$ref": "#/$defs/nonempty_string"},
+        "role": {"$ref": "#/$defs/nonempty_string"}
+      }
+    },
+    "scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "injection-to-measurement-path", "external-observability",
+        "time-resolved-numeric-data", "measurement-definition",
+        "access-readiness", "reuse-rights", "source-separation",
+        "current-platform-reuse", "bounded-extension"
+      ],
+      "properties": {
+        "injection-to-measurement-path": {"type": "integer", "minimum": 0, "maximum": 3},
+        "external-observability": {"type": "integer", "minimum": 0, "maximum": 3},
+        "time-resolved-numeric-data": {"type": "integer", "minimum": 0, "maximum": 3},
+        "measurement-definition": {"type": "integer", "minimum": 0, "maximum": 3},
+        "access-readiness": {"type": "integer", "minimum": 0, "maximum": 3},
+        "reuse-rights": {"type": "integer", "minimum": 0, "maximum": 3},
+        "source-separation": {"type": "integer", "minimum": 0, "maximum": 3},
+        "current-platform-reuse": {"type": "integer", "minimum": 0, "maximum": 3},
+        "bounded-extension": {"type": "integer", "minimum": 0, "maximum": 3}
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "rank", "disposition", "name", "scenario", "population",
+        "intervention", "measurement", "numeric_assets", "sources", "data_granularity",
+        "data_access", "rights_status", "source_role", "reusable_mehlissa_layers",
+        "nonreusable_mehlissa_layers", "eligibility", "scores", "total_score",
+        "strengths", "limitations", "next_action"
+      ],
+      "properties": {
+        "id": {"pattern": "^MRSQ-SCN-[0-9]{3}$"},
+        "rank": {"type": "integer", "minimum": 1, "maximum": 5},
+        "disposition": {
+          "enum": [
+            "selected-for-prospective-protocol",
+            "pulmonary-imaging-fallback",
+            "hemodynamic-endpoint-comparator",
+            "non-injection-measurement-resource",
+            "internal-software-demonstrator-only"
+          ]
+        },
+        "name": {"$ref": "#/$defs/nonempty_string"},
+        "scenario": {"$ref": "#/$defs/nonempty_string"},
+        "population": {"$ref": "#/$defs/nonempty_string"},
+        "intervention": {"$ref": "#/$defs/nonempty_string"},
+        "measurement": {"$ref": "#/$defs/nonempty_string"},
+        "numeric_assets": {"$ref": "#/$defs/nonempty_strings"},
+        "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+        "data_granularity": {"$ref": "#/$defs/nonempty_string"},
+        "data_access": {"enum": ["public-metadata-direct-data-route-needs-freeze", "article-and-supplement-only", "public-direct", "local", "blocked"]},
+        "rights_status": {"enum": ["CC-BY-4.0", "ODC-BY-1.0", "NOASSERTION", "mixed"]},
+        "source_role": {"$ref": "#/$defs/nonempty_string"},
+        "reusable_mehlissa_layers": {"$ref": "#/$defs/nonempty_strings"},
+        "nonreusable_mehlissa_layers": {"$ref": "#/$defs/nonempty_strings"},
+        "eligibility": {"enum": ["eligible-after-protocol-and-ingress-freeze", "fallback-needs-data-request", "endpoint-only", "ineligible-no-injection", "ineligible-no-external-observation"]},
+        "scores": {"$ref": "#/$defs/scores"},
+        "total_score": {"type": "integer", "minimum": 0, "maximum": 27},
+        "strengths": {"$ref": "#/$defs/nonempty_strings"},
+        "limitations": {"$ref": "#/$defs/nonempty_strings"},
+        "next_action": {"$ref": "#/$defs/nonempty_string"}
+      }
+    }
+  }
+}

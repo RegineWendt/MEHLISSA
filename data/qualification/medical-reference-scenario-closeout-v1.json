@@ -1,0 +1,34 @@
+{
+  "schema_version":"1.0.0",
+  "review":{"id":"MRSQ-1.7","date":"2026-09-06","participant_files_opened":false,"validation_outcomes_inspected":false,"machine_reviewer":"scripts/check_medical_reference_scenario_closeout.py","external_human_reviewer":"not-yet-appointed","overall_status":"PARTIAL-at-evidence-boundary"},
+  "increments":[
+    {"id":"MRSQ-1.1","computational_status":"PASS","evidence_status":"prospective-source-selection","reason":"Five scenario candidates and source identities are frozen before outcomes."},
+    {"id":"MRSQ-1.2","computational_status":"PASS","evidence_status":"prospective-protocol","reason":"Cohort endpoints, gates, source separation and no-refit rules are frozen."},
+    {"id":"MRSQ-1.3","computational_status":"PASS","evidence_status":"synthetic-only-measured-BLOCKED","reason":"Manifest-first adapter and twelve negative controls pass; governance, quarantine hashes and exact frame durations block measured ingress."},
+    {"id":"MRSQ-1.4","computational_status":"PASS","evidence_status":"source-disjoint-construction","reason":"Typed injection, vascular, organ, renal, decay and PET-frame modules execute without HedyPET outcomes."},
+    {"id":"MRSQ-1.5","computational_status":"PASS","evidence_status":"candidate-frozen","reason":"Parameters, assumptions, code hashes, uncertainty classes, reference output, replay and convergence controls are immutable."},
+    {"id":"MRSQ-1.6","computational_status":"PASS","evidence_status":"external-cohort-evaluation-BLOCKED","reason":"Participant-first metrics and deterministic bootstrap are qualified on arbitrary synthetic inputs; no external observation was opened or evaluated."},
+    {"id":"MRSQ-1.7","computational_status":"PASS","evidence_status":"external-human-review-BLOCKED","reason":"Independent machine close-out covers licence, archive, claim and documentation; a genuinely external human reviewer has not attested it."}
+  ],
+  "software_evidence": {
+    "assets": [
+      {"role":"ingress-adapter","path":"scripts/check_medical_reference_scenario_data_ingress.py","sha256":"ae322fbbbc84f3a408312ee69e54a60dc5cfe6e2fc2a0200314bcfd98eb65158"},
+      {"role":"ingress-negative-controls","path":"tests/test_medical_reference_scenario_data_ingress.py","sha256":"c00561f19ef23cf273e6513192192ac11c4b1caa3c27090d0a97ff00165f6c83"},
+      {"role":"cohort-evaluator","path":"scripts/mrsq_cohort_evaluator.py","sha256":"4a36a59938b485eca775ab31da0f1299ab15a6ba346cdf1e15cb588eba558a79"},
+      {"role":"cohort-evaluator-controls","path":"tests/test_mrsq_cohort_evaluator.py","sha256":"10ba218fe8dc0a78911057d5ae5c8f6f485633a8d5797fd011a7a90ae2c8370e"},
+      {"role":"candidate-controls","path":"tests/fdg_pet_model_tests.cpp","sha256":"9f71e7dd572922e2d2a64e517166d6fafdbb5112f95c5b4ae07efef0a4ee50bc"}
+    ],
+    "cohort_contract":{"participant_first":true,"nrmse_denominator":"participant maximum absolute observation","auc":"trapezoidal over identical accepted frame midpoints","interval":"two-sided 90-percent percentile bootstrap","replicates":10000,"seed":18042026,"minimum_complete_for_pass":60,"minimum_complete_for_partial":20},
+    "endpoint_limits":[
+      {"id":"MRSQ-P1","nrmse":0.25,"auc_lower":0.75,"auc_upper":1.25,"peak_gate":true},
+      {"id":"MRSQ-P2","nrmse":0.30,"auc_lower":0.70,"auc_upper":1.30,"peak_gate":false},
+      {"id":"MRSQ-P3","nrmse":0.30,"auc_lower":0.70,"auc_upper":1.30,"peak_gate":false},
+      {"id":"MRSQ-P4","nrmse":0.35,"auc_lower":0.65,"auc_upper":1.35,"peak_gate":false},
+      {"id":"MRSQ-P5","nrmse":0.40,"auc_lower":0.60,"auc_upper":1.40,"peak_gate":false}
+    ]
+  },
+  "gates":{"software_path":"PASS","synthetic_ingress":"PASS","candidate_freeze":"PASS","evaluation_implementation":"PASS","measured_ingress":"BLOCKED","five_primary_cohort_endpoints":"BLOCKED","external_human_review":"BLOCKED"},
+  "blockers":["local institutional determination and quarantine/retention approval","authorized participant-asset content hashes","authoritative exact PET frame durations compatible with prospective integration","execution of all five frozen cohort endpoints on at least 60 complete participants","external scientific and archive attestation"],
+  "allowed_claim":"MRSQ-1 is computationally complete through a frozen, source-disjoint FDG/PET candidate and a synthetic-qualified evaluation path; external healthy-adult cohort agreement has not been tested and no physiological, individual, diagnostic or clinical validation is claimed.",
+  "next_action":"Obtain an authoritative frame-duration mapping and local data-governance release, then create a prospective MRSQ-1.3 amendment with exact participant-file SHA-256 values before the first HedyPET CSV is opened."
+}

@@ -1016,6 +1016,60 @@ Do not commit identifiable patient data to this repository. Processing such
 data requires the documented governance and data-protection work of Gate M8 in
 addition to appropriate institutional approval.
 
+### 10.4 Computationally implemented first medical reference scenario
+
+MRSQ-1.1 (Medical Reference Scenario Qualification) selects a healthy-adult
+dynamic total-body [18F]FDG PET experiment as the first data-oriented
+injection-to-measurement architecture test. Existing body, organ, capillary,
+scenario, provenance, reporting, campaign, and Workbench contracts remain
+authoritative. The MRSQ package does not relabel VEGF, CD95 or FP9 mechanisms.
+
+MRSQ-1.2 now freezes the semantic boundary before API design: a closed-loop
+administration-to-PET track, a separately labelled measured-input diagnostic
+track, and a measurement-integrity track; frame-averaged arterial, organ-TAC,
+bladder-amount, and secondary Patlak observation models; and predeclared lung,
+liver, bilateral-kidney, and bladder regions. The primary path must predict the
+arterial input plus organ observations; injecting the measured input curve is a
+diagnostic path and cannot qualify the complete scenario.
+
+MRSQ-1.3 provides a fail-closed data-boundary adapter. It consumes a manifest
+before any CSV, verifies policy/protocol/source identities, requires synthetic
+release or an outside-Git quarantine decision, checks exact size/SHA-256 before
+parse, rejects direct-identifier columns, and returns only aggregate counts.
+The policy v1 cannot authorize measured input: governance, content hashes and
+an authoritative exact frame-duration mapping remain blocked.
+
+MRSQ-1.4 exposes the independent `MEHLISSA::fdg_pet_scenario` CMake target and
+the public header
+`scenarios/fdg_pet/include/mehlissa/scenarios/fdg_pet/fdg_pet_model.hpp`:
+
+- `Administration` supplies typed injected activity, body mass and injection
+  duration;
+- `TissueKinetics` and `CandidateParameters` make vascular fraction, volumes,
+  rates, blood kernel, cardiac output, renal excretion and fluorine-18 half-life
+  replaceable without tracer-specific changes in the simulation kernel;
+- `DecayReference` makes corrected-versus-uncorrected observation semantics
+  explicit;
+- `Frame` and `FramePrediction` define the PET observation boundary; and
+- `source_disjoint_reference_candidate()` plus `simulate()` provide the frozen
+  construction candidate and deterministic requested-frame integration.
+
+Internally, a four-exponential population input is convolved with the injection
+duration and drives reusable two-tissue compartments for lung, liver and kidney.
+Kidney free activity feeds a one-way bladder accumulator. RK4 states remain at
+the injection-time reference; radioactive decay is applied exactly once at the
+observation boundary. A new candidate should construct a separately identified
+parameter set or module and must never mutate the frozen v1 archive.
+
+MRSQ-1.5 binds the API/source/runner hashes and software reference. The
+`mrsq_cohort_evaluator.py` MRSQ-1.6 layer deliberately contains no data-access
+code; it computes participant-first metrics and cohort bootstrap states only.
+MRSQ-1.7 independently checks archive and claims. The library is currently a
+standalone qualification path rather than a main CLI/Workbench scenario. See
+the [MRSQ-1.1 scenario selection](../qualification/MRSQ1_SCENARIO_SELECTION.md),
+[prospective protocol](../qualification/MRSQ1_PROSPECTIVE_PROTOCOL.md), and
+[bounded result](../qualification/MRSQ1_QUALIFICATION_RESULT.md).
+
 ## 11. Execution and output lifecycle
 
 A mature declarative run is intended to follow this sequence:

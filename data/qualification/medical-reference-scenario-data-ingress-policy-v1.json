@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "policy": {
+    "id": "MRSQ-1.3", "program": "MRSQ-1", "version": "1.0.0", "created_date": "2026-09-06",
+    "status": "synthetic-ingress-qualified-measured-ingress-blocked",
+    "parent_protocol": {"path": "data/qualification/medical-reference-scenario-protocol-v1.json", "sha256": "ad4b1964bd36e97b0de3644d93f0fda7b8d7b90567d955d1480dca3104253225"},
+    "participant_files_opened": false, "validation_outcomes_inspected": false, "clinical_use": false
+  },
+  "source_contract": {
+    "provider": "Hugging Face", "repository_id": "DEPICT-RH/Multimodal-HC", "revision": "b6daf89015481bdc20a238866df730f90274157d",
+    "participant_assets": [
+      {"role":"administration","path":"train/derivatives/readouts/metadata.csv","size_bytes":14682,"git_blob_id":"ccb10f855f5bf81c86463955a2087404e6c52f4c","content_sha256":"pending-authorized-download-before-parse","access_state":"blocked"},
+      {"role":"aortic_input","path":"train/derivatives/readouts/input_functions.csv","size_bytes":6517065,"git_blob_id":"4c9d833768c9bff036e6c1bfe8de2f93f533f664","content_sha256":"pending-authorized-download-before-parse","access_state":"blocked"},
+      {"role":"organ_tac","path":"train/derivatives/readouts/tacs.csv","size_bytes":239084285,"git_blob_id":"7cfeae7e85657fcfcda060408a2e49db6be1c94e","content_sha256":"pending-authorized-download-before-parse","access_state":"blocked"},
+      {"role":"region_volume","path":"train/derivatives/readouts/volumes.csv","size_bytes":4078118,"git_blob_id":"c462868c114ce81e1aa62d0c28bfadba8286f548","content_sha256":"pending-authorized-download-before-parse","access_state":"blocked"}
+    ],
+    "metadata_columns": ["Subject","Injected Activity [MBq]","Weight [kg]"],
+    "curve_columns": ["Subject","Task","Label Index","Label Name","Erosion Iterations","Frame Index","Frame Time Middle [s]","PET Mean [Bq/mL]","PET STD [Bq/mL]"],
+    "volume_columns": ["Subject","Task","Label Index","Label Name","Erosion Iterations","Volume [mL]"],
+    "aortic_selector": {"task_prefix":"aortavois","label_name":"aorta","erosion_iterations":0},
+    "region_components": {
+      "MRSQ-ROI-LUNG":["lung_upper_lobe_left","lung_lower_lobe_left","lung_upper_lobe_right","lung_middle_lobe_right","lung_lower_lobe_right"],
+      "MRSQ-ROI-LIVER":["liver"], "MRSQ-ROI-KIDNEY":["kidney_left","kidney_right"], "MRSQ-ROI-BLADDER":["urinary_bladder"]
+    },
+    "frame_duration_state": "BLOCKED-combined-readouts-publish-midpoints-without-duration"
+  },
+  "ingress_boundary": {
+    "manifest_first": true, "authorization_before_file_open": true, "measured_data_repository_policy":"forbidden",
+    "quarantine_policy":"explicit-absolute-existing-root-outside-repository",
+    "direct_identifier_fields":["name","first_name","last_name","given_name","family_name","email","telephone","phone","address","street","postcode","postal_code","date_of_birth","birth_date","medical_record_number"],
+    "output_policy":"aggregate-metadata-only-no-source-pseudonym-or-raw-value",
+    "opaque_linkage":"run-scoped-sha256-with-private-manifest-salt", "required_decay_reference":"injection_time_decay_corrected"
+  },
+  "readiness_gates": [
+    {"id":"protocol-identity","status":"PASS","reason":"The frozen MRSQ-1.2 path and raw-byte SHA-256 are exact."},
+    {"id":"synthetic-adapter-negative-controls","status":"PASS","reason":"Four arbitrary CSV families and fail-closed controls are executable without participant data."},
+    {"id":"public-source-identity","status":"PASS","reason":"Public licence metadata, revision, paths, sizes and Git blob identities are frozen."},
+    {"id":"local-institutional-determination","status":"BLOCKED","reason":"A responsible local role has not recorded an approved determination for participant-level reuse."},
+    {"id":"quarantine-retention-access","status":"BLOCKED","reason":"No approved outside-repository quarantine root and retention/access record exists."},
+    {"id":"download-content-sha256","status":"BLOCKED","reason":"Participant assets have deliberately not been downloaded; their raw-byte hashes are unavailable."},
+    {"id":"exact-frame-duration-authority","status":"BLOCKED","reason":"The selected combined curve tables expose frame midpoints but no exact frame durations required by the frozen frame-integration rule."},
+    {"id":"measured-ingress-release","status":"BLOCKED","reason":"Measured release remains false until all preceding gates pass through a prospective amendment."}
+  ],
+  "synthetic_qualification": {"fixture_manifest":"tests/data/mrsq1-ingress/synthetic.manifest.json","families":["administration","aortic_input","organ_tac","region_volume"],"measured_evidence":false,"physiological_evidence":false,"negative_controls":12},
+  "decision": {
+    "synthetic_ingress":"PASS", "measured_ingress":"BLOCKED",
+    "blockers":["locally approved governance/quarantine/retention record is absent","authorized content SHA-256 values are absent","authoritative exact frame durations are absent from the selected readout tables"],
+    "next_increment":"MRSQ-1.4 executable source-disjoint FDG/PET candidate",
+    "allowed_claim":"The manifest-first adapter and failure boundaries are qualified only on arbitrary synthetic data; no participant file, validation outcome, or physiological agreement has been inspected."
+  }
+}

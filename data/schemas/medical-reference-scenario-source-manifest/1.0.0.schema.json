@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/medical-reference-scenario-source-manifest/1.0.0.schema.json",
+  "title": "MEHLISSA MRSQ-1 source manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "manifest", "protocol", "source", "governance", "content", "semantics"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "run_id", "evidence_status", "created_date", "run_linkage_salt"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "run_id": {"type": "string", "pattern": "^[A-Za-z0-9._-]+$"},
+        "evidence_status": {"enum": ["synthetic_test_only", "measured_validation"]},
+        "created_date": {"type": "string", "format": "date"},
+        "run_linkage_salt": {"type": "string", "minLength": 32}
+      }
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "data_revision"],
+      "properties": {
+        "path": {"const": "data/qualification/medical-reference-scenario-protocol-v1.json"},
+        "sha256": {"pattern": "^[0-9a-f]{64}$"},
+        "data_revision": {"pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "repository_id", "licence", "attribution", "raw_redistribution"],
+      "properties": {
+        "provider": {"enum": ["synthetic", "Hugging Face"]},
+        "repository_id": {"type": "string", "minLength": 1},
+        "licence": {"type": "string", "minLength": 1},
+        "attribution": {"type": "string", "minLength": 1},
+        "raw_redistribution": {"enum": ["synthetic-fixture-only", "prohibited"]}
+      }
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["local_determination", "determination_reference", "responsible_role", "purpose", "access_roles", "retention_start", "review_date", "deletion_trigger", "quarantine_required", "release_to_adapter"],
+      "properties": {
+        "local_determination": {"enum": ["not-applicable-synthetic", "approved-for-open-deidentified-research-reuse", "pending"]},
+        "determination_reference": {"type": "string", "minLength": 1},
+        "responsible_role": {"type": "string", "minLength": 1},
+        "purpose": {"type": "string", "minLength": 1},
+        "access_roles": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "retention_start": {"type": "string", "format": "date"},
+        "review_date": {"type": "string", "format": "date"},
+        "deletion_trigger": {"type": "string", "minLength": 1},
+        "quarantine_required": {"type": "boolean"},
+        "release_to_adapter": {"type": "boolean"}
+      }
+    },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assets"],
+      "properties": {
+        "assets": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"$ref": "#/$defs/asset"}}
+      }
+    },
+    "semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decay_reference", "whole_blood", "frame_duration_authority", "aortic_task_prefix", "aortic_label", "primary_erosion_iterations", "region_components"],
+      "properties": {
+        "decay_reference": {"enum": ["injection_time_decay_corrected", "scan_time_not_decay_corrected"]},
+        "whole_blood": {"const": true},
+        "frame_duration_authority": {"type": "string", "minLength": 1},
+        "aortic_task_prefix": {"const": "aortavois"},
+        "aortic_label": {"const": "aorta"},
+        "primary_erosion_iterations": {"const": 0},
+        "region_components": {"type": "object", "minProperties": 4, "additionalProperties": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}}
+      }
+    }
+  },
+  "$defs": {
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "protocol_path", "file_name", "size_bytes", "sha256"],
+      "properties": {
+        "role": {"enum": ["administration", "aortic_input", "organ_tac", "region_volume"]},
+        "protocol_path": {"type": "string", "minLength": 1},
+        "file_name": {"type": "string", "minLength": 1},
+        "size_bytes": {"type": "integer", "minimum": 1},
+        "sha256": {"pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}
