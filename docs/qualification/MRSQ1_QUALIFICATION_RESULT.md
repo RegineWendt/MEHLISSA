@@ -15,6 +15,10 @@ administration through a vascular input, lung/liver/kidney exchange and trapping
 renal transfer, fluorine-18 decay convention, and dynamic PET-frame observation.
 The implementation, its parameters, assumptions, code hashes and an eight-frame
 software reference are frozen before any HedyPET participant outcome was opened.
+The machine-readable freeze also retains one pre-outcome portability-maintenance
+record: an unused, never-called local helper was removed after strict GCC and
+Apple Clang diagnostics, and the source was re-hashed without changing equations,
+parameters, numerical integration, reference output, or claims.
 
 This is a computational qualification result, not a physiological validation.
 The HedyPET comparison has deliberately not run because the measured-data
