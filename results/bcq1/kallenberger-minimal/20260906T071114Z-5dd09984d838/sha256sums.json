@@ -118,27 +118,27 @@
     },
     {
       "path": "trajectories/BIOMD0000000523-primary.csv",
-      "sha256": "0d41758184158d65636c849cf65f24a7de16a8b114d01b69fb68e556aa3a5249"
+      "sha256": "c7b19861d22b9de70398e2acc440f94c4c682bf23372a1b79fd4e7571febc7f9"
     },
     {
       "path": "trajectories/BIOMD0000000523-replay.csv",
-      "sha256": "bb1f07543a13f826bb2a179b5ab759df5a07ff465c0ecf68d0c6ee803523861b"
+      "sha256": "aa0228bd94581e434362d425cf74c1f92260e59bea7781b779d40364d6700cbf"
     },
     {
       "path": "trajectories/BIOMD0000000523-tightened.csv",
-      "sha256": "8433f32b04f70e11cadfec95470b322707d32b7087b2ff0a6deb4b8856ee494a"
+      "sha256": "1276fc812f6a258460a083b2981ea19eef2a2cd03114a8caa5170ce04200245a"
     },
     {
       "path": "trajectories/BIOMD0000000524-primary.csv",
-      "sha256": "b2ad6a5ce467121b1853469d50a5b46c065e6041404e63b79432b05b7a9e7530"
+      "sha256": "6d8d249edf110aea6dc8cfc79d091a0c2f9e4e83eadcc1e4b8ebffa361da8107"
     },
     {
       "path": "trajectories/BIOMD0000000524-replay.csv",
-      "sha256": "eb913cea3e7af838d07ffeb95b48bd3654cc68f8a436e12d7236b0422e8851f5"
+      "sha256": "11ce3b44d6bee37a3256fa335ab8f0558089cf50d3a325a0e35c77fdd349ea15"
     },
     {
       "path": "trajectories/BIOMD0000000524-tightened.csv",
-      "sha256": "91c741e824963f96acd3deb6b091202955c7a2fc6db2c52ca69b4c75346063d5"
+      "sha256": "45d5058b5fabbb3a2dd1a27dec3f90dd5076391dad672ac36e1df46e6b7e0155"
     },
     {
       "path": "validation-report.json",
@@ -149,6 +149,7 @@
       "sha256": "0400b2ec947e42c68fc8f1ace76e05f5c0aaf51a9c7d90f83b79224ed15a8c41"
     }
   ],
+  "hash_policy": "SHA-256 over Git-canonical LF bytes for text artifacts; binary bytes unchanged",
   "run_id": "20260906T071114Z-5dd09984d838",
   "schema_version": "1.0.0"
 }

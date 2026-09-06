@@ -36,6 +36,7 @@ SPECIES_ORDER = [
     "p18inactive", "Bid", "tBid", "PrNES_mCherry", "PrNES", "mCherry",
     "PrER_mGFP", "PrER", "mGFP", "CD95L",
 ]
+ARCHIVE_TEXT_SUFFIXES = {".csv", ".json", ".md", ".txt"}
 
 
 class ReproductionError(ValueError):
@@ -48,6 +49,13 @@ def sha256(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def archive_sha256(path: Path) -> str:
+    data = path.read_bytes()
+    if path.suffix.lower() in ARCHIVE_TEXT_SUFFIXES:
+        data = data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(data).hexdigest()
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -733,10 +741,15 @@ realism, patient prediction, or clinical evidence. M5 therefore remains
     hash_entries = []
     for path in sorted(run_dir.rglob("*")):
         if path.is_file() and path.name != "sha256sums.json":
-            hash_entries.append({"path": path.relative_to(run_dir).as_posix(), "sha256": sha256(path)})
+            hash_entries.append({"path": path.relative_to(run_dir).as_posix(), "sha256": archive_sha256(path)})
     write_json(
         run_dir / "sha256sums.json",
-        {"schema_version": "1.0.0", "run_id": run_id, "files": hash_entries},
+        {
+            "schema_version": "1.0.0",
+            "run_id": run_id,
+            "hash_policy": "SHA-256 over Git-canonical LF bytes for text artifacts; binary bytes unchanged",
+            "files": hash_entries,
+        },
     )
     return run_dir
 

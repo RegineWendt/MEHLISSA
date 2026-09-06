@@ -26,6 +26,8 @@ SPECIES = [
     "p18inactive", "Bid", "tBid", "PrNES_mCherry", "PrNES", "mCherry",
     "PrER_mGFP", "PrER", "mGFP", "CD95L",
 ]
+ARCHIVE_TEXT_SUFFIXES = {".csv", ".json", ".md", ".txt"}
+ARCHIVE_HASH_POLICY = "SHA-256 over Git-canonical LF bytes for text artifacts; binary bytes unchanged"
 EXPECTED_GATES = [
     "source_identity", "import_structure", "complete_output", "initial_state",
     "deterministic_replay", "numerical_convergence", "conservation",
@@ -48,6 +50,13 @@ def sha256(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def archive_sha256(path: Path) -> str:
+    data = path.read_bytes()
+    if path.suffix.lower() in ARCHIVE_TEXT_SUFFIXES:
+        data = data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(data).hexdigest()
 
 
 def repository_path(root: Path, relative: str, errors: list[str]) -> Path | None:
@@ -139,11 +148,15 @@ def errors(document: dict[str, Any], root: Path = ROOT) -> list[str]:
     if manifest_path is None or not manifest_path.is_file():
         result.append("archive checksum manifest is missing")
         return result
-    if sha256(manifest_path) != archive["checksum_manifest"]["sha256"]:
+    if archive["hash_canonicalization"] != ARCHIVE_HASH_POLICY:
+        result.append("archive hash-canonicalization policy changed")
+    if archive_sha256(manifest_path) != archive["checksum_manifest"]["sha256"]:
         result.append("archive checksum-manifest hash changed")
         return result
 
     manifest = load_json(manifest_path)
+    if manifest.get("hash_policy") != ARCHIVE_HASH_POLICY:
+        result.append("checksum manifest lacks the cross-platform hash policy")
     if manifest.get("run_id") != archive["run_id"]:
         result.append("archive run identifier disagrees with checksum manifest")
     entries = manifest.get("files", [])
@@ -159,7 +172,7 @@ def errors(document: dict[str, Any], root: Path = ROOT) -> list[str]:
         result.append("archive file set differs from checksum manifest")
     for entry in entries:
         path = repository_path(archive_dir, entry["path"], result)
-        if path is None or not path.is_file() or sha256(path) != entry["sha256"]:
+        if path is None or not path.is_file() or archive_sha256(path) != entry["sha256"]:
             result.append(f"archive file hash changed: {entry['path']}")
 
     required = {
@@ -176,11 +189,11 @@ def errors(document: dict[str, Any], root: Path = ROOT) -> list[str]:
         result.append("archive is missing a required BCQ-1.3 artifact")
     if any(path.lower().endswith((".xml", ".sbml")) for path in actual_files):
         result.append("external SBML source was bundled despite the recorded policy")
-    if sha256(archive_dir / "protocol.json") != lineage["base_protocol"]["sha256"]:
+    if archive_sha256(archive_dir / "protocol.json") != lineage["base_protocol"]["sha256"]:
         result.append("archive protocol.json is not the frozen base protocol")
-    if sha256(archive_dir / "protocol-base-v1.json") != lineage["base_protocol"]["sha256"]:
+    if archive_sha256(archive_dir / "protocol-base-v1.json") != lineage["base_protocol"]["sha256"]:
         result.append("archive base-protocol lineage copy changed")
-    if sha256(archive_dir / "protocol-amendment-v1.1.json") != lineage["prospective_amendment"]["sha256"]:
+    if archive_sha256(archive_dir / "protocol-amendment-v1.1.json") != lineage["prospective_amendment"]["sha256"]:
         result.append("archive amendment lineage copy changed")
 
     solver = load_json(archive_dir / "solver-provenance.json")

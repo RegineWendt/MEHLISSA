@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import copy
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -20,6 +21,21 @@ def row(value: float = 0.0) -> dict[str, float]:
 
 
 class BiologicalCellModelReproductionRunnerTests(unittest.TestCase):
+    def test_archive_hash_normalizes_text_line_endings_only(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            lf_text = root / "lf.csv"
+            crlf_text = root / "crlf.csv"
+            lf_binary = root / "lf.bin"
+            crlf_binary = root / "crlf.bin"
+            lf_text.write_bytes(b"a,b\n1,2\n")
+            crlf_text.write_bytes(b"a,b\r\n1,2\r\n")
+            lf_binary.write_bytes(b"a,b\n1,2\n")
+            crlf_binary.write_bytes(b"a,b\r\n1,2\r\n")
+
+            self.assertEqual(runner.archive_sha256(lf_text), runner.archive_sha256(crlf_text))
+            self.assertNotEqual(runner.archive_sha256(lf_binary), runner.archive_sha256(crlf_binary))
+
     def test_execution_protocol_binds_base_and_amendment(self) -> None:
         _, amendment, base_hash, amendment_hash, identity = runner.load_execution_protocol()
         self.assertEqual(base_hash, amendment["amendment"]["base_protocol"]["sha256"])

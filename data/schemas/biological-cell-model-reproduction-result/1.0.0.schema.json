@@ -36,11 +36,12 @@
     "archive": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["run_id", "path", "checksum_manifest", "external_sbml_bundled", "raw_article_or_participant_data_bundled"],
+      "required": ["run_id", "path", "checksum_manifest", "hash_canonicalization", "external_sbml_bundled", "raw_article_or_participant_data_bundled"],
       "properties": {
         "run_id": {"const": "20260906T071228Z-5dd09984d838"},
         "path": {"const": "results/bcq1/kallenberger-minimal/20260906T071228Z-5dd09984d838"},
         "checksum_manifest": {"$ref": "#/$defs/asset"},
+        "hash_canonicalization": {"const": "SHA-256 over Git-canonical LF bytes for text artifacts; binary bytes unchanged"},
         "external_sbml_bundled": {"const": false},
         "raw_article_or_participant_data_bundled": {"const": false}
       }

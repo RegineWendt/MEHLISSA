@@ -147,6 +147,9 @@ The verifier checks schema, protocol lineage, archive membership and hashes,
 solver/source provenance, every raw CSV grid and initial state, replay and
 convergence limits, conservation, nonnegativity, reporter direction, result
 metrics, negative-control records, attempt retention, and claim boundaries.
+Text-artifact hashes use explicitly recorded Git-canonical LF bytes so the
+same manifest verifies on Windows, Linux, and macOS; binary hashes use the
+unchanged bytes.
 
 ## Claim boundary and next step
 
