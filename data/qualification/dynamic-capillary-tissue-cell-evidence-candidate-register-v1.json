@@ -1,0 +1,492 @@
+{
+  "schema_version": "1.0.0",
+  "screen": {
+    "id": "DCCQ-1.2",
+    "program": "DCCQ-1 Dynamic Capillary-Tissue-Cell Qualification",
+    "version": "1.0.0",
+    "performed_date": "2026-09-06",
+    "status": "target-and-evidence-family-selected-before-equation-freeze",
+    "parent_plan": "data/qualification/dynamic-capillary-tissue-cell-qualification-plan-v1.json",
+    "parent_plan_sha256": "2b8a50677ec3dcdd400e85ad838244299d0b7e4e0aa6c9c98aabbe21e11c1958",
+    "question": "Which named ligand-receptor-cell context provides the strongest auditable first target for a time-resolved, consumptive MEHLISSA capillary-tissue-cell coupling?",
+    "selection_boundary": "Public articles, supporting information, repositories, exact revisions, file hashes, licences, units, and time-resolved observations were screened. No third-party code or data are bundled, no dynamic equations or acceptance limits are selected, no model output has been inspected, and no biological, pulmonary, patient, or clinical qualification is claimed.",
+    "clinical_use": false
+  },
+  "criteria": [
+    {
+      "id": "biological-fit",
+      "description": "The candidate names one ligand, receptor system, primary cellular context, and dynamic trafficking or consumption response."
+    },
+    {
+      "id": "artifact-identity",
+      "description": "The publication, model, code, and data can be identified by persistent locator, immutable revision, or content hash."
+    },
+    {
+      "id": "unit-bridge",
+      "description": "Source amounts, concentrations, volumes, surfaces, times, and rates are explicit enough for a prospective SI conversion."
+    },
+    {
+      "id": "time-resolved-data",
+      "description": "Time-resolved observations exist for the selected ligand-receptor process and their calibration or validation role can be declared."
+    },
+    {
+      "id": "reuse-rights",
+      "description": "Rights for articles, supporting information, data, and executable code are assessed independently rather than inferred from access."
+    },
+    {
+      "id": "source-disjoint-evidence",
+      "description": "A separately authored measurement family can challenge at least one dynamic behavior without refitting."
+    },
+    {
+      "id": "pulmonary-context",
+      "description": "The represented species, cell type, preparation, and physiological state support a pulmonary-capillary interpretation."
+    },
+    {
+      "id": "bounded-integration",
+      "description": "A reduced MEHLISSA-native reference can be specified without importing a complete third-party platform or widening the claim."
+    }
+  ],
+  "candidates": [
+    {
+      "id": "DCCQ-SRC-001",
+      "rank": 1,
+      "decision": "selected-target-and-evidence-family",
+      "name": "Sarabipour 2025 VEGF-A165a-VEGFR2-NRP1 ligand-responsive trafficking in HUVECs",
+      "biology": {
+        "ligand": "human vascular endothelial growth factor A isoform 165a (VEGF-A165a)",
+        "receptors": [
+          "vascular endothelial growth factor receptor 2 (VEGFR2/KDR)",
+          "neuropilin-1 (NRP1) coreceptor"
+        ],
+        "cell_type": "primary human umbilical vein endothelial cells (HUVECs)",
+        "preparation": "confluent serum-starved endothelial cell culture exposed to exogenous ligand",
+        "dynamic_response": "ligand binding, surface loss, internalization into Rab4/5 and Rab11 compartments, recycling, and degradation",
+        "physiological_scope": "human endothelial in vitro mechanism; not lung-specific, in vivo, patient-specific, or clinical"
+      },
+      "publication": {
+        "citation": "Sarabipour S, Kinghorn K, Quigley KM, et al. Impact of ligand binding on VEGFR1, VEGFR2, and NRP1 localization in human endothelial cells. PLOS Computational Biology. 2025;21(7):e1013254.",
+        "doi": "10.1371/journal.pcbi.1013254",
+        "url": "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1013254",
+        "article_and_supporting_information_rights": "CC-BY-4.0 with attribution; the paper states that all manuscript data are in the Supporting Information"
+      },
+      "artifacts": [
+        {
+          "id": "DCCQ-ART-001",
+          "kind": "supporting-information",
+          "role": "model parameters, compartment geometry, binding and trafficking definitions",
+          "locator": "https://doi.org/10.1371/journal.pcbi.1013254.s012",
+          "revision": "publication-version-2025-07-16",
+          "path": "S12 Table and linked S14-S18 tables",
+          "sha256": null,
+          "licence": "CC-BY-4.0",
+          "reuse_decision": "eligible-with-attribution"
+        },
+        {
+          "id": "DCCQ-ART-002",
+          "kind": "source-code",
+          "role": "auditable full BioNetGen reference, not a source to copy",
+          "locator": "https://github.com/SSarabipour/VEGFR-Trafficking-Projects",
+          "revision": "bed7b23b3f6edbed6376e818b6307eccd65ea38e",
+          "path": "Liganded Trafficking 2025/Bionetgen code/All_Lig_Traff_model_Bionetgen_20231016.bngl",
+          "sha256": "2f5b245fdc11791c084b6c4e3cd3d9459c9b4de36f8f8e10a59762a7fa6c0007",
+          "licence": "NOASSERTION",
+          "reuse_decision": "inspection-and-hash-only-no-copy-or-redistribution"
+        },
+        {
+          "id": "DCCQ-ART-003",
+          "kind": "source-code",
+          "role": "auditable generated MATLAB reference, not a source to copy",
+          "locator": "https://github.com/SSarabipour/VEGFR-Trafficking-Projects",
+          "revision": "bed7b23b3f6edbed6376e818b6307eccd65ea38e",
+          "path": "Liganded Trafficking 2025/Matlab codes/All_Lig_Traff_model_Bionetgen_20231016.m",
+          "sha256": "f093433e313aba387d8a52a594bef045b34c1503f227985db5d04d94b47d58fd",
+          "licence": "NOASSERTION",
+          "reuse_decision": "inspection-and-hash-only-no-copy-or-redistribution"
+        },
+        {
+          "id": "DCCQ-ART-004",
+          "kind": "source-data",
+          "role": "repository copy of Figure 2C whole-cell time series; use the CC-BY Supporting Information as the rights-bearing source",
+          "locator": "https://github.com/SSarabipour/VEGFR-Trafficking-Projects",
+          "revision": "bed7b23b3f6edbed6376e818b6307eccd65ea38e",
+          "path": "Liganded Trafficking 2025/R code/Figure 2 data and fig files/Fig2C_data.csv",
+          "sha256": "0b04b0ccb76ee34417405170031894d3e46da4f82937731fc635799b5ab19c47",
+          "licence": "NOASSERTION",
+          "reuse_decision": "do-not-bundle-from-repository-use-cc-by-supporting-information"
+        },
+        {
+          "id": "DCCQ-ART-005",
+          "kind": "source-data",
+          "role": "repository copy of Figure 2G one-hour surface, internal, and total measurements",
+          "locator": "https://github.com/SSarabipour/VEGFR-Trafficking-Projects",
+          "revision": "bed7b23b3f6edbed6376e818b6307eccd65ea38e",
+          "path": "Liganded Trafficking 2025/R code/Figure 2 data and fig files/Fig2G_data.csv",
+          "sha256": "22827653281ca0f9f4795beca4d63c8465334e07cdab8ec182fe497760f9793e",
+          "licence": "NOASSERTION",
+          "reuse_decision": "do-not-bundle-from-repository-use-cc-by-supporting-information"
+        },
+        {
+          "id": "DCCQ-ART-006",
+          "kind": "source-data",
+          "role": "repository copy of Figure 2H four-hour surface, internal, and total measurements",
+          "locator": "https://github.com/SSarabipour/VEGFR-Trafficking-Projects",
+          "revision": "bed7b23b3f6edbed6376e818b6307eccd65ea38e",
+          "path": "Liganded Trafficking 2025/R code/Figure 2 data and fig files/Fig2H_data.csv",
+          "sha256": "d420d264568970f8fe205e8025a20b0319457172fd591bb1b4ae40ff70d52766",
+          "licence": "NOASSERTION",
+          "reuse_decision": "do-not-bundle-from-repository-use-cc-by-supporting-information"
+        }
+      ],
+      "unit_assessment": {
+        "source_amount": "molecules per represented cell",
+        "source_time": "seconds",
+        "source_volume": "femtolitres per represented cell, including 1e7 fL extracellular, 11.25 fL Rab4/5, and 3.75 fL Rab11",
+        "source_surface": "square micrometres per represented cell, including 1000 um2 cell surface, 950 um2 Rab4/5, and 325 um2 Rab11",
+        "source_rates": "first-order rates in s^-1 and association rates adjusted to molecules-per-cell, local volume, or local surface",
+        "stimulus": "50 ng/mL VEGF-A165a is encoded as 6843182 molecules per represented cell for the source extracellular volume",
+        "si_bridge_status": "convertible-but-not-yet-frozen",
+        "required_dccq_1_3_decisions": [
+          "freeze molecule-to-mole conversion using an explicit Avogadro constant",
+          "freeze fL-to-m3 and um2-to-m2 conversions",
+          "freeze the represented cell count and extracellular tissue volume",
+          "freeze the VEGF-A165a molecular-mass and monomer-versus-dimer convention",
+          "derive rather than silently reuse every adjusted association rate"
+        ]
+      },
+      "data_role": "The 2025 HUVEC observations may select the mechanism, calibration values, transformations, and observation model. They cannot validate the resulting candidate because they belong to the same evidence family.",
+      "scores": {
+        "biological-fit": 3,
+        "artifact-identity": 3,
+        "unit-bridge": 3,
+        "time-resolved-data": 3,
+        "reuse-rights": 2,
+        "source-disjoint-evidence": 2,
+        "pulmonary-context": 1,
+        "bounded-integration": 2
+      },
+      "total_score": 19,
+      "strengths": [
+        "Names a human endothelial ligand, receptor, coreceptor, cell preparation, and time-resolved trafficking response.",
+        "The article and Supporting Information are CC-BY-4.0 and provide explicit parameters, compartment geometry, and experimental observations.",
+        "The cited public repository can be pinned to one commit and its relevant files content-hashed.",
+        "Source units are explicit and can be mapped prospectively to the MEHLISSA SI amount ledger."
+      ],
+      "limitations": [
+        "HUVEC culture is not human pulmonary capillary endothelium and does not establish resting lung physiology.",
+        "The full 281-state reference is larger than the first bounded MEHLISSA coupling should be.",
+        "The GitHub repository contains no explicit LICENSE, COPYING, or NOTICE file, so its code and standalone CSV files must not be copied, modified, or redistributed under an assumed licence.",
+        "A condition-matched, source-disjoint HUVEC time series has not yet been frozen for validation."
+      ],
+      "next_action": "DCCQ-1.3 must independently specify a reduced MEHLISSA-native VEGF-A165a-VEGFR2 binding, internalization, recycling, and degradation model from the CC-BY publication record, freeze the SI mapping and observation roles, and retain NRP1 as an explicit included or excluded structural choice before output."
+    },
+    {
+      "id": "DCCQ-SRC-002",
+      "rank": 2,
+      "decision": "mechanistic-structural-alternative",
+      "name": "Clegg and Mac Gabhann 2015 VEGFR2 trafficking and site-specific phosphorylation model",
+      "biology": {
+        "ligand": "soluble or immobilized VEGF",
+        "receptors": [
+          "VEGFR2",
+          "NRP1 coreceptor"
+        ],
+        "cell_type": "HUVEC and porcine aortic endothelial-cell evidence contexts",
+        "preparation": "endothelial monolayer exposed to soluble or matrix-bound ligand",
+        "dynamic_response": "binding, endosomal trafficking, degradation, recycling, and site-specific VEGFR2 phosphorylation",
+        "physiological_scope": "endothelial in vitro mechanism; not lung-specific or patient-specific"
+      },
+      "publication": {
+        "citation": "Clegg LW, Mac Gabhann F. Site-Specific Phosphorylation of VEGFR2 Is Mediated by Receptor Trafficking: Insights from a Computational Model. PLOS Computational Biology. 2015;11(6):e1004158.",
+        "doi": "10.1371/journal.pcbi.1004158",
+        "url": "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004158",
+        "article_and_supporting_information_rights": "CC-BY-4.0 with attribution"
+      },
+      "artifacts": [
+        {
+          "id": "DCCQ-ART-007",
+          "kind": "supporting-information",
+          "role": "complete biochemical and trafficking reaction reference",
+          "locator": "https://doi.org/10.1371/journal.pcbi.1004158",
+          "revision": "publication-version-2015-06-12",
+          "path": "article tables and Supporting Information",
+          "sha256": null,
+          "licence": "CC-BY-4.0",
+          "reuse_decision": "eligible-with-attribution-manual-reconstruction-required"
+        }
+      ],
+      "unit_assessment": {
+        "source_amount": "explicit molecule and concentration definitions by study",
+        "source_time": "explicit published rate units",
+        "source_volume": "extracellular, surface, Rab4/5, Rab11, and degraded compartments",
+        "source_surface": "study-specific geometry is declared",
+        "source_rates": "binding, trafficking, and phosphorylation parameters are tabulated with units",
+        "stimulus": "study-specific soluble or immobilized VEGF",
+        "si_bridge_status": "convertible-but-no-exact-executable-artifact-frozen",
+        "required_dccq_1_3_decisions": [
+          "reconstruct only if the selected 2025 target proves unsuitable",
+          "separate trafficking from phosphorylation to preserve the first bounded scope"
+        ]
+      },
+      "data_role": "Useful structural and mechanistic reference for the reduced equation set; it is not source-disjoint from the selected Mac Gabhann laboratory evidence family.",
+      "scores": {
+        "biological-fit": 3,
+        "artifact-identity": 1,
+        "unit-bridge": 3,
+        "time-resolved-data": 2,
+        "reuse-rights": 3,
+        "source-disjoint-evidence": 1,
+        "pulmonary-context": 1,
+        "bounded-integration": 2
+      },
+      "total_score": 16,
+      "strengths": [
+        "Provides a detailed endothelial VEGFR2 and NRP1 trafficking mechanism with explicit parameter tables.",
+        "The article and Supporting Information are CC-BY-4.0.",
+        "It connects trafficking to receptor phosphorylation and therefore provides a later feedback extension path."
+      ],
+      "limitations": [
+        "No exact licensed executable source artifact was established in this screen.",
+        "The 97-species and phosphorylation-rich model is larger than the minimum dynamic coupling target.",
+        "It shares scientific lineage with the selected source and cannot serve as source-disjoint validation."
+      ],
+      "next_action": "Use as a structural reference in DCCQ-1.3 and as a fallback only if the selected source cannot support a reduced, prospectively specified implementation."
+    },
+    {
+      "id": "DCCQ-SRC-003",
+      "rank": 3,
+      "decision": "licensed-platform-alternative",
+      "name": "Kuehn and Checa 2019 AngioABM VEGFR1-VEGFR2-Dll4-Notch sprouting model",
+      "biology": {
+        "ligand": "VEGF-A",
+        "receptors": [
+          "VEGFR1",
+          "VEGFR2"
+        ],
+        "cell_type": "mouse embryoid-body endothelial sprouting agents",
+        "preparation": "two-dimensional multicellular agent-based sprouting assay",
+        "dynamic_response": "VEGF diffusion and uptake, VEGFR1/VEGFR2 signaling, Dll4-Notch lateral inhibition, migration, and sprouting",
+        "physiological_scope": "developmental mouse sprouting model; not normal human pulmonary capillary physiology"
+      },
+      "publication": {
+        "citation": "Kuehn C, Checa S. Computational Modeling to Quantify the Contributions of VEGFR1, VEGFR2, and Lateral Inhibition in Sprouting Angiogenesis. Frontiers in Physiology. 2019;10:288.",
+        "doi": "10.3389/fphys.2019.00288",
+        "url": "https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2019.00288/full",
+        "article_and_supporting_information_rights": "CC-BY-4.0 with attribution"
+      },
+      "artifacts": [
+        {
+          "id": "DCCQ-ART-008",
+          "kind": "source-code",
+          "role": "AngioABM simulation engine and VEGFR1 study configuration",
+          "locator": "https://github.com/ModularABM/AngioABM",
+          "revision": "d5768332027f3f3bef0e2575c257e05194e7e77f",
+          "path": "annotated tag VEGFR1 (tag object 1f2ad300177e85f5aa4f4f1739e41f636f5cad4d)",
+          "sha256": null,
+          "licence": "Apache-2.0",
+          "reuse_decision": "eligible-with-notice-and-attribution"
+        },
+        {
+          "id": "DCCQ-ART-009",
+          "kind": "source-code",
+          "role": "matching ABMTools analysis utilities",
+          "locator": "https://github.com/ModularABM/ABMTools",
+          "revision": "0b0566aa19557dbbcf7de6a1fd042861b6ae0b05",
+          "path": "annotated tag VEGFR1 (tag object 1dc6aa84d5698cd80ae135441db54a35dcaa04f4)",
+          "sha256": null,
+          "licence": "Apache-2.0",
+          "reuse_decision": "eligible-with-notice-and-attribution"
+        }
+      ],
+      "unit_assessment": {
+        "source_amount": "agent and lattice variables with model-specific scaling",
+        "source_time": "simulation-time mapping is configuration dependent",
+        "source_volume": "two-dimensional lattice rather than the DCCQ amount-volume ledger",
+        "source_surface": "agent-grid geometry",
+        "source_rates": "intracellular and uptake parameters include model-specific factors such as uptake_factor",
+        "stimulus": "spatial VEGF field",
+        "si_bridge_status": "not-directly-compatible",
+        "required_dccq_1_3_decisions": [
+          "do not import the agent platform for the first DCCQ coupling",
+          "use only separately justified reaction concepts if needed"
+        ]
+      },
+      "data_role": "Licensed reproducibility and multicellular angiogenesis alternative; not a source for normal human endothelial or pulmonary-capillary parameterization.",
+      "scores": {
+        "biological-fit": 2,
+        "artifact-identity": 3,
+        "unit-bridge": 1,
+        "time-resolved-data": 1,
+        "reuse-rights": 3,
+        "source-disjoint-evidence": 1,
+        "pulmonary-context": 0,
+        "bounded-integration": 0
+      },
+      "total_score": 11,
+      "strengths": [
+        "Exact immutable VEGFR1 tags now exist for both repositories even though the publication's same-named branches no longer do.",
+        "The code is explicitly Apache-2.0 and combines VEGF uptake with endothelial receptor signaling.",
+        "It provides a later multicellular sprouting benchmark."
+      ],
+      "limitations": [
+        "The biological context is mouse embryoid-body sprouting rather than human pulmonary or quiescent capillary endothelium.",
+        "The platform is a large two-dimensional agent-based model with model-specific units and high integration cost.",
+        "The publication-stated BioModels submission MODEL1804030001 was not established as a currently released public model artifact."
+      ],
+      "next_action": "Retain for a later angiogenesis package; do not use it to define the first DCCQ SI tissue-receptor boundary."
+    },
+    {
+      "id": "DCCQ-SRC-004",
+      "rank": 4,
+      "decision": "cell-solver-regression-only",
+      "name": "Kallenberger 2014 CD95L-CD95 average-cell model already qualified in BCQ-1",
+      "biology": {
+        "ligand": "CD95L",
+        "receptors": [
+          "CD95/Fas"
+        ],
+        "cell_type": "CD95-overexpressing and wild-type HeLa average-cell variants",
+        "preparation": "published cancer-cell apoptosis model",
+        "dynamic_response": "caspase-8 activation and cleavage intermediates",
+        "physiological_scope": "average HeLa cell; not endothelial, pulmonary, or patient-specific"
+      },
+      "publication": {
+        "citation": "Kallenberger SM, Beaudouin J, Claus J, et al. Intra- and Interdimeric Caspase-8 Self-Cleavage Controls Strength and Timing of CD95-Induced Apoptosis. Science Signaling. 2014;7(316):ra23.",
+        "doi": "10.1126/scisignal.2004738",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4208692/",
+        "article_and_supporting_information_rights": "article and experimental-data rights remain separate from the CC0 model artifacts"
+      },
+      "artifacts": [
+        {
+          "id": "DCCQ-ART-010",
+          "kind": "qualified-local-reference",
+          "role": "cell-solver regression and evidence-governance reference only",
+          "locator": "data/qualification/biological-cell-model-qualification-result-v1.json",
+          "revision": "BCQ-1.7",
+          "path": "BIOMD0000000523 and BIOMD0000000524",
+          "sha256": "f71cd44cdd38d173f17d99033b698635702088317b65c7603d8e50e66cdebda7",
+          "licence": "CC0-1.0",
+          "reuse_decision": "eligible-only-within-the-existing-bcq-claim-until-a-new-input-and-unit-protocol"
+        }
+      ],
+      "unit_assessment": {
+        "source_amount": "unresolved-model-native",
+        "source_time": "unresolved-model-native",
+        "source_volume": "not mapped to an SI tissue volume",
+        "source_surface": "not represented",
+        "source_rates": "unresolved-model-native",
+        "stimulus": "adapter-fixed CD95L value 16.6",
+        "si_bridge_status": "blocked",
+        "required_dccq_1_3_decisions": [
+          "do not vary or reinterpret the BCQ input",
+          "retain only as a regression reference"
+        ]
+      },
+      "data_role": "Existing computational regression; not a dynamic endothelial evidence source.",
+      "scores": {
+        "biological-fit": 0,
+        "artifact-identity": 3,
+        "unit-bridge": 0,
+        "time-resolved-data": 2,
+        "reuse-rights": 2,
+        "source-disjoint-evidence": 1,
+        "pulmonary-context": 0,
+        "bounded-integration": 2
+      },
+      "total_score": 10,
+      "strengths": [
+        "Already computationally qualified across COPASI and the MEHLISSA implementation.",
+        "Useful as a regression for solver, provenance, and evidence-governance behavior."
+      ],
+      "limitations": [
+        "Wrong ligand, receptor, and cell context for the endothelial coupling target.",
+        "The fixed source stimulus and unresolved model-native units block a direct SI dynamic boundary.",
+        "The qualified result is an average-cell computational claim, not biological or pulmonary qualification."
+      ],
+      "next_action": "Keep unchanged as a BCQ regression; do not connect it to the DCCQ capillary ledger."
+    }
+  ],
+  "evidence_sources": [
+    {
+      "id": "DCCQ-EVID-001",
+      "citation": "Sarabipour et al. 2025, DOI 10.1371/journal.pcbi.1013254",
+      "source_family": "selected-sarabipour-mac-gabhann-huvec-family",
+      "cell_context": "primary HUVEC",
+      "stimulus_and_schedule": "50 ng/mL VEGF-A165a; 0, 15, 30, 60, 120, and 240 minutes",
+      "observations": "whole-cell VEGFR1, VEGFR2, and NRP1 normalized measurements with replicate-derived variability",
+      "rights": "CC-BY-4.0 Supporting Information",
+      "role": "mechanism-selection-and-calibration",
+      "eligibility": "eligible-not-independent"
+    },
+    {
+      "id": "DCCQ-EVID-002",
+      "citation": "Sarabipour et al. 2025, DOI 10.1371/journal.pcbi.1013254",
+      "source_family": "selected-sarabipour-mac-gabhann-huvec-family",
+      "cell_context": "primary HUVEC",
+      "stimulus_and_schedule": "50 ng/mL VEGF-A165a; one-hour and four-hour endpoints",
+      "observations": "surface, internal, and whole-cell VEGFR1, VEGFR2, and NRP1 normalized measurements",
+      "rights": "CC-BY-4.0 Supporting Information",
+      "role": "within-study-structural-check",
+      "eligibility": "eligible-not-independent"
+    },
+    {
+      "id": "DCCQ-EVID-003",
+      "citation": "Sarabipour et al. 2024, DOI 10.1371/journal.pcbi.1011798",
+      "source_family": "selected-sarabipour-mac-gabhann-huvec-family",
+      "cell_context": "primary HUVEC without exogenous ligand",
+      "stimulus_and_schedule": "baseline localization and cycloheximide turnover experiments",
+      "observations": "surface fractions, receptor abundance context, and unligated VEGFR1, VEGFR2, and NRP1 turnover",
+      "rights": "CC-BY-4.0 article and Supporting Information",
+      "role": "baseline-parameterization-and-context",
+      "eligibility": "eligible-not-independent"
+    },
+    {
+      "id": "DCCQ-EVID-004",
+      "citation": "Peach et al. 2019, DOI 10.1111/bph.14755",
+      "source_family": "nottingham-nanobret-family",
+      "cell_context": "HEK293T cells expressing NanoLuc-tagged VEGFR2",
+      "stimulus_and_schedule": "fluorescent VEGF-A165a, VEGF-A165b, and VEGF-A121a; binding and endocytosis followed for up to 90 minutes",
+      "observations": "time-resolved binding and ligand-associated VEGFR2 endocytosis",
+      "rights": "CC-BY-4.0 article",
+      "role": "source-disjoint-no-refit-kinetic-challenge",
+      "eligibility": "eligible-with-engineered-non-endothelial-context-mismatch"
+    },
+    {
+      "id": "DCCQ-EVID-005",
+      "citation": "Zhao et al. 2010, DOI 10.1371/journal.pone.0012563",
+      "source_family": "ottawa-lovastatin-huvec-family",
+      "cell_context": "primary HUVEC",
+      "stimulus_and_schedule": "50 ng/mL VEGF-A165 for 30 minutes with untreated and lovastatin conditions",
+      "observations": "qualitative VEGFR2 internalization plus surface and total receptor loss at one endpoint",
+      "rights": "CC-BY article",
+      "role": "source-disjoint-directional-huvec-check",
+      "eligibility": "eligible-directional-only-not-a-dynamic-series"
+    }
+  ],
+  "decision": {
+    "selected_candidate_id": "DCCQ-SRC-001",
+    "selected_target": "human VEGF-A165a to VEGFR2 ligand binding and trafficking in primary HUVECs, with NRP1 treated as an explicit structural choice",
+    "selection_reason": "The selected family provides the best combined human endothelial fit, exact publication and repository identity, explicit molecule-per-cell, time, volume, surface, and rate units, reusable CC-BY Supporting Information, and time-resolved observations. Its repository licence gap, non-pulmonary cell origin, and source-disjoint context mismatch remain explicit blockers rather than being averaged away by the score.",
+    "authorized_for_dccq_1_3": [
+      "use the CC-BY publication and Supporting Information to specify an independent reduced MEHLISSA-native model",
+      "freeze an SI amount, volume, area, concentration, and rate conversion before any dynamic output",
+      "assign the 2024 and 2025 HUVEC family only to mechanism selection, parameterization, and within-study checks",
+      "reserve Peach 2019 for a source-disjoint kinetic challenge with an explicit cell-context mismatch",
+      "reserve Zhao 2010 for a source-disjoint directional HUVEC check only"
+    ],
+    "not_yet_authorized": [
+      "copying, modifying, bundling, or redistributing code or CSV files from the unlicensed VEGFR-Trafficking-Projects repository",
+      "porting the full 281-state reference model",
+      "selecting equations, state reductions, parameters, tolerances, observation transformations, or validation exclusions after viewing MEHLISSA outputs",
+      "calling the source family a pulmonary, in vivo, patient-specific, biological-validation, or clinical result",
+      "marking DCCQ-G1 or DCCQ-G7 passed before the SI map and exact no-refit observation protocol are frozen and executed"
+    ],
+    "gate_implications": {
+      "DCCQ-G1": "PARTIAL: one chemical identity and a convertible source unit system are selected, but the SI mapping and represented cell-volume convention remain to be frozen in DCCQ-1.3.",
+      "DCCQ-G6": "PARTIAL: measurement variability and parameter sources exist, but distributions, correlations, identifiability rules, and uncertainty propagation remain to be frozen.",
+      "DCCQ-G7": "BLOCKED: source-disjoint kinetic and directional observations are identified, but no condition-matched independent HUVEC time series and no prospective numeric evaluation protocol are frozen.",
+      "DCCQ-G8": "BLOCKED: no implementation, result archive, or close-out review exists."
+    },
+    "allowed_current_claim": "DCCQ-1.2 selects and machine-checks a human endothelial VEGF-A165a-VEGFR2-NRP1 target and evidence family for prospective model definition. It establishes source identity, unit convertibility, data roles, and rights boundaries; it does not implement or qualify dynamic coupling.",
+    "next_increment": "DCCQ-1.3 prospective reduced equations, SI mapping, synchronization, and evaluation protocol"
+  }
+}

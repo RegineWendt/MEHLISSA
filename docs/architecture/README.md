@@ -69,6 +69,7 @@ decisions; a new decision supersedes an existing one through a new ADR.
 | [ADR-0051](adr/0051-macos-apple-clang-source-build.md) | Accepted | native macOS source build and ARM64 Apple Clang CI without an application bundle |
 | [ADR-0052](adr/0052-qualified-kallenberger-cell-model-adapter.md) | Accepted | typed no-refit Kallenberger average-cell adapter, separate 13-reaction equation layer, deterministic RK4, and bounded computational qualification |
 | [ADR-0053](adr/0053-dynamic-capillary-tissue-cell-qualification-boundary.md) | Accepted | prospective DCCQ-1 boundary with one ligand identity, compatible units, seven-owner amount ledger, delayed feedback, and evidence-separated qualification |
+| [ADR-0054](adr/0054-vegfa-vegfr2-huvec-dccq-target.md) | Accepted | VEGF-A165a/VEGFR2 HUVEC target, explicit NRP1 structural choice, CC-BY publication basis, and no reuse of the unlicensed source repository |
 
 ## Status model
 

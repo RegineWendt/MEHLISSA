@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/dynamic-capillary-tissue-cell-evidence-candidate-register/1.0.0.schema.json",
+  "title": "MEHLISSA DCCQ-1.2 evidence candidate register",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "screen",
+    "criteria",
+    "candidates",
+    "evidence_sources",
+    "decision"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "screen": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "program", "version", "performed_date", "status", "parent_plan", "parent_plan_sha256", "question", "selection_boundary", "clinical_use"],
+      "properties": {
+        "id": {"const": "DCCQ-1.2"},
+        "program": {"const": "DCCQ-1 Dynamic Capillary-Tissue-Cell Qualification"},
+        "version": {"const": "1.0.0"},
+        "performed_date": {"type": "string", "format": "date"},
+        "status": {"const": "target-and-evidence-family-selected-before-equation-freeze"},
+        "parent_plan": {"const": "data/qualification/dynamic-capillary-tissue-cell-qualification-plan-v1.json"},
+        "parent_plan_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "question": {"$ref": "#/$defs/nonempty_string"},
+        "selection_boundary": {"$ref": "#/$defs/nonempty_string"},
+        "clinical_use": {"const": false}
+      }
+    },
+    "criteria": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description"],
+        "properties": {
+          "id": {"enum": ["biological-fit", "artifact-identity", "unit-bridge", "time-resolved-data", "reuse-rights", "source-disjoint-evidence", "pulmonary-context", "bounded-integration"]},
+          "description": {"$ref": "#/$defs/nonempty_string"}
+        }
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {"$ref": "#/$defs/candidate"}
+    },
+    "evidence_sources": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {"$ref": "#/$defs/evidence_source"}
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selected_candidate_id", "selected_target", "selection_reason", "authorized_for_dccq_1_3", "not_yet_authorized", "gate_implications", "allowed_current_claim", "next_increment"],
+      "properties": {
+        "selected_candidate_id": {"const": "DCCQ-SRC-001"},
+        "selected_target": {"$ref": "#/$defs/nonempty_string"},
+        "selection_reason": {"$ref": "#/$defs/nonempty_string"},
+        "authorized_for_dccq_1_3": {"$ref": "#/$defs/nonempty_strings"},
+        "not_yet_authorized": {"$ref": "#/$defs/nonempty_strings"},
+        "gate_implications": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["DCCQ-G1", "DCCQ-G6", "DCCQ-G7", "DCCQ-G8"],
+          "properties": {
+            "DCCQ-G1": {"$ref": "#/$defs/nonempty_string"},
+            "DCCQ-G6": {"$ref": "#/$defs/nonempty_string"},
+            "DCCQ-G7": {"$ref": "#/$defs/nonempty_string"},
+            "DCCQ-G8": {"$ref": "#/$defs/nonempty_string"}
+          }
+        },
+        "allowed_current_claim": {"$ref": "#/$defs/nonempty_string"},
+        "next_increment": {"const": "DCCQ-1.3 prospective reduced equations, SI mapping, synchronization, and evaluation protocol"}
+      }
+    }
+  },
+  "$defs": {
+    "nonempty_string": {"type": "string", "minLength": 1},
+    "nonempty_strings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/nonempty_string"}
+    },
+    "biology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ligand", "receptors", "cell_type", "preparation", "dynamic_response", "physiological_scope"],
+      "properties": {
+        "ligand": {"$ref": "#/$defs/nonempty_string"},
+        "receptors": {"$ref": "#/$defs/nonempty_strings"},
+        "cell_type": {"$ref": "#/$defs/nonempty_string"},
+        "preparation": {"$ref": "#/$defs/nonempty_string"},
+        "dynamic_response": {"$ref": "#/$defs/nonempty_string"},
+        "physiological_scope": {"$ref": "#/$defs/nonempty_string"}
+      }
+    },
+    "publication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["citation", "doi", "url", "article_and_supporting_information_rights"],
+      "properties": {
+        "citation": {"$ref": "#/$defs/nonempty_string"},
+        "doi": {"type": "string", "pattern": "^10\\."},
+        "url": {"type": "string", "format": "uri"},
+        "article_and_supporting_information_rights": {"$ref": "#/$defs/nonempty_string"}
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "role", "locator", "revision", "path", "sha256", "licence", "reuse_decision"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^DCCQ-ART-[0-9]{3}$"},
+        "kind": {"enum": ["supporting-information", "source-code", "source-data", "qualified-local-reference"]},
+        "role": {"$ref": "#/$defs/nonempty_string"},
+        "locator": {"$ref": "#/$defs/nonempty_string"},
+        "revision": {"$ref": "#/$defs/nonempty_string"},
+        "path": {"$ref": "#/$defs/nonempty_string"},
+        "sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "licence": {"enum": ["CC-BY-4.0", "CC-BY", "Apache-2.0", "CC0-1.0", "NOASSERTION"]},
+        "reuse_decision": {"$ref": "#/$defs/nonempty_string"}
+      }
+    },
+    "unit_assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_amount", "source_time", "source_volume", "source_surface", "source_rates", "stimulus", "si_bridge_status", "required_dccq_1_3_decisions"],
+      "properties": {
+        "source_amount": {"$ref": "#/$defs/nonempty_string"},
+        "source_time": {"$ref": "#/$defs/nonempty_string"},
+        "source_volume": {"$ref": "#/$defs/nonempty_string"},
+        "source_surface": {"$ref": "#/$defs/nonempty_string"},
+        "source_rates": {"$ref": "#/$defs/nonempty_string"},
+        "stimulus": {"$ref": "#/$defs/nonempty_string"},
+        "si_bridge_status": {"enum": ["convertible-but-not-yet-frozen", "convertible-but-no-exact-executable-artifact-frozen", "not-directly-compatible", "blocked"]},
+        "required_dccq_1_3_decisions": {"$ref": "#/$defs/nonempty_strings"}
+      }
+    },
+    "scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["biological-fit", "artifact-identity", "unit-bridge", "time-resolved-data", "reuse-rights", "source-disjoint-evidence", "pulmonary-context", "bounded-integration"],
+      "properties": {
+        "biological-fit": {"type": "integer", "minimum": 0, "maximum": 3},
+        "artifact-identity": {"type": "integer", "minimum": 0, "maximum": 3},
+        "unit-bridge": {"type": "integer", "minimum": 0, "maximum": 3},
+        "time-resolved-data": {"type": "integer", "minimum": 0, "maximum": 3},
+        "reuse-rights": {"type": "integer", "minimum": 0, "maximum": 3},
+        "source-disjoint-evidence": {"type": "integer", "minimum": 0, "maximum": 3},
+        "pulmonary-context": {"type": "integer", "minimum": 0, "maximum": 3},
+        "bounded-integration": {"type": "integer", "minimum": 0, "maximum": 3}
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "rank", "decision", "name", "biology", "publication", "artifacts", "unit_assessment", "data_role", "scores", "total_score", "strengths", "limitations", "next_action"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^DCCQ-SRC-[0-9]{3}$"},
+        "rank": {"type": "integer", "minimum": 1, "maximum": 4},
+        "decision": {"enum": ["selected-target-and-evidence-family", "mechanistic-structural-alternative", "licensed-platform-alternative", "cell-solver-regression-only"]},
+        "name": {"$ref": "#/$defs/nonempty_string"},
+        "biology": {"$ref": "#/$defs/biology"},
+        "publication": {"$ref": "#/$defs/publication"},
+        "artifacts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/artifact"}},
+        "unit_assessment": {"$ref": "#/$defs/unit_assessment"},
+        "data_role": {"$ref": "#/$defs/nonempty_string"},
+        "scores": {"$ref": "#/$defs/scores"},
+        "total_score": {"type": "integer", "minimum": 0, "maximum": 24},
+        "strengths": {"$ref": "#/$defs/nonempty_strings"},
+        "limitations": {"$ref": "#/$defs/nonempty_strings"},
+        "next_action": {"$ref": "#/$defs/nonempty_string"}
+      }
+    },
+    "evidence_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "citation", "source_family", "cell_context", "stimulus_and_schedule", "observations", "rights", "role", "eligibility"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^DCCQ-EVID-[0-9]{3}$"},
+        "citation": {"$ref": "#/$defs/nonempty_string"},
+        "source_family": {"$ref": "#/$defs/nonempty_string"},
+        "cell_context": {"$ref": "#/$defs/nonempty_string"},
+        "stimulus_and_schedule": {"$ref": "#/$defs/nonempty_string"},
+        "observations": {"$ref": "#/$defs/nonempty_string"},
+        "rights": {"$ref": "#/$defs/nonempty_string"},
+        "role": {"enum": ["mechanism-selection-and-calibration", "within-study-structural-check", "baseline-parameterization-and-context", "source-disjoint-no-refit-kinetic-challenge", "source-disjoint-directional-huvec-check"]},
+        "eligibility": {"enum": ["eligible-not-independent", "eligible-with-engineered-non-endothelial-context-mismatch", "eligible-directional-only-not-a-dynamic-series"]}
+      }
+    }
+  }
+}

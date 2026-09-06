@@ -425,26 +425,32 @@ protocol version. The completed result and code-to-equation review are in
 The result checker reconstructs all numerical claims from the committed CSVs
 without invoking the result runner or requiring COPASI/SBML.
 
-DCCQ means **Dynamic Capillary-Tissue-Cell Qualification**. DCCQ-1.1 is the
-prospective design and compatibility audit for the next scientific coupling
-programme; its machine authority is
-`data/qualification/dynamic-capillary-tissue-cell-qualification-plan-v1.json`.
-The checker binds the current staged capillary exchange, non-consuming
-extracellular snapshot, prescribed-trajectory receptor solver, transport
-baselines, and BCQ result by canonical SHA-256. It also enforces a single
-biochemical ligand identity, explicit compatible units, a complete seven-owner
-amount ledger, delayed feedback, eight still-blocked gates, ten negative
-controls, and DCCQ-1.2 as the sole next increment.
+DCCQ means **Dynamic Capillary-Tissue-Cell Qualification**. DCCQ-1.1 and
+DCCQ-1.2 are complete. The parent plan authority remains
+`data/qualification/dynamic-capillary-tissue-cell-qualification-plan-v1.json`;
+the selected target and source authority is
+`data/qualification/dynamic-capillary-tissue-cell-evidence-candidate-register-v1.json`.
+The latter hash-binds the parent plan and records four ranked targets, ten
+artifacts, five evidence sources, the source-to-SI bridge status, and separate
+rights decisions. The selected target is human VEGF-A165a/VEGFR2 trafficking in
+primary HUVECs, with NRP1 as an explicit DCCQ-1.3 structural choice.
 
 Do not implement the new path by looping over
 `CapillaryCellSignalCoupler::evaluate`: that contract is deliberately a
 non-consuming uniform snapshot. Do not pass `unresolved-model-native` BCQ
 states into SI transport, change the fixed CD95 stimulus, or map different
-chemical identifiers merely to make the APIs connect. DCCQ-1.2 must first
-select and licence-screen the target and alternatives; DCCQ-1.3 then freezes
-equations, units, parameters, synchronization, metrics, tolerances, and failure
-rules before dynamic output is inspected. See the
-[DCCQ-1 qualification plan](qualification/DCCQ1_QUALIFICATION_PLAN.md).
+chemical identifiers merely to make the APIs connect. DCCQ-1.2 has now
+selected and licence-screened the target and alternatives.
+Do not copy or derive from the linked VEGFR-Trafficking-Projects source code:
+its exact commit and relevant file hashes are recorded, but the repository has
+no explicit licence. DCCQ-1.3 must independently specify the reduced equations
+from the CC-BY article and Supporting Information, then freeze units,
+parameters, NRP1 scope, synchronization, metrics, tolerances, observation
+roles, and failure rules before dynamic output is inspected. HUVEC evidence
+must not be relabelled pulmonary evidence, and same-family HUVEC observations
+must not be used as validation. See the [DCCQ-1 qualification
+plan](qualification/DCCQ1_QUALIFICATION_PLAN.md) and [DCCQ-1.2 source
+screen](qualification/DCCQ1_EVIDENCE_SOURCE_SCREEN.md).
 
 Do not edit the locked protocol or raw archives in place. A changed protocol
 requires a new version and pre-measurement commit; a changed candidate requires

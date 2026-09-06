@@ -5,6 +5,11 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Dynamic Capillary-Tissue-Cell Qualification Plan (DCCQ-1)
 
+**Programme status:** DCCQ-1.1 and DCCQ-1.2 are complete. The selected target
+is human VEGF-A165a/VEGFR2 trafficking in primary HUVECs, with NRP1 as an
+explicit structural choice. DCCQ-1.3 is next; no dynamic coupling is yet
+implemented or qualified.
+
 ## Decision at DCCQ-1.1
 
 **DCCQ** means **Dynamic Capillary-Tissue-Cell Qualification**. DCCQ-1.1 is
@@ -57,11 +62,12 @@ The target claim is deliberately conditional:
 > predeclared balance, limiting-case, convergence, timing, uncertainty, and
 > evidence-compatibility criteria.
 
-DCCQ-1.1 does not yet select the biological target or population. Resting
-pulmonary capillary physiology is preferred because it builds on the strongest
-current organ and capillary work, but DCCQ-1.2 must show that the selected
-ligand-receptor evidence really supports that context. No patient, diagnostic,
-treatment, or clinical claim is in scope.
+DCCQ-1.2 has now selected human VEGF-A165a/VEGFR2 trafficking in primary HUVECs,
+with NRP1 as an explicit structural choice. This supplies a human endothelial
+in-vitro context, not resting pulmonary capillary physiology: HUVECs are not
+lung endothelial cells and the evidence is neither in vivo nor patient-specific.
+No patient, diagnostic, treatment, or clinical claim is in scope. See the
+[DCCQ-1.2 evidence source screen](DCCQ1_EVIDENCE_SOURCE_SCREEN.md).
 
 ## Compatibility audit of the current platform
 
@@ -71,15 +77,17 @@ treatment, or clinical claim is in scope.
 | M5.2 capillary-to-cell snapshot | typed identity, amount/volume concentration, time scope, retry safety | non-consuming homogeneous snapshot; oxygen-to-synthetic-ligand mapping has no biochemical meaning | contract regression only |
 | M5.3 time-varying receptor model | analytical constant and pulse references with RK4 convergence | trajectory is prescribed and binding does not deplete ligand | limiting-case reference |
 | BCQ-1 Kallenberger CD95 mechanism | named published mechanism and all-state COPASI agreement | fixed `CD95L=16.6`, unresolved source-native units, average HeLa cell, no dynamic consumptive SI boundary | biological context only; blocked from direct dynamic reuse |
-| Kuehn-Checa VEGF/VEGFR work | named endothelial ligand/receptors and perturbation context | exact released artifact, dependencies, data roles, and reuse rights are not frozen; biological context is not normal human pulmonary capillary physiology | candidate for DCCQ-1.2, not selected |
+| Kuehn-Checa VEGF/VEGFR work | named endothelial ligand/receptors, exact Apache-2.0 `VEGFR1` source tags, and perturbation context | two-dimensional mouse embryoid-body sprouting, model-specific units, and platform-scale integration do not fit the first human endothelial SI coupling | retained DCCQ-1.2 licensed platform alternative |
 | M4 axial and radial transport solvers | advection, diffusion, reaction, wall sink, balance, and refinement | synthetic wall sink without receptor-resolved tissue ledger or feedback | transport verification baseline |
 
 The most important result of this audit is negative but productive: the
 computationally qualified CD95 average-cell mechanism must not be connected to
 SI capillary transport merely because both APIs exist. Its model-native units
 and fixed stimulus first need a new prospective mapping and input protocol.
-Likewise, the endothelial VEGF candidate is biologically appealing but is not
-yet an audited reusable model package.
+The earlier endothelial candidate has now been resolved into ranked alternatives.
+The selected Sarabipour HUVEC publication family has auditable CC-BY Supporting
+Information and convertible source units, but its linked GitHub repository has
+no explicit licence. It may be inspected and hash-bound, not copied or bundled.
 
 ## Minimum dynamic state contract
 
@@ -129,13 +137,13 @@ that generated it inside the same step.
 
 | Gate | Meaning | DCCQ-1.1 state |
 |---|---|---|
-| DCCQ-G1 — identity and units | one ligand identity and compatible units across every layer | blocked pending DCCQ-1.2 source selection |
+| DCCQ-G1 — identity and units | one ligand identity and compatible units across every layer | partial: VEGF-A165a and convertible source units selected; SI and represented-population mapping follow in DCCQ-1.3 |
 | DCCQ-G2 — mass balance | complete ledger recalculated at every output and over the run | blocked pending implementation |
 | DCCQ-G3 — limiting cases | zero-flux, zero-binding, constant-reservoir, pulse-withdrawal, and no-feedback references | blocked pending frozen equations and tolerances |
 | DCCQ-G4 — numerical convergence | independent time-step, synchronization, and spatial refinement | blocked pending method selection |
 | DCCQ-G5 — causal timing | transport, exposure, response, and feedback remain ordered | blocked pending scheduler contract |
-| DCCQ-G6 — uncertainty and sensitivity | numerical, parameter, structural, observational, and synchronization uncertainty | blocked pending evidence-backed distributions |
-| DCCQ-G7 — independent reference | no-refit comparison with source-disjoint time-resolved observations | blocked pending reusable independent data |
+| DCCQ-G6 — uncertainty and sensitivity | numerical, parameter, structural, observational, and synchronization uncertainty | partial: source variability exists; distributions, correlations, and identifiability rules follow in DCCQ-1.3 |
+| DCCQ-G7 — independent reference | no-refit comparison with source-disjoint time-resolved observations | blocked: an independent HEK293T kinetic challenge and directional HUVEC check are identified, but no condition-matched independent HUVEC series or frozen numeric protocol exists |
 | DCCQ-G8 — claim and review | independent reconciliation of code, evidence, archive, licences, documentation, and claim | blocked until close-out |
 
 `BLOCKED` here does not mean that the programme failed. It prevents an
@@ -164,16 +172,19 @@ Passing an earlier level does not imply a later one.
 | Increment | Work | Exit |
 |---|---|---|
 | **DCCQ-1.1** | bounded intended use and baseline compatibility audit | **complete**: current capabilities and blockers are hash-bound; invalid shortcuts fail closed |
-| **DCCQ-1.2** | biological target, artifact, data, and licence screen | one named candidate and alternatives ranked by exact artifact, units, data roles, rights, and independent observations |
-| DCCQ-1.3 | prospective equation and evaluation protocol | equations, parameters, synchronization, metrics, tolerances, controls, and failure rules frozen before dynamic output |
+| **DCCQ-1.2** | biological target, artifact, data, and licence screen | **complete**: VEGF-A165a/VEGFR2 in primary HUVECs selected, with NRP1 explicit; four candidates, ten artifacts, five evidence roles, unit bridge, and rights boundaries are machine checked |
+| **DCCQ-1.3** | prospective equation and evaluation protocol | **next**: reduced equations, SI mapping, parameters, synchronization, metrics, tolerances, controls, and failure rules frozen before dynamic output |
 | DCCQ-1.4 | typed dynamic tissue and consumptive cell coupling | modular implementation owns every ligand amount exactly once |
 | DCCQ-1.5 | balance, limiting-case, convergence, and timing qualification | computational gates executed with all partial and failed results retained |
 | DCCQ-1.6 | uncertainty, sensitivity, and source-disjoint comparison | influential uncertainty reported and eligible independent data evaluated without refitting, or evidence remains blocked |
 | DCCQ-1.7 | independent close-out and bounded claim | runner-independent and human review reconcile implementation, evidence, archive, licences, and documentation |
 
-The next step is therefore DCCQ-1.2. It begins with research and source
-screening, not implementation. The previously noted VEGF-A/VEGFR endothelial
-model will be reassessed alongside alternatives; it is not preselected.
+The next step is therefore DCCQ-1.3. It will independently specify a reduced
+MEHLISSA-native VEGF-A165a/VEGFR2 binding, internalization, recycling, and
+degradation model from the CC-BY publication record. It must freeze the SI
+conversion, NRP1 structural choice, synchronization, observation roles,
+metrics, tolerances, and failure rules before output. The full 281-state source
+model is a reference, not an authorized port or preselected implementation.
 
 ## Negative controls
 

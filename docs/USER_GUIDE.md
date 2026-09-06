@@ -3396,17 +3396,22 @@ Planned substantive scientific extensions are:
   population ensemble, external human attestation, and biological or clinical
   qualification remain blocked;
 - DCCQ-1 dynamic capillary-tissue-cell qualification: DCCQ means **Dynamic
-  Capillary-Tissue-Cell Qualification**. DCCQ-1.1 has completed the prospective
-  intended-use and compatibility audit. It establishes the seven-owner ligand
-  ledger, compatible identity/unit rules, delayed feedback, eight qualification
-  gates, ten negative controls, six uncertainty classes, and the DCCQ-1.1 to
-  DCCQ-1.7 sequence. It does not add a user-runnable dynamic coupling. In
-  particular, repeated M5.2 non-consuming snapshots are not a dynamic model,
-  and the qualified fixed-input CD95 average-cell mechanism cannot receive SI
-  capillary concentrations while its source units remain unresolved. DCCQ-1.2
-  next screens a named ligand-receptor-cell context, artifacts, data roles,
-  reuse rights, units, and independent evidence before implementation. See the
-  [DCCQ-1 qualification plan](qualification/DCCQ1_QUALIFICATION_PLAN.md);
+  Capillary-Tissue-Cell Qualification**. DCCQ-1.1 and DCCQ-1.2 are complete.
+  The programme now has a named first target: human VEGF-A165a binding to and
+  trafficking with VEGFR2 in primary HUVEC endothelial cells, with NRP1 as an
+  explicit structural choice. Four candidates, ten exact source artifacts,
+  five evidence roles, source units, and reuse rights are machine checked.
+  The PLOS article and Supporting Information are CC-BY-4.0, but the linked
+  GitHub code repository has no explicit licence and will not be copied or
+  bundled. Source-disjoint kinetic and directional checks are identified, but
+  a condition-matched independent HUVEC time series remains unavailable.
+  This still does not add a user-runnable dynamic coupling: HUVECs are not lung
+  capillary cells, the SI conversion and reduced equations are not frozen, and
+  no DCCQ gate has passed. DCCQ-1.3 next freezes an independently specified
+  reduced model, SI mapping, synchronization, observation roles, metrics,
+  tolerances, and failure rules before output. See the
+  [DCCQ-1 qualification plan](qualification/DCCQ1_QUALIFICATION_PLAN.md) and
+  [DCCQ-1.2 evidence source screen](qualification/DCCQ1_EVIDENCE_SOURCE_SCREEN.md);
 - one frozen medical reference scenario evaluated end to end against
   independent physiological or experimental observations;
 - additional medical scenarios and organ families, beginning with a kidney

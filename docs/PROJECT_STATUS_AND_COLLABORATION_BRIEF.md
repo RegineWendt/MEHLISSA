@@ -13,7 +13,7 @@ SPDX-License-Identifier: CC-BY-4.0
 **Verified published release commit:** `5821c7358f490c1c92e9ec79eaed783f80851297`
 **Workbench release:** 1.0.0; UX-6.1 through UX-6.8 accepted
 **Milestone status:** M0 through M7 passed
-**Current product focus:** DCCQ-1.2 biological target, artifact, data, and licence screen
+**Current product focus:** DCCQ-1.3 prospective reduced equations, SI mapping, synchronization, and evaluation protocol
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -173,19 +173,27 @@ behind explicit contracts.
   binds final archive `20260906T090213Z-e3e71e6ce6c2`, its canonical checksum
   manifest, all nine source invariants, and two transparently superseded but
   retained attempts.
-- DCCQ-1.1 now establishes the next qualification programme. DCCQ means
+- DCCQ-1.1 established the next qualification programme. DCCQ means
   **Dynamic Capillary-Tissue-Cell Qualification**. Its machine-checked
   prospective plan audits six existing baselines, defines a seven-owner ligand
-  ledger, five evidence levels, eight still-blocked execution/evidence gates,
+  ledger, five evidence levels, eight execution/evidence gates,
   six uncertainty classes, ten negative controls, and seven increments. It
   expressly prevents the non-consuming homogeneous M5.2 snapshot, the
   oxygen-to-synthetic-ligand test alias, or the fixed-input, unit-unresolved
   BCQ mechanism from being reported as a dynamic biological coupling.
-- DCCQ-1.1 is design and compatibility evidence only. No dynamic coupling has
-  yet been implemented or qualified. DCCQ-1.2 will screen one named
-  ligand-receptor-cell-context candidate and alternatives for exact artifacts,
-  compatible units, data roles, reuse rights, and independent time-resolved
-  evidence before the equations or acceptance limits are frozen.
+- DCCQ-1.2 now selects human VEGF-A165a binding to and trafficking with VEGFR2
+  in primary HUVECs, with NRP1 as an explicit structural choice. Four targets,
+  ten exact artifacts, five evidence roles, source units, and rights boundaries
+  are machine checked. The article and Supporting Information are CC-BY-4.0;
+  the linked repository has no explicit licence, so its code and standalone
+  CSV files may be inspected and hashed but are not copied or bundled.
+- HUVEC culture provides a human endothelial in-vitro basis, not pulmonary
+  capillary physiology. The best identified source-disjoint kinetic challenge
+  uses engineered HEK293T cells, and the independent HUVEC evidence is a
+  directional single-timepoint check. No DCCQ gate has passed, no dynamic
+  coupling is implemented or qualified, and DCCQ-1.3 must freeze independent
+  reduced equations, the SI mapping, NRP1 scope, synchronization, metrics,
+  tolerances, controls, and evidence roles before output.
 - The result is a reproducible research-software demonstrator. It is not a
   clinical assay model, a medical device, or a patient-specific digital twin.
 
@@ -464,15 +472,16 @@ release is implied. The remaining programs begin by using and maintaining this
 qualification infrastructure.
 
 The access-pending pulmonary/capillary design, completed public cell-model path,
-and new DCCQ-1 plan are indexed in `docs/qualification/README.md`. While PCQ-1
-awaits governed data access, the current focus is the DCCQ-1.2 biological
-target, artifact, data, and licence screen.
+and DCCQ-1 plan and source screen are indexed in `docs/qualification/README.md`.
+While PCQ-1 awaits governed data access, the current focus is the DCCQ-1.3
+prospective reduced equations, SI mapping, synchronization, and evaluation
+protocol.
 
 | Program | Principal work | Intended outcome |
 |---|---|---|
 | Pulmonary and capillary qualification | **PCQ-1.1 through PCQ-1.5a completed locally:** design, source selection, observation models, numeric gates, safe ingress, uncertainty semantics, and repository availability are machine-checked. PCQ-1.5 covers six uncertainty classes and nine endpoints, seven pulmonary structures, covariance envelopes, local sensitivities, and identifiability. PCQ-1.5a finds no drop-in primary repository dataset, retains five non-equivalent alternatives, opens no participant file, and leaves the frozen source roles unchanged. A coordinated, still-unsent request package covers D'Souza, Arizona, Bailey, and feasibility-only Lassen. PCQ-1.6 next builds the outcome-blind execution/reporting shell and runs the frozen evaluator only when authorized source-disjoint observations exist. | Present result: auditable prospective design, source selection, safe data boundary, uncertainty/identifiability plan, repository-first access audit, and governed outreach drafts - not a validation pass. Intended exit: bounded pulmonary and capillary claims evaluated without refitting, with uncertainty and all partial or negative findings retained. |
 | Biological cell-model qualification | **BCQ-1.1 through BCQ-1.7 completed locally:** source and licence selection, prospective COPASI and MEHLISSA protocols, retained deviations, a typed no-refit 18-state M5 adapter, separate source equations, all-state cross-engine and convergence checks, 525/526 structural audit, average-cell population decision, stable local sensitivities, twelve negative controls, and a runner-independent close-out review. | One published average-cell mechanism is computationally qualified. Publication-curve alignment, a reusable population ensemble, external human attestation, biological qualification, endothelial/organ realism, individual or patient prediction, and clinical validity remain blocked. |
-| Dynamic capillary-tissue-cell coupling | **DCCQ-1.1 completed locally:** the bounded intended use and compatibility audit hash-bind six existing baselines and define a chemically consistent ligand identity, compatible-unit rule, seven-owner amount ledger, delayed feedback, eight blocked gates, ten negative controls, six uncertainty classes, and a seven-increment path. It rejects three tempting shortcuts: repeated non-consuming snapshots, the biochemical oxygen-to-synthetic-ligand test alias, and direct SI reuse of the fixed-input, unit-unresolved CD95 average-cell model. DCCQ-1.2 next ranks a named target and alternatives by artifact, unit, data-role, rights, and independent-evidence fitness. | Present result: machine-checked prospective design, not dynamic implementation or biological qualification. Intended exit: cell exposure generated by an amount-conserving coupled transport model, verified for identity, balance, limiting cases, convergence, causal timing, uncertainty, source-disjoint evidence compatibility, and bounded review. |
+| Dynamic capillary-tissue-cell coupling | **DCCQ-1.1 and DCCQ-1.2 completed locally:** the design binds six baselines, a seven-owner ligand ledger, delayed feedback, eight gates, ten controls, and six uncertainty classes. The source screen selects human VEGF-A165a/VEGFR2 trafficking in primary HUVECs with NRP1 explicit, after ranking four targets and auditing ten artifacts and five evidence sources. Source units are convertible but not SI-frozen. CC-BY publication material is usable with attribution; the exact linked repository has no explicit licence and is excluded from copying. HUVEC is not lung physiology and condition-matched source-disjoint dynamic validation remains blocked. | Present result: machine-checked prospective design and source selection, not equations, implementation, dynamic qualification, or biological validation. DCCQ-1.3 next freezes a reduced MEHLISSA-native equation, SI, synchronization, and evaluation protocol before output; later increments implement and evaluate balance, limits, convergence, timing, uncertainty, independent evidence, and bounded review. |
 | Externally validated medical reference scenario | Freeze one measurable complete protocol and compare its injection-to-measurement outputs with independent physiological or experimental observations. | The first reproducible end-to-end validation report with a bounded claim and explicit limitations. |
 | Additional medical scenarios | Continuous monitoring, liquid biopsy, endocrine/adrenal venous sampling, CAR-T, and ultimately metastasis prevention. | Evidence that the architecture generalizes beyond fingerprinting. |
 | Additional organs | Begin with a kidney surrogate and progress toward regional filtration, clearance, and organ-specific capillary interfaces. | Evidence that organ factories and coupling contracts are not lung-specific. |
@@ -596,7 +605,7 @@ and limitations are documented; and all supported CI paths pass.
 | `docs/ROADMAP.md` | Guiding principles, delivery history, scientific qualification sequence, medical scenarios, additional organs, personalization, scaling, and cross-cutting programs. |
 | `docs/qualification/PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md`, `PCQ1_EVIDENCE_SOURCE_SCREEN.md`, `PCQ1_PRE_OUTCOME_AMENDMENT.md`, `PCQ1_DATA_INGRESS.md`, `PCQ1_UNCERTAINTY_IDENTIFIABILITY.md`, `PCQ1_REPOSITORY_FIRST_DATA_AUDIT.md`, and `PCQ1_DATA_REQUEST_PACKAGE.md` | Active PCQ-1 claim, frozen candidates and analysis, ranked sources, safe ingress, uncertainty and identifiability, repository availability and alternatives, governed request drafts, controls, and pre-outcome sequence. |
 | `docs/qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md`, `BCQ1_REPRODUCTION_PROTOCOL.md`, `BCQ1_REPRODUCTION_PROTOCOL_AMENDMENT_1.md`, `BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md`, `BCQ1_MEHLISSA_QUALIFICATION_PROTOCOL.md`, and `BCQ1_MEHLISSA_QUALIFICATION_RESULT.md` | Complete BCQ-1.1–1.7 selection, prospective protocols, retained replay amendment, COPASI archive, typed MEHLISSA implementation, cross-engine result, structure/population decisions, independent checks, and bounded claim. |
-| `docs/qualification/DCCQ1_QUALIFICATION_PLAN.md` | Dynamic Capillary-Tissue-Cell Qualification programme: bounded intended use, six-component compatibility audit, seven-owner ledger, evidence ladder, eight blocked gates, uncertainty plan, negative controls, and the DCCQ-1.1–1.7 sequence. |
+| `docs/qualification/DCCQ1_QUALIFICATION_PLAN.md` and `DCCQ1_EVIDENCE_SOURCE_SCREEN.md` | Dynamic Capillary-Tissue-Cell Qualification programme and DCCQ-1.2 decision: intended use, six-component audit, seven-owner ledger, evidence ladder, gates and controls, ranked source and licence screen, selected VEGF-A165a/VEGFR2 HUVEC target, unit-bridge status, independent-evidence limits, and DCCQ-1.3–1.7 path. |
 | `docs/PROJECT_STATE.json` | Machine-readable shared release facts, Roadmap section mappings, selected traceability expectations, and ordered qualification packages. |
 | `docs/requirements/SYSTEM_REQUIREMENTS.md` | Numbered requirements derived from the dissertation and project decisions. |
 | `docs/requirements/TRACEABILITY_MATRIX.md` | Separate implementation and evidence status, achieved verification, and remaining gap for every tracked requirement. |

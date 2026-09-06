@@ -405,9 +405,10 @@ conversion, biological calibration, or direct mutation of another component.
 ### 6.1 Planned dynamic capillary-tissue-cell boundary
 
 DCCQ means **Dynamic Capillary-Tissue-Cell Qualification**. The completed
-DCCQ-1.1 design and compatibility audit does not add a new public runtime API;
-it constrains the API that DCCQ-1.3 and DCCQ-1.4 may introduce after the
-DCCQ-1.2 source screen.
+DCCQ-1.1 design audit and DCCQ-1.2 source screen do not add a new public runtime
+API; they constrain the API that DCCQ-1.3 and DCCQ-1.4 may specify and
+implement. The selected target is human VEGF-A165a/VEGFR2 trafficking in
+primary HUVECs, with NRP1 kept as an explicit structural choice.
 
 The existing `ExtracellularSignalSample` and `CapillaryCellSignalCoupler`
 remain deliberately non-consuming snapshot interfaces. A dynamic
@@ -420,12 +421,23 @@ Binding removes ligand from free tissue; dissociation returns it; every other
 loss reaches a declared sink. Feedback is delayed to a declared synchronization
 boundary and cannot mutate the upstream state within the same step.
 
-The qualified Kallenberger adapter is not currently eligible for this SI path:
-it locks `CD95L=16.6`, retains unresolved model-native units, and represents an
-average HeLa cell. DCCQ-1.2 will rank biological candidates and alternatives;
-VEGF-A/VEGFR remains a candidate rather than an architectural assumption. See
-[ADR-0053](adr/0053-dynamic-capillary-tissue-cell-qualification-boundary.md)
-and the [DCCQ-1 plan](../qualification/DCCQ1_QUALIFICATION_PLAN.md).
+The qualified Kallenberger adapter is not eligible for this SI path: it locks
+`CD95L=16.6`, retains unresolved model-native units, and represents an average
+HeLa cell. DCCQ-1.2 ranked that model behind three endothelial alternatives.
+The selected source uses molecules per represented cell, seconds,
+femtolitres-per-cell volumes, and square-micrometre-per-cell surfaces. The
+future API must expose an explicit represented-cell and SI conversion rather
+than embedding those values as implicit constants. It must also allow ligand
+association to remove free tissue amount, dissociation to return it, and
+internalization and degradation to change owner without losing ledger closure.
+
+The linked VEGFR source repository is exact and hash-audited but has no explicit
+licence. Its code cannot be copied or bundled. The DCCQ-1.3 equation contract
+must be independently specified from the CC-BY publication and Supporting
+Information before implementation. See [ADR-0053](adr/0053-dynamic-capillary-tissue-cell-qualification-boundary.md),
+[ADR-0054](adr/0054-vegfa-vegfr2-huvec-dccq-target.md), the [DCCQ-1
+plan](../qualification/DCCQ1_QUALIFICATION_PLAN.md), and the [DCCQ-1.2 source
+screen](../qualification/DCCQ1_EVIDENCE_SOURCE_SCREEN.md).
 
 ## 7. Configuration and data contracts
 
