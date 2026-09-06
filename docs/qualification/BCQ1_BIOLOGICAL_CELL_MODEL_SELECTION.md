@@ -156,16 +156,19 @@ qualification track, not a new milestone gate and not a replacement for M5.
 1. **BCQ-1.1 - candidate and licence selection, complete.** Freeze the selected
    source family, exact public identities, candidate ranking, rights boundary,
    and permissible claim before import.
-2. **BCQ-1.2 - prospective reproduction protocol.** Before executing either
-   model, freeze solver and version, time horizon and output grid, model
-   variants, initial conditions, ligand conditions, observables, numerical
-   tolerances, failure rules, negative controls, calibration-versus-evaluation
-   labels, and the expected report structure. No fitting is permitted.
+2. **BCQ-1.2 - prospective reproduction protocol, complete.** The
+   [frozen protocol](BCQ1_REPRODUCTION_PROTOCOL.md) binds COPASI/LSODA, the two
+   complete source cases, unresolved unit semantics, time grid, observables,
+   numerical and conservation tolerances, failure rules, ten negative controls,
+   evidence roles, and the expected report structure before execution. No
+   fitting is permitted and no trajectory has yet been generated.
 3. **BCQ-1.3 - independent external-solver reproduction.** Execute the frozen
-   source files with a mature SBML solver such as COPASI command line or
-   libRoadRunner, archive solver provenance, and compare the four reported
-   observables `PrER_mGFP`, `PrNES_mCherry`, `p43`, and `p18` with the
-   predeclared BioModels or publication references. Retain failed outputs.
+   source files with COPASI command line 4.46 Build 300 and LSODA, archive
+   solver provenance, and export and test the four
+   reported observables `PrER_mGFP`, `PrNES_mCherry`, `p43`, and `p18` under
+   the frozen source, replay, convergence, and invariant rules. Quantitative
+   publication-curve comparison remains blocked until a rights-compatible
+   numeric reference series is frozen. Retain failed outputs.
 4. **BCQ-1.4 - typed MEHLISSA adapter.** Map only declared stimulus, species,
    time, amount/concentration semantics, and outputs to the M5 contracts. Keep
    source equations separate from adapter code and do not refit parameters.
@@ -181,10 +184,10 @@ qualification track, not a new milestone gate and not a replacement for M5.
    licence, code-to-equation mapping, result archive, claim language, and User
    Guide/status updates before calling the variant biologically qualified.
 
-The recommended first solver is COPASI's command-line engine because it can be
-kept as an optional scientific reproduction dependency rather than a core
-runtime dependency. libRoadRunner is a reasonable second engine for a later
-cross-solver check. The exact choice becomes binding only in BCQ-1.2.
+The frozen first solver is COPASI's command-line engine 4.46 Build 300 with
+LSODA because it can remain an optional scientific reproduction dependency
+rather than a core runtime dependency. A second engine remains reasonable for
+a later cross-solver check, but it is not silently added to BCQ-1.3.
 
 ## Sources used for the screen
 
@@ -200,7 +203,8 @@ cross-solver check. The exact choice becomes binding only in BCQ-1.2.
 
 ## Present state
 
-BCQ-1.1 is a reproducible selection result and licence boundary. The next safe
-step is BCQ-1.2. Human PCQ-1 access work remains available but is not required
-for this cell-model reproduction path, and no external contact is implied by
-this decision.
+BCQ-1.1 is a reproducible selection result and licence boundary. BCQ-1.2 now
+adds the prospective, machine-checked execution decisions without importing or
+running a model. The next safe step is BCQ-1.3 independent external-solver
+reproduction. Human PCQ-1 access work remains available but is not required for
+this cell-model path, and no external contact is implied by this decision.

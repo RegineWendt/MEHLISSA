@@ -349,11 +349,34 @@ licence without extending it to the article or experimental data, keeps the
 larger 525/526 pair in its non-independent structural role, and prevents the
 unreleased endothelial BioModels submission from being treated as an audited
 artifact. Passing BCQ-1.1 proves selection and provenance discipline only.
-BCQ-1.2 must freeze solver, version, inputs, outputs, tolerances, controls, and
+BCQ-1.2 now freezes solver, version, inputs, outputs, tolerances, controls, and
 failure behavior before a developer executes, vendors, converts, or maps the
-selected model. Keep any external SBML engine an optional scientific
-reproduction dependency unless a later architecture decision establishes a
-supported runtime contract.
+selected model. Its checker is:
+
+```powershell
+python scripts/check_biological_cell_model_reproduction_protocol.py
+python -m unittest tests/test_biological_cell_model_reproduction_protocol.py
+```
+
+The checked machine authority is
+`data/qualification/biological-cell-model-reproduction-protocol-v1.json`; the
+human rationale and BCQ-1.3 handoff are in
+[`BCQ1_REPRODUCTION_PROTOCOL.md`](qualification/BCQ1_REPRODUCTION_PROTOCOL.md).
+Do not execute a different COPASI build, change LSODA tolerances, shorten the
+grid, substitute initial conditions, or infer seconds/minutes/SI units from the
+unit-incomplete SBML. Any material change requires a new protocol version
+committed before output from the changed choice is inspected. Keep COPASI an
+optional scientific reproduction dependency; BCQ-1.2 does not establish a
+supported runtime contract or install it for Workbench users.
+
+BCQ-1.3 must download the two source artifacts into a controlled, non-
+overwriting run workspace, verify their hashes before import, verify CopasiSE
+4.46 Build 300 provenance, execute all six declared runs, run all ten negative
+controls on disposable copies, and retain failed/partial outputs. It may report
+independent numerical execution of the frozen public average-cell SBML, but it
+must leave quantitative publication-curve alignment blocked until a
+rights-compatible numeric reference is frozen. A typed MEHLISSA adapter is
+BCQ-1.4 work and must not be smuggled into the external-solver reference.
 
 Do not edit the locked protocol or raw archives in place. A changed protocol
 requires a new version and pre-measurement commit; a changed candidate requires

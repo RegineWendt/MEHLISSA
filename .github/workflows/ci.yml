@@ -39,6 +39,7 @@ jobs:
           python scripts/check_pulmonary_capillary_uncertainty.py
           python scripts/check_pulmonary_capillary_repository_audit.py
           python scripts/check_biological_cell_model_candidates.py
+          python scripts/check_biological_cell_model_reproduction_protocol.py
           python scripts/check_paper1_release_candidate.py
           python -m unittest tests/test_evidence_validity_matrix.py
           python -m unittest tests/test_paper1_protocol.py
@@ -49,6 +50,7 @@ jobs:
           python -m unittest tests/test_pulmonary_capillary_uncertainty.py
           python -m unittest tests/test_pulmonary_capillary_repository_audit.py
           python -m unittest tests/test_biological_cell_model_candidates.py
+          python -m unittest tests/test_biological_cell_model_reproduction_protocol.py
           python -m unittest tests/test_paper1_measurement_tools.py
           python -m unittest tests/test_paper1_release_candidate.py
 

@@ -556,8 +556,9 @@ and [the capillary-to-cell hand-off](#capillary-to-cell-signal-hand-off-m52), or
 [the apoptosis response](#apoptosis-and-higher-layer-feedback-m57), or
 [the compressed population](#cohort-compressed-apoptosis-population-m58).
 
-The first move beyond those synthetic mechanisms has now been selected, but
-not yet executed. [BCQ-1.1](qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md)
+The first move beyond those synthetic mechanisms has now been selected and its
+execution rules frozen, but it has not yet been run.
+[BCQ-1.1](qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md)
 chooses the minimal Kallenberger 2014 CD95L-CD95-caspase-8 BioModels pair:
 `BIOMD0000000523` represents one average CD95-overexpressing HeLa cell and
 `BIOMD0000000524` one average wild-type HeLa cell. The public model artifacts
@@ -566,17 +567,26 @@ register. The associated article used CD95-HeLa observations for fitting and
 wild-type HeLa observations for a prediction test, making the family a strong
 first reproduction target.
 
-This selection is **not** a new experiment and does not yet make the Workbench
+The [BCQ-1.2 protocol](qualification/BCQ1_REPRODUCTION_PROTOCOL.md) now freezes
+COPASI 4.46 Build 300 with LSODA, both source hashes and initial-value sets, the
+unchanged `CD95L = 16.6` input, a primary/replay/tightened six-run matrix, four
+outputs, numerical and conservation gates, ten negative controls, and the
+result archive before any trajectory is inspected. The selected SBML files do
+not explicitly define time or substance units, so the first run uses unchanged
+source numbers labelled `unresolved-model-native`; it must not present the axis
+as seconds or minutes or the states as SI concentrations.
+
+This protocol is **not** a new experiment and does not yet make the Workbench
 capable of running that model. The SBML files are not bundled, no solver has
-been added, and M5 remains classified `software_test_surrogate`. The files each
-encode one average cell, so they cannot by themselves justify population
-claims. Their CC0 licence also does not cover the AAAS article or its
-experimental data. BCQ-1.2 must first freeze a no-refit reproduction protocol;
-BCQ-1.3 then uses an independent SBML solver; only later increments add a typed
-MEHLISSA adapter, cross-engine checks, justified population semantics, and
-independent review. Even if all of those pass, the validity scope remains a
-CD95L-stimulated HeLa-cell mechanism, not normal endothelium, a patient model,
-or clinical evidence.
+been added to the MEHLISSA runtime, no trajectory has been generated, and M5
+remains classified `software_test_surrogate`. The files each encode one average
+cell, so they cannot by themselves justify population claims. Their CC0
+licence also does not cover the AAAS article or its experimental data.
+BCQ-1.3 now performs the external-solver reproduction; only later increments
+add a typed MEHLISSA adapter, cross-engine checks, justified population
+semantics, and independent review. Even if all of those pass, the validity
+scope remains a CD95L-stimulated HeLa-cell mechanism, not normal endothelium, a
+patient model, or clinical evidence.
 
 #### 5.10 Nanodevice, detection message, and local one-hop communication
 
@@ -3346,8 +3356,10 @@ Planned substantive scientific extensions are:
   while access remains pending;
 - BCQ-1 biological cell-model qualification: BCQ-1.1 has selected and licence-
   screened the minimal Kallenberger CD95L-CD95-caspase-8
-  `BIOMD0000000523`/`0524` pair; BCQ-1.2 through BCQ-1.7 must still freeze and
-  execute the no-refit reproduction, map it through a typed M5 adapter, test
+  `BIOMD0000000523`/`0524` pair and BCQ-1.2 has frozen the no-refit solver,
+  source, unit, grid, output, tolerance, control, and archive decisions before
+  execution; BCQ-1.3 through BCQ-1.7 must execute the independent reproduction,
+  map it through a typed M5 adapter, test
   numerical and structural sensitivity, resolve or retain the average-cell
   population limit, and complete independent review;
 - dynamic capillary-tissue-cell coupling with time-dependent transport,

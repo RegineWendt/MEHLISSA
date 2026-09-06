@@ -250,7 +250,10 @@ remain binding.
 Post-gate [BCQ-1.1](../qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md)
 has selected and licence-screened the minimal Kallenberger 2014
 CD95L-CD95-caspase-8 BioModels pair `BIOMD0000000523`/`0524`. This is an
-auditable next-model decision only. The artifacts are not imported or executed,
-so no M5 evidence status changes until the prospective BCQ-1.2 protocol,
+auditable next-model decision only. The
+[BCQ-1.2 protocol](../qualification/BCQ1_REPRODUCTION_PROTOCOL.md) now freezes
+the independent solver, source cases, missing-unit guard, runs, outputs,
+numeric rules, controls, and archive before execution. The artifacts are still
+not imported or executed, so no M5 evidence status changes until the BCQ-1.3
 external-solver reproduction, typed adapter, cross-engine checks, population
 decision, and independent review have been completed.

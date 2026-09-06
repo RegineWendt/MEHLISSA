@@ -32,7 +32,7 @@ and constant-input reaction-network equilibria, supplemented by a shared
 ODE/SSA comparison. This is a technical
 acceptance criterion, not a substitute for external biological validation.
 
-## Selected external comparison—not current evidence
+## Frozen external comparison—not current evidence
 
 [BCQ-1.1](../qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md) has now
 completed the candidate and licence screen. The selected family is the minimal
@@ -51,13 +51,18 @@ because no stable, licensed machine artifact was established. A VEGF-A/VEGFR
 endothelial model is retained for the later dynamic capillary-tissue-cell
 program rather than used as this first, deliberately compact qualification.
 
-BCQ-1.1 does not change the M5 evidence classification. The selected models
-have not been imported, executed, mapped, or compared numerically with
-MEHLISSA. Article and experimental-data rights are separate from the CC0 model
-licence, and the public SBML artifacts each encode one average cell rather than
-the reported population ensemble. BCQ-1.2 must predeclare the external solver,
-observables, numerical tolerances, controls, failure handling, and no-refit
-rules before reproduction begins.
+BCQ-1.1 does not change the M5 evidence classification. Neither does the now
+completed [BCQ-1.2 prospective protocol](../qualification/BCQ1_REPRODUCTION_PROTOCOL.md):
+it freezes COPASI 4.46 Build 300/LSODA, both source cases, an unresolved-unit
+guard, a six-run primary/replay/tightened matrix, the four direct observables,
+source-derived invariants, numeric gates, ten negative controls, and the result
+archive before execution. The selected models still have not been imported,
+executed, mapped, or compared numerically with MEHLISSA. Article and
+experimental-data rights are separate from the CC0 model licence, and the
+public SBML artifacts each encode one average cell rather than the reported
+population ensemble. BCQ-1.3 is the first external-solver execution; its result
+cannot establish quantitative publication-curve alignment unless a separate
+rights-compatible numeric reference is frozen.
 
 ## Evidence gaps retained after M5
 

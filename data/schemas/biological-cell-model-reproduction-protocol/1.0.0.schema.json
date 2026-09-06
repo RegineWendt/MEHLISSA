@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/biological-cell-model-reproduction-protocol/1.0.0.schema.json",
+  "title": "MEHLISSA biological cell-model reproduction protocol",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "protocol", "source_artifacts", "shared_model_semantics", "unit_policy", "solver", "execution", "observables", "invariants", "acceptance_rules", "reference_and_claim_policy", "negative_controls", "result_archive", "decision"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "protocol": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "program", "version", "created_date", "status", "baseline_commit", "parent_register", "scope", "first_trajectory_generated", "external_model_bundled", "parameter_fitting", "clinical_use"],
+      "properties": {
+        "id": {"const": "BCQ-1.2"},
+        "program": {"const": "BCQ-1 biological cell-model qualification"},
+        "version": {"const": "1.0.0"},
+        "created_date": {"type": "string", "format": "date"},
+        "status": {"const": "prospective-protocol-frozen-before-first-trajectory"},
+        "baseline_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "parent_register": {"$ref": "#/$defs/frozen_file"},
+        "scope": {"type": "string", "minLength": 1},
+        "first_trajectory_generated": {"const": false},
+        "external_model_bundled": {"const": false},
+        "parameter_fitting": {"const": false},
+        "clinical_use": {"const": false}
+      }
+    },
+    "source_artifacts": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/source_artifact"}},
+    "shared_model_semantics": {
+      "type": "object", "additionalProperties": false,
+      "required": ["compartment", "kinetic_parameters", "assignment_rule", "stimulus"],
+      "properties": {
+        "compartment": {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "size", "spatial_dimensions", "declared_unit"],
+          "properties": {"id": {"const": "cell"}, "size": {"const": 1.0}, "spatial_dimensions": {"const": 3}, "declared_unit": {"type": "null"}}
+        },
+        "kinetic_parameters": {"type": "object", "minProperties": 11, "additionalProperties": {"type": "number"}},
+        "assignment_rule": {"type": "string", "minLength": 1},
+        "stimulus": {
+          "type": "object", "additionalProperties": false,
+          "required": ["species", "initial_value", "model_native_unit", "publication_mapping_note"],
+          "properties": {"species": {"const": "CD95L"}, "initial_value": {"const": 16.6}, "model_native_unit": {"const": "unresolved-model-native"}, "publication_mapping_note": {"type": "string", "minLength": 1}}
+        }
+      }
+    },
+    "unit_policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["sbml_declares_model_time_unit", "sbml_declares_model_substance_unit", "sbml_declares_compartment_unit", "time_label", "time_unit", "state_unit", "conversion_allowed", "rule"],
+      "properties": {
+        "sbml_declares_model_time_unit": {"const": false},
+        "sbml_declares_model_substance_unit": {"const": false},
+        "sbml_declares_compartment_unit": {"const": false},
+        "time_label": {"const": "model_time"},
+        "time_unit": {"const": "unresolved-model-native"},
+        "state_unit": {"const": "unresolved-model-native"},
+        "conversion_allowed": {"const": false},
+        "rule": {"type": "string", "minLength": 1}
+      }
+    },
+    "solver": {"$ref": "#/$defs/solver"},
+    "execution": {
+      "type": "object", "additionalProperties": false,
+      "required": ["time_grid", "matrix", "source_modification", "parameter_refitting", "case_substitution", "retain_failed_runs"],
+      "properties": {
+        "time_grid": {"$ref": "#/$defs/time_grid"},
+        "matrix": {"type": "array", "minItems": 6, "maxItems": 6, "items": {"$ref": "#/$defs/run"}},
+        "source_modification": {"const": "forbidden"},
+        "parameter_refitting": {"const": "forbidden"},
+        "case_substitution": {"const": "forbidden"},
+        "retain_failed_runs": {"const": true}
+      }
+    },
+    "observables": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"$ref": "#/$defs/observable"}},
+    "invariants": {"type": "array", "minItems": 9, "maxItems": 9, "items": {"$ref": "#/$defs/invariant"}},
+    "acceptance_rules": {"type": "object", "minProperties": 10, "additionalProperties": {"type": "string", "minLength": 1}},
+    "reference_and_claim_policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_artifact_reference", "publication_reference", "allowed_after_bcq_1_3_if_all_unblocked_rules_pass", "forbidden_after_bcq_1_3"],
+      "properties": {
+        "source_artifact_reference": {"type": "string", "minLength": 1},
+        "publication_reference": {"type": "string", "minLength": 1},
+        "allowed_after_bcq_1_3_if_all_unblocked_rules_pass": {"type": "string", "minLength": 1},
+        "forbidden_after_bcq_1_3": {"$ref": "#/$defs/nonempty_strings"}
+      }
+    },
+    "negative_controls": {"type": "array", "minItems": 10, "items": {"$ref": "#/$defs/negative_control"}},
+    "result_archive": {
+      "type": "object", "additionalProperties": false,
+      "required": ["root", "non_overwriting_run_id", "required_entries", "failure_retention", "raw_article_or_participant_data_allowed"],
+      "properties": {
+        "root": {"type": "string", "minLength": 1},
+        "non_overwriting_run_id": {"type": "string", "minLength": 1},
+        "required_entries": {"type": "array", "minItems": 13, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "failure_retention": {"type": "string", "minLength": 1},
+        "raw_article_or_participant_data_allowed": {"const": false}
+      }
+    },
+    "decision": {
+      "type": "object", "additionalProperties": false,
+      "required": ["current_result", "m5_evidence_status", "next_increment", "amendment_rule"],
+      "properties": {
+        "current_result": {"const": "protocol-frozen-no-trajectory-executed"},
+        "m5_evidence_status": {"const": "software_test_surrogate"},
+        "next_increment": {"const": "BCQ-1.3 independent external-solver reproduction"},
+        "amendment_rule": {"type": "string", "minLength": 1}
+      }
+    }
+  },
+  "$defs": {
+    "nonempty_strings": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "frozen_file": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+    },
+    "structure": {
+      "type": "object", "additionalProperties": false,
+      "required": ["compartments", "species", "reactions", "global_parameters", "assignment_rules"],
+      "properties": {"compartments": {"const": 1}, "species": {"const": 18}, "reactions": {"const": 13}, "global_parameters": {"const": 12}, "assignment_rules": {"const": 1}}
+    },
+    "source_artifact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["accession", "role", "source_url", "source_commit", "file", "sha256", "license", "sbml_level_version", "structure", "initial_values"],
+      "properties": {
+        "accession": {"enum": ["BIOMD0000000523", "BIOMD0000000524"]},
+        "role": {"type": "string", "minLength": 1},
+        "source_url": {"type": "string", "format": "uri"},
+        "source_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "file": {"type": "string", "pattern": "^BIOMD[0-9]{10}\\.xml$"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "license": {"const": "CC0-1.0"},
+        "sbml_level_version": {"const": "Level 2 Version 4"},
+        "structure": {"$ref": "#/$defs/structure"},
+        "initial_values": {"type": "object", "minProperties": 18, "maxProperties": 18, "additionalProperties": {"type": "number"}}
+      }
+    },
+    "settings": {
+      "type": "object", "additionalProperties": false,
+      "required": ["relative_tolerance", "absolute_tolerance", "maximum_internal_steps"],
+      "properties": {"relative_tolerance": {"type": "number", "exclusiveMinimum": 0}, "absolute_tolerance": {"type": "number", "exclusiveMinimum": 0}, "maximum_internal_steps": {"type": "integer", "minimum": 10000}}
+    },
+    "solver": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "version", "build", "release_tag", "source_commit", "release_url", "license", "task", "method", "reduced_model", "primary_settings", "tightened_settings", "optimization_or_parameter_estimation_enabled", "dependency_role"],
+      "properties": {
+        "name": {"const": "COPASI command-line engine (CopasiSE)"}, "version": {"const": "4.46"}, "build": {"const": 300}, "release_tag": {"const": "Build-300"}, "source_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"}, "release_url": {"type": "string", "format": "uri"}, "license": {"const": "Artistic-2.0"}, "task": {"const": "deterministic time course"}, "method": {"const": "LSODA"}, "reduced_model": {"const": false}, "primary_settings": {"$ref": "#/$defs/settings"}, "tightened_settings": {"$ref": "#/$defs/settings"}, "optimization_or_parameter_estimation_enabled": {"const": false}, "dependency_role": {"type": "string", "minLength": 1}
+      }
+    },
+    "time_grid": {
+      "type": "object", "additionalProperties": false,
+      "required": ["start", "end", "interval", "points_including_endpoints", "unit", "output_at_exact_grid"],
+      "properties": {"start": {"const": 0.0}, "end": {"const": 240.0}, "interval": {"const": 0.25}, "points_including_endpoints": {"const": 961}, "unit": {"const": "unresolved-model-native"}, "output_at_exact_grid": {"const": true}}
+    },
+    "run": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "accession", "settings", "purpose"],
+      "properties": {"id": {"type": "string", "pattern": "^BCQ-RUN-(523|524)-[PRT]$"}, "accession": {"enum": ["BIOMD0000000523", "BIOMD0000000524"]}, "settings": {"enum": ["primary", "tightened"]}, "purpose": {"enum": ["primary reproduction", "deterministic replay", "numerical convergence"]}}
+    },
+    "observable": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "role", "meaning", "operation"],
+      "properties": {"id": {"enum": ["PrER_mGFP", "PrNES_mCherry", "p43", "p18"]}, "role": {"const": "primary"}, "meaning": {"type": "string", "minLength": 1}, "operation": {"const": "direct SBML species value"}}
+    },
+    "invariant": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "species", "expected_initial_total_by_accession"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^INV-[A-Z0-9-]+$"},
+        "species": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "expected_initial_total_by_accession": {
+          "type": "object", "additionalProperties": false,
+          "required": ["BIOMD0000000523", "BIOMD0000000524"],
+          "properties": {"BIOMD0000000523": {"type": "number"}, "BIOMD0000000524": {"type": "number"}}
+        }
+      }
+    },
+    "negative_control": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "test", "expected_result"],
+      "properties": {"id": {"type": "string", "pattern": "^BCQ-NC-[0-9]{2}$"}, "test": {"type": "string", "minLength": 1}, "expected_result": {"type": "string", "minLength": 1}}
+    }
+  }
+}
