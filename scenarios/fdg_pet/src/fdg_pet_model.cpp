@@ -13,17 +13,6 @@ namespace {
 using State = std::array<double, 7>;
 
 double blood_rate(const CandidateParameters& p, double seconds_value) {
-    const auto raw = [&](double time) {
-        if (time < 0.0) {
-            return 0.0;
-        }
-        double value{};
-        for (std::size_t i{}; i < 4; ++i) {
-            value += p.blood_amplitudes_per_minute_squared[i] *
-                     std::exp(-p.blood_decay_per_minute[i] * time / 60.0) / 3600.0;
-        }
-        return value;
-    };
     double area{};
     for (std::size_t i{}; i < 4; ++i) {
         area += p.blood_amplitudes_per_minute_squared[i] / p.blood_decay_per_minute[i] / 60.0;
