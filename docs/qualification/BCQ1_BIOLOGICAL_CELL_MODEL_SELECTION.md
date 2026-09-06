@@ -14,9 +14,10 @@ are BioModels `BIOMD0000000523` for CD95-overexpressing HeLa cells and
 variant, are encoded in SBML Level 2 Version 4, and are distributed under
 CC0 1.0.
 
-This completes candidate and licence selection only. No external model has been
-added to the source tree, no simulation has been run through MEHLISSA, and no
-biological qualification claim has passed. The machine-readable authority is
+At the BCQ-1.1 increment, this completed candidate and licence selection only:
+no external model had been added to the source tree, no simulation had yet run
+through MEHLISSA, and no biological qualification claim had passed. The
+machine-readable selection authority remains
 `data/qualification/biological-cell-model-candidate-register-v1.json`.
 
 ## Why this is the strongest first package
@@ -170,20 +171,22 @@ qualification track, not a new milestone gate and not a replacement for M5.
    publication-curve comparison remains blocked until a rights-compatible
    numeric reference series is frozen. Failed outputs, the failed exact-zero
    protocol result, and its disclosed prospective amendment are retained.
-4. **BCQ-1.4 - typed MEHLISSA adapter.** Map only declared stimulus, species,
-   time, amount/concentration semantics, and outputs to the M5 contracts. Keep
-   source equations separate from adapter code and do not refit parameters.
-5. **BCQ-1.5 - cross-engine and structural checks.** Compare the MEHLISSA path
-   with the independent solver, assess numerical convergence, vary declared
-   solver tolerances, and use the larger 525/526 variant only as a same-family
-   structural sensitivity analysis.
-6. **BCQ-1.6 - population and uncertainty decision.** Import the ensemble only
-   if its distributions and reuse basis can be reproduced. Otherwise retain the
-   explicit average-cell limit. Quantify identifiable sensitivities and publish
-   every passed, partial, blocked, and failed result.
-7. **BCQ-1.7 - independent review and bounded claim.** Review source identity,
-   licence, code-to-equation mapping, result archive, claim language, and User
-   Guide/status updates before calling the variant biologically qualified.
+4. **BCQ-1.4 - typed MEHLISSA adapter, complete.** The no-refit adapter maps the
+   exact stimulus, 18 states, unresolved unit semantics, and four outputs while
+   a separate class owns the 13 source reactions.
+5. **BCQ-1.5 - cross-engine and structural checks, complete.** Both MEHLISSA
+   cases pass all-state COPASI comparison, deterministic replay, RK4
+   convergence, invariants, and nonnegativity; 525/526 remain same-family
+   structural context only.
+6. **BCQ-1.6 - population and uncertainty decision, complete.** The reusable
+   ensemble precondition is not met, so the average-cell limit is retained.
+   Stable local sensitivities are published as diagnostics, not population
+   evidence.
+7. **BCQ-1.7 - independent checks and bounded claim, complete.** The separate
+   checker, code-to-equation table, archive, claim, User Guide, Roadmap,
+   requirements, architecture, and status reviews pass. Publication alignment,
+   reusable population evidence, external human attestation, and biological
+   qualification remain blocked.
 
 The frozen first solver is COPASI's command-line engine 4.46 Build 300 with
 LSODA because it can remain an optional scientific reproduction dependency
@@ -208,6 +211,8 @@ BCQ-1.1 is a reproducible selection result and licence boundary. BCQ-1.2 adds
 the prospective, machine-checked execution decisions. BCQ-1.3 has independently
 executed the two unchanged artifacts with nine computational gates and ten
 negative controls passing; publication alignment and biological qualification
-remain open. The next safe step is BCQ-1.4 typed MEHLISSA mapping. Human PCQ-1
-access work remains available but is not required for this cell-model path, and
-no external contact is implied by this decision.
+remain open after BCQ-1.3. The completed
+[BCQ-1.4–1.7 result](BCQ1_MEHLISSA_QUALIFICATION_RESULT.md) now establishes a
+typed, computationally qualified published average-cell mechanism inside
+MEHLISSA while retaining the blocked biological gates. Human PCQ-1 access work
+remains separate, and no external contact is implied by this decision.

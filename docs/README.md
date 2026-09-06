@@ -22,7 +22,7 @@ rules are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 | understand APIs or add a model such as kidney | [Software Architecture and Developer Guide](architecture/SOFTWARE_ARCHITECTURE.md) | implemented structure, public APIs, coupling contracts, extension workflow, kidney outline, and personalization |
 | understand what comes next | [Roadmap](ROADMAP.md) | integrated platform history, scientific qualification program, further scenarios and organs, scaling, and the digital-twin path |
 | assess evidence for Paper 1 | [Evidence and Validity Baseline](publication/EVIDENCE_AND_VALIDITY_BASELINE.md) | schema-validated evidence roles, calibration/validation separation, source audit, claim boundaries, and bibliography export |
-| follow the active scientific qualification cycles | [PCQ-1 pulmonary and capillary package](qualification/README.md) and [BCQ-1 biological cell-model package](qualification/BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md) | pulmonary/capillary access-dependent work plus the completed independent COPASI reproduction and next typed-adapter step for the public CD95L-CD95-caspase-8 model family |
+| follow the scientific qualification cycles | [PCQ-1 pulmonary and capillary package](qualification/README.md) and [completed BCQ-1 biological cell-model package](qualification/BCQ1_MEHLISSA_QUALIFICATION_RESULT.md) | pulmonary/capillary access-dependent work plus the typed, all-state MEHLISSA/COPASI qualification and bounded average-cell conclusion for the public CD95L-CD95-caspase-8 model family |
 | reproduce Paper 1 technical measurements | [Technical Experiment Protocol v2](publication/PAPER1_TECHNICAL_EXPERIMENT_PROTOCOL_V2.md) | locked conditions, three experiments, metrics, controls, exclusions, failure handling, and archive structure |
 | inspect Paper 1 results | [Technical Measurement Report](publication/PAPER1_TECHNICAL_MEASUREMENTS.md) | 112-attempt body campaign, small M7 resource/replay study, access-path parity, retained setup deviation, and interpretation limits |
 | review the Paper 1 release candidate | [Candidate handoff](../publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/HANDOFF.md) | source export, raw archives, machine manifest, hashes, claim registry, reproduction, and review checklist |
@@ -86,6 +86,16 @@ rules are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
   attempts, complete hashed archive, solver and source provenance, six raw
   trajectories, numerical gates and negative controls, while enforcing the
   blocked publication-alignment and biological-qualification claims.
+- `python scripts/check_biological_cell_model_integration_protocol.py`
+  validates the prospectively frozen BCQ-1.4–1.7 typed mapping, implementation
+  hashes, RK4 grids, cross-engine limits, 525/526 structural-only role,
+  average-cell population decision, local-sensitivity design, review scope,
+  archive contract, and twelve negative controls.
+- `python scripts/check_biological_cell_model_qualification_result.py`
+  independently reconstructs the completed BCQ archive, all-state COPASI
+  comparisons, MEHLISSA convergence and replay, invariants, structural audit,
+  sensitivity stability, review outcomes, documentation links, hashes, and
+  bounded computational claim.
 - [Data licensing](DATA_LICENSING.md), the
   [licence and data inventory](m0/LICENSE_AND_DATA_INVENTORY.md), and
   [ADR-0007](architecture/adr/0007-repository-license.md) define release and

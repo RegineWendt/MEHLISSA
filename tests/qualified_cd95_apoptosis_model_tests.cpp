@@ -91,9 +91,10 @@ TEST_CASE("The qualified CD95 adapter locks source identity and unresolved units
 TEST_CASE("The qualified CD95 mechanism preserves every source-derived invariant",
           "[m5][bcq][adapter][conservation]") {
     const cell::QualifiedCd95ApoptosisAdapter adapter;
-    for (const auto [source_case, fadd, p55, bid, nes, er] :
-         {std::tuple{cell::KallenbergerCase::cd95_hela, 93.0, 155.0, 236.0, 973.0, 5178.0},
-          std::tuple{cell::KallenbergerCase::wild_type_hela, 90.0, 127.0, 224.0, 1909.0, 3316.0}}) {
+    for (const auto [source_case, fadd, p55, bid, nes, er, cd95] :
+         {std::tuple{cell::KallenbergerCase::cd95_hela, 93.0, 155.0, 236.0, 973.0, 5178.0, 116.0},
+          std::tuple{cell::KallenbergerCase::wild_type_hela, 90.0, 127.0, 224.0, 1909.0, 3316.0,
+                     12.0}}) {
         const auto result = adapter.evaluate(request(source_case));
         REQUIRE(result.samples.size() == 961);
         for (const auto& sample : result.samples) {
@@ -117,10 +118,22 @@ TEST_CASE("The qualified CD95 mechanism preserves every source-derived invariant
                       sample.state,
                       {cell::KallenbergerSpecies::prnes_mcherry, cell::KallenbergerSpecies::prnes},
                       nes) <= 1.0e-8);
+            CHECK(invariant_residual(sample.state,
+                                     {cell::KallenbergerSpecies::prnes_mcherry,
+                                      cell::KallenbergerSpecies::mcherry},
+                                     nes) <= 1.0e-8);
             CHECK(invariant_residual(
                       sample.state,
                       {cell::KallenbergerSpecies::prer_mgfp, cell::KallenbergerSpecies::prer},
                       er) <= 1.0e-8);
+            CHECK(invariant_residual(
+                      sample.state,
+                      {cell::KallenbergerSpecies::prer_mgfp, cell::KallenbergerSpecies::mgfp},
+                      er) <= 1.0e-8);
+            CHECK(invariant_residual(sample.state, {cell::KallenbergerSpecies::cd95}, cd95) <=
+                  1.0e-8);
+            CHECK(invariant_residual(sample.state, {cell::KallenbergerSpecies::cd95l}, 16.6) <=
+                  1.0e-8);
         }
     }
 }

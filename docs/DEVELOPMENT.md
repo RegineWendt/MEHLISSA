@@ -208,10 +208,11 @@ The accepted baseline comprises:
 - MEHLISSA Research Workbench 1.0 for guided configuration, execution,
   dashboards, provenance/evidence audit, descriptive campaign analysis, and
   export; and
-- 286 local Windows/MSVC tests plus accepted Windows/MSVC, Linux/GCC,
-  Linux/Clang, and macOS/Apple Clang CI; the Clang analysis path also covers
-  formatting, static analysis, and sanitizers, while the macOS path covers the
-  complete native ARM64 source build and test suite.
+- 290 local Windows/MSVC tests in the current BCQ-complete development branch;
+  the published Workbench baseline retains its accepted 286-test suite across
+  Windows/MSVC, Linux/GCC, Linux/Clang, and macOS/Apple Clang CI; the Clang
+  analysis path also covers formatting, static analysis, and sanitizers, while
+  the macOS path covers the complete native ARM64 source build and test suite.
 
 Medical scenarios and legacy state do not belong in the kernel. Biological and
 communication models depend on it as separate libraries. Browser code does not
@@ -359,6 +360,10 @@ python -m unittest tests/test_biological_cell_model_reproduction_protocol.py
 python scripts/check_biological_cell_model_reproduction_result.py
 python -m unittest tests/test_biological_cell_model_reproduction_result.py
 python -m unittest tests/test_biological_cell_model_reproduction_runner.py
+python scripts/check_biological_cell_model_integration_protocol.py
+python -m unittest tests/test_biological_cell_model_integration_protocol.py
+python scripts/check_biological_cell_model_qualification_result.py
+python -m unittest tests/test_biological_cell_model_qualification_result.py
 ```
 
 The checked machine authority is
@@ -398,8 +403,25 @@ python scripts/run_biological_cell_model_reproduction.py `
 The runner fails before import on a source-hash mismatch and does not vendor
 COPASI or the CC0 SBML files. The result checker needs only the checked-in
 archive; it recalculates the numerical acceptance values from the raw CSV
-files. A typed MEHLISSA adapter is BCQ-1.4 work and must not be smuggled into
-the external-solver reference.
+files. BCQ-1.4–1.7 are now implemented separately under the frozen integration
+protocol. The public API is
+`mehlissa/models/cell/qualified_cd95_apoptosis_model.hpp`:
+
+- `QualifiedCd95ApoptosisAdapter` is the no-refit M5 boundary;
+- `KallenbergerMinimalMechanism` contains the separately reviewable 13 source
+  reactions and assignment rule;
+- `QualifiedCd95Request` requires an exact source case, `CD95L=16.6`, explicit
+  `unresolved-model-native` semantics, and a bounded exact output grid; and
+- `mehlissa_bcq1_qualification_runner` is a testing/qualification executable,
+  not a general SBML or clinical interface.
+
+Do not convert these states to SI, introduce parameter overrides into the
+adapter, or substitute a population distribution. Changing source equations,
+parameter identities, time semantics, or pass limits requires a new prospective
+protocol version. The completed result and code-to-equation review are in
+[`BCQ1_MEHLISSA_QUALIFICATION_RESULT.md`](qualification/BCQ1_MEHLISSA_QUALIFICATION_RESULT.md).
+The result checker reconstructs all numerical claims from the committed CSVs
+without invoking the result runner or requiring COPASI/SBML.
 
 Do not edit the locked protocol or raw archives in place. A changed protocol
 requires a new version and pre-measurement commit; a changed candidate requires

@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "20260906T085845Z-e3e71e6ce6c2",
+  "status": "SUPERSEDED_INCOMPLETE_INVARIANT_AGGREGATION",
+  "computational_results_valid": true,
+  "authoritative": false,
+  "reason": "All trajectories and numerical comparisons passed, but the archive-level integrity aggregate explicitly evaluated only five of the nine frozen source invariants. The remaining four were covered indirectly by all-state comparison. This run is superseded by one that reports all nine invariants directly."
+}

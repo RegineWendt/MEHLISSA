@@ -556,9 +556,9 @@ and [the capillary-to-cell hand-off](#capillary-to-cell-signal-hand-off-m52), or
 [the apoptosis response](#apoptosis-and-higher-layer-feedback-m57), or
 [the compressed population](#cohort-compressed-apoptosis-population-m58).
 
-The first move beyond those synthetic mechanisms has now been selected and
-reproduced in an independent external solver, but it is not yet available as a
-Workbench simulation model.
+The first mechanism beyond those synthetic fixtures is now available through a
+typed C++ M5 adapter and has completed the bounded BCQ-1 computational
+qualification series. It is not yet a selectable Workbench scenario model.
 [BCQ-1.1](qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md)
 chooses the minimal Kallenberger 2014 CD95L-CD95-caspase-8 BioModels pair:
 `BIOMD0000000523` represents one average CD95-overexpressing HeLa cell and
@@ -586,15 +586,39 @@ numerical-equivalence rule before the passing run. Quantitative publication-
 curve alignment is still blocked because no rights-compatible numeric
 reference series has been frozen.
 
-This result does **not** make the Workbench capable of running the biological
-model. The SBML files and COPASI are not bundled, no MEHLISSA adapter exists,
-and M5 remains classified `software_test_surrogate`. Each file encodes one
-average cell, so it cannot by itself justify a population claim. The CC0 model
-licence also does not cover the AAAS article or its experimental data. BCQ-1.4
-next adds a typed adapter; later increments compare engines, decide population
-semantics, and obtain independent review. Even if all pass, the validity scope
-remains a CD95L-stimulated HeLa-cell mechanism, not normal endothelium, a
-patient model, or clinical evidence.
+The [BCQ-1.4–1.7 completion report](qualification/BCQ1_MEHLISSA_QUALIFICATION_RESULT.md)
+documents the next four increments. `QualifiedCd95ApoptosisAdapter` maps the
+two frozen source cases, the unchanged `CD95L = 16.6` stimulus, all 18 states,
+the four primary observables, and the unresolved time/state semantics without
+refitting. Its source-equation class implements the 13 reactions separately
+from the adapter. Fixed-step RK4 trajectories for both cases reproduce the
+independent COPASI reference over all 961 time points: the worst normalized
+cross-engine difference uses 2.31% of its prospective tolerance and the worst
+step-refinement difference uses 0.00123%.
+
+For developers, include
+`<mehlissa/models/cell/qualified_cd95_apoptosis_model.hpp>`, construct a
+`QualifiedCd95Request`, keep the unit tag equal to
+`unresolved-model-native`, and call `QualifiedCd95ApoptosisAdapter::evaluate`.
+The adapter rejects any changed stimulus or source parameters. The separate
+`mehlissa_bcq1_qualification_runner` executable exists for reproducibility and
+local sensitivity work; it is not a clinical or general-purpose SBML runner.
+
+BCQ-1.5 also verifies that the larger 525/526 pair has the expected 19-reaction
+structure, but correctly treats it as same-publication sensitivity context,
+not independent validation. BCQ-1.6 explicitly declines to invent a cell
+population: no reusable row-level protein distribution and correlation
+structure was established. Stable local parameter sensitivities are therefore
+diagnostics only. BCQ-1.7 closes the series with all unblocked computational
+checks passing while publication-curve alignment, the population ensemble,
+and external human reviewer attestation remain `BLOCKED`.
+
+Consequently, one named M5 variant is now classified as a
+`computationally-qualified published average-cell mechanism`; the original M5
+models remain `software_test_surrogate` fixtures. The result does **not**
+establish biological qualification, an individual-cell prediction, normal
+endothelial behavior, a patient model, or clinical evidence. The CC0 model
+licence also does not cover the AAAS article or its experimental data.
 
 #### 5.10 Nanodevice, detection message, and local one-hop communication
 
@@ -3362,14 +3386,15 @@ Planned substantive scientific extensions are:
   repository-first availability audit and governed request package completed
   before direct data requests, followed by the source-neutral PCQ-1.6 shell
   while access remains pending;
-- BCQ-1 biological cell-model qualification: BCQ-1.1 selected and licence-
-  screened the minimal Kallenberger CD95L-CD95-caspase-8
-  `BIOMD0000000523`/`0524` pair, BCQ-1.2 froze the no-refit execution protocol,
-  and BCQ-1.3 completed the independent COPASI reproduction with nine
-  computational gates passed and publication alignment explicitly blocked;
-  BCQ-1.4 through BCQ-1.7 must map it through a typed M5 adapter, test
-  cross-engine and structural sensitivity, resolve or retain the average-cell
-  population limit, and complete independent review;
+- BCQ-1 biological cell-model qualification: BCQ-1.1 through BCQ-1.7 are
+  complete. The minimal Kallenberger CD95L-CD95-caspase-8
+  `BIOMD0000000523`/`0524` pair is licence-screened, reproduced in COPASI,
+  mapped through a typed no-refit M5 adapter, compared over every state and
+  time point, convergence-tested, structurally audited against 525/526, and
+  locally sensitivity-tested. This establishes a computationally qualified
+  published average-cell mechanism only; publication curves, a reusable
+  population ensemble, external human attestation, and biological or clinical
+  qualification remain blocked;
 - dynamic capillary-tissue-cell coupling with time-dependent transport,
   interaction or consumption, feedback, and conservation checks;
 - one frozen medical reference scenario evaluated end to end against

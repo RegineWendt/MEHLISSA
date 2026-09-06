@@ -32,7 +32,7 @@ and constant-input reaction-network equilibria, supplemented by a shared
 ODE/SSA comparison. This is a technical
 acceptance criterion, not a substitute for external biological validation.
 
-## External source reproduction—not yet M5 biological evidence
+## Computationally qualified published average-cell mechanism
 
 [BCQ-1.1](../qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md) has now
 completed the candidate and licence screen. The selected family is the minimal
@@ -51,7 +51,7 @@ because no stable, licensed machine artifact was established. A VEGF-A/VEGFR
 endothelial model is retained for the later dynamic capillary-tissue-cell
 program rather than used as this first, deliberately compact qualification.
 
-BCQ-1.1 does not change the M5 evidence classification. The completed
+BCQ-1.1 did not by itself change the M5 evidence classification. The completed
 [BCQ-1.2 prospective protocol](../qualification/BCQ1_REPRODUCTION_PROTOCOL.md)
 it freezes COPASI 4.46 Build 300/LSODA, both source cases, an unresolved-unit
 guard, a six-run primary/replay/tightened matrix, the four direct observables,
@@ -63,20 +63,30 @@ computational gates and ten negative controls, and retains the original exact-
 zero replay failure plus the pre-run versioned amendment. The result establishes
 numerically stable execution of the unchanged public equations.
 
-It still does not change the M5 evidence classification. The model has not been
-mapped or executed through MEHLISSA, and no cross-engine agreement, publication-
-curve alignment, biological qualification, calibrated population ensemble, or
-independent review exists yet. Article and experimental-data rights remain
-separate from the CC0 model licence, and each public SBML artifact encodes one
-average cell. BCQ-1.4 is the typed MEHLISSA adapter.
+The completed
+[BCQ-1.4–1.7 qualification](../qualification/BCQ1_MEHLISSA_QUALIFICATION_RESULT.md)
+now adds a typed, no-refit MEHLISSA adapter and a separate implementation of
+the 13 source reactions. Both 18-state, 961-point MEHLISSA trajectories agree
+with the independent COPASI archive inside prospective limits, replay exactly,
+converge under step halving, and preserve the source invariants. The 525/526
+pair is verified only as a same-publication structural companion. All local
+parameter sensitivity step checks pass.
+
+This promotes only the named Kallenberger minimal variant to
+`computationally-qualified published average-cell mechanism`. It does not
+promote the configurable synthetic M5 fixtures, and it does not establish
+biological qualification. Publication-curve alignment, a reusable population
+ensemble, and external human reviewer attestation remain blocked. Article and
+experimental-data rights remain separate from the CC0 model licence, and each
+selected source artifact still represents one average cell.
 
 ## Evidence gaps retained after M5
 
 - a capillary-generated dynamic biomarker field rather than prescribed exposure;
 - named ligand, receptor, cell type, device, drug, target, and disease context;
 - jointly compatible kinetic, dose-response, population, and uncertainty data;
-- external SBML/CellML simulator conformance and independently reproduced
-  apoptosis trajectories;
+- external experimental or publication-series validation beyond the completed
+  MEHLISSA/COPASI numerical conformance of the selected average-cell mechanism;
 - calibrated inter-cell heterogeneity and spatial correlation;
 - pharmacokinetics, pharmacodynamics, metabolism, toxicity, resistance, and
   clearance; and

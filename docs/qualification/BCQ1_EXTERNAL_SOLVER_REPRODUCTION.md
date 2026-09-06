@@ -162,10 +162,11 @@ The supported claim is:
 
 This is not quantitative reproduction of a publication curve, the complete
 held-out population analysis, endothelial-cell or organ realism, patient
-prediction, treatment evidence, or clinical validation. BCQ-1.4 next defines a
+prediction, treatment evidence, or clinical validation. The later completed
+[BCQ-1.4–1.7 package](BCQ1_MEHLISSA_QUALIFICATION_RESULT.md) defines a
 typed MEHLISSA adapter for only the declared stimulus, states, observables, and
-still-unresolved unit/time semantics. Cross-engine comparison begins only in
-BCQ-1.5.
+still-unresolved unit/time semantics. The completed BCQ-1.5 cross-engine
+comparison uses this archive as its reference and retains these limits.
 
 ## Sources
 

@@ -1,0 +1,81 @@
+{
+  "allowed_claim": "MEHLISSA contains a typed, no-refit reimplementation of the selected Kallenberger minimal average-cell SBML mechanism whose trajectories reproduce the independently generated COPASI reference within the frozen numerical limits.",
+  "biological_qualification": "NOT_ESTABLISHED",
+  "dimensions": [
+    {
+      "dimension": "source_identity",
+      "status": "PASS"
+    },
+    {
+      "dimension": "licence",
+      "status": "PASS"
+    },
+    {
+      "dimension": "code_to_equation_mapping",
+      "status": "PASS"
+    },
+    {
+      "dimension": "typed_contract",
+      "status": "PASS"
+    },
+    {
+      "dimension": "cross_engine_archive",
+      "status": "PASS"
+    },
+    {
+      "dimension": "structural_scope",
+      "status": "PASS"
+    },
+    {
+      "dimension": "population_scope",
+      "status": "PASS"
+    },
+    {
+      "dimension": "claim_language",
+      "status": "PASS"
+    },
+    {
+      "dimension": "user_guide",
+      "status": "PASS"
+    },
+    {
+      "dimension": "roadmap",
+      "status": "PASS"
+    },
+    {
+      "dimension": "requirements_matrix",
+      "status": "PASS"
+    },
+    {
+      "dimension": "project_status",
+      "status": "PASS"
+    },
+    {
+      "dimension": "publication_curve_alignment",
+      "status": "BLOCKED"
+    },
+    {
+      "dimension": "population_ensemble",
+      "status": "BLOCKED"
+    },
+    {
+      "dimension": "external_human_reviewer_attestation",
+      "status": "BLOCKED"
+    }
+  ],
+  "forbidden_claims": [
+    "quantitative reproduction of publication curves",
+    "reproduction of the publication population ensemble",
+    "biological qualification or prediction for an individual cell",
+    "normal endothelial-cell realism",
+    "organ, patient, diagnostic, treatment, safety, or clinical validity",
+    "independent experimental validation",
+    "treating the 525/526 pair as an independent evidence source"
+  ],
+  "negative_controls_passed": 12,
+  "negative_controls_total": 12,
+  "outcome": "COMPUTATIONALLY_QUALIFIED_AVERAGE_CELL_WITH_BLOCKED_BIOLOGICAL_GATES",
+  "review_type": "runner-independent automated and maintainer review; no external human attestation",
+  "run_id": "20260906T084542Z-e3e71e6ce6c2",
+  "schema_version": "1.0.0"
+}

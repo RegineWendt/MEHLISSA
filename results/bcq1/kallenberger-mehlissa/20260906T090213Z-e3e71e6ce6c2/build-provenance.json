@@ -1,0 +1,26 @@
+{
+  "git_commit": "f2d66af524dbc5eddb93857573bf79bfefbe0153",
+  "implementation": {
+    "hash_policy": "SHA-256 over Git-canonical LF bytes",
+    "qualification_runner": {
+      "path": "models/cell/tools/bcq1_qualification_runner.cpp",
+      "sha256": "1d6546297ffa9722074395e044a06303d018bf2095501c85f20a6e4d109d8ed9"
+    },
+    "separation_rule": "The public adapter locks source identity, stimulus and unresolved units. The source-equation mechanism is a separate class and parameter variation is available only to the explicit qualification runner.",
+    "source_equations": {
+      "path": "models/cell/src/qualified_cd95_apoptosis_model.cpp",
+      "sha256": "41bc80a35533ea6a5fb7ea1168c2c5c10c9417689f115ab725e8b931cc0b8f4f"
+    },
+    "typed_adapter": {
+      "path": "models/cell/include/mehlissa/models/cell/qualified_cd95_apoptosis_model.hpp",
+      "sha256": "628e32d6669d8a778519d8181d1e629af0b5723aafe900785332e20190ebd547"
+    }
+  },
+  "platform": "Windows-10-10.0.26200-SP0",
+  "protocol_sha256": "e3e71e6ce6c2c5ca028d373710a5fb19ef2ced7388ad450b05d6414f0edd4b52",
+  "python_version": "3.11.7",
+  "run_id": "20260906T090213Z-e3e71e6ce6c2",
+  "runner_path_role": "local build artifact, not archived",
+  "runner_sha256": "70116bd3894ff62c962c023a183af2b99250aa493eb04f4ce4d25cdfc67cdb7f",
+  "schema_version": "1.0.0"
+}

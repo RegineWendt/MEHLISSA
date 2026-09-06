@@ -1,0 +1,232 @@
+{
+  "schema_version": "1.0.0",
+  "protocol": {
+    "id": "BCQ-1.4-1.7",
+    "program": "BCQ-1 biological cell-model qualification",
+    "version": "1.0.0",
+    "created_date": "2026-09-06",
+    "status": "prospective-protocol-frozen-before-qualification-archive",
+    "baseline_commit": "bc03999",
+    "scope": "Typed no-refit MEHLISSA mapping, cross-engine reproduction, structural-sensitivity audit, population and uncertainty decision, and bounded close-out review for the selected Kallenberger 2014 minimal average-cell family.",
+    "pre_protocol_development_runs": true,
+    "pre_protocol_development_runs_role": "Feasibility and test-development only; no generated development trajectory is a qualification result. The first authoritative archive is generated after this protocol commit.",
+    "parameter_fitting": false,
+    "clinical_use": false
+  },
+  "parent_result": {
+    "path": "data/qualification/biological-cell-model-reproduction-result-v1.json",
+    "sha256": "0d538ef4e95a026ee7747f2f1143f43e5c76928c2593786162ff27fd1a261ef8",
+    "authoritative_copasi_archive": "results/bcq1/kallenberger-minimal/20260906T071228Z-5dd09984d838"
+  },
+  "implementation": {
+    "hash_policy": "SHA-256 over Git-canonical LF bytes",
+    "typed_adapter": {
+      "path": "models/cell/include/mehlissa/models/cell/qualified_cd95_apoptosis_model.hpp",
+      "sha256": "628e32d6669d8a778519d8181d1e629af0b5723aafe900785332e20190ebd547"
+    },
+    "source_equations": {
+      "path": "models/cell/src/qualified_cd95_apoptosis_model.cpp",
+      "sha256": "41bc80a35533ea6a5fb7ea1168c2c5c10c9417689f115ab725e8b931cc0b8f4f"
+    },
+    "qualification_runner": {
+      "path": "models/cell/tools/bcq1_qualification_runner.cpp",
+      "sha256": "1d6546297ffa9722074395e044a06303d018bf2095501c85f20a6e4d109d8ed9"
+    },
+    "separation_rule": "The public adapter locks source identity, stimulus and unresolved units. The source-equation mechanism is a separate class and parameter variation is available only to the explicit qualification runner."
+  },
+  "typed_mapping": {
+    "source_cases": [
+      {
+        "accession": "BIOMD0000000523",
+        "role": "calibration-like-CD95-HeLa-average-cell",
+        "source_commit": "8605e43f8e2fd364f122d579341891c0058ef778",
+        "sbml_sha256": "2afe6758ab396038e71fcb1716fefcfec67656b8bd0bfb3da8d4e1eda9524ff4",
+        "license": "CC0-1.0"
+      },
+      {
+        "accession": "BIOMD0000000524",
+        "role": "publication-wild-type-HeLa-average-cell",
+        "source_commit": "d091308a14fb4301a4a2b1b567ea874484bb97e6",
+        "sbml_sha256": "4bf4a5bcda5b43a551bcdda09fca91a5e777d2c5db1eafcb17dcb6f1574221bc",
+        "license": "CC0-1.0"
+      }
+    ],
+    "stimulus": {
+      "species": "CD95L",
+      "value": 16.6,
+      "unit": "unresolved-model-native",
+      "override_allowed": false
+    },
+    "states": [
+      "CD95", "FADD", "DISC", "p55free", "DISCp55", "p30", "p43", "p18",
+      "p18inactive", "Bid", "tBid", "PrNES_mCherry", "PrNES", "mCherry",
+      "PrER_mGFP", "PrER", "mGFP", "CD95L"
+    ],
+    "primary_observables": ["PrER_mGFP", "PrNES_mCherry", "p43", "p18"],
+    "time_unit": "unresolved-model-native",
+    "state_unit": "unresolved-model-native",
+    "si_conversion_allowed": false,
+    "source_parameters_mutable_through_adapter": false
+  },
+  "execution": {
+    "time_grid": {
+      "start": 0.0,
+      "end": 240.0,
+      "interval": 0.25,
+      "points": 961,
+      "unit": "unresolved-model-native"
+    },
+    "mehlissa_primary": {
+      "method": "fixed-step-classical-rk4",
+      "maximum_internal_step": 0.01,
+      "expected_internal_steps": 24000
+    },
+    "mehlissa_tightened": {
+      "method": "fixed-step-classical-rk4",
+      "maximum_internal_step": 0.005,
+      "expected_internal_steps": 48000
+    },
+    "deterministic_replays_per_case": 2,
+    "parameter_refitting": "forbidden"
+  },
+  "cross_engine_acceptance": {
+    "reference_files": [
+      {
+        "accession": "BIOMD0000000523",
+        "path": "results/bcq1/kallenberger-minimal/20260906T071228Z-5dd09984d838/trajectories/BIOMD0000000523-primary.csv",
+        "sha256": "aa0228bd94581e434362d425cf74c1f92260e59bea7781b779d40364d6700cbf"
+      },
+      {
+        "accession": "BIOMD0000000524",
+        "path": "results/bcq1/kallenberger-minimal/20260906T071228Z-5dd09984d838/trajectories/BIOMD0000000524-primary.csv",
+        "sha256": "9f590397a475ee600a2fec7e5ff56a8a83b7ab1ac2235e0bfb93e11615cf949e"
+      }
+    ],
+    "all_state_tolerance": {
+      "absolute_floor": 1e-7,
+      "scale_relative": 1e-7,
+      "rule": "absolute_difference <= absolute_floor + scale_relative * max(1, abs(COPASI_reference))"
+    },
+    "mehlissa_convergence_tolerance": {
+      "absolute_floor": 1e-9,
+      "scale_relative": 1e-8,
+      "rule": "absolute_difference <= absolute_floor + scale_relative * max(1, abs(tightened_result))"
+    },
+    "deterministic_replay": "byte-identical canonical CSV for the same binary, case and settings",
+    "initial_state": "exact equality to the frozen source vector at model_time zero",
+    "invariants": "all nine source-derived invariants remain within 1e-8 absolute residual",
+    "nonnegativity": "all state values remain at least -1e-10"
+  },
+  "structural_sensitivity": {
+    "purpose": "Same-publication mechanism-structure audit only; not independent validation and not an M5 runtime variant.",
+    "companions": [
+      {
+        "accession": "BIOMD0000000525",
+        "role": "CD95-HeLa-larger-cis-trans-cis-trans",
+        "source_commit": "cdd208c7be889c3de5cb1f110426364ecbd94021",
+        "git_blob_sha256": "a0ec187a984fbee2a1896f5999c179eeed3446ee729f9769eb7df376c9b4cb5e",
+        "license": "CC0-1.0",
+        "species": 18,
+        "reactions": 19,
+        "global_parameters": 15,
+        "assignment_rules": 1
+      },
+      {
+        "accession": "BIOMD0000000526",
+        "role": "wild-type-HeLa-larger-cis-trans-cis-trans",
+        "source_commit": "4190fe165b212bcec7b6d24f984042f6663d65ef",
+        "git_blob_sha256": "dfe3fdedb6706d1edf3eeb8ab9cf5ab491abf4511df47cd040cad0dc33b94308",
+        "license": "CC0-1.0",
+        "species": 18,
+        "reactions": 19,
+        "global_parameters": 15,
+        "assignment_rules": 1
+      }
+    ],
+    "minimal_structure": {
+      "species": 18,
+      "reactions": 13,
+      "global_parameters": 12,
+      "assignment_rules": 1
+    },
+    "expected_difference": {
+      "additional_reactions": 6,
+      "additional_global_parameters": 3,
+      "initial_vectors_match_corresponding_minimal_cases": true
+    },
+    "trajectory_execution_in_this_protocol": false
+  },
+  "population_and_uncertainty": {
+    "ensemble_import_precondition": "A reusable row-level initial-protein distribution with correlation structure and a documented reuse basis must be available.",
+    "precondition_met": false,
+    "decision": "retain-explicit-average-cell-limit",
+    "reason": "The audited public package does not provide a reusable row-level ensemble distribution and correlation structure. Inventing independent marginals would fabricate biological population evidence.",
+    "local_sensitivity": {
+      "purpose": "Numerical and model-behavior diagnostic, not a population distribution or uncertainty probability.",
+      "parameters": [
+        "kon_FADD", "koff_FADD", "kDISC", "kD216", "kD374trans_p55",
+        "kD374trans_p43", "kdiss_p18", "kBid", "kD374probe", "KDR", "KDL"
+      ],
+      "endpoints": ["PrER_mGFP@240", "PrNES_mCherry@240", "p43@240", "p18@240"],
+      "central_relative_steps": [0.01, 0.005],
+      "stability_rule": "For endpoints with non-negligible sensitivity, the 1% and 0.5% normalized central sensitivities must agree within 5%; zero-scale endpoints are reported, not divided."
+    }
+  },
+  "review_and_claim_policy": {
+    "review_dimensions": [
+      "source_identity", "licence", "code_to_equation_mapping", "typed_contract",
+      "cross_engine_archive", "structural_scope", "population_scope", "claim_language",
+      "user_guide", "roadmap", "requirements_matrix", "project_status"
+    ],
+    "automated_checker_independent_of_runner": true,
+    "external_human_reviewer_attestation_required_for_biological_qualification": true,
+    "external_human_reviewer_attestation_available": false,
+    "allowed_if_unblocked_computational_gates_pass": "MEHLISSA contains a typed, no-refit reimplementation of the selected Kallenberger minimal average-cell SBML mechanism whose trajectories reproduce the independently generated COPASI reference within the frozen numerical limits.",
+    "forbidden_claims": [
+      "quantitative reproduction of publication curves",
+      "reproduction of the publication population ensemble",
+      "biological qualification or prediction for an individual cell",
+      "normal endothelial-cell realism",
+      "organ, patient, diagnostic, treatment, safety, or clinical validity",
+      "independent experimental validation",
+      "treating the 525/526 pair as an independent evidence source"
+    ],
+    "completion_rule": "BCQ-1 may close with explicit BLOCKED findings. It may not label the variant biologically qualified unless publication alignment, reusable population evidence, and external human review are all available and passed."
+  },
+  "result_archive": {
+    "root": "results/bcq1/kallenberger-mehlissa/<run-id>",
+    "non_overwriting_run_id": "UTC timestamp plus protocol SHA-256 prefix",
+    "required_entries": [
+      "protocol.json",
+      "build-provenance.json",
+      "trajectories/BIOMD0000000523-mehlissa-primary.csv",
+      "trajectories/BIOMD0000000523-mehlissa-replay.csv",
+      "trajectories/BIOMD0000000523-mehlissa-tightened.csv",
+      "trajectories/BIOMD0000000524-mehlissa-primary.csv",
+      "trajectories/BIOMD0000000524-mehlissa-replay.csv",
+      "trajectories/BIOMD0000000524-mehlissa-tightened.csv",
+      "local-sensitivity.json",
+      "qualification-metrics.json",
+      "review-record.json",
+      "qualification-report.md",
+      "sha256sums.json"
+    ],
+    "external_sbml_or_article_data_allowed": false,
+    "failure_retention": "Every started authoritative run and failed gate receives a non-overwriting archive and remains visible."
+  },
+  "negative_controls": [
+    "mutated parent COPASI CSV hash",
+    "unknown or swapped source case",
+    "changed CD95L stimulus",
+    "invented SI or nanomolar unit label",
+    "changed source parameter through the public adapter",
+    "truncated or reordered output grid",
+    "cross-engine value outside tolerance",
+    "convergence value outside tolerance",
+    "broken source invariant or material negative state",
+    "525/526 described as independent validation",
+    "invented independent population marginals",
+    "biological or clinical overclaim without blocked gates"
+  ],
+  "next_action": "Commit this protocol before generating the first authoritative BCQ-1.4-1.7 archive."
+}

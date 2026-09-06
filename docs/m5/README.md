@@ -257,7 +257,12 @@ numeric rules, controls, and archive before execution. The
 [BCQ-1.3 result](../qualification/BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md) now
 independently executes both unchanged artifacts in COPASI: nine computational
 gates and ten negative controls pass, while publication alignment remains
-blocked. This still does not change M5 evidence status because the biological
-mechanism has not been mapped into MEHLISSA, compared across engines, assigned
-justified population semantics, or independently reviewed. BCQ-1.4 is the
-typed adapter step.
+blocked. The subsequent
+[BCQ-1.4–1.7 completion](../qualification/BCQ1_MEHLISSA_QUALIFICATION_RESULT.md)
+adds the typed 18-state no-refit adapter, a separate source-equation layer,
+all-state MEHLISSA/COPASI comparison, RK4 convergence, the 525/526 structural
+audit, and stable local sensitivity diagnostics. One named published
+average-cell mechanism is now computationally qualified. Publication-curve
+alignment, reusable population evidence, external human attestation, and
+biological or clinical qualification remain blocked; the original configurable
+M5 models remain software-test surrogates.

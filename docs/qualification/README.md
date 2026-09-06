@@ -11,7 +11,7 @@ the milestone evidence without rewriting it after results are known.
 | Protocol | Status | Purpose |
 |---|---|---|
 | [PCQ-1 pulmonary and capillary qualification](PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md) | design v0.1.0, [PCQ-1.2 source screen](PCQ1_EVIDENCE_SOURCE_SCREEN.md), [PCQ-1.3 amendment](PCQ1_PRE_OUTCOME_AMENDMENT.md) v0.2.0, [PCQ-1.4 rights-aware ingress](PCQ1_DATA_INGRESS.md), [PCQ-1.5 uncertainty/identifiability analysis](PCQ1_UNCERTAINTY_IDENTIFIABILITY.md), [PCQ-1.5a repository-first data audit](PCQ1_REPOSITORY_FIRST_DATA_AUDIT.md), and an unsent [request and waiting-period package](PCQ1_DATA_REQUEST_PACKAGE.md); no participant outcomes acquired | qualify participant-level pulmonary hemodynamics, regional perfusion, capillary volume and transit, and their joint coherence |
-| [BCQ-1 biological cell-model qualification](BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md) | BCQ-1.1 selection, [BCQ-1.2 protocol](BCQ1_REPRODUCTION_PROTOCOL.md), disclosed [replay amendment](BCQ1_REPRODUCTION_PROTOCOL_AMENDMENT_1.md), and [BCQ-1.3 external-solver reproduction](BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md) complete | map the reproduced CD95L-CD95-caspase-8 source family through a typed MEHLISSA adapter, compare engines, then decide population scope and complete independent review |
+| [BCQ-1 biological cell-model qualification](BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md) | BCQ-1.1 through BCQ-1.7 complete: selection, [COPASI protocol](BCQ1_REPRODUCTION_PROTOCOL.md), disclosed [replay amendment](BCQ1_REPRODUCTION_PROTOCOL_AMENDMENT_1.md), [external-solver reproduction](BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md), [typed MEHLISSA protocol](BCQ1_MEHLISSA_QUALIFICATION_PROTOCOL.md), and [bounded completion result](BCQ1_MEHLISSA_QUALIFICATION_RESULT.md) | one published average-cell mechanism is computationally qualified; publication-series, population, external-human-review, biological, patient, and clinical gates remain blocked |
 
 BCQ means **Biological Cell-model Qualification**. Its BCQ-1.1 machine
 authority is
@@ -31,15 +31,29 @@ primary/replay/tightened matrix, a 961-point model-native grid, four primary
 observables, source-derived conservation sums, numeric gates, ten negative
 controls, and a non-overwriting failure-retaining result archive. Because the
 SBML files omit explicit time and substance units, the protocol forbids an SI,
-seconds, or minutes interpretation until a citable mapping is frozen. No
-BCQ-1.3 has now executed all six primary, replay, and tightened trajectories in
+seconds, or minutes interpretation until a citable mapping is frozen.
+BCQ-1.3 executed all six primary, replay, and tightened trajectories in
 COPASI. The first exact-zero replay protocol remains a disclosed failed result;
 the committed version 1.1 amendment defines a much tighter-than-solver numerical
 equivalence rule for a new run. The authoritative archive passes nine unblocked
 computational gates and ten negative controls. Quantitative publication
-alignment remains blocked without a rights-compatible numeric reference, no
-MEHLISSA adapter exists yet, and M5 remains `software_test_surrogate`. BCQ-1.4
-is the typed MEHLISSA adapter.
+alignment remains blocked without a rights-compatible numeric reference.
+
+BCQ-1.4 through BCQ-1.7 are now complete under the prospectively frozen
+`data/qualification/biological-cell-model-integration-protocol-v1.json`.
+The typed no-refit adapter and separate 13-reaction mechanism reproduce both
+18-state COPASI references, replay byte-identically, converge under RK4 step
+halving, and preserve every invariant. The 525/526 pair remains a verified
+same-publication structural comparison. The public package does not establish
+a reusable joint protein distribution, so the result retains an explicit
+average-cell boundary and reports stable local sensitivities as diagnostics
+only. A runner-independent checker closes the archive and claim review.
+
+The permitted outcome is a `computationally-qualified published average-cell
+mechanism`. Publication-curve alignment, population-ensemble reproduction,
+external human reviewer attestation, and biological qualification are blocked.
+The synthetic M5 fixtures retain their separate `software_test_surrogate`
+classification.
 
 The machine-readable design authority for PCQ-1 is
 `data/qualification/pulmonary-capillary-qualification-protocol-v1.json`. Its

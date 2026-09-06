@@ -18,3 +18,14 @@ supplements, or experimental data.
 The authoritative BCQ-1.3 outcome and complete attempt history are documented
 in `docs/qualification/BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md` and
 `data/qualification/biological-cell-model-reproduction-result-v1.json`.
+
+BCQ-1.4 through BCQ-1.7 are documented in
+`docs/qualification/BCQ1_MEHLISSA_QUALIFICATION_RESULT.md` and the
+machine-checkable
+`data/qualification/biological-cell-model-qualification-result-v1.json`.
+The authoritative MEHLISSA archive is
+`kallenberger-mehlissa/20260906T090213Z-e3e71e6ce6c2`. The two earlier
+directories in that family are intentionally retained, explicitly superseded
+attempts: one predates the completed documentation review and one directly
+aggregates only five of the nine frozen invariants. Their trajectories remain
+valid, but neither is the qualification authority.

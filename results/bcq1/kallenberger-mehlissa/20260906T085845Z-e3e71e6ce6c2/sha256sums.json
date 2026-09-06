@@ -1,0 +1,59 @@
+{
+  "files": [
+    {
+      "path": "build-provenance.json",
+      "sha256": "22db495c443512fd077e356094b147409e184f64eabad1b5538d1f0e33fcacf8"
+    },
+    {
+      "path": "local-sensitivity.json",
+      "sha256": "df5c837d688ecef7dd208a82bd9945bbf59cce2528edbd36d7895647aa536ac1"
+    },
+    {
+      "path": "protocol.json",
+      "sha256": "e3e71e6ce6c2c5ca028d373710a5fb19ef2ced7388ad450b05d6414f0edd4b52"
+    },
+    {
+      "path": "qualification-metrics.json",
+      "sha256": "97cb5b44459921106f137457113f29d088fefcae8dc11dbbccc12d2bb2918858"
+    },
+    {
+      "path": "qualification-report.md",
+      "sha256": "8591b2857a727a37dea183a5404f73b1faac3f08dfe3a9d9f41cfeab054b4b08"
+    },
+    {
+      "path": "review-record.json",
+      "sha256": "fba099f8fe064eb1e0c92b6c0be8749b75d4bd84079672e91f935595a2afc444"
+    },
+    {
+      "path": "supersession.json",
+      "sha256": "5770824d282098a3bf51860000df6f02884b6991e93542c31141f02201078204"
+    },
+    {
+      "path": "trajectories/BIOMD0000000523-mehlissa-primary.csv",
+      "sha256": "85bcc1787a9cb3297b21bb1a6895b297935f175b441bbfcf8aa8d91745a906cc"
+    },
+    {
+      "path": "trajectories/BIOMD0000000523-mehlissa-replay.csv",
+      "sha256": "85bcc1787a9cb3297b21bb1a6895b297935f175b441bbfcf8aa8d91745a906cc"
+    },
+    {
+      "path": "trajectories/BIOMD0000000523-mehlissa-tightened.csv",
+      "sha256": "c49d06ed2283c0e5e8221ce444528caedb2a4ef144de4bfca9d69876987f4c47"
+    },
+    {
+      "path": "trajectories/BIOMD0000000524-mehlissa-primary.csv",
+      "sha256": "f8bc42adfe5740e04a37249543c83436c132a787dcc8a4c3cfa160766e8c17f6"
+    },
+    {
+      "path": "trajectories/BIOMD0000000524-mehlissa-replay.csv",
+      "sha256": "f8bc42adfe5740e04a37249543c83436c132a787dcc8a4c3cfa160766e8c17f6"
+    },
+    {
+      "path": "trajectories/BIOMD0000000524-mehlissa-tightened.csv",
+      "sha256": "90cdc1cf8a28d508de4b5bd14d86ec98af0f7d99b3a8b2e73f5a9315da2e7394"
+    }
+  ],
+  "hash_policy": "SHA-256 over Git-canonical LF bytes for text artifacts; binary bytes unchanged",
+  "run_id": "20260906T085845Z-e3e71e6ce6c2",
+  "schema_version": "1.0.0"
+}

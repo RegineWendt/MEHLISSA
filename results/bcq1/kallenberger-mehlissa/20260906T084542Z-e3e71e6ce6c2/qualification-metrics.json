@@ -1,0 +1,211 @@
+{
+  "cases": [
+    {
+      "accession": "BIOMD0000000523",
+      "cross_engine": {
+        "maximum_absolute_difference": 2.626964032970136e-07,
+        "maximum_fraction_location": {
+          "absolute_difference": 2.2662314336230338e-07,
+          "actual": 97.2774845458949,
+          "allowed_difference": 9.827748477251804e-06,
+          "model_time": 33.0,
+          "reference": 97.27748477251804,
+          "row": 132,
+          "species": "PrER"
+        },
+        "maximum_fraction_of_allowed_difference": 0.02305951804595588,
+        "status": "PASS"
+      },
+      "deterministic_replay_byte_identical": true,
+      "integrity": {
+        "maximum_invariant_residual": 3.54702933691442e-11,
+        "maximum_reporter_increase": 0.0,
+        "minimum_state": 0.0,
+        "status": "PASS"
+      },
+      "mehlissa_convergence": {
+        "maximum_absolute_difference": 7.73070496506989e-11,
+        "maximum_fraction_location": {
+          "absolute_difference": 3.708144902248023e-13,
+          "actual": 2.9178661337235035,
+          "allowed_difference": 3.017866133723133e-08,
+          "model_time": 233.0,
+          "reference": 2.9178661337231326,
+          "row": 932,
+          "species": "p55free"
+        },
+        "maximum_fraction_of_allowed_difference": 1.2287307448171318e-05,
+        "status": "PASS"
+      },
+      "status": "PASS"
+    },
+    {
+      "accession": "BIOMD0000000524",
+      "cross_engine": {
+        "maximum_absolute_difference": 7.304716973521863e-07,
+        "maximum_fraction_location": {
+          "absolute_difference": 1.1672344868429718e-08,
+          "actual": 5.174560225686726,
+          "allowed_difference": 6.174560214014381e-07,
+          "model_time": 50.5,
+          "reference": 5.174560214014381,
+          "row": 202,
+          "species": "PrER"
+        },
+        "maximum_fraction_of_allowed_difference": 0.018903929128324042,
+        "status": "PASS"
+      },
+      "deterministic_replay_byte_identical": true,
+      "integrity": {
+        "maximum_invariant_residual": 4.001776687800884e-11,
+        "maximum_reporter_increase": 0.0,
+        "minimum_state": 0.0,
+        "status": "PASS"
+      },
+      "mehlissa_convergence": {
+        "maximum_absolute_difference": 2.6830093702301383e-11,
+        "maximum_fraction_location": {
+          "absolute_difference": 7.283063041541027e-13,
+          "actual": 11.341127210071969,
+          "allowed_difference": 1.1441127210072697e-07,
+          "model_time": 238.75,
+          "reference": 11.341127210072697,
+          "row": 955,
+          "species": "PrNES_mCherry"
+        },
+        "maximum_fraction_of_allowed_difference": 6.365686621445012e-06,
+        "status": "PASS"
+      },
+      "status": "PASS"
+    }
+  ],
+  "gates": [
+    {
+      "id": "typed_adapter",
+      "status": "PASS"
+    },
+    {
+      "id": "source_and_build_identity",
+      "status": "PASS"
+    },
+    {
+      "id": "cross_engine_all_states",
+      "status": "PASS"
+    },
+    {
+      "id": "deterministic_replay",
+      "status": "PASS"
+    },
+    {
+      "id": "mehlissa_numerical_convergence",
+      "status": "PASS"
+    },
+    {
+      "id": "invariants_and_nonnegativity",
+      "status": "PASS"
+    },
+    {
+      "id": "same_family_structural_audit",
+      "status": "PASS"
+    },
+    {
+      "id": "local_sensitivity_stability",
+      "status": "PASS"
+    },
+    {
+      "id": "population_ensemble",
+      "reason": "The audited public package does not provide a reusable row-level ensemble distribution and correlation structure. Inventing independent marginals would fabricate biological population evidence.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "publication_curve_alignment",
+      "reason": "No rights-compatible machine-readable publication reference series is frozen.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "external_human_review",
+      "reason": "No external reviewer attestation has been received.",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "biological_qualification",
+      "reason": "Publication, population, and external-review gates remain blocked.",
+      "status": "NOT_ESTABLISHED"
+    }
+  ],
+  "protocol_sha256": "e3e71e6ce6c2c5ca028d373710a5fb19ef2ced7388ad450b05d6414f0edd4b52",
+  "run_id": "20260906T084542Z-e3e71e6ce6c2",
+  "runner_records": [
+    {
+      "case": "523",
+      "label": "primary",
+      "stdout": "accession=BIOMD0000000523 points=961 integration_steps=24000",
+      "step": 0.01
+    },
+    {
+      "case": "523",
+      "label": "replay",
+      "stdout": "accession=BIOMD0000000523 points=961 integration_steps=24000",
+      "step": 0.01
+    },
+    {
+      "case": "523",
+      "label": "tightened",
+      "stdout": "accession=BIOMD0000000523 points=961 integration_steps=48000",
+      "step": 0.005
+    },
+    {
+      "case": "524",
+      "label": "primary",
+      "stdout": "accession=BIOMD0000000524 points=961 integration_steps=24000",
+      "step": 0.01
+    },
+    {
+      "case": "524",
+      "label": "replay",
+      "stdout": "accession=BIOMD0000000524 points=961 integration_steps=24000",
+      "step": 0.01
+    },
+    {
+      "case": "524",
+      "label": "tightened",
+      "stdout": "accession=BIOMD0000000524 points=961 integration_steps=48000",
+      "step": 0.005
+    }
+  ],
+  "schema_version": "1.0.0",
+  "structural_sensitivity": [
+    {
+      "accession": "BIOMD0000000525",
+      "git_blob_sha256": "a0ec187a984fbee2a1896f5999c179eeed3446ee729f9769eb7df376c9b4cb5e",
+      "initial_vector_matches_corresponding_minimal_case": true,
+      "license": "CC0-1.0",
+      "license_file_checked": true,
+      "observed_structure": {
+        "assignment_rules": 1,
+        "global_parameters": 15,
+        "reactions": 19,
+        "species": 18
+      },
+      "role": "same-publication-structural-sensitivity-only",
+      "source_commit": "cdd208c7be889c3de5cb1f110426364ecbd94021",
+      "status": "PASS"
+    },
+    {
+      "accession": "BIOMD0000000526",
+      "git_blob_sha256": "dfe3fdedb6706d1edf3eeb8ab9cf5ab491abf4511df47cd040cad0dc33b94308",
+      "initial_vector_matches_corresponding_minimal_case": true,
+      "license": "CC0-1.0",
+      "license_file_checked": true,
+      "observed_structure": {
+        "assignment_rules": 1,
+        "global_parameters": 15,
+        "reactions": 19,
+        "species": 18
+      },
+      "role": "same-publication-structural-sensitivity-only",
+      "source_commit": "4190fe165b212bcec7b6d24f984042f6663d65ef",
+      "status": "PASS"
+    }
+  ]
+}

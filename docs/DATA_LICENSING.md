@@ -39,8 +39,11 @@ The [BCQ-1 biological cell-model package](qualification/BCQ1_EXTERNAL_SOLVER_REP
 uses BioModels `BIOMD0000000523` and `BIOMD0000000524`. Their encoded SBML
 model artifacts are CC0 1.0 and are not bundled in this repository. BCQ-1.3
 publishes only newly generated COPASI trajectories, logs, metrics, and reports
-under CC BY 4.0, with exact source and solver identities in the manifests. The
-model licence does not cover
+under CC BY 4.0, with exact source and solver identities in the manifests.
+BCQ-1.4–1.7 add an MPL-2.0 MEHLISSA implementation of the source equations and
+CC-BY-4.0 MEHLISSA-generated trajectories, metrics, sensitivity diagnostics,
+protocols, and reports. The official CC0 525/526 files are inspected for the
+structural audit but are not copied into the repository. The model licence does not cover
 the associated AAAS article, figures, supplementary files, or experimental
 single-cell data. A later import must preserve the original CC0 notice,
 accession, source commit, file hash, and transformations and must not imply

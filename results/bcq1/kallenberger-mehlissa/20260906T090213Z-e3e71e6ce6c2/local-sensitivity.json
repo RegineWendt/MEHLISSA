@@ -1,0 +1,797 @@
+{
+  "cases": [
+    {
+      "accession": "BIOMD0000000523",
+      "endpoint_time": 240.0,
+      "entries": [
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": -0.13724199743019444,
+              "PrNES_mCherry": -1.335994783309054,
+              "p18": -0.18704793767001984,
+              "p43": -0.19548183496476798
+            },
+            "0.01": {
+              "PrER_mGFP": -0.13725432934985288,
+              "PrNES_mCherry": -1.3362607871034873,
+              "p18": -0.18705943948451684,
+              "p43": -0.19549430906979107
+            }
+          },
+          "parameter": "kon_FADD",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 8.985529130548723e-05,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 0.00019910541400054049,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 6.149126603729586e-05,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 6.38120929514198e-05,
+              "status": "PASS"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": 0.02630214604644775,
+              "PrNES_mCherry": 0.2477907273756479,
+              "p18": 0.02172299385772386,
+              "p43": 0.023427794191135564
+            },
+            "0.01": {
+              "PrER_mGFP": 0.026302144009895705,
+              "PrNES_mCherry": 0.24779089553935524,
+              "p18": 0.02172299755489154,
+              "p43": 0.023427796839381704
+            }
+          },
+          "parameter": "koff_FADD",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 7.742912085815969e-08,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 6.786521397676585e-07,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 1.7019604681839593e-07,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 1.1303864623940931e-07,
+              "status": "PASS"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": -0.2969902674725492,
+              "PrNES_mCherry": -2.8019756799414277,
+              "p18": -0.25942763012301884,
+              "p43": -0.27870434578766384
+            },
+            "0.01": {
+              "PrER_mGFP": -0.297014286110935,
+              "PrNES_mCherry": -2.802964782958017,
+              "p18": -0.25941961267603814,
+              "p43": -0.27869662543297113
+            }
+          },
+          "parameter": "kDISC",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 8.087348649572581e-05,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 0.0003530019991500575,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 3.090436811568484e-05,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 2.770087660775259e-05,
+              "status": "PASS"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": -0.8653746069304744,
+              "PrNES_mCherry": 9.075969062501724,
+              "p18": -0.4904162869332006,
+              "p43": -1.6692703122925865
+            },
+            "0.01": {
+              "PrER_mGFP": -0.8654561511345928,
+              "PrNES_mCherry": 9.083373166204721,
+              "p18": -0.4903576152663947,
+              "p43": -1.6692995315572499
+            }
+          },
+          "parameter": "kD216",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 9.42299478923637e-05,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 0.0008157920825874436,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 0.00011963645655571397,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 1.750421393599316e-05,
+              "status": "PASS"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": -0.003716308384619483,
+              "PrNES_mCherry": -0.3940320390534221,
+              "p18": -0.005528736928591207,
+              "p43": -0.0056088183972754745
+            },
+            "0.01": {
+              "PrER_mGFP": -0.0037164459320276053,
+              "PrNES_mCherry": -0.3940509871108425,
+              "p18": -0.0055289392792189215,
+              "p43": -0.00560902913915825
+            }
+          },
+          "parameter": "kD374trans_p55",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 3.701183913892745e-05,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 4.808760593666203e-05,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 3.6599793104333137e-05,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 3.757331185436276e-05,
+              "status": "PASS"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": -0.01444822508910008,
+              "PrNES_mCherry": -1.5736328020684585,
+              "p18": -0.017890517411825627,
+              "p43": 0.013021566187645653
+            },
+            "0.01": {
+              "PrER_mGFP": -0.014449764480838508,
+              "PrNES_mCherry": -1.5739145358073399,
+              "p18": -0.01789205934246198,
+              "p43": 0.013022772164446087
+            }
+          },
+          "parameter": "kD374trans_p43",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 0.00010654538733546896,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 0.00017903397699328737,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 8.618703421815086e-05,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 9.261380567099326e-05,
+              "status": "PASS"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": 1.8698645696269973,
+              "PrNES_mCherry": 1.8698645696274991,
+              "p18": -1.091209011926838,
+              "p43": 0.0
+            },
+            "0.01": {
+              "PrER_mGFP": 1.8698232008739761,
+              "PrNES_mCherry": 1.8698232008734401,
+              "p18": -1.0913046673332913,
+              "p43": 0.0
+            }
+          },
+          "parameter": "kdiss_p18",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 2.2123930092669394e-05,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 2.2123930647696427e-05,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 8.766002242263475e-05,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 0.0,
+              "status": "PASS_NEGLIGIBLE"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": 0.0,
+              "PrNES_mCherry": 0.0,
+              "p18": 0.0,
+              "p43": 0.0
+            },
+            "0.01": {
+              "PrER_mGFP": 0.0,
+              "PrNES_mCherry": 0.0,
+              "p18": 0.0,
+              "p43": 0.0
+            }
+          },
+          "parameter": "kBid",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 0.0,
+              "status": "PASS_NEGLIGIBLE"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 0.0,
+              "status": "PASS_NEGLIGIBLE"
+            },
+            "p18": {
+              "relative_difference": 0.0,
+              "status": "PASS_NEGLIGIBLE"
+            },
+            "p43": {
+              "relative_difference": 0.0,
+              "status": "PASS_NEGLIGIBLE"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": -1.9348273702740895,
+              "PrNES_mCherry": -16.446994873611477,
+              "p18": 0.0,
+              "p43": 0.0
+            },
+            "0.01": {
+              "PrER_mGFP": -1.9349179073623914,
+              "PrNES_mCherry": -16.50251331945942,
+              "p18": 0.0,
+              "p43": 0.0
+            }
+          },
+          "parameter": "kD374probe",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 4.679336755979058e-05,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 0.00337559817307547,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 0.0,
+              "status": "PASS_NEGLIGIBLE"
+            },
+            "p43": {
+              "relative_difference": 0.0,
+              "status": "PASS_NEGLIGIBLE"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": 0.00039395361901563335,
+              "PrNES_mCherry": 0.0038348379372757963,
+              "p18": 0.000536926812826186,
+              "p43": 0.0005611361386417182
+            },
+            "0.01": {
+              "PrER_mGFP": 0.0003939536185064611,
+              "PrNES_mCherry": 0.0038348379331911097,
+              "p18": 0.0005369268134363478,
+              "p43": 0.0005611361390382147
+            }
+          },
+          "parameter": "KDR",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 1.2924674768399657e-09,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 1.0651523346852186e-09,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 1.1363965341731483e-09,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 7.065959610894231e-10,
+              "status": "PASS"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": 0.06568591669131371,
+              "PrNES_mCherry": 0.6394034647023972,
+              "p18": 0.08952456059169685,
+              "p43": 0.09356110581196016
+            },
+            "0.01": {
+              "PrER_mGFP": 0.0656858849973576,
+              "PrNES_mCherry": 0.6394066864356748,
+              "p18": 0.08952447631752056,
+              "p43": 0.09356101846727416
+            }
+          },
+          "parameter": "KDL",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 4.825076319068325e-07,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 5.038654707794739e-06,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 9.413525822769148e-07,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 9.335576491939862e-07,
+              "status": "PASS"
+            }
+          }
+        }
+      ],
+      "status": "PASS",
+      "unit": "unresolved-model-native"
+    },
+    {
+      "accession": "BIOMD0000000524",
+      "endpoint_time": 240.0,
+      "entries": [
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": -0.5505004611801293,
+              "PrNES_mCherry": -5.028490504467695,
+              "p18": 0.3893655983831249,
+              "p43": 0.47798339089280584
+            },
+            "0.01": {
+              "PrER_mGFP": -0.5505193116313729,
+              "PrNES_mCherry": -5.0308509093499785,
+              "p18": 0.3893733783976245,
+              "p43": 0.47800545673349926
+            }
+          },
+          "parameter": "kon_FADD",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 3.424238955804376e-05,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 0.0004694062522712241,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 1.998125805640814e-05,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 4.6164450719100165e-05,
+              "status": "PASS"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": 0.06668529012013899,
+              "PrNES_mCherry": 0.6146149969045498,
+              "p18": -0.09635139987835824,
+              "p43": -0.11267718699610983
+            },
+            "0.01": {
+              "PrER_mGFP": 0.06668529793986817,
+              "PrNES_mCherry": 0.6146156934306017,
+              "p18": -0.09635143920643906,
+              "p43": -0.1126772303458264
+            }
+          },
+          "parameter": "koff_FADD",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 1.1726318007366411e-07,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 1.13327213858182e-06,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 4.081734242511874e-07,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 3.847248739701346e-07,
+              "status": "PASS"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": -0.2520766731028819,
+              "PrNES_mCherry": -2.288653639818917,
+              "p18": 0.26777658226084705,
+              "p43": 0.31840397906246914
+            },
+            "0.01": {
+              "PrER_mGFP": -0.2520876101652636,
+              "PrNES_mCherry": -2.2891027447409873,
+              "p18": 0.26778480250293824,
+              "p43": 0.31841543909647607
+            }
+          },
+          "parameter": "kDISC",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 4.3387840084813146e-05,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 0.00019623105665994139,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 3.069813656511659e-05,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 3.599211932172079e-05,
+              "status": "PASS"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": -0.4649394213856325,
+              "PrNES_mCherry": 2.3398141266550785,
+              "p18": 0.5764835701997603,
+              "p43": -0.6212898354359567
+            },
+            "0.01": {
+              "PrER_mGFP": -0.4649514105726388,
+              "PrNES_mCherry": 2.339913429103492,
+              "p18": 0.5764924934792391,
+              "p43": -0.62129025932401
+            }
+          },
+          "parameter": "kD216",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 2.578655724773494e-05,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 4.2440314930252964e-05,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 1.5478809701005785e-05,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 6.822710257721765e-07,
+              "status": "PASS"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": -0.021472574059979117,
+              "PrNES_mCherry": -0.5632785676385748,
+              "p18": -0.010531212940849346,
+              "p43": -0.00335474354568068
+            },
+            "0.01": {
+              "PrER_mGFP": -0.021473426593588106,
+              "PrNES_mCherry": -0.5633122461653138,
+              "p18": -0.010531698449956628,
+              "p43": -0.003354862223367351
+            }
+          },
+          "parameter": "kD374trans_p55",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 3.970337261886058e-05,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 5.97901796268732e-05,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 4.610191722539972e-05,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 3.5376083165525405e-05,
+              "status": "PASS"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": -0.06993295686073835,
+              "PrNES_mCherry": -1.8478073369071424,
+              "p18": -0.028874643106812373,
+              "p43": 0.14370401881559594
+            },
+            "0.01": {
+              "PrER_mGFP": -0.0699404444815079,
+              "PrNES_mCherry": -1.8481189769400734,
+              "p18": -0.028881677693710254,
+              "p43": 0.1437234446742339
+            }
+          },
+          "parameter": "kD374trans_p43",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 0.00010706855688167008,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 0.0001686539644618315,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 0.00024362506826000689,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 0.00013517964770966878,
+              "status": "PASS"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": 0.6775313710749934,
+              "PrNES_mCherry": 0.6775313710755669,
+              "p18": -0.992628564752974,
+              "p43": 0.0
+            },
+            "0.01": {
+              "PrER_mGFP": 0.677545919269966,
+              "PrNES_mCherry": 0.6775459192696945,
+              "p18": -0.9927014175105862,
+              "p43": 0.0
+            }
+          },
+          "parameter": "kdiss_p18",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 2.1472356253429416e-05,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 2.1472355006250176e-05,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 7.339377507263454e-05,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 0.0,
+              "status": "PASS_NEGLIGIBLE"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": 0.0,
+              "PrNES_mCherry": 0.0,
+              "p18": 0.0,
+              "p43": 0.0
+            },
+            "0.01": {
+              "PrER_mGFP": 0.0,
+              "PrNES_mCherry": 0.0,
+              "p18": 0.0,
+              "p43": 0.0
+            }
+          },
+          "parameter": "kBid",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 0.0,
+              "status": "PASS_NEGLIGIBLE"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 0.0,
+              "status": "PASS_NEGLIGIBLE"
+            },
+            "p18": {
+              "relative_difference": 0.0,
+              "status": "PASS_NEGLIGIBLE"
+            },
+            "p43": {
+              "relative_difference": 0.0,
+              "status": "PASS_NEGLIGIBLE"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": -0.7363515281155406,
+              "PrNES_mCherry": -5.18519924235489,
+              "p18": 0.0,
+              "p43": 0.0
+            },
+            "0.01": {
+              "PrER_mGFP": -0.7363565188453827,
+              "PrNES_mCherry": -5.186941584330046,
+              "p18": 0.0,
+              "p43": 0.0
+            }
+          },
+          "parameter": "kD374probe",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 6.777645800274729e-06,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 0.0003360221842438953,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 0.0,
+              "status": "PASS_NEGLIGIBLE"
+            },
+            "p43": {
+              "relative_difference": 0.0,
+              "status": "PASS_NEGLIGIBLE"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": 0.1166970192172038,
+              "PrNES_mCherry": 1.06580416245458,
+              "p18": -0.08253942550186208,
+              "p43": -0.10132413509855154
+            },
+            "0.01": {
+              "PrER_mGFP": 0.11669703785294476,
+              "PrNES_mCherry": 1.065809380965943,
+              "p18": -0.08253928145516932,
+              "p43": -0.10132397579069174
+            }
+          },
+          "parameter": "KDR",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 1.5969337596869542e-07,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 4.89631355071661e-06,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 1.745186519999621e-06,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 1.5722597546758365e-06,
+              "status": "PASS"
+            }
+          }
+        },
+        {
+          "normalized_central_sensitivity": {
+            "0.005": {
+              "PrER_mGFP": 0.14412689732209139,
+              "PrNES_mCherry": 1.3163494718128845,
+              "p18": -0.10194061923775749,
+              "p43": -0.12514090648396833
+            },
+            "0.01": {
+              "PrER_mGFP": 0.14411756408629176,
+              "PrNES_mCherry": 1.3163479135280045,
+              "p18": -0.10193421188688016,
+              "p43": -0.12513355152077266
+            }
+          },
+          "parameter": "KDL",
+          "step_stability": {
+            "PrER_mGFP": {
+              "relative_difference": 6.475707153240373e-05,
+              "status": "PASS"
+            },
+            "PrNES_mCherry": {
+              "relative_difference": 1.1837926883314636e-06,
+              "status": "PASS"
+            },
+            "p18": {
+              "relative_difference": 6.285375667949576e-05,
+              "status": "PASS"
+            },
+            "p43": {
+              "relative_difference": 5.87734530804227e-05,
+              "status": "PASS"
+            }
+          }
+        }
+      ],
+      "status": "PASS",
+      "unit": "unresolved-model-native"
+    }
+  ],
+  "method": "normalized central finite difference",
+  "population_interpretation": "forbidden",
+  "relative_steps": [
+    0.01,
+    0.005
+  ],
+  "schema_version": "1.0.0"
+}

@@ -282,16 +282,27 @@ than `SimulationComponent` instances. It provides:
 - a shared intracellular ODE/SSA reaction network;
 - conservative drug release and uptake;
 - synthetic irreversible apoptosis commitment; and
-- cohort-compressed apoptosis populations.
+- cohort-compressed apoptosis populations; and
+- a typed, no-refit Kallenberger CD95L–CD95–caspase-8 average-cell adapter with
+  a separately reviewable 13-reaction equation layer.
 
 `ReceptorLigandModel` is the principal polymorphic cell boundary. The
 capillary–cell adapter supplies a typed extracellular concentration and obtains
 a `ReceptorLigandResponse`. Later stages consume explicit response or event
 objects rather than reaching into model state.
 
-The apoptosis equations are synthetic software-contract models. Their
-parameters are configurable, but they are not yet biological or patient
-calibrations.
+The configurable apoptosis, binding, and population equations remain synthetic
+software-contract models. Their parameters are not biological or patient
+calibrations. Separately, `QualifiedCd95ApoptosisAdapter` locks the selected
+`BIOMD0000000523`/`0524` identities, unchanged `CD95L=16.6` input, all 18
+states, four primary observables, and unresolved model-native units.
+`KallenbergerMinimalMechanism` owns the source assignment rule and reaction
+rates; qualification-only variation never widens the adapter. The completed
+BCQ-1 series demonstrates all-state MEHLISSA/COPASI numerical agreement for
+these two published average cells, but not publication-curve, population,
+individual-cell, endothelial, patient, biological, or clinical validity. See
+[ADR-0052](adr/0052-qualified-kallenberger-cell-model-adapter.md) and the
+[BCQ result](../qualification/BCQ1_MEHLISSA_QUALIFICATION_RESULT.md).
 
 ### 5.5 Nano-IoT communication plane
 
@@ -673,7 +684,7 @@ headers add typed configurations, states, and verification functions.
 | `mehlissa::models::coupling` | `models/coupling/include/mehlissa/models/coupling/*.hpp` | `ModelComponent`, transfer contracts, ledgers, signals, events, and dispositions; layer-neutral exchange |
 | `mehlissa::models::organ` | `models/organ/include/mehlissa/models/organ/*.hpp` | lung definition loader, `make_lung_model`, pulmonary variants, and state; organ simulation |
 | `mehlissa::models::capillary` | `models/capillary/include/mehlissa/models/capillary/*.hpp` | capillary definition/profile loaders, `CapillaryBed`, and `MolecularChannel` variants; microvascular and molecular transport |
-| `mehlissa::models::cell` | `models/cell/include/mehlissa/models/cell/*.hpp` | profile loaders, binding models, intracellular network, delivery, and apoptosis; cellular response |
+| `mehlissa::models::cell` | `models/cell/include/mehlissa/models/cell/*.hpp`, especially `qualified_cd95_apoptosis_model.hpp` | profile loaders, binding models, intracellular network, delivery, synthetic apoptosis, and the typed no-refit BCQ-1 published average-cell mechanism; cellular response and bounded qualification |
 | `mehlissa::models::iot` | `models/iot/include/mehlissa/models/iot/*.hpp` | nanodevice runtime, detection/message translation, local and multihop transport, active gateway, replaceable BAN and external-simulator adapters, station policy, strict resilience-scenario profile, outcomes, and communication metrics |
 | `mehlissa::models::cosimulation` | `models/cosimulation/include/mehlissa/models/cosimulation/*.hpp` | explicit body/organ/capillary/cell/IoT adapters; synchronization and dependency-safe routing |
 | `mehlissa::scenarios::fingerprinting` | `scenarios/fingerprinting/include/mehlissa/scenarios/fingerprinting/*.hpp` | M7 profile/composer, runtime trace, Levels B-E detection/assembly/communication/analysis APIs, holistic runner, and versioned result writers |

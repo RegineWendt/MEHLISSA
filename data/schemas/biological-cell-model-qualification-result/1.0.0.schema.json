@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/biological-cell-model-qualification-result/1.0.0.schema.json",
+  "title": "MEHLISSA BCQ-1.4 through BCQ-1.7 qualification result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "result", "protocol", "parent_result", "archive", "execution", "headline_metrics", "structural_scope", "gates", "attempt_history", "decision"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "program", "version", "performed_date", "status", "baseline_commit", "executor", "clinical_use"],
+      "properties": {
+        "id": {"const": "BCQ-1.4-1.7"},
+        "program": {"const": "BCQ-1 biological cell-model qualification"},
+        "version": {"const": "1.0.0"},
+        "performed_date": {"type": "string", "format": "date"},
+        "status": {"const": "completed-computational-average-cell-qualification-with-blocked-biological-gates"},
+        "baseline_commit": {"$ref": "#/$defs/commit"},
+        "executor": {"const": "scripts/run_biological_cell_model_qualification.py"},
+        "clinical_use": {"const": false}
+      }
+    },
+    "protocol": {"$ref": "#/$defs/asset"},
+    "parent_result": {"$ref": "#/$defs/asset"},
+    "archive": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id", "path", "checksum_manifest", "hash_canonicalization", "external_sbml_bundled", "raw_article_or_participant_data_bundled"],
+      "properties": {
+        "run_id": {"const": "20260906T090213Z-e3e71e6ce6c2"},
+        "path": {"const": "results/bcq1/kallenberger-mehlissa/20260906T090213Z-e3e71e6ce6c2"},
+        "checksum_manifest": {"$ref": "#/$defs/asset"},
+        "hash_canonicalization": {"const": "SHA-256 over Git-canonical LF bytes for text artifacts; binary bytes unchanged"},
+        "external_sbml_bundled": {"const": false},
+        "raw_article_or_participant_data_bundled": {"const": false}
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mehlissa_method", "copasi_reference_method", "source_accessions", "run_count", "points_per_run", "reported_species", "all_state_time_comparisons", "time_unit", "state_unit", "parameter_refitting"],
+      "properties": {
+        "mehlissa_method": {"const": "fixed-step-classical-rk4"},
+        "copasi_reference_method": {"const": "COPASI 4.46 Build 300 LSODA"},
+        "source_accessions": {"type": "array", "prefixItems": [{"const": "BIOMD0000000523"}, {"const": "BIOMD0000000524"}], "items": false},
+        "run_count": {"const": 6},
+        "points_per_run": {"const": 961},
+        "reported_species": {"const": 18},
+        "all_state_time_comparisons": {"const": 34596},
+        "time_unit": {"const": "unresolved-model-native"},
+        "state_unit": {"const": "unresolved-model-native"},
+        "parameter_refitting": {"const": false}
+      }
+    },
+    "headline_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maximum_cross_engine_absolute_difference", "maximum_cross_engine_fraction_of_limit", "maximum_mehlissa_convergence_fraction_of_limit", "maximum_invariant_residual", "minimum_state", "maximum_sensitivity_step_disagreement", "sensitivity_step_comparisons", "negative_controls_passed"],
+      "properties": {
+        "maximum_cross_engine_absolute_difference": {"type": "number", "minimum": 0},
+        "maximum_cross_engine_fraction_of_limit": {"type": "number", "minimum": 0, "maximum": 1},
+        "maximum_mehlissa_convergence_fraction_of_limit": {"type": "number", "minimum": 0, "maximum": 1},
+        "maximum_invariant_residual": {"type": "number", "minimum": 0},
+        "minimum_state": {"type": "number"},
+        "maximum_sensitivity_step_disagreement": {"type": "number", "minimum": 0, "maximum": 0.05},
+        "sensitivity_step_comparisons": {"const": 88},
+        "negative_controls_passed": {"const": 12}
+      }
+    },
+    "structural_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["companions", "status", "independent_validation", "runtime_variants"],
+      "properties": {
+        "companions": {"type": "array", "prefixItems": [{"const": "BIOMD0000000525"}, {"const": "BIOMD0000000526"}], "items": false},
+        "status": {"const": "PASS"},
+        "independent_validation": {"const": false},
+        "runtime_variants": {"const": false}
+      }
+    },
+    "gates": {"type": "array", "minItems": 12, "maxItems": 12, "items": {"$ref": "#/$defs/gate"}},
+    "attempt_history": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["run_id", "path", "status", "reason", "authoritative"],
+        "properties": {
+          "run_id": {"type": "string", "pattern": "^[0-9]{8}T[0-9]{6}Z-[0-9a-f]{12}$"},
+          "path": {"type": "string", "minLength": 1},
+          "status": {"enum": ["SUPERSEDED_PRE_DOCUMENTATION_REVIEW", "SUPERSEDED_INCOMPLETE_INVARIANT_AGGREGATION", "PASS_WITH_BLOCKED_BIOLOGICAL_GATES"]},
+          "reason": {"type": "string", "minLength": 1},
+          "authoritative": {"type": "boolean"}
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["typed_source_mechanism", "cross_engine_reproduction", "population_ensemble", "publication_curve_alignment", "external_human_review", "biological_qualification", "m5_published_variant_evidence", "synthetic_m5_fixture_evidence", "allowed_claim", "forbidden_claims", "next_scientific_package"],
+      "properties": {
+        "typed_source_mechanism": {"const": "PASS"},
+        "cross_engine_reproduction": {"const": "PASS"},
+        "population_ensemble": {"const": "BLOCKED"},
+        "publication_curve_alignment": {"const": "BLOCKED"},
+        "external_human_review": {"const": "BLOCKED"},
+        "biological_qualification": {"const": "NOT_ESTABLISHED"},
+        "m5_published_variant_evidence": {"const": "computationally-qualified-published-average-cell-mechanism"},
+        "synthetic_m5_fixture_evidence": {"const": "software_test_surrogate"},
+        "allowed_claim": {"type": "string", "minLength": 1},
+        "forbidden_claims": {"$ref": "#/$defs/nonempty_strings"},
+        "next_scientific_package": {"const": "Dynamic capillary-tissue-cell coupling qualification design"}
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"}}
+    },
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status"],
+      "properties": {"id": {"type": "string", "minLength": 1}, "status": {"enum": ["PASS", "BLOCKED", "NOT_ESTABLISHED"]}, "reason": {"type": "string", "minLength": 1}}
+    },
+    "nonempty_strings": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+  }
+}

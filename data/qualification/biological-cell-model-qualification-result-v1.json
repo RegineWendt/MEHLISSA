@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0.0",
+  "result": {
+    "id": "BCQ-1.4-1.7",
+    "program": "BCQ-1 biological cell-model qualification",
+    "version": "1.0.0",
+    "performed_date": "2026-09-06",
+    "status": "completed-computational-average-cell-qualification-with-blocked-biological-gates",
+    "baseline_commit": "f2d66af524dbc5eddb93857573bf79bfefbe0153",
+    "executor": "scripts/run_biological_cell_model_qualification.py",
+    "clinical_use": false
+  },
+  "protocol": {
+    "path": "data/qualification/biological-cell-model-integration-protocol-v1.json",
+    "sha256": "e3e71e6ce6c2c5ca028d373710a5fb19ef2ced7388ad450b05d6414f0edd4b52"
+  },
+  "parent_result": {
+    "path": "data/qualification/biological-cell-model-reproduction-result-v1.json",
+    "sha256": "0d538ef4e95a026ee7747f2f1143f43e5c76928c2593786162ff27fd1a261ef8"
+  },
+  "archive": {
+    "run_id": "20260906T090213Z-e3e71e6ce6c2",
+    "path": "results/bcq1/kallenberger-mehlissa/20260906T090213Z-e3e71e6ce6c2",
+    "checksum_manifest": {
+      "path": "results/bcq1/kallenberger-mehlissa/20260906T090213Z-e3e71e6ce6c2/sha256sums.json",
+      "sha256": "14b8d4bd0f82cd069408c034b66c3e103ab87f736dfe00f97fdfc046e466e84f"
+    },
+    "hash_canonicalization": "SHA-256 over Git-canonical LF bytes for text artifacts; binary bytes unchanged",
+    "external_sbml_bundled": false,
+    "raw_article_or_participant_data_bundled": false
+  },
+  "execution": {
+    "mehlissa_method": "fixed-step-classical-rk4",
+    "copasi_reference_method": "COPASI 4.46 Build 300 LSODA",
+    "source_accessions": ["BIOMD0000000523", "BIOMD0000000524"],
+    "run_count": 6,
+    "points_per_run": 961,
+    "reported_species": 18,
+    "all_state_time_comparisons": 34596,
+    "time_unit": "unresolved-model-native",
+    "state_unit": "unresolved-model-native",
+    "parameter_refitting": false
+  },
+  "headline_metrics": {
+    "maximum_cross_engine_absolute_difference": 7.304716973521863e-7,
+    "maximum_cross_engine_fraction_of_limit": 0.02305951804595588,
+    "maximum_mehlissa_convergence_fraction_of_limit": 1.2287307448171318e-5,
+    "maximum_invariant_residual": 4.001776687800884e-11,
+    "minimum_state": 0.0,
+    "maximum_sensitivity_step_disagreement": 0.00337559817307547,
+    "sensitivity_step_comparisons": 88,
+    "negative_controls_passed": 12
+  },
+  "structural_scope": {
+    "companions": ["BIOMD0000000525", "BIOMD0000000526"],
+    "status": "PASS",
+    "independent_validation": false,
+    "runtime_variants": false
+  },
+  "gates": [
+    {"id": "typed_adapter", "status": "PASS"},
+    {"id": "source_and_build_identity", "status": "PASS"},
+    {"id": "cross_engine_all_states", "status": "PASS"},
+    {"id": "deterministic_replay", "status": "PASS"},
+    {"id": "mehlissa_numerical_convergence", "status": "PASS"},
+    {"id": "invariants_and_nonnegativity", "status": "PASS"},
+    {"id": "same_family_structural_audit", "status": "PASS"},
+    {"id": "local_sensitivity_stability", "status": "PASS"},
+    {"id": "population_ensemble", "status": "BLOCKED", "reason": "No reusable row-level initial-protein distribution with correlation structure and reuse basis was established."},
+    {"id": "publication_curve_alignment", "status": "BLOCKED", "reason": "No rights-compatible machine-readable publication reference series is frozen."},
+    {"id": "external_human_review", "status": "BLOCKED", "reason": "No external reviewer attestation has been received."},
+    {"id": "biological_qualification", "status": "NOT_ESTABLISHED", "reason": "Publication, population, and external-review gates remain blocked."}
+  ],
+  "attempt_history": [
+    {
+      "run_id": "20260906T084542Z-e3e71e6ce6c2",
+      "path": "results/bcq1/kallenberger-mehlissa/20260906T084542Z-e3e71e6ce6c2",
+      "status": "SUPERSEDED_PRE_DOCUMENTATION_REVIEW",
+      "reason": "Computational results were valid, but documentation review fields preceded the required living-document updates.",
+      "authoritative": false
+    },
+    {
+      "run_id": "20260906T085845Z-e3e71e6ce6c2",
+      "path": "results/bcq1/kallenberger-mehlissa/20260906T085845Z-e3e71e6ce6c2",
+      "status": "SUPERSEDED_INCOMPLETE_INVARIANT_AGGREGATION",
+      "reason": "All trajectories and comparisons passed, but the archive-level integrity summary explicitly aggregated only five of the nine frozen source invariants.",
+      "authoritative": false
+    },
+    {
+      "run_id": "20260906T090213Z-e3e71e6ce6c2",
+      "path": "results/bcq1/kallenberger-mehlissa/20260906T090213Z-e3e71e6ce6c2",
+      "status": "PASS_WITH_BLOCKED_BIOLOGICAL_GATES",
+      "reason": "All eight unblocked computational gates, all nine frozen source invariants, twelve negative controls, and the documented bounded close-out review pass; three biological-evidence inputs remain blocked.",
+      "authoritative": true
+    }
+  ],
+  "decision": {
+    "typed_source_mechanism": "PASS",
+    "cross_engine_reproduction": "PASS",
+    "population_ensemble": "BLOCKED",
+    "publication_curve_alignment": "BLOCKED",
+    "external_human_review": "BLOCKED",
+    "biological_qualification": "NOT_ESTABLISHED",
+    "m5_published_variant_evidence": "computationally-qualified-published-average-cell-mechanism",
+    "synthetic_m5_fixture_evidence": "software_test_surrogate",
+    "allowed_claim": "MEHLISSA contains a typed, no-refit reimplementation of the selected Kallenberger minimal average-cell SBML mechanism whose trajectories reproduce the independently generated COPASI reference within the frozen numerical limits.",
+    "forbidden_claims": [
+      "quantitative reproduction of publication curves",
+      "reproduction of the publication population ensemble",
+      "biological qualification or prediction for an individual cell",
+      "normal endothelial-cell realism",
+      "organ, patient, diagnostic, treatment, safety, or clinical validity",
+      "independent experimental validation",
+      "treating the 525/526 pair as an independent evidence source"
+    ],
+    "next_scientific_package": "Dynamic capillary-tissue-cell coupling qualification design"
+  }
+}

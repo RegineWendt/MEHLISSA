@@ -98,10 +98,10 @@ remaining gap; merely naming a class or source is insufficient.
 | CAP-006 | DISS pp. 129, 154 | DONE | VERIFIED | M4 | M4.8 defines a typed implementation-neutral request/response and analytical free-diffusion adapter; M4.9–M4.11 add deterministic endpoint particles, bounded paths, and a conservative radial field; M4.13 adds a separate pulmonary-card-bound shared case in which analytical, 200,000-particle, and 256-to-512-cell field resolutions compare directed advection, diffusion, bulk reaction, and a surface-to-volume wall sink with explicit balance and refinement gates; explicit radial wall encounters, receptor kinetics, external tools, noise, and physiological signal qualification follow without reopening the stable contracts |
 | CAP-007 | DISS p. 129 | SPEC | RESEARCH | M4/M6 | reachability and multi-hop comparison |
 | CELL-001 | DISS pp. 129–132 | PART | PART | M5 | biomarker field with analytical reference case |
-| CELL-002 | DISS pp. 130–132 | DONE | PART | M5/M7 | M5.1 provides the exact binding baseline; M5.2 adds a neutral capillary/tissue signal hand-off; M5.3 adds bounded RK4 trajectories and an analytical pulse; M5.4 adds finite-receptor SSA, population moments, and synthetic FP/FN evaluation; M5.5 adds a conserved receptor-to-messenger-to-effector state, response event, and shared ODE/SSA comparison; M5.6 consumes that event through a separate device-activation boundary; M5.7 connects final uptake to a synthetic apoptosis state and neutral event; BCQ-1.1 selects the named CD95L-CD95 minimal Kallenberger `BIOMD0000000523`/`0524` pair and freezes licence/source identities; BCQ-1.2 freezes the no-refit COPASI/LSODA execution and BCQ-1.3 executes six unchanged-source trajectories with nine computational gates and ten negative controls passing; typed MEHLISSA mapping, cross-engine comparison, publication alignment, population qualification, and review remain open |
+| CELL-002 | DISS pp. 130–132 | DONE | PART | M5/M7 | M5.1–M5.7 provide the synthetic binding-to-response chain; BCQ-1.1–1.3 select, licence-screen, and independently reproduce the minimal Kallenberger `BIOMD0000000523`/`0524` family in COPASI; BCQ-1.4–1.7 add a typed no-refit M5 adapter and separate 13-reaction implementation, pass every one of 34,596 all-state/time COPASI comparisons, deterministic replay, RK4 refinement, invariants, structural checks, and 88 sensitivity-stability checks. This proves a computationally qualified published average-cell mechanism; publication curves, a reusable population ensemble, external human attestation, individual-cell prediction, and biological or clinical qualification remain blocked. |
 | CELL-003 | DISS pp. 130–132, 153–154 | PART | PART | M5 | M5.6 provides threshold-derived activation plus an analytical, amount-conserving device-to-extracellular-to-intracellular release/uptake chain; M5.7 consumes the final intracellular inventory in a separate synthetic response; spatial diffusion, receptor binding, concentration/exposure kinetics, and biological calibration remain open |
-| CELL-004 | DISS pp. 131–133, 154 | DONE | PART | M5 | M5.5 provides one conserved topology as bounded ODE and exact SSA with analytical constant-input equilibria, fixed transient values, and a 1,000-cell population comparison; BCQ-1.1 selects a compact CC0 biological ODE family, BCQ-1.2 prospectively freezes its external-solver rules, and BCQ-1.3 independently reproduces the unchanged equations with replay, convergence, invariant, nonnegativity, direction, and negative-control gates; it remains outside MEHLISSA and biologically unqualified |
-| CELL-005 | DISS pp. 153–154 | DONE | PART | M5 | M5.7 provides a bounded synthetic effect, irreversible apoptosis-commitment state, and versioned neutral higher-layer event; M5.8 adds an exact cohort-compressed population, count-scale invariant, and response sensitivities; BCQ-1.1 identifies caspase-8/tBID apoptosis timing, BCQ-1.2 preserves average-cell, HeLa-only, unit, publication-reference, and non-clinical boundaries, and BCQ-1.3 reproduces the source trajectories externally; a typed executable scenario consumer, publication comparison, calibrated heterogeneity, and biological qualification remain open |
+| CELL-004 | DISS pp. 131–133, 154 | DONE | PART | M5 | M5.5 retains its conserved synthetic ODE/SSA topology; BCQ-1.1–1.7 separately qualify the selected CC0 13-reaction CD95/caspase-8 mechanism computationally inside MEHLISSA against COPASI over all 18 states, with code-to-equation mapping, replay, convergence, invariants, nonnegativity, structural sensitivity, and bounded claim review. Publication-series and biological qualification remain open, so evidence stays PART rather than VERIFIED. |
+| CELL-005 | DISS pp. 153–154 | DONE | PART | M5 | M5.7–M5.8 retain the synthetic apoptosis event and scalable cohort aggregate. BCQ-1.1–1.7 add a published average-cell caspase-8/tBID mechanism with exact source identity and cross-engine evidence, but explicitly decline to fabricate the unavailable correlated population ensemble. A Workbench scenario consumer, publication-curve comparison, calibrated heterogeneity, external human review, and biological qualification remain open. |
 
 M5 is closed at the synthetic software-contract level by the formal gate
 review. M5.1 through M5.8 advance `CELL-002`: they verify constant,
@@ -111,12 +111,15 @@ observation and adapter. The first M5 gate statement is therefore satisfied at
 the software-contract level, and receptor binding has analytical evidence toward
 the third statement. M5.7 also satisfies the measurable higher-layer event
 statement at the synthetic software-contract level. Dynamic capillary fields,
-biological heterogeneity, and biological qualification remain open. M5.4 provides a
+calibrated biological heterogeneity, and biological qualification remain open.
+BCQ-1 adds one computationally qualified published average-cell mechanism
+without changing that conclusion. M5.4 provides a
 binding SSA/distribution; M5.5 provides a shared intracellular ODE/SSA network;
 and M5.8 provides an exact compressed-population aggregate. `CELL-004` is
 functionally implemented but remains evidence-partial: executable ODE/SSA and
-distribution models exist, while external biological reaction data and
-qualification remain open.
+distribution models exist, and one distinct published mechanism has completed
+cross-engine numerical qualification, while publication-series, population,
+external-review, and biological qualification gates remain blocked.
 M5.6 advances `CELL-003` from specification to a partial executable contract:
 a typed response event activates one addressed device/payload, and an analytical
 chain conserves substance across device, extracellular, and intracellular
@@ -136,6 +139,7 @@ or biological calibration. See
 [the M5.8 population validity guide](../m5/POPULATION_SCALE_AND_VALIDITY.md),
 [the M5 evidence qualification](../m5/M5_EVIDENCE_QUALIFICATION.md),
 [the M5 gate review](../m5/M5_GATE_REVIEW.md),
+[the BCQ-1.4–1.7 bounded qualification result](../qualification/BCQ1_MEHLISSA_QUALIFICATION_RESULT.md),
 [ADR-0034](../architecture/adr/0034-analytical-receptor-ligand-baseline.md),
 [ADR-0035](../architecture/adr/0035-non-consuming-capillary-cell-signal-handoff.md),
 [ADR-0036](../architecture/adr/0036-time-varying-receptor-ligand-ode.md),
