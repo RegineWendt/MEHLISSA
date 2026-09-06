@@ -1,0 +1,260 @@
+{
+  "method": "one-at-a-time symmetric plus/minus 10 percent",
+  "parameter_count": 12,
+  "joint_distribution_used": false,
+  "population_interpretation": false,
+  "results": [
+    {
+      "parameter": "blood_to_endothelium",
+      "fraction": 0.1,
+      "outputs": {
+        "interstitium_free_mol": {
+          "lower_relative_change": -0.007588317374878368,
+          "upper_relative_change": 0.006193175501438199,
+          "central_elasticity": 0.06890746438158282
+        },
+        "receptor_bound_mol": {
+          "lower_relative_change": -0.00016808374888759598,
+          "upper_relative_change": 0.0001353348542246677,
+          "central_elasticity": 0.0015170930155613183
+        },
+        "internalized_mol": {
+          "lower_relative_change": -0.0005048126426552985,
+          "upper_relative_change": 0.0004212420048119376,
+          "central_elasticity": 0.00463027323733618
+        }
+      }
+    },
+    {
+      "parameter": "endothelium_to_blood",
+      "fraction": 0.1,
+      "outputs": {
+        "interstitium_free_mol": {
+          "lower_relative_change": 0.005323855986836628,
+          "upper_relative_change": -0.005277553994934961,
+          "central_elasticity": -0.05300704990885794
+        },
+        "receptor_bound_mol": {
+          "lower_relative_change": 0.00011640751691367076,
+          "upper_relative_change": -0.0001165982667814111,
+          "central_elasticity": -0.0011650289184754093
+        },
+        "internalized_mol": {
+          "lower_relative_change": 0.00014689794626297466,
+          "upper_relative_change": -0.0001408854742854031,
+          "central_elasticity": -0.0014389171027418886
+        }
+      }
+    },
+    {
+      "parameter": "endothelium_to_interstitium",
+      "fraction": 0.1,
+      "outputs": {
+        "interstitium_free_mol": {
+          "lower_relative_change": -0.026528024488247565,
+          "upper_relative_change": 0.022323536815757515,
+          "central_elasticity": 0.24425780652002538
+        },
+        "receptor_bound_mol": {
+          "lower_relative_change": -0.0005987356365467255,
+          "upper_relative_change": 0.0004802586718307271,
+          "central_elasticity": 0.005394971541887263
+        },
+        "internalized_mol": {
+          "lower_relative_change": -0.0010459598389895035,
+          "upper_relative_change": 0.0008594470599051417,
+          "central_elasticity": 0.009527034494473225
+        }
+      }
+    },
+    {
+      "parameter": "interstitium_to_endothelium",
+      "fraction": 0.1,
+      "outputs": {
+        "interstitium_free_mol": {
+          "lower_relative_change": 0.022974117848875163,
+          "upper_relative_change": -0.021985177330048653,
+          "central_elasticity": -0.22479647589461907
+        },
+        "receptor_bound_mol": {
+          "lower_relative_change": 0.0004937419224590239,
+          "upper_relative_change": -0.0004937211779994019,
+          "central_elasticity": -0.004937315502292129
+        },
+        "internalized_mol": {
+          "lower_relative_change": 0.00045818594484257566,
+          "upper_relative_change": -0.00045908262802969995,
+          "central_elasticity": -0.004586342864361377
+        }
+      }
+    },
+    {
+      "parameter": "blood_outlet",
+      "fraction": 0.1,
+      "outputs": {
+        "interstitium_free_mol": {
+          "lower_relative_change": 0.003285578190506344,
+          "upper_relative_change": -0.0032663257465390142,
+          "central_elasticity": -0.032759519685226786
+        },
+        "receptor_bound_mol": {
+          "lower_relative_change": 7.194364174697281e-05,
+          "upper_relative_change": -7.198162068874691e-05,
+          "central_elasticity": -0.0007196263121785986
+        },
+        "internalized_mol": {
+          "lower_relative_change": 6.35011147627052e-05,
+          "upper_relative_change": -6.353139155033641e-05,
+          "central_elasticity": -0.000635162531565208
+        }
+      }
+    },
+    {
+      "parameter": "interstitial_clearance",
+      "fraction": 0.1,
+      "outputs": {
+        "interstitium_free_mol": {
+          "lower_relative_change": 0.009082005761159074,
+          "upper_relative_change": -0.008990407822135676,
+          "central_elasticity": -0.09036206791647373
+        },
+        "receptor_bound_mol": {
+          "lower_relative_change": 0.00019761345519369165,
+          "upper_relative_change": -0.00019910283249160868,
+          "central_elasticity": -0.0019835814384265016
+        },
+        "internalized_mol": {
+          "lower_relative_change": 0.0001400255279007424,
+          "upper_relative_change": -0.00014082373546909049,
+          "central_elasticity": -0.0014042463168491641
+        }
+      }
+    },
+    {
+      "parameter": "association",
+      "fraction": 0.1,
+      "outputs": {
+        "interstitium_free_mol": {
+          "lower_relative_change": 0.00021161828127547628,
+          "upper_relative_change": -0.00017564521430368508,
+          "central_elasticity": -0.0019363174778958066
+        },
+        "receptor_bound_mol": {
+          "lower_relative_change": -0.0024305847935764133,
+          "upper_relative_change": 0.0019982423341047715,
+          "central_elasticity": 0.02214413563840592
+        },
+        "internalized_mol": {
+          "lower_relative_change": -0.0027292947940463015,
+          "upper_relative_change": 0.0022623922542974796,
+          "central_elasticity": 0.024958435241718903
+        }
+      }
+    },
+    {
+      "parameter": "dissociation",
+      "fraction": 0.1,
+      "outputs": {
+        "interstitium_free_mol": {
+          "lower_relative_change": -0.00011375831178706251,
+          "upper_relative_change": 0.00011159774333527491,
+          "central_elasticity": 0.0011267802756116869
+        },
+        "receptor_bound_mol": {
+          "lower_relative_change": 0.001299760985146104,
+          "upper_relative_change": -0.0012961467326200724,
+          "central_elasticity": -0.01297953858883088
+        },
+        "internalized_mol": {
+          "lower_relative_change": 0.001398580992385708,
+          "upper_relative_change": -0.0013871766434393046,
+          "central_elasticity": -0.013928788179125061
+        }
+      }
+    },
+    {
+      "parameter": "internalization",
+      "fraction": 0.1,
+      "outputs": {
+        "interstitium_free_mol": {
+          "lower_relative_change": 0.0006821435331767756,
+          "upper_relative_change": -0.0006821647792027943,
+          "central_elasticity": -0.006821541561897849
+        },
+        "receptor_bound_mol": {
+          "lower_relative_change": 0.0009124794471222514,
+          "upper_relative_change": -0.0009120587183113313,
+          "central_elasticity": -0.009122690827167913
+        },
+        "internalized_mol": {
+          "lower_relative_change": -0.09912078584637733,
+          "upper_relative_change": 0.09893383981520074,
+          "central_elasticity": 0.9902731283078902
+        }
+      }
+    },
+    {
+      "parameter": "degradation",
+      "fraction": 0.1,
+      "outputs": {
+        "interstitium_free_mol": {
+          "lower_relative_change": 0.0,
+          "upper_relative_change": 0.0,
+          "central_elasticity": 0.0
+        },
+        "receptor_bound_mol": {
+          "lower_relative_change": 0.0,
+          "upper_relative_change": 0.0,
+          "central_elasticity": 0.0
+        },
+        "internalized_mol": {
+          "lower_relative_change": 0.09287204003811804,
+          "upper_relative_change": -0.08002331029363995,
+          "central_elasticity": -0.8644767516587898
+        }
+      }
+    },
+    {
+      "parameter": "receptor_capacity",
+      "fraction": 0.1,
+      "outputs": {
+        "interstitium_free_mol": {
+          "lower_relative_change": 0.0008306644519643453,
+          "upper_relative_change": -0.0008306253596707306,
+          "central_elasticity": -0.008306449058175378
+        },
+        "receptor_bound_mol": {
+          "lower_relative_change": -0.09998359852043694,
+          "upper_relative_change": 0.09997992215290552,
+          "central_elasticity": 0.9998176033667122
+        },
+        "internalized_mol": {
+          "lower_relative_change": -0.09998542750444869,
+          "upper_relative_change": 0.09998216860698306,
+          "central_elasticity": 0.9998379805571586
+        }
+      }
+    },
+    {
+      "parameter": "feedback_gain",
+      "fraction": 0.1,
+      "outputs": {
+        "interstitium_free_mol": {
+          "lower_relative_change": 0.007664739164648059,
+          "upper_relative_change": -0.0017308111458643294,
+          "central_elasticity": -0.04697775155256194
+        },
+        "receptor_bound_mol": {
+          "lower_relative_change": 0.00016724311069210218,
+          "upper_relative_change": -3.8120913110914416e-05,
+          "central_elasticity": -0.0010268201190150828
+        },
+        "internalized_mol": {
+          "lower_relative_change": 0.00024139336980461272,
+          "upper_relative_change": -9.425285924406513e-05,
+          "central_elasticity": -0.001678231145243389
+        }
+      }
+    }
+  ]
+}

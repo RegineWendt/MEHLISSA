@@ -1,0 +1,401 @@
+{
+  "run_id": "20260906T120000Z-dccq1-v1",
+  "generated_utc": "2026-09-06T12:45:35.725101+00:00",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.14.4",
+  "runner_path": "build/windows-msvc/models/cosimulation/Debug/mehlissa_dccq1_qualification_runner.exe",
+  "runner_sha256": "ff47756c43dd4db30bc17f52c58803ebdb7bc18b0fb1eccca35793750eb9aaa5",
+  "protocol_path": "data/qualification/dynamic-capillary-tissue-cell-protocol-v1.json",
+  "protocol_sha256": "8837b47d8dd258e4b1ff21940fc34f0f2432ef6a01aeeb9b1373448a24c217d7",
+  "commands": [
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\baseline.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=2.4651903288156619e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\replay.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=2.4651903288156619e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\time-step-8s.csv",
+      "8.0",
+      "60.0",
+      "14400.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=1.3866695599588098e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\time-step-4s.csv",
+      "4.0",
+      "60.0",
+      "14400.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=2.0029671421627253e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\time-step-2s.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=2.4651903288156619e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\time-step-1s.csv",
+      "1.0",
+      "60.0",
+      "14400.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=4.1600086798764294e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\time-step-0.5s.csv",
+      "0.5",
+      "60.0",
+      "14400.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=5.5466782398352393e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\synchronization-120s.csv",
+      "0.5",
+      "120.0",
+      "14400.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=121 max_balance_error_mol=4.622231866529366e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\synchronization-60s.csv",
+      "0.5",
+      "60.0",
+      "14400.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=5.5466782398352393e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\synchronization-30s.csv",
+      "0.5",
+      "30.0",
+      "14400.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=481 max_balance_error_mol=7.8577941730999223e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\synchronization-15s.csv",
+      "0.5",
+      "15.0",
+      "14400.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=961 max_balance_error_mol=5.854827030937197e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\limit-zero-flux.csv",
+      "2.0",
+      "60.0",
+      "600.0",
+      "zero_flux",
+      "1.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=11 max_balance_error_mol=0"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\limit-zero-binding.csv",
+      "2.0",
+      "60.0",
+      "600.0",
+      "association",
+      "0.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=11 max_balance_error_mol=6.1629758220391547e-33"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\limit-constant-reservoir.csv",
+      "0.5",
+      "60.0",
+      "600.0",
+      "constant_reservoir",
+      "1.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=11 max_balance_error_mol=4.622231866529366e-33"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\structural-feedback-off.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "feedback_gain",
+      "0.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=5.0844550531823027e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\structural-nrp1-excluded.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "nrp1_excluded",
+      "1.0",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=2.4651903288156619e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\structural-nrp1-facilitation-1.5x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "nrp1_facilitation",
+      "1.5",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=2.7733391199176196e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-blood_to_endothelium-0.9x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "blood_to_endothelium",
+      "0.9",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=4.622231866529366e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-blood_to_endothelium-1.1x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "blood_to_endothelium",
+      "1.1",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=1.8488927466117464e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-endothelium_to_blood-0.9x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "endothelium_to_blood",
+      "0.9",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=3.543711097672514e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-endothelium_to_blood-1.1x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "endothelium_to_blood",
+      "1.1",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=4.622231866529366e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-endothelium_to_interstitium-0.9x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "endothelium_to_interstitium",
+      "0.9",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=6.4711246131411125e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-endothelium_to_interstitium-1.1x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "endothelium_to_interstitium",
+      "1.1",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=3.3896367021215351e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-interstitium_to_endothelium-0.9x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "interstitium_to_endothelium",
+      "0.9",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=3.543711097672514e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-interstitium_to_endothelium-1.1x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "interstitium_to_endothelium",
+      "1.1",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=1.5407439555097887e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-blood_outlet-0.9x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "blood_outlet",
+      "0.9",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=2.311115933264683e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-blood_outlet-1.1x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "blood_outlet",
+      "1.1",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=1.8488927466117464e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-interstitial_clearance-0.9x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "interstitial_clearance",
+      "0.9",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=3.543711097672514e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-interstitial_clearance-1.1x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "interstitial_clearance",
+      "1.1",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=4.1600086798764294e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-association-0.9x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "association",
+      "0.9",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=3.0814879110195774e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-association-1.1x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "association",
+      "1.1",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=2.311115933264683e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-dissociation-0.9x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "dissociation",
+      "0.9",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=3.0814879110195774e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-dissociation-1.1x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "dissociation",
+      "1.1",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=5.7007526353862181e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-internalization-0.9x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "internalization",
+      "0.9",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=3.6977854932234928e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-internalization-1.1x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "internalization",
+      "1.1",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=2.7733391199176196e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-degradation-0.9x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "degradation",
+      "0.9",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=2.311115933264683e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-degradation-1.1x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "degradation",
+      "1.1",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=2.4651903288156619e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-receptor_capacity-0.9x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "receptor_capacity",
+      "0.9",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=1.5407439555097887e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-receptor_capacity-1.1x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "receptor_capacity",
+      "1.1",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=4.0059342843254506e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-feedback_gain-0.9x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "feedback_gain",
+      "0.9",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=4.4681574709783872e-32"
+    ],
+    [
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\build\\windows-msvc\\models\\cosimulation\\Debug\\mehlissa_dccq1_qualification_runner.exe",
+      "C:\\Users\\Stefan Fischer\\Documents\\MEHLISSA Software\\results\\dccq1\\vegfa165a-vegfr2-huvec\\20260906T120000Z-dccq1-v1\\trajectories\\sensitivity-feedback_gain-1.1x.csv",
+      "2.0",
+      "60.0",
+      "14400.0",
+      "feedback_gain",
+      "1.1",
+      "model=cosimulation.dccq1.vegfa165a-vegfr2-huvec.v1 points=241 max_balance_error_mol=2.4651903288156619e-32"
+    ]
+  ],
+  "validation_refitting": false
+}

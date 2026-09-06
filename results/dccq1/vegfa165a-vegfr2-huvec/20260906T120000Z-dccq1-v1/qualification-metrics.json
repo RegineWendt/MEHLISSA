@@ -1,0 +1,99 @@
+{
+  "run_id": "20260906T120000Z-dccq1-v1",
+  "trajectory_count": 41,
+  "baseline_points": 241,
+  "duration_s": 14400.0,
+  "maximum_balance_error_mol": 7.857794173099922e-32,
+  "minimum_owner_amount_mol": 0.0,
+  "deterministic_replay_maximum_absolute_difference": 0.0,
+  "time_step_final_l1_relative_errors": {
+    "8.0": 2.5793435467118693e-11,
+    "4.0": 2.01105366044175e-12,
+    "2.0": 1.1867765914500301e-13,
+    "1.0": 1.0649136586993484e-14
+  },
+  "time_step_monotone": true,
+  "synchronization_final_l1_relative_errors": {
+    "120.0": 8.861676711228197e-05,
+    "60.0": 3.6947054103055644e-05,
+    "30.0": 1.2144341029339634e-05
+  },
+  "synchronization_monotone": true,
+  "zero_flux_relative_error": 0.0,
+  "zero_binding_max_bound_plus_internalized_mol": 0.0,
+  "constant_reservoir_analytical_occupancy": 0.9912765625816243,
+  "constant_reservoir_simulated_occupancy": 0.9912704204615704,
+  "constant_reservoir_absolute_error": 6.142120053898026e-06,
+  "causal_event_times_s": {
+    "blood_departure": 60.0,
+    "interstitial_arrival": 120.0,
+    "receptor_binding": 120.0,
+    "feedback_scheduled": 240.0,
+    "feedback_applied": 300.0
+  },
+  "causal_order_pass": true,
+  "feedback_delayed": true,
+  "baseline_final": {
+    "time_s": 14400.0,
+    "initial_mol": 1.1363371054780858e-17,
+    "cumulative_inlet_mol": 0.0,
+    "blood_free_mol": 4.130939197451375e-19,
+    "endothelium_free_mol": 2.069305626286739e-18,
+    "interstitium_free_mol": 7.520133384211585e-18,
+    "receptor_bound_mol": 7.957821027703004e-21,
+    "internalized_mol": 2.2861557208218818e-20,
+    "cleared_or_degraded_mol": 9.377313643416103e-19,
+    "cumulative_outlet_mol": 3.922873819598707e-19,
+    "occupancy_fraction": 0.9780228239125581,
+    "applied_feedback_multiplier": 0.7554921182823051,
+    "scheduled_feedback_multiplier": 0.7554942940218605,
+    "balance_error_mol": 6.162975822039155e-33
+  },
+  "structural_final_l1_relative_difference": {
+    "feedback_off": 0.09709224753925076,
+    "nrp1_excluded": 0.0,
+    "nrp1_facilitation_1.5x": 0.0010542544053999204
+  },
+  "gates": [
+    {
+      "id": "DCCQ-G1",
+      "status": "PASS",
+      "reason": "One frozen VEGF-A165a homodimer identity, exact SI conversion, one represented HUVEC, and seven exclusive amount owners pass the protocol and runtime guards."
+    },
+    {
+      "id": "DCCQ-G2",
+      "status": "PASS",
+      "reason": "Maximum balance residual 7.8577941730999223e-32 mol; minimum owner 0 mol."
+    },
+    {
+      "id": "DCCQ-G3",
+      "status": "PASS",
+      "reason": "Zero-flux, zero-binding, constant-reservoir, pulse-withdrawal, and no-feedback cases were retained and evaluated."
+    },
+    {
+      "id": "DCCQ-G4",
+      "status": "PASS",
+      "reason": "Independent RK4 step and coupling-interval refinement converge; spatial refinement is not applicable to the frozen well-mixed candidate."
+    },
+    {
+      "id": "DCCQ-G5",
+      "status": "PASS",
+      "reason": "Causal event times: {'blood_departure': 60.0, 'interstitial_arrival': 120.0, 'receptor_binding': 120.0, 'feedback_scheduled': 240.0, 'feedback_applied': 300.0}; feedback is applied only after it is scheduled."
+    },
+    {
+      "id": "DCCQ-G6",
+      "status": "PARTIAL",
+      "reason": "Numerical, synchronization, 12-parameter local, NRP1 structural, and feedback structural effects are reported. Joint distributions, correlations, observational covariance, and global identifiability remain unavailable."
+    },
+    {
+      "id": "DCCQ-G7",
+      "status": "BLOCKED",
+      "reason": "The source-disjoint kinetic series uses engineered HEK293T cells and the source-disjoint primary-HUVEC evidence supplies only a directional 30-minute endpoint; no condition-matched reusable HUVEC time series is frozen and no refitting was performed."
+    },
+    {
+      "id": "DCCQ-G8",
+      "status": "PARTIAL",
+      "reason": "A runner-independent machine checker, immutable archive, licence review, documentation reconciliation, and bounded claim are supplied; independent external human attestation remains absent."
+    }
+  ]
+}

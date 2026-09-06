@@ -27,7 +27,9 @@ and rate definitions plus CC-BY Supporting Information.
 
 Select human VEGF-A165a binding to and trafficking with VEGFR2 in primary
 HUVECs as the first DCCQ biological target. NRP1 remains an explicit structural
-choice that DCCQ-1.3 must include or exclude prospectively.
+choice that DCCQ-1.3 must include or exclude prospectively. The subsequent
+DCCQ-1.3 decision selected an explicit tracked-neutral reference plus excluded
+and labelled facilitation sensitivity variants; see ADR-0055.
 
 Use the 2025 and 2024 Sarabipour HUVEC publications and Supporting Information
 for mechanism selection, parameterization, and within-family checks. Use Peach
@@ -38,17 +40,17 @@ HUVEC check.
 The public VEGFR-Trafficking-Projects repository is pinned and selected files
 are content-hashed, but it contains no explicit repository licence. Its code
 and standalone CSV files may be inspected for provenance but must not be copied,
-modified, bundled, or redistributed under an assumed licence. DCCQ-1.3 must
-independently specify a reduced MEHLISSA-native model from the CC-BY publication
-record before output.
+modified, bundled, or redistributed under an assumed licence. DCCQ-1.3
+subsequently specified a reduced MEHLISSA-native model independently from the
+CC-BY publication record before authoritative output.
 
 ## Consequences
 
 - DCCQ now has one stable ligand, primary receptor, coreceptor choice, human
   endothelial context, and dynamic response to constrain the next protocol.
-- The molecule-per-cell source system is convertible to SI, but DCCQ-G1 remains
-  partial until cell count, volumes, molecular mass, dimer convention, and rate
-  conversions are frozen.
+- The molecule-per-cell source system was convertible to SI; DCCQ-1.3 later
+  froze cell count, volumes, molecular mass, dimer convention, and rate
+  conversions, allowing DCCQ-G1 to pass for the reduced candidate.
 - The full 281-state reference is not the implementation plan. A reduced model
   must preserve ligand ownership and the selected observables.
 - HUVEC evidence cannot establish pulmonary capillary physiology. No lung,

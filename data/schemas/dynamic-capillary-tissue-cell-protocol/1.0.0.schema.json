@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:dynamic-capillary-tissue-cell-protocol:1.0.0",
+  "title": "MEHLISSA DCCQ prospective dynamic coupling protocol",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "protocol", "parent_source_screen", "frozen_implementation", "target", "si_mapping", "state_contract", "equations", "reference_parameters", "initial_state", "synchronization", "evaluation", "independent_evidence", "uncertainty_policy", "negative_controls", "allowed_claim", "forbidden_claims"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "protocol": {"$ref": "#/$defs/protocol"},
+    "parent_source_screen": {"$ref": "#/$defs/asset"},
+    "frozen_implementation": {"type": "array", "minItems": 3, "items": {"$ref": "#/$defs/assetWithRole"}},
+    "target": {"type": "object"},
+    "si_mapping": {"type": "object"},
+    "state_contract": {"type": "object"},
+    "equations": {"type": "array", "minItems": 9, "items": {"type": "object", "required": ["state", "equation"]}},
+    "reference_parameters": {"type": "array", "minItems": 15, "items": {"type": "object", "required": ["id", "value", "unit", "provenance", "uncertainty_role"]}},
+    "initial_state": {"type": "object"},
+    "synchronization": {"type": "object"},
+    "evaluation": {"type": "object"},
+    "independent_evidence": {"type": "array", "minItems": 2, "items": {"type": "object", "required": ["id", "role", "status", "use"]}},
+    "uncertainty_policy": {"type": "object"},
+    "negative_controls": {"type": "array", "minItems": 10, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "allowed_claim": {"type": "string", "minLength": 1},
+    "forbidden_claims": {"type": "array", "minItems": 5, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"}}
+    },
+    "assetWithRole": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "role"],
+      "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"}, "role": {"type": "string", "minLength": 1}}
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "program", "version", "frozen_date", "status", "clinical_use"],
+      "properties": {
+        "id": {"const": "DCCQ-1.3"},
+        "program": {"const": "DCCQ-1"},
+        "version": {"const": "1.0.0"},
+        "frozen_date": {"type": "string", "format": "date"},
+        "status": {"const": "frozen-before-first-dynamic-qualification-output"},
+        "clinical_use": {"const": false}
+      }
+    }
+  }
+}

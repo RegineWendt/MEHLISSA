@@ -208,7 +208,7 @@ The accepted baseline comprises:
 - MEHLISSA Research Workbench 1.0 for guided configuration, execution,
   dashboards, provenance/evidence audit, descriptive campaign analysis, and
   export; and
-- 290 local Windows/MSVC tests in the current BCQ-complete development branch;
+- 295 local Windows/MSVC tests in the current DCCQ-complete development branch;
   the published Workbench baseline retains its accepted 286-test suite across
   Windows/MSVC, Linux/GCC, Linux/Clang, and macOS/Apple Clang CI; the Clang
   analysis path also covers formatting, static analysis, and sanitizers, while
@@ -425,15 +425,20 @@ protocol version. The completed result and code-to-equation review are in
 The result checker reconstructs all numerical claims from the committed CSVs
 without invoking the result runner or requiring COPASI/SBML.
 
-DCCQ means **Dynamic Capillary-Tissue-Cell Qualification**. DCCQ-1.1 and
-DCCQ-1.2 are complete. The parent plan authority remains
+DCCQ means **Dynamic Capillary-Tissue-Cell Qualification**. DCCQ-1.1 through
+DCCQ-1.6 are complete, while DCCQ-1.7 is partial only at the external-human-
+review boundary. The parent plan authority remains
 `data/qualification/dynamic-capillary-tissue-cell-qualification-plan-v1.json`;
 the selected target and source authority is
 `data/qualification/dynamic-capillary-tissue-cell-evidence-candidate-register-v1.json`.
 The latter hash-binds the parent plan and records four ranked targets, ten
 artifacts, five evidence sources, the source-to-SI bridge status, and separate
 rights decisions. The selected target is human VEGF-A165a/VEGFR2 trafficking in
-primary HUVECs, with NRP1 as an explicit DCCQ-1.3 structural choice.
+primary HUVECs, with NRP1 as an explicit structural choice. The prospective
+equation authority is
+`data/qualification/dynamic-capillary-tissue-cell-protocol-v1.json`; the
+result authority is
+`data/qualification/dynamic-capillary-tissue-cell-qualification-result-v1.json`.
 
 Do not implement the new path by looping over
 `CapillaryCellSignalCoupler::evaluate`: that contract is deliberately a
@@ -443,14 +448,46 @@ chemical identifiers merely to make the APIs connect. DCCQ-1.2 has now
 selected and licence-screened the target and alternatives.
 Do not copy or derive from the linked VEGFR-Trafficking-Projects source code:
 its exact commit and relevant file hashes are recorded, but the repository has
-no explicit licence. DCCQ-1.3 must independently specify the reduced equations
-from the CC-BY article and Supporting Information, then freeze units,
+no explicit licence. DCCQ-1.3 therefore independently specified the reduced
+equations from the CC-BY article and Supporting Information and froze units,
 parameters, NRP1 scope, synchronization, metrics, tolerances, observation
-roles, and failure rules before dynamic output is inspected. HUVEC evidence
+roles, and failure rules before the authoritative dynamic output. HUVEC evidence
 must not be relabelled pulmonary evidence, and same-family HUVEC observations
 must not be used as validation. See the [DCCQ-1 qualification
 plan](qualification/DCCQ1_QUALIFICATION_PLAN.md) and [DCCQ-1.2 source
-screen](qualification/DCCQ1_EVIDENCE_SOURCE_SCREEN.md).
+screen](qualification/DCCQ1_EVIDENCE_SOURCE_SCREEN.md), plus the [DCCQ-1
+result](qualification/DCCQ1_QUALIFICATION_RESULT.md).
+
+The public implementation API is
+`mehlissa::models::cosimulation::DynamicCapillaryTissueCellModel`. Construct it
+with a `DynamicCapillaryTissueCellParameters` and a
+`DynamicCapillaryTissueCellInitialState`, then call `run(duration)` or
+`advance_one_synchronization_interval()`. Each
+`DynamicCapillaryTissueCellSnapshot` exposes the seven-owner
+`DynamicLigandLedger`, receptor occupancy, the feedback multiplier used in the
+completed interval, and the multiplier scheduled for the next interval.
+`is_dynamically_balanced` independently checks the open-system invariant.
+
+The reference factories `dccq1_reference_parameters()` and
+`dccq1_reference_initial_state()` reproduce the frozen candidate. They are a
+qualification reference, not a generic fitting interface. A different ligand,
+cell context, receptor capacity, equation, source mapping, NRP1 assumption, or
+acceptance threshold requires a new candidate and prospective protocol.
+`mehlissa_dccq1_qualification_runner` writes a transparent CSV trajectory. The
+Python qualification orchestrator executes the 41-case matrix and the result
+checker reconstructs archive hashes, gate states, balance, replay and
+convergence without invoking the C++ runner.
+
+Run the DCCQ integrity checks with:
+
+```powershell
+python scripts/check_dynamic_capillary_tissue_cell_qualification_plan.py
+python scripts/check_dynamic_capillary_tissue_cell_evidence_candidates.py
+python scripts/check_dynamic_capillary_tissue_cell_protocol.py
+python scripts/check_dynamic_capillary_tissue_cell_qualification_result.py
+python -m unittest tests/test_dynamic_capillary_tissue_cell_protocol.py
+python -m unittest tests/test_dynamic_capillary_tissue_cell_qualification_result.py
+```
 
 Do not edit the locked protocol or raw archives in place. A changed protocol
 requires a new version and pre-measurement commit; a changed candidate requires

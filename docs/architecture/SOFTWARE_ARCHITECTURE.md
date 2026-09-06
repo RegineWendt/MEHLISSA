@@ -397,26 +397,27 @@ The implemented couplers are:
 | `BodyOrganCoupler` | removes an entity from body transport, sends it through an organ, and returns it without duplication |
 | `OrganCapillaryCoupler` | performs bidirectional entity and conserved-quantity transfers and terminal disposition hand-off |
 | `CapillaryCellSignalCoupler` | converts a non-consuming capillary inventory sample into a receptor–ligand request |
+| `DynamicCapillaryTissueCellModel` | advances one named ligand through a consumptive seven-owner SI ledger with bounded delayed feedback |
 | `make_cell_state_feedback_event` | converts committed apoptosis into a neutral higher-layer event |
 
 Couplers coordinate synchronization; they do not perform hidden unit
 conversion, biological calibration, or direct mutation of another component.
 
-### 6.1 Planned dynamic capillary-tissue-cell boundary
+### 6.1 Implemented dynamic capillary-tissue-cell boundary
 
-DCCQ means **Dynamic Capillary-Tissue-Cell Qualification**. The completed
-DCCQ-1.1 design audit and DCCQ-1.2 source screen do not add a new public runtime
-API; they constrain the API that DCCQ-1.3 and DCCQ-1.4 may specify and
-implement. The selected target is human VEGF-A165a/VEGFR2 trafficking in
-primary HUVECs, with NRP1 kept as an explicit structural choice.
+DCCQ means **Dynamic Capillary-Tissue-Cell Qualification**. DCCQ-1.1 through
+DCCQ-1.6 and the machine portion of DCCQ-1.7 now add and qualify the public
+`DynamicCapillaryTissueCellModel` API. The selected target is human
+VEGF-A165a/VEGFR2 trafficking in primary HUVECs, with NRP1 kept as an explicit
+structural choice.
 
 The existing `ExtracellularSignalSample` and `CapillaryCellSignalCoupler`
-remain deliberately non-consuming snapshot interfaces. A dynamic
-implementation must use a new versioned contract and must not change their
-meaning in place. Its minimum ledger has seven exclusive ligand owners:
+remain deliberately non-consuming snapshot interfaces. The dynamic
+implementation uses a separate `1.0.0` contract and does not change their
+meaning in place. Its ledger has seven exclusive ligand owners:
 `blood_free`, `endothelium_free`, `interstitium_free`, `receptor_bound`,
 `internalized`, `cleared_or_degraded`, and `outlet`, plus cumulative inlet.
-The same named ligand and compatible explicit units cross every boundary.
+The same named ligand and compatible core SI quantity types cross every boundary.
 Binding removes ligand from free tissue; dissociation returns it; every other
 loss reaches a declared sink. Feedback is delayed to a declared synchronization
 boundary and cannot mutate the upstream state within the same step.
@@ -426,18 +427,28 @@ The qualified Kallenberger adapter is not eligible for this SI path: it locks
 HeLa cell. DCCQ-1.2 ranked that model behind three endothelial alternatives.
 The selected source uses molecules per represented cell, seconds,
 femtolitres-per-cell volumes, and square-micrometre-per-cell surfaces. The
-future API must expose an explicit represented-cell and SI conversion rather
-than embedding those values as implicit constants. It must also allow ligand
-association to remove free tissue amount, dissociation to return it, and
-internalization and degradation to change owner without losing ledger closure.
+prospective protocol freezes the one-cell convention and exact SI conversion.
+The implementation removes free tissue amount on association, returns it on
+dissociation, and moves internalized, degraded, cleared, and outlet ligand
+without losing ledger closure. Occupancy feedback measured in interval `n` is
+applied only in interval `n+1`.
 
 The linked VEGFR source repository is exact and hash-audited but has no explicit
-licence. Its code cannot be copied or bundled. The DCCQ-1.3 equation contract
-must be independently specified from the CC-BY publication and Supporting
-Information before implementation. See [ADR-0053](adr/0053-dynamic-capillary-tissue-cell-qualification-boundary.md),
-[ADR-0054](adr/0054-vegfa-vegfr2-huvec-dccq-target.md), the [DCCQ-1
-plan](../qualification/DCCQ1_QUALIFICATION_PLAN.md), and the [DCCQ-1.2 source
-screen](../qualification/DCCQ1_EVIDENCE_SOURCE_SCREEN.md).
+licence. Its code was not copied or bundled. The DCCQ-1.3 equation contract was
+independently specified from the CC-BY publication and Supporting Information
+before the authoritative output. See [ADR-0053](adr/0053-dynamic-capillary-tissue-cell-qualification-boundary.md),
+[ADR-0054](adr/0054-vegfa-vegfr2-huvec-dccq-target.md),
+[ADR-0055](adr/0055-dynamic-seven-owner-coupling.md), and the [DCCQ-1
+result](../qualification/DCCQ1_QUALIFICATION_RESULT.md).
+
+`DynamicCapillaryTissueCellParameters` is the configuration boundary;
+`DynamicCapillaryTissueCellInitialState` requires the declared initial amount
+to equal its seven owners; and `DynamicCapillaryTissueCellSnapshot` exposes
+time, ledger, occupancy, used feedback, and next feedback. The reference
+factories reproduce the frozen candidate. Developers adding another biological
+target must create a new evidence-screen decision, stable identity, SI mapping,
+protocol version and model factory rather than weakening the DCCQ-1 runtime
+guards.
 
 ## 7. Configuration and data contracts
 

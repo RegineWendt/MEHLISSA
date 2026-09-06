@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mehlissa:schema:dynamic-capillary-tissue-cell-qualification-result:1.0.0",
+  "title": "MEHLISSA DCCQ computational qualification result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "result", "protocol", "archive", "execution", "headline_metrics", "increments", "gates", "decision"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "program", "version", "performed_date", "status", "clinical_use"],
+      "properties": {
+        "id": {"const": "DCCQ-1.4-1.7"},
+        "program": {"const": "DCCQ-1"},
+        "version": {"const": "1.0.0"},
+        "performed_date": {"type": "string", "format": "date"},
+        "status": {"const": "computational-close-out-complete-external-evidence-and-review-blocked"},
+        "clinical_use": {"const": false}
+      }
+    },
+    "protocol": {"$ref": "#/$defs/asset"},
+    "archive": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id", "path", "checksum_manifest", "raw_external_data_bundled", "unlicensed_external_code_bundled"],
+      "properties": {
+        "run_id": {"type": "string", "minLength": 1},
+        "path": {"type": "string", "minLength": 1},
+        "checksum_manifest": {"$ref": "#/$defs/asset"},
+        "raw_external_data_bundled": {"const": false},
+        "unlicensed_external_code_bundled": {"const": false}
+      }
+    },
+    "execution": {"type": "object"},
+    "headline_metrics": {"type": "object"},
+    "increments": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"$ref": "#/$defs/status"}},
+    "gates": {"type": "array", "minItems": 8, "maxItems": 8, "items": {"$ref": "#/$defs/gate"}},
+    "decision": {"type": "object"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"}}
+    },
+    "status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status"],
+      "properties": {"id": {"type": "string", "minLength": 1}, "status": {"type": "string", "minLength": 1}}
+    },
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "reason"],
+      "properties": {
+        "id": {"pattern": "^DCCQ-G[1-8]$"},
+        "status": {"enum": ["PASS", "PARTIAL", "BLOCKED", "FAIL"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

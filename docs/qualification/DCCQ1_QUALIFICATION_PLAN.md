@@ -5,10 +5,13 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Dynamic Capillary-Tissue-Cell Qualification Plan (DCCQ-1)
 
-**Programme status:** DCCQ-1.1 and DCCQ-1.2 are complete. The selected target
-is human VEGF-A165a/VEGFR2 trafficking in primary HUVECs, with NRP1 as an
-explicit structural choice. DCCQ-1.3 is next; no dynamic coupling is yet
-implemented or qualified.
+**Programme status:** DCCQ-1.1 through DCCQ-1.6 are complete. DCCQ-1.7 has
+reached its machine-verifiable close-out and remains partial only because an
+external human-review attestation is absent. The selected human
+VEGF-A165a/VEGFR2 primary-HUVEC target is implemented as a typed, SI-explicit,
+seven-owner reduced coupling with NRP1 explicit. DCCQ-G1 through DCCQ-G5 pass,
+G6 and G8 are partial, and G7 remains blocked. See the
+[qualification result](DCCQ1_QUALIFICATION_RESULT.md).
 
 ## Decision at DCCQ-1.1
 
@@ -135,16 +138,16 @@ that generated it inside the same step.
 
 ## Eight qualification gates
 
-| Gate | Meaning | DCCQ-1.1 state |
+| Gate | Meaning | Current state after DCCQ-1.6 and machine close-out |
 |---|---|---|
-| DCCQ-G1 — identity and units | one ligand identity and compatible units across every layer | partial: VEGF-A165a and convertible source units selected; SI and represented-population mapping follow in DCCQ-1.3 |
-| DCCQ-G2 — mass balance | complete ledger recalculated at every output and over the run | blocked pending implementation |
-| DCCQ-G3 — limiting cases | zero-flux, zero-binding, constant-reservoir, pulse-withdrawal, and no-feedback references | blocked pending frozen equations and tolerances |
-| DCCQ-G4 — numerical convergence | independent time-step, synchronization, and spatial refinement | blocked pending method selection |
-| DCCQ-G5 — causal timing | transport, exposure, response, and feedback remain ordered | blocked pending scheduler contract |
-| DCCQ-G6 — uncertainty and sensitivity | numerical, parameter, structural, observational, and synchronization uncertainty | partial: source variability exists; distributions, correlations, and identifiability rules follow in DCCQ-1.3 |
+| DCCQ-G1 — identity and units | one ligand identity and compatible units across every layer | **PASS:** one VEGF-A165a homodimer identity, exact SI conversions, one represented HUVEC, and runtime identity/unit guards |
+| DCCQ-G2 — mass balance | complete ledger recalculated at every output and over the run | **PASS:** all 41 retained trajectories remain nonnegative with maximum residual `7.857794173099922e-32 mol` |
+| DCCQ-G3 — limiting cases | zero-flux, zero-binding, constant-reservoir, pulse-withdrawal, and no-feedback references | **PASS:** all predeclared cases meet their frozen computational limits |
+| DCCQ-G4 — numerical convergence | independent time-step, synchronization, and spatial refinement | **PASS:** time-step and synchronization refinements converge; spatial refinement is inapplicable to this well-mixed candidate |
+| DCCQ-G5 — causal timing | transport, exposure, response, and feedback remain ordered | **PASS:** feedback is bounded and first applied one synchronization interval after it is scheduled |
+| DCCQ-G6 — uncertainty and sensitivity | numerical, parameter, structural, observational, and synchronization uncertainty | **PARTIAL:** numerical, synchronization, 24 local-parameter and NRP1/feedback structural comparisons exist; joint distributions, correlations, observational covariance, and global identifiability do not |
 | DCCQ-G7 — independent reference | no-refit comparison with source-disjoint time-resolved observations | blocked: an independent HEK293T kinetic challenge and directional HUVEC check are identified, but no condition-matched independent HUVEC series or frozen numeric protocol exists |
-| DCCQ-G8 — claim and review | independent reconciliation of code, evidence, archive, licences, documentation, and claim | blocked until close-out |
+| DCCQ-G8 — claim and review | independent reconciliation of code, evidence, archive, licences, documentation, and claim | **PARTIAL:** independent checker, archive, licence boundary, documentation and bounded claim agree; external human attestation remains absent |
 
 `BLOCKED` here does not mean that the programme failed. It prevents an
 unexecuted future gate from appearing as evidence merely because its plan is
@@ -173,18 +176,18 @@ Passing an earlier level does not imply a later one.
 |---|---|---|
 | **DCCQ-1.1** | bounded intended use and baseline compatibility audit | **complete**: current capabilities and blockers are hash-bound; invalid shortcuts fail closed |
 | **DCCQ-1.2** | biological target, artifact, data, and licence screen | **complete**: VEGF-A165a/VEGFR2 in primary HUVECs selected, with NRP1 explicit; four candidates, ten artifacts, five evidence roles, unit bridge, and rights boundaries are machine checked |
-| **DCCQ-1.3** | prospective equation and evaluation protocol | **next**: reduced equations, SI mapping, parameters, synchronization, metrics, tolerances, controls, and failure rules frozen before dynamic output |
-| DCCQ-1.4 | typed dynamic tissue and consumptive cell coupling | modular implementation owns every ligand amount exactly once |
-| DCCQ-1.5 | balance, limiting-case, convergence, and timing qualification | computational gates executed with all partial and failed results retained |
-| DCCQ-1.6 | uncertainty, sensitivity, and source-disjoint comparison | influential uncertainty reported and eligible independent data evaluated without refitting, or evidence remains blocked |
-| DCCQ-1.7 | independent close-out and bounded claim | runner-independent and human review reconcile implementation, evidence, archive, licences, and documentation |
+| **DCCQ-1.3** | prospective equation and evaluation protocol | **complete:** nine equations, exact SI map, 15 parameters, NRP1 choice, synchronization, metrics, limits, controls, and failure rules were frozen before the authoritative output |
+| **DCCQ-1.4** | typed dynamic tissue and consumptive cell coupling | **complete:** modular implementation owns every ligand amount exactly once and applies bounded feedback only at the next synchronization boundary |
+| **DCCQ-1.5** | balance, limiting-case, convergence, and timing qualification | **complete:** 41 retained trajectories pass every unblocked computational gate |
+| **DCCQ-1.6** | uncertainty, sensitivity, and source-disjoint comparison | **complete with explicit evidence limits:** local and structural effects are reported; G6 remains partial and G7 blocked rather than inventing distributions or fitting mismatched evidence |
+| **DCCQ-1.7** | independent close-out and bounded claim | **partial:** runner-independent machine, archive, licence, documentation and claim review complete; external human attestation remains blocked |
 
-The next step is therefore DCCQ-1.3. It will independently specify a reduced
-MEHLISSA-native VEGF-A165a/VEGFR2 binding, internalization, recycling, and
-degradation model from the CC-BY publication record. It must freeze the SI
-conversion, NRP1 structural choice, synchronization, observation roles,
-metrics, tolerances, and failure rules before output. The full 281-state source
-model is a reference, not an authorized port or preselected implementation.
+The computational programme is therefore closed at its present evidence
+boundary. The next DCCQ action is external: obtain a reusable,
+condition-matched, source-disjoint primary-HUVEC dynamic series and an external
+reviewer attestation. Both must be frozen prospectively and must not be used to
+refit the evaluated candidate. The full 281-state source model remains a
+reference, not an authorized port.
 
 ## Negative controls
 
@@ -195,14 +198,19 @@ overclaiming numerical checks, relabelling repeated snapshots, and invented
 independent parameter distributions. Later protocols may add controls but may
 not delete these safeguards silently.
 
-## Running the DCCQ-1.1 checks
+## Running the DCCQ checks
 
 With the publication dependencies installed:
 
 ```powershell
 python scripts/check_dynamic_capillary_tissue_cell_qualification_plan.py
 python -m unittest tests/test_dynamic_capillary_tissue_cell_qualification_plan.py -v
+python scripts/check_dynamic_capillary_tissue_cell_evidence_candidates.py
+python scripts/check_dynamic_capillary_tissue_cell_protocol.py
+python scripts/check_dynamic_capillary_tissue_cell_qualification_result.py
 ```
 
-A passing result establishes the integrity and internal consistency of the
-prospective programme only. It is not a dynamic simulation result.
+The plan and source-screen checkers establish prospective integrity. The result
+checker independently reconstructs the archive and computational claims. None
+of them converts the blocked independent experimental or human-review gates
+into biological or clinical validity.

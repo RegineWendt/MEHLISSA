@@ -21,6 +21,12 @@ select the reduced MEHLISSA equations, copy the external model, implement a
 dynamic coupling, pass a qualification gate, or establish biological,
 pulmonary, patient, or clinical validity.
 
+**Subsequent status:** DCCQ-1.3 through DCCQ-1.6 and the machine portion of
+DCCQ-1.7 have since been completed. The selected target now has a separate
+reduced SI implementation and computational qualification result; the source
+screen itself remains the historical selection record. See
+[DCCQ1_QUALIFICATION_RESULT.md](DCCQ1_QUALIFICATION_RESULT.md).
+
 The machine-readable authority is:
 
 ```text
@@ -102,16 +108,16 @@ Three classes of rights must remain separate:
 | GitHub CSV copies of Figure 2 data | commit, path, and SHA-256 frozen | standalone repository licence is unresolved; obtain reusable observations from the CC-BY Supporting Information or secure an explicit licence |
 
 This distinction matters. Public visibility and a paper's CC-BY licence do not
-automatically license separately hosted source code. DCCQ-1.3 will therefore
-specify independent MEHLISSA-native equations from the rights-compatible
-publication record, not port the repository implementation.
+automatically license separately hosted source code. DCCQ-1.3 therefore
+specified independent MEHLISSA-native equations from the rights-compatible
+publication record and did not port the repository implementation.
 
 The full source model contains 281 coupled ordinary differential equations.
 That model is the mechanistic reference, not the preselected implementation
 scope. Importing or reconstructing all 281 states is not authorized by this
 screen.
 
-## Unit bridge to freeze in DCCQ-1.3
+## Unit bridge frozen in DCCQ-1.3
 
 The selected source records enough information to design an explicit SI bridge:
 
@@ -123,14 +129,14 @@ The selected source records enough information to design an explicit SI bridge:
 | Rab4/5 volume | `11.25 fL/cell` | m3 |
 | Rab11 volume | `3.75 fL/cell` | m3 |
 | cell surface | `1000 um2/cell` | m2 |
-| Rab4/5 and Rab11 surfaces | `950` and `325 um2/cell` | m2 |
+| Rab4/5 and Rab11 surfaces | `950` and `350 um2/cell` | m2 |
 | external stimulus | `50 ng/mL` VEGF-A165a; encoded as `6843182 molecules/cell` for the source volume | mol/m3 with molecular-mass and dimer convention declared |
 | kinetic rates | first-order `s^-1`; association rates adjusted by local amount, volume, or area | dimensionally typed SI rates derived from the frozen conversion |
 
-DCCQ-1.3 must freeze the Avogadro constant, femtolitre and square-micrometre
-conversions, represented cell count, extracellular volume, VEGF-A165a
-molecular mass, monomer-versus-dimer convention, and derivation of every
-adjusted association rate. Until then, DCCQ-G1 is `PARTIAL`, not passed.
+DCCQ-1.3 froze the exact Avogadro constant, femtolitre and square-micrometre
+conversions, one represented cell, extracellular volume, 44-kDa homodimer
+convention, and reduced 1:1 association-rate derivation. DCCQ-G1 now passes for
+that candidate; the source screen alone did not establish the pass.
 
 ## Evidence roles and independence
 

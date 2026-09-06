@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0.0",
+  "result": {
+    "id": "DCCQ-1.4-1.7",
+    "program": "DCCQ-1",
+    "version": "1.0.0",
+    "performed_date": "2026-09-06",
+    "status": "computational-close-out-complete-external-evidence-and-review-blocked",
+    "clinical_use": false
+  },
+  "protocol": {
+    "path": "data/qualification/dynamic-capillary-tissue-cell-protocol-v1.json",
+    "sha256": "8837b47d8dd258e4b1ff21940fc34f0f2432ef6a01aeeb9b1373448a24c217d7"
+  },
+  "archive": {
+    "run_id": "20260906T120000Z-dccq1-v1",
+    "path": "results/dccq1/vegfa165a-vegfr2-huvec/20260906T120000Z-dccq1-v1",
+    "checksum_manifest": {
+      "path": "results/dccq1/vegfa165a-vegfr2-huvec/20260906T120000Z-dccq1-v1/sha256sums.json",
+      "sha256": "a9a8c755045fd56f81c876b881fc7f104ebf2e044899455269d3384e6c34c697"
+    },
+    "raw_external_data_bundled": false,
+    "unlicensed_external_code_bundled": false
+  },
+  "execution": {
+    "method": "fixed-step-classical-rk4-with-discrete-delayed-feedback",
+    "trajectory_count": 41,
+    "local_sensitivity_parameter_count": 12,
+    "validation_refitting": false
+  },
+  "headline_metrics": {
+    "maximum_balance_error_mol": 7.857794173099922e-32,
+    "minimum_owner_amount_mol": 0.0,
+    "deterministic_replay_maximum_absolute_difference": 0.0,
+    "time_step_1s_relative_error": 1.0649136586993484e-14,
+    "synchronization_30s_relative_error": 1.2144341029339634e-05,
+    "constant_reservoir_occupancy_absolute_error": 6.142120053898026e-06,
+    "local_sensitivity_comparisons": 24,
+    "negative_controls": 10
+  },
+  "increments": [
+    {
+      "id": "DCCQ-1.3",
+      "status": "COMPLETE"
+    },
+    {
+      "id": "DCCQ-1.4",
+      "status": "COMPLETE"
+    },
+    {
+      "id": "DCCQ-1.5",
+      "status": "COMPLETE"
+    },
+    {
+      "id": "DCCQ-1.6",
+      "status": "COMPLETE_WITH_G6_PARTIAL_AND_G7_BLOCKED"
+    },
+    {
+      "id": "DCCQ-1.7",
+      "status": "PARTIAL_EXTERNAL_HUMAN_REVIEW_BLOCKED"
+    }
+  ],
+  "gates": [
+    {
+      "id": "DCCQ-G1",
+      "status": "PASS",
+      "reason": "One frozen VEGF-A165a homodimer identity, exact SI conversion, one represented HUVEC, and seven exclusive amount owners pass the protocol and runtime guards."
+    },
+    {
+      "id": "DCCQ-G2",
+      "status": "PASS",
+      "reason": "Maximum balance residual 7.8577941730999223e-32 mol; minimum owner 0 mol."
+    },
+    {
+      "id": "DCCQ-G3",
+      "status": "PASS",
+      "reason": "Zero-flux, zero-binding, constant-reservoir, pulse-withdrawal, and no-feedback cases were retained and evaluated."
+    },
+    {
+      "id": "DCCQ-G4",
+      "status": "PASS",
+      "reason": "Independent RK4 step and coupling-interval refinement converge; spatial refinement is not applicable to the frozen well-mixed candidate."
+    },
+    {
+      "id": "DCCQ-G5",
+      "status": "PASS",
+      "reason": "Causal event times: {'blood_departure': 60.0, 'interstitial_arrival': 120.0, 'receptor_binding': 120.0, 'feedback_scheduled': 240.0, 'feedback_applied': 300.0}; feedback is applied only after it is scheduled."
+    },
+    {
+      "id": "DCCQ-G6",
+      "status": "PARTIAL",
+      "reason": "Numerical, synchronization, 12-parameter local, NRP1 structural, and feedback structural effects are reported. Joint distributions, correlations, observational covariance, and global identifiability remain unavailable."
+    },
+    {
+      "id": "DCCQ-G7",
+      "status": "BLOCKED",
+      "reason": "The source-disjoint kinetic series uses engineered HEK293T cells and the source-disjoint primary-HUVEC evidence supplies only a directional 30-minute endpoint; no condition-matched reusable HUVEC time series is frozen and no refitting was performed."
+    },
+    {
+      "id": "DCCQ-G8",
+      "status": "PARTIAL",
+      "reason": "A runner-independent machine checker, immutable archive, licence review, documentation reconciliation, and bounded claim are supplied; independent external human attestation remains absent."
+    }
+  ],
+  "decision": {
+    "computational_qualification": "PASS",
+    "literature_parameterization": "PARTIAL",
+    "independent_experimental_validation": "BLOCKED",
+    "external_human_review": "BLOCKED",
+    "biological_or_clinical_validation": "NOT_ESTABLISHED",
+    "allowed_claim": "The frozen MEHLISSA candidate is an independently written, SI-explicit, amount-conserving reduced VEGF-A165a/VEGFR2 HUVEC-informed dynamic coupling suitable for software, mathematical, numerical, and local-sensitivity qualification.",
+    "next_scientific_action": "Obtain and prospectively freeze a condition-matched source-disjoint primary-HUVEC dynamic series and an external reviewer attestation; do not refit this candidate on that series."
+  }
+}

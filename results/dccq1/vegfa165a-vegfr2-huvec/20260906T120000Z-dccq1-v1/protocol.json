@@ -1,0 +1,179 @@
+{
+  "schema_version": "1.0.0",
+  "protocol": {
+    "id": "DCCQ-1.3",
+    "program": "DCCQ-1",
+    "version": "1.0.0",
+    "frozen_date": "2026-09-06",
+    "status": "frozen-before-first-dynamic-qualification-output",
+    "clinical_use": false
+  },
+  "parent_source_screen": {
+    "path": "data/qualification/dynamic-capillary-tissue-cell-evidence-candidate-register-v1.json",
+    "sha256": "a027d8ae0d4a04c991ec9bdff38442b25970057cd39dcb49709a6e002fcb33d4"
+  },
+  "frozen_implementation": [
+    {
+      "path": "models/cosimulation/include/mehlissa/models/cosimulation/dynamic_capillary_tissue_cell_model.hpp",
+      "sha256": "951b40db67a22708a065e02cd770f0daf7f735fc39097888a0894678c2a0ef82",
+      "role": "typed public state, parameter, ledger, and synchronization API"
+    },
+    {
+      "path": "models/cosimulation/src/dynamic_capillary_tissue_cell_model.cpp",
+      "sha256": "058c49c0ac9222eb3a34f2077a171bd5002ee913f5207d23c3ef90c06a6e91f7",
+      "role": "independently written reduced ODE and delayed-feedback implementation"
+    },
+    {
+      "path": "models/cosimulation/tools/dccq1_qualification_runner.cpp",
+      "sha256": "2f53daa51fa47ce0e8d3edadf34f6a20d2a1904f3e0d1bfb92cfadce2743e0f3",
+      "role": "trajectory runner used by the qualification orchestrator"
+    }
+  ],
+  "target": {
+    "ligand_id": "mehlissa.bio.human-vegfa165a-homodimer.v1",
+    "ligand_name": "human VEGF-A165a homodimer",
+    "receptor_id": "UniProtKB:KDR_HUMAN",
+    "coreceptor_id": "UniProtKB:NRP1_HUMAN",
+    "cell_context": "primary-HUVEC",
+    "represented_cells": 1,
+    "bounded_context": "deterministic well-mixed flow-through reference coupled to one represented primary HUVEC",
+    "not_represented": [
+      "pulmonary endothelial identity",
+      "in vivo physiology",
+      "patient-specific biology",
+      "angiogenesis morphology",
+      "diagnostic or treatment response"
+    ]
+  },
+  "si_mapping": {
+    "avogadro_per_mol": 6.02214076e23,
+    "vegfa165a_homodimer_molar_mass_kg_per_mol": 44.0,
+    "femtolitre_to_m3": 1e-18,
+    "square_micrometre_to_m2": 1e-12,
+    "source_extracellular_volume_m3_per_cell": 1e-11,
+    "source_rab4_5_volume_m3_per_cell": 1.125e-17,
+    "source_rab11_volume_m3_per_cell": 3.75e-18,
+    "source_cell_surface_m2_per_cell": 1e-9,
+    "source_rab4_5_surface_m2_per_cell": 9.5e-10,
+    "source_rab11_surface_m2_per_cell": 3.5e-10,
+    "source_vegfr2_receptors_per_cell": 4900,
+    "source_vegfr2_capacity_mol_per_cell": 8.136641429151849e-21,
+    "stimulus_ng_per_ml": 50.0,
+    "source_stimulus_molecules_per_cell": 6843182,
+    "source_stimulus_amount_mol_per_cell": 1.1363371054780858e-17,
+    "source_stimulus_concentration_mol_per_m3": 1.1363371054780858e-6,
+    "association_source_value_pM_inverse_s_inverse": 1e-5,
+    "association_si_m3_per_mol_s": 10000.0,
+    "dissociation_s_inverse": 0.001,
+    "liganded_internalization_s_inverse": 0.00069,
+    "internalized_degradation_s_inverse": 0.00023,
+    "convention": "The 44 kDa VEGF-A165a homodimer is one ligand amount. Molecule counts are divided by the exact Avogadro constant. The reduced 1:1 VEGFR2 association rate is converted from pM^-1 s^-1 using 1 pM = 1e-9 mol m^-3."
+  },
+  "state_contract": {
+    "owners": [
+      "blood_free",
+      "endothelium_free",
+      "interstitium_free",
+      "receptor_bound",
+      "internalized",
+      "cleared_or_degraded",
+      "outlet"
+    ],
+    "cumulative_ledger": ["initial_amount", "cumulative_inlet"],
+    "balance_equation": "initial_amount + cumulative_inlet = blood_free + endothelium_free + interstitium_free + receptor_bound + internalized + cleared_or_degraded + cumulative_outlet",
+    "receptor_capacity_semantics": "A fixed replenished VEGFR2 surface-site capacity bounds receptor_bound. Receptor production, unliganded trafficking, dimerization, phosphorylation, and explicit receptor recycling are outside this reduced ligand ledger.",
+    "nrp1_choice": "NRP1 is explicitly tracked-neutral in the reference candidate: its human identifier and full site eligibility are present, but no unsupported kinetic multiplier is introduced. Exclusion and a prospectively labelled 1.5-fold facilitation assumption are structural sensitivity variants only."
+  },
+  "equations": [
+    {"state": "blood_free", "equation": "dB/dt = inlet - k_BE*B + k_EB*E - k_out*B"},
+    {"state": "endothelium_free", "equation": "dE/dt = k_BE*B - k_EB*E - feedback*k_EI*E + k_IE*I"},
+    {"state": "interstitium_free", "equation": "dI/dt = feedback*k_EI*E - k_IE*I - association + dissociation - clearance"},
+    {"state": "receptor_bound", "equation": "dC/dt = association - k_off*C - k_int*C"},
+    {"state": "internalized", "equation": "dN/dt = k_int*C - k_deg*N"},
+    {"state": "cleared_or_degraded", "equation": "dD/dt = k_clear*I + k_deg*N"},
+    {"state": "outlet", "equation": "dO/dt = k_out*B"},
+    {"state": "cumulative_inlet", "equation": "dU/dt = inlet"},
+    {"state": "association", "equation": "association = k_on*(I/V_I)*(R_total-C)*(1+f_NRP1*(m_NRP1-1))"}
+  ],
+  "reference_parameters": [
+    {"id": "blood_volume", "value": 1e-11, "unit": "m3", "provenance": "Sarabipour 2025 S12 extracellular culture volume", "uncertainty_role": "fixed-source-derived"},
+    {"id": "endothelium_volume", "value": 1e-12, "unit": "m3", "provenance": "MEHLISSA effective well-mixed engineering compartment", "uncertainty_role": "structural-assumption"},
+    {"id": "interstitium_volume", "value": 1e-12, "unit": "m3", "provenance": "MEHLISSA effective well-mixed engineering compartment", "uncertainty_role": "structural-assumption"},
+    {"id": "blood_to_endothelium", "value": 0.001, "unit": "s^-1", "provenance": "MEHLISSA qualification reference assumption", "uncertainty_role": "local-plus-minus-10-percent"},
+    {"id": "endothelium_to_blood", "value": 0.0002, "unit": "s^-1", "provenance": "MEHLISSA qualification reference assumption", "uncertainty_role": "local-plus-minus-10-percent"},
+    {"id": "endothelium_to_interstitium", "value": 0.0005, "unit": "s^-1", "provenance": "MEHLISSA qualification reference assumption", "uncertainty_role": "local-plus-minus-10-percent"},
+    {"id": "interstitium_to_endothelium", "value": 0.0001, "unit": "s^-1", "provenance": "MEHLISSA qualification reference assumption", "uncertainty_role": "local-plus-minus-10-percent"},
+    {"id": "blood_outlet", "value": 0.00002, "unit": "s^-1", "provenance": "MEHLISSA qualification reference assumption", "uncertainty_role": "local-plus-minus-10-percent"},
+    {"id": "interstitial_clearance", "value": 0.00001, "unit": "s^-1", "provenance": "MEHLISSA qualification reference assumption", "uncertainty_role": "local-plus-minus-10-percent"},
+    {"id": "association", "value": 10000.0, "unit": "m3 mol^-1 s^-1", "provenance": "Sarabipour 2025 S16 reduced 1:1 VEGF-A165a to VEGFR2 binding", "uncertainty_role": "local-plus-minus-10-percent"},
+    {"id": "dissociation", "value": 0.001, "unit": "s^-1", "provenance": "Sarabipour 2025 S16 reduced 1:1 VEGF-A165a to VEGFR2 binding", "uncertainty_role": "local-plus-minus-10-percent"},
+    {"id": "internalization", "value": 0.00069, "unit": "s^-1", "provenance": "Sarabipour 2025 S14 threefold liganded VEGFR2 internalization", "uncertainty_role": "local-plus-minus-10-percent"},
+    {"id": "degradation", "value": 0.00023, "unit": "s^-1", "provenance": "Sarabipour 2025 S14 VEGFR2 degradation", "uncertainty_role": "local-plus-minus-10-percent"},
+    {"id": "receptor_capacity", "value": 8.136641429151849e-21, "unit": "mol cell^-1", "provenance": "Sarabipour 2025 S12 4900 surface VEGFR2 per HUVEC", "uncertainty_role": "local-plus-minus-10-percent"},
+    {"id": "feedback_gain", "value": 0.25, "unit": "1", "provenance": "MEHLISSA bounded causal-feedback software challenge", "uncertainty_role": "structural-assumption"}
+  ],
+  "initial_state": {
+    "declared_initial_amount_mol": 1.1363371054780858e-17,
+    "blood_free_mol": 1.1363371054780858e-17,
+    "all_other_owners_mol": 0.0,
+    "inlet_rate_mol_per_s": 0.0,
+    "interpretation": "A pulse containing the source-encoded 6,843,182 VEGF-A165a homodimers starts in the blood-side owner; this is a flow-through software qualification case, not the source culture protocol."
+  },
+  "synchronization": {
+    "method": "fixed-step-classical-rk4-with-discrete-delayed-feedback",
+    "duration_s": 14400.0,
+    "baseline_internal_step_s": 2.0,
+    "baseline_coupling_interval_s": 60.0,
+    "time_step_refinement_s": [8.0, 4.0, 2.0, 1.0, 0.5],
+    "coupling_refinement_s": [120.0, 60.0, 30.0, 15.0],
+    "feedback_rule": "Occupancy at the end of interval n schedules max(0.75, 1-0.25*occupancy) for endothelial-to-interstitial transport during interval n+1. Same-step mutation is forbidden.",
+    "spatial_refinement": "not-applicable-to-the-frozen-well-mixed-candidate"
+  },
+  "evaluation": {
+    "mass_balance_relative_tolerance": 1e-9,
+    "nonnegative_floor_mol": -1e-27,
+    "deterministic_replay_absolute_tolerance": 0.0,
+    "zero_flux_relative_tolerance": 1e-12,
+    "zero_binding_absolute_tolerance_mol": 1e-30,
+    "constant_reservoir_occupancy_absolute_tolerance": 0.001,
+    "time_step_fine_relative_limit": 1e-6,
+    "time_step_requires_monotone_error_reduction": true,
+    "synchronization_fine_relative_limit": 0.01,
+    "causal_order": ["blood_departure", "interstitial_arrival", "receptor_binding", "feedback_scheduled", "feedback_applied"],
+    "local_sensitivity_fraction": 0.1,
+    "validation_refitting": false,
+    "failure_policy": "Retain failed, partial, and blocked gates. Do not mutate this protocol or exclude outputs after inspection; a changed candidate requires a new protocol version."
+  },
+  "independent_evidence": [
+    {"id": "DCCQ-EVID-004", "role": "source-disjoint kinetic challenge", "status": "context-mismatched", "use": "direction and characteristic-time context only; HEK293T is not HUVEC"},
+    {"id": "DCCQ-EVID-005", "role": "source-disjoint HUVEC directional check", "status": "single-endpoint-only", "use": "directional internalization and surface-loss check only; not a time-series fit"}
+  ],
+  "uncertainty_policy": {
+    "numerical": "Independent internal-step and coupling-interval refinements are mandatory.",
+    "parameter": "Report one-at-a-time plus/minus 10 percent local sensitivity; do not synthesize distributions.",
+    "structural": "Compare tracked-neutral NRP1, NRP1 exclusion, 1.5-fold labelled facilitation, and feedback-off variants.",
+    "observational": "No numeric experimental score is allowed until reusable values, transforms, errors, and covariance are frozen.",
+    "correlation": "Unknown; global probabilistic attribution and population prediction are blocked.",
+    "identifiability": "Transport assumptions are not identifiable from the selected receptor-trafficking observations and remain engineering parameters."
+  },
+  "negative_controls": [
+    "reject-mismatched-ligand-identity",
+    "reject-nonpositive-or-nonfinite-si-quantity",
+    "reject-double-owned-initial-amount",
+    "reject-unbalanced-or-negative-integrated-state",
+    "reject-same-step-feedback",
+    "reject-post-output-protocol-mutation",
+    "reject-validation-refitting",
+    "reject-biological-claim-from-numerical-gates",
+    "reject-snapshot-as-dynamic-coupling",
+    "reject-invented-independent-distributions"
+  ],
+  "allowed_claim": "The frozen MEHLISSA candidate is an independently written, SI-explicit, amount-conserving reduced VEGF-A165a/VEGFR2 HUVEC-informed dynamic coupling suitable for software, mathematical, numerical, and local-sensitivity qualification.",
+  "forbidden_claims": [
+    "reimplementation or reproduction of the full 281-state source model",
+    "condition-matched independent HUVEC validation",
+    "pulmonary endothelial, in vivo, patient-specific, diagnostic, treatment, safety, or clinical validity",
+    "globally identified parameter uncertainty or population prediction",
+    "independent human review before an external attestation exists"
+  ]
+}

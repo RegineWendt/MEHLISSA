@@ -1,0 +1,194 @@
+{
+  "run_id": "20260906T120000Z-dccq1-v1",
+  "hash_policy": "SHA-256 over Git-canonical LF bytes for text artifacts; binary bytes unchanged",
+  "files": [
+    {
+      "path": "build-provenance.json",
+      "sha256": "24c599b096ae493d3df2cef5ec0d33c2f9f4b4320b75f3bcc92057b418ed1475"
+    },
+    {
+      "path": "local-sensitivity.json",
+      "sha256": "c1fa26984a08f34871772da220d188b90c1ead0f95b7c5ef3f9dbd2c518cab47"
+    },
+    {
+      "path": "protocol.json",
+      "sha256": "8837b47d8dd258e4b1ff21940fc34f0f2432ef6a01aeeb9b1373448a24c217d7"
+    },
+    {
+      "path": "qualification-metrics.json",
+      "sha256": "240c6f66b0308418ccc8b86c04c00f9f6839c60ad47e1431f130280b842740ee"
+    },
+    {
+      "path": "qualification-report.md",
+      "sha256": "10cc699cbf0f6f8aeabdfb8c68703672f8302c79a0217fd2b23b1bc0c1004033"
+    },
+    {
+      "path": "review-record.json",
+      "sha256": "f9ea7ddbb0f662931864c067911aaad8681360c135833a297137673118d0b50c"
+    },
+    {
+      "path": "trajectories/baseline.csv",
+      "sha256": "71d2cf2a5ca498e7337008b66e1ccf2420382de1350dbefe501762ef4053d1b1"
+    },
+    {
+      "path": "trajectories/limit-constant-reservoir.csv",
+      "sha256": "676666dbb01ff041ba9d664fb5337d87f09947cd0acfd0309c8f4e46b55b8d37"
+    },
+    {
+      "path": "trajectories/limit-zero-binding.csv",
+      "sha256": "589e30fdfaf3e9c017af43f6cc5e3639038994f55936af87a50a5b87f4682243"
+    },
+    {
+      "path": "trajectories/limit-zero-flux.csv",
+      "sha256": "eb2e284e7d83e588b7f57a62b145f6dda113b4a10ff0d2f215ba13c503577f93"
+    },
+    {
+      "path": "trajectories/replay.csv",
+      "sha256": "71d2cf2a5ca498e7337008b66e1ccf2420382de1350dbefe501762ef4053d1b1"
+    },
+    {
+      "path": "trajectories/sensitivity-association-0.9x.csv",
+      "sha256": "0722717f7b2e5d8d5374f5d77ea12fedf5a3df57182fb84d2d93a7e5a3ddff3d"
+    },
+    {
+      "path": "trajectories/sensitivity-association-1.1x.csv",
+      "sha256": "c468f0544b063ef5fad49ee9029fc28d25335523f66bfe89d7c19314e959976a"
+    },
+    {
+      "path": "trajectories/sensitivity-blood_outlet-0.9x.csv",
+      "sha256": "307d05bc83a89433240cbccf5c86cc43821da293f94fef627d71bb3f5ffe4d32"
+    },
+    {
+      "path": "trajectories/sensitivity-blood_outlet-1.1x.csv",
+      "sha256": "920ece5d80ccbedfde432bbb5b0e45ed009c73a2d8ebd030234bfafce85ef3e8"
+    },
+    {
+      "path": "trajectories/sensitivity-blood_to_endothelium-0.9x.csv",
+      "sha256": "282866042bf8fbcf65b80931be696a6590963ec5acea96360e9a6c836b1b3aaf"
+    },
+    {
+      "path": "trajectories/sensitivity-blood_to_endothelium-1.1x.csv",
+      "sha256": "1f165392c14220de4fa96832732634abf26c22f66b75bc15f32c17ac413beb65"
+    },
+    {
+      "path": "trajectories/sensitivity-degradation-0.9x.csv",
+      "sha256": "9f3990af353a2f146260144932c74bf95cdca2f1d92fc50405b65cfde32ca4e5"
+    },
+    {
+      "path": "trajectories/sensitivity-degradation-1.1x.csv",
+      "sha256": "1a4ea13b85f2af86c9a89bdecf811d17b68e427853477b2ea374e48016008a56"
+    },
+    {
+      "path": "trajectories/sensitivity-dissociation-0.9x.csv",
+      "sha256": "762b18b5550b4c757d71328de93c8f360eb41b2b63068462926e31f572707787"
+    },
+    {
+      "path": "trajectories/sensitivity-dissociation-1.1x.csv",
+      "sha256": "5d36b9c12857fe44d04e6fb3c6d0c24c6bf5a7baab2730c54dee8eff409a606b"
+    },
+    {
+      "path": "trajectories/sensitivity-endothelium_to_blood-0.9x.csv",
+      "sha256": "88beeb160bee3b3b281a4a130980d775f6feeb8fbc29e4a837b4363e661f3a5a"
+    },
+    {
+      "path": "trajectories/sensitivity-endothelium_to_blood-1.1x.csv",
+      "sha256": "4bb2479e2779d7ef52f7eefd8805c947eed53b067779a54525ab5ffe7b2f068e"
+    },
+    {
+      "path": "trajectories/sensitivity-endothelium_to_interstitium-0.9x.csv",
+      "sha256": "fe4dba4e9269494362bae10363bd306f4ee3d601be4163831553474a847e2997"
+    },
+    {
+      "path": "trajectories/sensitivity-endothelium_to_interstitium-1.1x.csv",
+      "sha256": "7b80eb0ff76e1e6cc65d6f66b8a7f6ac366575473dc87d3445d9e1d9c3560aeb"
+    },
+    {
+      "path": "trajectories/sensitivity-feedback_gain-0.9x.csv",
+      "sha256": "2dd6258f6f11fda504f7a0c99a239f78d6c8d219536d0f941708e60974c6f5f3"
+    },
+    {
+      "path": "trajectories/sensitivity-feedback_gain-1.1x.csv",
+      "sha256": "8351d356bcdc47f3e90873de17453abe57e665f46ec77251ecf2f080c7265949"
+    },
+    {
+      "path": "trajectories/sensitivity-internalization-0.9x.csv",
+      "sha256": "9ace8b7ac55fbb13bc4cb98d0a747d1a13a1c61314d4dadda2f893c39c3eed3e"
+    },
+    {
+      "path": "trajectories/sensitivity-internalization-1.1x.csv",
+      "sha256": "c30b51fd93ec33ce046b442e3c37f59cc20a866c341ed02ede9b0f3e52e9713d"
+    },
+    {
+      "path": "trajectories/sensitivity-interstitial_clearance-0.9x.csv",
+      "sha256": "8929aacfc74098df75492aa5ea3145db9684e7a33159707fabc9c015a0ddd1b5"
+    },
+    {
+      "path": "trajectories/sensitivity-interstitial_clearance-1.1x.csv",
+      "sha256": "4ffcbae833ba6799330caa69fb2520528fe7460fc6df46e19aacc5a886aa3fc7"
+    },
+    {
+      "path": "trajectories/sensitivity-interstitium_to_endothelium-0.9x.csv",
+      "sha256": "ed80d8683d5c75c1a97316dc8a943b391904e5798c6d3c8462fb45b2d13de832"
+    },
+    {
+      "path": "trajectories/sensitivity-interstitium_to_endothelium-1.1x.csv",
+      "sha256": "6ddb959bd2d69a036801dd37a3f66e3343e8fb175b3c2f27bfe2074ecbc7ab84"
+    },
+    {
+      "path": "trajectories/sensitivity-receptor_capacity-0.9x.csv",
+      "sha256": "4bcf8c16247375da04dc1d6e270a37247daa11d1effcc2df1732547fd30ab5d2"
+    },
+    {
+      "path": "trajectories/sensitivity-receptor_capacity-1.1x.csv",
+      "sha256": "a31ad0e99f86ec0fd9e53f2be64d5441df1e75ca9f3f2d55688575ac697f12b4"
+    },
+    {
+      "path": "trajectories/structural-feedback-off.csv",
+      "sha256": "1690eddce239826447a395677619368f162d3999c1350a589f89afa70589c79d"
+    },
+    {
+      "path": "trajectories/structural-nrp1-excluded.csv",
+      "sha256": "71d2cf2a5ca498e7337008b66e1ccf2420382de1350dbefe501762ef4053d1b1"
+    },
+    {
+      "path": "trajectories/structural-nrp1-facilitation-1.5x.csv",
+      "sha256": "66e8056ccfb55ad8b11eeec8f37a68b2c51cfba7610db6b710bc60a26d6edf35"
+    },
+    {
+      "path": "trajectories/synchronization-120s.csv",
+      "sha256": "83d21991d7dca7d85848ac74c8ea051103f4c19dd71ae0c02d27f18c71c57592"
+    },
+    {
+      "path": "trajectories/synchronization-15s.csv",
+      "sha256": "e23d303191e21af49546cb6ecc585552694765fa10b6aef6c2363f83f5976d77"
+    },
+    {
+      "path": "trajectories/synchronization-30s.csv",
+      "sha256": "45abaf42c701aa42774079bf76c1630e0bff2341c2aba10440dac026f4cbcae7"
+    },
+    {
+      "path": "trajectories/synchronization-60s.csv",
+      "sha256": "a1810e50da73ea853b5d95e0b967733533268086ee22ee12f53dc016ecdffcef"
+    },
+    {
+      "path": "trajectories/time-step-0.5s.csv",
+      "sha256": "a1810e50da73ea853b5d95e0b967733533268086ee22ee12f53dc016ecdffcef"
+    },
+    {
+      "path": "trajectories/time-step-1s.csv",
+      "sha256": "6016a54de920a3a64982dbbee7f72858ee277f328c42aee3a0fe7d11edfd23ab"
+    },
+    {
+      "path": "trajectories/time-step-2s.csv",
+      "sha256": "71d2cf2a5ca498e7337008b66e1ccf2420382de1350dbefe501762ef4053d1b1"
+    },
+    {
+      "path": "trajectories/time-step-4s.csv",
+      "sha256": "06ba34dfc54b234c568704c6b886c2dc956043d446409f20b30b77551841687f"
+    },
+    {
+      "path": "trajectories/time-step-8s.csv",
+      "sha256": "e39f74bb91a966a4d5b7f825bb06887bee436320c5fa53f0babee6e82a5fd893"
+    }
+  ]
+}

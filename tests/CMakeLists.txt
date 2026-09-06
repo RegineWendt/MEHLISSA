@@ -255,6 +255,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
             mehlissa_cell_cosimulation_tests
             capillary_cell_signal_coupler_tests.cpp
             cell_state_feedback_tests.cpp
+            dynamic_capillary_tissue_cell_model_tests.cpp
         )
         target_link_libraries(
             mehlissa_cell_cosimulation_tests

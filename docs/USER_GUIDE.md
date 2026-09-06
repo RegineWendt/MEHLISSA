@@ -3232,6 +3232,47 @@ performance estimates. The receptor, tile, communication, and labels remain
 synthetic; published FP9 localization/return values remain historical. Read
 the [M7 Gate Review](m7/M7_GATE_REVIEW.md) before making scientific claims.
 
+#### Inspect or reproduce the DCCQ-1 dynamic coupling
+
+DCCQ means **Dynamic Capillary-Tissue-Cell Qualification**. Unlike the M5.2
+snapshot, the DCCQ-1 reference actually moves one named VEGF-A165a ligand
+amount over time. Blood, endothelial, interstitial, receptor-bound,
+internalized, cleared/degraded and outlet amounts are separate owners. Binding
+therefore consumes free interstitial ligand, and every disappearance has a
+reported destination.
+
+This workflow is presently intended for developers and scientific reviewers;
+it is not yet a Workbench scenario. Build its runner and create a new
+non-overwriting archive with:
+
+```powershell
+cmake --build --preset windows-msvc-debug `
+  --target mehlissa_dccq1_qualification_runner
+python scripts/run_dynamic_capillary_tissue_cell_qualification.py `
+  --runner build/windows-msvc/models/cosimulation/Debug/mehlissa_dccq1_qualification_runner.exe
+```
+
+Use `linux-gcc-debug` and the corresponding executable path on Linux, or
+`macos-apple-clang-debug` on macOS. The run produces baseline, replay,
+time-step, synchronization, limiting-case, NRP1/feedback structural, and local
+sensitivity trajectories. It never overwrites the checked-in authoritative
+archive.
+
+The current authoritative result contains 41 trajectories and 24 local
+sensitivity comparisons. Identity and SI units, balance, limiting cases,
+numerical convergence, and delayed causal feedback pass. Uncertainty is only
+partial, because no justified joint parameter distribution or observational
+covariance exists. Independent experimental validation remains blocked because
+the reusable source-disjoint evidence is either an engineered HEK293T kinetic
+series or a single directional HUVEC endpoint, not a condition-matched primary
+HUVEC time series. External human review is also still open.
+
+Read the [DCCQ-1 result](qualification/DCCQ1_QUALIFICATION_RESULT.md) before
+interpreting a trajectory. It documents the equations, source-versus-engineering
+parameter split, exact metrics, all eight gate states, and the permitted claim.
+Do not interpret this reduced reference as pulmonary, in-vivo, individual,
+patient-specific, diagnostic, treatment, safety, or clinical evidence.
+
 ### Troubleshooting
 
 #### CMake selects the wrong Visual Studio version
@@ -3395,23 +3436,21 @@ Planned substantive scientific extensions are:
   published average-cell mechanism only; publication curves, a reusable
   population ensemble, external human attestation, and biological or clinical
   qualification remain blocked;
-- DCCQ-1 dynamic capillary-tissue-cell qualification: DCCQ means **Dynamic
-  Capillary-Tissue-Cell Qualification**. DCCQ-1.1 and DCCQ-1.2 are complete.
-  The programme now has a named first target: human VEGF-A165a binding to and
-  trafficking with VEGFR2 in primary HUVEC endothelial cells, with NRP1 as an
-  explicit structural choice. Four candidates, ten exact source artifacts,
-  five evidence roles, source units, and reuse rights are machine checked.
-  The PLOS article and Supporting Information are CC-BY-4.0, but the linked
-  GitHub code repository has no explicit licence and will not be copied or
-  bundled. Source-disjoint kinetic and directional checks are identified, but
-  a condition-matched independent HUVEC time series remains unavailable.
-  This still does not add a user-runnable dynamic coupling: HUVECs are not lung
-  capillary cells, the SI conversion and reduced equations are not frozen, and
-  no DCCQ gate has passed. DCCQ-1.3 next freezes an independently specified
-  reduced model, SI mapping, synchronization, observation roles, metrics,
-  tolerances, and failure rules before output. See the
-  [DCCQ-1 qualification plan](qualification/DCCQ1_QUALIFICATION_PLAN.md) and
-  [DCCQ-1.2 evidence source screen](qualification/DCCQ1_EVIDENCE_SOURCE_SCREEN.md);
+- DCCQ-1 dynamic capillary-tissue-cell qualification: DCCQ-1.1 through
+  DCCQ-1.6 are complete, and DCCQ-1.7 is complete to its machine-verifiable
+  boundary. The independently written `DynamicCapillaryTissueCellModel` moves
+  human VEGF-A165a through seven exclusive SI amount owners, consumes free
+  ligand during VEGFR2 binding, tracks internalization and terminal sinks, and
+  delays bounded occupancy feedback to the following synchronization interval.
+  Forty-one retained trajectories establish identity/unit, balance,
+  limiting-case, convergence and causal-timing gates; 24 local-sensitivity and
+  NRP1/feedback structural comparisons are reported. Joint distributions,
+  observational covariance, condition-matched independent HUVEC dynamics and
+  external human attestation remain unavailable. Therefore G1-G5 pass, G6 and
+  G8 remain partial, and G7 remains blocked. See the [DCCQ-1 qualification
+  result](qualification/DCCQ1_QUALIFICATION_RESULT.md); this is computational,
+  HUVEC-informed qualification, not pulmonary, patient, biological or clinical
+  validation;
 - one frozen medical reference scenario evaluated end to end against
   independent physiological or experimental observations;
 - additional medical scenarios and organ families, beginning with a kidney

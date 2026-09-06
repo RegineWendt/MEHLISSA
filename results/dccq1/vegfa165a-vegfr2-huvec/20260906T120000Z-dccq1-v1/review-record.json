@@ -1,0 +1,15 @@
+{
+  "machine_review": "PASS",
+  "licence_review": "PASS_WITH_UNLICENSED_EXTERNAL_REPOSITORY_EXCLUDED",
+  "documentation_review": "PASS",
+  "external_human_review": "BLOCKED_NO_ATTESTATION",
+  "independent_experimental_validation": "BLOCKED_NO_CONDITION_MATCHED_HUVEC_SERIES",
+  "allowed_claim": "The frozen MEHLISSA candidate is an independently written, SI-explicit, amount-conserving reduced VEGF-A165a/VEGFR2 HUVEC-informed dynamic coupling suitable for software, mathematical, numerical, and local-sensitivity qualification.",
+  "forbidden_claims": [
+    "reimplementation or reproduction of the full 281-state source model",
+    "condition-matched independent HUVEC validation",
+    "pulmonary endothelial, in vivo, patient-specific, diagnostic, treatment, safety, or clinical validity",
+    "globally identified parameter uncertainty or population prediction",
+    "independent human review before an external attestation exists"
+  ]
+}

@@ -141,7 +141,7 @@
         "source_amount": "molecules per represented cell",
         "source_time": "seconds",
         "source_volume": "femtolitres per represented cell, including 1e7 fL extracellular, 11.25 fL Rab4/5, and 3.75 fL Rab11",
-        "source_surface": "square micrometres per represented cell, including 1000 um2 cell surface, 950 um2 Rab4/5, and 325 um2 Rab11",
+        "source_surface": "square micrometres per represented cell, including 1000 um2 cell surface, 950 um2 Rab4/5, and 350 um2 Rab11",
         "source_rates": "first-order rates in s^-1 and association rates adjusted to molecules-per-cell, local volume, or local surface",
         "stimulus": "50 ng/mL VEGF-A165a is encoded as 6843182 molecules per represented cell for the source extracellular volume",
         "si_bridge_status": "convertible-but-not-yet-frozen",

@@ -28,6 +28,7 @@ if(MEHLISSA_BUILD_CELL_MODELS)
         src/capillary_cell_signal_coupler.cpp
         src/capillary_cell_signal_profile.cpp
         src/cell_state_feedback.cpp
+        src/dynamic_capillary_tissue_cell_model.cpp
     )
     add_library(MEHLISSA::cell_cosimulation ALIAS mehlissa_cell_cosimulation)
     target_include_directories(
@@ -44,6 +45,18 @@ if(MEHLISSA_BUILD_CELL_MODELS)
     )
     target_compile_definitions(mehlissa_cell_cosimulation PRIVATE JSONCONS_NO_DEPRECATED)
     mehlissa_configure_target(mehlissa_cell_cosimulation)
+
+    if(BUILD_TESTING)
+        add_executable(
+            mehlissa_dccq1_qualification_runner
+            tools/dccq1_qualification_runner.cpp
+        )
+        target_link_libraries(
+            mehlissa_dccq1_qualification_runner
+            PRIVATE MEHLISSA::cell_cosimulation
+        )
+        mehlissa_configure_target(mehlissa_dccq1_qualification_runner)
+    endif()
 endif()
 
 if(MEHLISSA_BUILD_CELL_MODELS AND MEHLISSA_BUILD_IOT_MODELS)
