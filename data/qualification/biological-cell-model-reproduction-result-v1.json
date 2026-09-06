@@ -27,7 +27,7 @@
     "path": "results/bcq1/kallenberger-minimal/20260906T071228Z-5dd09984d838",
     "checksum_manifest": {
       "path": "results/bcq1/kallenberger-minimal/20260906T071228Z-5dd09984d838/sha256sums.json",
-      "sha256": "11d2a2f72030846b7261d476a7cc95c92d9386728c157cc5785ce70fad750ab0"
+      "sha256": "696e504d257a5c8f51bc371baf76ebf4d0380820c334fe6a039f068af9bba104"
     },
     "external_sbml_bundled": false,
     "raw_article_or_participant_data_bundled": false

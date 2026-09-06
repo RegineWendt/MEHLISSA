@@ -73,7 +73,11 @@ def load_execution_protocol() -> tuple[dict[str, Any], dict[str, Any], str, str,
 
 def write_json(path: Path, value: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(value, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
 
 
 def artifact_by_accession(protocol: dict[str, Any], accession: str) -> dict[str, Any]:
@@ -602,8 +606,8 @@ def execute(
                 workspace,
                 process_timeout,
             )
-            (logs / f"{run['id']}-import.stdout.txt").write_text(import_result["stdout"], encoding="utf-8")
-            (logs / f"{run['id']}-import.stderr.txt").write_text(import_result["stderr"], encoding="utf-8")
+            (logs / f"{run['id']}-import.stdout.txt").write_text(import_result["stdout"], encoding="utf-8", newline="\n")
+            (logs / f"{run['id']}-import.stderr.txt").write_text(import_result["stderr"], encoding="utf-8", newline="\n")
             if import_result["exit_code"] != 0 or not imported.is_file():
                 raise ReproductionError(f"{run['id']} COPASI import failed")
 
@@ -621,8 +625,8 @@ def execute(
                 workspace,
                 process_timeout,
             )
-            (logs / f"{run['id']}-execute.stdout.txt").write_text(execution_result["stdout"], encoding="utf-8")
-            (logs / f"{run['id']}-execute.stderr.txt").write_text(execution_result["stderr"], encoding="utf-8")
+            (logs / f"{run['id']}-execute.stdout.txt").write_text(execution_result["stdout"], encoding="utf-8", newline="\n")
+            (logs / f"{run['id']}-execute.stderr.txt").write_text(execution_result["stderr"], encoding="utf-8", newline="\n")
             if execution_result["exit_code"] != 0:
                 raise ReproductionError(f"{run['id']} COPASI execution failed")
             rows = parse_trajectory(output)
@@ -724,7 +728,7 @@ held-out population analysis, biological qualification, endothelial or organ
 realism, patient prediction, or clinical evidence. M5 therefore remains
 `software_test_surrogate`. The next increment is BCQ-1.4 typed MEHLISSA adapter.
 """
-    (run_dir / "validation-report.md").write_text(markdown, encoding="utf-8")
+    (run_dir / "validation-report.md").write_text(markdown, encoding="utf-8", newline="\n")
 
     hash_entries = []
     for path in sorted(run_dir.rglob("*")):
