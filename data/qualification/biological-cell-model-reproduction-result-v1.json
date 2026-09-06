@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0.0",
+  "result": {
+    "id": "BCQ-1.3",
+    "program": "BCQ-1 biological cell-model qualification",
+    "version": "1.0.0",
+    "performed_date": "2026-09-06",
+    "status": "completed-external-solver-reproduction-with-publication-alignment-blocked",
+    "baseline_commit": "2fe6a531ada559c8852a9696b4a680244c3aea41",
+    "executor": "scripts/run_biological_cell_model_reproduction.py",
+    "clinical_use": false
+  },
+  "protocol_lineage": {
+    "base_protocol": {
+      "path": "data/qualification/biological-cell-model-reproduction-protocol-v1.json",
+      "sha256": "7ea0d2273f3122b0f58c700569813e9454d48a9827974b4994983c8df6ed527d"
+    },
+    "prospective_amendment": {
+      "path": "data/qualification/biological-cell-model-reproduction-protocol-v1.1.json",
+      "sha256": "b92c5ba3e017a3c4b64cd823f12e0c132d176158cba9d51716900e281f37e3b4"
+    },
+    "execution_protocol_sha256": "5dd09984d838c0a4237d9d100256a91a4e4db5f4473ac0601749db105912d5dd",
+    "v1_failed_result_preserved": true
+  },
+  "archive": {
+    "run_id": "20260906T071228Z-5dd09984d838",
+    "path": "results/bcq1/kallenberger-minimal/20260906T071228Z-5dd09984d838",
+    "checksum_manifest": {
+      "path": "results/bcq1/kallenberger-minimal/20260906T071228Z-5dd09984d838/sha256sums.json",
+      "sha256": "11d2a2f72030846b7261d476a7cc95c92d9386728c157cc5785ce70fad750ab0"
+    },
+    "external_sbml_bundled": false,
+    "raw_article_or_participant_data_bundled": false
+  },
+  "execution": {
+    "solver": "COPASI command-line engine (CopasiSE)",
+    "version": "4.46",
+    "build": 300,
+    "method": "LSODA",
+    "binary_sha256": "f311e16e4b94aea86b972c956e55fdc0dc275fbb69937ae90b73876e040f128d",
+    "source_accessions": ["BIOMD0000000523", "BIOMD0000000524"],
+    "run_count": 6,
+    "points_per_run": 961,
+    "reported_species": 18,
+    "time_unit": "unresolved-model-native",
+    "state_unit": "unresolved-model-native",
+    "parameter_refitting": false
+  },
+  "gates": [
+    {"id": "source_identity", "status": "PASS"},
+    {"id": "import_structure", "status": "PASS"},
+    {"id": "complete_output", "status": "PASS"},
+    {"id": "initial_state", "status": "PASS"},
+    {"id": "deterministic_replay", "status": "PASS"},
+    {"id": "numerical_convergence", "status": "PASS"},
+    {"id": "conservation", "status": "PASS"},
+    {"id": "nonnegativity", "status": "PASS"},
+    {"id": "reporter_direction", "status": "PASS"},
+    {"id": "publication_alignment", "status": "BLOCKED", "reason": "No rights-compatible machine-readable publication reference series is frozen."}
+  ],
+  "headline_metrics": {
+    "maximum_replay_fraction_of_limit": 0.3083619554792158,
+    "maximum_convergence_fraction_of_limit": 0.003387266814670928,
+    "maximum_invariant_residual": 1.000444171950221e-11,
+    "minimum_species_value": 0.0,
+    "negative_controls_passed": 10
+  },
+  "attempt_history": [
+    {"run_id": "20260906T065959Z-7ea0d2273f31", "protocol": "1.0.0", "status": "FAILED_OUTPUT_CONFIGURATION", "reason": "The runner rejected a COPASI report whose fields lacked delimiters.", "authoritative": false},
+    {"run_id": "20260906T070045Z-7ea0d2273f31", "protocol": "1.0.0", "status": "FAILED_OUTPUT_CONFIGURATION", "reason": "A first separator correction was insufficient and the parser again failed closed.", "authoritative": false},
+    {"run_id": "20260906T070125Z-7ea0d2273f31", "protocol": "1.0.0", "status": "INTERRUPTED_STALLED_PROCESS", "reason": "The 524 replay process made no CPU or output progress and was interrupted; partial outputs were retained.", "authoritative": false},
+    {"run_id": "20260906T070728Z-7ea0d2273f31", "protocol": "1.0.0", "status": "FAILED_GATE", "reason": "All six trajectories completed, but the prospective exact-zero replay gate failed; this result remains failed.", "authoritative": false},
+    {"run_id": "20260906T071114Z-5dd09984d838", "protocol": "1.1.0", "status": "SUPERSEDED_ARCHIVE_LAYOUT", "reason": "Computational gates passed, but the archive omitted the frozen protocol.json alias and was superseded without reclassification.", "authoritative": false},
+    {"run_id": "20260906T071228Z-5dd09984d838", "protocol": "1.1.0", "status": "PASS_WITH_BLOCKED_PUBLICATION_ALIGNMENT", "reason": "The complete protocol-conforming archive passed all nine unblocked computational gates and ten negative controls; publication alignment remains blocked.", "authoritative": true}
+  ],
+  "decision": {
+    "source_artifact_reproduction": "PASS",
+    "publication_curve_alignment": "BLOCKED",
+    "biological_qualification": "NOT_ESTABLISHED",
+    "m5_evidence_status": "software_test_surrogate",
+    "allowed_claim": "The two selected unchanged BioModels average-cell artifacts were independently executed in COPASI with numerically equivalent replay and stable primary-observable results under tightened tolerances on the frozen model-time grid.",
+    "forbidden_claims": [
+      "quantitative reproduction of a publication curve",
+      "reproduction of the complete held-out cell population",
+      "biological qualification or normal endothelial-cell realism",
+      "organ-level or patient-level validity",
+      "diagnostic, therapeutic, safety, or clinical validity"
+    ],
+    "next_increment": "BCQ-1.4 typed MEHLISSA adapter"
+  }
+}

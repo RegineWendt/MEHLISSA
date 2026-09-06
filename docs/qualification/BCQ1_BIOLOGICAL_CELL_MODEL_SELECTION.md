@@ -161,14 +161,15 @@ qualification track, not a new milestone gate and not a replacement for M5.
    complete source cases, unresolved unit semantics, time grid, observables,
    numerical and conservation tolerances, failure rules, ten negative controls,
    evidence roles, and the expected report structure before execution. No
-   fitting is permitted and no trajectory has yet been generated.
-3. **BCQ-1.3 - independent external-solver reproduction.** Execute the frozen
-   source files with COPASI command line 4.46 Build 300 and LSODA, archive
-   solver provenance, and export and test the four
+   fitting is permitted.
+3. **BCQ-1.3 - independent external-solver reproduction, complete.** The
+   [executed result](BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md) uses COPASI command
+   line 4.46 Build 300 and LSODA, archives solver provenance, and exports and tests the four
    reported observables `PrER_mGFP`, `PrNES_mCherry`, `p43`, and `p18` under
    the frozen source, replay, convergence, and invariant rules. Quantitative
    publication-curve comparison remains blocked until a rights-compatible
-   numeric reference series is frozen. Retain failed outputs.
+   numeric reference series is frozen. Failed outputs, the failed exact-zero
+   protocol result, and its disclosed prospective amendment are retained.
 4. **BCQ-1.4 - typed MEHLISSA adapter.** Map only declared stimulus, species,
    time, amount/concentration semantics, and outputs to the M5 contracts. Keep
    source equations separate from adapter code and do not refit parameters.
@@ -203,8 +204,10 @@ a later cross-solver check, but it is not silently added to BCQ-1.3.
 
 ## Present state
 
-BCQ-1.1 is a reproducible selection result and licence boundary. BCQ-1.2 now
-adds the prospective, machine-checked execution decisions without importing or
-running a model. The next safe step is BCQ-1.3 independent external-solver
-reproduction. Human PCQ-1 access work remains available but is not required for
-this cell-model path, and no external contact is implied by this decision.
+BCQ-1.1 is a reproducible selection result and licence boundary. BCQ-1.2 adds
+the prospective, machine-checked execution decisions. BCQ-1.3 has independently
+executed the two unchanged artifacts with nine computational gates and ten
+negative controls passing; publication alignment and biological qualification
+remain open. The next safe step is BCQ-1.4 typed MEHLISSA mapping. Human PCQ-1
+access work remains available but is not required for this cell-model path, and
+no external contact is implied by this decision.

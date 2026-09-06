@@ -13,7 +13,7 @@ SPDX-License-Identifier: CC-BY-4.0
 **Verified published release commit:** `5821c7358f490c1c92e9ec79eaed783f80851297`
 **Workbench release:** 1.0.0; UX-6.1 through UX-6.8 accepted
 **Milestone status:** M0 through M7 passed
-**Current product focus:** BCQ-1.3 independent external-solver reproduction
+**Current product focus:** BCQ-1.4 typed MEHLISSA biological cell-model adapter
 
 This Markdown file is the maintainable source for the shareable PDF at
 `output/pdf/MEHLISSA_Next_Project_Status_and_Collaboration_Brief.pdf`.
@@ -129,18 +129,27 @@ behind explicit contracts.
   Kallenberger 525/526 pair is a same-publication structural companion, and a
   VEGF-A/VEGFR endothelial model is deferred to the later dynamic coupling
   program.
-- BCQ-1.2 now freezes the no-refit reproduction protocol before a first
-  trajectory. The machine record binds both source hashes and full initial
+- BCQ-1.2 froze the no-refit reproduction protocol before a first trajectory.
+  The machine record binds both source hashes and full initial
   cases, COPASI command line 4.46 Build 300 with LSODA, a primary/replay/
   tightened six-run matrix on a 961-point grid, four direct observables,
   conservation and numerical gates, ten negative controls, and a non-
   overwriting failure-retaining archive. The selected SBML files omit explicit
   time and substance units, so the protocol preserves the source numbers as
   `unresolved-model-native` and forbids silently calling them seconds, minutes,
-  molar, or SI. No external model has been imported or executed, quantitative
-  publication-curve alignment remains blocked without a rights-compatible
-  numeric series, and M5 remains `software_test_surrogate`. BCQ-1.3 is now the
-  independent external-solver execution step.
+  molar, or SI.
+- BCQ-1.3 has now independently executed both unchanged artifacts in COPASI
+  4.46 Build 300. Six primary, replay, and tightened runs each contain 961
+  model-time points and all 18 species. Nine unblocked computational gates and
+  all ten negative controls pass. The worst replay difference used 30.84% of
+  its prospective strict limit; the worst tightened-solver difference used
+  0.339% of its limit; source-derived invariants stayed within
+  `1.00045e-11`; and no negative state or reporter-direction violation occurred.
+  The original exact-zero replay protocol remains a disclosed failed result;
+  its versioned amendment was committed before the passing run. Quantitative
+  publication-curve alignment remains blocked, units remain source-native and
+  unresolved, no MEHLISSA adapter exists yet, and M5 remains
+  `software_test_surrogate`. BCQ-1.4 typed mapping is now the active step.
 - The result is a reproducible research-software demonstrator. It is not a
   clinical assay model, a medical device, or a patient-specific digital twin.
 
@@ -415,12 +424,13 @@ release is implied. The remaining programs begin by using and maintaining this
 qualification infrastructure.
 
 The access-pending pulmonary/capillary design and the active public-model path
-are indexed in `docs/qualification/README.md`; BCQ-1.3 is the current focus.
+are indexed in `docs/qualification/README.md`; BCQ-1.4 typed MEHLISSA mapping
+is the current focus.
 
 | Program | Principal work | Intended outcome |
 |---|---|---|
 | Pulmonary and capillary qualification | **PCQ-1.1 through PCQ-1.5a completed locally:** design, source selection, observation models, numeric gates, safe ingress, uncertainty semantics, and repository availability are machine-checked. PCQ-1.5 covers six uncertainty classes and nine endpoints, seven pulmonary structures, covariance envelopes, local sensitivities, and identifiability. PCQ-1.5a finds no drop-in primary repository dataset, retains five non-equivalent alternatives, opens no participant file, and leaves the frozen source roles unchanged. A coordinated, still-unsent request package covers D'Souza, Arizona, Bailey, and feasibility-only Lassen. PCQ-1.6 next builds the outcome-blind execution/reporting shell and runs the frozen evaluator only when authorized source-disjoint observations exist. | Present result: auditable prospective design, source selection, safe data boundary, uncertainty/identifiability plan, repository-first access audit, and governed outreach drafts - not a validation pass. Intended exit: bounded pulmonary and capillary claims evaluated without refitting, with uncertainty and all partial or negative findings retained. |
-| Biological cell-model qualification | **BCQ-1.1 and BCQ-1.2 completed locally:** a machine-checked screen selects the minimal Kallenberger 2014 CD95L-CD95-caspase-8 `BIOMD0000000523`/`0524` pair; a second machine record freezes source cases, COPASI/LSODA, unresolved units, six runs, four observables, numeric and invariant gates, ten negative controls, and a failure-retaining archive before execution. BCQ-1.3 next runs the independent external solver. | Present result: auditable public-model, licence, and prospective execution decisions, not a reproduced model or new biological evidence. Intended exit: no-refit external-solver reproduction, typed M5 mapping, cross-engine and structural checks, justified population semantics, and independent review yielding one narrowly evidence-backed M5 variant. |
+| Biological cell-model qualification | **BCQ-1.1 through BCQ-1.3 completed locally:** a machine-checked screen selects the minimal Kallenberger 2014 CD95L-CD95-caspase-8 `BIOMD0000000523`/`0524` pair; a prospective protocol and disclosed amendment freeze the source, solver, units, six runs, gates, controls, and failure history; the complete hashed COPASI archive passes nine unblocked computational gates and ten negative controls. | Present result: unchanged public source artifacts reproduce with numerically equivalent replay and strong tightened-solver stability. Publication-curve alignment, biological qualification, and any M5 evidence promotion remain blocked. BCQ-1.4 next adds a typed no-refit MEHLISSA adapter; cross-engine and structural checks, population scope, and independent review follow. |
 | Dynamic capillary-tissue-cell coupling | Replace the prescribed homogeneous signal snapshot with time-dependent transport, binding or consumption, feedback, and conservation checks. | Cell exposure generated by a qualified coupled transport model rather than an imposed input alone. |
 | Externally validated medical reference scenario | Freeze one measurable complete protocol and compare its injection-to-measurement outputs with independent physiological or experimental observations. | The first reproducible end-to-end validation report with a bounded claim and explicit limitations. |
 | Additional medical scenarios | Continuous monitoring, liquid biopsy, endocrine/adrenal venous sampling, CAR-T, and ultimately metastasis prevention. | Evidence that the architecture generalizes beyond fingerprinting. |
@@ -544,7 +554,7 @@ and limitations are documented; and all supported CI paths pass.
 | `docs/architecture/SOFTWARE_ARCHITECTURE.md` | System structure, APIs, extension workflow, kidney outline, external simulator integration, and personalization. |
 | `docs/ROADMAP.md` | Guiding principles, delivery history, scientific qualification sequence, medical scenarios, additional organs, personalization, scaling, and cross-cutting programs. |
 | `docs/qualification/PULMONARY_CAPILLARY_QUALIFICATION_PROTOCOL.md`, `PCQ1_EVIDENCE_SOURCE_SCREEN.md`, `PCQ1_PRE_OUTCOME_AMENDMENT.md`, `PCQ1_DATA_INGRESS.md`, `PCQ1_UNCERTAINTY_IDENTIFIABILITY.md`, `PCQ1_REPOSITORY_FIRST_DATA_AUDIT.md`, and `PCQ1_DATA_REQUEST_PACKAGE.md` | Active PCQ-1 claim, frozen candidates and analysis, ranked sources, safe ingress, uncertainty and identifiability, repository availability and alternatives, governed request drafts, controls, and pre-outcome sequence. |
-| `docs/qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md` and `BCQ1_REPRODUCTION_PROTOCOL.md` | BCQ-1.1 ranked public-model/licence screen plus the BCQ-1.2 frozen source, solver, unit, execution, observable, tolerance, control, archive, and claim decisions for BCQ-1.3. |
+| `docs/qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md`, `BCQ1_REPRODUCTION_PROTOCOL.md`, `BCQ1_REPRODUCTION_PROTOCOL_AMENDMENT_1.md`, and `BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md` | BCQ-1.1 selection, BCQ-1.2 prospective protocol and disclosed replay amendment, and the BCQ-1.3 complete external-solver archive, numerical results, failure history, checks, and bounded claim. |
 | `docs/PROJECT_STATE.json` | Machine-readable shared release facts, Roadmap section mappings, selected traceability expectations, and ordered qualification packages. |
 | `docs/requirements/SYSTEM_REQUIREMENTS.md` | Numbered requirements derived from the dissertation and project decisions. |
 | `docs/requirements/TRACEABILITY_MATRIX.md` | Separate implementation and evidence status, achieved verification, and remaining gap for every tracked requirement. |

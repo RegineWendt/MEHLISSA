@@ -1,0 +1,30 @@
+{
+  "binary_name": "CopasiSE.exe",
+  "binary_sha256": "f311e16e4b94aea86b972c956e55fdc0dc275fbb69937ae90b73876e040f128d",
+  "build": 300,
+  "copasi_import_default_units": {
+    "interpretation": "COPASI import defaults only; outputs remain labelled unresolved-model-native because the source artifacts omit explicit declarations",
+    "quantity": "mol",
+    "time": "s",
+    "volume": "l"
+  },
+  "host": {
+    "machine": "AMD64",
+    "python": "3.11.7",
+    "release": "10",
+    "system": "Windows",
+    "version": "10.0.26200"
+  },
+  "license": "Artistic-2.0",
+  "method": "LSODA",
+  "name": "COPASI command-line engine (CopasiSE)",
+  "optimization_or_parameter_estimation_enabled": false,
+  "protocol_sha256": "7ea0d2273f3122b0f58c700569813e9454d48a9827974b4994983c8df6ed527d",
+  "reduced_model": false,
+  "release_tag": "Build-300",
+  "schema_version": "1.0.0",
+  "source_commit": "e9c47d912b55eccd56f70b72e52f19d61f5ab2e2",
+  "version": "4.46",
+  "version_banner": "COPASI 4.46 (Build 300)",
+  "version_probe_exit_code": 0
+}

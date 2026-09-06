@@ -1,0 +1,259 @@
+{
+  "schema_version": "1.0.0",
+  "protocol": {
+    "id": "BCQ-1.2",
+    "program": "BCQ-1 biological cell-model qualification",
+    "version": "1.0.0",
+    "created_date": "2026-09-06",
+    "status": "prospective-protocol-frozen-before-first-trajectory",
+    "baseline_commit": "3f7c555bdc604b1acb9da20cd632b1b7a2770d62",
+    "parent_register": {
+      "path": "data/qualification/biological-cell-model-candidate-register-v1.json",
+      "sha256": "3cd72bc3e3f71f26089b448d3ae6e80000a2d1156abc99cf95669a2f18a723be"
+    },
+    "scope": "No-refit numerical reproduction of the two selected minimal Kallenberger 2014 average-cell SBML artifacts in an independent external solver. This protocol freezes inputs and decisions; it does not execute a trajectory, import a model into MEHLISSA, or establish biological qualification.",
+    "first_trajectory_generated": false,
+    "external_model_bundled": false,
+    "parameter_fitting": false,
+    "clinical_use": false
+  },
+  "source_artifacts": [
+    {
+      "accession": "BIOMD0000000523",
+      "role": "calibration-like-CD95-HeLa-average-cell",
+      "source_url": "https://github.com/biomodels/BIOMD0000000523",
+      "source_commit": "8605e43f8e2fd364f122d579341891c0058ef778",
+      "file": "BIOMD0000000523.xml",
+      "sha256": "2afe6758ab396038e71fcb1716fefcfec67656b8bd0bfb3da8d4e1eda9524ff4",
+      "license": "CC0-1.0",
+      "sbml_level_version": "Level 2 Version 4",
+      "structure": {
+        "compartments": 1,
+        "species": 18,
+        "reactions": 13,
+        "global_parameters": 12,
+        "assignment_rules": 1
+      },
+      "initial_values": {
+        "CD95": 116.0,
+        "FADD": 93.0,
+        "DISC": 0.0,
+        "p55free": 155.0,
+        "DISCp55": 0.0,
+        "p30": 0.0,
+        "p43": 0.0,
+        "p18": 0.0,
+        "p18inactive": 0.0,
+        "Bid": 236.0,
+        "tBid": 0.0,
+        "PrNES_mCherry": 973.0,
+        "PrNES": 0.0,
+        "mCherry": 0.0,
+        "PrER_mGFP": 5178.0,
+        "PrER": 0.0,
+        "mGFP": 0.0,
+        "CD95L": 16.6
+      }
+    },
+    {
+      "accession": "BIOMD0000000524",
+      "role": "publication-wild-type-HeLa-average-cell",
+      "source_url": "https://github.com/biomodels/BIOMD0000000524",
+      "source_commit": "d091308a14fb4301a4a2b1b567ea874484bb97e6",
+      "file": "BIOMD0000000524.xml",
+      "sha256": "4bf4a5bcda5b43a551bcdda09fca91a5e777d2c5db1eafcb17dcb6f1574221bc",
+      "license": "CC0-1.0",
+      "sbml_level_version": "Level 2 Version 4",
+      "structure": {
+        "compartments": 1,
+        "species": 18,
+        "reactions": 13,
+        "global_parameters": 12,
+        "assignment_rules": 1
+      },
+      "initial_values": {
+        "CD95": 12.0,
+        "FADD": 90.0,
+        "DISC": 0.0,
+        "p55free": 127.0,
+        "DISCp55": 0.0,
+        "p30": 0.0,
+        "p43": 0.0,
+        "p18": 0.0,
+        "p18inactive": 0.0,
+        "Bid": 224.0,
+        "tBid": 0.0,
+        "PrNES_mCherry": 1909.0,
+        "PrNES": 0.0,
+        "mCherry": 0.0,
+        "PrER_mGFP": 3316.0,
+        "PrER": 0.0,
+        "mGFP": 0.0,
+        "CD95L": 16.6
+      }
+    }
+  ],
+  "shared_model_semantics": {
+    "compartment": {
+      "id": "cell",
+      "size": 1.0,
+      "spatial_dimensions": 3,
+      "declared_unit": null
+    },
+    "kinetic_parameters": {
+      "kon_FADD": 0.000811711012144556,
+      "koff_FADD": 0.00566528253772301,
+      "kDISC": 0.000491828591049766,
+      "kD216": 0.0114186392006403,
+      "kD374trans_p55": 0.000446994772958953,
+      "kD374trans_p43": 0.00343995957326369,
+      "kdiss_p18": 0.0949914492651531,
+      "kBid": 0.00052867403363568,
+      "kD374probe": 0.00152252549827479,
+      "KDR": 8.98496674617627,
+      "KDL": 15.421878766215
+    },
+    "assignment_rule": "CD95act = (CD95^3 * KDL^2 * CD95L) / ((CD95L + KDL) * (CD95^2 * KDL^2 + KDR * CD95L^2 + 2 * KDR * KDL * CD95L + KDR * KDL^2))",
+    "stimulus": {
+      "species": "CD95L",
+      "initial_value": 16.6,
+      "model_native_unit": "unresolved-model-native",
+      "publication_mapping_note": "The BioModels documentation relates 16.6 to 500 ng/mL CD95L and labels it 16.6 nM, but the SBML artifacts omit explicit substance and concentration units. BCQ-1.3 therefore executes the numeric value unchanged and does not perform an SI conversion."
+    }
+  },
+  "unit_policy": {
+    "sbml_declares_model_time_unit": false,
+    "sbml_declares_model_substance_unit": false,
+    "sbml_declares_compartment_unit": false,
+    "time_label": "model_time",
+    "time_unit": "unresolved-model-native",
+    "state_unit": "unresolved-model-native",
+    "conversion_allowed": false,
+    "rule": "BCQ-1.3 must preserve source numbers exactly and must not label the time axis as seconds or minutes, nor state values as molar or SI concentrations. A later pre-outcome amendment may add a biological unit mapping only from a citable source or curator task configuration and must retain the unconverted run."
+  },
+  "solver": {
+    "name": "COPASI command-line engine (CopasiSE)",
+    "version": "4.46",
+    "build": 300,
+    "release_tag": "Build-300",
+    "source_commit": "e9c47d912b55eccd56f70b72e52f19d61f5ab2e2",
+    "release_url": "https://github.com/copasi/COPASI/releases/tag/Build-300",
+    "license": "Artistic-2.0",
+    "task": "deterministic time course",
+    "method": "LSODA",
+    "reduced_model": false,
+    "primary_settings": {
+      "relative_tolerance": 1e-09,
+      "absolute_tolerance": 1e-12,
+      "maximum_internal_steps": 100000
+    },
+    "tightened_settings": {
+      "relative_tolerance": 1e-11,
+      "absolute_tolerance": 1e-13,
+      "maximum_internal_steps": 200000
+    },
+    "optimization_or_parameter_estimation_enabled": false,
+    "dependency_role": "optional scientific reproduction tool, not a MEHLISSA runtime dependency"
+  },
+  "execution": {
+    "time_grid": {
+      "start": 0.0,
+      "end": 240.0,
+      "interval": 0.25,
+      "points_including_endpoints": 961,
+      "unit": "unresolved-model-native",
+      "output_at_exact_grid": true
+    },
+    "matrix": [
+      {"id": "BCQ-RUN-523-P", "accession": "BIOMD0000000523", "settings": "primary", "purpose": "primary reproduction"},
+      {"id": "BCQ-RUN-523-R", "accession": "BIOMD0000000523", "settings": "primary", "purpose": "deterministic replay"},
+      {"id": "BCQ-RUN-523-T", "accession": "BIOMD0000000523", "settings": "tightened", "purpose": "numerical convergence"},
+      {"id": "BCQ-RUN-524-P", "accession": "BIOMD0000000524", "settings": "primary", "purpose": "primary reproduction"},
+      {"id": "BCQ-RUN-524-R", "accession": "BIOMD0000000524", "settings": "primary", "purpose": "deterministic replay"},
+      {"id": "BCQ-RUN-524-T", "accession": "BIOMD0000000524", "settings": "tightened", "purpose": "numerical convergence"}
+    ],
+    "source_modification": "forbidden",
+    "parameter_refitting": "forbidden",
+    "case_substitution": "forbidden",
+    "retain_failed_runs": true
+  },
+  "observables": [
+    {"id": "PrER_mGFP", "role": "primary", "meaning": "uncleaved ER-localized mGFP reporter substrate", "operation": "direct SBML species value"},
+    {"id": "PrNES_mCherry", "role": "primary", "meaning": "uncleaved NES-localized mCherry reporter substrate", "operation": "direct SBML species value"},
+    {"id": "p43", "role": "primary", "meaning": "caspase-8 p43 cleavage intermediate", "operation": "direct SBML species value"},
+    {"id": "p18", "role": "primary", "meaning": "active caspase-8 p18 species", "operation": "direct SBML species value"}
+  ],
+  "invariants": [
+    {"id": "INV-FADD-COMPLEX", "species": ["FADD", "DISC", "DISCp55", "p30", "p43"], "expected_initial_total_by_accession": {"BIOMD0000000523": 93.0, "BIOMD0000000524": 90.0}},
+    {"id": "INV-P55-FAMILY", "species": ["p55free", "DISCp55", "p30", "p43", "p18", "p18inactive"], "expected_initial_total_by_accession": {"BIOMD0000000523": 155.0, "BIOMD0000000524": 127.0}},
+    {"id": "INV-BID-FAMILY", "species": ["Bid", "tBid"], "expected_initial_total_by_accession": {"BIOMD0000000523": 236.0, "BIOMD0000000524": 224.0}},
+    {"id": "INV-NES-SUBSTRATE", "species": ["PrNES_mCherry", "PrNES"], "expected_initial_total_by_accession": {"BIOMD0000000523": 973.0, "BIOMD0000000524": 1909.0}},
+    {"id": "INV-NES-FLUOROPHORE", "species": ["PrNES_mCherry", "mCherry"], "expected_initial_total_by_accession": {"BIOMD0000000523": 973.0, "BIOMD0000000524": 1909.0}},
+    {"id": "INV-ER-SUBSTRATE", "species": ["PrER_mGFP", "PrER"], "expected_initial_total_by_accession": {"BIOMD0000000523": 5178.0, "BIOMD0000000524": 3316.0}},
+    {"id": "INV-ER-FLUOROPHORE", "species": ["PrER_mGFP", "mGFP"], "expected_initial_total_by_accession": {"BIOMD0000000523": 5178.0, "BIOMD0000000524": 3316.0}},
+    {"id": "INV-CD95-CONSTANT", "species": ["CD95"], "expected_initial_total_by_accession": {"BIOMD0000000523": 116.0, "BIOMD0000000524": 12.0}},
+    {"id": "INV-CD95L-CONSTANT", "species": ["CD95L"], "expected_initial_total_by_accession": {"BIOMD0000000523": 16.6, "BIOMD0000000524": 16.6}}
+  ],
+  "acceptance_rules": {
+    "source_identity": "Before import, both downloaded files must match their frozen SHA-256 hashes and Git commits. Any mismatch is a failed protocol run, not an invitation to update the expected hash.",
+    "import_structure": "COPASI must import each unchanged SBML artifact with one compartment, 18 species, 13 reactions, 12 global parameters, and one assignment rule and report no fatal semantic error.",
+    "complete_output": "Each run must contain exactly 961 ordered model_time rows from 0 through 240 and the four primary observables, with no missing, NaN, or infinite numeric value.",
+    "initial_state": "At model_time zero every recorded species must equal the frozen SBML initial value within absolute tolerance 1e-12.",
+    "deterministic_replay": "After canonical numeric parsing, the primary and replay runs for the same artifact must have zero maximum absolute and relative difference at every frozen grid point.",
+    "numerical_convergence": "For every primary observable and grid point, primary-versus-tightened absolute difference must be no greater than 1e-8 + 1e-6 * max(1, abs(tightened_value)).",
+    "conservation": "For every declared invariant and grid point, absolute residual from its frozen initial total must be no greater than 1e-10 + 1e-8 * max(1, abs(initial_total)).",
+    "nonnegativity": "Every species value must be at least -1e-10 * max(1, largest absolute initial value for that artifact).",
+    "reporter_direction": "PrER_mGFP and PrNES_mCherry must be non-increasing, allowing only the same scale-aware 1e-8 relative numerical margin used for conservation.",
+    "publication_alignment": "Quantitative publication-curve acceptance is BLOCKED because no rights-cleared machine-readable reference series has been frozen. Visual similarity to an article or BioModels report may be recorded only as descriptive context and cannot pass this gate."
+  },
+  "reference_and_claim_policy": {
+    "source_artifact_reference": "The unchanged CC0 BioModels SBML equations and initial values are the machine reference for BCQ-1.3 numerical execution.",
+    "publication_reference": "Kallenberger et al. 2014 and BioModels curation support biological context and reported qualitative similarity, but no figure or experimental row is redistributed by this protocol.",
+    "allowed_after_bcq_1_3_if_all_unblocked_rules_pass": "The frozen public average-cell SBML artifacts were independently executed in COPASI with reproducible, numerically converged trajectories and source-derived invariants.",
+    "forbidden_after_bcq_1_3": [
+      "claiming quantitative reproduction of a published curve without a frozen numeric reference",
+      "claiming the wild-type average-cell artifact is the complete held-out population prediction",
+      "claiming biological qualification, normal endothelial behavior, organ realism, patient prediction, diagnosis, treatment response, safety, or clinical validity",
+      "changing parameters, initial values, units, solver settings, observables, tolerances, or failure rules after inspecting a trajectory without a versioned pre-outcome amendment"
+    ]
+  },
+  "negative_controls": [
+    {"id": "BCQ-NC-01", "test": "alter one source-file byte or expected SHA-256", "expected_result": "fail before solver import"},
+    {"id": "BCQ-NC-02", "test": "substitute BIOMD0000000525 or another accession", "expected_result": "fail selected-artifact identity"},
+    {"id": "BCQ-NC-03", "test": "swap the 523 and 524 role or initial-value set", "expected_result": "fail case identity"},
+    {"id": "BCQ-NC-04", "test": "change CD95L, any initial value, kinetic parameter, or assignment rule", "expected_result": "fail no-refit source semantics"},
+    {"id": "BCQ-NC-05", "test": "execute a different COPASI version, build, commit, method, or tolerance without an amendment", "expected_result": "fail solver provenance"},
+    {"id": "BCQ-NC-06", "test": "label model_time as seconds or minutes or convert state values to SI without an approved mapping", "expected_result": "fail unit policy"},
+    {"id": "BCQ-NC-07", "test": "omit, duplicate, reorder, or truncate a frozen time row or primary observable", "expected_result": "fail complete-output gate"},
+    {"id": "BCQ-NC-08", "test": "inject NaN, infinity, a conservation violation, or material negative state", "expected_result": "fail numerical-integrity gate"},
+    {"id": "BCQ-NC-09", "test": "enable optimization, parameter estimation, or outcome-informed tuning", "expected_result": "fail no-refit gate"},
+    {"id": "BCQ-NC-10", "test": "describe visual agreement, an average-cell run, or same-paper 525/526 sensitivity as independent biological validation", "expected_result": "fail claim review"}
+  ],
+  "result_archive": {
+    "root": "results/bcq1/kallenberger-minimal/<run-id>",
+    "non_overwriting_run_id": "UTC timestamp plus protocol SHA-256 prefix",
+    "required_entries": [
+      "protocol.json",
+      "source-manifest.json",
+      "solver-provenance.json",
+      "trajectories/BIOMD0000000523-primary.csv",
+      "trajectories/BIOMD0000000523-replay.csv",
+      "trajectories/BIOMD0000000523-tightened.csv",
+      "trajectories/BIOMD0000000524-primary.csv",
+      "trajectories/BIOMD0000000524-replay.csv",
+      "trajectories/BIOMD0000000524-tightened.csv",
+      "reproduction-metrics.json",
+      "validation-report.json",
+      "validation-report.md",
+      "sha256sums.json"
+    ],
+    "failure_retention": "All started runs, logs, partial outputs, deviations, and failed gates remain in their original non-overwriting archive.",
+    "raw_article_or_participant_data_allowed": false
+  },
+  "decision": {
+    "current_result": "protocol-frozen-no-trajectory-executed",
+    "m5_evidence_status": "software_test_surrogate",
+    "next_increment": "BCQ-1.3 independent external-solver reproduction",
+    "amendment_rule": "Any material change after this commit requires a new protocol version committed before inspecting new trajectory outcomes; the original protocol and later failed or superseded results remain traceable."
+  }
+}

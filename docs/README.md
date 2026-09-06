@@ -22,7 +22,7 @@ rules are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
 | understand APIs or add a model such as kidney | [Software Architecture and Developer Guide](architecture/SOFTWARE_ARCHITECTURE.md) | implemented structure, public APIs, coupling contracts, extension workflow, kidney outline, and personalization |
 | understand what comes next | [Roadmap](ROADMAP.md) | integrated platform history, scientific qualification program, further scenarios and organs, scaling, and the digital-twin path |
 | assess evidence for Paper 1 | [Evidence and Validity Baseline](publication/EVIDENCE_AND_VALIDITY_BASELINE.md) | schema-validated evidence roles, calibration/validation separation, source audit, claim boundaries, and bibliography export |
-| follow the active scientific qualification cycles | [PCQ-1 pulmonary and capillary package](qualification/README.md), [BCQ-1.1 biological cell-model selection](qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md), and [BCQ-1.2 reproduction protocol](qualification/BCQ1_REPRODUCTION_PROTOCOL.md) | pulmonary/capillary access-dependent work plus the selected public CD95L-CD95-caspase-8 model family and its frozen pre-trajectory execution rules |
+| follow the active scientific qualification cycles | [PCQ-1 pulmonary and capillary package](qualification/README.md) and [BCQ-1 biological cell-model package](qualification/BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md) | pulmonary/capillary access-dependent work plus the completed independent COPASI reproduction and next typed-adapter step for the public CD95L-CD95-caspase-8 model family |
 | reproduce Paper 1 technical measurements | [Technical Experiment Protocol v2](publication/PAPER1_TECHNICAL_EXPERIMENT_PROTOCOL_V2.md) | locked conditions, three experiments, metrics, controls, exclusions, failure handling, and archive structure |
 | inspect Paper 1 results | [Technical Measurement Report](publication/PAPER1_TECHNICAL_MEASUREMENTS.md) | 112-attempt body campaign, small M7 resource/replay study, access-path parity, retained setup deviation, and interpretation limits |
 | review the Paper 1 release candidate | [Candidate handoff](../publication/paper1/release-candidates/paper1-platform-methods-rc1-20260903/HANDOFF.md) | source export, raw archives, machine manifest, hashes, claim registry, reproduction, and review checklist |
@@ -81,6 +81,11 @@ rules are documented in [`DATA_LICENSING.md`](DATA_LICENSING.md).
   unresolved-unit guard, six-run grid, observables, invariants, acceptance
   rules, negative controls, no-refit boundary, and result archive before the
   first trajectory is executed.
+- `python scripts/check_biological_cell_model_reproduction_result.py`
+  independently validates the BCQ-1.3 protocol/amendment lineage, retained
+  attempts, complete hashed archive, solver and source provenance, six raw
+  trajectories, numerical gates and negative controls, while enforcing the
+  blocked publication-alignment and biological-qualification claims.
 - [Data licensing](DATA_LICENSING.md), the
   [licence and data inventory](m0/LICENSE_AND_DATA_INVENTORY.md), and
   [ADR-0007](architecture/adr/0007-repository-license.md) define release and

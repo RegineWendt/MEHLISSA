@@ -253,7 +253,11 @@ CD95L-CD95-caspase-8 BioModels pair `BIOMD0000000523`/`0524`. This is an
 auditable next-model decision only. The
 [BCQ-1.2 protocol](../qualification/BCQ1_REPRODUCTION_PROTOCOL.md) now freezes
 the independent solver, source cases, missing-unit guard, runs, outputs,
-numeric rules, controls, and archive before execution. The artifacts are still
-not imported or executed, so no M5 evidence status changes until the BCQ-1.3
-external-solver reproduction, typed adapter, cross-engine checks, population
-decision, and independent review have been completed.
+numeric rules, controls, and archive before execution. The
+[BCQ-1.3 result](../qualification/BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md) now
+independently executes both unchanged artifacts in COPASI: nine computational
+gates and ten negative controls pass, while publication alignment remains
+blocked. This still does not change M5 evidence status because the biological
+mechanism has not been mapped into MEHLISSA, compared across engines, assigned
+justified population semantics, or independently reviewed. BCQ-1.4 is the
+typed adapter step.

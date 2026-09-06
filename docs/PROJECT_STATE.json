@@ -4,7 +4,7 @@
   "status_date_display": "6 September 2026",
   "development_branch": "mehlissa-next-generation",
   "milestones_passed_through": "M7",
-  "current_focus": "BCQ-1.3 independent external-solver reproduction",
+  "current_focus": "BCQ-1.4 typed MEHLISSA biological cell-model adapter",
   "research_use": {
     "delivery_range": "UX-1 through UX-6",
     "workbench_version": "1.0.0",
@@ -53,17 +53,25 @@
   },
   "active_biological_cell_qualification": {
     "protocol_id": "BCQ-1",
-    "completed_increment": "BCQ-1.2 prospective no-refit reproduction protocol",
-    "status": "minimal Kallenberger 2014 CD95L-CD95-caspase-8 model family selected and external-solver protocol frozen before import or execution; no trajectory generated and no biological qualification result claimed",
+    "completed_increment": "BCQ-1.3 independent external-solver reproduction",
+    "status": "two unchanged minimal Kallenberger 2014 CD95L-CD95-caspase-8 BioModels artifacts reproduced in COPASI across six runs; nine unblocked computational gates and ten negative controls pass, publication alignment remains blocked, no MEHLISSA adapter or biological qualification result exists yet",
     "selection_document": "docs/qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md",
     "candidate_register": "data/qualification/biological-cell-model-candidate-register-v1.json",
     "reproduction_protocol_document": "docs/qualification/BCQ1_REPRODUCTION_PROTOCOL.md",
     "reproduction_protocol": "data/qualification/biological-cell-model-reproduction-protocol-v1.json",
+    "reproduction_protocol_amendment": "data/qualification/biological-cell-model-reproduction-protocol-v1.1.json",
+    "reproduction_result_document": "docs/qualification/BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md",
+    "reproduction_result": "data/qualification/biological-cell-model-reproduction-result-v1.json",
+    "authoritative_run": "results/bcq1/kallenberger-minimal/20260906T071228Z-5dd09984d838",
+    "computational_gates_passed": 9,
+    "negative_controls_passed": 10,
+    "publication_alignment": "BLOCKED",
+    "biological_qualification": "NOT_ESTABLISHED",
     "selected_artifacts": ["BIOMD0000000523", "BIOMD0000000524"],
     "model_artifact_license": "CC0-1.0",
     "external_solver": "COPASI command-line engine 4.46 Build 300 using LSODA",
     "unit_status": "unresolved-model-native; conversion forbidden until a citable mapping is frozen",
-    "next_increment": "BCQ-1.3 independent external-solver reproduction"
+    "next_increment": "BCQ-1.4 typed MEHLISSA adapter"
   },
   "next_scientific_packages": [
     "Pulmonary and capillary qualification",

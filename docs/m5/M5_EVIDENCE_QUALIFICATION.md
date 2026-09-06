@@ -32,7 +32,7 @@ and constant-input reaction-network equilibria, supplemented by a shared
 ODE/SSA comparison. This is a technical
 acceptance criterion, not a substitute for external biological validation.
 
-## Frozen external comparison—not current evidence
+## External source reproduction—not yet M5 biological evidence
 
 [BCQ-1.1](../qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md) has now
 completed the candidate and licence screen. The selected family is the minimal
@@ -51,18 +51,24 @@ because no stable, licensed machine artifact was established. A VEGF-A/VEGFR
 endothelial model is retained for the later dynamic capillary-tissue-cell
 program rather than used as this first, deliberately compact qualification.
 
-BCQ-1.1 does not change the M5 evidence classification. Neither does the now
-completed [BCQ-1.2 prospective protocol](../qualification/BCQ1_REPRODUCTION_PROTOCOL.md):
+BCQ-1.1 does not change the M5 evidence classification. The completed
+[BCQ-1.2 prospective protocol](../qualification/BCQ1_REPRODUCTION_PROTOCOL.md)
 it freezes COPASI 4.46 Build 300/LSODA, both source cases, an unresolved-unit
 guard, a six-run primary/replay/tightened matrix, the four direct observables,
 source-derived invariants, numeric gates, ten negative controls, and the result
-archive before execution. The selected models still have not been imported,
-executed, mapped, or compared numerically with MEHLISSA. Article and
-experimental-data rights are separate from the CC0 model licence, and the
-public SBML artifacts each encode one average cell rather than the reported
-population ensemble. BCQ-1.3 is the first external-solver execution; its result
-cannot establish quantitative publication-curve alignment unless a separate
-rights-compatible numeric reference is frozen.
+archive before execution. The subsequent
+[BCQ-1.3 external-solver result](../qualification/BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md)
+executes all six frozen trajectories in COPASI, passes nine unblocked
+computational gates and ten negative controls, and retains the original exact-
+zero replay failure plus the pre-run versioned amendment. The result establishes
+numerically stable execution of the unchanged public equations.
+
+It still does not change the M5 evidence classification. The model has not been
+mapped or executed through MEHLISSA, and no cross-engine agreement, publication-
+curve alignment, biological qualification, calibrated population ensemble, or
+independent review exists yet. Article and experimental-data rights remain
+separate from the CC0 model licence, and each public SBML artifact encodes one
+average cell. BCQ-1.4 is the typed MEHLISSA adapter.
 
 ## Evidence gaps retained after M5
 

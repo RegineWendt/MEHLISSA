@@ -556,8 +556,9 @@ and [the capillary-to-cell hand-off](#capillary-to-cell-signal-hand-off-m52), or
 [the apoptosis response](#apoptosis-and-higher-layer-feedback-m57), or
 [the compressed population](#cohort-compressed-apoptosis-population-m58).
 
-The first move beyond those synthetic mechanisms has now been selected and its
-execution rules frozen, but it has not yet been run.
+The first move beyond those synthetic mechanisms has now been selected and
+reproduced in an independent external solver, but it is not yet available as a
+Workbench simulation model.
 [BCQ-1.1](qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md)
 chooses the minimal Kallenberger 2014 CD95L-CD95-caspase-8 BioModels pair:
 `BIOMD0000000523` represents one average CD95-overexpressing HeLa cell and
@@ -576,16 +577,23 @@ not explicitly define time or substance units, so the first run uses unchanged
 source numbers labelled `unresolved-model-native`; it must not present the axis
 as seconds or minutes or the states as SI concentrations.
 
-This protocol is **not** a new experiment and does not yet make the Workbench
-capable of running that model. The SBML files are not bundled, no solver has
-been added to the MEHLISSA runtime, no trajectory has been generated, and M5
-remains classified `software_test_surrogate`. The files each encode one average
-cell, so they cannot by themselves justify population claims. Their CC0
-licence also does not cover the AAAS article or its experimental data.
-BCQ-1.3 now performs the external-solver reproduction; only later increments
-add a typed MEHLISSA adapter, cross-engine checks, justified population
-semantics, and independent review. Even if all of those pass, the validity
-scope remains a CD95L-stimulated HeLa-cell mechanism, not normal endothelium, a
+The [BCQ-1.3 result](qualification/BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md)
+contains six COPASI trajectories: primary, replay, and tightened-tolerance runs
+for both artifacts. Nine unblocked computational gates and ten negative
+controls pass. The first exact-zero replay protocol remains a transparent
+failed result; a committed prospective amendment then established a strict
+numerical-equivalence rule before the passing run. Quantitative publication-
+curve alignment is still blocked because no rights-compatible numeric
+reference series has been frozen.
+
+This result does **not** make the Workbench capable of running the biological
+model. The SBML files and COPASI are not bundled, no MEHLISSA adapter exists,
+and M5 remains classified `software_test_surrogate`. Each file encodes one
+average cell, so it cannot by itself justify a population claim. The CC0 model
+licence also does not cover the AAAS article or its experimental data. BCQ-1.4
+next adds a typed adapter; later increments compare engines, decide population
+semantics, and obtain independent review. Even if all pass, the validity scope
+remains a CD95L-stimulated HeLa-cell mechanism, not normal endothelium, a
 patient model, or clinical evidence.
 
 #### 5.10 Nanodevice, detection message, and local one-hop communication
@@ -3354,13 +3362,13 @@ Planned substantive scientific extensions are:
   repository-first availability audit and governed request package completed
   before direct data requests, followed by the source-neutral PCQ-1.6 shell
   while access remains pending;
-- BCQ-1 biological cell-model qualification: BCQ-1.1 has selected and licence-
+- BCQ-1 biological cell-model qualification: BCQ-1.1 selected and licence-
   screened the minimal Kallenberger CD95L-CD95-caspase-8
-  `BIOMD0000000523`/`0524` pair and BCQ-1.2 has frozen the no-refit solver,
-  source, unit, grid, output, tolerance, control, and archive decisions before
-  execution; BCQ-1.3 through BCQ-1.7 must execute the independent reproduction,
-  map it through a typed M5 adapter, test
-  numerical and structural sensitivity, resolve or retain the average-cell
+  `BIOMD0000000523`/`0524` pair, BCQ-1.2 froze the no-refit execution protocol,
+  and BCQ-1.3 completed the independent COPASI reproduction with nine
+  computational gates passed and publication alignment explicitly blocked;
+  BCQ-1.4 through BCQ-1.7 must map it through a typed M5 adapter, test
+  cross-engine and structural sensitivity, resolve or retain the average-cell
   population limit, and complete independent review;
 - dynamic capillary-tissue-cell coupling with time-dependent transport,
   interaction or consumption, feedback, and conservation checks;

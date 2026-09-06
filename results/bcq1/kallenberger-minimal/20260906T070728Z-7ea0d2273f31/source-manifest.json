@@ -1,0 +1,55 @@
+{
+  "external_source_files_bundled": false,
+  "protocol_sha256": "7ea0d2273f3122b0f58c700569813e9454d48a9827974b4994983c8df6ed527d",
+  "schema_version": "1.0.0",
+  "sources": [
+    {
+      "accession": "BIOMD0000000523",
+      "file": "BIOMD0000000523.xml",
+      "license": "CC0-1.0",
+      "role": "calibration-like-CD95-HeLa-average-cell",
+      "sha256": "2afe6758ab396038e71fcb1716fefcfec67656b8bd0bfb3da8d4e1eda9524ff4",
+      "source_commit": "8605e43f8e2fd364f122d579341891c0058ef778",
+      "source_url": "https://github.com/biomodels/BIOMD0000000523",
+      "structure": {
+        "assignment_rules": 1,
+        "compartments": 1,
+        "global_parameters": 12,
+        "reactions": 13,
+        "species": 18
+      },
+      "unit_audit": {
+        "compartment_units": true,
+        "model_extentUnits": true,
+        "model_substanceUnits": true,
+        "model_timeUnits": true,
+        "model_volumeUnits": true,
+        "species_substance_units": true
+      }
+    },
+    {
+      "accession": "BIOMD0000000524",
+      "file": "BIOMD0000000524.xml",
+      "license": "CC0-1.0",
+      "role": "publication-wild-type-HeLa-average-cell",
+      "sha256": "4bf4a5bcda5b43a551bcdda09fca91a5e777d2c5db1eafcb17dcb6f1574221bc",
+      "source_commit": "d091308a14fb4301a4a2b1b567ea874484bb97e6",
+      "source_url": "https://github.com/biomodels/BIOMD0000000524",
+      "structure": {
+        "assignment_rules": 1,
+        "compartments": 1,
+        "global_parameters": 12,
+        "reactions": 13,
+        "species": 18
+      },
+      "unit_audit": {
+        "compartment_units": true,
+        "model_extentUnits": true,
+        "model_substanceUnits": true,
+        "model_timeUnits": true,
+        "model_volumeUnits": true,
+        "species_substance_units": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "amendment": {
+    "id": "BCQ-1.2-A1",
+    "program": "BCQ-1 biological cell-model qualification",
+    "version": "1.1.0",
+    "created_date": "2026-09-06",
+    "status": "prospective-amendment-frozen-before-v1.1-trajectory",
+    "base_protocol": {
+      "path": "data/qualification/biological-cell-model-reproduction-protocol-v1.json",
+      "sha256": "7ea0d2273f3122b0f58c700569813e9454d48a9827974b4994983c8df6ed527d"
+    },
+    "triggering_v1_attempt": {
+      "run_id": "20260906T070728Z-7ea0d2273f31",
+      "decision": "FAIL",
+      "failed_gate": "deterministic_replay",
+      "observation": "BIOMD0000000523 repeated with unchanged inputs and settings had maximum absolute difference 2.637534635141492e-11 and maximum scale-normalized difference 2.0191528122055834e-13; BIOMD0000000524 was bit-identical.",
+      "interpretation": "The exact-zero rule tested bitwise process reproducibility rather than scientifically material numerical reproducibility and was too strict for independent COPASI process launches. The v1 result remains failed and is not reclassified."
+    },
+    "scope": "Only the replay acceptance rule and a process timeout are amended. Sources, cases, hashes, model numbers, unit policy, solver and binary identity, LSODA settings, grid, observables, invariants, convergence limits, negative controls, no-refit rule, claim boundary, and publication-alignment block remain unchanged.",
+    "first_v1_1_trajectory_generated": false
+  },
+  "changes": {
+    "deterministic_replay": {
+      "old_rule": "maximum absolute and relative difference must both be exactly zero",
+      "new_rule": "For every parsed value, abs(primary-replay) must be no greater than 1e-12 + 1e-12 * max(1, abs(replay)).",
+      "absolute_tolerance": 1e-12,
+      "relative_tolerance": 1e-12,
+      "rationale": "This remains at least one thousand times tighter in relative scale than the primary LSODA relative tolerance of 1e-9, while separating floating-point process-launch variation from a scientifically material replay failure.",
+      "reporting": "Record maximum absolute difference, maximum scale-normalized difference, and maximum fraction of the allowed difference for each artifact. Do not use the term bit-identical unless both maxima are exactly zero."
+    },
+    "execution_timeout": {
+      "seconds_per_solver_process": 120,
+      "result_on_timeout": "FAIL and retain the partial run archive",
+      "rationale": "One setup attempt stalled without CPU progress or output. A frozen wall-clock guard prevents an indefinite process wait and does not alter solver mathematics."
+    }
+  },
+  "lineage_and_claim_policy": {
+    "v1_result_remains": "FAIL for the exact-zero deterministic-replay gate",
+    "v1_1_result_must_be_new": true,
+    "post_outcome_reclassification_forbidden": true,
+    "allowed_claim_if_v1_1_passes": "The two selected unchanged BioModels average-cell artifacts were reproduced in COPASI with numerically equivalent repeated runs and stable results under tightened tolerances on the frozen model-time grid.",
+    "publication_alignment": "BLOCKED",
+    "m5_evidence_status": "software_test_surrogate"
+  }
+}

@@ -1,0 +1,453 @@
+{
+  "amendment_sha256": "b92c5ba3e017a3c4b64cd823f12e0c132d176158cba9d51716900e281f37e3b4",
+  "base_protocol_sha256": "7ea0d2273f3122b0f58c700569813e9454d48a9827974b4994983c8df6ed527d",
+  "comparisons": {
+    "BIOMD0000000523": {
+      "deterministic_replay": {
+        "bit_identical": false,
+        "maximum_absolute_difference": 1.0913936421275139e-11,
+        "maximum_fraction_of_allowed_difference": 0.07349420342883592,
+        "maximum_scale_normalized_difference": 7.446922136520695e-14
+      },
+      "numerical_convergence": {
+        "PrER_mGFP": {
+          "maximum_absolute_difference": 2.625774868647568e-07,
+          "maximum_fraction_of_allowed_difference": 5.199893766393152e-05
+        },
+        "PrNES_mCherry": {
+          "maximum_absolute_difference": 2.3303380203287816e-07,
+          "maximum_fraction_of_allowed_difference": 0.003400654015809544
+        },
+        "p18": {
+          "maximum_absolute_difference": 4.931132391305937e-09,
+          "maximum_fraction_of_allowed_difference": 0.0017111562127106383
+        },
+        "p43": {
+          "maximum_absolute_difference": 1.3646879182260818e-08,
+          "maximum_fraction_of_allowed_difference": 0.000940896073410801
+        }
+      }
+    },
+    "BIOMD0000000524": {
+      "deterministic_replay": {
+        "bit_identical": false,
+        "maximum_absolute_difference": 7.969447324285284e-11,
+        "maximum_fraction_of_allowed_difference": 0.38830764764049397,
+        "maximum_scale_normalized_difference": 4.556537573255637e-13
+      },
+      "numerical_convergence": {
+        "PrER_mGFP": {
+          "maximum_absolute_difference": 3.7247309592203237e-07,
+          "maximum_fraction_of_allowed_difference": 0.000124994273634295
+        },
+        "PrNES_mCherry": {
+          "maximum_absolute_difference": 7.322114470298402e-07,
+          "maximum_fraction_of_allowed_difference": 0.001084307744857819
+        },
+        "p18": {
+          "maximum_absolute_difference": 2.218020878075322e-09,
+          "maximum_fraction_of_allowed_difference": 0.0008330973194068406
+        },
+        "p43": {
+          "maximum_absolute_difference": 2.866975989945786e-09,
+          "maximum_fraction_of_allowed_difference": 0.0003701835317929857
+        }
+      }
+    }
+  },
+  "configuration_records": [
+    {
+      "accession": "BIOMD0000000523",
+      "configured_cps_sha256": "2c4c64829b2882a7e308822dc7b16fa8b92d576fd4031864e1d355088fa171f7",
+      "model_name": "Kallenberger2014 - CD95L induced apoptosis initiated by caspase-8, CD95 HeLa cells (cis/trans variant)",
+      "report_columns": [
+        "model_time",
+        "CD95",
+        "FADD",
+        "DISC",
+        "p55free",
+        "DISCp55",
+        "p30",
+        "p43",
+        "p18",
+        "p18inactive",
+        "Bid",
+        "tBid",
+        "PrNES_mCherry",
+        "PrNES",
+        "mCherry",
+        "PrER_mGFP",
+        "PrER",
+        "mGFP",
+        "CD95L"
+      ],
+      "run_id": "BCQ-RUN-523-P",
+      "settings": "primary"
+    },
+    {
+      "accession": "BIOMD0000000523",
+      "configured_cps_sha256": "47985726c916544a56a7c1d26749112aadb10a1b6e83241067d5e90e2636b7b6",
+      "model_name": "Kallenberger2014 - CD95L induced apoptosis initiated by caspase-8, CD95 HeLa cells (cis/trans variant)",
+      "report_columns": [
+        "model_time",
+        "CD95",
+        "FADD",
+        "DISC",
+        "p55free",
+        "DISCp55",
+        "p30",
+        "p43",
+        "p18",
+        "p18inactive",
+        "Bid",
+        "tBid",
+        "PrNES_mCherry",
+        "PrNES",
+        "mCherry",
+        "PrER_mGFP",
+        "PrER",
+        "mGFP",
+        "CD95L"
+      ],
+      "run_id": "BCQ-RUN-523-R",
+      "settings": "primary"
+    },
+    {
+      "accession": "BIOMD0000000523",
+      "configured_cps_sha256": "c800e359b7bbd62e36a23ef6dcd5835768276ab9718ea6830d50930f7f0b12cb",
+      "model_name": "Kallenberger2014 - CD95L induced apoptosis initiated by caspase-8, CD95 HeLa cells (cis/trans variant)",
+      "report_columns": [
+        "model_time",
+        "CD95",
+        "FADD",
+        "DISC",
+        "p55free",
+        "DISCp55",
+        "p30",
+        "p43",
+        "p18",
+        "p18inactive",
+        "Bid",
+        "tBid",
+        "PrNES_mCherry",
+        "PrNES",
+        "mCherry",
+        "PrER_mGFP",
+        "PrER",
+        "mGFP",
+        "CD95L"
+      ],
+      "run_id": "BCQ-RUN-523-T",
+      "settings": "tightened"
+    },
+    {
+      "accession": "BIOMD0000000524",
+      "configured_cps_sha256": "3ec34b053c88b3142838a796393c7dc9ee955d8f6927eb7dd11ea688948dc5d7",
+      "model_name": "Kallenberger2014 - CD95L induced apoptosis initiated by caspase-8, wild-type HeLa cells (cis/trans variant)",
+      "report_columns": [
+        "model_time",
+        "CD95",
+        "FADD",
+        "DISC",
+        "p55free",
+        "DISCp55",
+        "p30",
+        "p43",
+        "p18",
+        "p18inactive",
+        "Bid",
+        "tBid",
+        "PrNES_mCherry",
+        "PrNES",
+        "mCherry",
+        "PrER_mGFP",
+        "PrER",
+        "mGFP",
+        "CD95L"
+      ],
+      "run_id": "BCQ-RUN-524-P",
+      "settings": "primary"
+    },
+    {
+      "accession": "BIOMD0000000524",
+      "configured_cps_sha256": "5e2d851415e926093fac979294798b5dd3759f761ca2903b21b760a3ad9c3182",
+      "model_name": "Kallenberger2014 - CD95L induced apoptosis initiated by caspase-8, wild-type HeLa cells (cis/trans variant)",
+      "report_columns": [
+        "model_time",
+        "CD95",
+        "FADD",
+        "DISC",
+        "p55free",
+        "DISCp55",
+        "p30",
+        "p43",
+        "p18",
+        "p18inactive",
+        "Bid",
+        "tBid",
+        "PrNES_mCherry",
+        "PrNES",
+        "mCherry",
+        "PrER_mGFP",
+        "PrER",
+        "mGFP",
+        "CD95L"
+      ],
+      "run_id": "BCQ-RUN-524-R",
+      "settings": "primary"
+    },
+    {
+      "accession": "BIOMD0000000524",
+      "configured_cps_sha256": "e3bd318228c53eadcf07d174882467bfd299b7aaea78c340d9fddefa80bb951f",
+      "model_name": "Kallenberger2014 - CD95L induced apoptosis initiated by caspase-8, wild-type HeLa cells (cis/trans variant)",
+      "report_columns": [
+        "model_time",
+        "CD95",
+        "FADD",
+        "DISC",
+        "p55free",
+        "DISCp55",
+        "p30",
+        "p43",
+        "p18",
+        "p18inactive",
+        "Bid",
+        "tBid",
+        "PrNES_mCherry",
+        "PrNES",
+        "mCherry",
+        "PrER_mGFP",
+        "PrER",
+        "mGFP",
+        "CD95L"
+      ],
+      "run_id": "BCQ-RUN-524-T",
+      "settings": "tightened"
+    }
+  ],
+  "execution_protocol_sha256": "5dd09984d838c0a4237d9d100256a91a4e4db5f4473ac0601749db105912d5dd",
+  "negative_controls": [
+    {
+      "id": "BCQ-NC-01",
+      "observed_rejection": "BIOMD0000000523 source hash mismatch: 56c83d4e8c180ea9151f4c91bb5503a6a30cbff5d80de20c0d756a1e6fc4825a",
+      "status": "PASS"
+    },
+    {
+      "id": "BCQ-NC-02",
+      "observed_rejection": "unselected artifact accession: BIOMD0000000525",
+      "status": "PASS"
+    },
+    {
+      "id": "BCQ-NC-03",
+      "observed_rejection": "initial state mismatch for CD95",
+      "status": "PASS"
+    },
+    {
+      "id": "BCQ-NC-04",
+      "observed_rejection": "BIOMD0000000523 source hash mismatch: 56c83d4e8c180ea9151f4c91bb5503a6a30cbff5d80de20c0d756a1e6fc4825a",
+      "status": "PASS"
+    },
+    {
+      "id": "BCQ-NC-05",
+      "observed_rejection": "solver version mismatch",
+      "status": "PASS"
+    },
+    {
+      "id": "BCQ-NC-06",
+      "observed_rejection": "invented unit label: minute",
+      "status": "PASS"
+    },
+    {
+      "id": "BCQ-NC-07",
+      "observed_rejection": "trajectory row count changed: 960",
+      "status": "PASS"
+    },
+    {
+      "id": "BCQ-NC-08",
+      "observed_rejection": "non-finite trajectory value at row 1",
+      "status": "PASS"
+    },
+    {
+      "id": "BCQ-NC-09",
+      "observed_rejection": "parameter fitting is forbidden",
+      "status": "PASS"
+    },
+    {
+      "id": "BCQ-NC-10",
+      "observed_rejection": "claim exceeds BCQ-1.3: biologically validated held-out population",
+      "status": "PASS"
+    }
+  ],
+  "run_id": "20260906T071114Z-5dd09984d838",
+  "run_metrics": {
+    "BCQ-RUN-523-P": {
+      "end": 240.0,
+      "final_primary_observables": {
+        "PrER_mGFP": 747.9805451701594,
+        "PrNES_mCherry": 7.13345617715774e-05,
+        "p18": 3.711892508830018,
+        "p43": 27.32880267318729
+      },
+      "maximum_invariant_residuals": {
+        "INV-BID-FAMILY": 1.7053025658242404e-13,
+        "INV-CD95-CONSTANT": 0.0,
+        "INV-CD95L-CONSTANT": 0.0,
+        "INV-ER-FLUOROPHORE": 8.185452315956354e-12,
+        "INV-ER-SUBSTRATE": 8.185452315956354e-12,
+        "INV-FADD-COMPLEX": 5.684341886080802e-14,
+        "INV-NES-FLUOROPHORE": 1.4779288903810084e-12,
+        "INV-NES-SUBSTRATE": 1.4779288903810084e-12,
+        "INV-P55-FAMILY": 3.126388037344441e-13
+      },
+      "maximum_reporter_increases": {
+        "PrER_mGFP": 0.0,
+        "PrNES_mCherry": -1.5836576494621113e-10
+      },
+      "minimum_species_value": 0.0,
+      "nonnegative_limit": -5.178e-07,
+      "rows": 961,
+      "start": 0.0
+    },
+    "BCQ-RUN-523-R": {
+      "end": 240.0,
+      "final_primary_observables": {
+        "PrER_mGFP": 747.9805451701621,
+        "PrNES_mCherry": 7.133456177158116e-05,
+        "p18": 3.711892508830033,
+        "p43": 27.328802673187397
+      },
+      "maximum_invariant_residuals": {
+        "INV-BID-FAMILY": 1.7053025658242404e-13,
+        "INV-CD95-CONSTANT": 0.0,
+        "INV-CD95L-CONSTANT": 0.0,
+        "INV-ER-FLUOROPHORE": 8.185452315956354e-12,
+        "INV-ER-SUBSTRATE": 8.185452315956354e-12,
+        "INV-FADD-COMPLEX": 1.4210854715202004e-13,
+        "INV-NES-FLUOROPHORE": 1.1368683772161603e-12,
+        "INV-NES-SUBSTRATE": 1.1368683772161603e-12,
+        "INV-P55-FAMILY": 2.2737367544323206e-13
+      },
+      "maximum_reporter_increases": {
+        "PrER_mGFP": 0.0,
+        "PrNES_mCherry": -1.5836576494621113e-10
+      },
+      "minimum_species_value": 0.0,
+      "nonnegative_limit": -5.178e-07,
+      "rows": 961,
+      "start": 0.0
+    },
+    "BCQ-RUN-523-T": {
+      "end": 240.0,
+      "final_primary_observables": {
+        "PrER_mGFP": 747.980545166511,
+        "PrNES_mCherry": 7.133456294412204e-05,
+        "p18": 3.7118925088327854,
+        "p43": 27.328802673201903
+      },
+      "maximum_invariant_residuals": {
+        "INV-BID-FAMILY": 2.8421709430404007e-13,
+        "INV-CD95-CONSTANT": 0.0,
+        "INV-CD95L-CONSTANT": 0.0,
+        "INV-ER-FLUOROPHORE": 1.6370904631912708e-11,
+        "INV-ER-SUBSTRATE": 1.6370904631912708e-11,
+        "INV-FADD-COMPLEX": 8.526512829121202e-14,
+        "INV-NES-FLUOROPHORE": 1.3642420526593924e-12,
+        "INV-NES-SUBSTRATE": 1.3642420526593924e-12,
+        "INV-P55-FAMILY": 2.2737367544323206e-13
+      },
+      "maximum_reporter_increases": {
+        "PrER_mGFP": -9.094947017729282e-13,
+        "PrNES_mCherry": -1.5791101759532467e-10
+      },
+      "minimum_species_value": 0.0,
+      "nonnegative_limit": -5.178e-07,
+      "rows": 961,
+      "start": 0.0
+    },
+    "BCQ-RUN-524-P": {
+      "end": 240.0,
+      "final_primary_observables": {
+        "PrER_mGFP": 1587.8952112609397,
+        "PrNES_mCherry": 10.694357687014326,
+        "p18": 3.6973749614275118,
+        "p43": 27.17204487626545
+      },
+      "maximum_invariant_residuals": {
+        "INV-BID-FAMILY": 1.7053025658242404e-13,
+        "INV-CD95-CONSTANT": 0.0,
+        "INV-CD95L-CONSTANT": 0.0,
+        "INV-ER-FLUOROPHORE": 4.547473508864641e-12,
+        "INV-ER-SUBSTRATE": 4.547473508864641e-12,
+        "INV-FADD-COMPLEX": 1.1368683772161603e-13,
+        "INV-NES-FLUOROPHORE": 1.3642420526593924e-12,
+        "INV-NES-SUBSTRATE": 1.3642420526593924e-12,
+        "INV-P55-FAMILY": 5.684341886080802e-14
+      },
+      "maximum_reporter_increases": {
+        "PrER_mGFP": 0.0,
+        "PrNES_mCherry": -1.3642420526593924e-12
+      },
+      "minimum_species_value": 0.0,
+      "nonnegative_limit": -3.3160000000000003e-07,
+      "rows": 961,
+      "start": 0.0
+    },
+    "BCQ-RUN-524-R": {
+      "end": 240.0,
+      "final_primary_observables": {
+        "PrER_mGFP": 1587.895211260946,
+        "PrNES_mCherry": 10.694357687014739,
+        "p18": 3.697374961427513,
+        "p43": 27.172044876265467
+      },
+      "maximum_invariant_residuals": {
+        "INV-BID-FAMILY": 1.7053025658242404e-13,
+        "INV-CD95-CONSTANT": 0.0,
+        "INV-CD95L-CONSTANT": 0.0,
+        "INV-ER-FLUOROPHORE": 4.547473508864641e-12,
+        "INV-ER-SUBSTRATE": 4.547473508864641e-12,
+        "INV-FADD-COMPLEX": 8.526512829121202e-14,
+        "INV-NES-FLUOROPHORE": 2.7284841053187847e-12,
+        "INV-NES-SUBSTRATE": 2.7284841053187847e-12,
+        "INV-P55-FAMILY": 1.1368683772161603e-13
+      },
+      "maximum_reporter_increases": {
+        "PrER_mGFP": 0.0,
+        "PrNES_mCherry": -1.3642420526593924e-12
+      },
+      "minimum_species_value": 0.0,
+      "nonnegative_limit": -3.3160000000000003e-07,
+      "rows": 961,
+      "start": 0.0
+    },
+    "BCQ-RUN-524-T": {
+      "end": 240.0,
+      "final_primary_observables": {
+        "PrER_mGFP": 1587.895211186858,
+        "PrNES_mCherry": 10.69435769296262,
+        "p18": 3.697374961468753,
+        "p43": 27.17204487604943
+      },
+      "maximum_invariant_residuals": {
+        "INV-BID-FAMILY": 1.9895196601282805e-13,
+        "INV-CD95-CONSTANT": 0.0,
+        "INV-CD95L-CONSTANT": 0.0,
+        "INV-ER-FLUOROPHORE": 4.092726157978177e-12,
+        "INV-ER-SUBSTRATE": 4.092726157978177e-12,
+        "INV-FADD-COMPLEX": 7.105427357601002e-14,
+        "INV-NES-FLUOROPHORE": 2.0463630789890885e-12,
+        "INV-NES-SUBSTRATE": 2.0463630789890885e-12,
+        "INV-P55-FAMILY": 1.5631940186722204e-13
+      },
+      "maximum_reporter_increases": {
+        "PrER_mGFP": 0.0,
+        "PrNES_mCherry": -1.1368683772161603e-12
+      },
+      "minimum_species_value": 0.0,
+      "nonnegative_limit": -3.3160000000000003e-07,
+      "rows": 961,
+      "start": 0.0
+    }
+  },
+  "schema_version": "1.0.0"
+}

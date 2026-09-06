@@ -356,12 +356,19 @@ selected model. Its checker is:
 ```powershell
 python scripts/check_biological_cell_model_reproduction_protocol.py
 python -m unittest tests/test_biological_cell_model_reproduction_protocol.py
+python scripts/check_biological_cell_model_reproduction_result.py
+python -m unittest tests/test_biological_cell_model_reproduction_result.py
+python -m unittest tests/test_biological_cell_model_reproduction_runner.py
 ```
 
 The checked machine authority is
 `data/qualification/biological-cell-model-reproduction-protocol-v1.json`; the
-human rationale and BCQ-1.3 handoff are in
+human rationale is in
 [`BCQ1_REPRODUCTION_PROTOCOL.md`](qualification/BCQ1_REPRODUCTION_PROTOCOL.md).
+The prospective replay amendment is
+[`BCQ1_REPRODUCTION_PROTOCOL_AMENDMENT_1.md`](qualification/BCQ1_REPRODUCTION_PROTOCOL_AMENDMENT_1.md),
+and the executed result is
+[`BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md`](qualification/BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md).
 Do not execute a different COPASI build, change LSODA tolerances, shorten the
 grid, substitute initial conditions, or infer seconds/minutes/SI units from the
 unit-incomplete SBML. Any material change requires a new protocol version
@@ -369,14 +376,30 @@ committed before output from the changed choice is inspected. Keep COPASI an
 optional scientific reproduction dependency; BCQ-1.2 does not establish a
 supported runtime contract or install it for Workbench users.
 
-BCQ-1.3 must download the two source artifacts into a controlled, non-
-overwriting run workspace, verify their hashes before import, verify CopasiSE
-4.46 Build 300 provenance, execute all six declared runs, run all ten negative
-controls on disposable copies, and retain failed/partial outputs. It may report
-independent numerical execution of the frozen public average-cell SBML, but it
-must leave quantitative publication-curve alignment blocked until a
-rights-compatible numeric reference is frozen. A typed MEHLISSA adapter is
-BCQ-1.4 work and must not be smuggled into the external-solver reference.
+BCQ-1.3 has downloaded the two source artifacts into a controlled workspace,
+verified their hashes before import, verified CopasiSE 4.46 Build 300, executed
+all six declared runs, exercised all ten negative controls on disposable
+copies, and retained failed/partial attempts. The original exact-zero replay
+gate failed and remains failed. Amendment 1.1 was committed before a new run;
+the authoritative archive then passed all nine unblocked computational gates.
+Quantitative publication-curve alignment remains blocked until a rights-
+compatible numeric reference is frozen.
+
+COPASI remains optional. To generate a new non-overwriting archive from exact,
+separately acquired source artifacts:
+
+```powershell
+python scripts/run_biological_cell_model_reproduction.py `
+  --copasi "C:\path\to\CopasiSE.exe" `
+  --source-523 "C:\path\to\BIOMD0000000523.xml" `
+  --source-524 "C:\path\to\BIOMD0000000524.xml"
+```
+
+The runner fails before import on a source-hash mismatch and does not vendor
+COPASI or the CC0 SBML files. The result checker needs only the checked-in
+archive; it recalculates the numerical acceptance values from the raw CSV
+files. A typed MEHLISSA adapter is BCQ-1.4 work and must not be smuggled into
+the external-solver reference.
 
 Do not edit the locked protocol or raw archives in place. A changed protocol
 requires a new version and pre-measurement commit; a changed candidate requires

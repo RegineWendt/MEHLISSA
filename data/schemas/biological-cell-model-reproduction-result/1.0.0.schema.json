@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RegineWendt/MEHLISSA/data/schemas/biological-cell-model-reproduction-result/1.0.0.schema.json",
+  "title": "MEHLISSA BCQ-1.3 external-solver reproduction result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "result", "protocol_lineage", "archive", "execution", "gates", "headline_metrics", "attempt_history", "decision"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "program", "version", "performed_date", "status", "baseline_commit", "executor", "clinical_use"],
+      "properties": {
+        "id": {"const": "BCQ-1.3"},
+        "program": {"const": "BCQ-1 biological cell-model qualification"},
+        "version": {"const": "1.0.0"},
+        "performed_date": {"type": "string", "format": "date"},
+        "status": {"const": "completed-external-solver-reproduction-with-publication-alignment-blocked"},
+        "baseline_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "executor": {"type": "string", "minLength": 1},
+        "clinical_use": {"const": false}
+      }
+    },
+    "protocol_lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["base_protocol", "prospective_amendment", "execution_protocol_sha256", "v1_failed_result_preserved"],
+      "properties": {
+        "base_protocol": {"$ref": "#/$defs/asset"},
+        "prospective_amendment": {"$ref": "#/$defs/asset"},
+        "execution_protocol_sha256": {"$ref": "#/$defs/sha256"},
+        "v1_failed_result_preserved": {"const": true}
+      }
+    },
+    "archive": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id", "path", "checksum_manifest", "external_sbml_bundled", "raw_article_or_participant_data_bundled"],
+      "properties": {
+        "run_id": {"const": "20260906T071228Z-5dd09984d838"},
+        "path": {"const": "results/bcq1/kallenberger-minimal/20260906T071228Z-5dd09984d838"},
+        "checksum_manifest": {"$ref": "#/$defs/asset"},
+        "external_sbml_bundled": {"const": false},
+        "raw_article_or_participant_data_bundled": {"const": false}
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["solver", "version", "build", "method", "binary_sha256", "source_accessions", "run_count", "points_per_run", "reported_species", "time_unit", "state_unit", "parameter_refitting"],
+      "properties": {
+        "solver": {"const": "COPASI command-line engine (CopasiSE)"},
+        "version": {"const": "4.46"},
+        "build": {"const": 300},
+        "method": {"const": "LSODA"},
+        "binary_sha256": {"$ref": "#/$defs/sha256"},
+        "source_accessions": {
+          "type": "array",
+          "prefixItems": [{"const": "BIOMD0000000523"}, {"const": "BIOMD0000000524"}],
+          "items": false
+        },
+        "run_count": {"const": 6},
+        "points_per_run": {"const": 961},
+        "reported_species": {"const": 18},
+        "time_unit": {"const": "unresolved-model-native"},
+        "state_unit": {"const": "unresolved-model-native"},
+        "parameter_refitting": {"const": false}
+      }
+    },
+    "gates": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "status"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "status": {"enum": ["PASS", "BLOCKED"]},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "headline_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maximum_replay_fraction_of_limit", "maximum_convergence_fraction_of_limit", "maximum_invariant_residual", "minimum_species_value", "negative_controls_passed"],
+      "properties": {
+        "maximum_replay_fraction_of_limit": {"type": "number", "minimum": 0, "maximum": 1},
+        "maximum_convergence_fraction_of_limit": {"type": "number", "minimum": 0, "maximum": 1},
+        "maximum_invariant_residual": {"type": "number", "minimum": 0},
+        "minimum_species_value": {"type": "number"},
+        "negative_controls_passed": {"const": 10}
+      }
+    },
+    "attempt_history": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["run_id", "protocol", "status", "reason", "authoritative"],
+        "properties": {
+          "run_id": {"type": "string", "pattern": "^[0-9]{8}T[0-9]{6}Z-[0-9a-f]{12}$"},
+          "protocol": {"enum": ["1.0.0", "1.1.0"]},
+          "status": {"enum": ["FAILED_OUTPUT_CONFIGURATION", "INTERRUPTED_STALLED_PROCESS", "FAILED_GATE", "SUPERSEDED_ARCHIVE_LAYOUT", "PASS_WITH_BLOCKED_PUBLICATION_ALIGNMENT"]},
+          "reason": {"type": "string", "minLength": 1},
+          "authoritative": {"type": "boolean"}
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_artifact_reproduction", "publication_curve_alignment", "biological_qualification", "m5_evidence_status", "allowed_claim", "forbidden_claims", "next_increment"],
+      "properties": {
+        "source_artifact_reproduction": {"const": "PASS"},
+        "publication_curve_alignment": {"const": "BLOCKED"},
+        "biological_qualification": {"const": "NOT_ESTABLISHED"},
+        "m5_evidence_status": {"const": "software_test_surrogate"},
+        "allowed_claim": {"type": "string", "minLength": 1},
+        "forbidden_claims": {"$ref": "#/$defs/nonempty_strings"},
+        "next_increment": {"const": "BCQ-1.4 typed MEHLISSA adapter"}
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "nonempty_strings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}

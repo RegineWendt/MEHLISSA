@@ -1,0 +1,63 @@
+{
+  "amendment_sha256": "b92c5ba3e017a3c4b64cd823f12e0c132d176158cba9d51716900e281f37e3b4",
+  "base_protocol_sha256": "7ea0d2273f3122b0f58c700569813e9454d48a9827974b4994983c8df6ed527d",
+  "claim": "The frozen public average-cell SBML artifacts were independently executed in COPASI with reproducible, numerically converged trajectories and source-derived invariants.",
+  "computational_gates": [
+    {
+      "id": "source_identity",
+      "status": "PASS"
+    },
+    {
+      "id": "import_structure",
+      "status": "PASS"
+    },
+    {
+      "id": "complete_output",
+      "status": "PASS"
+    },
+    {
+      "id": "initial_state",
+      "status": "PASS"
+    },
+    {
+      "id": "deterministic_replay",
+      "status": "PASS"
+    },
+    {
+      "id": "numerical_convergence",
+      "status": "PASS"
+    },
+    {
+      "id": "conservation",
+      "status": "PASS"
+    },
+    {
+      "id": "nonnegativity",
+      "status": "PASS"
+    },
+    {
+      "id": "reporter_direction",
+      "status": "PASS"
+    },
+    {
+      "id": "publication_alignment",
+      "reason": "No rights-compatible machine-readable publication reference series is frozen.",
+      "status": "BLOCKED"
+    }
+  ],
+  "execution_protocol_sha256": "5dd09984d838c0a4237d9d100256a91a4e4db5f4473ac0601749db105912d5dd",
+  "limitations": [
+    "claiming quantitative reproduction of a published curve without a frozen numeric reference",
+    "claiming the wild-type average-cell artifact is the complete held-out population prediction",
+    "claiming biological qualification, normal endothelial behavior, organ realism, patient prediction, diagnosis, treatment response, safety, or clinical validity",
+    "changing parameters, initial values, units, solver settings, observables, tolerances, or failure rules after inspecting a trajectory without a versioned pre-outcome amendment"
+  ],
+  "m5_evidence_status": "software_test_surrogate",
+  "negative_controls_passed": 10,
+  "next_increment": "BCQ-1.4 typed MEHLISSA adapter",
+  "protocol_version": "1.1.0",
+  "qualification_increment": "BCQ-1.3",
+  "run_id": "20260906T071114Z-5dd09984d838",
+  "schema_version": "1.0.0",
+  "status": "PASS_WITH_BLOCKED_PUBLICATION_ALIGNMENT"
+}

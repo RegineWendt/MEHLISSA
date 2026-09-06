@@ -528,6 +528,9 @@ def execute(
     except FileExistsError as error:
         raise ReproductionError(f"result archive already exists: {run_dir}") from error
 
+    # Keep the base protocol at its originally frozen archive name and retain
+    # explicit lineage copies for readers applying amendment 1.
+    shutil.copyfile(PROTOCOL_PATH, run_dir / "protocol.json")
     shutil.copyfile(PROTOCOL_PATH, run_dir / "protocol-base-v1.json")
     shutil.copyfile(AMENDMENT_PATH, run_dir / "protocol-amendment-v1.1.json")
     source_audits: dict[str, Any] = {}

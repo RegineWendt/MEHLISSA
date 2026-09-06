@@ -5,7 +5,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # BCQ-1.2 Prospective No-Refit Reproduction Protocol
 
-## Decision and present result
+## Protocol decision
 
 BCQ-1.2 freezes the first execution protocol for the minimal Kallenberger 2014
 CD95L-CD95-caspase-8 model pair before a trajectory is generated. The
@@ -14,10 +14,12 @@ machine-readable authority is
 Its parent is the content-hashed
 [BCQ-1.1 selection](BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md).
 
-This increment is a protocol result, not a simulation result. No external SBML
-file is bundled in MEHLISSA, no model has been run, no parameter has been
-fitted, and M5 remains `software_test_surrogate`. BCQ-1.3 is the first
-execution increment.
+This increment was a protocol result, not a simulation result. At its freeze,
+no external SBML file was bundled in MEHLISSA, no model had been run, and no
+parameter had been fitted. The later
+[BCQ-1.3 result](BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md) preserves this protocol,
+its failed exact-zero replay outcome, and the committed prospective amendment.
+M5 remains `software_test_surrogate`.
 
 ## Question
 
@@ -217,12 +219,13 @@ choice. It must explain the reason, name the affected decision, and keep this
 version and every earlier result traceable. A post-outcome threshold relaxation
 cannot be represented as if it were this prospective protocol.
 
-## Next increment
+## Execution handoff
 
-BCQ-1.3 will acquire the two content-hashed CC0 artifacts in a controlled
-workspace, verify COPASI 4.46 Build 300, generate the six frozen runs, exercise
-the negative controls, and publish the complete pass/partial/blocked/fail
-archive. It will not yet add a MEHLISSA runtime adapter; that begins in BCQ-1.4.
+BCQ-1.3 acquired the two content-hashed CC0 artifacts in a controlled
+workspace, verified COPASI 4.46 Build 300, generated the six frozen runs,
+exercised the negative controls, and published the complete pass/partial/
+blocked/fail history. The external result does not add a MEHLISSA runtime
+adapter; that begins in BCQ-1.4.
 
 ## Sources
 

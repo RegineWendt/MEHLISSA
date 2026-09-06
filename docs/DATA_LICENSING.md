@@ -35,10 +35,12 @@ This authorization applies to the listed artifacts and does not automatically
 cover other CSV files, extensions, or publication PDFs in the repository. Their
 status remains documented in the [license and data inventory](m0/LICENSE_AND_DATA_INVENTORY.md).
 
-The [BCQ-1.1 biological cell-model screen](qualification/BCQ1_BIOLOGICAL_CELL_MODEL_SELECTION.md)
-has selected BioModels `BIOMD0000000523` and `BIOMD0000000524` for the next
-qualification protocol. Their encoded SBML model artifacts are CC0 1.0, but
-they are not yet bundled in this repository. That model licence does not cover
+The [BCQ-1 biological cell-model package](qualification/BCQ1_EXTERNAL_SOLVER_REPRODUCTION.md)
+uses BioModels `BIOMD0000000523` and `BIOMD0000000524`. Their encoded SBML
+model artifacts are CC0 1.0 and are not bundled in this repository. BCQ-1.3
+publishes only newly generated COPASI trajectories, logs, metrics, and reports
+under CC BY 4.0, with exact source and solver identities in the manifests. The
+model licence does not cover
 the associated AAAS article, figures, supplementary files, or experimental
 single-cell data. A later import must preserve the original CC0 notice,
 accession, source commit, file hash, and transformations and must not imply
