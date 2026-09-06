@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mehlissa.example/schemas/biological-cell-model-integration-protocol/1.0.0",
+  "title": "MEHLISSA BCQ-1.4 through BCQ-1.7 prospective qualification protocol",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "protocol", "parent_result", "implementation", "typed_mapping",
+    "execution", "cross_engine_acceptance", "structural_sensitivity",
+    "population_and_uncertainty", "review_and_claim_policy", "result_archive",
+    "negative_controls", "next_action"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "protocol": {"type": "object"},
+    "parent_result": {"type": "object"},
+    "implementation": {"type": "object"},
+    "typed_mapping": {"type": "object"},
+    "execution": {"type": "object"},
+    "cross_engine_acceptance": {"type": "object"},
+    "structural_sensitivity": {"type": "object"},
+    "population_and_uncertainty": {"type": "object"},
+    "review_and_claim_policy": {"type": "object"},
+    "result_archive": {"type": "object"},
+    "negative_controls": {"type": "array", "minItems": 12, "uniqueItems": true},
+    "next_action": {"type": "string", "minLength": 1}
+  }
+}

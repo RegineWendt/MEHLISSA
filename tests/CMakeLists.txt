@@ -165,6 +165,7 @@ if(MEHLISSA_ENABLE_CATCH2_TESTS)
             apoptosis_response_tests.cpp
             drug_delivery_tests.cpp
             intracellular_response_network_tests.cpp
+            qualified_cd95_apoptosis_model_tests.cpp
             receptor_ligand_tests.cpp
             stochastic_receptor_ligand_tests.cpp
             time_varying_receptor_ligand_tests.cpp

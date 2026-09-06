@@ -15,6 +15,7 @@ add_library(
     src/intracellular_response_network.cpp
     src/intracellular_response_profile.cpp
     src/receptor_ligand_profile.cpp
+    src/qualified_cd95_apoptosis_model.cpp
     src/stochastic_receptor_ligand_model.cpp
     src/stochastic_receptor_ligand_population.cpp
     src/stochastic_receptor_ligand_profile.cpp
@@ -35,3 +36,15 @@ target_link_libraries(
 )
 target_compile_definitions(mehlissa_cell_model PRIVATE JSONCONS_NO_DEPRECATED)
 mehlissa_configure_target(mehlissa_cell_model)
+
+if(BUILD_TESTING)
+    add_executable(
+        mehlissa_bcq1_qualification_runner
+        tools/bcq1_qualification_runner.cpp
+    )
+    target_link_libraries(
+        mehlissa_bcq1_qualification_runner
+        PRIVATE MEHLISSA::cell_model
+    )
+    mehlissa_configure_target(mehlissa_bcq1_qualification_runner)
+endif()
