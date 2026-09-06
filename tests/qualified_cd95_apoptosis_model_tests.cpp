@@ -91,7 +91,7 @@ TEST_CASE("The qualified CD95 adapter locks source identity and unresolved units
 TEST_CASE("The qualified CD95 mechanism preserves every source-derived invariant",
           "[m5][bcq][adapter][conservation]") {
     const cell::QualifiedCd95ApoptosisAdapter adapter;
-    for (const auto [source_case, fadd, p55, bid, nes, er, cd95] :
+    for (const auto& [source_case, fadd, p55, bid, nes, er, cd95] :
          {std::tuple{cell::KallenbergerCase::cd95_hela, 93.0, 155.0, 236.0, 973.0, 5178.0, 116.0},
           std::tuple{cell::KallenbergerCase::wild_type_hela, 90.0, 127.0, 224.0, 1909.0, 3316.0,
                      12.0}}) {
@@ -144,7 +144,7 @@ TEST_CASE("The MEHLISSA CD95 trajectories agree with the independent COPASI arch
     const auto archive =
         root / "results/bcq1/kallenberger-minimal/20260906T071228Z-5dd09984d838/trajectories";
     const cell::QualifiedCd95ApoptosisAdapter adapter;
-    for (const auto [source_case, file] :
+    for (const auto& [source_case, file] :
          {std::pair{cell::KallenbergerCase::cd95_hela, std::string{"BIOMD0000000523-primary.csv"}},
           std::pair{cell::KallenbergerCase::wild_type_hela,
                     std::string{"BIOMD0000000524-primary.csv"}}}) {
