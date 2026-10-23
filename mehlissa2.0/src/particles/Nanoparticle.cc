@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
- * Berlin [DEBUS] This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -35,16 +35,14 @@ Nanoparticle::~Nanoparticle() {}
 double Nanoparticle::GetDelay() { return m_delay; }
 
 void Nanoparticle::SetDelay(double value) {
-    if (value < 0)
-        value = 0;
+    if (value < 0) value = 0;
     m_delay = value;
 }
 
 double Nanoparticle::GetDetectionRadius() { return m_detectionRadius; }
 
 void Nanoparticle::SetDetectionRadius(double value) {
-    if (value < 0)
-        value = 0;
+    if (value < 0) value = 0;
     m_detectionRadius = value;
 }
 

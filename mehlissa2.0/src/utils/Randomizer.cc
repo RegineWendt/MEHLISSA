@@ -24,16 +24,32 @@ static unsigned int m_seed;
 static mt19937 rnd_stream;
 static uniform_real_distribution stream_bool;
 static uniform_real_distribution stream_0_1;
+static long m_configuredSeed = -1; // <0: fall back to isDeterministic flag
+static bool m_seeded = false;
+
+void Randomizer::SetSeed(long seed) {
+    m_configuredSeed = seed;
+    m_seeded = false;
+}
+
+unsigned int Randomizer::GetSeed() { return m_seed; }
 
 void Randomizer::InitRandomizer(bool isDeterministic) {
-    std::random_device rnd = std::random_device();
-    if (isDeterministic == true)
+    // Called from several places, seed only once so a run can be repeated from
+    // its recorded seed.
+    if (m_seeded)
+        return;
+    if (m_configuredSeed >= 0)
+        m_seed = static_cast<unsigned int>(m_configuredSeed);
+    else if (isDeterministic == true)
         m_seed = 1;
     else
-        m_seed = rnd();
-    mt19937 rnd_stream(m_seed);
-    uniform_real_distribution stream_bool(0.0, 1.0);
-    uniform_real_distribution stream_0_1(0.0, 1.0);
+        m_seed = std::random_device{}();
+    // Seed the static generator itself, not a local copy
+    rnd_stream.seed(m_seed);
+    stream_bool = uniform_real_distribution<double>(0.0, 1.0);
+    stream_0_1 = uniform_real_distribution<double>(0.0, 1.0);
+    m_seeded = true;
 }
 
 bool Randomizer::GetRandomBoolean() {

@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
- * Berlin [DEBUS] This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -56,16 +56,14 @@ void Particle::SetParticleID(int value) { m_nanobotID = value; }
 double Particle::GetLength() { return m_length; }
 
 void Particle::SetLength(double value) {
-    if (value < 0)
-        value = 0;
+    if (value < 0) value = 0;
     m_length = value;
 }
 
 double Particle::GetWidth() { return m_width; }
 
 void Particle::SetWidth(double value) {
-    if (value < 0)
-        value = 0;
+    if (value < 0) value = 0;
     m_width = value;
 }
 
@@ -79,9 +77,7 @@ void Particle::SetShouldChange(bool value) { m_shouldChange = value; }
 
 uint64_t Particle::GetTimeStepInSeconds() { return m_timeStep; }
 
-void Particle::SetTimeStep() {
-    m_timeStep = GlobalTimer::NowInSeconds();
-} // TODO
+void Particle::SetTimeStep() { m_timeStep = GlobalTimer::NowInSeconds(); } // TODO
 
 Position Particle::GetPosition() { return m_position; }
 
@@ -111,6 +107,9 @@ void Particle::GetsDetected() {}
 
 double Particle::GetDetectionRadius() { return 0; }
 
+int Particle::GetSubType() { return 0; }
+int Particle::GetState() { return 0; }
+
 void Particle::SetDetectionRadius(double value) {}
 
 bool Particle::CanAge() { return m_canAge; }
@@ -122,20 +121,19 @@ uint64_t Particle::GetAge() {
     return age;
 }
 
+uint64_t Particle::GetMaxAge() { return m_maxAge; }
+
 bool Particle::IsAlive() { return m_canAge ? m_ageCounter > 0 : true; }
 
 bool Particle::Age() {
-    if (!m_canAge)
-        return true;
+    if (!m_canAge) return true;
     m_ageCounter--;
     return m_ageCounter > 0;
 }
 
 bool Particle::Age(int secCount) {
-    if (m_mitosisTime > 0)
-        m_mitosisCounter -= secCount;
-    if (!m_canAge)
-        return true;
+    if (m_mitosisTime > 0) m_mitosisCounter -= secCount;
+    if (!m_canAge) return true;
     m_ageCounter -= secCount;
     return m_ageCounter > 0;
 }
@@ -147,8 +145,7 @@ bool Particle::WillPerformMitosis() {
 }
 
 void Particle::ResetMitosis() {
-    if (m_mitosisTime > 0)
-        m_mitosisCounter = m_mitosisTime;
+    if (m_mitosisTime > 0) m_mitosisCounter = m_mitosisTime;
     return;
 }
 } // namespace particles

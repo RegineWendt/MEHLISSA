@@ -34,11 +34,13 @@ class Printer {
 private:
     ofstream output;
     ofstream gwOutput;
-    int particlePrintMode;
+    int particlePrintMode; // default 0
+    int interval;          // printing interval [s]
 
 public:
-    Printer(int particleMode);
-    Printer(int particleMode, string simFile, string gwFile);
+    Printer(int particleMode = 0, int printInterval = 60);
+    Printer(string simFile, string gwFile, int particleMode = 0,
+            int printInterval = 60);
 
     ~Printer();
 
@@ -47,12 +49,15 @@ public:
 
     /// Prints transposed/translated nanobots in the BloodVessel to a csv file.
     void PrintParticles(list<shared_ptr<Particle>> nbl, int vesselID);
+    void PrintVessel(list<shared_ptr<Particle>> nbl, int vesselID);
 
-    void PrintGateway(int vesselID, int cancerCellNumber, int carTCellNumber);
+    /// Prints the given outputString in the gateway file
+    void PrintGateway(int vesselID, string outputString);
 
-    // Debug Function, currently not used
+    /// Debug function, currently not used
     void PrintInTerminal(vector<shared_ptr<Bloodstream>> streamsOfVessel,
                          int vesselIDl);
+    void CloseFile();
 };
 }; // namespace utils
 #endif

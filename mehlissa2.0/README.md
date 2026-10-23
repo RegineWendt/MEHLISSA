@@ -96,8 +96,45 @@ make clean all
 You can run MEHLISSA 2.0 from the command line in the mehlissa2.0 folder via:
 
 ```
-./bin/MehlissaCancer [command line arguments]
+./bin/Mehlissa [command line arguments]
 ```
+
+#### Command Line Arguments
+
+You can define the MEHLISSA simulation via the following command line parameters:
+
+      simulationStep (TYPE double, default_value 1)
+      simulationDuration (TYPE int, DEFAULT 10)
+      numOfParticles (TYPE int, DEFAULT 0)
+      numOfCollectors (TYPE int, DEFAULT 0)
+      numOfLocators (TYPE int, DEFAULT 0)
+      numCancerCells (TYPE int, DEFAULT 0)
+      numCarTCells (TYPE int, DEFAULT 0)
+      numTCells (TYPE int, DEFAULT 0)
+      particleMode (TYPE int, DEFAULT 0)
+      injectionVessel (TYPE int, DEFAULT 1)
+      injectionTime (TYPE double, DEFAULT 10)
+      detectionVessel (TYPE int, DEFAULT 23)
+      isDeterministic (TYPE bool, DEFAULT true)
+      parallel (TYPE int, DEFAULT 1)
+      log level (TYPE int, DEFAULT 2)
+      simFile (TYPE string, DEFAULT '../output/csvnano.csv')
+      gwFile (TYPE string, DEFAULT '../output/gwDetect.csv')
+      networkFile (TYPE string, DEFAULT '../data/95_vasculature.csv')
+      transitionsFile (TYPE string, DEFAULT '../data/95_transitions.csv')
+      fingerprintFile (TYPE string, DEFAULT '../data/95_fingerprints.csv')
+
+An example programm call would be:
+
+      ../bin/Mehlissa --simulationDuration=43200 --networkFile='../data/example_vasculature.csv'
+
+To display the help message run 
+
+      ../bin/Mehlissa --help
+
+#### Network Configuration
+
+The simulated vessel network is defined via the network file. A more detailad description of its structure is available [here](data/network_file_guidelines.md).
 
 ### Example: CAR-T Cell Treatment
 
@@ -152,7 +189,7 @@ You can run the CAR-T cell treatment simulation in MEHLISSA 2.0 from the src fol
 
 ```
 NUMOFNANOBOTS=0 INJECTVESSEL=68 DETECTVESSEL=29 NUMCANCERCELLS=300000 NUMCARTCELLS=2000 NUMTCELLS=300000 SIMDURATION=100 SIMSTEP=1 INJECTTIME=20 ISDETERMINISTIC=false PARALLELITY=1 SIMFILE="../output/csvNano_cancer001.csv" GWFILE="../output/gwNano_cancer001.csv" VASCFILE="../data/95_vasculature.csv" TRANSFILE="../data/95_transitions.csv" FINGERPRINTS="../data/95_fingerprints.csv"
-../bin/MehlissaCancer --simulationDuration=$SIMDURATION --simulationStep=$SIMSTEP --numCancerCells=$NUMCANCERCELLS --numCarTCells=$NUMCARTCELLS --numTCells=$NUMTCELLS --injectionTime=$INJECTTIME --injectionVessel=$INJECTVESSEL --detectionVessel=$DETECTVESSEL --isDeterministic=$ISDETERMINISTIC --simFile=$SIMFILE  --gwFile=$GWFILE --parallel=$PARALLELITY --networkFile=$VASCFILE --transitionsFile=$TRANSFILE --fingerprintFile=$FINGERPRINTS
+../bin/Mehlissa --simulationDuration=$SIMDURATION --simulationStep=$SIMSTEP --numCancerCells=$NUMCANCERCELLS --numCarTCells=$NUMCARTCELLS --numTCells=$NUMTCELLS --injectionTime=$INJECTTIME --injectionVessel=$INJECTVESSEL --detectionVessel=$DETECTVESSEL --isDeterministic=$ISDETERMINISTIC --simFile=$SIMFILE  --gwFile=$GWFILE --parallel=$PARALLELITY --networkFile=$VASCFILE --transitionsFile=$TRANSFILE --fingerprintFile=$FINGERPRINTS
 ```
 
 ## References

@@ -45,17 +45,18 @@ Simulator::~Simulator() {
 
 int Simulator::Simulate(uint64_t numberOfSeconds) {
     if (m_parallelity > 1)
-        cout << "No parallel execution implemented, yet! Simulating "
-                "sequentially."
-             << endl;
+        Logger::LogWarning(
+            "No parallel execution implemented, yet! Simulating sequentially.");
     SimulateSequential(numberOfSeconds);
+    m_circuit->ClosePrinter();
     return GlobalTimer::NowInSeconds();
 }
 
 int Simulator::SimulateSequential(uint64_t numberOfSeconds) {
+    Logger::LogInfo("Starting simulation");
     while (m_nextSteps.size() > 0 &&
            GlobalTimer::NowInSeconds() <= numberOfSeconds) {
-        cout << GlobalTimer::NowInSeconds() << "s" << endl;
+        Logger::LogDebug(to_string(GlobalTimer::NowInSeconds()) + "s");
         for (auto s : m_nextSteps)
             m_currentSteps.push_back(s);
         m_nextSteps.clear();
@@ -73,23 +74,21 @@ int Simulator::SimulateSequential(uint64_t numberOfSeconds) {
             if (bv->NeedsTransferStep())
                 m_transferStepsSafeAppendRange({bv});
         }
-        // cout << "do transfer" << endl;
         inbetween = clock();
 
         while (m_transferSteps.size() > 0) {
-            // cout << "t";
             shared_ptr<BloodVessel> ts = m_transferStepsSafePop();
-            // cout << ts->GetbloodvesselID() << endl;
             ts->PerformTransferStep();
         }
+        m_circuit->RunTransceivers(m_timeStep);
 
         finish = clock();
 
         m_circuit->PrintParticles();
-
-        // cout << "first part: " << (inbetween - start)/CLOCKS_PER_SEC
-        //      << "    second part: " << (finish - inbetween)/CLOCKS_PER_SEC
-        //      << endl;
+        Logger::LogDebug(string("first part: ") +
+                         to_string((inbetween - start) / CLOCKS_PER_SEC) +
+                         "    second part: " +
+                         to_string((finish - inbetween) / CLOCKS_PER_SEC) + "");
         GlobalTimer::IncreaseTimer(m_timeStep);
     }
     return GlobalTimer::NowInSeconds();

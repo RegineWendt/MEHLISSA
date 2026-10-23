@@ -60,8 +60,9 @@ shared_ptr<BloodVessel> BloodVessel::Step(uint64_t timeInS) {
 
     if (this->injection.m_injectionVessel > 0) {
         if (this->injection.m_injectionTime <= timeInS) {
-            cout << "Injecting CAR-T cells now" << endl;
-            cout << "Vessel ID: " << this->GetbloodvesselID() << endl;
+            Logger::LogInfo("Injecting CAR-T cells now\n");
+            Logger::LogInfo(string("Vessel ID: ") +
+                            to_string(this->GetbloodvesselID()) + "\n");
             this->PerformInjection();
             this->injection.m_injectionVessel = -1;
         }
@@ -153,16 +154,18 @@ bool BloodVessel::moveParticle(shared_ptr<Particle> nb, int i,
 }
 
 void BloodVessel::TranslatePosition(double dt) {
+    list<shared_ptr<Particle>> print;
     int numCarTCells = 0;
     int numCancerCells = 0;
     // perform interaction between CarTCells and Cancer Cells
     for (int i = 0; i < m_numberOfStreams; i++) {
-        for (unsigned int j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
+        for (uint j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
             shared_ptr<Particle> nb = m_bloodstreams[i]->GetParticle(j);
             if (nb->particleType == CarTCellType) {
-                // cout << "Found CarTCell" << endl;
+                Logger::LogTrace("Found CarTCell\n");
                 shared_ptr<Particle> nb = m_bloodstreams[i]->GetParticle(j);
                 if (!nb->IsAlive()) {
+                    Logger::LogTrace("unalive\n");
                     m_bloodstreams[i]->RemoveParticle(nb);
                     j = -1;
                     continue;
@@ -171,14 +174,14 @@ void BloodVessel::TranslatePosition(double dt) {
                 if (ctc == NULL)
                     continue;
                 for (int k = 0; k < m_numberOfStreams; k++) {
-                    for (unsigned int l = 0; l < m_bloodstreams[k]->CountParticles();
+                    for (uint l = 0; l < m_bloodstreams[k]->CountParticles();
                          l++) {
                         shared_ptr<Particle> nb2 =
                             m_bloodstreams[k]->GetParticle(l);
                         ctc->AddPossibleMitosis(nb2->particleType);
                         switch (nb2->particleType) {
                         case CancerCellType: {
-                            // cout << "Found CancerCell" << endl;
+                            Logger::LogTrace("Found CancerCell\n");
                             shared_ptr<CancerCell> cc =
                                 dynamic_pointer_cast<CancerCell>(nb2);
                             if (cc == NULL)
@@ -186,7 +189,7 @@ void BloodVessel::TranslatePosition(double dt) {
                             double dist = CalcDistance(nb, nb2);
                             if (dist <= nb2->GetDetectionRadius()) {
                                 if (ctc->KillCancerCell() == true) {
-                                    // cout << "Killing CancerCell" << endl;
+                                    Logger::LogTrace("Killing CancerCell\n");
                                     cc->GetsDetected();
                                     m_bloodstreams[k]->RemoveParticle(nb2);
                                     l -= 1;
@@ -195,7 +198,7 @@ void BloodVessel::TranslatePosition(double dt) {
                             break;
                         }
                         case TCellType: {
-                            // cout << "Found TCell" << endl;
+                            Logger::LogTrace("Found TCell\n");
                             shared_ptr<TCell> tc =
                                 dynamic_pointer_cast<TCell>(nb2);
                             if (tc == NULL)
@@ -203,7 +206,7 @@ void BloodVessel::TranslatePosition(double dt) {
                             double dist = CalcDistance(nb, nb2);
                             if (dist <= tc->GetDetectionRadius()) {
                                 if (ctc->KillTCell() == true) {
-                                    // cout << "Killing TCell" << endl;
+                                    Logger::LogTrace("Killing TCell\n");
                                     tc->GetsDetected();
                                     m_bloodstreams[k]->RemoveParticle(nb2);
                                     l -= 1;
@@ -212,7 +215,7 @@ void BloodVessel::TranslatePosition(double dt) {
                             break;
                         }
                         case CarTCellType: {
-                            // cout << "Found other CarTCell" << endl;
+                            Logger::LogTrace("Found other CarTCell\n");
                             shared_ptr<CarTCell> ctc2 =
                                 dynamic_pointer_cast<CarTCell>(nb2);
                             if (ctc2 == NULL)
@@ -220,7 +223,8 @@ void BloodVessel::TranslatePosition(double dt) {
                             double dist = CalcDistance(nb, nb2);
                             if (dist <= 0) {
                                 if (ctc->KillCarTCell() == true) {
-                                    // cout << "Killing other CarTCell" << endl;
+                                    Logger::LogTrace(
+                                        "Killing other CarTCell\n");
                                     m_bloodstreams[k]->RemoveParticle(nb2);
                                     l -= 1;
                                 }
@@ -239,7 +243,7 @@ void BloodVessel::TranslatePosition(double dt) {
     // for every stream of the vessel
     for (int i = 0; i < m_numberOfStreams; i++) {
         // for every nanobot of the stream
-        for (unsigned int j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
+        for (uint j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
             shared_ptr<Particle> nb = m_bloodstreams[i]->GetParticle(j);
             shared_ptr<CarTCell> ctc = dynamic_pointer_cast<CarTCell>(nb);
             if (nb->particleType == CarTCellType) {
@@ -261,21 +265,27 @@ void BloodVessel::TranslatePosition(double dt) {
                 // has nanobot reached end after moving
                 if (moveParticle(nb, i, Randomizer::GetRandomValue(0, 11),
                                  Randomizer::GetRandomBoolean(), dt)) {
+
                     reachedEndMap[i].push_back(nb);
                     m_bloodstreams[i]->RemoveParticle(nb);
+                    j = -1;
+                } else {
+                    print.push_back(nb);
                 }
             }
         }
     }
-    if (m_isGatewayVessel == true || m_bloodvesselID == 1)
-        printer->PrintGateway(m_bloodvesselID, numCancerCells, numCarTCells);
+    // printer->PrintParticles(print, this->GetbloodvesselID());
+    // if (m_isGatewayVessel == true || m_bloodvesselID == 1) // TODO: add
+    // somewhere else
+    //    printer->PrintGateway(m_bloodvesselID, numCancerCells, numCarTCells);
 }
 
 void BloodVessel::ChangeStream() {
     if (m_numberOfStreams > 1) {
         // set half of the nanobots randomly to change
         for (int i = 0; i < m_numberOfStreams; i++) {
-            for (unsigned int j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
+            for (uint j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
                 if (Randomizer::GetRandomBoolean())
                     m_bloodstreams[i]->GetParticle(j)->SetShouldChange(true);
             }
@@ -295,9 +305,9 @@ void BloodVessel::ChangeStream() {
 }
 
 void BloodVessel::DoChangeStreamIfPossible(int curStream, int desStream) {
-    list<shared_ptr<Particle>> canChange;
-    canChange.clear();
-    for (unsigned int j = 0; j < m_bloodstreams[curStream]->CountParticles(); j++) {
+    // list<shared_ptr<Particle>> canChange;
+    // canChange.clear();
+    for (uint j = 0; j < m_bloodstreams[curStream]->CountParticles(); j++) {
         if (m_bloodstreams[curStream]->GetParticle(j)->GetShouldChange()) {
             // set should change back to false
             m_bloodstreams[curStream]->GetParticle(j)->SetShouldChange(false);
@@ -347,17 +357,17 @@ void BloodVessel::PerformTransferStep() {
         }
         x.second.clear();
     }
-    reachedEndMap.clear();
 }
 
 void BloodVessel::TransferStep(list<shared_ptr<Particle>> reachedEnd,
                                int stream) {
+    list<shared_ptr<Particle>> print1;
+    list<shared_ptr<Particle>> print2;
     list<shared_ptr<Particle>> reachedEndAgain;
-
+    int other = 0;
     int onetwo = -1;
     for (const shared_ptr<Particle> &botToTranspose : reachedEnd) {
         onetwo = Randomizer::GetRandomValue(0, 100000);
-        // to v2
         if (m_nextBloodVessel2 != 0 && (onetwo >= m_transitionto1 * 100000)) {
             // fits next vessel?
             if (transposeParticle(botToTranspose, shared_from_this(),
@@ -365,9 +375,11 @@ void BloodVessel::TransferStep(list<shared_ptr<Particle>> reachedEnd,
                 reachedEndAgain.push_back(botToTranspose);
                 m_nextBloodVessel2->TransferStep(reachedEndAgain, stream);
                 reachedEndAgain.clear();
+                other = other + 1;
             } else {
                 m_nextBloodVessel2->m_bloodstreams[stream]->AddParticle(
                     botToTranspose);
+                print2.push_back(botToTranspose);
             }
         }
         // to v1
@@ -378,21 +390,24 @@ void BloodVessel::TransferStep(list<shared_ptr<Particle>> reachedEnd,
                 reachedEndAgain.push_back(botToTranspose);
                 m_nextBloodVessel1->TransferStep(reachedEndAgain, stream);
                 reachedEndAgain.clear();
+                other = other + 1;
             } else {
                 m_nextBloodVessel1->m_bloodstreams[stream]->AddParticle(
                     botToTranspose);
+                print1.push_back(botToTranspose);
             }
         } else {
-            cout << "ERROR! Did not transpose particle correctly" << endl;
+            Logger::LogError("ERROR! Did not transpose particle correctly\n");
         }
     }
 }
 
 list<shared_ptr<Particle>> BloodVessel::GetParticles() {
     list<shared_ptr<Particle>> bots;
-    for (unsigned int j = 0; j < m_bloodstreams.size(); j++) {
-        for (unsigned int i = 0; i < m_bloodstreams[j]->CountParticles(); i++)
+    for (uint j = 0; j < m_bloodstreams.size(); j++) {
+        for (uint i = 0; i < m_bloodstreams[j]->CountParticles(); i++) {
             bots.push_back(m_bloodstreams[j]->GetParticle(i));
+        }
     }
     return bots;
 }
@@ -408,8 +423,8 @@ void BloodVessel::CheckParticleInteractions() {
 
 // HELPER
 void BloodVessel::PrintParticlesOfVessel() {
-    for (unsigned int j = 0; j < m_bloodstreams.size(); j++) {
-        for (unsigned int i = 0; i < m_bloodstreams[j]->CountParticles(); i++)
+    for (uint j = 0; j < m_bloodstreams.size(); j++) {
+        for (uint i = 0; i < m_bloodstreams[j]->CountParticles(); i++)
             printer->PrintParticle(m_bloodstreams[j]->GetParticle(i),
                                    GetbloodvesselID());
     }
@@ -465,7 +480,7 @@ void BloodVessel::CountStepsAndAgeCells() {
         if (m_stepsPerSec < 0)
             secCount = m_deltaT;
         for (int i = 0; i < m_numberOfStreams; i++) {
-            for (unsigned int j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
+            for (uint j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
                 shared_ptr<Particle> nb = m_bloodstreams[i]->GetParticle(j);
                 if (nb->CanAge() && !nb->Age(secCount)) {
                     m_bloodstreams[i]->RemoveParticle(nb);
@@ -478,7 +493,7 @@ void BloodVessel::CountStepsAndAgeCells() {
 
 void BloodVessel::PerformCellMitosis() {
     for (int i = 0; i < m_numberOfStreams; i++) {
-        for (unsigned int j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
+        for (uint j = 0; j < m_bloodstreams[i]->CountParticles(); j++) {
             shared_ptr<Particle> nb = m_bloodstreams[i]->GetParticle(j);
             if (nb->WillPerformMitosis()) {
                 switch (nb->particleType) {
@@ -565,9 +580,11 @@ void BloodVessel::CheckCollect(list<shared_ptr<Particle>> nbToCheck) {
         // Bot is nanocollector
         if (bot->particleType == NanocollectorType) {
             if (bot->GetTargetOrgan() == m_bloodvesselID)
-                // std::cout << "Nanocollector: " << bot->GetParticleID() << "
-                // collects message " << bot->GetTargetOrgan() << std::endl;
-                bot->collectMessage();
+                Logger::LogDebug(string("Nanocollector: ") +
+                                 to_string(bot->GetParticleID()) +
+                                 "collects message " +
+                                 to_string(bot->GetTargetOrgan()) + "\n");
+            bot->collectMessage();
         }
     }
 }
@@ -683,9 +700,10 @@ void BloodVessel::CheckFingerprintRelease() {
         m_fingerPrintTimer -= m_deltaT;
         if (m_fingerPrintTimer <= 0) {
             m_hasActiveFingerprintMessage = true;
-            std::cout << "Timer expired! Fingerprint message received "
-                      << m_hasActiveFingerprintMessage
-                      << " in organ: " << m_bloodvesselID << std::endl;
+            Logger::LogInfo(
+                string("Timer expired! Fingerprint message received ") +
+                to_string(m_hasActiveFingerprintMessage) +
+                " in organ: " + to_string(m_bloodvesselID) + "\n");
         }
     }
 }

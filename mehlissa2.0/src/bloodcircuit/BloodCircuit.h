@@ -20,6 +20,10 @@
 #ifndef CLASS_BLOODCIRCUIT_
 #define CLASS_BLOODCIRCUIT_
 
+#include "../network/AdrenalGland.h"
+#include "../network/Hypothalamus.h"
+#include "../network/Pituitary.h"
+#include "../network/Transceiver.h"
 #include "../particles/CancerCell.h"
 #include "../particles/CarTCell.h"
 #include "../particles/Nanocollector.h"
@@ -38,10 +42,12 @@
 #include <random>
 #include <sstream>
 #include <stdexcept>
+// cout << "count" << endl;
 
 using namespace std;
 using namespace particles;
 using namespace utils;
+using namespace network;
 
 namespace bloodcircuit {
 /**
@@ -54,16 +60,21 @@ namespace bloodcircuit {
  */
 class BloodCircuit {
 private:
-    unsigned int valuesPerLine = 9;
+    unsigned int valuesPerLine = 17;
 
     unsigned int injectionVesselID = 1;
 
     // A map of m_bloodvesselId to BloodVessel.
     map<int, shared_ptr<BloodVessel>> m_bloodvessels;
+    map<int, shared_ptr<Transceiver>> m_transceivers;
 
     shared_ptr<Printer> printer;
 
     vector<int> m_fingerprint_organs;
+
+    int m_idHypothalamus;
+    int m_idPituitary;
+    int m_idAdrenalGland;
 
     // read in bloodcircuit data from the given file
     void ReadInBloodCircuit(string fileName);
@@ -71,6 +82,28 @@ private:
     // add a new vessel Object to the bloodcircuit
     void AddVesselData(int id, BloodVesselType type, Position start,
                        Position stop);
+
+    int AddHypothalamus(int id, int baseline, double detect_prob,
+                        double detect_dist, double f1, double f2);
+
+    int AddPituitary(int id, int baseline_type, double detect_prob,
+                     double detect_dist, double f1, double f2, double f3,
+                     string baseline_input);
+
+    int AddAdrenalGland(int id, int delay, double detect_prob,
+                        double detect_dist, int baseline, double f1);
+
+    void AddGateway(int id, int baseline, Position pos, double distance,
+                    double factor_g1, double factor_g2, double p_g1_detect,
+                    double p_s_detect_1, double p_s_detect_2,
+                    double initial_input_time, int type);
+
+    void AddSensor(int id, int delayType, Position pos, string sensorDelayInput,
+                   double distance, double factor, double offset, double phase,
+                   double amp, double alpha_step, double alpha_offset,
+                   double gamma_step, double gamma_offset, int type);
+
+    void BasicTransceiverSettings();
 
     // creates vessel objects from array
     void InitialiseBloodVessels(int vesseldata[][8], unsigned int count);
@@ -142,6 +175,12 @@ public:
     static string fingerprintFile;
 
     /// The constructor setting up the BloodCircuit.
+    BloodCircuit(shared_ptr<Printer> printer, unsigned int numberOfParticles,
+                 unsigned int numberOfCollectors, unsigned int numberOfLocators,
+                 unsigned int numberOfCancerCells,
+                 unsigned int numberOfCarTCells, unsigned int numberOfTCells,
+                 unsigned int injectionVessel, unsigned int detectionVessel,
+                 unsigned int injectionTime, unsigned int particleMode);
     BloodCircuit(unsigned int numberOfParticles,
                  unsigned int numberOfCollectors, unsigned int numberOfLocators,
                  unsigned int injectionVessel, shared_ptr<Printer> printer,
@@ -157,6 +196,15 @@ public:
     /// Destructor to clean up the map.
     ~BloodCircuit();
 
+    static shared_ptr<BloodCircuit> CreateBloodCircuit(
+        bool isDeterministic, unsigned int printMode,
+        unsigned int printInterval, string simFile, string gwFile,
+        unsigned int injectionTime, unsigned int injectionVessel,
+        unsigned int detectionVessel, unsigned int simulationDuration,
+        unsigned int numOfParticles, unsigned int numOfCollectors,
+        unsigned int numOfLocators, unsigned int numCancerCells,
+        unsigned int numCarTCells, unsigned int numTCells);
+
     static shared_ptr<BloodCircuit>
     BeginSimulation(unsigned int simulationDuration,
                     unsigned int numOfParticles, unsigned int injectionVessel,
@@ -170,9 +218,13 @@ public:
                      unsigned int detectionVessel, bool isDeterministic,
                      string simFile, string gwFile);
 
+    void PrintStatistics();
+
     void PrintParticles();
 
-    void PrintStatistics();
+    void ClosePrinter();
+
+    void ConnectTransceivers();
 
     static unsigned int GetNextParticleID();
 
@@ -185,6 +237,8 @@ public:
         transitionsFile = transitions;
         fingerprintFile = fingerprints;
     }
+
+    void RunTransceivers(int step);
 };
 }; // namespace bloodcircuit
 #endif

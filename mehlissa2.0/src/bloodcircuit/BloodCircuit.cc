@@ -32,7 +32,9 @@ string BloodCircuit::fingerprintFile;
 
 BloodCircuit::BloodCircuit(shared_ptr<Printer> printer) {
     m_bloodvessels = map<int, shared_ptr<BloodVessel>>();
+    m_transceivers = map<int, shared_ptr<Transceiver>>();
     this->printer = printer;
+    BasicTransceiverSettings();
     ReadInBloodCircuit(vasculatureFile);
     ConnectBloodVessels();
     SetTransitionProbabilities();
@@ -47,18 +49,18 @@ BloodCircuit::BloodCircuit(unsigned int numberOfCancerCells,
                            unsigned int injectionTime,
                            shared_ptr<Printer> printer) {
     m_bloodvessels = map<int, shared_ptr<BloodVessel>>();
+    m_transceivers = map<int, shared_ptr<Transceiver>>();
     this->printer = printer;
+    BasicTransceiverSettings();
     ReadInBloodCircuit(vasculatureFile);
     ConnectBloodVessels();
     SetTransitionProbabilities();
     SetFingerprintTimes();
-    cout << "detection Vessel: " << detectionVessel << endl;
     SetGatewayVessel(detectionVessel);
 
     injectionVesselID = injectionVessel < m_bloodvessels.size()
                             ? injectionVessel
                             : m_bloodvessels.size() - 1;
-    cout << "injection Vessel: " << injectionVesselID << endl;
     if (m_bloodvessels.size() > 1)
         InjectParticles(0, 0, 0, numberOfCancerCells, numberOfTCells,
                         m_bloodvessels[injectionVessel], 0);
@@ -74,11 +76,12 @@ BloodCircuit::BloodCircuit(unsigned int numberOfParticles,
                            unsigned int particleMode) {
     // initialise map with bloodvesselinformation
     m_bloodvessels = map<int, shared_ptr<BloodVessel>>();
+    m_transceivers = map<int, shared_ptr<Transceiver>>();
     this->printer = printer;
+    BasicTransceiverSettings();
     ReadInBloodCircuit(vasculatureFile);
     ConnectBloodVessels();
     SetTransitionProbabilities();
-    cout << "load CSV - transitions" << endl;
     SetFingerprintTimes();
 
     injectionVesselID = injectionVessel < m_bloodvessels.size()
@@ -87,6 +90,81 @@ BloodCircuit::BloodCircuit(unsigned int numberOfParticles,
     if (m_bloodvessels.size() > 1) {
         InjectParticles(numberOfParticles, numberOfCollectors, numberOfLocators,
                         0, 0, m_bloodvessels[injectionVesselID], particleMode);
+    }
+}
+
+BloodCircuit::BloodCircuit(
+    shared_ptr<Printer> printer, unsigned int numberOfParticles,
+    unsigned int numberOfCollectors, unsigned int numberOfLocators,
+    unsigned int numberOfCancerCells, unsigned int numberOfCarTCells,
+    unsigned int numberOfTCells, unsigned int injectionVessel,
+    unsigned int detectionVessel, unsigned int injectionTime,
+    unsigned int particleMode) {
+    // initialise map with bloodvesselinformation
+    m_bloodvessels = map<int, shared_ptr<BloodVessel>>();
+    m_transceivers = map<int, shared_ptr<Transceiver>>();
+    this->printer = printer;
+    BasicTransceiverSettings();
+    ReadInBloodCircuit(vasculatureFile);
+    ConnectBloodVessels();
+    SetTransitionProbabilities();
+    SetFingerprintTimes();
+    if (detectionVessel >= 0)
+        SetGatewayVessel(detectionVessel);
+
+    if (injectionVessel >= 0)
+        injectionVesselID = injectionVessel < m_bloodvessels.size()
+                                ? injectionVessel
+                                : m_bloodvessels.size() - 1;
+    bool must_inject = numberOfCancerCells + numberOfCarTCells +
+                           numberOfCollectors + numberOfLocators +
+                           numberOfParticles + numberOfParticles +
+                           numberOfTCells >
+                       0;
+    if (m_bloodvessels.size() > 1 && must_inject)
+        InjectParticles(numberOfParticles, numberOfCollectors, numberOfLocators,
+                        numberOfCancerCells, numberOfTCells,
+                        m_bloodvessels[injectionVesselID], particleMode);
+    if (numberOfCarTCells > 0)
+        AddCarTCellInjectionToVessel(numberOfCarTCells, injectionVessel,
+                                     injectionTime);
+}
+
+void BloodCircuit::BasicTransceiverSettings() {
+    m_idHypothalamus = -1;
+    m_idPituitary = -1;
+    m_idAdrenalGland = -1;
+}
+
+shared_ptr<BloodCircuit> BloodCircuit::CreateBloodCircuit(
+    bool isDeterministic, unsigned int printMode, unsigned int printInterval,
+    string simFile, string gwFile, unsigned int injectionTime,
+    unsigned int injectionVessel, unsigned int detectionVessel,
+    unsigned int simulationDuration, unsigned int numOfParticles,
+    unsigned int numOfCollectors, unsigned int numOfLocators,
+    unsigned int numCancerCells, unsigned int numCarTCells,
+    unsigned int numTCells) {
+    try {
+        Randomizer::InitRandomizer(isDeterministic);
+        IDCounter::InitIDCounter();
+        shared_ptr<Printer> printNano =
+            make_shared<Printer>(simFile, gwFile, printMode, printInterval);
+        shared_ptr<BloodCircuit> circuit = make_shared<BloodCircuit>(
+            printNano, numOfParticles, numOfCollectors, numOfLocators,
+            numCancerCells, numCarTCells, numTCells, injectionVessel,
+            detectionVessel, injectionTime, printMode);
+        map<int, shared_ptr<BloodVessel>> circuitMap =
+            circuit->GetBloodCircuit();
+        if (circuitMap.size() <= 1) {
+            Logger::LogWarning(
+                string("Not enough vessels for simulation! Please check ") +
+                circuit->vasculatureFile + "");
+            return nullptr;
+        }
+        return circuit;
+    } catch (const exception &e) {
+        Logger::LogError(string("Exception ") + e.what() + "");
+        return nullptr;
     }
 }
 
@@ -99,13 +177,14 @@ shared_ptr<BloodCircuit> BloodCircuit::BeginSimulation(
     shared_ptr<Printer> printNano = make_shared<Printer>(particleMode);
     // Create the bloodcircuit
     shared_ptr<BloodCircuit> circuit = make_shared<BloodCircuit>(
-        numOfParticles, numOfCollectors, numOfCollectors, injectionVessel,
-        printNano, particleMode);
+        printNano, numOfParticles, numOfCollectors, numOfLocators, 0, 0, 0,
+        injectionVessel, -1, -1, particleMode);
     // Get the map of the bloodcircuit
     map<int, shared_ptr<BloodVessel>> circuitMap = circuit->GetBloodCircuit();
     if (circuitMap.size() <= 1) {
-        cout << "Not enough vessels for simulation! Please check "
-             << circuit->vasculatureFile << endl;
+        Logger::LogWarning(
+            string("Not enough vessels for simulation! Please check ") +
+            circuit->vasculatureFile + "");
         return nullptr;
     }
     return circuit;
@@ -121,24 +200,25 @@ shared_ptr<BloodCircuit> BloodCircuit::CancerSimulation(
         Randomizer::InitRandomizer(isDeterministic);
         IDCounter::InitIDCounter();
         shared_ptr<Printer> printNano =
-            make_shared<Printer>(0, simFile, gwFile);
+            make_shared<Printer>(simFile, gwFile, 0);
 
         // setup bloodcircuit
         shared_ptr<BloodCircuit> circuit = make_shared<BloodCircuit>(
-            numCancerCells, numCarTCells, numTCells, injectionVessel,
-            detectionVessel, injectionTime, printNano);
+            printNano, 0, 0, 0, numCancerCells, numCarTCells, numTCells,
+            injectionVessel, detectionVessel, injectionTime, 0);
 
         map<int, shared_ptr<BloodVessel>> circuitMap =
             circuit->GetBloodCircuit();
 
         if (circuitMap.size() <= 1) {
-            cout << "Not enough vessels for simulation! Please check "
-                 << circuit->vasculatureFile << endl;
+            Logger::LogWarning(
+                string("Not enough vessels for simulation! Please check ") +
+                circuit->vasculatureFile + "");
             return nullptr;
         }
         return circuit;
     } catch (const exception &e) {
-        cout << "Exception " << e.what() << endl;
+        Logger::LogError(string("Exception ") + e.what() + "");
         return nullptr;
     }
 }
@@ -177,7 +257,7 @@ void BloodCircuit::InjectParticles(int numberOfParticles,
     if (numberOfNanolocators > numberOfParticles)
         throw runtime_error("Number of Nanolocators too high");
 
-    cout << "Starting first injections" << endl;
+    Logger::LogInfo("Starting first injections");
     int nanobotGroupSize = 1;
     shared_ptr<RandomStream> distribute_randomly =
         Randomizer::GetNewRandomStream(0, bloodvessel->GetNumberOfStreams());
@@ -194,7 +274,7 @@ void BloodCircuit::InjectParticles(int numberOfParticles,
 
     switch (particleMode) {
     case 1: // Particle mode LDL Cholesterol
-        cout << "---> Particles" << endl;
+        Logger::LogInfo("---> Particles");
         // release particles from the liver Organ 36
         for (int i = 1; i <= 100; ++i) {
             AddNanoparticle(36, 2.32, 0.2,
@@ -202,7 +282,7 @@ void BloodCircuit::InjectParticles(int numberOfParticles,
         }
         break;
     case 2: // Particle mode liquid biopsy breast
-        cout << "---> Particles" << endl;
+        Logger::LogInfo("---> Particles");
         // release particles from the breast Organ 24
         for (int i = 1; i <= 160000; ++i) {
             AddNanoparticle(24, 4.71, 0.01,
@@ -215,7 +295,7 @@ void BloodCircuit::InjectParticles(int numberOfParticles,
 
     // Distribute Nanocollectors at the beginning of the start vessel.
     if (numberOfNanocollectors > 0) {
-        cout << "---> Collectors" << endl;
+        Logger::LogInfo("---> Collectors");
         for (int i = 1; i <= numberOfNanocollectors; ++i)
             AddNanocollector(floor(distribute_randomly->GetValue()),
                              bloodvessel,
@@ -225,7 +305,7 @@ void BloodCircuit::InjectParticles(int numberOfParticles,
     }
     // Distribute Nanolocators at the beginning of the start vessel.
     if (numberOfNanolocators > 0) {
-        cout << "---> Locators" << endl;
+        Logger::LogInfo("---> Locators");
         for (int i = 1; i <= numberOfNanolocators; ++i)
             AddNanolocator(floor(distribute_randomly->GetValue()), bloodvessel,
                            Position(m_coordinateStart.x, m_coordinateStart.y,
@@ -234,7 +314,7 @@ void BloodCircuit::InjectParticles(int numberOfParticles,
     }
     // Distribute cancer cells uniformly
     if (numberOfCancerCells > 0) {
-        cout << "---> Cancer cells" << endl;
+        Logger::LogInfo("---> Cancer cells");
         int bloodcircuitSize = m_bloodvessels.size();
         for (int i = 1; i <= numberOfCancerCells; ++i) {
             unsigned int vesselID = (i % bloodcircuitSize) + 1;
@@ -243,7 +323,7 @@ void BloodCircuit::InjectParticles(int numberOfParticles,
     }
     // Distribute healthy T cells uniformly
     if (numberOfTCells > 0) {
-        cout << "---> T cells" << endl;
+        Logger::LogInfo("---> T cells");
         int bloodcircuitSize = m_bloodvessels.size();
         for (int i = 1; i <= numberOfTCells; ++i) {
             unsigned int vesselID = (i % bloodcircuitSize) + 1;
@@ -252,15 +332,16 @@ void BloodCircuit::InjectParticles(int numberOfParticles,
     }
     // Distribute Particles in groups over the beginning of the start
     // vessel.
-    if (numberOfParticles > 0)
-        cout << "---> Bots" << endl;
-    for (int i = 1; i <= numberOfParticles; ++i) {
-        group = (i - 1) / intervall;
-        AddParticle(
-            floor(distribute_randomly->GetValue()), bloodvessel,
-            Position(m_coordinateStart.x + (directionIntervall.x * group),
-                     m_coordinateStart.y + (directionIntervall.y * group),
-                     m_coordinateStart.z + (directionIntervall.z * group)));
+    if (numberOfParticles > 0) {
+        Logger::LogInfo("---> Bots");
+        for (int i = 1; i <= numberOfParticles; ++i) {
+            group = (i - 1) / intervall;
+            AddParticle(
+                floor(distribute_randomly->GetValue()), bloodvessel,
+                Position(m_coordinateStart.x + (directionIntervall.x * group),
+                         m_coordinateStart.y + (directionIntervall.y * group),
+                         m_coordinateStart.z + (directionIntervall.z * group)));
+        }
     }
     // Print Particles in csv-file.
     bloodvessel->PrintParticlesOfVessel();
@@ -348,9 +429,6 @@ void BloodCircuit::AddCarTCell(unsigned int vesselID, int streamID) {
 void BloodCircuit::AddCarTCellInjectionToVessel(unsigned int numberOfCarTCells,
                                                 unsigned int injectionVessel,
                                                 unsigned int injectionTime) {
-    cout << numberOfCarTCells << endl;
-    cout << injectionVessel << endl;
-    cout << injectionTime << endl;
     if (injectionVessel <= 0)
         throw runtime_error("Cannot inject CAR-T cells into vessel with "
                             "negative ID. Given ID: " +
@@ -389,40 +467,65 @@ double BloodCircuit::GetSpeedClassOfBloodVesselType(BloodVesselType type) {
 }
 
 void BloodCircuit::ReadInBloodCircuit(string fileName) {
-    cout << "Loading flow network from: " << fileName << endl;
+    Logger::LogInfo(string("Loading flow network from: ") + fileName);
     std::ifstream infile{fileName};
     if (infile.good()) {
         try {
-            std::vector<int> numbers;
+            std::vector<string> numbers;
             numbers.resize(valuesPerLine);
             std::string buffer;
             std::string line;
             int errorflag = 0;
             // while (infile.good()) {
             while (std::getline(infile, line)) {
-                // cout << line << endl;
                 std::stringstream lineStream(line);
                 for (auto &&elem : numbers) {
                     if (std::getline(lineStream, buffer, ',')) {
-                        elem = std::stoi(buffer);
+                        elem = buffer;
+                        // TODOD: check with Regine whether errorflag should be
+                        // reset ehr... she's the only one using this...
+                        // errorflag = 0;
                     } else {
-                        elem = 0;
+                        elem = "0";
                         errorflag = 1;
                     }
                 }
                 if (errorflag == 0) {
-                    if (numbers[1] < 3) {
+                    if (stoi(numbers[1]) < 3) {
                         AddVesselData(
-                            numbers[0], (BloodVesselType)numbers[1],
-                            Position(numbers[2], numbers[3], numbers[4]),
-                            Position(numbers[5], numbers[6], numbers[7]));
+                            stoi(numbers[0]), (BloodVesselType)stoi(numbers[1]),
+                            Position(stod(numbers[2]), stod(numbers[3]),
+                                     stod(numbers[4])),
+                            Position(stod(numbers[5]), stod(numbers[6]),
+                                     stod(numbers[7])));
+                    } else if (stoi(numbers[1]) == 100) {
+                        m_idHypothalamus =
+                            AddHypothalamus(stoi(numbers[0]), stoi(numbers[2]),
+                                            stod(numbers[3]), stod(numbers[4]),
+                                            stod(numbers[5]), stod(numbers[6]));
+                    } else if (stoi(numbers[1]) == 101) {
+                        m_idPituitary =
+                            AddPituitary(stoi(numbers[0]), stoi(numbers[2]),
+                                         stod(numbers[3]), stod(numbers[4]),
+                                         stod(numbers[5]), stod(numbers[6]),
+                                         stod(numbers[7]), numbers[8]);
+                    } else if (stoi(numbers[1]) == 102) {
+                        m_idAdrenalGland =
+                            AddAdrenalGland(stoi(numbers[0]), stoi(numbers[2]),
+                                            stod(numbers[3]), stod(numbers[4]),
+                                            stoi(numbers[5]), stod(numbers[6]));
+                    } else {
+                        throw runtime_error(
+                            "Encountered entry with unknown type ID: " + line);
                     }
                 }
+                ConnectTransceivers();
             }
-            cout << "bloodcircuit loaded from " << fileName << endl;
+            Logger::LogInfo(" ... done");
         } catch (const exception &e) {
-            cout << "Exception during bloodcircuit laoding procedure: "
-                 << e.what() << endl;
+            Logger::LogError(
+                string("Exception during bloodcircuit laoding procedure: ") +
+                e.what() + "");
         }
     } else { // Old way of loading data
         throw runtime_error("NO VALID CSV FILE FOUND! Please provide a valid "
@@ -443,11 +546,40 @@ void BloodCircuit::AddVesselData(int id, BloodVesselType type, Position start,
     vessel->InitBloodstreamLengthAngleAndVelocity(
         GetSpeedClassOfBloodVesselType(type));
     m_bloodvessels[id] = vessel;
-    cout << "New Vessel(" + to_string(id) + "," + to_string(type) + "," +
-                to_string(start.x) + "," + to_string(start.y) + "," +
-                to_string(start.z) + "," + to_string(stop.x) + "," +
-                to_string(stop.y) + "," + to_string(stop.z) + ")"
-         << endl;
+    Logger::LogDebug(string("New Vessel (") + to_string(id) + "," +
+                     to_string(type) + "," + to_string(start.x) + "," +
+                     to_string(start.y) + "," + to_string(start.z) + "," +
+                     to_string(stop.x) + "," + to_string(stop.y) + "," +
+                     to_string(stop.z) + ")");
+}
+
+int BloodCircuit::AddHypothalamus(int id, int baseline, double detect_prob,
+                                  double detect_dist, double f1, double f2) {
+    shared_ptr<Hypothalamus> hypo = make_shared<Hypothalamus>(
+        id, baseline, detect_prob, detect_dist, f1, f2);
+    m_transceivers[id] = hypo;
+    Logger::LogDebug("New Hypothalamus");
+    return id;
+}
+
+int BloodCircuit::AddPituitary(int id, int baseline_type, double detect_prob,
+                               double detect_dist, double f1, double f2,
+                               double f3, string baseline_input) {
+    shared_ptr<Pituitary> pitu =
+        make_shared<Pituitary>(id, baseline_type, detect_prob, detect_dist, f1,
+                               f2, f3, baseline_input);
+    m_transceivers[id] = pitu;
+    Logger::LogDebug("New Pituitary");
+    return id;
+}
+
+int BloodCircuit::AddAdrenalGland(int id, int delay, double detect_prob,
+                                  double detect_dist, int baseline, double f1) {
+    shared_ptr<AdrenalGland> adre = make_shared<AdrenalGland>(
+        id, delay, 1, detect_prob, detect_dist, baseline, f1);
+    m_transceivers[id] = adre;
+    Logger::LogDebug("New AdrenalGland");
+    return id;
 }
 
 void BloodCircuit::InitialiseBloodVessels(int vesseldata[][8],
@@ -459,12 +591,14 @@ void BloodCircuit::InitialiseBloodVessels(int vesseldata[][8],
             Position(vesseldata[i][5], vesseldata[i][6], vesseldata[i][7]));
 }
 
+void BloodCircuit::ClosePrinter() { printer->CloseFile(); }
+
 void BloodCircuit::ConnectBloodVessels() {
     unsigned int count = m_bloodvessels.size();
-    cout << count << endl;
+    unsigned int transceiverCount = m_transceivers.size();
     // Set Connections between bloodvessels if they have the same start/end
     // coordinates
-    cout << "connecting";
+    Logger::LogInfo("connecting");
     for (unsigned int i = 1; i < count + 1; i++) {
         unsigned int counter = 0;
         Position origin = m_bloodvessels[i]->GetStartPositionBloodVessel();
@@ -480,15 +614,49 @@ void BloodCircuit::ConnectBloodVessels() {
                     m_bloodvessels[i]->SetNextBloodVessel1(m_bloodvessels[j]);
                 else
                     m_bloodvessels[i]->SetNextBloodVessel2(m_bloodvessels[j]);
+                Logger::LogDebug(
+                    string("connected ") +
+                    to_string(m_bloodvessels[i]->GetbloodvesselID()) + " to " +
+                    to_string(m_bloodvessels[j]->GetbloodvesselID()) + "");
+            }
+        }
+        for (unsigned int k = 0; k < transceiverCount; ++k) {
+            if (m_transceivers[k]->GetVessel() == nullptr) {
+                Position pV =
+                    m_transceivers[k]->GetPosition(); // IDEA: add transceiver
+                                                      // to bloodvessel?
+                if ((origin.x <= pV.x && pV.x <= end.x ||
+                     end.x <= pV.x && pV.x <= origin.x) &&
+                    (origin.y <= pV.y && pV.y <= end.y ||
+                     end.y <= pV.y && pV.y <= origin.y) &&
+                    (origin.z <= pV.z && pV.z <= end.z ||
+                     end.z <= pV.z && pV.z <= origin.z)) {
+                    m_transceivers[k]->SetVessel(m_bloodvessels[i]);
+                }
             }
         }
     }
-    cout << " ... done" << endl;
+    Logger::LogInfo(" ... done");
+}
+
+void BloodCircuit::ConnectTransceivers() {
+    if (m_idHypothalamus >= 0 && m_idPituitary >= 0 && m_idAdrenalGland >= 0) {
+        shared_ptr<Hypothalamus> hypo = std::dynamic_pointer_cast<Hypothalamus>(
+            m_transceivers[m_idHypothalamus]);
+        shared_ptr<Pituitary> pitu =
+            std::dynamic_pointer_cast<Pituitary>(m_transceivers[m_idPituitary]);
+        shared_ptr<AdrenalGland> adre = std::dynamic_pointer_cast<AdrenalGland>(
+            m_transceivers[m_idAdrenalGland]);
+
+        adre->SetACTHOffset(pitu->GetBaseline());
+        pitu->SetCORTOffset(adre->GetBaseline());
+        hypo->SetCORTOffset(adre->GetBaseline());
+    }
 }
 
 void BloodCircuit::SetTransitionProbabilities() {
     std::ifstream infile{transitionsFile};
-    cout << "loading transitions";
+    Logger::LogInfo("loading transitions");
     if (infile.good()) {
         std::vector<double> numbers;
         numbers.resize(3);
@@ -509,16 +677,16 @@ void BloodCircuit::SetTransitionProbabilities() {
                 m_bloodvessels[numbers[0]]->SetTransition2(numbers[2]);
             }
         }
-        cout << " ... done" << endl;
+        Logger::LogInfo(" ... done");
     } else { // Old way of loading data
-        cout << " ... aborted" << endl;
-        cout << "NO VALID CSV FILE FOUND! " << endl;
-        cout << "Transitions set to 1 and 0" << endl;
+        Logger::LogError(" ... aborted\n"
+                         "NO VALID CSV FILE FOUND! \n"
+                         "Transitions set to 1 and 0");
     }
 }
 void BloodCircuit::SetFingerprintTimes() {
     std::ifstream infile{fingerprintFile};
-    cout << "loading fingerprint times";
+    Logger::LogInfo("loading fingerprint times");
     if (infile.good()) {
         std::vector<double> numbers;
         numbers.resize(2);
@@ -542,16 +710,27 @@ void BloodCircuit::SetFingerprintTimes() {
                 m_fingerprint_organs.push_back(numbers[0]);
             }
         }
-        cout << " ... done" << endl;
+        Logger::LogInfo(" ... done");
     } else { // Old way of loading data
-        cout << " ... aborted" << endl;
-        cout << "NO VALID CSV FILE FOUND! " << endl;
-        cout << "Fingerprint times not added" << endl;
+        Logger::LogError(" ... aborted\n"
+                         "NO VALID CSV FILE FOUND!\n"
+                         "Fingerprint times not added");
     }
 }
 
 void BloodCircuit::SetGatewayVessel(int detectionVesselID) {
     m_bloodvessels[detectionVesselID]->SetIsGatewayVessel(true);
+}
+
+void BloodCircuit::PrintStatistics() {
+    int cancerCells = 0;
+    int carTCells = 0;
+    for (int i = 0; i < m_bloodvessels.size(); i++) {
+        cancerCells += m_bloodvessels[i]->CountCancerCells();
+        carTCells += m_bloodvessels[i]->CountCarTCells();
+    }
+    Logger::LogInfo(string("Cancer Cells: ") + to_string(cancerCells) +
+                    ", CAR-T Cells: " + to_string(carTCells) + "");
 }
 
 void BloodCircuit::PrintParticles() {
@@ -564,18 +743,27 @@ void BloodCircuit::PrintParticles() {
     }
 }
 
-void BloodCircuit::PrintStatistics() {
-    int cancerCells = 0;
-    int carTCells = 0;
-    for (int i = 0; i < m_bloodvessels.size(); i++) {
-        cancerCells += m_bloodvessels[i]->CountCancerCells();
-        carTCells += m_bloodvessels[i]->CountCarTCells();
-    }
-    cout << "Cancer Cells: " << cancerCells << ", CAR-T Cells: " << carTCells
-         << endl;
-}
-
 unsigned int BloodCircuit::GetNextParticleID() {
     return IDCounter::GetNextParticleID();
+}
+
+void BloodCircuit::RunTransceivers(int step) {
+    ConnectTransceivers();
+    unsigned int transceiverCount = m_transceivers.size();
+    for (unsigned int k = 0; k < transceiverCount; ++k) {
+        shared_ptr<Transceiver> t = m_transceivers[k];
+        shared_ptr<BloodVessel> vessel = t->GetVessel();
+        Position p = t->GetPosition();
+        list<shared_ptr<Particle>> pList =
+            vessel->GetParticles(); // TODO: only get nanobots in range
+        std::vector<shared_ptr<Particle>> pVector{std::begin(pList),
+                                                  std::end(pList)};
+        pVector = t->DetectParticles(pVector);
+        if (pVector.size() > 0)
+            vessel->ExchangeParticles(pVector);
+        string out = t->GetGatewayOutput();
+        if (!out.empty())
+            printer->PrintGateway(t->GetTransceiverID(), out);
+    }
 }
 } // namespace bloodcircuit

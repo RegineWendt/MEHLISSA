@@ -20,6 +20,7 @@
 #ifndef H_RANDOMIZER_
 #define H_RANDOMIZER_
 
+#include "Logger.h"
 #include "RandomStream.h"
 #include <cstdint>
 #include <iostream>
@@ -32,6 +33,14 @@ namespace utils {
 class Randomizer {
 private:
 public:
+    /// Sets a fixed seed so that a run can be repeated exactly.
+    /// A negative value uses isDeterministic flag instead (1 if true, else
+    /// random). Has to be called before blood circuit is built.
+    static void SetSeed(long seed);
+
+    /// The seed in use, printed at the end of a run.
+    static unsigned int GetSeed();
+
     static void InitRandomizer(bool isDeterministic);
 
     // Will return either true or false randomly

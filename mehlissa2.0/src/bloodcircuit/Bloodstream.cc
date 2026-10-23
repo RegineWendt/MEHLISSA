@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
- * Berlin [DEBUS] This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -27,9 +27,9 @@ Bloodstream::~Bloodstream() {
     this->m_nanobots.erase(this->m_nanobots.begin(), this->m_nanobots.end());
 }
 
-void Bloodstream::initBloodstream(int vesselId, int streamId,
-                                  int velocityfactor, double offsetX,
+void Bloodstream::initBloodstream(int vesselId, int streamId, int velocityfactor, double offsetX,
                                   double offsetY, double angle) {
+    m_nanobots = {};
     m_bloodvesselID = vesselId;
     m_currentStream = streamId; // id of stream
     m_velocity_factor = velocityfactor;
@@ -48,8 +48,7 @@ int Bloodstream::CountCarTCells() {
     int carTCells = 0;
     list<shared_ptr<Particle>>::iterator bots = this->m_nanobots.begin();
     for (unsigned int i = 0; i < m_nanobots.size(); i++) {
-        if ((*bots)->particleType == CarTCellType)
-            carTCells += 1;
+        if ((*bots)->particleType == CarTCellType) carTCells += 1;
         advance(bots, 1);
     }
     return carTCells;
@@ -59,8 +58,7 @@ int Bloodstream::CountCancerCells() {
     int cancerCells = 0;
     list<shared_ptr<Particle>>::iterator bots = this->m_nanobots.begin();
     for (unsigned int i = 0; i < m_nanobots.size(); i++) {
-        if ((*bots)->particleType == CancerCellType)
-            cancerCells += 1;
+        if ((*bots)->particleType == CancerCellType) cancerCells += 1;
         advance(bots, 1);
     }
     return cancerCells;
@@ -109,9 +107,7 @@ void Bloodstream::SetAngle(double angle, double offsetX, double offsetY) {
     }
 }
 
-void Bloodstream::SortStream(void) {
-    m_nanobots.sort(particles::Particle::Compare);
-}
+void Bloodstream::SortStream(void) { m_nanobots.sort(particles::Particle::Compare); }
 
 bool Bloodstream::IsEmpty(void) { return m_nanobots.size() <= 0; }
 

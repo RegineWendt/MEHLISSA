@@ -31,6 +31,7 @@ CancerCell::CancerCell() {
     m_detectionRadius = 0.0000001;
     m_mitosisTime = 3456000;
     m_mitosisCounter = m_mitosisTime;
+    // m_canAge = false;
 }
 
 CancerCell::~CancerCell() {}

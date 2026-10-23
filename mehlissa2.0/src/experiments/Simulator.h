@@ -23,11 +23,13 @@
 #include "../bloodcircuit/BloodCircuit.h"
 #include "../bloodcircuit/BloodVessel.h"
 #include "../utils/GlobalTimer.h"
+#include "../utils/Logger.h"
 #include <fstream>
 #include <functional>
 #include <list>
 #include <memory>
 #include <mutex>
+#include <omp.h>
 #include <random>
 #include <stdexcept>
 

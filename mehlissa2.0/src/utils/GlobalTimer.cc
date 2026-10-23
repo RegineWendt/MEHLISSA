@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
- * Berlin [DEBUS] This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -22,13 +22,25 @@
 namespace utils {
 
 static uint64_t m_time; // in seconds, so basically unixtime as simulationtime
+static double m_last_step;
 
-GlobalTimer::GlobalTimer() {}
+GlobalTimer::GlobalTimer() {
+    m_last_step = 0;
+    m_time = 0;
+}
 GlobalTimer::~GlobalTimer() {}
 
-void GlobalTimer::ResetTimer() { m_time = 0; }
+void GlobalTimer::ResetTimer() {
+    m_last_step = 0;
+    m_time = 0;
+}
 
-void GlobalTimer::IncreaseTimer(double step) { m_time += (step * 1000); }
+void GlobalTimer::IncreaseTimer(double step) {
+    m_last_step = step;
+    m_time += (step * 1000);
+}
 
 double GlobalTimer::NowInSeconds() { return m_time / 1000; }
+
+double GlobalTimer::GetLastStep() { return m_last_step; }
 } // namespace utils

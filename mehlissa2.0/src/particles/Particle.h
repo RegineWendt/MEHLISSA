@@ -21,6 +21,7 @@
 #define CLASS_PARTICLE_
 
 #include "../utils/GlobalTimer.h"
+#include "../utils/Logger.h"
 #include "../utils/Position.h"
 #include <cstdint>
 #include <iostream>
@@ -51,7 +52,7 @@ enum ParticleType {
     CarTCellType,
     TCellType,
     ContainerParticleType,
-    SwitchableParticleType
+    HormoneType,
 };
 
 class Particle {
@@ -71,8 +72,8 @@ protected:
     uint64_t m_timeStep; // sim time of the last change of the nanobot
 
     bool m_willPerformMitosis; // set if cell will perform mitosis in next step
-    uint64_t m_mitosisTime;        // nanobot's time to mitosis
-    uint64_t m_mitosisCounter;     // counter for mitosis
+    uint64_t m_mitosisTime;    // nanobot's time to mitosis
+    uint64_t m_mitosisCounter; // counter for mitosis
 
 public:
     ParticleType particleType;
@@ -220,11 +221,15 @@ public:
 
     virtual void SetDetectionRadius(double value);
 
+    virtual int GetSubType();
+    virtual int GetState();
+
     bool CanAge();
 
     void SetCanAge(bool canAge);
 
     uint64_t GetAge();
+    uint64_t GetMaxAge();
 
     bool IsAlive();
 

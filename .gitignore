@@ -42,3 +42,7 @@ mehlissa2.0/src/Makefile
 mehlissa2.0/src/cmake_install.cmake
 mehlissa2.0/src/CMakeCache.txt
 
+# vscode project files
+mehlissa2.0/.vscode/
+mehlissa2.0/src/.vscode/
+

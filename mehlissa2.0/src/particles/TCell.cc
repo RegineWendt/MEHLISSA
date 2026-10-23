@@ -29,6 +29,7 @@ TCell::TCell() {
     m_delay = 1;
     m_got_detected = 0;
     m_detectionRadius = 0.0000001;
+    // m_canAge = false;
 }
 
 TCell::~TCell() {}

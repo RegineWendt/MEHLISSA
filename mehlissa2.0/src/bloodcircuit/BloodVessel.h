@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
- * Berlin [DEBUS] This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -29,6 +29,7 @@
 #include "../particles/TCell.h"
 #include "../utils/GlobalTimer.h"
 #include "../utils/IDCounter.h"
+#include "../utils/Logger.h"
 #include "../utils/Position.h"
 #include "../utils/Printer.h"
 #include "../utils/RandomStream.h"
@@ -39,41 +40,41 @@
 #include <memory>
 #include <random>
 
+
 using namespace std;
 using namespace utils;
 using namespace particles;
 
 namespace bloodcircuit {
 /**
- * \brief BloodVessel is the place holder of the Particle's and manages each
- * step of the Particle's mobility.
+ * \brief BloodVessel is the place holder of the Particle's and manages each step
+ * of the Particle's mobility.
  *
  * A BloodVessel has up to total 5 lists (maximum 5 streams). At each step
  * (interval dt), BloodVessel browses the nanobots of each stream in order of
- * their positions and moves each Particle. If the resulting position exceeds
- * the current bloodvessel the nanobot gets pushed to the next bloodvessel (and
- * so on). Particles are added to the BloodVessels in BloodCircuit.
+ * their positions and moves each Particle. If the resulting position exceeds the
+ * current bloodvessel the nanobot gets pushed to the next bloodvessel (and so
+ * on). Particles are added to the BloodVessels in BloodCircuit.
  */
 enum BloodVesselType { ARTERY, VEIN, ORGAN };
 class BloodVessel : public enable_shared_from_this<BloodVessel> {
 private:
     // bool m_start;
-    vector<shared_ptr<Bloodstream>>
-        m_bloodstreams;                    // list of nanobots in streams
-    int m_bloodvesselID;                   // unique ID, set in bloodcircuit
-    double m_bloodvesselLength;            // the length of the bloodvessel
-    double m_angle;                        // the angle of the bloodvessel
-    double m_basevelocity;                 // velocity of the bloodvessel
-    BloodVesselType m_bloodvesselType;     // type of the bloodvessel:
-                                           // 0=artery, 1=vein, 2=organ
-    Position m_startPositionBloodVessel;   // start-coordinates of the vessel
-    Position m_stopPositionBloodVessel;    // end-coordinates of the vessel
-    double m_vesselWidth;                  // the width of each stream in the
-                                           // bloodvessel
-    bool m_isGatewayVessel;                // vessel records measurements
-    CarTCell::CarTCellInjection injection; // notes whether additional
-                                           // CarTCells are injected into the
-                                           // vessel during the simulation
+    vector<shared_ptr<Bloodstream>> m_bloodstreams; // list of nanobots in streams
+    int m_bloodvesselID;                            // unique ID, set in bloodcircuit
+    double m_bloodvesselLength;                     // the length of the bloodvessel
+    double m_angle;                                 // the angle of the bloodvessel
+    double m_basevelocity;                          // velocity of the bloodvessel
+    BloodVesselType m_bloodvesselType;              // type of the bloodvessel:
+                                                    // 0=artery, 1=vein, 2=organ
+    Position m_startPositionBloodVessel;            // start-coordinates of the vessel
+    Position m_stopPositionBloodVessel;             // end-coordinates of the vessel
+    double m_vesselWidth;                           // the width of each stream in the
+                                                    // bloodvessel
+    bool m_isGatewayVessel;                         // vessel records measurements
+    CarTCell::CarTCellInjection injection;          // notes whether additional
+                                                    // CarTCells are injected into the
+                                                    // vessel during the simulation
 
     // Simulation time
     double m_deltaT;      // the mobility step interval
@@ -106,11 +107,10 @@ private:
                             // between streams
     // stream split according to power-law
     const int stream_definition[21][3] = {
-        {100, 0, 0},  {99, -1, 0},  {99, +1, 0},  {99, 0, -1},  {99, 0, +1},
-        {99, -1, -1}, {99, +1, +1}, {99, +1, -1}, {99, -1, +1}, {86, +2, 0},
-        {86, -2, 0},  {86, 0, +2},  {86, 0, -2},  {86, +2, -1}, {86, -2, +1},
-        {86, -1, +2}, {86, +1, -2}, {86, +2, +1}, {86, -2, -1}, {86, +1, +2},
-        {86, -1, -2}};
+        {100, 0, 0},  {99, -1, 0},  {99, +1, 0},  {99, 0, -1},  {99, 0, +1},  {99, -1, -1},
+        {99, +1, +1}, {99, +1, -1}, {99, -1, +1}, {86, +2, 0},  {86, -2, 0},  {86, 0, +2},
+        {86, 0, -2},  {86, +2, -1}, {86, -2, +1}, {86, -1, +2}, {86, +1, -2}, {86, +2, +1},
+        {86, -2, -1}, {86, +1, +2}, {86, -1, -2}};
     // stream split according to poiseuille
     // {100, 0, 0},  {96, -1, 0},  {96, +1, 0},  {96, 0, -1},  {96, 0, +1},
     // {96, -1, -1}, {96, +1, +1}, {96, +1, -1}, {96, -1, +1}, {60, +2, 0},
@@ -130,8 +130,8 @@ private:
     // string m_nbTraceFilename;
     shared_ptr<Printer> printer;
 
-    Position SetPosition(Position nbv, double distance, double angle,
-                         int bloodvesselType, double startPosZ);
+    Position SetPosition(Position nbv, double distance, double angle, int bloodvesselType,
+                         double startPosZ);
 
     // calculate Angle
     double CalcAngle();
@@ -174,8 +174,8 @@ private:
     /**
      * /return TRUE if position exceeds bloodvessel
      */
-    bool moveParticle(shared_ptr<Particle> nb, int i, int randVelocityOffset,
-                      bool direction, double dt);
+    bool moveParticle(shared_ptr<Particle> nb, int i, int randVelocityOffset, bool direction,
+                      double dt);
 
     /**
      * \returns true, if all streams of the bloodvessel are empty.
@@ -364,8 +364,7 @@ public:
 
     void ReleaseParticles();
 
-    void AddCarTCellInjection(int injectionTime, int injectionVessel,
-                              int numberOfCarTCells);
+    void AddCarTCellInjection(int injectionTime, int injectionVessel, int numberOfCarTCells);
 
     void ExchangeParticles(std::vector<shared_ptr<Particle>> newBots);
 };

@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
- * Berlin [DEBUS] This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -28,6 +28,7 @@
 #include <cmath>
 #include <memory>
 #include <mutex>
+#include <omp.h>
 
 using namespace std;
 using namespace particles;
@@ -65,8 +66,8 @@ public:
      * the base velocity \param offsetX: relative offsetcoordinates \param
      * offsetY: relative offsetcoordinates \param angle: angle of the stream
      */
-    void initBloodstream(int vesselId, int streamId, int velocityfactor,
-                         double offsetX, double offsetY, double angle);
+    void initBloodstream(int vesselId, int streamId, int velocityfactor, double offsetX,
+                         double offsetY, double angle);
 
     void ClearStream();
 
