@@ -116,6 +116,7 @@ You can define the MEHLISSA simulation via the following command line parameters
       injectionTime (TYPE double, DEFAULT 10)
       detectionVessel (TYPE int, DEFAULT 23)
       isDeterministic (TYPE bool, DEFAULT true)
+      seed (TYPE int, DEFAULT -1, explicitly set positive seed value overrides isDeterministic, negative value results in a random seed)
       parallel (TYPE int, DEFAULT 1)
       log level (TYPE int, DEFAULT 2)
       simFile (TYPE string, DEFAULT '../output/csvnano.csv')
