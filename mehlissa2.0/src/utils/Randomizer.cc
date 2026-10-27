@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität
- * Berlin [DEBUS] This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License version 2 as
+ * Copyright (c) 2025 Universität zu Lübeck [WENDT] and Technische Universität Berlin [DEBUS]
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
@@ -35,10 +35,8 @@ void Randomizer::SetSeed(long seed) {
 unsigned int Randomizer::GetSeed() { return m_seed; }
 
 void Randomizer::InitRandomizer(bool isDeterministic) {
-    // Called from several places, seed only once so a run can be repeated from
-    // its recorded seed.
-    if (m_seeded)
-        return;
+    // Called from several places, seed only once so a run can be repeated from its recorded seed.
+    if (m_seeded) return;
     if (m_configuredSeed >= 0)
         m_seed = static_cast<unsigned int>(m_configuredSeed);
     else if (isDeterministic == true)
@@ -70,16 +68,19 @@ double Randomizer::GetRandomValue(double min, double max) {
 }
 
 int Randomizer::GetRandomIntegerValue(int min, int max) {
+    // double value = stream_0_1(rnd_stream);
+    // if (value == 1) value = value - 0.01;
+    // value *= max + 1;
+    // value += min;
     double value = stream_0_1(rnd_stream);
-    if (value == 1)
-        value = value - 0.01;
-    value *= max + 1;
+    // Logger::LogDebug("Created random value: " + std::to_string(value));
+    value *= max - min;
     value += min;
+
     return std::floor(value);
 }
 
-shared_ptr<RandomStream> Randomizer::GetNewRandomStream(double min,
-                                                        double max) {
+shared_ptr<RandomStream> Randomizer::GetNewRandomStream(double min, double max) {
     shared_ptr<RandomStream> rs = make_shared<RandomStream>(m_seed, min, max);
     return rs;
 }
