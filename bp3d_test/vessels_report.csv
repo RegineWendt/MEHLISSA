@@ -1,0 +1,953 @@
+bp3d_file,klasse,name,x_cm,y_cm,z_cm,status
+FJ1654,artery,anterior cerebral artery | right anterior cerebral artery | artery | r,-1.8,31.1,-0.4,ok
+FJ1655,artery,branch of anterior cerebral artery | anterior communicating artery | a,-1.3,30.8,-0.6,ok
+FJ1656,artery,anterior inferior cerebellar artery | artery | region of vascular tree,-2.6,27.6,-4.1,ok
+FJ1657,artery,anterior spinal artery | right anterior spinal artery | artery | regio,-1.6,25.2,-4.9,ok
+FJ1658,artery,anterior choroidal artery | right anterior choroidal artery | artery |,-3.7,30.8,-2.5,ok
+FJ1659,artery,branch of middle cerebral artery | anterior temporal artery | right an,-7.1,31.4,-1.5,ok
+FJ1660,artery,zone of middle cerebral artery | insular part of middle cerebral arter,-5.2,32.0,-0.9,ok
+FJ1661,artery,branch of posterior cerebral artery | branch of lateral occipital arte,-4.7,29.4,-4.8,ok
+FJ1662,artery,branch of middle cerebral artery | anterolateral central branch of mid,-3.4,32.2,-1.6,ok
+FJ1663,artery,branch of middle cerebral artery | anterolateral central branch of mid,-2.8,31.4,-2.0,ok
+FJ1664,artery,branch of middle cerebral artery | superior terminal branch of middle ,-6.7,34.1,-2.9,ok
+FJ1665,artery,branch of middle cerebral artery | superior terminal branch of middle ,-7.1,35.6,-4.9,ok
+FJ1666,artery,branch of middle cerebral artery | superior terminal branch of middle ,-7.4,34.9,-5.6,ok
+FJ1667,artery,branch of middle cerebral artery | superior terminal branch of middle ,-7.3,35.9,-7.1,ok
+FJ1668,artery,branch of middle cerebral artery | superior terminal branch of middle ,-6.4,35.1,-2.0,ok
+FJ1669,artery,branch of middle cerebral artery | superior terminal branch of middle ,-6.6,33.7,-0.6,ok
+FJ1670,artery,branch of middle cerebral artery | superior terminal branch of middle ,-6.8,35.9,-1.7,ok
+FJ1671,artery,branch of anterior cerebral artery | branch of pericallosal artery | p,-1.4,35.9,-2.9,ok
+FJ1672,artery,basilar artery | artery | region of vascular tree organ | physical ana,-1.2,28.7,-2.6,ok
+FJ1673,artery,branch of middle cerebral artery | inferior terminal branch of middle ,-6.8,35.1,-9.2,ok
+FJ1674,artery,branch of anterior choroidal artery | branch of anterior choroidal art,-3.9,32.0,-3.8,ok
+FJ1675,artery,branch of posterior cerebral artery | thalamogeniculate artery | right,-2.9,30.8,-4.0,ok
+FJ1676,artery,branch of anterior cerebral artery | callosomarginal artery | right ca,-1.5,33.3,1.7,ok
+FJ1677,artery,branch of posterior cerebral artery | branch of medial occipital arter,-2.1,31.2,-5.8,ok
+FJ1678,artery,branch of posterior cerebral artery | branch of medial occipital arter,-1.5,32.7,-6.9,ok
+FJ1679,artery,branch of posterior communicating artery | hypothalamic branch of post,-1.8,30.5,-1.2,ok
+FJ1680,artery,branch of posterior cerebral artery | branch of lateral occipital arte,-3.0,30.0,-7.4,ok
+FJ1681,artery,branch of anterior cerebral artery | branch of callosomarginal artery ,-1.6,36.6,2.4,ok
+FJ1682,artery,internal carotid artery | right internal carotid artery | artery | reg,-3.5,25.9,-1.4,ok
+FJ1683,artery,branch of superior cerebellar artery | lateral superior cerebellar art,-3.9,29.3,-7.0,ok
+FJ1684,artery,branch of pontine artery | lateral branch of pontine artery | lateral ,-2.4,28.3,-2.9,ok
+FJ1685,artery,branch of middle cerebral artery | superior terminal branch of middle ,-5.2,32.8,0.9,ok
+FJ1686,artery,branch of middle cerebral artery | superior terminal branch of middle ,-6.3,32.6,1.4,ok
+FJ1687,artery,branch of posterior cerebral artery | lateral occipital artery | right,-1.8,31.0,-8.4,ok
+FJ1688,artery,branch of superior cerebellar artery | medial branch of superior cereb,-2.5,30.1,-5.9,ok
+FJ1689,artery,branch of pontine artery | medial branch of pontine artery | medial br,-1.7,29.0,-2.4,ok
+FJ1690,artery,branch of anterior cerebral artery | medial frontobasal artery | right,-1.6,31.2,2.2,ok
+FJ1691,artery,branch of posterior cerebral artery | medial occipital artery | right ,-1.8,32.6,-8.4,ok
+FJ1692,artery,zone of middle cerebral artery | sphenoid part of middle cerebral arte,-4.1,31.0,-0.8,ok
+FJ1693,artery,branch of middle cerebral artery | inferior terminal branch of middle ,-7.4,31.8,-4.6,ok
+FJ1694,artery,zone of middle cerebral artery | insular part of middle cerebral arter,-5.6,33.1,-3.4,ok
+FJ1695,artery,ophthalmic artery | right ophthalmic artery | artery | region of vascu,-2.4,30.7,1.6,ok
+FJ1696,artery,branch of anterior cerebral artery | branch of callosomarginal artery ,-1.6,37.1,-2.0,ok
+FJ1697,artery,branch of anterior cerebral artery | branch of callosomarginal artery ,-2.5,39.9,-4.1,ok
+FJ1698,artery,branch of anterior cerebral artery | branch of callosomarginal artery ,-1.3,37.7,-3.8,ok
+FJ1699,artery,branch of anterior cerebral artery | pericallosal artery | right peric,-1.5,34.3,-1.6,ok
+FJ1700,artery,posterior inferior cerebellar artery | right posterior inferior cerebe,-3.0,26.0,-7.3,ok
+FJ1701,artery,posterior inferior cerebellar artery | right posterior inferior cerebe,-3.3,26.7,-9.2,ok
+FJ1702,artery,posterior inferior cerebellar artery | right posterior inferior cerebe,-2.5,27.1,-9.6,ok
+FJ1703,artery,posterior inferior cerebellar artery | right posterior inferior cerebe,-2.3,27.5,-10.2,ok
+FJ1704,artery,posterior inferior cerebellar artery | right posterior inferior cerebe,-3.9,26.5,-6.4,ok
+FJ1705,artery,posterior inferior cerebellar artery | right posterior inferior cerebe,-4.1,26.6,-8.5,ok
+FJ1706,artery,posterior inferior cerebellar artery | right posterior inferior cerebe,-5.5,26.9,-7.1,ok
+FJ1707,artery,posterior inferior cerebellar artery | right posterior inferior cerebe,-2.5,26.3,-8.2,ok
+FJ1708,artery,posterior inferior cerebellar artery | right posterior inferior cerebe,-4.2,26.8,-5.8,ok
+FJ1709,artery,posterior inferior cerebellar artery | right posterior inferior cerebe,-6.1,27.7,-6.4,ok
+FJ1710,artery,posterior inferior cerebellar artery | right posterior inferior cerebe,-6.2,28.0,-8.3,ok
+FJ1711,artery,posterior inferior cerebellar artery | right posterior inferior cerebe,-2.4,26.4,-7.4,ok
+FJ1712,artery,branch of middle cerebral artery | polar temporal artery | right polar,-5.8,31.6,0.1,ok
+FJ1713,artery,posterior communicating artery | right posterior communicating artery ,-2.1,30.2,-1.4,ok
+FJ1714,artery,zone of posterior cerebral artery | postcommunicating part of posterio,-2.6,30.3,-3.6,ok
+FJ1715,artery,posterior inferior cerebellar artery | right posterior inferior cerebe,-3.8,26.6,-6.7,ok
+FJ1716,artery,branch of middle cerebral artery | superior terminal branch of middle ,-6.2,34.1,-6.4,ok
+FJ1717,artery,branch of middle cerebral artery | inferior terminal branch of middle ,-7.3,32.1,-7.2,ok
+FJ1718,artery,arterial trunk | systemic arterial trunk | region of vascular tree org,-6.1,32.4,-1.2,ok
+FJ1719,artery,anatomical set | physical anatomical entity | anatomical entity | set ,-3.6,30.0,-9.1,ok
+FJ1720,artery,branch of posterior cerebral artery | thalamoperforating artery | righ,-2.1,31.8,-5.2,ok
+FJ1721,artery,posteromedial central branch of posterior cerebral artery | posteromed,-3.1,30.3,-2.7,ok
+FJ1722,artery,branch of anterior cerebral artery | branch of callosomarginal artery ,-1.6,37.8,-0.2,ok
+FJ1723,artery,zone of posterior cerebral artery | precommunicating part of posterior,-1.5,30.3,-2.1,ok
+FJ1724,artery,branch of middle cerebral artery | superior terminal branch of middle ,-6.0,34.2,0.3,ok
+FJ1725,artery,vertebral artery | right vertebral artery | artery | region of vascula,-3.1,22.9,-4.4,ok
+FJ1726,artery,superior cerebellar artery | right superior cerebellar artery | artery,-2.5,29.6,-2.8,ok
+FJ1727,artery,branch of posterior cerebral artery | posterior medial choroidal arter,-1.7,32.9,-4.7,ok
+FJ1728,artery,branch of superior cerebellar artery | branch of medial branch of supe,-1.8,30.5,-6.6,ok
+FJ1729,artery,branch of middle cerebral artery | inferior terminal branch of middle ,-6.0,32.6,-8.1,ok
+FJ1844,artery,basilar artery | artery | region of vascular tree organ | physical ana,-1.3,28.7,-2.6,ok
+FJ1846,artery,artery | region of vascular tree organ | celiac artery | physical anat,-0.5,-14.6,0.0,ok
+FJ1853,vein,region of vascular tree organ | vein | hepatic portal vein | physical ,-2.6,-14.3,1.6,ok
+FJ1858,vein,hepatovenous subsector | hepatovenous segment ix | physical anatomical,-8.7,-10.3,-3.0,ok
+FJ1867,vein,tributary of middle hepatic vein | tributary of hepatic vein | region ,-7.4,-8.0,4.3,ok
+FJ1874,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,-3.5,-8.7,5.5,ok
+FJ1893,vein,left portal vein | region of vascular tree organ | vein | physical ana,1.0,-8.8,5.6,ok
+FJ1913,vein,right portal vein | region of vascular tree organ | vein | physical an,-8.0,-11.1,1.1,ok
+FJ1914,vein,region of vascular tree organ | vein | physical anatomical entity | an,-3.7,-11.4,1.5,ok
+FJ1916,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,-4.0,-11.8,1.6,ok
+FJ1924,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,-8.1,-10.1,-0.8,ok
+FJ1928,artery,superior mesenteric artery | artery | region of vascular tree organ | ,-2.6,-24.5,1.5,ok
+FJ1931,artery,segment of aorta | region of vascular tree organ | physical anatomical,0.5,-1.6,-4.6,ok
+FJ1932,artery,abdominal aorta | segment of aorta | region of vascular tree organ | p,-0.3,-18.1,-0.5,ok
+FJ1933,artery,artery | region of vascular tree organ | physical anatomical entity | ,-2.7,6.9,-3.3,ok
+FJ1934,artery,esophageal artery | artery | region of vascular tree organ | physical ,-1.7,-0.8,-4.3,ok
+FJ1935,artery,right superior intercostal artery | artery | region of vascular tree o,-6.1,11.7,-2.6,ok
+FJ1936,artery,right superior epigastric artery | superior epigastric artery | artery,-2.3,-13.2,7.9,ok
+FJ1937,artery,internal thoracic artery | right internal thoracic artery | artery | r,-3.3,3.6,4.0,ok
+FJ1938,artery,lateral thoracic artery | right lateral thoracic artery | artery | reg,-13.0,-0.1,0.7,ok
+FJ1939,artery,posterior intercostal artery | artery | region of vascular tree organ ,-6.5,8.9,-0.5,ok
+FJ1950,artery,second posterior intercostal artery | posterior intercostal artery | r,-7.9,7.3,-0.8,ok
+FJ1967,artery,subcostal artery | right subcostal artery | artery | region of vascula,-4.9,-17.1,-5.4,ok
+FJ1969,artery,musculophrenic artery | right musculophrenic artery | artery | region ,-7.4,-14.1,6.2,ok
+FJ1970,artery,left superior intercostal artery | artery | region of vascular tree or,3.7,11.7,-2.6,ok
+FJ1971,artery,left superior epigastric artery | superior epigastric artery | artery ,-0.1,-13.2,7.9,ok
+FJ1972,artery,internal thoracic artery | left internal thoracic artery | artery | re,1.0,3.7,3.9,ok
+FJ1973,artery,posterior intercostal artery | artery | region of vascular tree organ ,4.1,8.9,-0.5,ok
+FJ1974,artery,second posterior intercostal artery | left second posterior intercosta,5.6,7.3,-0.8,ok
+FJ1976,artery,lateral thoracic artery | left lateral thoracic artery | artery | regi,10.6,-0.1,0.7,ok
+FJ1977,artery,subcostal artery | left subcostal artery | artery | region of vascular,3.0,-17.2,-5.8,ok
+FJ1979,artery,left musculophrenic artery | musculophrenic artery | artery | region o,5.1,-14.1,6.2,ok
+FJ1981,vein,accessory hemiazygos vein | tributary of azygos vein | region of vascu,0.3,4.0,-4.5,ok
+FJ1985,vein,anatomical set | physical anatomical entity | anatomical entity | set ,6.8,-3.8,-2.6,ok
+FJ1986,vein,left superior intercostal vein | region of vascular tree organ | vein ,1.7,9.6,-6.7,ok
+FJ1987,vein,left subcostal vein | subcostal vein | region of vascular tree organ |,3.9,-17.6,-7.1,ok
+FJ1988,vein,musculophrenic vein | left musculophrenic vein | tributary of internal,4.8,-13.0,7.1,ok
+FJ1991,vein,right superior intercostal vein | tributary of azygos vein | region of,-3.7,8.4,-6.4,ok
+FJ1993,vein,internal thoracic vein | right internal thoracic vein | region of vasc,-2.7,3.3,4.5,ok
+FJ1994,vein,anatomical set | physical anatomical entity | anatomical entity | set ,-9.0,-3.9,-2.6,ok
+FJ1995,vein,right subcostal vein | subcostal vein | region of vascular tree organ ,-5.5,-17.2,-6.2,ok
+FJ1996,vein,musculophrenic vein | right musculophrenic vein | tributary of interna,-7.2,-12.9,7.1,ok
+FJ2011,artery,superior mesenteric artery | artery | region of vascular tree organ | ,-2.6,-24.5,1.5,ok
+FJ2013,artery,artery | region of vascular tree organ | celiac artery | physical anat,-0.5,-14.6,0.0,ok
+FJ2025,artery,branch of ileocolic artery | marginal colic artery | branch of inferio,0.9,-22.6,0.0,ok
+FJ2034,artery,ileal branch of inferior branch of ileocolic artery | branch of ileoco,-5.3,-28.3,0.9,ok
+FJ2038,artery,renal artery | right renal artery | artery | region of vascular tree o,-2.4,-19.3,-1.0,ok
+FJ2041,artery,right anterior segmental artery | segmental pulmonary artery | anterio,-8.1,-18.9,-3.8,ok
+FJ2042,artery,artery | region of vascular tree organ | physical anatomical entity | ,-7.4,-18.0,-4.0,ok
+FJ2043,artery,artery | region of vascular tree organ | physical anatomical entity | ,-8.3,-21.2,-3.0,ok
+FJ2044,artery,right anterior segmental artery | segmental pulmonary artery | anterio,-8.9,-20.4,-3.4,ok
+FJ2045,artery,artery | region of vascular tree organ | physical anatomical entity | ,-9.5,-22.0,-4.8,ok
+FJ2046,artery,renal artery | left renal artery | artery | region of vascular tree or,0.8,-18.8,-0.8,ok
+FJ2049,artery,artery | region of vascular tree organ | physical anatomical entity | ,5.2,-19.7,-3.1,ok
+FJ2052,artery,artery | region of vascular tree organ | physical anatomical entity | ,3.6,-16.6,-3.6,ok
+FJ2053,artery,artery | region of vascular tree organ | physical anatomical entity | ,4.6,-17.5,-5.0,ok
+FJ2054,artery,artery | region of vascular tree organ | physical anatomical entity | ,5.4,-19.4,-4.7,ok
+FJ2055,artery,segment of artery | dorsalis pedis artery | right dorsalis pedis arter,-9.3,-123.7,-0.4,ok
+FJ2056,vein,tributary of internal iliac vein | tributary of internal pudendal vein,-1.2,-45.9,2.7,ok
+FJ2057,artery,branch of lateral circumflex femoral artery | descending branch of lat,-12.2,-60.2,-2.1,ok
+FJ2058,artery,trunk of branch of external iliac artery | arterial trunk | branch of ,-13.1,-128.6,4.6,ok
+FJ2059,vein,dorsal venous arch of foot | dorsal venous arch of left foot | region ,10.1,-125.5,0.6,ok
+FJ2060,vein,dorsal venous arch of foot | dorsal venous arch of left foot | region ,8.5,-126.7,2.8,ok
+FJ2061,vein,dorsal venous arch of foot | dorsal venous arch of right foot | region,-12.5,-125.5,0.6,ok
+FJ2062,vein,dorsal venous arch of foot | dorsal venous arch of right foot | region,-10.8,-126.7,2.8,ok
+FJ2063,artery,branch of lateral circumflex femoral artery | descending branch of lat,9.8,-60.2,-2.1,ok
+FJ2064,artery,trunk of branch of external iliac artery | arterial trunk | branch of ,10.7,-128.6,4.6,ok
+FJ2065,artery,anterior tibial artery | left anterior tibial artery | artery | region,7.8,-105.6,-2.9,ok
+FJ2066,artery,anterior tibial recurrent artery | left anterior tibial recurrent arte,7.5,-85.8,-1.3,ok
+FJ2067,artery,arcuate artery | artery | region of vascular tree organ | physical ana,9.6,-125.5,0.2,ok
+FJ2068,artery,plantar arch | region of vascular tree organ | physical anatomical ent,8.3,-126.2,2.2,ok
+FJ2069,artery,descending genicular artery | left descending genicular artery | arter,3.4,-79.7,-1.7,ok
+FJ2072,artery,dorsal digital artery of foot | artery | region of vascular tree organ,12.2,-129.0,6.0,ok
+FJ2073,artery,segment of artery | dorsalis pedis artery | left dorsalis pedis artery,6.9,-123.7,-0.4,ok
+FJ2074,artery,artery | region of vascular tree organ | physical anatomical entity | ,3.6,-57.9,0.6,ok
+FJ2076,artery,inferior genicular artery | inferior lateral genicular artery | left i,8.8,-87.0,-5.1,ok
+FJ2077,artery,inferior genicular artery | inferior medial genicular artery | left in,4.8,-88.9,-4.4,ok
+FJ2078,artery,lateral circumflex femoral artery | left lateral circumflex femoral ar,7.9,-45.6,-2.9,ok
+FJ2079,artery,subdivision of posterior tibial artery | lateral plantar artery | left,7.9,-128.0,-2.5,ok
+FJ2080,artery,superior genicular artery | superior lateral genicular artery | left l,8.3,-81.6,-4.3,ok
+FJ2081,artery,lateral tarsal artery | artery | region of vascular tree organ | physi,8.4,-124.7,-2.2,ok
+FJ2082,artery,subdivision of posterior tibial artery | medial plantar artery | left ,6.0,-127.0,-1.3,ok
+FJ2083,artery,superior genicular artery | superior medial genicular artery | left me,3.6,-82.1,-3.8,ok
+FJ2084,artery,middle genicular artery | left middle genicular artery | artery | regi,6.5,-84.1,-6.2,ok
+FJ2085,artery,plantar arch | left plantar arch | region of vascular tree organ | phy,8.5,-127.6,0.4,ok
+FJ2086,artery,artery | region of vascular tree organ | physical anatomical entity | ,6.5,-84.2,-5.0,ok
+FJ2087,artery,posterior tibial artery | left posterior tibial artery | artery | regi,5.2,-108.8,-5.7,ok
+FJ2089,artery,trunk of branch of external iliac artery | arterial trunk | superficia,6.4,-127.9,3.4,ok
+FJ2091,artery,anatomical set | physical anatomical entity | anatomical entity | set ,9.4,-45.3,-2.5,ok
+FJ2096,artery,subdivision of posterior tibial artery | plantar metatarsal artery | a,10.1,-128.1,2.3,ok
+FJ2097,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,8.6,-87.7,-1.7,ok
+FJ2099,vein,tributary of femoral vein | region of vascular tree organ | vein | dee,5.2,-53.2,0.9,ok
+FJ2100,vein,anatomical set | physical anatomical entity | anatomical entity | set ,11.1,-128.3,4.4,ok
+FJ2102,vein,femoral vein | left femoral vein | region of vascular tree organ | vei,3.4,-58.3,0.4,ok
+FJ2103,vein,great saphenous vein | left great saphenous vein | tributary of femora,2.0,-81.1,-2.9,ok
+FJ2107,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,9.4,-86.6,-4.7,ok
+FJ2108,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,4.9,-90.0,-3.0,ok
+FJ2113,vein,tributary of plantar venous arch | region of vascular tree organ | vei,7.9,-128.4,-2.5,ok
+FJ2115,vein,tributary of plantar venous arch | region of vascular tree organ | vei,6.0,-127.5,-1.3,ok
+FJ2117,vein,tributary of femoral vein | tributary of deep femoral vein | popliteal,7.0,-81.9,-4.8,ok
+FJ2118,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,4.2,-108.6,-5.6,ok
+FJ2119,vein,anatomical set | physical anatomical entity | anatomical entity | set ,10.3,-127.5,2.5,ok
+FJ2120,vein,anatomical set | physical anatomical entity | anatomical entity | set ,11.2,-129.8,6.1,ok
+FJ2121,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,6.3,-102.7,-8.9,ok
+FJ2122,vein,tributary of great saphenous vein | superficial epigastric vein | trib,2.5,-37.7,5.4,ok
+FJ2124,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,8.6,-81.7,-4.1,ok
+FJ2125,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,4.0,-80.6,-3.4,ok
+FJ2128,vein,plantar venous arch of foot | plantar venous arch of left foot | regio,8.5,-128.0,0.4,ok
+FJ2129,vein,plantar venous arch of foot | plantar venous arch of right foot | regi,-10.9,-128.0,0.4,ok
+FJ2130,artery,anterior tibial artery | right anterior tibial artery | artery | regio,-10.1,-105.6,-2.9,ok
+FJ2131,artery,anterior tibial recurrent artery | right anterior tibial recurrent art,-9.9,-85.8,-1.3,ok
+FJ2132,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,-11.0,-87.7,-1.7,ok
+FJ2133,artery,arcuate artery | artery | region of vascular tree organ | physical ana,-11.9,-125.5,0.2,ok
+FJ2135,vein,tributary of femoral vein | region of vascular tree organ | vein | dee,-7.6,-53.2,0.9,ok
+FJ2136,artery,plantar arch | region of vascular tree organ | physical anatomical ent,-10.7,-126.2,2.2,ok
+FJ2137,artery,descending genicular artery | right descending genicular artery | arte,-5.8,-79.7,-1.7,ok
+FJ2138,vein,anatomical set | physical anatomical entity | anatomical entity | set ,-13.5,-128.3,4.4,ok
+FJ2141,artery,dorsal digital artery of foot | artery | region of vascular tree organ,-14.6,-129.0,6.0,ok
+FJ2143,artery,artery | region of vascular tree organ | physical anatomical entity | ,-6.0,-58.0,0.5,ok
+FJ2144,vein,femoral vein | right femoral vein | region of vascular tree organ | ve,-5.8,-58.3,0.4,ok
+FJ2145,vein,great saphenous vein | right great saphenous vein | tributary of femor,-4.4,-81.1,-2.9,ok
+FJ2150,artery,inferior genicular artery | inferior lateral genicular artery | right ,-11.2,-87.0,-5.1,ok
+FJ2151,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,-11.8,-86.6,-4.7,ok
+FJ2152,artery,inferior genicular artery | inferior medial genicular artery | right i,-7.1,-88.9,-4.4,ok
+FJ2153,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,-7.2,-90.0,-3.0,ok
+FJ2158,artery,lateral circumflex femoral artery | right lateral circumflex femoral a,-10.2,-45.7,-2.9,ok
+FJ2159,artery,subdivision of posterior tibial artery | lateral plantar artery | righ,-10.2,-128.0,-2.5,ok
+FJ2160,vein,tributary of plantar venous arch | region of vascular tree organ | vei,-10.3,-128.4,-2.5,ok
+FJ2162,artery,superior genicular artery | superior lateral genicular artery | right ,-10.7,-81.6,-4.3,ok
+FJ2163,artery,lateral tarsal artery | artery | region of vascular tree organ | physi,-10.8,-124.7,-2.2,ok
+FJ2164,artery,subdivision of posterior tibial artery | medial plantar artery | right,-8.4,-127.0,-1.3,ok
+FJ2165,vein,tributary of plantar venous arch | region of vascular tree organ | vei,-8.4,-127.5,-1.3,ok
+FJ2166,artery,superior genicular artery | superior medial genicular artery | right m,-6.0,-82.1,-3.8,ok
+FJ2167,artery,middle genicular artery | right middle genicular artery | artery | reg,-8.9,-84.1,-6.2,ok
+FJ2169,artery,plantar arch | right plantar arch | region of vascular tree organ | ph,-10.9,-127.6,0.4,ok
+FJ2170,artery,artery | region of vascular tree organ | physical anatomical entity | ,-8.9,-84.2,-5.0,ok
+FJ2171,vein,tributary of femoral vein | tributary of deep femoral vein | popliteal,-9.4,-81.9,-4.8,ok
+FJ2172,artery,posterior tibial artery | right posterior tibial artery | artery | reg,-7.5,-108.8,-5.7,ok
+FJ2173,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,-6.6,-108.6,-5.6,ok
+FJ2174,vein,anatomical set | physical anatomical entity | anatomical entity | set ,-12.7,-127.5,2.5,ok
+FJ2175,vein,anatomical set | physical anatomical entity | anatomical entity | set ,-13.6,-129.8,6.1,ok
+FJ2176,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,-8.7,-102.7,-8.9,ok
+FJ2178,vein,tributary of great saphenous vein | superficial epigastric vein | trib,-4.9,-37.7,5.4,ok
+FJ2179,artery,trunk of branch of external iliac artery | arterial trunk | superficia,-8.7,-127.9,3.4,ok
+FJ2181,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,-11.0,-81.7,-4.1,ok
+FJ2182,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,-6.4,-80.6,-3.4,ok
+FJ2183,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,8.5,-101.8,-3.6,ok
+FJ2184,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,4.2,-126.0,-7.1,ok
+FJ2185,vein,anatomical set | physical anatomical entity | anatomical entity | set ,12.1,-128.8,7.6,ok
+FJ2186,vein,tributary of venous anastomosis | dorsal metacarpal vein | venous trun,10.8,-126.8,3.8,ok
+FJ2187,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,6.5,-110.2,-6.7,ok
+FJ2188,vein,tributary of femoral vein | lateral circumflex femoral vein | left lat,9.0,-45.3,-1.6,ok
+FJ2189,vein,tributary of femoral vein | medial circumflex femoral vein | left medi,6.2,-46.2,-2.8,ok
+FJ2190,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,6.6,-59.2,0.2,ok
+FJ2191,vein,tributary of plantar venous arch | plantar metatarsal vein | region of,10.4,-128.8,3.0,ok
+FJ2192,vein,anatomical set | physical anatomical entity | anatomical entity | set ,-8.9,-59.2,0.2,ok
+FJ2193,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,-10.9,-101.8,-3.6,ok
+FJ2194,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,-6.6,-126.0,-7.1,ok
+FJ2195,artery,anatomical set | physical anatomical entity | anatomical entity | set ,-11.8,-45.3,-2.5,ok
+FJ2198,vein,anatomical set | physical anatomical entity | anatomical entity | set ,-14.5,-128.8,7.6,ok
+FJ2199,vein,tributary of venous anastomosis | dorsal metacarpal vein | venous trun,-13.2,-126.8,3.8,ok
+FJ2200,vein,tributary of femoral vein | tributary of deep femoral vein | tributary,-8.9,-110.2,-6.7,ok
+FJ2201,vein,tributary of femoral vein | lateral circumflex femoral vein | right la,-11.4,-45.3,-1.6,ok
+FJ2202,vein,tributary of femoral vein | medial circumflex femoral vein | right med,-8.6,-46.2,-2.8,ok
+FJ2206,artery,subdivision of posterior tibial artery | plantar metatarsal artery | a,-12.5,-128.1,2.3,ok
+FJ2207,vein,tributary of plantar venous arch | plantar metatarsal vein | region of,-12.8,-128.8,3.0,ok
+FJ2208,vein,tributary of great saphenous vein | tributary of superficial external ,-1.2,-46.7,5.5,ok
+FJ2209,artery,inferior thyroid artery | right inferior thyroid artery | artery | reg,-5.1,14.3,-1.7,ok
+FJ2210,artery,inferior thyroid artery | left inferior thyroid artery | artery | regi,2.7,14.3,-1.7,ok
+FJ2211,artery,acromial branch of thoraco-acromial artery | acromial branch of left t,10.1,9.4,-1.8,ok
+FJ2212,artery,anterior circumflex humeral artery | left anterior circumflex humeral ,15.6,6.2,-2.7,ok
+FJ2213,vein,tributary of subclavian vein | region of vascular tree organ | vein | ,15.7,6.5,-2.1,ok
+FJ2214,artery,branch of ulnar artery | branch of common interosseous artery | anteri,21.9,-29.2,-2.7,ok
+FJ2215,artery,branch of brachial artery | inferior ulnar collateral artery | left in,17.9,-17.1,-3.6,ok
+FJ2216,artery,segment of artery | axillary artery | left axillary artery | region of,10.9,7.8,-2.6,ok
+FJ2217,vein,axillary vein | left axillary vein | region of vascular tree organ | v,11.5,6.6,-1.5,ok
+FJ2218,vein,basilic vein | left basilic vein | tributary of subclavian vein | regi,17.3,-18.7,-3.6,ok
+FJ2219,artery,segment of artery | brachial artery | left brachial artery | region of,16.6,-7.0,-3.7,ok
+FJ2220,vein,cephalic vein | left cephalic vein | tributary of subclavian vein | re,20.3,-13.4,-1.7,ok
+FJ2221,artery,circumflex scapular artery | left circumflex scapular artery | artery ,12.9,5.7,-5.0,ok
+FJ2222,vein,tributary of subclavian vein | region of vascular tree organ | vein | ,13.2,6.1,-3.9,ok
+FJ2223,artery,branch of ulnar artery | common interosseous artery | left common inte,20.5,-23.3,-4.3,ok
+FJ2224,artery,left costocervical trunk | costocervical trunk | arterial trunk | syst,3.7,12.1,-2.2,ok
+FJ2225,artery,branch of brachial artery | deep brachial artery | left deep brachial ,17.7,-7.8,-5.7,ok
+FJ2226,artery,left deep cervical artery | deep cervical artery | artery | region of ,2.8,14.9,-4.9,ok
+FJ2227,artery,anastomosis | vascular anastomosis | arterial anastomosis | anatomical,24.6,-44.7,1.1,ok
+FJ2228,vein,anatomical set | physical anatomical entity | dorsal venous network of,24.6,-48.3,0.6,ok
+FJ2229,vein,anastomosis | vascular anastomosis | venous anastomosis | anatomical j,24.9,-44.1,1.2,ok
+FJ2230,artery,deltoid branch of thoraco-acromial artery | deltoid branch of left tho,12.2,8.5,-1.6,ok
+FJ2231,artery,branch of radial artery | dorsal carpal branch of radial artery | dors,25.8,-44.1,-0.4,ok
+FJ2232,artery,left dorsal scapular artery | artery | region of vascular tree organ |,6.0,7.4,-8.9,ok
+FJ2233,vein,tributary of subclavian vein | region of vascular tree organ | vein | ,11.7,0.1,1.3,ok
+FJ2234,vein,tributary of subclavian vein | median antebrachial vein | left median ,21.0,-29.9,-0.4,ok
+FJ2235,vein,tributary of subclavian vein | median cubital vein | left median cubit,19.2,-18.8,-3.0,ok
+FJ2236,artery,branch of ulnar artery | dorsal carpal branch of ulnar artery | left d,22.9,-43.8,0.0,ok
+FJ2237,artery,branch of arterial anastomosis | branch of deep palmar arterial arch |,25.0,-46.6,1.3,ok
+FJ2238,vein,palmar metacarpal vein | left palmar metacarpal vein | tributary of su,27.1,-46.9,1.5,ok
+FJ2239,artery,posterior circumflex humeral artery | left posterior circumflex humera,15.0,6.1,-4.6,ok
+FJ2240,artery,posterior circumflex humeral artery | left posterior circumflex humera,15.1,5.9,-4.2,ok
+FJ2241,artery,branch of ulnar artery | posterior ulnar recurrent artery | left poste,17.8,-20.1,-5.7,ok
+FJ2242,artery,radial artery | left radial artery | artery | region of vascular tree ,24.3,-31.2,-1.9,ok
+FJ2243,artery,branch of radial artery | radial recurrent artery | left radial recurr,22.5,-19.2,-4.7,ok
+FJ2244,vein,tributary of subclavian vein | tributary of brachial vein | radial vei,23.3,-29.3,-1.7,ok
+FJ2245,artery,branch of ulnar artery | branch of common interosseous artery | artery,21.3,-20.9,-5.6,ok
+FJ2246,artery,subscapular artery | left subscapular artery | artery | region of vasc,12.3,5.9,-2.9,ok
+FJ2247,vein,tributary of subclavian vein | subscapular vein | left subscapular vei,11.6,7.2,-1.5,ok
+FJ2248,artery,anastomosis | vascular anastomosis | arterial anastomosis | anatomical,24.5,-44.9,1.5,ok
+FJ2249,vein,anastomosis | vascular anastomosis | venous anastomosis | anatomical j,24.4,-44.7,1.3,ok
+FJ2250,vein,tributary of external jugular vein | suprascapular vein | tributary of,9.7,9.4,-4.4,ok
+FJ2251,artery,suprascapular artery | left suprascapular artery | artery | region of ,8.4,10.1,-4.4,ok
+FJ2252,artery,arterial trunk | systemic arterial trunk | region of vascular tree org,8.2,9.5,-1.8,ok
+FJ2253,artery,artery | region of vascular tree organ | physical anatomical entity | ,12.0,1.8,-4.2,ok
+FJ2254,vein,tributary of subclavian vein | region of vascular tree organ | vein | ,11.7,2.6,-1.1,ok
+FJ2255,artery,thyrocervical trunk | left thyrocervical trunk | arterial trunk | syst,2.9,12.5,-2.0,ok
+FJ2256,artery,superficial cervical artery | left superficial cervical artery | arter,4.3,15.1,-2.5,ok
+FJ2257,artery,transverse cervical artery | left transverse cervical artery | artery ,3.9,12.7,-2.0,ok
+FJ2258,artery,ulnar artery | left ulnar artery | artery | region of vascular tree or,21.0,-31.2,-1.5,ok
+FJ2259,artery,branch of ulnar artery | anterior ulnar recurrent artery | left anteri,19.2,-21.7,-4.3,ok
+FJ2260,vein,tributary of subclavian vein | tributary of brachial vein | ulnar vein,20.9,-30.3,-1.3,ok
+FJ2261,artery,branch of brachial artery | branch of deep brachial artery | radial co,20.5,-13.4,-6.5,ok
+FJ2262,artery,branch of brachial artery | branch of deep brachial artery | radial co,-22.9,-13.4,-6.5,ok
+FJ2263,artery,acromial branch of thoraco-acromial artery | acromial branch of right ,-12.5,9.4,-1.8,ok
+FJ2264,artery,anterior circumflex humeral artery | right anterior circumflex humeral,-18.0,6.2,-2.7,ok
+FJ2265,vein,tributary of subclavian vein | region of vascular tree organ | vein | ,-18.0,6.5,-2.1,ok
+FJ2266,artery,branch of ulnar artery | branch of common interosseous artery | anteri,-24.3,-29.2,-2.7,ok
+FJ2267,artery,branch of brachial artery | inferior ulnar collateral artery | right i,-20.3,-17.1,-3.6,ok
+FJ2268,artery,segment of artery | axillary artery | right axillary artery | region o,-13.3,7.8,-2.6,ok
+FJ2269,vein,axillary vein | right axillary vein | region of vascular tree organ | ,-13.9,6.6,-1.5,ok
+FJ2270,vein,basilic vein | right basilic vein | tributary of subclavian vein | reg,-19.6,-18.7,-3.6,ok
+FJ2271,artery,segment of artery | brachial artery | right brachial artery | region o,-18.9,-7.0,-3.7,ok
+FJ2272,vein,cephalic vein | right cephalic vein | tributary of subclavian vein | r,-22.7,-13.4,-1.7,ok
+FJ2273,artery,circumflex scapular artery | right circumflex scapular artery | artery,-15.3,5.7,-5.0,ok
+FJ2274,vein,tributary of subclavian vein | region of vascular tree organ | vein | ,-15.6,6.1,-3.9,ok
+FJ2275,artery,branch of ulnar artery | common interosseous artery | right common int,-22.9,-23.3,-4.3,ok
+FJ2276,artery,right costocervical trunk | costocervical trunk | arterial trunk | sys,-6.1,12.1,-2.2,ok
+FJ2277,artery,branch of brachial artery | deep brachial artery | right deep brachial,-20.1,-7.8,-5.7,ok
+FJ2278,artery,deep cervical artery | right deep cervical artery | artery | region of,-5.2,14.9,-4.9,ok
+FJ2279,artery,anastomosis | vascular anastomosis | arterial anastomosis | anatomical,-27.0,-44.7,1.1,ok
+FJ2280,vein,anatomical set | physical anatomical entity | dorsal venous network of,-27.0,-48.3,0.6,ok
+FJ2281,vein,anastomosis | vascular anastomosis | venous anastomosis | anatomical j,-27.3,-44.1,1.2,ok
+FJ2282,artery,deltoid branch of thoraco-acromial artery | deltoid branch of right th,-14.6,8.5,-1.6,ok
+FJ2283,artery,branch of radial artery | dorsal carpal branch of radial artery | dors,-28.2,-44.1,-0.4,ok
+FJ2284,artery,right dorsal scapular artery | artery | region of vascular tree organ ,-8.3,7.4,-8.9,ok
+FJ2285,vein,tributary of subclavian vein | region of vascular tree organ | vein | ,-14.1,0.1,1.3,ok
+FJ2286,vein,tributary of subclavian vein | median antebrachial vein | right median,-23.4,-29.9,-0.4,ok
+FJ2287,vein,tributary of subclavian vein | median cubital vein | right median cubi,-21.6,-18.8,-3.0,ok
+FJ2288,artery,branch of ulnar artery | dorsal carpal branch of ulnar artery | right ,-25.3,-43.8,0.0,ok
+FJ2289,artery,branch of arterial anastomosis | branch of deep palmar arterial arch |,-27.4,-46.6,1.3,ok
+FJ2290,vein,palmar metacarpal vein | right palmar metacarpal vein | tributary of s,-29.5,-46.9,1.5,ok
+FJ2291,artery,posterior circumflex humeral artery | right posterior circumflex humer,-17.4,6.1,-4.6,ok
+FJ2292,artery,posterior circumflex humeral artery | right posterior circumflex humer,-17.5,5.9,-4.2,ok
+FJ2293,artery,branch of ulnar artery | posterior ulnar recurrent artery | right post,-20.2,-20.1,-5.7,ok
+FJ2294,artery,radial artery | right radial artery | artery | region of vascular tree,-26.7,-31.2,-1.9,ok
+FJ2295,artery,branch of radial artery | radial recurrent artery | right radial recur,-24.8,-19.2,-4.7,ok
+FJ2296,vein,tributary of subclavian vein | tributary of brachial vein | radial vei,-25.7,-29.3,-1.7,ok
+FJ2297,artery,branch of ulnar artery | branch of common interosseous artery | artery,-23.7,-20.9,-5.6,ok
+FJ2298,artery,subscapular artery | right subscapular artery | artery | region of vas,-14.7,5.9,-2.9,ok
+FJ2299,vein,tributary of subclavian vein | subscapular vein | right subscapular ve,-14.0,7.2,-1.5,ok
+FJ2300,artery,anastomosis | vascular anastomosis | arterial anastomosis | anatomical,-26.8,-44.9,1.5,ok
+FJ2301,vein,anastomosis | vascular anastomosis | venous anastomosis | anatomical j,-26.8,-44.7,1.3,ok
+FJ2302,vein,tributary of external jugular vein | suprascapular vein | tributary of,-12.1,9.4,-4.4,ok
+FJ2303,artery,suprascapular artery | right suprascapular artery | artery | region of,-10.8,10.1,-4.4,ok
+FJ2304,artery,arterial trunk | systemic arterial trunk | region of vascular tree org,-10.6,9.5,-1.8,ok
+FJ2305,artery,artery | region of vascular tree organ | physical anatomical entity | ,-14.4,1.8,-4.2,ok
+FJ2306,vein,tributary of subclavian vein | region of vascular tree organ | vein | ,-14.0,2.6,-1.1,ok
+FJ2307,artery,thyrocervical trunk | right thyrocervical trunk | arterial trunk | sys,-5.3,12.5,-2.0,ok
+FJ2308,artery,superficial cervical artery | right superficial cervical artery | arte,-6.7,15.1,-2.5,ok
+FJ2309,artery,transverse cervical artery | right transverse cervical artery | artery,-6.3,12.7,-2.0,ok
+FJ2310,artery,ulnar artery | right ulnar artery | artery | region of vascular tree o,-23.4,-31.2,-1.5,ok
+FJ2311,artery,branch of ulnar artery | anterior ulnar recurrent artery | right anter,-21.6,-21.7,-4.3,ok
+FJ2312,vein,tributary of subclavian vein | tributary of brachial vein | ulnar vein,-23.3,-30.3,-1.3,ok
+FJ2313,vein,tributary of subclavian vein | brachial vein | left medial brachial ve,17.0,-9.2,-2.9,ok
+FJ2314,artery,branch of radial artery | arteria radialis indicis | left arteria radi,27.2,-48.1,2.2,ok
+FJ2315,artery,branch of arterial anastomosis | branch of superficial palmar arterial,26.0,-48.5,2.1,ok
+FJ2316,artery,branch of arterial anastomosis | branch of superficial palmar arterial,24.4,-48.7,1.9,ok
+FJ2317,artery,branch of arterial anastomosis | branch of superficial palmar arterial,23.0,-48.1,2.3,ok
+FJ2319,vein,tributary of venous anastomosis | tributary of superficial palmar veno,25.3,-48.4,1.8,ok
+FJ2320,vein,palmar metacarpal vein | left palmar metacarpal vein | tributary of su,28.4,-44.5,2.8,ok
+FJ2321,vein,tributary of venous anastomosis | tributary of superficial palmar veno,21.3,-50.0,2.9,ok
+FJ2322,vein,tributary of venous anastomosis | tributary of superficial palmar veno,24.6,-50.4,2.5,ok
+FJ2323,vein,palmar metacarpal vein | left palmar metacarpal vein | tributary of su,28.8,-47.7,3.0,ok
+FJ2324,vein,tributary of venous anastomosis | tributary of superficial palmar veno,29.1,-53.6,3.6,ok
+FJ2325,vein,tributary of venous anastomosis | tributary of superficial palmar veno,27.7,-53.5,3.4,ok
+FJ2326,vein,tributary of venous anastomosis | tributary of superficial palmar veno,26.6,-53.8,4.1,ok
+FJ2327,vein,tributary of venous anastomosis | tributary of superficial palmar veno,24.3,-53.5,3.9,ok
+FJ2328,vein,tributary of venous anastomosis | tributary of superficial palmar veno,23.1,-52.9,4.0,ok
+FJ2329,vein,tributary of venous anastomosis | tributary of superficial palmar veno,22.0,-52.2,3.8,ok
+FJ2330,artery,pectoral branch of thoraco-acromial artery | pectoral branch of left t,9.5,4.6,0.4,ok
+FJ2331,artery,branch of brachial artery | branch of deep brachial artery | medial co,20.0,-14.8,-6.4,ok
+FJ2332,artery,branch of radial artery | arteria radialis indicis | left arteria radi,29.1,-53.1,3.5,ok
+FJ2333,artery,branch of arterial anastomosis | branch of superficial palmar arterial,27.5,-53.0,3.2,ok
+FJ2334,artery,branch of arterial anastomosis | branch of superficial palmar arterial,26.6,-53.2,4.1,ok
+FJ2335,artery,branch of arterial anastomosis | branch of superficial palmar arterial,24.4,-52.9,4.0,ok
+FJ2336,artery,branch of arterial anastomosis | branch of superficial palmar arterial,22.1,-51.8,4.0,ok
+FJ2337,artery,branch of arterial anastomosis | branch of superficial palmar arterial,21.4,-49.8,3.3,ok
+FJ2338,artery,branch of radial artery | arteria princeps pollicis | left arteria pri,28.5,-44.8,2.8,ok
+FJ2339,artery,branch of radial artery | arteria princeps pollicis | left arteria pri,28.7,-47.5,2.8,ok
+FJ2340,vein,tributary of venous anastomosis | tributary of superficial palmar veno,25.3,-54.0,4.0,ok
+FJ2341,vein,tributary of subclavian vein | brachial vein | right medial brachial v,-19.4,-9.2,-2.9,ok
+FJ2342,artery,branch of radial artery | arteria radialis indicis | right arteria rad,-29.6,-48.1,2.2,ok
+FJ2343,artery,branch of arterial anastomosis | branch of superficial palmar arterial,-28.4,-48.5,2.1,ok
+FJ2344,artery,branch of arterial anastomosis | branch of superficial palmar arterial,-26.8,-48.7,1.9,ok
+FJ2345,artery,branch of arterial anastomosis | branch of superficial palmar arterial,-25.3,-48.1,2.3,ok
+FJ2349,vein,tributary of venous anastomosis | tributary of superficial palmar veno,-27.7,-48.4,1.8,ok
+FJ2350,vein,palmar metacarpal vein | right palmar metacarpal vein | tributary of s,-30.8,-44.5,2.8,ok
+FJ2351,vein,tributary of venous anastomosis | tributary of superficial palmar veno,-23.7,-50.0,2.9,ok
+FJ2352,vein,tributary of venous anastomosis | tributary of superficial palmar veno,-27.0,-50.4,2.5,ok
+FJ2353,vein,palmar metacarpal vein | right palmar metacarpal vein | tributary of s,-31.2,-47.7,3.0,ok
+FJ2354,vein,tributary of venous anastomosis | tributary of superficial palmar veno,-31.5,-53.6,3.6,ok
+FJ2355,vein,tributary of venous anastomosis | tributary of superficial palmar veno,-30.1,-53.5,3.4,ok
+FJ2356,vein,tributary of venous anastomosis | tributary of superficial palmar veno,-29.0,-53.8,4.1,ok
+FJ2357,vein,tributary of venous anastomosis | tributary of superficial palmar veno,-27.7,-54.0,4.0,ok
+FJ2358,vein,tributary of venous anastomosis | tributary of superficial palmar veno,-26.7,-53.5,3.9,ok
+FJ2359,vein,tributary of venous anastomosis | tributary of superficial palmar veno,-25.4,-52.9,4.0,ok
+FJ2360,vein,tributary of venous anastomosis | tributary of superficial palmar veno,-24.3,-52.2,3.8,ok
+FJ2361,artery,pectoral branch of thoraco-acromial artery | pectoral branch of right ,-11.9,4.6,0.4,ok
+FJ2362,artery,branch of brachial artery | branch of deep brachial artery | medial co,-22.4,-14.8,-6.4,ok
+FJ2363,artery,branch of radial artery | arteria radialis indicis | right arteria rad,-31.5,-53.1,3.5,ok
+FJ2364,artery,branch of arterial anastomosis | branch of superficial palmar arterial,-29.9,-53.0,3.2,ok
+FJ2365,artery,branch of arterial anastomosis | branch of superficial palmar arterial,-29.0,-53.2,4.1,ok
+FJ2366,artery,branch of arterial anastomosis | branch of superficial palmar arterial,-26.7,-52.9,4.0,ok
+FJ2367,artery,branch of arterial anastomosis | branch of superficial palmar arterial,-27.5,-53.2,3.9,ok
+FJ2368,artery,branch of arterial anastomosis | branch of superficial palmar arterial,-24.5,-51.8,4.0,ok
+FJ2369,artery,branch of arterial anastomosis | branch of superficial palmar arterial,-25.4,-52.4,4.3,ok
+FJ2370,artery,branch of arterial anastomosis | branch of superficial palmar arterial,-23.8,-49.8,3.3,ok
+FJ2371,artery,branch of radial artery | arteria princeps pollicis | right arteria pr,-30.9,-44.8,2.8,ok
+FJ2372,artery,branch of radial artery | arteria princeps pollicis | right arteria pr,-31.1,-47.5,2.8,ok
+FJ2373,artery,branch of brachial artery | superior ulnar collateral artery | right s,-19.6,-14.0,-5.0,ok
+FJ2374,artery,branch of brachial artery | superior ulnar collateral artery | left su,17.2,-14.0,-5.0,ok
+FJ2386,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,-4.0,-11.8,1.6,ok
+FJ2394,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,-8.1,-10.1,-0.8,ok
+FJ2404,vein,left portal vein | region of vascular tree organ | vein | physical ana,-3.1,-10.6,4.1,ok
+FJ2405,vein,right portal vein | region of vascular tree organ | vein | physical an,-6.6,-11.8,0.0,ok
+FJ2409,vein,hepatovenous subsector | hepatovenous segment vii | region of posterio,-9.2,-15.2,-1.2,ok
+FJ2414,vein,hepatic vein | middle hepatic vein | region of vascular tree organ | v,-3.9,-8.8,4.1,ok
+FJ2415,vein,hepatic vein | left hepatic vein | region of vascular tree organ | vei,0.8,-8.4,2.3,ok
+FJ2416,vein,hepatic vein | right hepatic vein | region of vascular tree organ | ve,-7.4,-9.2,-1.6,ok
+FJ2562,artery,splenic artery | artery | region of vascular tree organ | physical ana,3.9,-15.1,-0.3,ok
+FJ2631,artery,trunk of branch of coronary artery | arterial trunk | systemic arteria,3.8,-0.2,3.2,ok
+FJ2632,artery,right anterior branch of anterior interventricular branch of left coro,3.6,-0.0,4.8,ok
+FJ2633,artery,diagonal branch of anterior descending branch of left coronary artery ,6.1,-0.2,1.1,ok
+FJ2634,artery,diagonal branch of anterior descending branch of left coronary artery ,6.0,0.2,0.7,ok
+FJ2635,artery,diagonal branch of anterior descending branch of left coronary artery ,5.1,-2.2,4.6,ok
+FJ2636,artery,diagonal branch of anterior descending branch of left coronary artery ,4.9,-1.7,4.8,ok
+FJ2637,artery,diagonal branch of anterior descending branch of left coronary artery ,5.4,-4.6,4.0,ok
+FJ2638,artery,diagonal branch of anterior descending branch of left coronary artery ,6.2,-3.3,3.9,ok
+FJ2639,artery,diagonal branch of anterior descending branch of left coronary artery ,6.0,-4.4,3.1,ok
+FJ2640,artery,diagonal branch of anterior descending branch of left coronary artery ,5.9,-4.6,3.2,ok
+FJ2641,artery,right anterior branch of anterior interventricular branch of left coro,3.8,-3.5,4.8,ok
+FJ2642,artery,diagonal branch of anterior descending branch of left coronary artery ,5.6,-0.3,2.4,ok
+FJ2643,artery,conus branch of anterior interventricular branch of left coronary arte,3.3,1.4,3.9,ok
+FJ2644,artery,conus branch of anterior interventricular branch of left coronary arte,2.5,1.6,4.9,ok
+FJ2645,artery,right anterior branch of anterior interventricular branch of left coro,3.8,0.0,4.4,ok
+FJ2646,artery,right anterior branch of anterior interventricular branch of left coro,3.5,-1.7,5.0,ok
+FJ2647,artery,right anterior branch of anterior interventricular branch of left coro,3.2,-4.3,4.6,ok
+FJ2648,artery,diagonal branch of anterior descending branch of left coronary artery ,6.4,-1.2,2.7,ok
+FJ2649,artery,circumflex branch of left coronary artery | coronary artery | artery |,3.3,1.5,-1.4,ok
+FJ2650,artery,circumflex branch of left coronary artery | coronary artery | artery |,4.5,-2.1,-2.7,ok
+FJ2651,artery,circumflex branch of left coronary artery | coronary artery | artery |,5.5,-1.5,-1.6,ok
+FJ2652,artery,circumflex branch of left coronary artery | coronary artery | artery |,5.4,-2.7,-1.7,ok
+FJ2653,artery,circumflex branch of left coronary artery | coronary artery | artery |,6.4,-3.6,0.5,ok
+FJ2654,artery,circumflex branch of left coronary artery | coronary artery | artery |,6.3,-4.0,1.8,ok
+FJ2655,vein,coronary sinus | venous trunk | region of vascular tree organ | physic,0.4,-2.4,-2.1,ok
+FJ2656,vein,great cardiac vein | cardiac vein | region of vascular tree organ | ve,3.4,0.8,-2.0,ok
+FJ2657,vein,cardiac vein | region of vascular tree organ | vein | physical anatomi,4.8,-3.5,4.7,ok
+FJ2658,vein,cardiac vein | region of vascular tree organ | vein | physical anatomi,3.6,-1.4,5.0,ok
+FJ2659,vein,cardiac vein | region of vascular tree organ | vein | physical anatomi,5.0,-1.9,4.6,ok
+FJ2660,vein,cardiac vein | region of vascular tree organ | vein | physical anatomi,5.8,-3.4,4.3,ok
+FJ2661,vein,cardiac vein | region of vascular tree organ | vein | physical anatomi,3.8,0.3,4.1,ok
+FJ2662,vein,cardiac vein | region of vascular tree organ | vein | physical anatomi,4.7,1.2,2.2,ok
+FJ2663,vein,cardiac vein | region of vascular tree organ | vein | physical anatomi,5.8,0.1,2.4,ok
+FJ2664,vein,cardiac vein | region of vascular tree organ | vein | physical anatomi,5.6,0.7,1.6,ok
+FJ2665,vein,cardiac vein | region of vascular tree organ | vein | physical anatomi,4.1,-0.4,3.4,ok
+FJ2667,artery,anterior ventricular branch of right coronary artery | marginal branch,1.1,-2.8,5.4,ok
+FJ2668,artery,anterior ventricular branch of right coronary artery | marginal branch,1.8,-2.6,5.5,ok
+FJ2670,artery,right conus artery | coronary artery | artery | region of vascular tre,0.3,2.5,4.3,ok
+FJ2671,artery,anterior ventricular branch of right coronary artery | first anterior ,-0.3,0.5,5.1,ok
+FJ2672,artery,anterior ventricular branch of right coronary artery | marginal branch,-1.0,-2.1,4.9,ok
+FJ2673,artery,anterior ventricular branch of right coronary artery | first anterior ,1.0,-0.1,5.7,ok
+FJ2674,artery,anterior ventricular branch of right coronary artery | marginal branch,-0.3,-2.8,5.2,ok
+FJ2675,artery,anterior ventricular branch of right coronary artery | marginal branch,-1.6,-2.2,4.7,ok
+FJ2676,artery,right conus artery | coronary artery | artery | region of vascular tre,1.3,2.6,4.6,ok
+FJ2677,artery,anterior ventricular branch of right coronary artery | first anterior ,1.6,-0.0,5.7,ok
+FJ2678,vein,middle cardiac vein | cardiac vein | region of vascular tree organ | v,1.2,-4.4,0.9,ok
+FJ2679,vein,middle cardiac vein | cardiac vein | region of vascular tree organ | v,2.8,-5.3,2.7,ok
+FJ2680,vein,middle cardiac vein | cardiac vein | region of vascular tree organ | v,4.6,-5.3,2.2,ok
+FJ2681,vein,middle cardiac vein | cardiac vein | region of vascular tree organ | v,4.6,-5.1,3.3,ok
+FJ2682,vein,middle cardiac vein | cardiac vein | region of vascular tree organ | v,5.2,-5.2,2.9,ok
+FJ2683,vein,middle cardiac vein | cardiac vein | region of vascular tree organ | v,5.5,-4.8,3.6,ok
+FJ2684,vein,middle cardiac vein | cardiac vein | region of vascular tree organ | v,0.9,-5.0,1.4,ok
+FJ2685,vein,middle cardiac vein | cardiac vein | region of vascular tree organ | v,1.6,-5.2,2.7,ok
+FJ2686,vein,middle cardiac vein | cardiac vein | region of vascular tree organ | v,1.1,-5.0,3.0,ok
+FJ2687,vein,middle cardiac vein | cardiac vein | region of vascular tree organ | v,0.4,-4.6,-0.0,ok
+FJ2688,vein,middle cardiac vein | cardiac vein | region of vascular tree organ | v,1.3,-4.9,-0.4,ok
+FJ2689,vein,middle cardiac vein | cardiac vein | region of vascular tree organ | v,3.5,-5.4,1.7,ok
+FJ2690,vein,middle cardiac vein | cardiac vein | region of vascular tree organ | v,3.0,-5.2,2.7,ok
+FJ2691,vein,middle cardiac vein | cardiac vein | region of vascular tree organ | v,3.3,-5.4,1.4,ok
+FJ2692,artery,posterior interventricular branch of right coronary artery | coronary ,1.4,-4.8,1.5,ok
+FJ2693,artery,posterior interventricular branch of right coronary artery | coronary ,1.1,-4.7,0.8,ok
+FJ2694,artery,posterior interventricular branch of right coronary artery | coronary ,1.3,-5.0,0.2,ok
+FJ2695,artery,posterior interventricular branch of right coronary artery | coronary ,2.9,-5.3,1.4,ok
+FJ2696,artery,posterior interventricular branch of right coronary artery | coronary ,1.1,-5.1,2.2,ok
+FJ2697,artery,posterior interventricular branch of right coronary artery | coronary ,2.8,-5.3,2.9,ok
+FJ2698,artery,posterior interventricular branch of right coronary artery | coronary ,3.0,-5.3,3.1,ok
+FJ2699,artery,posterior interventricular branch of right coronary artery | coronary ,5.1,-5.1,3.4,ok
+FJ2700,artery,posterior interventricular branch of right coronary artery | coronary ,4.7,-5.1,3.4,ok
+FJ2701,vein,posterior vein of left ventricle | cardiac vein | region of vascular t,3.1,-4.4,-1.4,ok
+FJ2702,vein,posterior vein of left ventricle | cardiac vein | region of vascular t,6.1,-4.4,2.0,ok
+FJ2703,vein,left marginal vein | cardiac vein | region of vascular tree organ | ve,5.1,-2.2,-1.6,ok
+FJ2704,vein,left marginal vein | cardiac vein | region of vascular tree organ | ve,6.3,-3.7,0.5,ok
+FJ2705,vein,left marginal vein | cardiac vein | region of vascular tree organ | ve,4.7,-2.3,-2.5,ok
+FJ2706,vein,posterior vein of left ventricle | cardiac vein | region of vascular t,2.7,-4.1,-2.4,ok
+FJ2707,vein,posterior vein of left ventricle | cardiac vein | region of vascular t,3.2,-5.2,-0.6,ok
+FJ2708,vein,posterior vein of left ventricle | cardiac vein | region of vascular t,4.7,-4.4,-1.2,ok
+FJ2709,vein,posterior vein of left ventricle | cardiac vein | region of vascular t,5.0,-5.3,0.5,ok
+FJ2710,vein,posterior vein of left ventricle | cardiac vein | region of vascular t,3.0,-3.7,-2.8,ok
+FJ2711,vein,posterior vein of left ventricle | cardiac vein | region of vascular t,3.3,-5.4,0.2,ok
+FJ2712,vein,posterior vein of left ventricle | cardiac vein | region of vascular t,5.6,-4.8,0.4,ok
+FJ2713,vein,posterior vein of left ventricle | cardiac vein | region of vascular t,6.2,-4.3,1.7,ok
+FJ2714,artery,posterior ventricular branch of right coronary artery | first posterio,3.2,-4.6,-1.2,ok
+FJ2715,artery,posterior ventricular branch of right coronary artery | first posterio,5.9,-4.6,1.3,ok
+FJ2716,artery,posterior ventricular branch of right coronary artery | first posterio,5.8,-4.8,1.7,ok
+FJ2717,artery,posterior ventricular branch of right coronary artery | first posterio,2.2,-3.9,-2.6,ok
+FJ2718,artery,posterior ventricular branch of right coronary artery | first posterio,3.0,-4.4,-2.1,ok
+FJ2719,artery,posterior ventricular branch of right coronary artery | first posterio,3.3,-5.1,-0.8,ok
+FJ2720,artery,posterior ventricular branch of right coronary artery | first posterio,4.7,-4.6,-1.0,ok
+FJ2721,artery,posterior ventricular branch of right coronary artery | first posterio,5.5,-4.7,-0.0,ok
+FJ2722,artery,posterior ventricular branch of right coronary artery | first posterio,5.0,-5.3,0.7,ok
+FJ2723,artery,trunk of right coronary artery | arterial trunk | systemic arterial tr,-1.5,-0.7,2.4,ok
+FJ2724,vein,small cardiac vein | cardiac vein | region of vascular tree organ | ve,-2.5,-0.8,3.8,ok
+FJ2725,vein,cardiac vein | region of vascular tree organ | vein | physical anatomi,-0.2,0.7,5.1,ok
+FJ2727,vein,right marginal vein | cardiac vein | region of vascular tree organ | v,-0.3,-4.1,3.5,ok
+FJ2728,vein,right marginal vein | cardiac vein | region of vascular tree organ | v,-1.4,-2.2,4.8,ok
+FJ2729,vein,right marginal vein | cardiac vein | region of vascular tree organ | v,0.7,-3.2,5.2,ok
+FJ2730,vein,cardiac vein | region of vascular tree organ | vein | physical anatomi,0.7,-0.2,5.7,ok
+FJ2731,vein,small cardiac vein | cardiac vein | region of vascular tree organ | ve,-1.9,-3.7,1.3,ok
+FJ2732,artery,septal branch of anterior interventricular artery | branch of anterior,3.9,-2.1,4.3,ok
+FJ2733,artery,septal branch of anterior interventricular artery | branch of anterior,3.7,-0.6,4.0,ok
+FJ2734,artery,septal branch of anterior interventricular artery | branch of anterior,3.6,1.0,2.9,ok
+FJ2735,artery,septal branch of right posterior interventricular artery | first septa,0.1,-3.9,0.3,ok
+FJ2736,artery,septal branch of right posterior interventricular artery | second sept,1.4,-4.3,1.2,ok
+FJ2737,artery,trunk of left coronary artery | arterial trunk | systemic arterial tru,1.7,2.8,0.2,ok
+FJ2818,vein,hepatovenous subsector | hepatovenous segment ii | physical anatomical,3.3,-7.7,3.4,ok
+FJ2819,vein,hepatovenous subsector | hepatovenous segment iii | region of anterior,1.0,-10.6,5.4,ok
+FJ2820,vein,hepatovenous subsector | hepatovenous segment iv | region of anterior ,-3.1,-10.2,4.6,ok
+FJ2821,vein,hepatovenous subsector | hepatovenous segment v | region of anterior s,-7.4,-13.8,3.9,ok
+FJ2822,vein,hepatovenous subsector | hepatovenous segment vi | region of posterior,-9.2,-15.1,-1.2,ok
+FJ2823,vein,hepatovenous subsector | hepatovenous segment viii | region of anterio,-8.6,-10.3,-3.0,ok
+FJ2824,vein,hepatovenous subsector | hepatovenous segment viii | region of anterio,-7.1,-8.3,1.6,ok
+FJ2881,artery,left posterior basal segmental artery | posterior basal segmental arte,6.3,-2.8,-6.6,ok
+FJ2882,artery,left lateral basal segmental artery | lateral basal segmental artery |,9.3,-7.6,-6.4,ok
+FJ2883,artery,left anterior basal segmental artery | anterior basal segmental artery,7.8,-2.2,-3.9,ok
+FJ2884,artery,left medial basal segmental artery | medial basal segmental artery | s,8.5,-2.3,-2.4,ok
+FJ2885,artery,left medial basal segmental artery | medial basal segmental artery | s,8.5,-1.9,-3.3,ok
+FJ2886,artery,left anterior basal segmental artery | anterior basal segmental artery,10.5,-7.2,-2.1,ok
+FJ2887,artery,left anterior basal segmental artery | anterior basal segmental artery,10.5,-6.0,-1.4,ok
+FJ2888,artery,left superior segmental artery | superior segmental artery | segmental,3.9,3.9,-6.6,ok
+FJ2889,artery,left superior segmental artery | superior segmental artery | segmental,3.8,5.5,-7.6,ok
+FJ2890,artery,left superior segmental artery | superior segmental artery | segmental,4.7,4.6,-7.3,ok
+FJ2891,artery,left superior segmental artery | superior segmental artery | segmental,3.5,2.0,-5.9,ok
+FJ2892,artery,left posterior basal segmental artery | posterior basal segmental arte,6.6,-8.3,-8.4,ok
+FJ2893,artery,left superior segmental artery | superior segmental artery | segmental,3.4,0.8,-6.4,ok
+FJ2894,artery,left superior segmental artery | superior segmental artery | segmental,5.4,2.8,-6.5,ok
+FJ2895,artery,left superior segmental artery | superior segmental artery | segmental,6.8,2.1,-7.1,ok
+FJ2896,artery,inferior lingular artery | segmental pulmonary artery | artery | regio,6.8,0.3,-1.3,ok
+FJ2897,artery,inferior lingular artery | segmental pulmonary artery | artery | regio,8.4,-2.2,1.2,ok
+FJ2898,artery,superior lingular artery | segmental pulmonary artery | artery | regio,6.6,2.7,-2.9,ok
+FJ2899,artery,superior lingular artery | segmental pulmonary artery | artery | regio,9.4,0.7,-0.5,ok
+FJ2900,artery,superior lingular artery | segmental pulmonary artery | artery | regio,8.3,2.5,-2.9,ok
+FJ2901,artery,superior lingular artery | segmental pulmonary artery | artery | regio,9.0,2.2,-3.4,ok
+FJ2902,artery,segmental pulmonary artery | anterior segmental artery | left anterior,5.5,4.5,-3.3,ok
+FJ2903,artery,left posterior basal segmental artery | posterior basal segmental arte,5.8,-5.3,-7.5,ok
+FJ2904,artery,segmental pulmonary artery | anterior segmental artery | left anterior,7.5,4.3,-0.3,ok
+FJ2905,artery,segmental pulmonary artery | anterior segmental artery | left anterior,6.9,5.3,0.1,ok
+FJ2906,artery,segmental pulmonary artery | anterior segmental artery | left anterior,4.2,3.9,-0.6,ok
+FJ2907,artery,segmental pulmonary artery | anterior segmental artery | left anterior,3.8,4.1,1.8,ok
+FJ2908,artery,segmental pulmonary artery | anterior segmental artery | left anterior,4.0,4.9,-1.8,ok
+FJ2909,artery,segmental pulmonary artery | anterior segmental artery | left anterior,4.0,5.5,0.8,ok
+FJ2910,artery,segmental pulmonary artery | anterior segmental artery | left anterior,4.9,5.1,0.4,ok
+FJ2911,artery,left posterior segmental artery | segmental pulmonary artery | posteri,4.6,6.2,-4.2,ok
+FJ2912,artery,left posterior segmental artery | segmental pulmonary artery | posteri,6.2,7.6,-5.0,ok
+FJ2913,artery,left posterior segmental artery | segmental pulmonary artery | posteri,5.9,6.6,-4.4,ok
+FJ2914,artery,left posterior basal segmental artery | posterior basal segmental arte,4.1,-7.7,-8.4,ok
+FJ2915,artery,left apical segmental artery | apical segmental artery | segmental pul,3.2,7.6,-3.1,ok
+FJ2916,artery,left apical segmental artery | apical segmental artery | segmental pul,3.7,9.0,-3.5,ok
+FJ2917,artery,left apical segmental artery | apical segmental artery | segmental pul,2.2,10.7,-2.8,ok
+FJ2918,artery,left apical segmental artery | apical segmental artery | segmental pul,3.9,9.1,-3.6,ok
+FJ2919,artery,left posterior basal segmental artery | posterior basal segmental arte,5.7,-2.2,-7.0,ok
+FJ2920,artery,left posterior basal segmental artery | posterior basal segmental arte,4.9,-4.7,-8.2,ok
+FJ2921,artery,left lateral basal segmental artery | lateral basal segmental artery |,7.9,-3.1,-5.4,ok
+FJ2922,artery,left lateral basal segmental artery | lateral basal segmental artery |,9.1,-6.4,-5.9,ok
+FJ2923,artery,left lateral basal segmental artery | lateral basal segmental artery |,10.4,-8.7,-4.3,ok
+FJ2924,artery,artery | region of vascular tree organ | left pulmonary artery | physi,3.0,4.2,-2.6,ok
+FJ2925,vein,vascular tree | venous tree organ | pulmonary venous tree organ | supe,3.4,3.0,-2.7,ok
+FJ2926,vein,segmental pulmonary vein | left posterior segmental vein | posterior s,4.8,6.7,-2.4,ok
+FJ2927,vein,segmental pulmonary vein | left posterior segmental vein | posterior s,3.4,7.0,-3.3,ok
+FJ2928,vein,segmental pulmonary vein | left posterior segmental vein | posterior s,5.3,7.4,-2.8,ok
+FJ2929,vein,segmental pulmonary vein | left posterior segmental vein | posterior s,7.0,7.8,-4.2,ok
+FJ2930,vein,left anterior segmental vein | segmental pulmonary vein | anterior seg,5.3,3.0,-1.9,ok
+FJ2931,vein,left anterior segmental vein | segmental pulmonary vein | anterior seg,6.9,2.6,-0.7,ok
+FJ2932,vein,left anterior segmental vein | segmental pulmonary vein | anterior seg,7.0,2.3,0.2,ok
+FJ2933,vein,vascular tree | venous tree organ | pulmonary venous tree organ | supe,4.6,1.2,-2.3,ok
+FJ2934,vein,inferior lingular vein | segmental pulmonary vein | region of vascular,7.3,-2.7,0.6,ok
+FJ2935,vein,inferior lingular vein | segmental pulmonary vein | region of vascular,8.0,-4.1,2.0,ok
+FJ2936,vein,segmental pulmonary vein | left apical segmental vein | apical segment,3.1,7.5,-2.3,ok
+FJ2937,vein,superior lingular vein | segmental pulmonary vein | region of vascular,5.7,1.2,-0.7,ok
+FJ2938,vein,superior lingular vein | segmental pulmonary vein | region of vascular,6.1,0.4,1.0,ok
+FJ2939,vein,segmental pulmonary vein | left posterior segmental vein | posterior s,4.6,0.6,-5.8,ok
+FJ2940,vein,segmental pulmonary vein | left posterior segmental vein | posterior s,6.2,1.7,-7.8,ok
+FJ2941,vein,segmental pulmonary vein | left posterior segmental vein | posterior s,5.5,0.6,-8.4,ok
+FJ2942,vein,segmental pulmonary vein | left posterior segmental vein | posterior s,5.3,0.4,-8.7,ok
+FJ2943,vein,segmental pulmonary vein | left posterior segmental vein | posterior s,6.1,0.4,-8.1,ok
+FJ2944,vein,vascular tree | venous tree organ | pulmonary venous tree organ | infe,3.8,-1.3,-5.2,ok
+FJ2945,vein,segmental pulmonary vein | left posterior basal segmental vein | poste,4.4,-5.2,-6.6,ok
+FJ2946,vein,segmental pulmonary vein | left posterior basal segmental vein | poste,4.5,-7.6,-7.0,ok
+FJ2947,vein,segmental pulmonary vein | left apical segmental vein | apical segment,2.2,10.2,-2.1,ok
+FJ2948,vein,segmental pulmonary vein | left posterior basal segmental vein | poste,5.1,-7.9,-8.5,ok
+FJ2949,vein,segmental pulmonary vein | left posterior basal segmental vein | poste,5.2,-7.2,-7.9,ok
+FJ2950,vein,vascular tree | venous tree organ | pulmonary venous tree organ | infe,4.0,-0.9,-4.0,ok
+FJ2951,vein,segmental pulmonary vein | left lateral basal segmental vein | lateral,7.4,-5.1,-4.4,ok
+FJ2952,vein,segmental pulmonary vein | left lateral basal segmental vein | lateral,9.5,-8.3,-4.7,ok
+FJ2953,vein,segmental pulmonary vein | left lateral basal segmental vein | lateral,8.2,-4.5,-3.8,ok
+FJ2954,vein,segmental pulmonary vein | left lateral basal segmental vein | lateral,9.3,-5.8,-3.5,ok
+FJ2955,vein,vascular tree | venous tree organ | pulmonary venous tree organ | infe,4.0,-0.3,-3.8,ok
+FJ2956,vein,left anterior basal segmental vein | segmental pulmonary vein | anteri,8.0,-4.0,-1.6,ok
+FJ2957,vein,left anterior basal segmental vein | segmental pulmonary vein | anteri,9.8,-5.8,0.0,ok
+FJ2958,vein,segmental pulmonary vein | left apical segmental vein | apical segment,4.2,8.5,-2.2,ok
+FJ2959,vein,left anterior basal segmental vein | segmental pulmonary vein | anteri,7.9,-3.1,-1.6,ok
+FJ2960,vein,left anterior basal segmental vein | segmental pulmonary vein | anteri,7.9,-2.6,-1.9,ok
+FJ2961,vein,segmental pulmonary vein | left apical segmental vein | apical segment,3.0,7.1,-0.9,ok
+FJ2962,vein,segmental pulmonary vein | left apical segmental vein | apical segment,3.7,7.2,-0.3,ok
+FJ2963,vein,segmental pulmonary vein | left apical segmental vein | apical segment,5.0,9.0,-2.1,ok
+FJ2964,vein,segmental pulmonary vein | left apical segmental vein | apical segment,4.4,9.7,-2.1,ok
+FJ2965,vein,segmental pulmonary vein | left posterior segmental vein | posterior s,6.2,6.9,-3.1,ok
+FJ2966,artery,pulmonary trunk | pulmonary arterial trunk | arterial trunk | region o,1.6,4.4,1.6,ok
+FJ2967,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-4.4,7.4,-2.7,ok
+FJ2968,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-7.8,8.4,-6.9,ok
+FJ2969,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-7.5,7.5,-7.2,ok
+FJ2970,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-6.5,4.5,-4.6,ok
+FJ2971,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-9.9,5.1,-5.7,ok
+FJ2972,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-9.3,5.2,-7.1,ok
+FJ2973,artery,upper lobar artery | artery | region of vascular tree organ | physical,-2.9,5.1,-2.2,ok
+FJ2974,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-7.0,5.7,-2.1,ok
+FJ2975,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-5.1,5.0,-0.1,ok
+FJ2976,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-3.9,4.0,2.2,ok
+FJ2977,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-5.7,4.3,2.0,ok
+FJ2978,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-4.3,8.3,-3.6,ok
+FJ2979,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-5.5,5.1,1.3,ok
+FJ2980,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-9.6,5.7,-2.2,ok
+FJ2981,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-8.9,5.0,-1.5,ok
+FJ2982,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-8.7,-1.4,0.4,ok
+FJ2983,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-9.5,-0.2,-0.9,ok
+FJ2984,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-10.9,0.3,-1.4,ok
+FJ2985,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-10.2,-2.9,1.7,ok
+FJ2986,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-7.0,-2.3,4.1,ok
+FJ2987,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-5.3,-2.5,2.7,ok
+FJ2988,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-6.0,-1.1,1.9,ok
+FJ2989,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-4.1,10.5,-4.7,ok
+FJ2990,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-6.4,0.3,-0.4,ok
+FJ2991,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-6.5,2.4,-6.1,ok
+FJ2992,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-8.0,2.4,-7.5,ok
+FJ2993,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-8.9,2.3,-7.6,ok
+FJ2994,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-5.1,2.0,-7.3,ok
+FJ2995,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-5.8,0.6,-8.8,ok
+FJ2996,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-4.9,1.6,-8.3,ok
+FJ2997,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-5.8,3.6,-6.2,ok
+FJ2998,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-6.9,5.3,-7.7,ok
+FJ2999,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-5.4,4.3,-7.1,ok
+FJ3000,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-4.1,10.9,-4.6,ok
+FJ3001,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-8.3,-1.0,-4.3,ok
+FJ3002,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-10.6,-2.8,-3.8,ok
+FJ3003,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-11.9,-3.8,-3.0,ok
+FJ3004,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-11.4,-7.7,-6.7,ok
+FJ3005,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-8.7,-4.5,-6.4,ok
+FJ3006,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-9.5,-4.5,-6.5,ok
+FJ3007,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-9.8,-4.7,-6.2,ok
+FJ3008,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-6.5,-3.4,-6.3,ok
+FJ3009,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-6.1,-3.8,-6.7,ok
+FJ3010,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-5.7,-5.1,-7.7,ok
+FJ3011,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-4.5,11.4,-4.1,ok
+FJ3012,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-6.4,-8.7,-8.1,ok
+FJ3013,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-7.5,-6.5,-8.2,ok
+FJ3014,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-7.6,-7.1,-8.5,ok
+FJ3015,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-5.2,10.5,-2.6,ok
+FJ3016,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-4.8,9.1,-1.7,ok
+FJ3017,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-5.1,9.5,-1.1,ok
+FJ3018,artery,subsegmental pulmonary artery | artery | region of vascular tree organ,-5.5,6.2,-4.9,ok
+FJ3019,artery,artery | region of vascular tree organ | right pulmonary artery | phys,-2.2,3.9,-2.2,ok
+FJ3020,vein,vascular tree | venous tree organ | pulmonary venous tree organ | supe,-3.9,1.7,-2.2,ok
+FJ3021,vein,inferior part of anterior segmental vein | subsegmental pulmonary vein,-5.1,3.1,0.3,ok
+FJ3022,vein,right posterior segmental vein | segmental pulmonary vein | posterior ,-6.3,3.1,-3.3,ok
+FJ3023,vein,right posterior segmental vein | segmental pulmonary vein | posterior ,-7.8,6.4,-4.7,ok
+FJ3024,vein,right posterior segmental vein | segmental pulmonary vein | posterior ,-8.6,6.5,-6.2,ok
+FJ3025,vein,right posterior segmental vein | segmental pulmonary vein | posterior ,-6.2,9.4,-4.1,ok
+FJ3026,vein,right posterior segmental vein | segmental pulmonary vein | posterior ,-6.4,9.6,-5.1,ok
+FJ3027,vein,superior part of anterior segmental vein | subsegmental pulmonary vein,-5.9,4.2,0.0,ok
+FJ3028,vein,right anterior segmental vein | segmental pulmonary vein | anterior se,-7.6,3.7,-1.5,ok
+FJ3029,vein,right anterior segmental vein | segmental pulmonary vein | anterior se,-9.0,3.9,-1.4,ok
+FJ3030,vein,subsegmental pulmonary vein | subsegmental part of medial segmental ve,-5.0,-0.8,-0.1,ok
+FJ3031,vein,trunk of pulmonary vein | trunk of intrapulmonary vein | venous trunk ,-4.3,4.4,-1.2,ok
+FJ3032,vein,subsegmental pulmonary vein | subsegmental part of medial segmental ve,-4.9,-0.9,-0.8,ok
+FJ3033,vein,subsegmental pulmonary vein | subsegmental part of medial segmental ve,-6.1,-2.9,1.7,ok
+FJ3034,vein,subsegmental pulmonary vein | subsegmental part of lateral segmental v,-5.6,-0.5,-1.8,ok
+FJ3035,vein,subsegmental pulmonary vein | subsegmental part of lateral segmental v,-9.8,-1.6,-0.0,ok
+FJ3036,vein,subsegmental pulmonary vein | subsegmental part of lateral segmental v,-9.3,-0.7,-1.4,ok
+FJ3037,vein,subsegmental pulmonary vein | subsegmental part of lateral segmental v,-7.4,-1.7,0.7,ok
+FJ3038,vein,subsegmental pulmonary vein | subsegmental part of lateral segmental v,-9.1,-2.2,2.0,ok
+FJ3039,vein,subsegmental pulmonary vein | subsegmental part of lateral segmental v,-8.2,-2.5,2.5,ok
+FJ3040,vein,vascular tree | venous tree organ | pulmonary venous tree organ | infe,-3.1,-0.9,-3.6,ok
+FJ3041,vein,segmental pulmonary vein | right posterior basal segmental vein | post,-6.8,-4.6,-5.7,ok
+FJ3042,vein,subsegmental pulmonary vein | subsegmental part of apical segmental ve,-4.0,7.8,-0.6,ok
+FJ3043,vein,segmental pulmonary vein | right posterior basal segmental vein | post,-5.1,-5.7,-5.8,ok
+FJ3044,vein,segmental pulmonary vein | right posterior basal segmental vein | post,-5.0,-7.1,-6.9,ok
+FJ3045,vein,segmental pulmonary vein | right posterior basal segmental vein | post,-7.1,-6.1,-6.8,ok
+FJ3046,vein,segmental pulmonary vein | right posterior basal segmental vein | post,-7.2,-5.6,-6.3,ok
+FJ3047,vein,segmental pulmonary vein | right posterior basal segmental vein | post,-9.9,-7.3,-7.1,ok
+FJ3048,vein,segmental pulmonary vein | right posterior basal segmental vein | post,-10.3,-8.0,-7.6,ok
+FJ3049,vein,right anterior basal segmental vein | segmental pulmonary vein | anter,-5.4,-2.2,-5.6,ok
+FJ3050,vein,right superior segmental vein | segmental pulmonary vein | superior se,-6.5,-0.9,-4.7,ok
+FJ3051,vein,right superior segmental vein | segmental pulmonary vein | superior se,-6.4,0.1,-5.9,ok
+FJ3052,vein,right superior segmental vein | segmental pulmonary vein | superior se,-8.5,1.8,-7.9,ok
+FJ3053,vein,subsegmental pulmonary vein | subsegmental part of apical segmental ve,-5.1,8.3,-0.3,ok
+FJ3054,vein,segmental pulmonary vein | right medial basal segmental vein | medial ,-7.1,1.0,-8.0,ok
+FJ3055,vein,segmental pulmonary vein | right medial basal segmental vein | medial ,-6.2,1.2,-8.1,ok
+FJ3056,vein,right anterior basal segmental vein | segmental pulmonary vein | anter,-5.6,-3.2,-6.4,ok
+FJ3057,vein,segmental pulmonary vein | right posterior basal segmental vein | post,-4.9,-3.6,-4.6,ok
+FJ3058,vein,segmental pulmonary vein | right posterior basal segmental vein | post,-4.5,-4.1,-4.5,ok
+FJ3059,vein,segmental pulmonary vein | right lateral basal segmental vein | latera,-7.8,-3.4,-4.7,ok
+FJ3060,vein,segmental pulmonary vein | right lateral basal segmental vein | latera,-8.2,-2.9,-3.8,ok
+FJ3061,vein,segmental pulmonary vein | right lateral basal segmental vein | latera,-11.7,-4.1,-4.2,ok
+FJ3062,vein,segmental pulmonary vein | right lateral basal segmental vein | latera,-10.7,-4.2,-4.4,ok
+FJ3063,vein,right superior segmental vein | segmental pulmonary vein | superior se,-4.3,-0.9,-5.1,ok
+FJ3064,vein,apical part of right apical segmental vein | subsegmental pulmonary ve,-3.8,8.8,-1.6,ok
+FJ3065,vein,right superior segmental vein | segmental pulmonary vein | superior se,-4.8,-1.0,-5.3,ok
+FJ3066,vein,right superior segmental vein | segmental pulmonary vein | superior se,-7.0,-1.5,-5.9,ok
+FJ3067,vein,apical part of right apical segmental vein | subsegmental pulmonary ve,-4.1,9.6,-1.9,ok
+FJ3068,vein,apical part of right apical segmental vein | subsegmental pulmonary ve,-3.5,10.2,-1.8,ok
+FJ3069,vein,right posterior segmental vein | segmental pulmonary vein | posterior ,-5.5,3.5,-1.7,ok
+FJ3070,vein,right posterior segmental vein | segmental pulmonary vein | posterior ,-6.7,7.1,-3.5,ok
+FJ3073,vein,anterior superior segmental branch of right portal vein | region of va,-5.6,-10.8,2.6,ok
+FJ3074,vein,anterior inferior segmental branch of right portal vein | region of va,-7.4,-11.1,3.2,ok
+FJ3075,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,-7.3,-11.2,3.5,ok
+FJ3076,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,-5.8,-10.7,3.0,ok
+FJ3077,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,-1.8,-10.7,2.4,ok
+FJ3078,artery,common hepatic artery | artery | region of vascular tree organ | physi,-1.6,-15.0,1.8,ok
+FJ3081,artery,hepatic artery proper | artery | region of vascular tree organ | physi,-2.9,-13.3,2.7,ok
+FJ3082,vein,region of vascular tree organ | vein | physical anatomical entity | an,-2.6,-14.3,1.6,ok
+FJ3083,vein,tributary of middle hepatic vein | anterior inferior segmental tributa,-5.4,-8.2,3.3,ok
+FJ3084,vein,tributary of middle hepatic vein | medial inferior segmental tributary,-3.7,-7.5,4.1,ok
+FJ3085,vein,tributary of middle hepatic vein | medial inferior segmental tributary,-4.0,-9.5,6.1,ok
+FJ3086,vein,tributary of middle hepatic vein | anterior inferior segmental tributa,-7.4,-12.9,5.6,ok
+FJ3091,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,1.3,-8.5,3.5,ok
+FJ3092,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,0.8,-10.0,6.0,ok
+FJ3093,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,2.7,-8.8,5.5,ok
+FJ3095,artery,trunk of branch of coeliac artery | arterial trunk | systemic arterial,-2.1,-11.1,3.6,ok
+FJ3097,vein,tributary of left hepatic vein | lateral inferior segmental tributary ,-1.5,-7.5,1.6,ok
+FJ3098,vein,tributary of left hepatic vein | lateral superior segmental tributary ,0.4,-9.1,3.4,ok
+FJ3099,vein,tributary of left hepatic vein | lateral inferior segmental tributary ,1.1,-9.9,4.7,ok
+FJ3100,vein,tributary of left hepatic vein | lateral inferior segmental tributary ,2.1,-10.3,5.4,ok
+FJ3101,vein,tributary of left hepatic vein | medial superior segmental tributary o,-1.0,-7.9,2.6,ok
+FJ3102,vein,trunk of portal vein | venous trunk | region of vascular tree organ | ,-2.1,-10.9,3.2,ok
+FJ3106,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,-2.0,-10.0,5.5,ok
+FJ3107,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,-3.3,-8.9,4.9,ok
+FJ3111,vein,posterior inferior segmental branch of right portal vein | region of v,-6.7,-12.5,0.6,ok
+FJ3112,vein,posterior superior segmental branch of right portal vein | region of v,-7.3,-10.6,-2.7,ok
+FJ3113,vein,posterior superior segmental branch of right portal vein | region of v,-7.8,-11.7,-1.2,ok
+FJ3114,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,-6.5,-12.6,0.9,ok
+FJ3115,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,-7.2,-12.0,-0.9,ok
+FJ3116,artery,hepatic artery | subdivision of hepatic artery proper | artery | regio,-8.2,-10.4,-3.1,ok
+FJ3117,artery,trunk of branch of coeliac artery | arterial trunk | systemic arterial,-3.6,-11.9,3.0,ok
+FJ3118,vein,tributary of right hepatic vein | posterior inferior segmental tributa,-6.4,-9.0,-1.8,ok
+FJ3119,vein,tributary of right hepatic vein | posterior superior segmental tributa,-7.9,-9.0,-4.1,ok
+FJ3120,vein,tributary of right hepatic vein | posterior inferior segmental tributa,-6.6,-10.4,-4.2,ok
+FJ3121,vein,tributary of right hepatic vein | anterior superior segmental tributar,-7.6,-10.4,-1.8,ok
+FJ3122,vein,trunk of portal vein | venous trunk | region of vascular tree organ | ,-3.4,-12.1,2.3,ok
+FJ3124,vein,caudate lobe branch of left portal vein | region of vascular tree orga,-1.5,-10.1,1.8,ok
+FJ3125,vein,lateral inferior segmental branch of left portal vein | region of vasc,0.8,-9.9,6.1,ok
+FJ3126,vein,lateral superior segmental branch of left portal vein | region of vasc,1.7,-8.0,3.4,ok
+FJ3127,vein,medial superior segmental branch of left portal vein | region of vascu,-3.2,-9.2,4.8,ok
+FJ3128,vein,medial inferior segmental branch of left portal vein | region of vascu,-2.1,-10.3,5.6,ok
+FJ3399,artery,trunk of branch of inferior mesenteric artery | ascending branch of le,3.8,-20.7,-0.1,ok
+FJ3400,vein,tributary of splenic vein | tributary of inferior mesenteric vein | le,3.6,-20.9,-0.5,ok
+FJ3401,artery,artery | region of vascular tree organ | physical anatomical entity | ,-4.3,-21.5,2.1,ok
+FJ3406,artery,anterior cecal artery | branch of ileocolic artery | branch of inferio,-7.7,-30.5,0.3,ok
+FJ3409,artery,anterior superior pancreaticoduodenal artery | artery | region of vasc,-4.4,-18.1,1.5,ok
+FJ3410,artery,appendicular artery | branch of ileocolic artery | branch of inferior ,-5.8,-33.0,-0.6,ok
+FJ3411,artery,arch of aorta | segment of aorta | region of vascular tree organ | phy,0.4,6.7,-2.2,ok
+FJ3413,artery,ascending aorta | segment of aorta | region of vascular tree organ | p,-0.1,3.0,0.4,ok
+FJ3414,artery,ascending branch of inferior branch of ileocolic artery | branch of il,-6.7,-26.2,0.6,ok
+FJ3415,vein,tributary of superior mesenteric vein | ileocolic vein | region of vas,-6.9,-26.2,0.2,ok
+FJ3416,vein,azygos vein | region of vascular tree organ | vein | physical anatomic,-2.3,-3.2,-4.1,ok
+FJ3417,artery,brachiocephalic artery | artery | region of vascular tree organ | phys,-1.1,9.4,-0.6,ok
+FJ3418,artery,variant artery | variant bronchial artery | bronchial branch of arch o,-1.4,5.6,-4.3,ok
+FJ3419,artery,caudal pancreatic artery | artery | region of vascular tree organ | ph,3.1,-16.4,-1.8,ok
+FJ3420,artery,splenic artery | artery | region of vascular tree organ | physical ana,3.6,-15.9,-1.2,ok
+FJ3421,artery,celiac trunk | arterial trunk | systemic arterial trunk | region of va,-0.5,-14.6,0.0,ok
+FJ3426,vein,tributary of great saphenous vein | tributary of superficial external ,-1.2,-45.8,3.1,ok
+FJ3427,artery,descending aorta | segment of aorta | region of vascular tree organ | ,0.1,-9.7,-2.7,ok
+FJ3428,artery,trunk of branch of inferior mesenteric artery | descending branch of l,4.1,-26.3,-0.1,ok
+FJ3429,vein,tributary of splenic vein | tributary of inferior mesenteric vein | le,4.4,-26.4,-0.6,ok
+FJ3430,artery,dorsal pancreatic artery | artery | region of vascular tree organ | ph,-0.6,-16.7,0.9,ok
+FJ3431,artery,anatomical set | physical anatomical entity | anatomical entity | set ,-0.5,0.1,-4.5,ok
+FJ3432,artery,trunk of branch of coeliac artery | arterial trunk | systemic arterial,-2.0,-15.8,2.0,ok
+FJ3433,artery,great pancreatic artery | artery | region of vascular tree organ | phy,3.1,-15.9,-1.4,ok
+FJ3434,vein,hemiazygos vein | tributary of azygos vein | region of vascular tree o,0.3,-9.5,-5.2,ok
+FJ3437,artery,ileal artery | artery | region of vascular tree organ | physical anato,-5.3,-28.3,0.8,ok
+FJ3438,vein,tributary of superior mesenteric vein | ileal vein | region of vascula,-5.5,-28.2,0.5,ok
+FJ3439,artery,ileocolic artery | artery | region of vascular tree organ | physical a,-3.0,-26.1,1.9,ok
+FJ3440,vein,tributary of superior mesenteric vein | ileocolic vein | region of vas,-3.4,-26.3,1.4,ok
+FJ3441,vein,inferior vena cava | venous trunk | region of vascular tree organ | ph,-2.7,-8.5,-0.3,ok
+FJ3442,artery,inferior mesenteric artery | artery | region of vascular tree organ | ,0.0,-28.0,1.2,ok
+FJ3443,vein,tributary of splenic vein | inferior mesenteric vein | region of vascu,0.9,-23.7,0.4,ok
+FJ3444,artery,inferior pancreatic artery | artery | region of vascular tree organ | ,0.7,-17.7,-0.2,ok
+FJ3446,artery,inferior pancreaticoduodenal artery | artery | region of vascular tree,-2.0,-20.3,2.2,ok
+FJ3447,vein,region of vascular tree organ | vein | physical anatomical entity | an,1.1,-10.1,-0.8,ok
+FJ3448,vein,region of vascular tree organ | vein | physical anatomical entity | an,6.7,-8.4,-1.8,ok
+FJ3449,vein,region of vascular tree organ | vein | physical anatomical entity | an,5.9,-7.0,1.5,ok
+FJ3450,vein,region of vascular tree organ | vein | physical anatomical entity | an,0.8,-5.6,4.6,ok
+FJ3451,vein,region of vascular tree organ | vein | physical anatomical entity | an,9.8,-11.6,-1.4,ok
+FJ3452,vein,region of vascular tree organ | vein | physical anatomical entity | an,9.6,-16.3,-4.1,ok
+FJ3458,artery,artery | region of vascular tree organ | physical anatomical entity | ,3.0,-18.6,-1.9,ok
+FJ3459,artery,artery | region of vascular tree organ | physical anatomical entity | ,4.1,-21.1,-3.1,ok
+FJ3460,artery,artery | region of vascular tree organ | physical anatomical entity | ,5.2,-19.1,-3.7,ok
+FJ3461,artery,artery | region of vascular tree organ | physical anatomical entity | ,5.4,-19.3,-3.9,ok
+FJ3462,artery,artery | region of vascular tree organ | physical anatomical entity | ,3.0,-18.0,-2.5,ok
+FJ3463,artery,artery | region of vascular tree organ | physical anatomical entity | ,3.5,-19.5,-2.3,ok
+FJ3464,artery,common iliac artery | left common iliac artery | artery | region of va,0.6,-29.7,-0.7,ok
+FJ3465,vein,common iliac vein | left common iliac vein | region of vascular tree o,-0.8,-29.9,-1.6,ok
+FJ3466,artery,external iliac artery | left external iliac artery | artery | region o,3.7,-37.3,-1.4,ok
+FJ3467,artery,artery | region of vascular tree organ | physical anatomical entity | ,3.0,-16.1,-3.7,ok
+FJ3468,artery,internal iliac artery | left internal iliac artery | artery | region o,1.6,-35.1,-5.0,ok
+FJ3469,vein,internal iliac vein | left internal iliac vein | region of vascular tr,0.8,-34.2,-5.7,ok
+FJ3470,vein,internal iliac vein | left internal iliac vein | region of vascular tr,0.8,-37.5,-9.4,ok
+FJ3471,vein,internal iliac vein | left internal iliac vein | region of vascular tr,0.9,-40.4,-10.3,ok
+FJ3472,artery,middle suprarenal artery | left middle suprarenal artery | artery | re,1.6,-15.3,-3.1,ok
+FJ3473,artery,artery | region of vascular tree organ | physical anatomical entity | ,2.5,-19.0,-3.1,ok
+FJ3474,artery,artery | region of vascular tree organ | physical anatomical entity | ,3.3,-19.4,-4.5,ok
+FJ3475,artery,artery | region of vascular tree organ | physical anatomical entity | ,3.2,-18.6,-3.3,ok
+FJ3476,artery,arterial trunk | systemic arterial trunk | region of vascular tree org,0.8,-18.8,-0.8,ok
+FJ3477,vein,renal vein | left renal vein | region of vascular tree organ | vein | ,-0.2,-19.7,0.1,ok
+FJ3478,vein,renal vein | left renal vein | region of vascular tree organ | vein | ,4.1,-19.3,-3.9,ok
+FJ3479,artery,subclavian artery | left subclavian artery | artery | region of vascul,3.1,10.9,-2.0,ok
+FJ3480,vein,suprarenal vein | left suprarenal vein | region of vascular tree organ,2.0,-15.9,-3.8,ok
+FJ3481,artery,artery | region of vascular tree organ | physical anatomical entity | ,1.8,-21.6,-1.9,ok
+FJ3482,vein,brachiocephalic vein | left brachiocephalic vein | region of vascular ,-1.1,9.1,0.3,ok
+FJ3483,artery,common carotid artery | left common carotid artery | artery | region o,0.5,11.0,-1.4,ok
+FJ3484,vein,external iliac vein | left external iliac vein | region of vascular tr,2.8,-37.8,-2.2,ok
+FJ3485,vein,internal jugular vein | left internal jugular vein | region of vascula,1.3,12.9,-0.1,ok
+FJ3486,vein,subclavian vein | left subclavian vein | region of vascular tree organ,4.4,11.1,-0.7,ok
+FJ3493,vein,left ascending lumbar vein | ascending lumbar vein | tributary of azyg,-3.1,-22.6,-1.3,ok
+FJ3494,artery,left colic artery | artery | region of vascular tree organ | physical ,1.1,-25.5,1.5,ok
+FJ3495,vein,tributary of splenic vein | tributary of inferior mesenteric vein | le,1.6,-25.4,0.6,ok
+FJ3496,artery,dorsal artery of penis | left dorsal artery of penis | artery | region,-0.3,-45.5,1.8,ok
+FJ3497,artery,dorsal artery of penis | left dorsal artery of penis | artery | region,-0.7,-45.8,4.6,ok
+FJ3499,artery,left gastric artery | artery | region of vascular tree organ | physica,0.7,-12.6,2.3,ok
+FJ3500,vein,tributary of superior mesenteric vein | left gastric vein | region of ,-0.0,-12.4,2.7,ok
+FJ3501,artery,left gastro-epiploic artery | artery | region of vascular tree organ |,7.0,-16.3,2.3,ok
+FJ3502,vein,tributary of splenic vein | left gastroepiploic vein | region of vascu,7.1,-16.2,2.3,ok
+FJ3510,vein,tributary of internal iliac vein | iliolumbar vein | left iliolumbar v,5.8,-30.3,-5.1,ok
+FJ3511,artery,inferior epigastric artery | left inferior epigastric artery | artery ,2.6,-33.0,3.2,ok
+FJ3512,vein,inferior epigastric vein | left inferior epigastric vein | region of v,2.2,-32.9,3.4,ok
+FJ3513,vein,tributary of internal iliac vein | inferior gluteal vein | left inferi,1.7,-39.7,-9.7,ok
+FJ3514,artery,inferior phrenic artery | left inferior phrenic artery | artery | regi,1.5,-9.0,-0.7,ok
+FJ3515,artery,inferior phrenic artery | left inferior phrenic artery | artery | regi,7.5,-10.2,-3.3,ok
+FJ3516,artery,inferior phrenic artery | left inferior phrenic artery | artery | regi,5.2,-6.4,2.3,ok
+FJ3517,artery,inferior phrenic artery | left inferior phrenic artery | artery | regi,9.7,-11.9,0.6,ok
+FJ3518,artery,inferior phrenic artery | left inferior phrenic artery | artery | regi,5.7,-8.1,5.1,ok
+FJ3519,artery,inferior phrenic artery | left inferior phrenic artery | artery | regi,10.3,-16.6,-2.4,ok
+FJ3520,artery,inferior phrenic artery | left inferior phrenic artery | artery | regi,5.1,-9.8,7.1,ok
+FJ3522,vein,external iliac vein | left external iliac vein | region of vascular tr,0.1,-32.9,-3.7,ok
+FJ3523,vein,external iliac vein | left external iliac vein | region of vascular tr,0.2,-35.0,-5.2,ok
+FJ3524,vein,external iliac vein | left external iliac vein | region of vascular tr,0.4,-34.7,-5.6,ok
+FJ3525,vein,tributary of internal iliac vein | internal pudendal vein | left inter,0.9,-42.5,-8.0,ok
+FJ3526,vein,tributary of internal iliac vein | lateral sacral vein | left lateral ,-0.8,-37.0,-9.9,ok
+FJ3527,vein,tributary of internal iliac vein | obturator vein | left obturator vei,2.4,-37.9,-5.5,ok
+FJ3529,artery,superficial epigastric artery | left superficial epigastric artery | a,3.8,-35.9,5.8,ok
+FJ3530,vein,superior epigastric vein | left superior epigastric vein | tributary o,2.5,-37.5,5.7,ok
+FJ3531,vein,tributary of internal iliac vein | superior gluteal vein | left superi,1.7,-36.5,-7.4,ok
+FJ3532,artery,testicular artery | left testicular artery | artery | region of vascul,2.7,-33.4,-0.1,ok
+FJ3533,vein,testicular vein | left testicular vein | region of vascular tree organ,2.9,-33.0,0.1,ok
+FJ3534,artery,marginal artery of colon | artery | region of vascular tree organ | ph,0.9,-22.6,0.0,ok
+FJ3541,vein,tributary of internal iliac vein | region of vascular tree organ | vei,-1.5,-35.1,-6.0,ok
+FJ3542,artery,middle colic artery | artery | region of vascular tree organ | physica,-2.5,-18.3,3.3,ok
+FJ3543,vein,tributary of superior mesenteric vein | middle colic vein | region of ,-2.4,-18.4,3.0,ok
+FJ3544,artery,splenic artery | artery | region of vascular tree organ | physical ana,3.0,-15.9,-0.8,ok
+FJ3545,vein,tributary of superior mesenteric vein | pancreaticoduodenal vein | reg,-4.5,-19.7,1.5,ok
+FJ3546,artery,artery | region of vascular tree organ | physical anatomical entity | ,-3.4,-20.6,0.7,ok
+FJ3553,artery,posterior cecal artery | branch of ileocolic artery | branch of inferi,-7.5,-31.0,0.2,ok
+FJ3557,artery,posterior superior pancreaticoduodenal artery | artery | region of vas,-3.8,-17.6,-0.0,ok
+FJ3558,artery,artery | region of vascular tree organ | physical anatomical entity | ,-5.8,-21.3,-2.0,ok
+FJ3559,artery,artery | region of vascular tree organ | physical anatomical entity | ,-5.5,-19.9,-1.9,ok
+FJ3560,artery,artery | region of vascular tree organ | physical anatomical entity | ,-5.4,-19.3,-2.2,ok
+FJ3561,artery,artery | region of vascular tree organ | physical anatomical entity | ,-6.1,-20.8,-2.1,ok
+FJ3562,artery,artery | region of vascular tree organ | physical anatomical entity | ,-6.4,-21.9,-2.4,ok
+FJ3563,artery,artery | region of vascular tree organ | physical anatomical entity | ,-7.1,-20.8,-3.0,ok
+FJ3564,artery,common carotid artery | right common carotid artery | artery | region ,-2.8,12.2,-0.6,ok
+FJ3565,artery,common iliac artery | right common iliac artery | artery | region of v,-2.5,-29.5,0.1,ok
+FJ3566,vein,common iliac vein | right common iliac vein | region of vascular tree ,-3.1,-29.8,-1.1,ok
+FJ3567,artery,external iliac artery | right external iliac artery | artery | region ,-6.2,-37.3,-1.5,ok
+FJ3568,vein,external iliac vein | right external iliac vein | region of vascular t,-5.4,-38.1,-2.1,ok
+FJ3569,artery,internal iliac artery | right internal iliac artery | artery | region ,-4.4,-34.7,-3.8,ok
+FJ3570,vein,internal iliac vein | right internal iliac vein | region of vascular t,-4.0,-34.4,-4.9,ok
+FJ3571,vein,internal iliac vein | right internal iliac vein | region of vascular t,-3.9,-38.0,-8.8,ok
+FJ3572,vein,internal iliac vein | right internal iliac vein | region of vascular t,-4.3,-40.8,-9.3,ok
+FJ3573,artery,artery | region of vascular tree organ | physical anatomical entity | ,-7.9,-21.1,-3.7,ok
+FJ3574,artery,artery | region of vascular tree organ | physical anatomical entity | ,-7.0,-21.0,-3.9,ok
+FJ3575,artery,artery | region of vascular tree organ | physical anatomical entity | ,-5.4,-20.1,-2.8,ok
+FJ3576,artery,arterial trunk | systemic arterial trunk | region of vascular tree org,-2.1,-19.2,-0.9,ok
+FJ3577,vein,renal vein | right renal vein | region of vascular tree organ | vein |,-3.1,-20.4,-1.1,ok
+FJ3578,vein,renal vein | right renal vein | region of vascular tree organ | vein |,-6.0,-20.9,-3.1,ok
+FJ3579,artery,subclavian artery | right subclavian artery | artery | region of vascu,-5.5,11.4,-1.6,ok
+FJ3580,vein,right suprarenal vein | suprarenal vein | region of vascular tree orga,-4.2,-16.9,-1.7,ok
+FJ3581,artery,artery | region of vascular tree organ | physical anatomical entity | ,-4.2,-21.7,-1.8,ok
+FJ3582,artery,artery | region of vascular tree organ | physical anatomical entity | ,-4.0,-22.9,-1.7,ok
+FJ3583,vein,brachiocephalic vein | right brachiocephalic vein | region of vascular,-3.2,9.3,0.2,ok
+FJ3584,artery,artery | region of vascular tree organ | physical anatomical entity | ,-5.6,-17.2,-2.9,ok
+FJ3585,vein,internal jugular vein | right internal jugular vein | region of vascul,-3.8,13.2,-0.1,ok
+FJ3586,artery,middle suprarenal artery | right middle suprarenal artery | artery | r,-3.5,-16.5,-2.0,ok
+FJ3587,vein,subclavian vein | right subclavian vein | region of vascular tree orga,-6.5,11.1,-0.4,ok
+FJ3589,vein,right ascending lumbar vein | ascending lumbar vein | tributary of azy,0.9,-23.6,-2.6,ok
+FJ3590,artery,right colic artery | artery | region of vascular tree organ | physical,-5.7,-22.3,1.5,ok
+FJ3591,vein,tributary of superior mesenteric vein | right colic vein | region of v,-5.9,-22.2,1.1,ok
+FJ3592,artery,dorsal artery of penis | right dorsal artery of penis | artery | regio,-2.1,-45.5,1.8,ok
+FJ3593,artery,dorsal artery of penis | right dorsal artery of penis | artery | regio,-1.7,-45.9,4.6,ok
+FJ3594,artery,right gastric artery | subdivision of hepatic artery proper | artery |,-0.8,-15.0,3.9,ok
+FJ3595,vein,tributary of superior mesenteric vein | right gastric vein | region of,-2.5,-14.6,3.3,ok
+FJ3596,artery,right gastro-epiploic artery | artery | region of vascular tree organ ,-0.4,-18.1,4.8,ok
+FJ3597,vein,tributary of superior mesenteric vein | right gastroepiploic vein | re,-0.1,-18.6,4.6,ok
+FJ3603,vein,tributary of internal iliac vein | iliolumbar vein | right iliolumbar ,-8.5,-30.2,-4.9,ok
+FJ3604,artery,inferior epigastric artery | right inferior epigastric artery | artery,-5.2,-33.0,3.2,ok
+FJ3605,vein,inferior epigastric vein | right inferior epigastric vein | region of ,-4.6,-33.2,3.3,ok
+FJ3606,vein,tributary of internal iliac vein | inferior gluteal vein | right infer,-5.1,-39.6,-8.2,ok
+FJ3607,vein,internal iliac vein | right internal iliac vein | region of vascular t,-3.6,-32.9,-2.4,ok
+FJ3608,vein,internal iliac vein | right internal iliac vein | region of vascular t,-3.5,-34.9,-3.7,ok
+FJ3609,vein,internal iliac vein | right internal iliac vein | region of vascular t,-3.8,-34.6,-4.2,ok
+FJ3610,vein,tributary of internal iliac vein | internal pudendal vein | right inte,-4.3,-42.5,-6.6,ok
+FJ3611,vein,tributary of internal iliac vein | lateral sacral vein | right lateral,-2.6,-36.9,-8.5,ok
+FJ3612,vein,tributary of internal iliac vein | obturator vein | right obturator ve,-5.8,-38.6,-4.6,ok
+FJ3614,artery,superficial epigastric artery | right superficial epigastric artery | ,-6.3,-36.6,5.4,ok
+FJ3615,vein,superior epigastric vein | right superior epigastric vein | tributary ,-4.9,-37.7,5.4,ok
+FJ3616,vein,tributary of internal iliac vein | superior gluteal vein | right super,-5.1,-36.5,-6.0,ok
+FJ3617,artery,testicular artery | right testicular artery | artery | region of vascu,-4.9,-33.2,0.1,ok
+FJ3618,vein,right testicular vein | testicular vein | region of vascular tree orga,-5.5,-33.8,0.1,ok
+FJ3619,artery,inferior phrenic artery | right inferior phrenic artery | artery | reg,-4.5,-8.9,-1.8,ok
+FJ3620,artery,inferior phrenic artery | right inferior phrenic artery | artery | reg,-10.5,-7.0,-2.5,ok
+FJ3621,artery,inferior phrenic artery | right inferior phrenic artery | artery | reg,-5.2,-4.5,3.2,ok
+FJ3622,artery,inferior phrenic artery | right inferior phrenic artery | artery | reg,-10.9,-5.2,-1.0,ok
+FJ3623,artery,inferior phrenic artery | right inferior phrenic artery | artery | reg,-3.4,-5.0,5.6,ok
+FJ3624,artery,inferior phrenic artery | right inferior phrenic artery | artery | reg,-12.8,-12.5,-0.5,ok
+FJ3625,artery,inferior phrenic artery | right inferior phrenic artery | artery | reg,-11.9,-12.8,-5.5,ok
+FJ3626,artery,inferior phrenic artery | right inferior phrenic artery | artery | reg,-12.3,-16.1,1.7,ok
+FJ3631,vein,lumbar vein | region of vascular tree organ | vein | physical anatomic,3.2,-23.7,-4.9,ok
+FJ3632,artery,lumbar artery | artery | region of vascular tree organ | physical anat,2.2,-23.7,-3.5,ok
+FJ3635,vein,lumbar vein | region of vascular tree organ | vein | physical anatomic,-5.6,-22.9,-4.2,ok
+FJ3636,artery,lumbar artery | artery | region of vascular tree organ | physical anat,-4.3,-23.4,-3.6,ok
+FJ3637,vein,tributary of great saphenous vein | tributary of superficial external ,-1.2,-46.4,5.8,ok
+FJ3638,artery,sigmoid artery | artery | region of vascular tree organ | physical ana,2.9,-31.2,0.2,ok
+FJ3639,vein,tributary of splenic vein | tributary of inferior mesenteric vein | si,3.1,-31.3,-0.1,ok
+FJ3640,artery,splenic artery | artery | region of vascular tree organ | physical ana,3.6,-15.1,-0.8,ok
+FJ3641,vein,splenic vein | region of vascular tree organ | vein | subdivision of p,3.0,-15.8,-1.1,ok
+FJ3644,artery,arterial trunk | systemic arterial trunk | region of vascular tree org,-2.6,-24.5,1.5,ok
+FJ3645,vein,superior vena cava | venous trunk | region of vascular tree organ | ph,-2.7,6.2,-0.2,ok
+FJ3646,vein,tributary of superior mesenteric vein | pancreaticoduodenal vein | reg,-3.3,-20.4,0.6,ok
+FJ3647,vein,superior mesenteric vein | region of vascular tree organ | vein | subd,-3.1,-24.0,1.2,ok
+FJ3648,vein,region of vascular tree organ | vein | physical anatomical entity | an,-7.9,-4.8,-0.6,ok
+FJ3649,vein,region of vascular tree organ | vein | physical anatomical entity | an,-7.7,-4.1,-0.5,ok
+FJ3650,vein,region of vascular tree organ | vein | physical anatomical entity | an,-4.1,-4.6,2.4,ok
+FJ3651,vein,region of vascular tree organ | vein | physical anatomical entity | an,-7.3,-4.4,2.2,ok
+FJ3652,vein,region of vascular tree organ | vein | physical anatomical entity | an,-12.0,-8.5,-1.0,ok
+FJ3653,vein,region of vascular tree organ | vein | physical anatomical entity | an,-12.3,-12.4,-1.5,ok
+FJ3654,vein,region of vascular tree organ | vein | physical anatomical entity | an,-12.7,-9.9,-2.2,ok
+FJ3655,vein,tributary of superior mesenteric vein | pancreaticoduodenal vein | reg,-3.4,-16.9,0.0,ok
+FJ3656,artery,superior rectal artery | artery | region of vascular tree organ | phys,-2.1,-35.4,-4.9,ok
+FJ3657,vein,tributary of splenic vein | tributary of inferior mesenteric vein | su,-1.9,-35.2,-5.1,ok
+FJ3658,vein,ascending lumbar vein | tributary of azygos vein | region of vascular ,-1.0,-24.3,-0.9,ok
+FJ3659,vein,inferior vena cava | venous trunk | region of vascular tree organ | ph,-2.4,-20.2,-0.1,ok
