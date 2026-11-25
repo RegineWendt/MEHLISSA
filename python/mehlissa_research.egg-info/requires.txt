@@ -1,0 +1,6 @@
+
+[plot]
+matplotlib>=3.8
+
+[publication]
+jsonschema==4.25.1

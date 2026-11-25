@@ -1,0 +1,2 @@
+[console_scripts]
+mehlissa-workbench = mehlissa_workbench.__main__:main
